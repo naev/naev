@@ -1,19 +1,19 @@
 <spob name="Excelcior">
- <pos x="-3067.007994" y="-1955.217596"/>
+ <pos x="-1169.303882" y="-3444.146093"/>
  <GFX>
   <space>M13</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>2.5e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

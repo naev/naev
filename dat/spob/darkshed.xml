@@ -1,20 +1,20 @@
 <spob name="Darkshed">
  <lua>lawless.lua</lua>
- <pos x="-15535.629234" y="-9372.732177"/>
+ <pos x="-16956.619526" y="-6455.767838"/>
  <GFX>
   <space>station-round2</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>14000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

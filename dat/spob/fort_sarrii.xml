@@ -1,20 +1,20 @@
 <spob name="Fort Sarrii">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-2675.964475" y="-6088.010868"/>
+ <pos x="-2451.142709" y="-6181.954514"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>1</class>
   <population>1112</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services>
    <land/>
    <refuel/>

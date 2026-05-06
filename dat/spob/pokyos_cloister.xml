@@ -1,20 +1,20 @@
 <spob name="Pokyos Cloister">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="-5018.249839" y="-3370.638946"/>
+ <pos x="-5870.508848" y="-1442.624069"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>3000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

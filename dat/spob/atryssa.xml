@@ -1,19 +1,19 @@
 <spob name="Atryssa">
- <pos x="-14448.551980" y="-10881.130960"/>
+ <pos x="-16024.252288" y="-8389.457901"/>
  <GFX>
   <space>M11</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>O</class>
   <population>3e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

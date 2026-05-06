@@ -1,19 +1,19 @@
 <spob name="Dowue">
- <pos x="-2774.694760" y="-3802.503709"/>
+ <pos x="-4065.766273" y="-2372.237356"/>
  <GFX>
   <space>P02</space>
   <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>P</class>
   <population>125000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

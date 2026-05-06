@@ -3,11 +3,11 @@
   <background>plasmastorm</background>
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#oRestricted#0, #pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>56.250000</interference>
+  <interference>56.25</interference>
  </general>
- <pos x="1274.991221" y="-156.253133"/>
+ <pos x="585.935214" y="-380.865662"/>
  <spobs>
   <spob>Voproid Monastery</spob>
   <spob>Voproid Prime</spob>
@@ -16,17 +16,17 @@
  </spobs>
  <jumps>
   <jump target="Botarn">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7404.972733" y="-13044.783586" was_auto="true"/>
   </jump>
   <jump target="NGC-7319">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="11507.071205" y="9622.230108" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <energy_mod>-50.000000</energy_mod>
-  <stress_dissipation>-50.000000</stress_dissipation>
+  <energy_mod>-50</energy_mod>
+  <stress_dissipation>-50</stress_dissipation>
  </stats>
  <tags>
   <tag>restricted</tag>

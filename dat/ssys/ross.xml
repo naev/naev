@@ -1,33 +1,33 @@
 <ssys name="Ross">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="238.458682" y="-153.119916"/>
+ <pos x="-533.491598" y="-51.151565"/>
  <spobs>
   <spob>Ross Prime</spob>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Cebus">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14712.148725" y="-2924.496516" was_auto="true"/>
   </jump>
   <jump target="Hakoi">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7544.345606" y="12964.676986" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
-   <radius>5000.000000</radius>
-   <pos x="-1978.220156" y="-2300.255995"/>
+   <radius>5000</radius>
+   <pos x="-2447.94978" y="-1792.22613"/>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
-   <pos x="-3496.821003" y="-4463.360410"/>
+   <radius>1000</radius>
+   <pos x="-3496.821003" y="-4463.36041"/>
   </exclusion>
  </asteroids>
 </ssys>

@@ -1,5 +1,5 @@
 <spob name="Norpin IV">
- <pos x="12080.000000" y="-20640.000000"/>
+ <pos x="19974.364032" y="-13151.455489"/>
  <GFX>
   <space>L00</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

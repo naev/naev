@@ -1,6 +1,6 @@
 <spob name="Vargo's Rock">
  <lua>lowclass.lua</lua>
- <pos x="20025.798638" y="-6063.478210"/>
+ <pos x="16781.871448" y="-12496.686352"/>
  <GFX>
   <space>D01</space>
   <exterior>underground_facility</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>D</class>
   <population>500000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

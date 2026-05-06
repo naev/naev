@@ -1,19 +1,19 @@
 <spob name="Protera Nova">
- <pos x="187.238109" y="1185.841360"/>
+ <pos x="-437.961395" y="1117.795892"/>
  <GFX>
   <space>moon-P02</space>
   <exterior>hangar1</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>50.000000</base>
-  <bonus>20.000000</bonus>
+  <base>50</base>
+  <bonus>20</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>P</class>
   <population>500</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
    <refuel/>

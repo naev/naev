@@ -1,5 +1,5 @@
 <spob name="Sarcophagus IIb">
- <pos x="-13519.748039" y="8039.294972"/>
+ <pos x="-9623.602753" y="12441.869663"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

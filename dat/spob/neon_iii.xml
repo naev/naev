@@ -1,5 +1,5 @@
 <spob name="Neon III">
- <pos x="-6594.067187" y="1610.179197"/>
+ <pos x="-5006.894008" y="4583.166099"/>
  <GFX>
   <space>J07</space>
   <exterior>forest2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

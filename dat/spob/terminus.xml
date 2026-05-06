@@ -1,5 +1,5 @@
 <spob name="Terminus">
- <pos x="10150.000000" y="-20860.000000"/>
+ <pos x="22065.8529" y="-7159.625391"/>
  <GFX>
   <space>moon-A01</space>
   <exterior>gas</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>A</class>
   <population>1.7e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

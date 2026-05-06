@@ -1,5 +1,5 @@
 <spob name="Vanir I">
- <pos x="-12550.400000" y="4676.800000"/>
+ <pos x="-9007.846633" y="9911.795872"/>
  <GFX>
   <space>S00</space>
   <exterior>uninhabited-rocky-green-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>S</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

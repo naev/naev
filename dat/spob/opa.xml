@@ -1,5 +1,5 @@
 <spob name="Opa">
- <pos x="-3548.243133" y="-3056.307753"/>
+ <pos x="-3269.502639" y="-3352.819544"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

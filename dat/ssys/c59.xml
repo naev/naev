@@ -1,11 +1,14 @@
 <ssys name="C-59">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>200</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
+  <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
   <nolanes/>
  </general>
- <pos x="-213.560544" y="375.931027"/>
+ <pos x="-937.840431" y="532.61143"/>
  <spobs>
   <spob>P9122</spob>
   <spob>S13024</spob>
@@ -14,30 +17,42 @@
  </spobs>
  <jumps>
   <jump target="C-28">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3042.231433" y="17233.537881" was_auto="true"/>
   </jump>
   <jump target="C-43">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-16441.815494" y="-5993.054584" was_auto="true"/>
   </jump>
   <jump target="Hades">
+   <hide>1</hide>
+   <pos x="1662.679588" y="-17420.835128" was_auto="true"/>
+  </jump>
+  <jump target="Mason">
+   <hide>1</hide>
+   <hidden/>
    <autopos/>
-   <hide>1.000000</hide>
+  </jump>
+  <jump target="SW-1">
+   <exitonly/>
+   <hide>1</hide>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>4000.000000</radius>
-   <pos x="-3193.998144" y="-2294.257528"/>
+   <radius>4000</radius>
+   <pos x="-3929.278687" y="-161.278461"/>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
-   <pos x="-3119.102900" y="-2240.760926"/>
+   <radius>1000</radius>
+   <pos x="-3119.1029" y="-2240.760926"/>
   </exclusion>
  </asteroids>
  <tags>
+  <tag>northstellarwind</tag>
+  <tag>stellarwind</tag>
   <tag>restricted</tag>
  </tags>
 </ssys>

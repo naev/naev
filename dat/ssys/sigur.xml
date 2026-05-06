@@ -1,12 +1,12 @@
 <ssys name="Sigur">
  <general>
-  <radius>28000.000000</radius>
+  <radius>28000</radius>
   <spacedust>400</spacedust>
-  <interference>68.478300</interference>
-  <nebula>300.000000</nebula>
+  <interference>68.4783</interference>
+  <nebula>300</nebula>
   <nolanes/>
  </general>
- <pos x="389.157474" y="-202.803721"/>
+ <pos x="-224.384461" y="-175.36347"/>
  <spobs>
   <spob_virtual>Empire Unpresence</spob_virtual>
   <spob_virtual>Independent All Unpresence</spob_virtual>
@@ -18,11 +18,11 @@
   <jump target="Arcanis">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Behar">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

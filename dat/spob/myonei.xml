@@ -1,5 +1,5 @@
 <spob name="Myonei">
- <pos x="-17821.865227" y="-17114.204956"/>
+ <pos x="-10688.32321" y="-22277.222412"/>
  <GFX>
   <space>K03</space>
   <exterior>gas</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>Y</class>
   <population>50000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

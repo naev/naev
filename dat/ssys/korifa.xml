@@ -1,10 +1,10 @@
 <ssys name="Korifa">
  <general>
-  <radius>23000.000000</radius>
+  <radius>23000</radius>
   <spacedust>300</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="1160.542858" y="553.882237"/>
+ <pos x="553.660051" y="201.472698"/>
  <spobs>
   <spob>Korifa I</spob>
   <spob>Korifa II</spob>
@@ -16,8 +16,8 @@
  </spobs>
  <jumps>
   <jump target="Hystera">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14808.079868" y="17598.885492" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

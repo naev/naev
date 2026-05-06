@@ -1,10 +1,10 @@
 <ssys name="Esker">
  <general>
-  <radius>22750.000000</radius>
+  <radius>22750</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="978.159861" y="-656.670454"/>
+ <pos x="175.480505" y="-773.836578"/>
  <spobs>
   <spob>Esker I</spob>
   <spob>Esker II</spob>
@@ -16,16 +16,16 @@
  </spobs>
  <jumps>
   <jump target="Gutter">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="22695.315281" y="-1576.440384" was_auto="true"/>
   </jump>
   <jump target="Nougat">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-15787.174912" y="16380.708417" was_auto="true"/>
   </jump>
   <jump target="Scarlet">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-15218.844164" y="-16910.034958" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

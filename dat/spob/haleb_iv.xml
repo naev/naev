@@ -1,5 +1,5 @@
 <spob name="Haleb IV">
- <pos x="-9097.124865" y="-8125.122171"/>
+ <pos x="-12192.386869" y="347.841228"/>
  <GFX>
   <space>I04</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

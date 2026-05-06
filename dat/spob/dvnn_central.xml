@@ -1,19 +1,19 @@
 <spob name="DVNN Central">
- <pos x="11185.917396" y="25623.169472"/>
+ <pos x="12559.948535" y="24978.375739"/>
  <GFX>
   <space>station-powerplant</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>0</class>
   <population>1200</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

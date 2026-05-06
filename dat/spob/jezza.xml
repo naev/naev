@@ -1,5 +1,5 @@
 <spob name="Jezza">
- <pos x="18148.644587" y="14760.930450"/>
+ <pos x="23138.808411" y="3442.951261"/>
  <GFX>
   <space>K03</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

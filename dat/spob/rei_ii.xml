@@ -1,5 +1,5 @@
 <spob name="Rei II">
- <pos x="-3584.272380" y="2023.954802"/>
+ <pos x="-2270.603872" y="3433.330684"/>
  <GFX>
   <space>M05</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>M</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Jade VI">
- <pos x="15886.179946" y="-11744.772546"/>
+ <pos x="15158.885616" y="-12669.592822"/>
  <GFX>
   <space>D00</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

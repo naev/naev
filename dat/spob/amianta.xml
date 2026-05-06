@@ -1,19 +1,19 @@
 <spob name="Amianta">
- <pos x="14165.896522" y="10080.641875"/>
+ <pos x="17105.403962" y="3114.019937"/>
  <GFX>
   <space>P02</space>
   <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>650.000000</base>
-  <bonus>50.000000</bonus>
+  <base>650</base>
+  <bonus>50</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>C</class>
   <population>600000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

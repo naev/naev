@@ -1,5 +1,5 @@
 <spob name="Massia IVa">
- <pos x="-1088.000000" y="-15096.000000"/>
+ <pos x="-1619.642474" y="-15048.246351"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

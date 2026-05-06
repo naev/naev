@@ -1,5 +1,5 @@
 <spob name="Taxumi I">
- <pos x="-5783.813977" y="-6392.661671"/>
+ <pos x="-6325.474462" y="-5857.217785"/>
  <GFX>
   <space>A06</space>
   <exterior>station03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Orville Shipyard">
- <pos x="-8020.974940" y="-6034.193104"/>
+ <pos x="-9249.800982" y="3897.269195"/>
  <GFX>
   <space>station-shipyard</space>
   <exterior>station04</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>0</class>
   <population>9000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

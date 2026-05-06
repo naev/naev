@@ -1,19 +1,19 @@
 <spob name="Castrum Akra">
- <pos x="-2449.716430" y="-2403.495366"/>
+ <pos x="-3238.31563" y="-1136.315289"/>
  <GFX>
   <space>station-commerce2</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>200000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

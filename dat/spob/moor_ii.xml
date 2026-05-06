@@ -1,5 +1,5 @@
 <spob name="Moor II">
- <pos x="-8933.793803" y="4029.027222"/>
+ <pos x="-9671.188112" y="1585.513343"/>
  <GFX>
   <space>H00</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

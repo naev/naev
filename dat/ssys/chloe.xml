@@ -1,21 +1,26 @@
 <ssys name="Chloe">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-24.482796" y="151.759768"/>
+ <pos x="-1038.711271" y="322.354341"/>
  <spobs>
   <spob>Chloe I</spob>
  </spobs>
  <jumps>
   <jump target="Polack">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="13993.491835" y="-426.832797" was_auto="true"/>
   </jump>
   <jump target="Wolf">
+   <hide>1</hide>
+   <pos x="5214.253917" y="-12992.750135" was_auto="true"/>
+  </jump>
+  <jump target="SW-3">
+   <exitonly/>
+   <hide>1</hide>
    <autopos/>
-   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

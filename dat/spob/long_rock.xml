@@ -1,19 +1,19 @@
 <spob name="Long Rock">
- <pos x="-2891.491375" y="3309.834808"/>
+ <pos x="-4338.979973" y="699.272208"/>
  <GFX>
   <space>K00</space>
   <exterior>mining5</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>D</class>
   <population>100000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

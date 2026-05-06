@@ -1,5 +1,5 @@
 <spob name="Capricorn II">
- <pos x="15400.000000" y="2540.000000"/>
+ <pos x="15327.069733" y="2948.310257"/>
  <GFX>
   <space>A04</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

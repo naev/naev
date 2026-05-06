@@ -1,5 +1,5 @@
 <spob name="Goddard III">
- <pos x="-7131.741933" y="-8453.589513"/>
+ <pos x="93.007187" y="-11059.668544"/>
  <GFX>
   <space>D02</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

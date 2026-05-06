@@ -1,19 +1,19 @@
 <spob name="Sheik Hall">
- <pos x="22036.883334" y="27.050026"/>
+ <pos x="263.673008" y="22035.322446"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>Y</class>
   <population>400000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

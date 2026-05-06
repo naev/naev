@@ -1,5 +1,5 @@
 <spob name="Damien VII">
- <pos x="-5464.794844" y="-3143.683194"/>
+ <pos x="-6303.964803" y="-82.185567"/>
  <GFX>
   <space>J04</space>
   <exterior>station03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

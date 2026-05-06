@@ -1,5 +1,5 @@
 <spob name="Andee IIIa">
- <pos x="13929.329926" y="-6969.106766"/>
+ <pos x="3634.157565" y="-15145.546543"/>
  <GFX>
   <space>moon-P00</space>
   <exterior>uninhabited-rocky-airless-00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services>
    <land/>
   </services>

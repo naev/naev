@@ -1,12 +1,12 @@
 <spob name="Symm IIIa">
- <pos x="3663.680133" y="3548.372981"/>
+ <pos x="3965.589684" y="3207.429091"/>
  <GFX>
   <space>moon-O00</space>
  </GFX>
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services/>
  </general>
 </spob>

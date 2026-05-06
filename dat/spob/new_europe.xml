@@ -1,19 +1,19 @@
 <spob name="New Europe">
- <pos x="9151.972559" y="-871.217027"/>
+ <pos x="7004.391735" y="-5954.503946"/>
  <GFX>
   <space>M08</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>10.000000</base>
-  <bonus>10.000000</bonus>
+  <base>10</base>
+  <bonus>10</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>M</class>
   <population>700000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

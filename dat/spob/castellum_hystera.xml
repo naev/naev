@@ -1,19 +1,19 @@
 <spob name="Castellum Hystera">
- <pos x="5647.850814" y="6361.203738"/>
+ <pos x="6147.038772" y="-5880.225008"/>
  <GFX>
   <space>station-commerce3</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>2000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

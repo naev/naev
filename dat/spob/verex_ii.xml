@@ -1,5 +1,5 @@
 <spob name="Verex II">
- <pos x="26475.000000" y="-2775.000000"/>
+ <pos x="24399.116578" y="-10644.686945"/>
  <GFX>
   <space>D00</space>
   <exterior>uninhabited-rocky-airless-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

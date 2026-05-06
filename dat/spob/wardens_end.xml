@@ -1,20 +1,20 @@
 <spob name="Warden's End">
  <lua>pirate_clanworld.lua</lua>
- <pos x="19365.865907" y="7882.413669"/>
+ <pos x="15847.661042" y="13638.945966"/>
  <GFX>
   <space>station-round3</space>
   <exterior>scrapped_station</exterior>
  </GFX>
  <presence>
   <faction>Black Lotus</faction>
-  <base>400.000000</base>
-  <bonus>50.000000</bonus>
+  <base>400</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>2</class>
   <population>4500</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

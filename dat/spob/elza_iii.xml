@@ -1,5 +1,5 @@
 <spob name="Elza III">
- <pos x="8329.857647" y="-11194.854673"/>
+ <pos x="11453.197302" y="-7970.920343"/>
  <GFX>
   <space>P04</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

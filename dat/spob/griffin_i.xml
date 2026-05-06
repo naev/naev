@@ -1,5 +1,5 @@
 <spob name="Griffin I">
- <pos x="-6522.156506" y="7149.136931"/>
+ <pos x="-5122.443671" y="8210.313951"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

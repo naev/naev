@@ -1,5 +1,5 @@
 <spob name="Orion's Anger">
- <pos x="5679.644433" y="2218.611107"/>
+ <pos x="2510.944207" y="5556.595659"/>
  <GFX>
   <space>A01</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

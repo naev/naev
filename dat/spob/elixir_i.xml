@@ -1,5 +1,5 @@
 <spob name="Elixir I">
- <pos x="14818.376965" y="-496.705373"/>
+ <pos x="12597.734511" y="7818.445962"/>
  <GFX>
   <space>moon-P01</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Mirror I">
- <pos x="3776.100242" y="-2716.142279"/>
+ <pos x="2630.930845" y="-3835.95683"/>
  <GFX>
   <space>moon-J00</space>
   <exterior>station03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

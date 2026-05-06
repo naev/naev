@@ -1,10 +1,10 @@
 <ssys name="Neon">
  <general>
-  <radius>18000.000000</radius>
+  <radius>18000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="1057.094580" y="-313.243184"/>
+ <pos x="320.167649" y="-473.443663"/>
  <spobs>
   <spob>Maatsu</spob>
   <spob>Neon I</spob>
@@ -14,20 +14,20 @@
  </spobs>
  <jumps>
   <jump target="Kiwi">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14626.033751" y="-10491.860497" was_auto="true"/>
   </jump>
   <jump target="Kraft">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="17400.243609" y="4607.767606" was_auto="true"/>
   </jump>
   <jump target="Nixon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-11904.203499" y="-13501.479142" was_auto="true"/>
   </jump>
   <jump target="Pike">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-17374.352461" y="4704.452843" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

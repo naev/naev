@@ -1,5 +1,5 @@
 <spob name="Alsafi Ib">
- <pos x="-8428.487236" y="1723.665452"/>
+ <pos x="-156.434336" y="8601.50847"/>
  <GFX>
   <space>moon-A01</space>
   <exterior>uninhabited-rocky-airless-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

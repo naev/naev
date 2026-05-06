@@ -1,5 +1,5 @@
 <spob name="Riun">
- <pos x="-5513.000000" y="4477.000000"/>
+ <pos x="-6711.899508" y="2321.013352"/>
  <GFX>
   <space>moon-J00</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Castellan VI">
- <pos x="25682.128164" y="16763.575618"/>
+ <pos x="22946.869184" y="20347.736216"/>
  <GFX>
   <space>I07</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services/>
  </general>
 </spob>

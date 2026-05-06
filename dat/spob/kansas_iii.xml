@@ -1,5 +1,5 @@
 <spob name="Kansas III">
- <pos x="-21144.645396" y="-3143.725357"/>
+ <pos x="16187.549647" y="-13962.172984"/>
  <GFX>
   <space>G00</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

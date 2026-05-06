@@ -1,10 +1,10 @@
 <ssys name="Ingot">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>500</spacedust>
   <interference>13.235288</interference>
  </general>
- <pos x="555.473373" y="-557.020919"/>
+ <pos x="-100.36259" y="-414.187301"/>
  <spobs>
   <spob>Ingot I</spob>
   <spob>Ulios</spob>
@@ -13,13 +13,13 @@
  </spobs>
  <jumps>
   <jump target="Gilligan's Light">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="20515.108075" y="4486.684817" was_auto="true"/>
   </jump>
   <jump target="Toaxis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-5419.666229" y="20288.598225" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

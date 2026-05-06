@@ -1,19 +1,19 @@
 <spob name="Fort Raelid">
- <pos x="3598.832090" y="-4493.722479"/>
+ <pos x="5415.145266" y="-1954.823743"/>
  <GFX>
   <space>002</space>
   <exterior>station02</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>3000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

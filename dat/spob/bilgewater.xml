@@ -1,5 +1,5 @@
 <spob name="Bilgewater">
- <pos x="-1597.399997" y="2475.969995"/>
+ <pos x="-1162.683928" y="2707.449029"/>
  <GFX>
   <space>Z00</space>
   <exterior>uninhabited-rocky-yellow-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>Z</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

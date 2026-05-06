@@ -1,5 +1,5 @@
 <spob name="Olljan">
- <pos x="-12068.063055" y="3720.894098"/>
+ <pos x="-10090.501447" y="7593.746067"/>
  <GFX>
   <space>O00</space>
   <exterior>aquatic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>1e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

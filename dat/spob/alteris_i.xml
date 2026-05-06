@@ -1,5 +1,5 @@
 <spob name="Alteris I">
- <pos x="3161.494856" y="-2251.603909"/>
+ <pos x="2709.903212" y="-2778.703738"/>
  <GFX>
   <space>K02</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

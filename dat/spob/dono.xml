@@ -1,19 +1,19 @@
 <spob name="Dono">
- <pos x="580.608000" y="521.856000"/>
+ <pos x="259.075733" y="736.423179"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

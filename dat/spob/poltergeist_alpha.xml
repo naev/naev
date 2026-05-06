@@ -1,5 +1,5 @@
 <spob name="Poltergeist Alpha">
- <pos x="2034.481559" y="14537.119196"/>
+ <pos x="-1189.620706" y="14630.507588"/>
  <GFX>
   <space>moon-Y00</space>
   <exterior>uninhabited-rocky-magenta-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>Y</class>
   <population>0</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
   </services>

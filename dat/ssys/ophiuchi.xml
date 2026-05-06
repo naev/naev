@@ -1,21 +1,21 @@
 <ssys name="Ophiuchi">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>28.800000</interference>
-  <nebula volatility="0.900000">300.000000</nebula>
+  <interference>28.8</interference>
+  <nebula volatility="0.9">300</nebula>
   <nolanes/>
  </general>
- <pos x="390.725002" y="-135.407505"/>
+ <pos x="-217.307419" y="-99.532344"/>
  <spobs/>
  <jumps>
   <jump target="Iris">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Tau Ceti">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

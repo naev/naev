@@ -1,19 +1,19 @@
 <spob name="Caethia">
- <pos x="695.706571" y="-803.798376"/>
+ <pos x="62.541257" y="-1061.220077"/>
  <GFX>
   <space>moon-M00</space>
   <exterior>uninhabited-jungle</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>130.000000</base>
-  <bonus>20.000000</bonus>
+  <base>130</base>
+  <bonus>20</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>M</class>
   <population>8000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Zaren">
- <pos x="-5608.155853" y="-5484.899681"/>
+ <pos x="-4796.355075" y="-6207.29527"/>
  <GFX>
   <space>Y00</space>
   <exterior>methane</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>Y</class>
   <population>10112</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

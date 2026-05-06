@@ -1,0 +1,45 @@
+<ssys name="SW-9">
+ <general>
+  <radius>6666.666666</radius>
+  <spacedust>300</spacedust>
+  <interference>0</interference>
+  <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
+ </general>
+ <pos x="-1167.469534" y="-192.162643"/>
+ <spobs/>
+ <jumps>
+  <jump target="SW-8">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+  <jump target="SW-10">
+   <autopos/>
+   <hide>1</hide>
+   <tags>
+    <tag>hidden</tag>
+   </tags>
+  </jump>
+  <jump target="Logania">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+  <jump target="Palejos">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+  <jump target="NGC-4746">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>stellarwind</tag>
+  <tag>spoiler</tag>
+ </tags>
+</ssys>

@@ -1,5 +1,5 @@
 <spob name="Mugen">
- <pos x="1185.435648" y="-1382.510592"/>
+ <pos x="1753.9324" y="-490.218672"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>lava</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>J</class>
   <population>1.25457e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

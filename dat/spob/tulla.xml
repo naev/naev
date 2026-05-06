@@ -1,5 +1,5 @@
 <spob name="Tulla">
- <pos x="-3316.789367" y="-2888.816545"/>
+ <pos x="-67.26284" y="-4397.934565"/>
  <GFX>
   <space>M01</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>7.805e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

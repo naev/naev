@@ -1,20 +1,20 @@
 <spob name="Varia">
  <lua>highclass.lua</lua>
- <pos x="-9713.888889" y="-290.555556"/>
+ <pos x="-394.843233" y="-9710.208993"/>
  <GFX>
   <space>M04</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

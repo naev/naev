@@ -1,6 +1,6 @@
 <spob name="Wellen">
  <lua>lowclass.lua</lua>
- <pos x="326.106374" y="-3415.535179"/>
+ <pos x="298.302688" y="-3418.075691"/>
  <GFX>
   <space>moon-J00</space>
   <exterior>mining5</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>N</class>
   <population>99654</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,6 +1,6 @@
 <spob name="Lora-Mor">
  <lua>highclass.lua</lua>
- <pos x="12004.532136" y="-6382.199194"/>
+ <pos x="5550.886388" y="-12410.838757"/>
  <GFX>
   <space>moon-M02</space>
   <exterior>traderoom</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>2.5e+06</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
    <refuel/>

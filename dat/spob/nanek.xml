@@ -1,19 +1,19 @@
 <spob name="Nanek">
- <pos x="3062.309947" y="-1121.717978"/>
+ <pos x="3087.552876" y="1050.243147"/>
  <GFX>
   <space>H03</space>
   <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>H</class>
   <population>1.24579e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

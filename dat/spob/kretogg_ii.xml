@@ -1,5 +1,5 @@
 <spob name="Kretogg II">
- <pos x="15300.000000" y="-9250.000000"/>
+ <pos x="17449.098336" y="-3896.340238"/>
  <GFX>
   <space>K03</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

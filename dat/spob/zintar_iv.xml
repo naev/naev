@@ -1,5 +1,5 @@
 <spob name="Zintar IV">
- <pos x="8748.214329" y="11780.505497"/>
+ <pos x="6244.167699" y="13278.626941"/>
  <GFX>
   <space>D02</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

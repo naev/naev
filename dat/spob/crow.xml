@@ -1,5 +1,5 @@
 <spob name="Crow">
- <pos x="7370.643037" y="3893.363862"/>
+ <pos x="7488.073677" y="3662.432735"/>
  <GFX>
   <space>M07</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>4.5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

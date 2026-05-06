@@ -1,19 +1,19 @@
 <spob name="Torg Crops">
- <pos x="-2701.724375" y="12569.305869"/>
+ <pos x="-4762.559575" y="11941.724788"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>6.666670</base>
-  <bonus>3.333330</bonus>
+  <base>6.66667</base>
+  <bonus>3.33333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

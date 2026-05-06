@@ -1,19 +1,19 @@
 <spob name="Topkapi Station">
- <pos x="16417.722190" y="13311.666640"/>
+ <pos x="20823.29456" y="3623.875589"/>
  <GFX>
   <space>zalek_station1</space>
   <exterior>zalek_station1</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>3200</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services>
    <land/>
    <refuel/>

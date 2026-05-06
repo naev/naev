@@ -1,19 +1,19 @@
 <spob name="Aleph">
- <pos x="-3900.793946" y="-3495.111376"/>
+ <pos x="-4480.224417" y="2712.855711"/>
  <GFX>
   <space>G02</space>
   <exterior>mining6</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>G</class>
   <population>1.7e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Palovi V">
- <pos x="-5294.940817" y="-7385.734366"/>
+ <pos x="-7681.002665" y="-4856.713748"/>
  <GFX>
   <space>I01</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

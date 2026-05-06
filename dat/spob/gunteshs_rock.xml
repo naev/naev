@@ -1,5 +1,5 @@
 <spob name="Guntesh's Rock">
- <pos x="745.904244" y="-4173.354258"/>
+ <pos x="-2145.930316" y="-3656.260655"/>
  <GFX>
   <space>D03</space>
   <exterior>uninhabited-rocky-airless-01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>2.700000</hide>
+  <hide>2.7</hide>
   <services>
    <land/>
   </services>

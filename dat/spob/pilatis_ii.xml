@@ -1,5 +1,5 @@
 <spob name="Pilatis II">
- <pos x="-2098.083495" y="6420.135498"/>
+ <pos x="-2902.668864" y="6098.738199"/>
  <GFX>
   <space>moon-M01</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

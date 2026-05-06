@@ -1,10 +1,10 @@
 <ssys name="Blunderbuss">
  <general>
-  <radius>35000.000000</radius>
+  <radius>35000</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="284.817181" y="-682.670966"/>
+ <pos x="-347.818184" y="-556.684532"/>
  <spobs>
   <spob>Blunderbuss II</spob>
   <spob>DVNN Central</spob>
@@ -15,20 +15,20 @@
  </spobs>
  <jumps>
   <jump target="Ogat">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="6114.546499" y="34461.751567" was_auto="true"/>
   </jump>
   <jump target="Verex">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="34871.686618" y="-2994.23987" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>11000.000000</radius>
-   <pos x="-1258.700081" y="-27095.175422"/>
-   <density>0.700000</density>
+   <radius>11000</radius>
+   <pos x="-2727.24244" y="-26986.941392"/>
+   <density>0.7</density>
   </asteroid>
  </asteroids>
 </ssys>

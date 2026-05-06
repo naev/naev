@@ -1,20 +1,20 @@
 <ssys name="NGC-9017">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
- <pos x="20.082293" y="-1135.921783"/>
+ <pos x="-803.816303" y="-1375.357986"/>
  <spobs/>
  <jumps>
   <jump target="NGC-10180">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="NGC-1098">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
 </ssys>

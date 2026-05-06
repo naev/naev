@@ -1,5 +1,5 @@
 <spob name="Ruid">
- <pos x="-23737.052713" y="1453.882562"/>
+ <pos x="-22950.139991" y="-6233.178994"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

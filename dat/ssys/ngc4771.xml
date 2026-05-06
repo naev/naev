@@ -3,38 +3,38 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
   <nolanes/>
  </general>
- <pos x="358.798090" y="1101.322659"/>
+ <pos x="-482.092821" y="1466.681167"/>
  <spobs/>
  <jumps>
   <jump target="NGC-13322">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8931.806601" y="12050.843573" was_auto="true"/>
   </jump>
   <jump target="NGC-14479">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14995.941398" y="-348.914829" was_auto="true"/>
   </jump>
   <jump target="NGC-1931">
-   <autopos/>
-   <hide>0.500000</hide>
+   <hide>0.5</hide>
+   <pos x="10405.720008" y="-10803.748937" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>8000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
-   <density>0.300000</density>
+   <radius>8000</radius>
+   <pos x="0" y="0"/>
+   <density>0.3</density>
   </asteroid>
  </asteroids>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

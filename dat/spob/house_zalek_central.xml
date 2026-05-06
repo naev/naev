@@ -1,20 +1,20 @@
 <spob name="House Za'lek Central">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="10464.449053" y="5380.131934"/>
+ <pos x="11199.442958" y="3608.738149"/>
  <GFX>
   <space>zalek_hq</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>1</class>
   <population>25000</population>
-  <hide>1.600000</hide>
+  <hide>1.6</hide>
   <services>
    <land/>
    <refuel/>

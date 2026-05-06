@@ -1,5 +1,5 @@
 <spob name="Awowa V">
- <pos x="5232.591396" y="-5915.373586"/>
+ <pos x="3465.000551" y="-7096.860471"/>
  <GFX>
   <space>G01</space>
   <exterior>mining5</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

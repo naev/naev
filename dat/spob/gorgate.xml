@@ -1,5 +1,5 @@
 <spob name="Gorgate">
- <pos x="5763.521422" y="6955.974130"/>
+ <pos x="7781.275541" y="4588.627924"/>
  <GFX>
   <space>M02</space>
   <exterior>aquatic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>4e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

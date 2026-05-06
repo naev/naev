@@ -1,36 +1,36 @@
 <ssys name="Felzen">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="537.820800" y="-1108.446884"/>
+ <pos x="-146.664114" y="-1100.661316"/>
  <spobs>
   <spob_virtual>Miner Small</spob_virtual>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Baf">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="1167.287375" y="9931.638343" was_auto="true"/>
   </jump>
   <jump target="Peter">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="6001.379511" y="7998.96518" was_auto="true"/>
   </jump>
   <jump target="Sagittarius Prime">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7637.28975" y="-6455.370266" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>4000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
-   <density>0.500000</density>
+   <radius>4000</radius>
+   <pos x="0" y="0"/>
+   <density>0.5</density>
   </asteroid>
  </asteroids>
 </ssys>

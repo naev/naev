@@ -1,19 +1,19 @@
 <spob name="Amhurst">
- <pos x="3546.227993" y="2108.567996"/>
+ <pos x="2648.132164" y="3163.730079"/>
  <GFX>
   <space>H04</space>
   <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>D</class>
   <population>50000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

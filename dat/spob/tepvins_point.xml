@@ -1,19 +1,19 @@
 <spob name="Tepvin's Point">
- <pos x="-8635.359788" y="5219.463804"/>
+ <pos x="-8026.754349" y="6114.201147"/>
  <GFX>
   <space>moon-M04</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>M</class>
   <population>570000</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services>
    <land/>
    <refuel/>

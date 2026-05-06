@@ -3,32 +3,32 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
   <nolanes/>
  </general>
- <pos x="400.872469" y="1041.588846"/>
+ <pos x="-438.935491" y="1356.977922"/>
  <spobs>
   <spob>Wormhole NGC-1931</spob>
  </spobs>
  <jumps>
   <jump target="Malebolge">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-8866.049128" y="-12099.304643" was_auto="true"/>
   </jump>
   <jump target="NGC-4771">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-10420.017818" y="10789.959622" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <waypoints>
-  <waypoint x="-6000.000000" y="3000.000000">zbh09_feral</waypoint>
+  <waypoint x="-6389.799623" y="2042.170603">zbh09_feral</waypoint>
  </waypoints>
  <tags>
   <tag>haze</tag>

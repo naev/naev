@@ -1,20 +1,20 @@
 <spob name="Boowoy">
  <lua>lowclass.lua</lua>
- <pos x="-2854.157639" y="6002.748046"/>
+ <pos x="-2227.968089" y="6262.21671"/>
  <GFX>
   <space>H03</space>
   <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>50.000000</base>
-  <bonus>20.000000</bonus>
+  <base>50</base>
+  <bonus>20</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>H</class>
   <population>290000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Delta Pavonis IIa">
- <pos x="-9556.282127" y="10023.908927"/>
+ <pos x="-7249.409029" y="11800.311309"/>
  <GFX>
   <space>moon-I00</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

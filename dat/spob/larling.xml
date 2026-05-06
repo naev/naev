@@ -1,5 +1,5 @@
 <spob name="Larling">
- <pos x="-8640.000000" y="680.000000"/>
+ <pos x="-8635.180208" y="-738.6899"/>
  <GFX>
   <space>K00</space>
   <exterior>desertic3</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>K</class>
   <population>2e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

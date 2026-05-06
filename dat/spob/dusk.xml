@@ -1,5 +1,5 @@
 <spob name="Dusk">
- <pos x="4675.385757" y="-3179.943585"/>
+ <pos x="3734.324104" y="-4245.715094"/>
  <GFX>
   <space>P01</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

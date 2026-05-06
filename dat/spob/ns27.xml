@@ -1,6 +1,6 @@
 <spob name="NS-27">
  <lua>thurion.lua</lua>
- <pos x="4987.206307" y="-1535.728809"/>
+ <pos x="-3330.763836" y="4017.051405"/>
  <GFX>
   <space>001</space>
   <exterior>station01</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

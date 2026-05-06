@@ -1,5 +1,5 @@
 <spob name="Isador">
- <pos x="-9353.454279" y="-12594.310510"/>
+ <pos x="-8192.519762" y="-13378.5793"/>
  <GFX>
   <space>O04</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

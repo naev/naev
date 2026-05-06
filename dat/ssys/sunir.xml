@@ -1,0 +1,30 @@
+<ssys name="Su'nir">
+ <general>
+  <radius>6666.666666</radius>
+  <spacedust>300</spacedust>
+  <interference>0</interference>
+ </general>
+ <pos x="480.502799" y="-522.186201"/>
+ <spobs/>
+ <jumps>
+  <jump target="Monogram">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+  <jump target="Suna">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+  <jump target="Vanir">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>unused</tag>
+  <tag>spoiler</tag>
+ </tags>
+</ssys>

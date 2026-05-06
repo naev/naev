@@ -1,19 +1,19 @@
 <spob name="Europea">
- <pos x="9066.069227" y="9205.498988"/>
+ <pos x="11404.859164" y="6071.573954"/>
  <GFX>
   <space>O03</space>
   <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>5e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

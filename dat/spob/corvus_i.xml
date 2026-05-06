@@ -1,5 +1,5 @@
 <spob name="Corvus I">
- <pos x="2251.356163" y="-1379.659409"/>
+ <pos x="2207.394396" y="-1448.956395"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

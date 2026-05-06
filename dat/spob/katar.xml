@@ -1,5 +1,5 @@
 <spob name="Katar">
- <pos x="-5207.523990" y="-5271.419990"/>
+ <pos x="-4547.030399" y="-5850.699903"/>
  <GFX>
   <space>A00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

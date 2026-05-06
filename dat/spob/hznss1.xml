@@ -1,19 +1,19 @@
 <spob name="HZNSS-1">
- <pos x="-4189.198255" y="8197.765081"/>
+ <pos x="-8725.962678" y="2934.332917"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>0</class>
   <population>13000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

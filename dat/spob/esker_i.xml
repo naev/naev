@@ -1,5 +1,5 @@
 <spob name="Esker I">
- <pos x="3965.000000" y="8710.000000"/>
+ <pos x="7955.20645" y="5319.775871"/>
  <GFX>
   <space>moon-O00</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

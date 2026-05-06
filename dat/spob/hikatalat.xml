@@ -1,6 +1,6 @@
 <spob name="Hikatalat">
  <lua>lowclass.lua</lua>
- <pos x="20640.000000" y="1920.000000"/>
+ <pos x="15436.616393" y="13834.987326"/>
  <GFX>
   <space>S00</space>
   <exterior>methane</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>S</class>
   <population>1e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

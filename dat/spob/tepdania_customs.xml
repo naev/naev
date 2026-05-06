@@ -1,19 +1,19 @@
 <spob name="Tepdania Customs">
- <pos x="7360.819185" y="-9546.062381"/>
+ <pos x="6023.347702" y="-10441.659279"/>
  <GFX>
   <space>station-dvaered1</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>4500</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

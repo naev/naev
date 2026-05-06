@@ -1,5 +1,5 @@
 <spob name="Malebolge IV">
- <pos x="13118.124000" y="2716.521632"/>
+ <pos x="11828.075667" y="6289.776868"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>uninhabited-rocky-red-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
   </services>

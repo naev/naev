@@ -1,5 +1,5 @@
 <spob name="Ginger II">
- <pos x="1152.000000" y="-10080.000000"/>
+ <pos x="-3453.345577" y="-9539.806513"/>
  <GFX>
   <space>moon-A01</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Warnecke II">
- <pos x="-105.345516" y="-6.449725"/>
+ <pos x="-74.217562" y="-75.040189"/>
  <GFX>
   <space>moon-J00</space>
   <exterior>uninhabited-rocky-magenta-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Karman II">
- <pos x="-27075.000000" y="-5655.000000"/>
+ <pos x="-27550.071998" y="-2455.235807"/>
  <GFX>
   <space>O01</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

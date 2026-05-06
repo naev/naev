@@ -1,6 +1,6 @@
 <spob name="Culex">
  <lua>lowclass.lua</lua>
- <pos x="-17337.694408" y="-16625.248069"/>
+ <pos x="-10406.371435" y="-21649.525497"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>oceanic</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>6e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

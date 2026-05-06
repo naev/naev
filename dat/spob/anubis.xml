@@ -1,19 +1,19 @@
 <spob name="Anubis">
- <pos x="4295.188850" y="-6813.153652"/>
+ <pos x="3660.322998" y="-7174.241805"/>
  <GFX>
   <space>Y00</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>Y</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

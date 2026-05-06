@@ -1,5 +1,5 @@
 <spob name="Qoral">
- <pos x="17749.592764" y="3014.081790"/>
+ <pos x="-15993.899916" y="-8266.069064"/>
  <GFX>
   <space>S01</space>
   <exterior>mining4</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>S</class>
   <population>5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

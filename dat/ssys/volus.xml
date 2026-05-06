@@ -3,39 +3,39 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>18900.000000</radius>
+  <radius>18900</radius>
   <spacedust>400</spacedust>
-  <interference>30.000000</interference>
+  <interference>30</interference>
  </general>
- <pos x="52.983489" y="-884.088355"/>
+ <pos x="-731.971951" y="-1064.860635"/>
  <spobs/>
  <jumps>
   <jump target="Sheffield">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="5108.251046" y="18196.586802" was_auto="true"/>
   </jump>
   <jump target="Unicorn">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3822.253958" y="-18509.467163" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>2500.000000</radius>
-   <pos x="-8744.653192" y="-8015.932093"/>
-   <density>0.700000</density>
+   <radius>2500</radius>
+   <pos x="10144.808026" y="-6148.739453"/>
+   <density>0.7</density>
   </asteroid>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>6000.000000</radius>
-   <pos x="6094.758286" y="4306.079224"/>
-   <density>0.800000</density>
+   <radius>6000</radius>
+   <pos x="-6819.86736" y="3029.489401"/>
+   <density>0.8</density>
   </asteroid>
  </asteroids>
  <stats>
-  <fuel_regen>1.000000</fuel_regen>
+  <fuel_regen>1</fuel_regen>
  </stats>
  <tags>
   <tag>southstellarwind</tag>

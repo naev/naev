@@ -1,19 +1,19 @@
 <spob name="PRP-1">
- <pos x="26366.454322" y="11195.805981"/>
+ <pos x="27834.968544" y="6763.912417"/>
  <GFX>
   <space>zalek_research_station1</space>
   <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>6.666670</base>
-  <bonus>3.333330</bonus>
+  <base>6.66667</base>
+  <bonus>3.33333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>25000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

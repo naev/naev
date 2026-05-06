@@ -1,5 +1,5 @@
 <spob name="Merisi III">
- <pos x="-24500.000000" y="-19460.000000"/>
+ <pos x="6964.730711" y="-30503.018311"/>
  <GFX>
   <space>D02</space>
   <exterior>mining2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Antlejos III">
- <pos x="-4281.530916" y="589.980744"/>
+ <pos x="-4240.958588" y="-832.979301"/>
  <GFX>
   <space>A03</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>B</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

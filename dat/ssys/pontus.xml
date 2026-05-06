@@ -1,23 +1,23 @@
 <ssys name="Pontus">
  <general>
-  <radius>15750.000000</radius>
+  <radius>15750</radius>
   <spacedust>150</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-94.688882" y="337.900122"/>
+ <pos x="-772.922825" y="415.5008"/>
  <spobs/>
  <jumps>
   <jump target="Capricorn">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8156.161634" y="13473.660504" was_auto="true"/>
   </jump>
   <jump target="Fortitude">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-3782.501823" y="-15289.054253" was_auto="true"/>
   </jump>
   <jump target="Rockbed">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="15703.738094" y="-1206.279351" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

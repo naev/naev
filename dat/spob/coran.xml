@@ -1,5 +1,5 @@
 <spob name="Coran">
- <pos x="1053.000000" y="-1027.000000"/>
+ <pos x="1316.95668" y="-655.105412"/>
  <GFX>
   <space>X01</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

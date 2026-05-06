@@ -1,5 +1,5 @@
 <spob name="Huan'xi">
- <pos x="23129.393696" y="14349.852869"/>
+ <pos x="25929.372455" y="-8279.781044"/>
  <GFX>
   <space>M07</space>
   <exterior>agricultural</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>4e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

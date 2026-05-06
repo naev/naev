@@ -1,5 +1,5 @@
 <spob name="Zepei">
- <pos x="20400.000000" y="3840.000000"/>
+ <pos x="19500.200712" y="7116.724821"/>
  <GFX>
   <space>M02</space>
   <exterior>oceanic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,10 +1,10 @@
 <ssys name="Sarcophagus">
  <general>
-  <radius>22750.000000</radius>
+  <radius>22750</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="651.017118" y="702.191371"/>
+ <pos x="-38.514245" y="902.386933"/>
  <spobs>
   <spob>Ebenezer</spob>
   <spob>Sarcophagus I</spob>
@@ -16,8 +16,8 @@
  </spobs>
  <jumps>
   <jump target="Gewirn">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-20817.193138" y="-9176.435572" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

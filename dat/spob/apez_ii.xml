@@ -1,5 +1,5 @@
 <spob name="Apez II">
- <pos x="7632.757843" y="-8078.617151"/>
+ <pos x="3756.534739" y="-10459.994938"/>
  <GFX>
   <space>J04</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

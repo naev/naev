@@ -1,5 +1,5 @@
 <spob name="Lazuli Ia">
- <pos x="9120.000000" y="13020.000000"/>
+ <pos x="14865.12697" y="5632.299721"/>
  <GFX>
   <space>moon-H00</space>
   <exterior>mining3</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services/>
  </general>
 </spob>

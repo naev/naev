@@ -1,12 +1,12 @@
 <spob name="Zurai Ib">
- <pos x="-441.817544" y="54.578093"/>
+ <pos x="-317.269308" y="312.284639"/>
  <GFX>
   <space>D03</space>
  </GFX>
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

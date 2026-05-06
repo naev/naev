@@ -1,5 +1,5 @@
 <spob name="Verex III">
- <pos x="-2100.000000" y="5175.000000"/>
+ <pos x="-438.227854" y="5567.636962"/>
  <GFX>
   <space>H01</space>
   <exterior>uninhabited-rocky-yellow-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

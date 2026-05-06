@@ -1,10 +1,10 @@
 <ssys name="Apez">
  <general>
-  <radius>19687.500000</radius>
+  <radius>19687.5</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="101.095436" y="39.323443"/>
+ <pos x="-687.224519" y="65.20408"/>
  <spobs>
   <spob>Apez II</spob>
   <spob>Apez V</spob>
@@ -16,26 +16,26 @@
  </spobs>
  <jumps>
   <jump target="Gamma Polaris">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-19100.320046" y="-4772.36109" was_auto="true"/>
   </jump>
   <jump target="Hekaras">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3710.822442" y="-19334.617996" was_auto="true"/>
   </jump>
   <jump target="Mural">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="19631.634535" y="-1482.086943" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>2500.000000</radius>
-   <pos x="7521.091652" y="-8186.674984"/>
+   <radius>2500</radius>
+   <pos x="3610.928606" y="-10514.259913"/>
   </asteroid>
   <exclusion>
-   <radius>1500.000000</radius>
+   <radius>1500</radius>
    <pos x="7587.649985" y="-8075.744429"/>
   </exclusion>
  </asteroids>

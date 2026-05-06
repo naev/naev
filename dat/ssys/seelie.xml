@@ -1,10 +1,10 @@
 <ssys name="Seelie">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-288.809153" y="-637.293645"/>
+ <pos x="-1068.377157" y="-785.779216"/>
  <spobs>
   <spob>Fae</spob>
   <spob>Oberon</spob>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Stone Table">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9988.658548" y="476.130662" was_auto="true"/>
   </jump>
   <jump target="Za'lek">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-8921.59535" y="-4517.204489" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

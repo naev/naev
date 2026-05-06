@@ -1,19 +1,19 @@
 <spob name="Diabolos Station">
- <pos x="12182.413409" y="-6354.687071"/>
+ <pos x="10366.318447" y="-9018.463621"/>
  <GFX>
   <space>station-sphere</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>6.666670</base>
-  <bonus>3.333330</bonus>
+  <base>6.66667</base>
+  <bonus>3.33333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>2000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

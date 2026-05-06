@@ -1,20 +1,20 @@
 <spob name="Majesteka Prime">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="6862.430386" y="-3603.734393"/>
+ <pos x="7737.397188" y="-461.017492"/>
  <GFX>
   <space>M25</space>
   <exterior>citadel</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>M</class>
   <population>170000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,34 +1,34 @@
 <ssys name="Fury">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>140</spacedust>
-  <interference>25.000000</interference>
+  <interference>25</interference>
   <nolanes/>
  </general>
- <pos x="91.638645" y="533.481155"/>
+ <pos x="-586.729095" y="548.505078"/>
  <spobs>
   <spob>Fury I</spob>
  </spobs>
  <jumps>
   <jump target="Bastion">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="13414.357964" y="-11238.549746" was_auto="true"/>
   </jump>
   <jump target="New Haven">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-12213.299654" y="12533.367925" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>2500.000000</radius>
-   <pos x="-6433.972210" y="554.652777"/>
-   <density>1.500000</density>
+   <radius>2500</radius>
+   <pos x="126.441103" y="6456.597459"/>
+   <density>1.5</density>
   </asteroid>
   <exclusion>
-   <radius>2000.000000</radius>
+   <radius>2000</radius>
    <pos x="-6323.041654" y="517.675925"/>
   </exclusion>
  </asteroids>

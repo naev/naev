@@ -1,5 +1,5 @@
 <spob name="Nartur II">
- <pos x="-31150.000000" y="6650.000000"/>
+ <pos x="20888.586064" y="24046.038597"/>
  <GFX>
   <space>M08</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,19 +1,19 @@
 <spob name="Wa'kan">
- <pos x="20481.479384" y="11262.053354"/>
+ <pos x="15862.859708" y="17166.669023"/>
  <GFX>
   <space>K03</space>
   <exterior>mining3</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>20.000000</base>
-  <bonus>10.000000</bonus>
+  <base>20</base>
+  <bonus>10</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>K</class>
   <population>13500</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

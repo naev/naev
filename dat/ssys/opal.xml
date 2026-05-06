@@ -3,11 +3,11 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
-  <interference>34.000000</interference>
+  <interference>34</interference>
  </general>
- <pos x="193.309093" y="930.886819"/>
+ <pos x="-679.123486" y="1215.087705"/>
  <spobs>
   <spob>Edorn</spob>
   <spob>Opal I</spob>
@@ -15,17 +15,17 @@
  </spobs>
  <jumps>
   <jump target="Hadosh">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12476.561887" y="-6351.01594" was_auto="true"/>
   </jump>
   <jump target="Sleuth">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-1166.706604" y="13951.30086" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

@@ -1,19 +1,19 @@
 <spob name="Cebus Prime">
- <pos x="4866.050981" y="-2336.731605"/>
+ <pos x="3033.47102" y="-4465.066663"/>
  <GFX>
   <space>moon-H02</space>
   <exterior>mining_shaft</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>0.000000</base>
-  <bonus>0.000000</bonus>
+  <base>0</base>
+  <bonus>0</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>H</class>
   <population>3000</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services>
    <land/>
    <refuel/>

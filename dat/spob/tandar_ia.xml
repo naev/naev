@@ -1,5 +1,5 @@
 <spob name="Tandar Ia">
- <pos x="10681.332054" y="-4812.595335"/>
+ <pos x="10678.070955" y="-4819.826654"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

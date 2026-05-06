@@ -1,5 +1,5 @@
 <spob name="Moor III">
- <pos x="4156.633721" y="9846.232802"/>
+ <pos x="1473.183182" y="10585.633452"/>
  <GFX>
   <space>moon-I00</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

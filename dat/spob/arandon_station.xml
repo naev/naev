@@ -1,20 +1,20 @@
 <spob name="Arandon Station">
  <display>Ruined Station</display>
- <pos x="-4360.187106" y="4175.302847"/>
+ <pos x="-5877.177567" y="1379.554024"/>
  <GFX>
   <space>station-destroyed5</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>
-  <base>0.000000</base>
-  <bonus>0.000000</bonus>
+  <base>0</base>
+  <bonus>0</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>0</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
   </services>

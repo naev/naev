@@ -1,32 +1,32 @@
 <ssys name="Vega">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>33.300000</interference>
-  <nebula volatility="2.600000" hue="270.000000">300.000000</nebula>
+  <interference>33.3</interference>
+  <nebula volatility="2.6" hue="270">300</nebula>
   <nolanes/>
  </general>
- <pos x="432.133268" y="62.460978"/>
+ <pos x="-219.920811" y="59.021991"/>
  <spobs>
   <spob>Las Vegas</spob>
  </spobs>
  <jumps>
   <jump target="Akodu">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9852.494304" y="1711.243988" was_auto="true"/>
   </jump>
   <jump target="Altair">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3757.01102" y="9267.408925" was_auto="true"/>
   </jump>
   <jump target="Carrza">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9149.781468" y="-4035.033962" was_auto="true"/>
   </jump>
   <jump target="Deneb">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8422.233529" y="5391.287635" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

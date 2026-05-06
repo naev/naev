@@ -1,5 +1,5 @@
 <spob name="Alpha Aquilea">
- <pos x="-425.973332" y="3194.799994"/>
+ <pos x="-1617.782331" y="2787.647863"/>
  <GFX>
   <space>I08</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

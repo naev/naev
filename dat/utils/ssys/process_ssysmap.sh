@@ -190,13 +190,14 @@ grep -v ' virtual$'                                                            |
 pmsg "stellarwind road"                                                        |
 "$DIR"/graphmod_stellarwind_road.py                                            |
 "$DIR"/reposition -e -q -w0 "yarn" "griffin" "ngc8338"                         |
+"$DIR"/graphmod_sinensis.py                                                |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')
 else pmsg "";                                                               fi |
 pmsg "finally"                                                                 |
 if [ -n "$FORCE" ] ;                                                      then
-   tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
+   tee >("$DIR"/graph_scale.py 1.25 | tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py))
 else cat ;                                                                  fi |
 if [ ! "$NOPIC" = "1" ] ; then
    pmsg "" |

@@ -1,19 +1,19 @@
 <spob name="Praxis">
- <pos x="3350.000000" y="3250.000000"/>
+ <pos x="2796.659675" y="3736.802732"/>
  <GFX>
   <space>M00</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>400000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Zero-Five">
- <pos x="15040.000000" y="10400.000000"/>
+ <pos x="17605.960476" y="4938.801038"/>
  <GFX>
   <space>moon-P01</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Cerberus I">
- <pos x="-15075.000000" y="-450.000000"/>
+ <pos x="-13959.820053" y="-5708.024972"/>
  <GFX>
   <space>A01</space>
   <exterior>forest2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

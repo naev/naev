@@ -1,20 +1,20 @@
 <spob name="Raptor Nest">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="-8029.968852" y="14963.118654"/>
+ <pos x="-14223.996431" y="9276.488836"/>
  <GFX>
   <space>station-cylinder</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>1</class>
   <population>3500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

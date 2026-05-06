@@ -1,36 +1,36 @@
 <ssys name="Jommel">
  <general>
-  <radius>12000.000000</radius>
+  <radius>12000</radius>
   <spacedust>400</spacedust>
-  <interference>15.070000</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <interference>15.07</interference>
+  <nebula hue="240">100</nebula>
  </general>
- <pos x="671.638423" y="606.065862"/>
+ <pos x="14.345746" y="810.813147"/>
  <spobs>
   <spob_virtual>Miner Small</spob_virtual>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Gewirn">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-11906.749058" y="1493.093052" was_auto="true"/>
   </jump>
   <jump target="Stint">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="6422.818746" y="10136.439184" was_auto="true"/>
   </jump>
   <jump target="Syndania">
-   <pos x="1151.566461" y="-3899.223600"/>
+   <pos x="1304.739811" y="-3850.675787"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>5000.000000</radius>
-   <pos x="3000.000000" y="-1000.000000"/>
-   <density>0.500000</density>
+   <radius>5000</radius>
+   <pos x="3037.170772" y="-880.677976"/>
+   <density>0.5</density>
   </asteroid>
  </asteroids>
  <tags>

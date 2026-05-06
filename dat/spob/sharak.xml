@@ -1,6 +1,6 @@
 <spob name="Sharak">
  <lua>highclass.lua</lua>
- <pos x="-2669.241196" y="-5912.913110"/>
+ <pos x="-2087.424589" y="-6142.479026"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>forest</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>L</class>
   <population>50000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

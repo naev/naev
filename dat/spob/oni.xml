@@ -1,5 +1,5 @@
 <spob name="Oni">
- <pos x="5369.038878" y="-8497.280539"/>
+ <pos x="5226.957974" y="-8585.410028"/>
  <GFX>
   <space>J04</space>
   <exterior>gas</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>J</class>
   <population>55000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

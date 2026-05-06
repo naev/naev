@@ -1,20 +1,20 @@
 <spob name="Sabe">
  <lua>thurion.lua</lua>
- <pos x="5941.192400" y="-4685.152481"/>
+ <pos x="-2755.052136" y="7046.850972"/>
  <GFX>
   <space>M08</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <base>550.000000</base>
-  <bonus>50.000000</bonus>
+  <base>550</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

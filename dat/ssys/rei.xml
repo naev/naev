@@ -1,11 +1,11 @@
 <ssys name="Rei">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>8.100000</interference>
-  <nebula hue="245.000000">125.000000</nebula>
+  <interference>8.1</interference>
+  <nebula hue="245">125</nebula>
  </general>
- <pos x="956.456547" y="-269.800184"/>
+ <pos x="311.949303" y="-327.976222"/>
  <spobs>
   <spob>Rei II</spob>
   <spob>Rei III</spob>
@@ -13,27 +13,27 @@
  </spobs>
  <jumps>
   <jump target="Penn">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="7115.399864" y="7026.45606" was_auto="true"/>
   </jump>
   <jump target="Pike">
-   <autopos/>
-   <hide>0.500000</hide>
+   <hide>0.5</hide>
+   <pos x="-514.078196" y="-9986.777438" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>8000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
-   <density>0.200000</density>
+   <radius>8000</radius>
+   <pos x="0" y="0"/>
+   <density>0.2</density>
   </asteroid>
   <exclusion>
-   <radius>1200.000000</radius>
+   <radius>1200</radius>
    <pos x="-3623.731474" y="2033.726848"/>
   </exclusion>
   <exclusion>
-   <radius>1800.000000</radius>
+   <radius>1800</radius>
    <pos x="2902.682865" y="-2625.356476"/>
   </exclusion>
  </asteroids>

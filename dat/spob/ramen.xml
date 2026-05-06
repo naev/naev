@@ -1,19 +1,19 @@
 <spob name="Ramen">
- <pos x="-2483.222826" y="1436.483160"/>
+ <pos x="-2822.404441" y="513.724285"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>A</class>
   <population>981320</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

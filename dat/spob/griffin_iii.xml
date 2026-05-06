@@ -1,6 +1,6 @@
 <spob name="Griffin III">
  <lua>lowclass.lua</lua>
- <pos x="7197.470245" y="10978.871016"/>
+ <pos x="9063.445141" y="9497.007364"/>
  <GFX>
   <space>M07</space>
   <exterior>forest</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

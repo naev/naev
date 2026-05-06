@@ -1,5 +1,5 @@
 <spob name="Amatiri I">
- <pos x="-6790.695294" y="2121.850081"/>
+ <pos x="-7086.523544" y="630.059038"/>
  <GFX>
   <space>I07</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

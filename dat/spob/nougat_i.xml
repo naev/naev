@@ -1,5 +1,5 @@
 <spob name="Nougat I">
- <pos x="-476.416819" y="10037.915904"/>
+ <pos x="786.653774" y="10018.378337"/>
  <GFX>
   <space>M09</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>M</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

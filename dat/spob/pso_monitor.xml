@@ -1,5 +1,5 @@
 <spob name="PSO Monitor">
- <pos x="12918.237671" y="5896.016168"/>
+ <pos x="8532.446731" y="11350.824813"/>
  <GFX>
   <space>001</space>
   <exterior>station01</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>0</class>
   <population>500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

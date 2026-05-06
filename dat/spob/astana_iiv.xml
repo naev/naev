@@ -1,5 +1,5 @@
 <spob name="Astana IIV">
- <pos x="-4476.553751" y="-2346.261115"/>
+ <pos x="-2764.308437" y="-4231.202378"/>
  <GFX>
   <space>H04</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,29 +1,29 @@
 <ssys name="Sorrow">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>9.675000</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <interference>9.675</interference>
+  <nebula hue="240">100</nebula>
  </general>
- <pos x="1074.703102" y="-196.492051"/>
+ <pos x="408.15696" y="-316.822002"/>
  <spobs>
   <spob>New Europe</spob>
   <spob>Sorrow II</spob>
  </spobs>
  <jumps>
   <jump target="Kraft">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-820.095925" y="-9966.315401" was_auto="true"/>
   </jump>
   <jump target="NGC-15670">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9835.321407" y="-1807.333066" was_auto="true"/>
   </jump>
   <jump target="Penn">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-5576.983982" y="8300.436714" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

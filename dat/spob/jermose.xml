@@ -1,5 +1,5 @@
 <spob name="Jermose">
- <pos x="-2785.720764" y="-9153.238293"/>
+ <pos x="-919.440292" y="-9523.478407"/>
  <GFX>
   <space>O03</space>
   <exterior>aquatic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

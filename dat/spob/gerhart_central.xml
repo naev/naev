@@ -1,19 +1,19 @@
 <spob name="Gerhart Central">
- <pos x="10274.476780" y="-6019.003188"/>
+ <pos x="11323.661366" y="-3683.471967"/>
  <GFX>
   <space>zalek_station2</space>
   <exterior>zalek_station2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>8500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

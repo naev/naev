@@ -1,5 +1,5 @@
 <spob name="Sola">
- <pos x="1637.513626" y="917.294285"/>
+ <pos x="931.514079" y="1629.466538"/>
  <GFX>
   <space>moon-C00</space>
   <exterior>station03</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>A</class>
   <population>987450</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

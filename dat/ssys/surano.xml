@@ -1,40 +1,40 @@
 <ssys name="Surano">
  <general>
-  <radius>19250.000000</radius>
+  <radius>19250</radius>
   <spacedust>600</spacedust>
-  <interference>24.750000</interference>
-  <nebula hue="240.000000">150.000000</nebula>
+  <interference>24.75</interference>
+  <nebula hue="240">150</nebula>
  </general>
- <pos x="332.613810" y="-417.613944"/>
+ <pos x="-322.319445" y="-273.646548"/>
  <spobs>
   <spob>Wormhole Surano</spob>
  </spobs>
  <jumps>
   <jump target="Arcanis">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="4473.539873" y="18722.978956" was_auto="true"/>
   </jump>
   <jump target="Tuoladis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="11738.57637" y="-15256.746861" was_auto="true"/>
   </jump>
   <jump target="Van Maanen">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-17873.106616" y="7149.444725" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>6000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <radius>6000</radius>
+   <pos x="0" y="0"/>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="-8500.000000" y="7000.000000">surano_pirate_1</waypoint>
-  <waypoint x="7000.000000" y="9000.000000">surano_pirate_2</waypoint>
-  <waypoint x="2000.000000" y="-14000.000000">surano_pirate_3</waypoint>
+  <waypoint x="-10675.388928" y="2699.272351">surano_pirate_1</waypoint>
+  <waypoint x="2485.730464" y="11127.494958">surano_pirate_2</waypoint>
+  <waypoint x="7787.596947" y="-11804.801302">surano_pirate_3</waypoint>
  </waypoints>
  <tags>
   <tag>thenebula</tag>

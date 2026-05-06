@@ -1,5 +1,5 @@
 <spob name="Ahmed">
- <pos x="-7128.458366" y="-3384.438830"/>
+ <pos x="-7128.458366" y="-3384.43883"/>
  <GFX>
   <space>moon-H02</space>
   <exterior>mining</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>H</class>
   <population>100000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

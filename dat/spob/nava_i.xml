@@ -1,5 +1,5 @@
 <spob name="Nava I">
- <pos x="6617.228942" y="5721.956790"/>
+ <pos x="-8602.607288" y="-1588.60197"/>
  <GFX>
   <space>C00</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Cristen">
- <pos x="10673.259801" y="3373.708793"/>
+ <pos x="7036.422609" y="8705.695989"/>
  <GFX>
   <space>G03</space>
   <exterior>snow</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>G</class>
   <population>150000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

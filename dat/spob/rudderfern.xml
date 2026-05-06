@@ -1,20 +1,20 @@
 <spob name="Rudderfern">
  <lua>highclass.lua</lua>
- <pos x="-17255.078803" y="-5266.400375"/>
+ <pos x="-16322.613082" y="-7684.075713"/>
  <GFX>
   <space>moon-L00</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>L</class>
   <population>9e+08</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Ross Prime">
- <pos x="-3565.396793" y="-4485.499191"/>
+ <pos x="-4488.966664" y="-3561.030127"/>
  <GFX>
   <space>X01</space>
   <exterior>gas</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

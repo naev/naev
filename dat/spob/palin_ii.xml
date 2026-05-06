@@ -1,5 +1,5 @@
 <spob name="Palin II">
- <pos x="9700.717288" y="-8791.275042"/>
+ <pos x="10822.555512" y="-7366.323705"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

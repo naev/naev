@@ -1,20 +1,20 @@
 <spob name="Jomos">
  <lua>highclass.lua</lua>
- <pos x="12956.737140" y="-8615.855896"/>
+ <pos x="10013.136571" y="-11909.958276"/>
  <GFX>
   <space>moon-O00</space>
   <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.660000</base>
-  <bonus>33.330000</bonus>
+  <base>66.66</base>
+  <bonus>33.33</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>500000</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
    <refuel/>

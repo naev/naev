@@ -1,5 +1,5 @@
 <spob name="Thymo">
- <pos x="24202.720556" y="-18121.767832"/>
+ <pos x="15858.370399" y="-25742.61525"/>
  <GFX>
   <space>D02</space>
   <exterior>desertic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>D</class>
   <population>1e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

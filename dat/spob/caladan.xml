@@ -1,5 +1,5 @@
 <spob name="Caladan">
- <pos x="-13061.286600" y="-11944.148856"/>
+ <pos x="-15269.794431" y="-8949.484764"/>
  <GFX>
   <space>M01</space>
   <exterior>oceanic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>1.7e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

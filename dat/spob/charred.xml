@@ -1,5 +1,5 @@
 <spob name="Charred">
- <pos x="945.000000" y="8460.000000"/>
+ <pos x="-7319.478892" y="4346.245937"/>
  <GFX>
   <space>A02</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

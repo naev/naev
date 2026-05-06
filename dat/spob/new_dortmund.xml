@@ -1,19 +1,19 @@
 <spob name="New Dortmund">
- <pos x="-30820.101542" y="-18688.394805"/>
+ <pos x="-19349.932975" y="-30409.124507"/>
  <GFX>
   <space>M07</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,19 +1,19 @@
 <spob name="Oberon">
- <pos x="-1597.399997" y="1131.491664"/>
+ <pos x="-1216.863475" y="1533.363432"/>
  <GFX>
   <space>moon-J02</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>13.330000</base>
-  <bonus>6.666000</bonus>
+  <base>13.33</base>
+  <bonus>6.666</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>J</class>
   <population>75800</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

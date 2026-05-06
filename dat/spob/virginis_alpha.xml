@@ -1,19 +1,19 @@
 <spob name="Virginis Alpha">
- <pos x="11492.121551" y="2883.072709"/>
+ <pos x="10868.552205" y="4717.577656"/>
  <GFX>
   <space>G03</space>
   <exterior>mining_shaft</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>20.000000</base>
-  <bonus>10.000000</bonus>
+  <base>20</base>
+  <bonus>10</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>G</class>
   <population>173000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

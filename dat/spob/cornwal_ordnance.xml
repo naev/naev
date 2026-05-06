@@ -1,19 +1,19 @@
 <spob name="Cornwal Ordnance">
- <pos x="19513.608336" y="8530.899774"/>
+ <pos x="20164.098836" y="-6853.194828"/>
  <GFX>
   <space>station-commerce</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>50000</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
    <refuel/>

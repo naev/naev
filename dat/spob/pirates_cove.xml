@@ -1,20 +1,20 @@
 <spob name="Pirate's Cove">
  <lua>pirate_clanworld.lua</lua>
- <pos x="-123.975989" y="-3195.776183"/>
+ <pos x="-94.270265" y="-3196.790355"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>citadel</exterior>
  </GFX>
  <presence>
   <faction>Pirate</faction>
-  <base>200.000000</base>
-  <bonus>120.000000</bonus>
+  <base>200</base>
+  <bonus>120</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>M</class>
   <population>100000</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
    <refuel/>

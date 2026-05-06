@@ -3,12 +3,12 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>15600.000000</radius>
+  <radius>15600</radius>
   <spacedust>400</spacedust>
-  <interference>40.000000</interference>
+  <interference>40</interference>
   <nolanes/>
  </general>
- <pos x="-49.579151" y="564.868056"/>
+ <pos x="-759.22535" y="604.312132"/>
  <spobs>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
@@ -16,25 +16,25 @@
   <jump target="Capricorn">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Haven">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Mason">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="New Haven">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1.000000</fuel_regen>
+  <fuel_regen>1</fuel_regen>
  </stats>
  <tags>
   <tag>northstellarwind</tag>

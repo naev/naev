@@ -1,5 +1,5 @@
 <spob name="Janko">
- <pos x="8655.709961" y="-2171.134959"/>
+ <pos x="8361.759596" y="-3117.068877"/>
  <GFX>
   <space>M08</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>4e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="P-9172">
- <pos x="-6256.483321" y="4153.239992"/>
+ <pos x="-5330.290593" y="5289.705867"/>
  <GFX>
   <space>moon-I01</space>
   <exterior>station03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

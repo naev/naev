@@ -1,5 +1,5 @@
 <spob name="Arcturus I">
- <pos x="-4256.504551" y="1153.374908"/>
+ <pos x="-3543.258232" y="2625.533426"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

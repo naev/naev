@@ -1,10 +1,10 @@
 <ssys name="Ganth">
  <general>
-  <radius>18500.000000</radius>
+  <radius>18500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-282.058102" y="-371.693961"/>
+ <pos x="-1059.494799" y="-509.184023"/>
  <spobs>
   <spob>Ganth I</spob>
   <spob>Gerhart Central</spob>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Attaria">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="15308.558578" y="10387.397857" was_auto="true"/>
   </jump>
   <jump target="Hargen">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2139.112871" y="-18375.913477" was_auto="true"/>
   </jump>
   <jump target="Olympus">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14306.712875" y="-11728.937151" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

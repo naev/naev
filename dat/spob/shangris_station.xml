@@ -1,20 +1,20 @@
 <spob name="Shangris Station">
  <lua>lawless.lua</lua>
- <pos x="13172.960754" y="425.307879"/>
+ <pos x="9553.381211" y="9079.685525"/>
  <GFX>
   <space>station-fleetbase4</space>
   <exterior>mining6</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>60.000000</base>
-  <bonus>20.000000</bonus>
+  <base>60</base>
+  <bonus>20</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>35700</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
    <refuel/>

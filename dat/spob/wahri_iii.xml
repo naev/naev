@@ -1,5 +1,5 @@
 <spob name="Wahri III">
- <pos x="-5869.866578" y="-4297.102761"/>
+ <pos x="-3088.785036" y="-6586.336825"/>
  <GFX>
   <space>C01</space>
   <exterior>uninhabited-rocky-airless-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

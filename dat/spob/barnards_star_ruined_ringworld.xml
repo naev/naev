@@ -1,20 +1,20 @@
 <spob name="Barnard's Star Ruined Ringworld">
  <display>Ruined Ringworld</display>
- <pos x="5099.313287" y="-1559.782213"/>
+ <pos x="1054.831602" y="5227.164321"/>
  <GFX>
   <space>ringworld_destroyed</space>
   <exterior>uninhabited-rocky-airless-03</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>
-  <base>0.000000</base>
-  <bonus>0.000000</bonus>
+  <base>0</base>
+  <bonus>0</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>4</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
   </services>

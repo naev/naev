@@ -1,23 +1,23 @@
 <ssys name="Struve">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="472.164815" y="466.685756"/>
+ <pos x="-210.804147" y="534.533135"/>
  <spobs/>
  <jumps>
   <jump target="Cygni">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="5618.811717" y="-13907.873844" was_auto="true"/>
   </jump>
   <jump target="Oberon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14951.498403" y="1205.278177" was_auto="true"/>
   </jump>
   <jump target="Octantis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14576.555908" y="3538.928914" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -1,5 +1,5 @@
 <spob name="Hekaras IV">
- <pos x="-20146.206410" y="11878.412610"/>
+ <pos x="-20146.20641" y="11878.41261"/>
  <GFX>
   <space>I06</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,20 +1,20 @@
 <spob name="Dawn">
  <lua>highclass.lua</lua>
- <pos x="-3764.344765" y="9623.930431"/>
+ <pos x="-1244.595403" y="10258.718766"/>
  <GFX>
   <space>O01</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>40.000000</base>
-  <bonus>20.000000</bonus>
+  <base>40</base>
+  <bonus>20</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>4e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

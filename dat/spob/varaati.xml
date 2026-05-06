@@ -1,19 +1,19 @@
 <spob name="Varaati">
- <pos x="20300.000000" y="21350.000000"/>
+ <pos x="29405.929971" y="-1789.911317"/>
  <GFX>
   <space>M03</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>40.000000</base>
-  <bonus>20.000000</bonus>
+  <base>40</base>
+  <bonus>20</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

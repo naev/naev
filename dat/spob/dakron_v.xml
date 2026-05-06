@@ -1,5 +1,5 @@
 <spob name="Dakron V">
- <pos x="-15902.754472" y="-7429.667292"/>
+ <pos x="-3115.474263" y="17274.008682"/>
  <GFX>
   <space>G02</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

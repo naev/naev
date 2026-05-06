@@ -1,5 +1,5 @@
 <spob name="Za'lek IV">
- <pos x="1428.710400" y="358.732800"/>
+ <pos x="1468.00843" y="121.87648"/>
  <GFX>
   <space>moon-C00</space>
   <exterior>desertic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

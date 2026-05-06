@@ -1,10 +1,10 @@
 <ssys name="Suk">
  <general>
-  <radius>17000.000000</radius>
+  <radius>17000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="400.597614" y="-995.335774"/>
+ <pos x="-353.007713" y="-983.157881"/>
  <spobs>
   <spob>Cristen</spob>
   <spob>Fort Allan</spob>
@@ -14,15 +14,15 @@
  </spobs>
  <jumps>
   <jump target="Allous">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="16714.979728" y="-3099.911718" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>3700.000000</radius>
-   <pos x="7820.870385" y="11777.310697"/>
+   <radius>3700</radius>
+   <pos x="18.484237" y="14137.564117"/>
   </asteroid>
  </asteroids>
 </ssys>

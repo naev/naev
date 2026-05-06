@@ -1,5 +1,5 @@
 <spob name="Shickhaw I">
- <pos x="8332.129630" y="-9159.722222"/>
+ <pos x="1724.354361" y="-12261.790138"/>
  <GFX>
   <space>D01</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

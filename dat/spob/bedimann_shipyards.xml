@@ -1,20 +1,20 @@
 <spob name="Bedimann Shipyards">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="4304.105547" y="1996.749996"/>
+ <pos x="4306.781773" y="1990.971085"/>
  <GFX>
   <space>station-shipyard2</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>60.000000</base>
-  <bonus>40.000000</bonus>
+  <base>60</base>
+  <bonus>40</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>12500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

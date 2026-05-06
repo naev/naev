@@ -1,5 +1,5 @@
 <spob name="Racheka Secundus">
- <pos x="-2069.391983" y="2764.209655"/>
+ <pos x="-496.236449" y="3417.160748"/>
  <GFX>
   <space>moon-D01</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

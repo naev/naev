@@ -1,19 +1,19 @@
 <spob name="Yrina">
- <pos x="28159.705105" y="8322.145136"/>
+ <pos x="28840.346271" y="-5519.195432"/>
  <GFX>
   <space>P03</space>
   <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>P</class>
   <population>5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

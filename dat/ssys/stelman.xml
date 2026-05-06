@@ -1,10 +1,10 @@
 <ssys name="Stelman">
  <general>
-  <radius>13200.000000</radius>
+  <radius>13200</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-319.830616" y="-940.166249"/>
+ <pos x="-1109.452688" y="-1190.372748"/>
  <spobs>
   <spob>Scorch</spob>
   <spob>Stein</spob>
@@ -12,21 +12,21 @@
  </spobs>
  <jumps>
   <jump target="Garten">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="4327.679447" y="12470.412607" was_auto="true"/>
   </jump>
   <jump target="NGC-1317">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="6976.644852" y="-11205.642623" was_auto="true"/>
   </jump>
   <jump target="Somard">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12890.312568" y="2842.506267" was_auto="true"/>
   </jump>
   <jump target="Woreck">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13151.454399" y="-1131.038103" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

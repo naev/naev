@@ -1,48 +1,48 @@
 <ssys name="Klintus">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-387.228576" y="75.334604"/>
+ <pos x="-1288.073781" y="31.197262"/>
  <spobs/>
  <jumps>
   <jump target="Antlejos">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8986.34703" y="12010.227602" was_auto="true"/>
   </jump>
   <jump target="Kobopos">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12215.241434" y="-8705.623279" was_auto="true"/>
   </jump>
   <jump target="NGC-3219">
-   <autopos/>
-   <hide>0.500000</hide>
+   <hide>0.5</hide>
+   <pos x="-8896.756192" y="12076.743321" was_auto="true"/>
   </jump>
   <jump target="Senara">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="375.12342" y="-14995.30868" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-14000.000000" y="0.000000">ant09_2_3</waypoint>
-  <waypoint x="-14000.000000" y="6000.000000">ant09_3_1</waypoint>
-  <waypoint x="10000.000000" y="6000.000000">ant09_3_2</waypoint>
-  <waypoint x="10000.000000" y="-6000.000000">ant09_3_3</waypoint>
-  <waypoint x="-14000.000000" y="-6000.000000">ant09_3_4</waypoint>
-  <waypoint x="-10000.000000" y="0.000000">ant09_4_1</waypoint>
-  <waypoint x="-4000.000000" y="4000.000000">ant09_4_2</waypoint>
-  <waypoint x="4000.000000" y="4000.000000">ant09_4_3</waypoint>
-  <waypoint x="4000.000000" y="-4000.000000">ant09_4_4</waypoint>
-  <waypoint x="-4000.000000" y="-4000.000000">ant09_4_5</waypoint>
-  <waypoint x="-14000.000000" y="4000.000000">ant09_5_1</waypoint>
-  <waypoint x="-14000.000000" y="-4000.000000">ant09_5_3</waypoint>
-  <waypoint x="6000.000000" y="-14000.000000">ant09_6_1</waypoint>
-  <waypoint x="6000.000000" y="10000.000000">ant09_6_2</waypoint>
-  <waypoint x="-6000.000000" y="10000.000000">ant09_6_3</waypoint>
-  <waypoint x="-6000.000000" y="-14000.000000">ant09_6_4</waypoint>
-  <waypoint x="-6000.000000" y="-5000.000000">ant09_7_1</waypoint>
-  <waypoint x="-4000.000000" y="4000.000000">ant09_7_2</waypoint>
-  <waypoint x="-4000.000000" y="0.000000">ant09_PUAAA_mothership</waypoint>
+  <waypoint x="-13320.090293" y="-4309.89496">ant09_2_3</waypoint>
+  <waypoint x="-15167.188133" y="1398.715165">ant09_3_1</waypoint>
+  <waypoint x="7667.252369" y="8787.106526">ant09_3_2</waypoint>
+  <waypoint x="11361.448049" y="-2630.113725">ant09_3_3</waypoint>
+  <waypoint x="-11472.992453" y="-10018.505086">ant09_3_4</waypoint>
+  <waypoint x="-9514.350209" y="-3078.4964">ant09_4_1</waypoint>
+  <waypoint x="-5037.138644" y="2574.341523">ant09_4_2</waypoint>
+  <waypoint x="2574.341523" y="5037.138644">ant09_4_3</waypoint>
+  <waypoint x="5037.138644" y="-2574.341523">ant09_4_4</waypoint>
+  <waypoint x="-2574.341523" y="-5037.138644">ant09_4_5</waypoint>
+  <waypoint x="-14551.488853" y="-504.154876">ant09_5_1</waypoint>
+  <waypoint x="-12088.691733" y="-8115.635044">ant09_5_3</waypoint>
+  <waypoint x="10018.505086" y="-11472.992453">ant09_6_1</waypoint>
+  <waypoint x="2630.113725" y="11361.448049">ant09_6_2</waypoint>
+  <waypoint x="-8787.106526" y="7667.252369">ant09_6_3</waypoint>
+  <waypoint x="-1398.715165" y="-15167.188133">ant09_6_4</waypoint>
+  <waypoint x="-4169.361925" y="-6604.272945">ant09_7_1</waypoint>
+  <waypoint x="-5037.138644" y="2574.341523">ant09_7_2</waypoint>
+  <waypoint x="-3805.740083" y="-1231.39856">ant09_PUAAA_mothership</waypoint>
  </waypoints>
 </ssys>

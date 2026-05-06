@@ -1,5 +1,5 @@
 <spob name="Tau Prime">
- <pos x="8491.064816" y="-13844.050924"/>
+ <pos x="3960.426239" y="-15750.268305"/>
  <GFX>
   <space>M02</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>M</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,48 +1,48 @@
 <ssys name="Bastion">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>160</spacedust>
-  <interference>13.235300</interference>
+  <interference>13.2353</interference>
   <nolanes/>
  </general>
- <pos x="129.997050" y="476.413476"/>
+ <pos x="-504.545253" y="500.537226"/>
  <spobs/>
  <jumps>
   <jump target="Elixir">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="5468.479206" y="16623.649875" was_auto="true"/>
   </jump>
   <jump target="Fury">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7340.968845" y="15885.848306" was_auto="true"/>
   </jump>
   <jump target="Gamel">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13050.498373" y="-11659.094827" was_auto="true"/>
   </jump>
   <jump target="Halo">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14309.413589" y="-10074.25842" was_auto="true"/>
   </jump>
   <jump target="Taiomi">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="17088.216523" y="3773.970858" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>4000.000000</radius>
-   <pos x="13000.000000" y="5000.000000"/>
-   <density>0.777700</density>
+   <radius>4000</radius>
+   <pos x="13627.434394" y="2879.762458"/>
+   <density>0.7777</density>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="15000.000000" y="6000.000000">derelicts</waypoint>
-  <waypoint x="8000.000000" y="3000.000000">handoff_pos</waypoint>
-  <waypoint x="12000.000000" y="4250.000000">main_derelict</waypoint>
-  <waypoint x="-2500.000000" y="-2000.000000">taiomi05_firstpos</waypoint>
+  <waypoint x="15760.481708" y="3550.664208">derelicts</waypoint>
+  <waypoint x="8373.940491" y="1696.207722">handoff_pos</waypoint>
+  <waypoint x="12521.348547" y="2297.461765">main_derelict</waypoint>
+  <waypoint x="-2784.995714" y="-1579.176643">taiomi05_firstpos</waypoint>
  </waypoints>
 </ssys>

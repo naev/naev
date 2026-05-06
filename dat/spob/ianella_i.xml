@@ -1,5 +1,5 @@
 <spob name="Ianella I">
- <pos x="-7662.041362" y="-1386.636462"/>
+ <pos x="-5986.574472" y="-4979.012411"/>
  <GFX>
   <space>I01</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

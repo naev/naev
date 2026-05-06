@@ -1,5 +1,5 @@
 <spob name="Perhelion Gamma">
- <pos x="-5087.007787" y="3264.979223"/>
+ <pos x="-5550.099874" y="2394.604129"/>
  <GFX>
   <space>moon-J02</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

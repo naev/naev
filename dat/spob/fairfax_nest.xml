@@ -1,20 +1,20 @@
 <spob name="Fairfax Nest">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="1670.614163" y="4658.343787"/>
+ <pos x="715.810681" y="4896.80851"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>1</class>
   <population>1000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

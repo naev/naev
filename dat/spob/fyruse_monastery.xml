@@ -1,20 +1,20 @@
 <spob name="Fyruse Monastery">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="3795.124991" y="8868.896979"/>
+ <pos x="7894.376646" y="5544.287571"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>20000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

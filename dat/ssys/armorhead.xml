@@ -1,10 +1,10 @@
 <ssys name="Armorhead">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-507.468518" y="-722.540927"/>
+ <pos x="-1326.409994" y="-888.529847"/>
  <spobs>
   <spob>Armorhead I-1</spob>
   <spob>Armorhead I-1 b</spob>
@@ -13,21 +13,21 @@
  </spobs>
  <jumps>
   <jump target="Eiger">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7524.320531" y="12976.309203" was_auto="true"/>
   </jump>
   <jump target="Gorman">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13970.997529" y="5459.965937" was_auto="true"/>
   </jump>
   <jump target="Hideyoshi's Star">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14752.695106" y="2712.560982" was_auto="true"/>
   </jump>
   <jump target="Reptile">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-12747.541657" y="-7905.705641" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

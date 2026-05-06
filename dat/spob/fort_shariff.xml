@@ -1,20 +1,20 @@
 <spob name="Fort Shariff">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="8176.922812" y="-3831.949938"/>
+ <pos x="7849.803399" y="-4463.910123"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>2000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

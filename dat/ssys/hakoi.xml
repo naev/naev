@@ -1,10 +1,10 @@
 <ssys name="Hakoi">
  <general>
-  <radius>28000.000000</radius>
+  <radius>28000</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="192.657208" y="-104.501521"/>
+ <pos x="-605.72137" y="5.123645"/>
  <spobs>
   <spob>Em 1</spob>
   <spob>Em 2</spob>
@@ -15,34 +15,34 @@
  </spobs>
  <jumps>
   <jump target="Eneguoz">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-23522.276978" y="-15188.893499" was_auto="true"/>
   </jump>
   <jump target="Ross">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="25586.955594" y="-11371.35451" was_auto="true"/>
   </jump>
   <jump target="Salvador">
-   <pos x="9216.302743" y="120.608077"/>
+   <pos x="8452.800945" y="3674.90663"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>4000.000000</radius>
-   <pos x="5592.795801" y="13108.408451"/>
-   <density>2.000000</density>
+   <radius>4000</radius>
+   <pos x="89.129437" y="14251.378632"/>
+   <density>2</density>
   </asteroid>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>7000.000000</radius>
-   <pos x="4682.507829" y="-4041.380148"/>
-   <density>0.500000</density>
+   <radius>7000</radius>
+   <pos x="5880.976852" y="-1916.440536"/>
+   <density>0.5</density>
   </asteroid>
   <exclusion>
-   <radius>3000.000000</radius>
+   <radius>3000</radius>
    <pos x="5707.808601" y="13185.083651"/>
   </exclusion>
  </asteroids>

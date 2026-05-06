@@ -1,5 +1,5 @@
 <spob name="Deneb III">
- <pos x="-5657.458322" y="-4418.733788"/>
+ <pos x="-2168.131959" y="-6843.335938"/>
  <GFX>
   <space>J09</space>
   <exterior>desertic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

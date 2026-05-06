@@ -1,5 +1,5 @@
 <spob name="Eryla">
- <pos x="2158.000000" y="1313.000000"/>
+ <pos x="1718.26177" y="1851.623473"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

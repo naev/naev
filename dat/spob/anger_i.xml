@@ -1,5 +1,5 @@
 <spob name="Anger I">
- <pos x="1067.489280" y="-783.820800"/>
+ <pos x="-142.132051" y="-1316.703037"/>
  <GFX>
   <space>A02</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

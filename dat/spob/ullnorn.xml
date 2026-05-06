@@ -1,19 +1,19 @@
 <spob name="Ullnorn">
- <pos x="2880.000000" y="3600.000000"/>
+ <pos x="4181.005215" y="1942.574422"/>
  <GFX>
   <space>A00</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>Y</class>
   <population>10000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

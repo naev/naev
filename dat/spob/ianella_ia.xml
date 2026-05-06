@@ -1,5 +1,5 @@
 <spob name="Ianella I-a">
- <pos x="-6994.255636" y="-1481.368811"/>
+ <pos x="-5358.681004" y="-4732.716275"/>
  <GFX>
   <space>moon-C01</space>
   <exterior>uninhabited-rocky-airless-01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
   </services>

@@ -1,10 +1,10 @@
 <ssys name="Dakron">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="493.696281" y="-633.443444"/>
+ <pos x="-120.101805" y="-484.538477"/>
  <spobs>
   <spob>Dakron III</spob>
   <spob>Dakron V</spob>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Doranthex">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-17392.394664" y="-1937.681041" was_auto="true"/>
   </jump>
   <jump target="Theras">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8739.446181" y="-15161.532918" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

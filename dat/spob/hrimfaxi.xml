@@ -1,5 +1,5 @@
 <spob name="Hrimfaxi">
- <pos x="2962.677185" y="-7513.628599"/>
+ <pos x="1366.422269" y="-7960.211115"/>
  <GFX>
   <space>O00</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,20 +1,20 @@
 <spob name="Fort Maus">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-12143.540902" y="-7680.624142"/>
+ <pos x="-12650.474413" y="-6813.447729"/>
  <GFX>
   <space>station-dvaered1</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>1</class>
   <population>10000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

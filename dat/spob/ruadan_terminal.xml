@@ -1,19 +1,19 @@
 <spob name="Ruadan Terminal">
- <pos x="-8313.446778" y="-6385.162765"/>
+ <pos x="-10473.219274" y="442.016844"/>
  <GFX>
   <space>002</space>
   <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>6.666670</base>
-  <bonus>3.333330</bonus>
+  <base>6.66667</base>
+  <bonus>3.33333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>100</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

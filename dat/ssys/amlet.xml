@@ -3,11 +3,11 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>30.000000</interference>
+  <interference>30</interference>
  </general>
- <pos x="-22.200000" y="-737.400000"/>
+ <pos x="-730.176758" y="-827.433055"/>
  <spobs>
   <spob>Amlet I</spob>
   <spob>Amlet Ia</spob>
@@ -18,31 +18,31 @@
  </spobs>
  <jumps>
   <jump target="Gold">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-6933.375108" y="13301.440132" was_auto="true"/>
   </jump>
   <jump target="Sheffield">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="4985.444764" y="-14147.273253" was_auto="true"/>
   </jump>
   <jump target="Yetmer-O'rez Highspace">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12754.949524" y="-7893.748325" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>5000.000000</radius>
-   <pos x="2853.742168" y="9653.905412"/>
+   <radius>5000</radius>
+   <pos x="4165.487442" y="9164.630294"/>
   </asteroid>
   <exclusion>
-   <radius>3000.000000</radius>
-   <pos x="3806.027290" y="10105.230858"/>
+   <radius>3000</radius>
+   <pos x="3806.02729" y="10105.230858"/>
   </exclusion>
  </asteroids>
  <stats>
-  <fuel_regen>1.000000</fuel_regen>
+  <fuel_regen>1</fuel_regen>
  </stats>
  <tags>
   <tag>southstellarwind</tag>

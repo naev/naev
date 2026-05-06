@@ -1,30 +1,30 @@
 <ssys name="Carrza">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>74.250000</interference>
-  <nebula volatility="3.500000" hue="290.000000">500.000000</nebula>
+  <interference>74.25</interference>
+  <nebula volatility="3.5" hue="290">500</nebula>
   <nolanes/>
  </general>
- <pos x="472.914817" y="7.335556"/>
+ <pos x="-157.906424" y="6.566415"/>
  <spobs>
   <spob>Wormhole Carrza</spob>
   <spob_virtual>Traders Society Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Barnard's Star">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-4326.113233" y="-14362.616206" was_auto="true"/>
   </jump>
   <jump target="Midoros">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14678.381807" y="-3089.515739" was_auto="true"/>
   </jump>
   <jump target="Vega">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7407.08573" y="13043.5839" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

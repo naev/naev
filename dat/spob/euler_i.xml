@@ -1,5 +1,5 @@
 <spob name="Euler I">
- <pos x="-10891.203810" y="-3968.860038"/>
+ <pos x="-11035.235013" y="-3548.768606"/>
  <GFX>
   <space>J00</space>
   <exterior>gas</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,20 +1,20 @@
 <spob name="Omega Enclave">
  <lua>empire_mil_omega_station.lua</lua>
- <pos x="-10032.106791" y="7530.403357"/>
+ <pos x="-2047.032812" y="12375.774644"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>1</class>
   <population>14000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

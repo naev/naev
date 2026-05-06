@@ -1,20 +1,20 @@
 <ssys name="Sagittarius Prime">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="439.144518" y="-1125.154546"/>
+ <pos x="-239.695336" y="-1130.70938"/>
  <spobs/>
  <jumps>
   <jump target="Faust">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-8097.130362" y="5868.26038" was_auto="true"/>
   </jump>
   <jump target="Felzen">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9383.676621" y="3456.387285" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

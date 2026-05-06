@@ -1,20 +1,20 @@
 <spob name="Moorline Nidus">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="-2730.715876" y="-9072.781321"/>
+ <pos x="-295.343176" y="-9470.213434"/>
  <GFX>
   <space>000</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>1000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

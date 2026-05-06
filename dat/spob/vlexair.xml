@@ -1,5 +1,5 @@
 <spob name="Vlexair">
- <pos x="-23920.000000" y="1840.000000"/>
+ <pos x="-23247.222524" y="-5926.098623"/>
  <GFX>
   <space>P01</space>
   <exterior>snow</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>4500</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

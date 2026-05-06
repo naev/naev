@@ -1,5 +1,5 @@
 <spob name="Baf I">
- <pos x="1515.023788" y="-718.994340"/>
+ <pos x="1638.486057" y="-357.230148"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

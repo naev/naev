@@ -1,0 +1,35 @@
+<ssys name="SW-3">
+ <general>
+  <radius>6666.666666</radius>
+  <spacedust>300</spacedust>
+  <interference>0</interference>
+  <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
+ </general>
+ <pos x="-974.882766" y="289.811162"/>
+ <spobs/>
+ <jumps>
+  <jump target="SW-2">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+  <jump target="SW-4">
+   <autopos/>
+   <hide>1</hide>
+   <tags>
+    <tag>hidden</tag>
+   </tags>
+  </jump>
+  <jump target="Chloe">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>stellarwind</tag>
+  <tag>spoiler</tag>
+ </tags>
+</ssys>

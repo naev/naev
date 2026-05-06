@@ -1,40 +1,40 @@
 <ssys name="Knave">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-263.395623" y="182.651438"/>
+ <pos x="-1158.874321" y="147.688016"/>
  <spobs>
   <spob_virtual>Miner Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Antlejos">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-1601.595452" y="-9870.911407" was_auto="true"/>
   </jump>
   <jump target="Brumerebus">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2620.763771" y="9650.471348" was_auto="true"/>
   </jump>
   <jump target="Delta Polaris">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9244.720699" y="-3812.497761" was_auto="true"/>
   </jump>
   <jump target="Paradox">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9422.759593" y="3348.372983" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>2000.000000</radius>
-   <pos x="-4500.000000" y="4000.000000"/>
-   <density>0.500000</density>
+   <radius>2000</radius>
+   <pos x="-5970.085321" y="779.79565"/>
+   <density>0.5</density>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="-4500.000000" y="4500.000000">ant06_PUAAA_supply_ship</waypoint>
+  <waypoint x="-6251.068229" y="1193.375878">ant06_PUAAA_supply_ship</waypoint>
  </waypoints>
 </ssys>

@@ -1,5 +1,5 @@
 <spob name="Corinth 2">
- <pos x="4450.917344" y="-2995.809751"/>
+ <pos x="5230.550431" y="-1194.522267"/>
  <GFX>
   <space>K02</space>
   <exterior>station05</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Edergast">
- <pos x="2770.000000" y="2280.000000"/>
+ <pos x="3472.908126" y="900.116183"/>
  <GFX>
   <space>P04</space>
   <exterior>uninhabited-rocky-blue-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

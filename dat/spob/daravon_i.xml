@@ -1,5 +1,5 @@
 <spob name="Daravon I">
- <pos x="-9800.000000" y="-10950.000000"/>
+ <pos x="-7954.205377" y="-12356.096341"/>
  <GFX>
   <space>moon-C00</space>
   <exterior>uninhabited-rocky-airless-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
   </services>

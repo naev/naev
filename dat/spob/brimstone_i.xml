@@ -1,5 +1,5 @@
 <spob name="Brimstone I">
- <pos x="11870.221386" y="-10437.336689"/>
+ <pos x="6301.301137" y="-14495.991062"/>
  <GFX>
   <space>I02</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

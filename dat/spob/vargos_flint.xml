@@ -1,5 +1,5 @@
 <spob name="Vargo's Flint">
- <pos x="20296.157003" y="-5796.792188"/>
+ <pos x="17126.660704" y="-12337.515222"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>uninhabited-rocky-airless-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

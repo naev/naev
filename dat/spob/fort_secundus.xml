@@ -1,19 +1,19 @@
 <spob name="Fort Secundus">
- <pos x="-5198.478537" y="-9255.152333"/>
+ <pos x="-3008.136404" y="-10180.036305"/>
  <GFX>
   <space>003</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>3.333330</base>
-  <bonus>1.666670</bonus>
+  <base>3.33333</base>
+  <bonus>1.66667</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>100</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

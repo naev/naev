@@ -1,19 +1,19 @@
 <spob name="Jasmine">
- <pos x="-704.884533" y="2778.790933"/>
+ <pos x="-82.938894" y="2865.599831"/>
  <GFX>
   <space>K04</space>
   <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>K</class>
   <population>800000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

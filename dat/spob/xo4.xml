@@ -1,5 +1,5 @@
 <spob name="XO-4">
- <pos x="-6256.483321" y="-1308.980553"/>
+ <pos x="5741.580715" y="2809.139463"/>
  <GFX>
   <space>S00</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>S</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

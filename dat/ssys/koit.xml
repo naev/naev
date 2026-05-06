@@ -1,32 +1,32 @@
 <ssys name="Koit">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="776.176268" y="-706.056975"/>
+ <pos x="29.597239" y="-689.976222"/>
  <spobs>
   <spob>XO-4</spob>
  </spobs>
  <jumps>
   <jump target="Lynx">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-6215.614924" y="-13651.598115" was_auto="true"/>
   </jump>
   <jump target="Triap">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2449.097738" y="14798.713466" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>2500.000000</radius>
-   <pos x="-6057.340788" y="-1226.803198"/>
-   <density>3.000000</density>
+   <radius>2500</radius>
+   <pos x="5533.947868" y="2751.698474"/>
+   <density>3</density>
   </asteroid>
   <exclusion>
-   <radius>2000.000000</radius>
+   <radius>2000</radius>
    <pos x="-6066.514745" y="-1316.016426"/>
   </exclusion>
  </asteroids>

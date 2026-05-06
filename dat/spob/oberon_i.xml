@@ -1,5 +1,5 @@
 <spob name="Oberon I">
- <pos x="16150.000000" y="-3192.000000"/>
+ <pos x="16412.87005" y="-1276.346621"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Sindbad">
- <pos x="-8700.000000" y="-3000.000000"/>
+ <pos x="-8700" y="-3000"/>
  <GFX>
   <space>000</space>
   <exterior>station04</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
    <refuel/>

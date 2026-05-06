@@ -1,10 +1,10 @@
 <ssys name="Delta Polaris">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-206.511924" y="96.373034"/>
+ <pos x="-1088.272126" y="80.968436"/>
  <spobs>
   <spob>Benteen</spob>
   <spob>Bolero</spob>
@@ -15,34 +15,39 @@
  </spobs>
  <jumps>
   <jump target="Antlejos">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-19398.375585" y="-4868.575216" was_auto="true"/>
   </jump>
   <jump target="Jade">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-5936.686949" y="-19098.579739" was_auto="true"/>
   </jump>
   <jump target="Knave">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-17443.456684" y="9783.95722" was_auto="true"/>
   </jump>
   <jump target="Zemur">
+   <hide>1</hide>
+   <pos x="19167.882109" y="5708.966233" was_auto="true"/>
+  </jump>
+  <jump target="SW-7">
+   <exitonly/>
+   <hide>1</hide>
    <autopos/>
-   <hide>1.000000</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>1000.000000</radius>
-   <pos x="-821.337464" y="10960.983874"/>
+   <radius>1000</radius>
+   <pos x="-5759.572738" y="9361.895352"/>
   </asteroid>
   <exclusion>
-   <radius>500.000000</radius>
+   <radius>500</radius>
    <pos x="-841.597055" y="10984.495082"/>
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="-18000.000000" y="7000.000000">ant08_PUAAA_protesters</waypoint>
+  <waypoint x="-19205.119933" y="-2040.433375">ant08_PUAAA_protesters</waypoint>
  </waypoints>
 </ssys>

@@ -1,20 +1,20 @@
 <spob name="Hypergate Gamma Polaris">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos x="63.896000" y="-958.439998"/>
+ <pos x="-135.617191" y="-950.945795"/>
  <GFX>
   <space>hypergate_early_construction_stage</space>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>Construct</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
  <tags>

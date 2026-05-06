@@ -1,5 +1,5 @@
 <spob name="Neexi I">
- <pos x="4600.511991" y="-6762.752627"/>
+ <pos x="7361.966874" y="3563.843067"/>
  <GFX>
   <space>I02</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

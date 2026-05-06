@@ -1,5 +1,5 @@
 <spob name="PSO 1251">
- <pos x="-5510.578050" y="3425.494463"/>
+ <pos x="-4268.921137" y="4886.388757"/>
  <GFX>
   <space>X00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

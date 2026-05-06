@@ -3,11 +3,11 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>14457.000000</radius>
+  <radius>14457</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
  </general>
- <pos x="412.597860" y="927.844172"/>
+ <pos x="-354.192418" y="1192.403393"/>
  <spobs>
   <spob>Calvin</spob>
   <spob>Mendez</spob>
@@ -16,25 +16,25 @@
  </spobs>
  <jumps>
   <jump target="Bonanza">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="3447.782122" y="14039.859238" was_auto="true"/>
   </jump>
   <jump target="Malebolge">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-10762.838332" y="9652.261912" was_auto="true"/>
   </jump>
   <jump target="Pisces Prime">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="10335.16955" y="-10108.863405" was_auto="true"/>
   </jump>
   <jump target="Ram">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-12550.310774" y="-7175.97021" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

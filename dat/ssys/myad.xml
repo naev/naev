@@ -1,28 +1,28 @@
 <ssys name="Myad">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>400</spacedust>
-  <interference>35.526300</interference>
-  <nebula volatility="1.000000">400.000000</nebula>
+  <interference>35.5263</interference>
+  <nebula volatility="1">400</nebula>
   <nolanes/>
  </general>
- <pos x="607.222605" y="-413.479878"/>
+ <pos x="-38.884567" y="-372.368906"/>
  <spobs>
   <spob>Toros IV</spob>
  </spobs>
  <jumps>
   <jump target="Doeston">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-10274.119029" y="14166.597268" was_auto="true"/>
   </jump>
   <jump target="Gilligan's Light">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9655.030544" y="-14595.560461" was_auto="true"/>
   </jump>
   <jump target="Tormulex">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="17488.228483" y="641.766711" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

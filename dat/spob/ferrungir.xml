@@ -1,6 +1,6 @@
 <spob name="Ferrungir">
  <lua>lowclass.lua</lua>
- <pos x="-5527.157340" y="6055.653934"/>
+ <pos x="-2411.638615" y="7836.096733"/>
  <GFX>
   <space>C01</space>
   <exterior>mining2</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>C</class>
   <population>1e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

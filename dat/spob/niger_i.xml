@@ -1,5 +1,5 @@
 <spob name="Niger I">
- <pos x="-25142.222222" y="-2473.333333"/>
+ <pos x="-25201.60282" y="-1768.595854"/>
  <GFX>
   <space>P01</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

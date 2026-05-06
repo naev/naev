@@ -1,6 +1,6 @@
 <spob name="Nolan">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-14082.017719" y="10784.915102"/>
+ <pos x="-15437.329736" y="8735.357313"/>
  <GFX>
   <space>J04</space>
   <exterior>station05</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>J</class>
   <population>9939</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

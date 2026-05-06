@@ -1,20 +1,20 @@
 <spob name="Thaddius Terminal">
  <lua>lawless.lua</lua>
- <pos x="1478.954102" y="-804.588905"/>
+ <pos x="1640.368755" y="-379.287342"/>
  <GFX>
   <space>002</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>9000</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services>
    <land/>
    <refuel/>

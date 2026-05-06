@@ -1,5 +1,5 @@
 <spob name="Rotide I">
- <pos x="-1320.000000" y="-1080.000000"/>
+ <pos x="1632.657775" y="493.182104"/>
  <GFX>
   <space>A02</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

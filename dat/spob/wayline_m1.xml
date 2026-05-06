@@ -1,5 +1,5 @@
 <spob name="Wayline m1">
- <pos x="-895.436882" y="481.579500"/>
+ <pos x="-912.477809" y="448.453198"/>
  <GFX>
   <space>moon-P00</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

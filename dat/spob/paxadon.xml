@@ -1,20 +1,20 @@
 <spob name="Paxadon">
  <lua>highclass.lua</lua>
- <pos x="-5698.032282" y="-2837.408368"/>
+ <pos x="-6265.803674" y="-1121.678408"/>
  <GFX>
   <space>G03</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>G</class>
   <population>1e+10</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

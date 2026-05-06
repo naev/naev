@@ -1,5 +1,5 @@
 <spob name="Samell">
- <pos x="3130.903994" y="7507.779985"/>
+ <pos x="7082.854167" y="4000.312107"/>
  <GFX>
   <space>P02</space>
   <exterior>city2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>1e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

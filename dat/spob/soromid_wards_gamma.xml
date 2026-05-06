@@ -1,6 +1,6 @@
 <spob name="Soromid Wards Gamma">
  <lua>highclass.lua</lua>
- <pos x="11050.675296" y="6217.996620"/>
+ <pos x="12096.336192" y="3802.572443"/>
  <GFX>
   <space>station-commerce</space>
   <exterior>traderoom</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>0</class>
   <population>100</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

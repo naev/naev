@@ -1,12 +1,12 @@
 <ssys name="Kruger">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>22.050000</interference>
-  <nebula hue="245.000000">100.000000</nebula>
+  <interference>22.05</interference>
+  <nebula hue="245">100</nebula>
   <nolanes/>
  </general>
- <pos x="315.380428" y="-229.451086"/>
+ <pos x="-371.587026" y="-200.226891"/>
  <spobs>
   <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
   <spob_virtual>Traders Society Unpresence (Range 1)</spob_virtual>
@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Arcanis">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Guntesh">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Kruger's Pocket">
    <autopos/>
-   <hide>0.300000</hide>
+   <hide>0.3</hide>
   </jump>
   <jump target="Van Maanen">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

@@ -1,19 +1,19 @@
 <spob name="Arck">
- <pos x="14520.452708" y="-19462.383187"/>
+ <pos x="13825.134679" y="-19962.303405"/>
  <GFX>
   <space>M01</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>9e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

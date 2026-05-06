@@ -1,20 +1,20 @@
 <spob name="Marius Enclave">
  <lua>empire_mil_restricted.lua</lua>
- <pos x="-6450.889110" y="8554.815028"/>
+ <pos x="-9967.497315" y="3930.372467"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>1</class>
   <population>2000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

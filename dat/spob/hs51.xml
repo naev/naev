@@ -1,19 +1,19 @@
 <spob name="HS-51">
- <pos x="-4533.758622" y="-7183.066534"/>
+ <pos x="-4466.416404" y="-7225.132287"/>
  <GFX>
   <space>moon-X00</space>
   <exterior>rocky_small</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>X</class>
   <population>7500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

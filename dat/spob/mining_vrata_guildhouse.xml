@@ -1,19 +1,19 @@
 <spob name="Mining Vrata Guildhouse">
- <pos x="0.000000" y="0.000000"/>
+ <pos x="0" y="0"/>
  <GFX>
   <space>station-round3</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>
-  <base>80.000000</base>
-  <bonus>40.000000</bonus>
+  <base>80</base>
+  <bonus>40</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>150000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

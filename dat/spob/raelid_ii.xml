@@ -1,5 +1,5 @@
 <spob name="Raelid II">
- <pos x="-6752.120425" y="8087.623756"/>
+ <pos x="-9980.610089" y="3374.642276"/>
  <GFX>
   <space>D00</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

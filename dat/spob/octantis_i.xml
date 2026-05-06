@@ -1,5 +1,5 @@
 <spob name="Octantis I">
- <pos x="7831.697207" y="6123.366655"/>
+ <pos x="9525.749659" y="2844.502374"/>
  <GFX>
   <space>moon-C02</space>
   <exterior>uninhabited-rocky-airless-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>0.900000</hide>
+  <hide>0.9</hide>
   <services>
    <land/>
   </services>

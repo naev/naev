@@ -1,10 +1,10 @@
 <ssys name="Blackwell">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-200.506077" y="-51.738192"/>
+ <pos x="-1039.585542" y="-97.49445"/>
  <spobs>
   <spob>Blackwell I</spob>
   <spob>Blackwell IIX</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Jade">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13962.223413" y="14319.787615" was_auto="true"/>
   </jump>
   <jump target="Pastor">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="19555.522331" y="-4193.035455" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

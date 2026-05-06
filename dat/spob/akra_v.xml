@@ -1,5 +1,5 @@
 <spob name="Akra V">
- <pos x="-22362.490650" y="652.148409"/>
+ <pos x="-19970.874164" y="10083.177609"/>
  <GFX>
   <space>S00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>S</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

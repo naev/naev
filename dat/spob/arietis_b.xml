@@ -1,5 +1,5 @@
 <spob name="Arietis B">
- <pos x="-5918.864122" y="-1219.722541"/>
+ <pos x="-5235.788482" y="-3017.812872"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services/>
  </general>
 </spob>

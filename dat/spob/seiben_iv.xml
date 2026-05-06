@@ -1,5 +1,5 @@
 <spob name="Seiben IV">
- <pos x="-2943.786333" y="865.278053"/>
+ <pos x="-2679.957847" y="1494.125169"/>
  <GFX>
   <space>I07</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.500000</hide>
+  <hide>1.5</hide>
   <services/>
  </general>
 </spob>

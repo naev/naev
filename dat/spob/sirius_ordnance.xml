@@ -1,20 +1,20 @@
 <spob name="Sirius Ordnance">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="5966.666667" y="19366.197274"/>
+ <pos x="9134.793244" y="18088.843532"/>
  <GFX>
   <space>station-fleetbase3</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>100.000000</base>
-  <bonus>80.000000</bonus>
+  <base>100</base>
+  <bonus>80</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>2000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

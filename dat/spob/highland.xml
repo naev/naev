@@ -1,19 +1,19 @@
 <spob name="Highland">
- <pos x="6581.879617" y="1183.259257"/>
+ <pos x="5305.631606" y="4070.812575"/>
  <GFX>
   <space>H00</space>
   <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>O'rez</faction>
-  <base>200.000000</base>
-  <bonus>100.000000</bonus>
+  <base>200</base>
+  <bonus>100</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>G</class>
   <population>2.78e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

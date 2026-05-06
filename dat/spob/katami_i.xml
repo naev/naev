@@ -1,5 +1,5 @@
 <spob name="Katami I">
- <pos x="-4829.000000" y="-3564.000000"/>
+ <pos x="1120.891248" y="-5896.180103"/>
  <GFX>
   <space>G00</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

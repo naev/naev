@@ -1,24 +1,24 @@
 <ssys name="Seran">
  <general>
-  <radius>13000.000000</radius>
+  <radius>13000</radius>
   <spacedust>400</spacedust>
-  <interference>45.000000</interference>
-  <nebula volatility="0.250000">300.000000</nebula>
+  <interference>45</interference>
+  <nebula volatility="0.25">300</nebula>
   <nolanes/>
  </general>
- <pos x="717.396200" y="202.067533"/>
+ <pos x="30.216001" y="171.539316"/>
  <spobs>
   <spob>New Thomas</spob>
   <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Metsys">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9315.493095" y="-9067.612055" was_auto="true"/>
   </jump>
   <jump target="South Bell">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12987.446916" y="571.158981" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

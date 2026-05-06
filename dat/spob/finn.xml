@@ -1,5 +1,5 @@
 <spob name="Finn">
- <pos x="-7935.702751" y="9320.810117"/>
+ <pos x="-10391.314961" y="6470.970001"/>
  <GFX>
   <space>D02</space>
   <exterior>mining3</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>D</class>
   <population>235127</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

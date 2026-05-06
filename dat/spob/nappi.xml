@@ -1,5 +1,5 @@
 <spob name="Nappi">
- <pos x="-17112.889013" y="2502.957678"/>
+ <pos x="-16211.418986" y="6025.417989"/>
  <GFX>
   <space>H01</space>
   <exterior>desertic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>H</class>
   <population>200000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,20 +1,20 @@
 <ssys name="Firk">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>200</spacedust>
-  <interference>22.000000</interference>
+  <interference>22</interference>
   <nolanes/>
  </general>
- <pos x="154.864487" y="25.496038"/>
+ <pos x="-755.339049" y="73.379416"/>
  <spobs/>
  <jumps>
   <jump target="Doowa">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Flok">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

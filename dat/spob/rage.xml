@@ -1,5 +1,5 @@
 <spob name="Rage">
- <pos x="-2901.655730" y="-2991.530022"/>
+ <pos x="-4043.824081" y="1008.139198"/>
  <GFX>
   <space>A02</space>
   <exterior>desertic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

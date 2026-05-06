@@ -1,12 +1,12 @@
 <ssys name="Teller">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>400</spacedust>
-  <interference>58.050000</interference>
-  <nebula volatility="0.500000" hue="275.000000">350.000000</nebula>
+  <interference>58.05</interference>
+  <nebula volatility="0.5" hue="275">350</nebula>
   <nolanes/>
  </general>
- <pos x="891.004520" y="-145.347513"/>
+ <pos x="337.275151" y="-176.026836"/>
  <spobs>
   <spob>Jezza</spob>
   <spob>Killerog</spob>
@@ -15,30 +15,30 @@
  </spobs>
  <jumps>
   <jump target="Brumeria">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="7990.164722" y="19420.537266" was_auto="true"/>
   </jump>
   <jump target="Fern">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="20969.556311" y="-1130.357505" was_auto="true"/>
   </jump>
   <jump target="Penn">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="15775.426161" y="-13861.310523" was_auto="true"/>
   </jump>
   <jump target="Seifer">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-12793.683761" y="-16652.977385" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>8000.000000</radius>
-   <pos x="-7473.011884" y="11079.582977"/>
+   <radius>8000</radius>
+   <pos x="-778.535692" y="13341.549675"/>
   </asteroid>
   <exclusion>
-   <radius>5000.000000</radius>
+   <radius>5000</radius>
    <pos x="-8123.311451" y="12401.361629"/>
   </exclusion>
  </asteroids>

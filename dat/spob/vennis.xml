@@ -1,5 +1,5 @@
 <spob name="Vennis">
- <pos x="9321.283353" y="2238.834901"/>
+ <pos x="8789.020985" y="-3827.768955"/>
  <GFX>
   <space>X00</space>
   <exterior>methane</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>X</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

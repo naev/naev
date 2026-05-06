@@ -1,20 +1,20 @@
 <spob name="SY-1025">
  <lua>thurion.lua</lua>
- <pos x="3395.067989" y="1492.489908"/>
+ <pos x="-3132.451914" y="-1985.386053"/>
  <GFX>
   <space>003</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>2000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

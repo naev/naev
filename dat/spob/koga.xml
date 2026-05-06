@@ -1,19 +1,19 @@
 <spob name="Koga">
- <pos x="15545.627381" y="-4711.194876"/>
+ <pos x="9916.76898" y="12865.441337"/>
  <GFX>
   <space>A00</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.660000</base>
-  <bonus>33.330000</bonus>
+  <base>66.66</base>
+  <bonus>33.33</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>A</class>
   <population>150000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

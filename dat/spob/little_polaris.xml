@@ -1,5 +1,5 @@
 <spob name="Little Polaris">
- <pos x="-4280.455083" y="-4348.186199"/>
+ <pos x="-4842.30985" y="-3712.284236"/>
  <GFX>
   <space>moon-P01</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
   </services>

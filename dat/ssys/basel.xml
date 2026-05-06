@@ -1,11 +1,11 @@
 <ssys name="Basel">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
   <interference>35.526375</interference>
-  <nebula volatility="4.000000" hue="270.000000">300.000000</nebula>
+  <nebula volatility="4" hue="270">300</nebula>
  </general>
- <pos x="602.876985" y="304.755139"/>
+ <pos x="-36.970922" y="599.995957"/>
  <spobs>
   <spob>Basel I</spob>
   <spob>Sorom</spob>
@@ -14,8 +14,8 @@
  </spobs>
  <jumps>
   <jump target="Percival">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="59.088401" y="9999.825426" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

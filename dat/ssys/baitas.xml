@@ -1,32 +1,32 @@
 <ssys name="Baitas">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>19.900000</interference>
+  <interference>19.9</interference>
   <nolanes/>
  </general>
- <pos x="812.618409" y="520.904022"/>
+ <pos x="135.895556" y="669.149798"/>
  <spobs>
   <spob_virtual>Lost Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Alpha Centauri">
-   <pos x="-15383.234070" y="2539.517892"/>
-   <hide>1.000000</hide>
+   <pos x="-15383.23407" y="2539.517892"/>
+   <hide>1</hide>
   </jump>
   <jump target="Protera">
    <pos x="11198.159698" y="-6404.916229"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>nodrop</group>
    <group>typeB-poor</group>
-   <radius>4500.000000</radius>
+   <radius>4500</radius>
    <pos x="3150.664423" y="9178.246241"/>
-   <density>0.800000</density>
-   <maxspeed>10.000000</maxspeed>
+   <density>0.8</density>
+   <maxspeed>10</maxspeed>
   </asteroid>
  </asteroids>
  <tags>

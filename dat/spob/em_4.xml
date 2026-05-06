@@ -1,5 +1,5 @@
 <spob name="Em 4">
- <pos x="-5209.564808" y="-28740.551066"/>
+ <pos x="6308.793796" y="-28519.431303"/>
  <GFX>
   <space>moon-H01</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

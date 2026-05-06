@@ -3,11 +3,11 @@
   <background>plasmastorm</background>
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
-  <radius>14500.000000</radius>
+  <radius>14500</radius>
   <spacedust>400</spacedust>
-  <interference>56.250000</interference>
+  <interference>56.25</interference>
  </general>
- <pos x="1467.789953" y="-510.108332"/>
+ <pos x="761.661854" y="-892.987218"/>
  <spobs>
   <spob>Monsoon Cloister</spob>
   <spob>Narousse I</spob>
@@ -18,21 +18,21 @@
  </spobs>
  <jumps>
   <jump target="Euler">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14498.907173" y="178.019044" was_auto="true"/>
   </jump>
   <jump target="Korma">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7076.22598" y="-12656.106267" was_auto="true"/>
   </jump>
   <jump target="Toxin">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8191.127609" y="11964.757769" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <energy_mod>-50.000000</energy_mod>
-  <stress_dissipation>-50.000000</stress_dissipation>
+  <energy_mod>-50</energy_mod>
+  <stress_dissipation>-50</stress_dissipation>
  </stats>
  <tags>
   <tag>plasmastorm</tag>

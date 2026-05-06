@@ -1,5 +1,5 @@
 <spob name="UX I">
- <pos x="684.117311" y="-1134.496612"/>
+ <pos x="1133.612937" y="-685.580605"/>
  <GFX>
   <space>moon-D00</space>
   <exterior>uninhabited-rocky-airless-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

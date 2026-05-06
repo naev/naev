@@ -1,41 +1,41 @@
 <ssys name="Tuoladis">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>500</spacedust>
-  <interference>10.575000</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <interference>10.575</interference>
+  <nebula hue="240">100</nebula>
  </general>
- <pos x="349.681529" y="-495.945226"/>
+ <pos x="-330.43314" y="-371.773587"/>
  <spobs>
   <spob_virtual>FLF Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Ogat">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7045.840754" y="-12097.773681" was_auto="true"/>
   </jump>
   <jump target="Surano">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-3698.103296" y="13502.741647" was_auto="true"/>
   </jump>
   <jump target="Zacron">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12556.28956" y="6191.897324" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>6500.000000</radius>
-   <pos x="-6440.716787" y="2951.995194"/>
-   <density>0.600000</density>
+   <radius>6500</radius>
+   <pos x="-6587.493587" y="2608.07143"/>
+   <density>0.6</density>
   </asteroid>
   <exclusion>
-   <radius>6000.000000</radius>
+   <radius>6000</radius>
    <pos x="996.777598" y="-2108.567996"/>
   </exclusion>
   <exclusion>
-   <radius>6000.000000</radius>
+   <radius>6000</radius>
    <pos x="3488.721593" y="5942.327988"/>
   </exclusion>
  </asteroids>

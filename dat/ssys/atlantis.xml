@@ -1,26 +1,26 @@
 <ssys name="Atlantis">
  <general>
-  <radius>14500.000000</radius>
+  <radius>14500</radius>
   <spacedust>400</spacedust>
-  <interference>5.625000</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <interference>5.625</interference>
+  <nebula hue="240">100</nebula>
  </general>
- <pos x="881.096871" y="-334.377841"/>
+ <pos x="201.279614" y="-410.077937"/>
  <spobs>
   <spob>Atlantis I</spob>
  </spobs>
  <jumps>
   <jump target="Pike">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12231.633631" y="-7786.985212" was_auto="true"/>
   </jump>
   <jump target="Ryder">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-5128.55451" y="13562.740454" was_auto="true"/>
   </jump>
   <jump target="Shickhaw">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-8836.279818" y="-11496.528126" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

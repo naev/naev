@@ -1,20 +1,20 @@
 <spob name="Foundation Station">
  <lua>pirate_clanworld.lua</lua>
- <pos x="1941.876493" y="767.371325"/>
+ <pos x="-1811.562057" y="1038.261034"/>
  <GFX>
   <space>000</space>
   <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Raven Clan</faction>
-  <base>200.000000</base>
-  <bonus>50.000000</bonus>
+  <base>200</base>
+  <bonus>50</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>2</class>
   <population>5000</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
    <refuel/>

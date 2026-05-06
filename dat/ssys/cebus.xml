@@ -1,27 +1,27 @@
 <ssys name="Cebus">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>14.175000</interference>
-  <nebula hue="240.000000">125.000000</nebula>
+  <interference>14.175</interference>
+  <nebula hue="240">125</nebula>
  </general>
- <pos x="315.367396" y="-150.632289"/>
+ <pos x="-458.86062" y="-99.847482"/>
  <spobs>
   <spob>Cebus Prime</spob>
  </spobs>
  <jumps>
   <jump target="Carnis Minor">
-   <autopos/>
-   <hide>0.300000</hide>
+   <hide>0.3</hide>
+   <pos x="5674.542911" y="13885.228221" was_auto="true"/>
   </jump>
   <jump target="Kruger's Pocket">
-   <autopos/>
    <hidden/>
-   <hide>0.300000</hide>
+   <hide>0.3</hide>
+   <pos x="-13060.654984" y="-7376.943226" was_auto="true"/>
   </jump>
   <jump target="Ross">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13206.512732" y="7112.525672" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

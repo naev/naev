@@ -1,5 +1,5 @@
 <spob name="Urbanus II">
- <pos x="2403.259278" y="-2059.936524"/>
+ <pos x="3076.188987" y="-745.690924"/>
  <GFX>
   <space>K04</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Warnecke I">
- <pos x="1395.547217" y="-381.846862"/>
+ <pos x="1294.722265" y="645.796652"/>
  <GFX>
   <space>D07</space>
   <exterior>uninhabited-rocky-airless-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

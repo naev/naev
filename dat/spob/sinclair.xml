@@ -1,5 +1,5 @@
 <spob name="Sinclair">
- <pos x="-25294.952304" y="-19671.631367"/>
+ <pos x="-25972.887419" y="-18767.440204"/>
  <GFX>
   <space>M00</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>130000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

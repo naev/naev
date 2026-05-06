@@ -1,20 +1,20 @@
 <spob name="Saraab">
  <lua>lowclass.lua</lua>
- <pos x="12706.429531" y="4420.183280"/>
+ <pos x="13279.525807" y="-2155.357507"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>mining_shaft</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>G</class>
   <population>120000</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
    <refuel/>

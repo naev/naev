@@ -1,5 +1,5 @@
 <spob name="Merisi IV">
- <pos x="19320.000000" y="490.000000"/>
+ <pos x="7905.321954" y="17635.429815"/>
  <GFX>
   <space>moon-P02</space>
   <exterior>uninhabited-rocky-blue-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>B</class>
   <population>0</population>
-  <hide>1.800000</hide>
+  <hide>1.8</hide>
   <services>
    <land/>
   </services>

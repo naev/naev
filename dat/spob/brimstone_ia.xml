@@ -1,5 +1,5 @@
 <spob name="Brimstone Ia">
- <pos x="12677.992672" y="-10635.425534"/>
+ <pos x="6948.025707" y="-15018.945144"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

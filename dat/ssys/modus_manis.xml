@@ -1,31 +1,31 @@
 <ssys name="Modus Manis">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="1238.253131" y="-751.256158"/>
+ <pos x="347.091248" y="-963.443866"/>
  <spobs>
   <spob>Manis</spob>
   <spob>Modus</spob>
  </spobs>
  <jumps>
   <jump target="Humdrum">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-1435.52117" y="-20950.877761" was_auto="true"/>
   </jump>
   <jump target="Tarmak">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="19195.663924" y="-8516.248381" was_auto="true"/>
   </jump>
   <jump target="Tartan">
-   <pos x="7695.981028" y="20113.548757"/>
+   <pos x="10989.715938" y="18520.505154"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Willow">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="6654.145173" y="19917.89025" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

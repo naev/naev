@@ -1,5 +1,5 @@
 <spob name="Korifa II">
- <pos x="-15916.313676" y="-6371.651665"/>
+ <pos x="-2821.092078" y="16910.600978"/>
  <GFX>
   <space>K00</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

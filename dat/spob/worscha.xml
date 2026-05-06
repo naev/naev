@@ -1,20 +1,20 @@
 <spob name="Worscha">
  <lua>highclass.lua</lua>
- <pos x="-3271.270726" y="-7117.605452"/>
+ <pos x="-6879.259741" y="-3746.639152"/>
  <GFX>
   <space>M00</space>
   <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>2e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

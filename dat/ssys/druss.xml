@@ -1,10 +1,10 @@
 <ssys name="Druss">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="1030.936110" y="-797.416038"/>
+ <pos x="111.991494" y="-916.735196"/>
  <spobs>
   <spob>Druss II</spob>
   <spob>Druss III</spob>
@@ -16,24 +16,24 @@
  </spobs>
  <jumps>
   <jump target="Eye of Night">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-17012.54547" y="4101.621216" was_auto="true"/>
   </jump>
   <jump target="Kyo">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="17498.996427" y="-187.414097" was_auto="true"/>
   </jump>
   <jump target="Ruttwi">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9097.6733" y="-14949.325754" was_auto="true"/>
   </jump>
   <jump target="Scarlet">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-948.064833" y="17474.300359" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-13000.000000" y="4000.000000">achack02_ambush</waypoint>
+  <waypoint x="-7799.867418" y="11142.803428">achack02_ambush</waypoint>
  </waypoints>
  <tags>
   <tag>tradelane</tag>

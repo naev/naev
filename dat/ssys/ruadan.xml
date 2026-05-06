@@ -1,10 +1,10 @@
 <ssys name="Ruadan">
  <general>
-  <radius>24000.000000</radius>
+  <radius>24000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-241.802225" y="-780.410944"/>
+ <pos x="-1065.626837" y="-1020.86952"/>
  <spobs>
   <spob>Hypergate Ruadan</spob>
   <spob>Ruadan Gamma</spob>
@@ -20,16 +20,16 @@
  </spobs>
  <jumps>
   <jump target="Damien">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-12243.073517" y="20642.363014" was_auto="true"/>
   </jump>
   <jump target="Severus">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="20450.980794" y="12560.150658" was_auto="true"/>
   </jump>
   <jump target="Tomas">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9756.382873" y="-21927.448397" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -1,5 +1,5 @@
 <spob name="Gyrios IV">
- <pos x="21776.061442" y="13731.331447"/>
+ <pos x="24103.460023" y="9042.650615"/>
  <GFX>
   <space>A02</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

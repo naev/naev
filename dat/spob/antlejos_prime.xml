@@ -1,5 +1,5 @@
 <spob name="Antlejos Prime">
- <pos x="3335.537214" y="9095.864562"/>
+ <pos x="199.599186" y="9686.109683"/>
  <GFX>
   <space>J04</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

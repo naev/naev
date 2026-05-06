@@ -1,32 +1,32 @@
 <ssys name="Metsys">
  <general>
-  <radius>13000.000000</radius>
+  <radius>13000</radius>
   <spacedust>400</spacedust>
-  <interference>61.363600</interference>
-  <nebula volatility="1.000000" hue="280.000000">400.000000</nebula>
+  <interference>61.3636</interference>
+  <nebula volatility="1" hue="280">400</nebula>
   <nolanes/>
  </general>
- <pos x="612.428192" y="127.103847"/>
+ <pos x="-35.712531" y="108.331983"/>
  <spobs>
   <spob>FD-24</spob>
   <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Adran">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="10139.424614" y="-8135.850815" was_auto="true"/>
   </jump>
   <jump target="Booster">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-3917.836271" y="12395.586269" was_auto="true"/>
   </jump>
   <jump target="Midoros">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2564.107476" y="-12744.620545" was_auto="true"/>
   </jump>
   <jump target="Seran">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9512.206173" y="8861.034573" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

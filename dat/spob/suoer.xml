@@ -1,5 +1,5 @@
 <spob name="Suoer">
- <pos x="23465.000000" y="3380.000000"/>
+ <pos x="21731.696671" y="-9474.38572"/>
  <GFX>
   <space>moon-M04</space>
   <exterior>aquatic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>1e+08</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
    <refuel/>

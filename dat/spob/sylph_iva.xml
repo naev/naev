@@ -1,5 +1,5 @@
 <spob name="Sylph IVa">
- <pos x="16877.672963" y="11664.535904"/>
+ <pos x="20470.705898" y="-1366.544009"/>
  <GFX>
   <space>moon-I01</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

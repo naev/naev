@@ -1,19 +1,19 @@
 <spob name="Warei">
- <pos x="9355.543527" y="-10118.223706"/>
+ <pos x="10976.111813" y="-8332.443525"/>
  <GFX>
   <space>P00</space>
   <exterior>mining3</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>P</class>
   <population>5e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

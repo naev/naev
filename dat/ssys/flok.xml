@@ -1,27 +1,32 @@
 <ssys name="Flok">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>200</spacedust>
-  <interference>22.000000</interference>
+  <interference>22</interference>
   <nolanes/>
  </general>
- <pos x="119.132950" y="87.715970"/>
+ <pos x="-851.904958" y="136.851978"/>
  <spobs/>
  <jumps>
   <jump target="Firk">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="17594.690964" y="-17049.24778" was_auto="true"/>
   </jump>
   <jump target="Terminus">
+   <hide>1</hide>
+   <pos x="695.59509" y="24490.123467" was_auto="true"/>
+  </jump>
+  <jump target="SW-5">
+   <exitonly/>
+   <hide>1</hide>
    <autopos/>
-   <hide>1.000000</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
-   <radius>6000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <radius>6000</radius>
+   <pos x="0" y="0"/>
   </asteroid>
  </asteroids>
  <tags>

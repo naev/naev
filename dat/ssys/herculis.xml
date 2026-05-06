@@ -1,16 +1,16 @@
 <ssys name="Herculis">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>37.575000</interference>
-  <nebula hue="250.000000">200.000000</nebula>
+  <interference>37.575</interference>
+  <nebula hue="250">200</nebula>
  </general>
- <pos x="828.565887" y="715.311575"/>
+ <pos x="158.38829" y="998.699495"/>
  <spobs/>
  <jumps>
   <jump target="Longbow">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14109.21902" y="5092.144797" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

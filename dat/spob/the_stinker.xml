@@ -1,20 +1,20 @@
 <spob name="The Stinker">
  <lua>lowclass.lua</lua>
- <pos x="-319.479999" y="-1022.335998"/>
+ <pos x="-372.335676" y="-1004.293038"/>
  <GFX>
   <space>X01</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>20.000000</base>
-  <bonus>10.000000</bonus>
+  <base>20</base>
+  <bonus>10</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>X</class>
   <population>200</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

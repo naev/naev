@@ -1,19 +1,19 @@
 <spob name="M.K.">
- <pos x="-10298.000000" y="2166.000000"/>
+ <pos x="-10480.935137" y="943.588178"/>
  <GFX>
   <space>M01</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

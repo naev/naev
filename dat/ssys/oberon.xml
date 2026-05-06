@@ -1,10 +1,10 @@
 <ssys name="Oberon">
  <general>
-  <radius>13300.000000</radius>
+  <radius>13300</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="391.143819" y="462.723008"/>
+ <pos x="-311.274926" y="525.623157"/>
  <spobs>
   <spob>M.K.</spob>
   <spob>Oberon I</spob>
@@ -15,16 +15,16 @@
  </spobs>
  <jumps>
   <jump target="Defa">
-   <pos x="-11193.320129" y="-9417.213120"/>
-   <hide>0.000000</hide>
+   <pos x="-10011.913454" y="-10664.703814"/>
+   <hide>0</hide>
   </jump>
   <jump target="Shikima">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="3128.03469" y="12926.925348" was_auto="true"/>
   </jump>
   <jump target="Struve">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="13116.305022" y="2202.848737" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

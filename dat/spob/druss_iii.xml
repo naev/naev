@@ -1,5 +1,5 @@
 <spob name="Druss III">
- <pos x="-15949.696927" y="13.034873"/>
+ <pos x="-12576.689861" y="9809.172957"/>
  <GFX>
   <space>moon-O00</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,19 +1,19 @@
 <spob name="Nexus Shipyards HQ">
- <pos x="-11638.001887" y="-5124.991657"/>
+ <pos x="-11679.319657" y="-5030.121244"/>
  <GFX>
   <space>station-shipyard3</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>70.000000</base>
-  <bonus>40.000000</bonus>
+  <base>70</base>
+  <bonus>40</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>19500</population>
-  <hide>1.300000</hide>
+  <hide>1.3</hide>
   <services>
    <land/>
    <refuel/>

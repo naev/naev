@@ -1,30 +1,42 @@
 <ssys name="Sollav">
  <general>
-  <radius>15500.000000</radius>
+  <radius>15500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
+  <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
  </general>
- <pos x="-258.679024" y="-555.509016"/>
+ <pos x="-961.134007" y="-686.711693"/>
  <spobs>
   <spob>Sollav II</spob>
   <spob>Sollav VI</spob>
  </spobs>
  <jumps>
   <jump target="Fried">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="15034.937646" y="-3768.374977" was_auto="true"/>
   </jump>
   <jump target="Limbo">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="13570.646328" y="7489.162719" was_auto="true"/>
   </jump>
   <jump target="Pultatis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="2981.503788" y="15210.543552" was_auto="true"/>
   </jump>
   <jump target="Stone Table">
+   <hide>1</hide>
+   <pos x="3502.234537" y="-15099.150745" was_auto="true"/>
+  </jump>
+  <jump target="SW-14">
+   <exitonly/>
+   <hide>1</hide>
    <autopos/>
-   <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>southstellarwind</tag>
+  <tag>stellarwind</tag>
+ </tags>
 </ssys>

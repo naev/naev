@@ -1,5 +1,5 @@
 <spob name="Wunomi I-a">
- <pos x="-8385.851633" y="-2044.958757"/>
+ <pos x="-7535.052397" y="-4210.385884"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>uninhabited-rocky-airless-00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>0.300000</hide>
+  <hide>0.3</hide>
   <services>
    <land/>
   </services>

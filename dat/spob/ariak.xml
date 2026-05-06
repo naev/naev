@@ -1,5 +1,5 @@
 <spob name="Ariak">
- <pos x="4737.307524" y="4059.013239"/>
+ <pos x="-5196.113529" y="3452.256542"/>
  <GFX>
   <space>C00</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

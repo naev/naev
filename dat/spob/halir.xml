@@ -1,6 +1,6 @@
 <spob name="Halir">
  <lua>lowclass.lua</lua>
- <pos x="-12053.358215" y="-6447.649991"/>
+ <pos x="-13125.882999" y="-3816.651693"/>
  <GFX>
   <space>M07</space>
   <exterior>oceanic</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>3e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

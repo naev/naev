@@ -1,5 +1,5 @@
 <spob name="Arietis C">
- <pos x="2529.478275" y="10161.088205"/>
+ <pos x="-791.543305" y="10441.237141"/>
  <GFX>
   <space>Y00</space>
   <exterior>uninhabited-rocky-magenta-01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>Y</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

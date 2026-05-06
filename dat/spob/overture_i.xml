@@ -1,5 +1,5 @@
 <spob name="Overture I">
- <pos x="-5700.000000" y="-8160.000000"/>
+ <pos x="-1581.211384" y="-9827.276863"/>
  <GFX>
   <space>moon-H00</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

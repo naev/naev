@@ -1,20 +1,20 @@
 <spob name="Belltower Nest">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="-5392.086751" y="-5040.697911"/>
+ <pos x="-5917.527179" y="-4412.041142"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>1000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

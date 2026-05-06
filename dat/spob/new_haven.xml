@@ -1,20 +1,20 @@
 <spob name="New Haven">
  <lua>pirate_clanworld.lua</lua>
- <pos x="-29845.859288" y="4223.363841"/>
+ <pos x="-30133.718039" y="755.748577"/>
  <GFX>
   <space>X01</space>
   <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Wild Ones</faction>
-  <base>400.000000</base>
-  <bonus>50.000000</bonus>
+  <base>400</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>X</class>
   <population>9000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

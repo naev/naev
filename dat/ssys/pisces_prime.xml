@@ -3,11 +3,11 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>16652.400000</radius>
+  <radius>16652.4</radius>
   <spacedust>400</spacedust>
-  <interference>22.000000</interference>
+  <interference>22</interference>
  </general>
- <pos x="498.760621" y="846.192720"/>
+ <pos x="-325.320579" y="1109.897151"/>
  <spobs>
   <spob>Aldernael</spob>
   <spob>Doro</spob>
@@ -17,21 +17,21 @@
  </spobs>
  <jumps>
   <jump target="Feye">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-8855.207911" y="-14102.755709" was_auto="true"/>
   </jump>
   <jump target="Norn">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-10113.780433" y="13229.280823" was_auto="true"/>
   </jump>
   <jump target="Treacle">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="14126.887214" y="8816.659423" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

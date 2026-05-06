@@ -1,19 +1,19 @@
 <spob name="Lapra">
- <pos x="8924.769604" y="18652.646412"/>
+ <pos x="12513.305253" y="16461.771541"/>
  <GFX>
   <space>K02</space>
   <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>K</class>
   <population>3.5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

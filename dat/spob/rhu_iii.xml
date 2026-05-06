@@ -1,5 +1,5 @@
 <spob name="Rhu III">
- <pos x="15360.000000" y="-16640.000000"/>
+ <pos x="10841.124749" y="19881.881555"/>
  <GFX>
   <space>K04</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

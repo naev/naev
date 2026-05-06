@@ -1,20 +1,20 @@
 <spob name="Utsuwa">
  <lua>lowclass.lua</lua>
- <pos x="-13000.000000" y="-4700.000000"/>
+ <pos x="-13235.902319" y="-3987.591977"/>
  <GFX>
   <space>K00</space>
   <exterior>mining3</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>K</class>
   <population>400000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

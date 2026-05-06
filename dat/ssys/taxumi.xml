@@ -1,11 +1,11 @@
 <ssys name="Taxumi">
  <general>
   <features>#oRestricted#0</features>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="717.399275" y="847.337869"/>
+ <pos x="-74.445715" y="1112.10148"/>
  <spobs>
   <spob>Taxumi I</spob>
   <spob>Taxumi II</spob>
@@ -16,12 +16,12 @@
  </spobs>
  <jumps>
   <jump target="Moor">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="1984.385995" y="-14868.161023" was_auto="true"/>
   </jump>
   <jump target="Starlight End">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-10746.599692" y="10464.731007" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

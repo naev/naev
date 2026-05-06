@@ -1,19 +1,19 @@
 <spob name="Brock">
- <pos x="-6988.624986" y="-11971.255763"/>
+ <pos x="-7126.955682" y="-11889.421619"/>
  <GFX>
   <space>S00</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>40.000000</base>
-  <bonus>20.000000</bonus>
+  <base>40</base>
+  <bonus>20</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>S</class>
   <population>25114</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Trincea">
- <pos x="19000.000000" y="5000.000000"/>
+ <pos x="14664.829264" y="13074.508887"/>
  <GFX>
   <space>M02</space>
   <exterior>desertic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>8.5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

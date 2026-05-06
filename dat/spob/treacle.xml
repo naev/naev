@@ -1,5 +1,5 @@
 <spob name="Treacle">
- <pos x="5222.980314" y="2033.726848"/>
+ <pos x="5308.534828" y="1798.617866"/>
  <GFX>
   <space>C01</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Sollebor">
- <pos x="22929.999657" y="-16606.297744"/>
+ <pos x="5742.249763" y="-27723.28582"/>
  <GFX>
   <space>P04</space>
   <exterior>mining4</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Tau Ceti e">
- <pos x="3183.047860" y="-1809.968391"/>
+ <pos x="3588.380704" y="-728.905465"/>
  <GFX>
   <space>moon-M00</space>
   <exterior>uninhabited-rocky-green-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>M</class>
   <population>0</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services>
    <land/>
   </services>

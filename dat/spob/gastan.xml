@@ -1,19 +1,19 @@
 <spob name="Gastan">
- <pos x="4945.550390" y="3067.007994"/>
+ <pos x="5500.837456" y="1898.892827"/>
  <GFX>
   <space>A04</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>200.000000</base>
-  <bonus>50.000000</bonus>
+  <base>200</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>A</class>
   <population>125000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

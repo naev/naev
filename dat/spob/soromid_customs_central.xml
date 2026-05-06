@@ -1,19 +1,19 @@
 <spob name="Soromid Customs Central">
- <pos x="251.569920" y="-12533.106791"/>
+ <pos x="1719.378418" y="-12417.157126"/>
  <GFX>
   <space>station-fleetbase3</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>500000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

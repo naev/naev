@@ -1,5 +1,5 @@
 <spob name="Gutter III">
- <pos x="13056.714501" y="11991.245864"/>
+ <pos x="17645.255095" y="1706.676169"/>
  <GFX>
   <space>moon-I00</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

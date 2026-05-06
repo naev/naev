@@ -1,10 +1,10 @@
 <ssys name="Poller">
  <general>
-  <radius>18000.000000</radius>
+  <radius>18000</radius>
   <spacedust>400</spacedust>
-  <interference>20.000000</interference>
+  <interference>20</interference>
  </general>
- <pos x="-494.532696" y="-909.790192"/>
+ <pos x="-1298.492949" y="-1156.695528"/>
  <spobs>
   <spob>Poller D-2</spob>
   <spob>Poller I-1</spob>
@@ -13,27 +13,27 @@
  </spobs>
  <jumps>
   <jump target="NGC-11231">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-16169.637216" y="7908.402638" was_auto="true"/>
   </jump>
   <jump target="Newmarch">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9502.955023" y="15287.048302" was_auto="true"/>
   </jump>
   <jump target="Woreck">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="16694.269903" y="-6730.627933" was_auto="true"/>
   </jump>
   <jump target="Xeric">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13271.225012" y="-12160.369511" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>4000.000000</radius>
-   <pos x="4605.836658" y="-6416.223321"/>
+   <radius>4000</radius>
+   <pos x="4559.272749" y="-6449.394159"/>
   </asteroid>
  </asteroids>
 </ssys>

@@ -1,20 +1,20 @@
 <spob name="Castrum Sigma">
  <lua>proteron_mil_restricted.lua</lua>
- <pos x="3150.528370" y="-2234.267876"/>
+ <pos x="-919.663593" y="-3751.266563"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>550.000000</base>
-  <bonus>50.000000</bonus>
+  <base>550</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>10000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

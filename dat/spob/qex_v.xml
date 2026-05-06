@@ -1,5 +1,5 @@
 <spob name="Qex V">
- <pos x="-477.598690" y="4420.129056"/>
+ <pos x="-710.402535" y="4388.732119"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

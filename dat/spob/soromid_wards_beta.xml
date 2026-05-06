@@ -1,5 +1,5 @@
 <spob name="Soromid Wards Beta">
- <pos x="7808.800001" y="16514.977244"/>
+ <pos x="5009.829252" y="17567.681739"/>
  <GFX>
   <space>station-commerce</space>
   <exterior>traderoom</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>0</class>
   <population>70000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

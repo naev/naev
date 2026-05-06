@@ -1,6 +1,6 @@
 <spob name="Cutha">
  <lua>highclass.lua</lua>
- <pos x="25900.000000" y="24990.000000"/>
+ <pos x="-33.019643" y="35990.401632"/>
  <GFX>
   <space>M04</space>
   <exterior>oceanic</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

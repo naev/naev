@@ -1,5 +1,5 @@
 <spob name="Gaula Foods">
- <pos x="14836.417425" y="-1411.933345"/>
+ <pos x="14174.523505" y="4603.881097"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>station05</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>0</class>
   <population>200</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

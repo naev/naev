@@ -1,19 +1,19 @@
 <spob name="Mannannan">
- <pos x="-7152.264249" y="-10820.708001"/>
+ <pos x="-10338.350367" y="-7833.333722"/>
  <GFX>
   <space>M06</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>6e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

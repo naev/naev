@@ -1,5 +1,5 @@
 <spob name="Kobopos I">
- <pos x="-951.955371" y="1935.550028"/>
+ <pos x="-849.258425" y="1982.758953"/>
  <GFX>
   <space>moon-J00</space>
   <exterior>mining5</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

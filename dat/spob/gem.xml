@@ -1,5 +1,5 @@
 <spob name="Gem">
- <pos x="-2316.897947" y="-3385.866684"/>
+ <pos x="-3479.390317" y="-2173.925553"/>
  <GFX>
   <space>moon-P03</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

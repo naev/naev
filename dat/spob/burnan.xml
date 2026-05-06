@@ -1,20 +1,20 @@
 <spob name="Burnan">
  <lua>highclass.lua</lua>
- <pos x="-6250.670883" y="4135.478736"/>
+ <pos x="-2216.852791" y="7159.51357"/>
  <GFX>
   <space>M07</space>
   <exterior>city1</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>90.000000</base>
-  <bonus>45.000000</bonus>
+  <base>90</base>
+  <bonus>45</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>3e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

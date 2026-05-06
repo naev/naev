@@ -1,5 +1,5 @@
 <spob name="Ariadus VIa">
- <pos x="-1173.021433" y="-15927.552349"/>
+ <pos x="-2931.040118" y="-15699.423777"/>
  <GFX>
   <space>moon-D01</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

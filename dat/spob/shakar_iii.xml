@@ -1,5 +1,5 @@
 <spob name="Shakar III">
- <pos x="6359.007813" y="-7100.286078"/>
+ <pos x="886.611592" y="-9490.256194"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

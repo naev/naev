@@ -1,31 +1,36 @@
 <ssys name="Logania">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-240.806496" y="-99.372086"/>
+ <pos x="-1164.831873" y="-119.400977"/>
  <spobs>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Kobopos">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-4941.614029" y="14162.642789" was_auto="true"/>
   </jump>
   <jump target="Palejos">
+   <hide>1</hide>
+   <pos x="12558.364296" y="-8202.894989" was_auto="true"/>
+  </jump>
+  <jump target="SW-9">
+   <exitonly/>
+   <hide>1</hide>
    <autopos/>
-   <hide>1.000000</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>3700.000000</radius>
-   <pos x="5366.037186" y="5829.768795"/>
+   <radius>3700</radius>
+   <pos x="-7632.812674" y="-2126.200829"/>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="5000.000000" y="6000.000000">finale1</waypoint>
+  <waypoint x="-7617.872914" y="-1722.791994">finale1</waypoint>
  </waypoints>
 </ssys>

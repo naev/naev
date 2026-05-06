@@ -1,5 +1,5 @@
 <spob name="Imk">
- <pos x="3303.666819" y="11690.405671"/>
+ <pos x="-5105.970492" y="11023.105938"/>
  <GFX>
   <space>moon-P01</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

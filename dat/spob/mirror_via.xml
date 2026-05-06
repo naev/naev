@@ -1,5 +1,5 @@
 <spob name="Mirror VIa">
- <pos x="8582.017701" y="-19331.319868"/>
+ <pos x="1516.124749" y="-21096.263209"/>
  <GFX>
   <space>moon-M05</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

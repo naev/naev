@@ -1,5 +1,5 @@
 <spob name="Kaso">
- <pos x="-6968.000000" y="-4914.000000"/>
+ <pos x="8496.489513" y="714.203018"/>
  <GFX>
   <space>moon-C01</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

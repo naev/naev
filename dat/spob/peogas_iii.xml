@@ -1,5 +1,5 @@
 <spob name="Peogas III">
- <pos x="5881.345646" y="10049.818444"/>
+ <pos x="6874.286329" y="9398.577808"/>
  <GFX>
   <space>G00</space>
   <exterior>mining2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

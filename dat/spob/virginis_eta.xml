@@ -1,5 +1,5 @@
 <spob name="Virginis Eta">
- <pos x="6716.747507" y="-4094.455672"/>
+ <pos x="7294.273047" y="-2944.969443"/>
  <GFX>
   <space>A00</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

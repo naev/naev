@@ -1,19 +1,19 @@
 <spob name="Kayel">
- <pos x="-5434.715148" y="4000.053426"/>
+ <pos x="-5217.718729" y="4279.248463"/>
  <GFX>
   <space>M01</space>
   <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>M</class>
   <population>100000</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services>
    <land/>
    <refuel/>

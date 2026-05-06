@@ -1,20 +1,20 @@
 <spob name="Taxumi IIIa">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="-4290.427536" y="1615.597401"/>
+ <pos x="-4131.086075" y="1987.976669"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>200.000000</base>
-  <bonus>100.000000</bonus>
+  <base>200</base>
+  <bonus>100</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>8000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

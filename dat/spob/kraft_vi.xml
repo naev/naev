@@ -1,5 +1,5 @@
 <spob name="Kraft VI">
- <pos x="11601.225390" y="3879.160230"/>
+ <pos x="12228.901051" y="-300.489109"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Kanel">
- <pos x="7260.754073" y="4575.536182"/>
+ <pos x="7614.083199" y="3959.775005"/>
  <GFX>
   <space>moon-H01</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

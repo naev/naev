@@ -1,19 +1,19 @@
 <spob name="Soromid Wards Alpha">
- <pos x="-1723.417690" y="-4794.935802"/>
+ <pos x="-4571.427956" y="2250.249833"/>
  <GFX>
   <space>station-commerce2</space>
   <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>30000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

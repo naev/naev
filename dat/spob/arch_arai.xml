@@ -1,5 +1,5 @@
 <spob name="Arch Arai">
- <pos x="9162.462434" y="16600.550706"/>
+ <pos x="15938.775506" y="10270.561666"/>
  <GFX>
   <space>moon-P03</space>
   <exterior>traderoom</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>5e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

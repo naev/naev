@@ -1,5 +1,5 @@
 <spob name="Worgen">
- <pos x="-6032.011259" y="-654.104609"/>
+ <pos x="-6042.056711" y="-553.681641"/>
  <GFX>
   <space>D00</space>
   <exterior>uninhabited-rocky-airless-01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

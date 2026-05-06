@@ -1,5 +1,5 @@
 <spob name="Urbanus Crops">
- <pos x="-6464.109968" y="14128.452439"/>
+ <pos x="-12169.569627" y="9659.164616"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>0</class>
   <population>500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

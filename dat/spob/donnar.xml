@@ -1,5 +1,5 @@
 <spob name="Donnar">
- <pos x="23841.859354" y="5606.161715"/>
+ <pos x="24459.958523" y="-1254.486221"/>
  <GFX>
   <space>G00</space>
   <exterior>desertic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>G</class>
   <population>2e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

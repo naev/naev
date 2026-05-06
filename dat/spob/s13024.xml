@@ -1,19 +1,19 @@
 <spob name="S13024">
- <pos x="1813.437925" y="-11001.523413"/>
+ <pos x="-4531.406841" y="-10187.660504"/>
  <GFX>
   <space>001</space>
   <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Collective</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>3</class>
   <population>0</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services/>
  </general>
  <tags>

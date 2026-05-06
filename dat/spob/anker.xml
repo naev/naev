@@ -1,5 +1,5 @@
 <spob name="Anker">
- <pos x="15899.369441" y="15634.379950"/>
+ <pos x="21502.506626" y="5904.743332"/>
  <GFX>
   <space>H02</space>
   <exterior>forest2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

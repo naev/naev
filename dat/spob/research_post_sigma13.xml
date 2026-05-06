@@ -1,19 +1,19 @@
 <spob name="Research Post Sigma-13">
- <pos x="13999.436084" y="3949.127770"/>
+ <pos x="11474.464453" y="8939.602134"/>
  <GFX>
   <space>zalek_research_station2</space>
   <exterior>station_scene</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>
-  <base>0.000000</base>
-  <bonus>0.000000</bonus>
+  <base>0</base>
+  <bonus>0</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>0</population>
-  <hide>0.300000</hide>
+  <hide>0.3</hide>
   <services>
    <land/>
    <nomissionspawn/>

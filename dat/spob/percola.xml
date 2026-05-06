@@ -1,5 +1,5 @@
 <spob name="Percola">
- <pos x="-10266.857313" y="-3918.579198"/>
+ <pos x="-7709.43377" y="-7831.235723"/>
  <GFX>
   <space>moon-M05</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>300000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

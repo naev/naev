@@ -1,5 +1,5 @@
 <spob name="Tandar IIX">
- <pos x="-1715.947784" y="-20172.129858"/>
+ <pos x="-1729.606114" y="-20170.96335"/>
  <GFX>
   <space>X00</space>
   <exterior>mining5</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

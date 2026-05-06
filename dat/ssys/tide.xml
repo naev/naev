@@ -1,21 +1,21 @@
 <ssys name="Tide">
  <general>
-  <radius>13000.000000</radius>
+  <radius>13000</radius>
   <spacedust>400</spacedust>
-  <interference>96.428500</interference>
-  <nebula volatility="75.800000" hue="320.000000">800.000000</nebula>
+  <interference>96.4285</interference>
+  <nebula volatility="75.8" hue="320">800</nebula>
   <nolanes/>
  </general>
- <pos x="715.183377" y="-64.364841"/>
+ <pos x="88.562908" y="8.572812"/>
  <spobs/>
  <jumps>
   <jump target="Antares">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Sol">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

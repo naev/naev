@@ -1,5 +1,5 @@
 <spob name="Lazuli III">
- <pos x="-16920.000000" y="-4560.000000"/>
+ <pos x="-16553.404174" y="5750.200885"/>
  <GFX>
   <space>H02</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

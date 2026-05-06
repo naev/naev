@@ -1,10 +1,10 @@
 <ssys name="Haleb">
  <general>
-  <radius>21700.000000</radius>
+  <radius>21700</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="643.583893" y="-722.224133"/>
+ <pos x="-36.324601" y="-621.955175"/>
  <spobs>
   <spob>Fort Raglan</spob>
   <spob>Haleb IV</spob>
@@ -13,16 +13,16 @@
  </spobs>
  <jumps>
   <jump target="Slaccid">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="11654.902711" y="-18304.459642" was_auto="true"/>
   </jump>
   <jump target="Theras">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="4223.488171" y="21285.021673" was_auto="true"/>
   </jump>
   <jump target="Triap">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="21553.094171" y="-2520.740293" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

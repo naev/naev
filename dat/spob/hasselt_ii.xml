@@ -1,5 +1,5 @@
 <spob name="Hasselt II">
- <pos x="-14309.432497" y="-7949.684720"/>
+ <pos x="-6974.634727" y="-14809.180124"/>
  <GFX>
   <space>I00</space>
   <exterior>aquatic3</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

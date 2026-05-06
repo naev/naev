@@ -1,5 +1,5 @@
 <spob name="Behar Prime">
- <pos x="2733.973601" y="1262.321688"/>
+ <pos x="2928.403109" y="701.799776"/>
  <GFX>
   <space>A03</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

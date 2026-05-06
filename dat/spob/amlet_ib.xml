@@ -1,5 +1,5 @@
 <spob name="Amlet Ib">
- <pos x="5154.530813" y="9222.997157"/>
+ <pos x="6384.243721" y="8418.687342"/>
  <GFX>
   <space>D01</space>
   <exterior>uninhabited-rocky-airless-00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
   </services>

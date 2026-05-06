@@ -1,19 +1,19 @@
 <spob name="Corvus VI-b">
- <pos x="-17516.230274" y="20769.275657"/>
+ <pos x="-16862.342577" y="21303.580382"/>
  <GFX>
   <space>moon-C01</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>10.000000</base>
-  <bonus>5.000000</bonus>
+  <base>10</base>
+  <bonus>5</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>C</class>
   <population>75000</population>
-  <hide>2.500000</hide>
+  <hide>2.5</hide>
   <services>
    <land/>
    <refuel/>

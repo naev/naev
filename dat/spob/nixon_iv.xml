@@ -1,5 +1,5 @@
 <spob name="Nixon IV">
- <pos x="14765.036534" y="-9623.001685"/>
+ <pos x="-997.254387" y="-17595.850333"/>
  <GFX>
   <space>moon-C00</space>
   <exterior>desertic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

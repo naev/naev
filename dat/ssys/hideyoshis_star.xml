@@ -1,11 +1,11 @@
 <ssys name="Hideyoshi's Star">
  <general>
   <background>nebu_ngc_6210</background>
-  <radius>15500.000000</radius>
+  <radius>15500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-447.813266" y="-725.674377"/>
+ <pos x="-1233.420296" y="-882.88828"/>
  <spobs>
   <spob>HS-5</spob>
   <spob>HS-51</spob>
@@ -13,16 +13,16 @@
  </spobs>
  <jumps>
   <jump target="Armorhead">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-15485.585676" y="668.308513" was_auto="true"/>
   </jump>
   <jump target="Vauban">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3338.823266" y="-15136.124312" was_auto="true"/>
   </jump>
   <jump target="Za'lek">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="15177.316213" y="3146.279159" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

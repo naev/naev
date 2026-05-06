@@ -1,10 +1,10 @@
 <ssys name="Point Zero">
  <general>
-  <radius>11500.000000</radius>
+  <radius>11500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="588.388623" y="528.771849"/>
+ <pos x="-204.258584" y="781.118351"/>
  <spobs>
   <spob>Point Zero 0</spob>
   <spob>Point Zero Nidus</spob>
@@ -13,20 +13,20 @@
  </spobs>
  <jumps>
   <jump target="Father's Pride">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-11361.598485" y="1778.786061" was_auto="true"/>
   </jump>
   <jump target="Gewirn">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-3893.684063" y="10820.77744" was_auto="true"/>
   </jump>
   <jump target="Ivella">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="11497.178474" y="254.729523" was_auto="true"/>
   </jump>
   <jump target="Thirty Stars">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="3530.168272" y="-10944.766419" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -1,5 +1,5 @@
 <spob name="Kraft I">
- <pos x="-2346.261115" y="4738.527351"/>
+ <pos x="-593.608441" y="5254.161369"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>mining6</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

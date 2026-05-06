@@ -1,5 +1,5 @@
 <spob name="Pultatis I">
- <pos x="-20026.940179" y="7813.534088"/>
+ <pos x="-19613.259862" y="8800.550292"/>
  <GFX>
   <space>A02</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

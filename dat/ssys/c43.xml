@@ -1,11 +1,11 @@
 <ssys name="C-43">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>200</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
- <pos x="-257.209485" y="317.230005"/>
+ <pos x="-1032.208964" y="504.802325"/>
  <spobs>
   <spob>Eiroik</spob>
   <spob>S23491</spob>
@@ -16,31 +16,31 @@
  </spobs>
  <jumps>
   <jump target="C-14">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13030.901624" y="16468.017575" was_auto="true"/>
   </jump>
   <jump target="C-59">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="20054.182348" y="6231.353812" was_auto="true"/>
   </jump>
   <jump target="Hades">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="15806.893344" y="-13825.415827" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-8000.000000" y="-7500.000000">ec02_dst1</waypoint>
-  <waypoint x="7000.000000" y="-5000.000000">ec02_dst2</waypoint>
-  <waypoint x="-9500.000000" y="13000.000000">ec02_dst3</waypoint>
-  <waypoint x="-11000.000000" y="4000.000000">ec02_src1</waypoint>
-  <waypoint x="1700.000000" y="12000.000000">ec02_src2</waypoint>
-  <waypoint x="17000.000000" y="2500.000000">ec02_src3</waypoint>
-  <waypoint x="20500.000000" y="2300.000000">ec04_fleet1</waypoint>
-  <waypoint x="20500.000000" y="1700.000000">ec04_fleet2</waypoint>
-  <waypoint x="7500.000000" y="9500.000000">ec04_wayp1</waypoint>
-  <waypoint x="1500.000000" y="3000.000000">ec04_wayp12</waypoint>
-  <waypoint x="7500.000000" y="-5500.000000">ec04_wayp2</waypoint>
-  <waypoint x="1500.000000" y="-500.000000">ec04_wayp22</waypoint>
+  <waypoint x="-10883.005697" y="-1345.431899">ec02_dst1</waypoint>
+  <waypoint x="2709.256183" y="-8164.55332">ec02_dst2</waypoint>
+  <waypoint x="-14.98809" y="16101.235212">ec02_dst3</waypoint>
+  <waypoint x="-6530.280938" y="9713.672367">ec02_src1</waypoint>
+  <waypoint x="8444.675131" y="8693.529888">ec02_src2</waypoint>
+  <waypoint x="15208.141877" y="-7997.650943">ec02_src3</waypoint>
+  <waypoint x="17918.07892" y="-10221.665607">ec04_fleet1</waypoint>
+  <waypoint x="17564.520063" y="-10706.429606">ec04_fleet2</waypoint>
+  <waypoint x="11657.56522" y="3255.944277">ec04_wayp1</waypoint>
+  <waypoint x="2979.704281" y="1539.922853">ec04_wayp12</waypoint>
+  <waypoint x="2818.593802" y="-8863.1557">ec04_wayp2</waypoint>
+  <waypoint x="917.277617" y="-1287.867141">ec04_wayp22</waypoint>
  </waypoints>
  <tags>
   <tag>restricted</tag>

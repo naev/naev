@@ -1,19 +1,19 @@
 <spob name="Curie">
- <pos x="8372.931824" y="-644.071679"/>
+ <pos x="8353.111645" y="863.91058"/>
  <GFX>
   <space>A02</space>
   <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>A</class>
   <population>125000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

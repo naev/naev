@@ -1,5 +1,5 @@
 <spob name="Oma">
- <pos x="-3100.298044" y="-3366.492496"/>
+ <pos x="-2796.319249" y="-3622.943325"/>
  <GFX>
   <space>H03</space>
   <exterior>desertic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>H</class>
   <population>20000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

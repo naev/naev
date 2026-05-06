@@ -1,19 +1,19 @@
 <spob name="Cantina Centre">
- <pos x="11117.903978" y="2747.527995"/>
+ <pos x="10714.581383" y="4044.062899"/>
  <GFX>
   <space>zalek_station2</space>
   <exterior>zalek_station2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>0</class>
   <population>16000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Kobopos IV">
- <pos x="-8335.974251" y="13632.186765"/>
+ <pos x="-7610.434271" y="14050.134266"/>
  <GFX>
   <space>M08</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

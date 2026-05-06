@@ -1,10 +1,10 @@
 <ssys name="Ogat">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="297.960025" y="-574.860072"/>
+ <pos x="-358.484276" y="-474.472146"/>
  <spobs>
   <spob>Fort Fernando</spob>
   <spob>Gamma</spob>
@@ -13,24 +13,24 @@
  </spobs>
  <jumps>
   <jump target="Blunderbuss">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="7350.343097" y="-23371.402532" was_auto="true"/>
   </jump>
   <jump target="Draygar">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-19017.009381" y="15446.791064" was_auto="true"/>
   </jump>
   <jump target="Torg">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="24245.500859" y="3522.170931" was_auto="true"/>
   </jump>
   <jump target="Tuoladis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3761.810625" y="24209.477086" was_auto="true"/>
   </jump>
   <jump target="Vlexon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-13061.408103" y="-20727.99118" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -1,5 +1,5 @@
 <spob name="Vilati Vilata">
- <pos x="-5844.907407" y="8169.259259"/>
+ <pos x="-8698.397086" y="5023.706556"/>
  <GFX>
   <space>P00</space>
   <exterior>snowy_cliffs</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>4e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

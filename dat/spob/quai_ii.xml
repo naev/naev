@@ -1,5 +1,5 @@
 <spob name="Quai II">
- <pos x="-4059.313385" y="-6465.033791"/>
+ <pos x="-5982.28113" y="-4742.045924"/>
  <GFX>
   <space>G00</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>1.200000</hide>
+  <hide>1.2</hide>
   <services/>
  </general>
 </spob>

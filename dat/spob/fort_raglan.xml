@@ -1,19 +1,19 @@
 <spob name="Fort Raglan">
- <pos x="1830.182334" y="12469.138345"/>
+ <pos x="9897.683395" y="7801.592262"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>80.000000</base>
-  <bonus>40.000000</bonus>
+  <base>80</base>
+  <bonus>40</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>7000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

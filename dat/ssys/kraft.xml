@@ -1,10 +1,10 @@
 <ssys name="Kraft">
  <general>
-  <radius>22000.000000</radius>
+  <radius>22000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="1112.182606" y="-260.820459"/>
+ <pos x="382.811686" y="-381.431458"/>
  <spobs>
   <spob>Grindstone Shipyards</spob>
   <spob>Kraft I</spob>
@@ -17,16 +17,16 @@
  </spobs>
  <jumps>
   <jump target="Monogram">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="21767.316954" y="-3191.224311" was_auto="true"/>
   </jump>
   <jump target="Neon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-20147.102736" y="-8837.095186" was_auto="true"/>
   </jump>
   <jump target="Sorrow">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-3944.988093" y="21643.407054" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

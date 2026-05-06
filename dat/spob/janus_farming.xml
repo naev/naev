@@ -1,19 +1,19 @@
 <spob name="Janus Farming">
- <pos x="-5154.532907" y="-4133.193687"/>
+ <pos x="-6604.147324" y="-194.261822"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>9000</population>
-  <hide>0.700000</hide>
+  <hide>0.7</hide>
   <services>
    <land/>
    <refuel/>

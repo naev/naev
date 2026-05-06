@@ -1,10 +1,10 @@
 <ssys name="Gilligan's Light">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="679.340032" y="-565.922481"/>
+ <pos x="-27.300631" y="-448.534883"/>
  <spobs>
   <spob>Dawn</spob>
   <spob>Dusk</spob>
@@ -15,30 +15,30 @@
  </spobs>
  <jumps>
   <jump target="Brimstone">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="24059.490691" y="4625.030559" was_auto="true"/>
   </jump>
   <jump target="Ingot">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-23226.354823" y="7796.566014" was_auto="true"/>
   </jump>
   <jump target="Myad">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-4621.313139" y="24060.205004" was_auto="true"/>
   </jump>
   <jump target="Theras">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-23425.595125" y="-7175.757311" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>7000.000000</radius>
-   <pos x="10003.353274" y="7419.705739"/>
-   <density>0.100000</density>
+   <radius>7000</radius>
+   <pos x="11537.997198" y="4689.747393"/>
+   <density>0.1</density>
   </asteroid>
  </asteroids>
 </ssys>

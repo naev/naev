@@ -1,5 +1,5 @@
 <spob name="Maus I">
- <pos x="-985.724438" y="-965.188513"/>
+ <pos x="-1050.74867" y="-893.962395"/>
  <GFX>
   <space>moon-M02</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

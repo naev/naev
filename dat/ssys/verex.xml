@@ -1,10 +1,10 @@
 <ssys name="Verex">
  <general>
-  <radius>26250.000000</radius>
+  <radius>26250</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="394.423947" y="-686.109348"/>
+ <pos x="-266.861487" y="-589.98834"/>
  <spobs>
   <spob>Verex I</spob>
   <spob>Verex II</spob>
@@ -13,20 +13,20 @@
  </spobs>
  <jumps>
   <jump target="Blunderbuss">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-24762.105203" y="8712.097675" was_auto="true"/>
   </jump>
   <jump target="Darkstone">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-21704.721174" y="-14763.725096" was_auto="true"/>
   </jump>
   <jump target="Ginger">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12828.688322" y="-22901.686748" was_auto="true"/>
   </jump>
   <jump target="Tarsus">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="21790.327595" y="14637.080421" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

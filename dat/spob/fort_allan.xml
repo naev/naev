@@ -1,19 +1,19 @@
 <spob name="Fort Allan">
- <pos x="1007.596800" y="928.281600"/>
+ <pos x="327.595307" y="1330.277923"/>
  <GFX>
   <space>000</space>
   <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>30.000000</base>
-  <bonus>15.000000</bonus>
+  <base>30</base>
+  <bonus>15</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>400</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
    <refuel/>

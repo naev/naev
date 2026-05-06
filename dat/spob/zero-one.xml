@@ -1,5 +1,5 @@
 <spob name="Zero-One">
- <pos x="-23680.000000" y="-4400.000000"/>
+ <pos x="-23822.773279" y="3546.529749"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>mining5</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

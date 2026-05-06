@@ -1,5 +1,5 @@
 <spob name="Druss IIa">
- <pos x="11632.195782" y="-6651.822071"/>
+ <pos x="5091.45791" y="-12394.828434"/>
  <GFX>
   <space>moon-J02</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

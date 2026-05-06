@@ -3,12 +3,12 @@
  <feature>#bWormhole#0</feature>
  <lua>wormhole_ivella.lua</lua>
  <marker>spobmarker_wormhole</marker>
- <pos x="6521.634681" y="-8927.344635"/>
+ <pos x="7587.680398" y="-8040.914582"/>
  <GFX/>
  <general>
   <class>Wormhole</class>
   <population>0</population>
-  <hide>0.150000</hide>
+  <hide>0.15</hide>
   <services>
    <uninhabited/>
   </services>

@@ -1,5 +1,5 @@
 <spob name="Beeklo II">
- <pos x="-924.000000" y="21582.000000"/>
+ <pos x="4130.397407" y="21203.214785"/>
  <GFX>
   <space>G03</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

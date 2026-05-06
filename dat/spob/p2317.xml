@@ -1,5 +1,5 @@
 <spob name="P-2317">
- <pos x="3726.929987" y="650.875333"/>
+ <pos x="3181.94846" y="2046.667979"/>
  <GFX>
   <space>M19</space>
   <exterior>uninhabited-jungle</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>M</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

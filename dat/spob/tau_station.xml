@@ -1,19 +1,19 @@
 <spob name="Tau Station">
- <pos x="8917.170749" y="-13303.144273"/>
+ <pos x="4528.840023" y="-15361.614165"/>
  <GFX>
   <space>000</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>12000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

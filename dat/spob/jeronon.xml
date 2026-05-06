@@ -1,19 +1,19 @@
 <spob name="Jeronon">
- <pos x="-8052.787306" y="-3991.710904"/>
+ <pos x="-2802.063616" y="-8539.881663"/>
  <GFX>
   <space>D01</space>
   <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>D</class>
   <population>50000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

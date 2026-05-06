@@ -1,19 +1,19 @@
 <spob name="Leszec">
- <pos x="4978.196048" y="5624.517261"/>
+ <pos x="4099.780775" y="6293.60214"/>
  <GFX>
   <space>J03</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>J</class>
   <population>15641</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

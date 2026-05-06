@@ -1,5 +1,5 @@
 <spob name="Kaira">
- <pos x="4400.210864" y="-2156.378609"/>
+ <pos x="-2499.670898" y="4214.673148"/>
  <GFX>
   <space>P04</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

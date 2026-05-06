@@ -1,5 +1,5 @@
 <spob name="Waterhole">
- <pos x="-5555.000000" y="-2200.000000"/>
+ <pos x="-4695.410411" y="-3694.745737"/>
  <GFX>
   <space>O00</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

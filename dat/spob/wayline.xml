@@ -1,5 +1,5 @@
 <spob name="Wayline">
- <pos x="-1404.285821" y="1179.600089"/>
+ <pos x="-1446.556177" y="1127.364299"/>
  <GFX>
   <space>P03</space>
   <exterior>snow</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>75000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

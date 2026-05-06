@@ -1,5 +1,5 @@
 <spob name="Mouddar">
- <pos x="4755.463992" y="-15972.357019"/>
+ <pos x="-1393.671016" y="-16606.875311"/>
  <GFX>
   <space>O00</space>
   <exterior>aquatic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>400000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

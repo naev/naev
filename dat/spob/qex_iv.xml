@@ -1,5 +1,5 @@
 <spob name="Qex IV">
- <pos x="6044.547579" y="709.309155"/>
+ <pos x="5998.644136" y="1027.591085"/>
  <GFX>
   <space>J00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

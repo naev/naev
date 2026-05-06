@@ -1,5 +1,5 @@
 <spob name="Suna II">
- <pos x="-4670.000000" y="-1110.000000"/>
+ <pos x="-4619.87957" y="1302.963066"/>
  <GFX>
   <space>C01</space>
   <exterior>mining4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

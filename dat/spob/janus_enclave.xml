@@ -1,20 +1,20 @@
 <spob name="Janus Enclave">
  <lua>empire_mil_restricted.lua</lua>
- <pos x="-2258.544687" y="5008.117353"/>
+ <pos x="-1188.603705" y="5363.719302"/>
  <GFX>
   <space>station-shipyard2</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>1</class>
   <population>12000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

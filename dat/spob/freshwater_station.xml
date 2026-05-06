@@ -1,19 +1,19 @@
 <spob name="Freshwater Station">
- <pos x="-13589.830053" y="11789.469068"/>
+ <pos x="-6300.693735" y="16851.596963"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>40.000000</base>
-  <bonus>20.000000</bonus>
+  <base>40</base>
+  <bonus>20</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>200</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

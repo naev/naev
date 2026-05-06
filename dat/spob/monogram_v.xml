@@ -1,5 +1,5 @@
 <spob name="Monogram V">
- <pos x="-2960.195181" y="-11805.148054"/>
+ <pos x="-8218.799699" y="-8976.391679"/>
  <GFX>
   <space>moon-C01</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Gilligan's Memory">
- <pos x="2560.000000" y="-6640.000000"/>
+ <pos x="259.54384" y="-7111.669072"/>
  <GFX>
   <space>M00</space>
   <exterior>station03</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>3e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

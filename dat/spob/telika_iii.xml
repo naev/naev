@@ -1,5 +1,5 @@
 <spob name="Telika III">
- <pos x="10028.372174" y="8612.168880"/>
+ <pos x="12497.077611" y="-4308.219175"/>
  <GFX>
   <space>C01</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

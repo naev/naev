@@ -1,10 +1,10 @@
 <ssys name="Lynx">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="863.499185" y="-751.771096"/>
+ <pos x="6.748593" y="-786.036822"/>
  <spobs>
   <spob>Lyncis I</spob>
   <spob>Lyncis II</spob>
@@ -15,37 +15,37 @@
  </spobs>
  <jumps>
   <jump target="Eye of Night">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2344.282408" y="-14815.678856" was_auto="true"/>
   </jump>
   <jump target="Fidelis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-12725.085317" y="-7941.801034" was_auto="true"/>
   </jump>
   <jump target="Koit">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2508.347073" y="14788.786121" was_auto="true"/>
   </jump>
   <jump target="Norpin">
-   <pos x="1523.379155" y="14741.257170"/>
+   <pos x="12654.983703" y="7712.116083"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>5000.000000</radius>
-   <pos x="6425.995149" y="-2649.894907"/>
-   <density>1.300000</density>
+   <radius>5000</radius>
+   <pos x="1781.321671" y="-6718.798239"/>
+   <density>1.3</density>
   </asteroid>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>6000.000000</radius>
-   <pos x="-3378.616006" y="4637.316087"/>
+   <radius>6000</radius>
+   <pos x="1645.416717" y="5496.576246"/>
   </asteroid>
   <exclusion>
-   <radius>9000.000000</radius>
+   <radius>9000</radius>
    <pos x="723.669585" y="1390.888125"/>
   </exclusion>
  </asteroids>

@@ -1,11 +1,11 @@
 <ssys name="Raelid">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>500</spacedust>
   <interference>13.235288</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <nebula hue="240">100</nebula>
  </general>
- <pos x="452.982268" y="-501.420020"/>
+ <pos x="-234.944839" y="-393.792583"/>
  <spobs>
   <spob>Fort Raelid</spob>
   <spob>Marius Enclave</spob>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Doranthex">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8336.740684" y="-15386.642088" was_auto="true"/>
   </jump>
   <jump target="Zacron">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-4447.504067" y="16925.416023" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

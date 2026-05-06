@@ -1,5 +1,5 @@
 <spob name="Garten X">
- <pos x="-17519.479371" y="-12522.862141"/>
+ <pos x="-18494.561055" y="-11032.019081"/>
  <GFX>
   <space>moon-M05</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

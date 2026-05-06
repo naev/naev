@@ -1,10 +1,10 @@
 <ssys name="Tau Prime">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>600</spacedust>
   <interference>6.818175</interference>
  </general>
- <pos x="260.785374" y="208.751310"/>
+ <pos x="-425.293731" y="206.556446"/>
  <spobs>
   <spob>Europea</spob>
   <spob>Tau Prime</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Draconis">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="6265.452769" y="23685.314048" was_auto="true"/>
   </jump>
   <jump target="Holly">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-11189.777584" y="-21795.386613" was_auto="true"/>
   </jump>
   <jump target="Kenvis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="23459.367828" y="-7064.563757" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

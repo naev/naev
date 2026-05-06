@@ -1,5 +1,5 @@
 <spob name="Delta Pavonis II">
- <pos x="-9783.174932" y="9701.669603"/>
+ <pos x="-7538.657939" y="11532.629418"/>
  <GFX>
   <space>C01</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

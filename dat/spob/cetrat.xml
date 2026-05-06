@@ -1,19 +1,19 @@
 <spob name="Cetrat">
- <pos x="-5040.078848" y="-3946.220808"/>
+ <pos x="-6091.267768" y="-1967.615417"/>
  <GFX>
   <space>O01</space>
   <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>9.3e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

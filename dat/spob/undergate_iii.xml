@@ -1,5 +1,5 @@
 <spob name="Undergate III">
- <pos x="19697.628816" y="6644.689858"/>
+ <pos x="19028.504349" y="-8370.454379"/>
  <GFX>
   <space>I05</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

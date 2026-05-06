@@ -1,5 +1,5 @@
 <spob name="Draconis Delta">
- <pos x="-4630.204796" y="30782.638104"/>
+ <pos x="-3175.063242" y="30966.571952"/>
  <GFX>
   <space>moon-H02</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

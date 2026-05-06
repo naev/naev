@@ -1,5 +1,5 @@
 <spob name="Adrian">
- <pos x="-179.477707" y="5286.959359"/>
+ <pos x="1035.847876" y="5187.597776"/>
  <GFX>
   <space>P04</space>
   <exterior>snow</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>4e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

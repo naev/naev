@@ -1,6 +1,6 @@
 <spob name="Turawee">
  <lua>highclass.lua</lua>
- <pos x="16925.367382" y="4758.979987"/>
+ <pos x="17490.542462" y="-1787.980953"/>
  <GFX>
   <space>M02</space>
   <exterior>forest2</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>2.13344e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

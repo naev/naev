@@ -1,5 +1,5 @@
 <spob name="Zero-Eleven">
- <pos x="13120.000000" y="-25920.000000"/>
+ <pos x="3969.669342" y="-28778.855524"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

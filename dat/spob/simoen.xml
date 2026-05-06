@@ -1,20 +1,20 @@
 <spob name="Simoen">
  <lua>lowclass.lua</lua>
- <pos x="4705.190678" y="-10883.354542"/>
+ <pos x="720.540223" y="-11834.992487"/>
  <GFX>
   <space>G03</space>
   <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>G</class>
   <population>1e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,20 +1,20 @@
 <spob name="Jaxheen">
  <lua>highclass.lua</lua>
- <pos x="13061.773645" y="-3555.275667"/>
+ <pos x="13434.693574" y="1661.001016"/>
  <GFX>
   <space>M08</space>
   <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>6e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,20 +1,20 @@
 <spob name="Wikon">
  <lua>highclass.lua</lua>
- <pos x="-7993.567073" y="1973.321463"/>
+ <pos x="-6092.937077" y="5537.800097"/>
  <GFX>
   <space>M02</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

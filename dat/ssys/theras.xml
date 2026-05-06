@@ -1,10 +1,10 @@
 <ssys name="Theras">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>400</spacedust>
   <interference>13.235288</interference>
  </general>
- <pos x="582.526674" y="-625.194582"/>
+ <pos x="-45.331341" y="-529.556753"/>
  <spobs>
   <spob>Cetrat</spob>
   <spob>Theras II</spob>
@@ -16,32 +16,32 @@
  </spobs>
  <jumps>
   <jump target="Dakron">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-16915.276497" y="4485.91362" was_auto="true"/>
   </jump>
   <jump target="Gilligan's Light">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="17159.675511" y="3434.463034" was_auto="true"/>
   </jump>
   <jump target="Haleb">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3645.188543" y="-17116.150282" was_auto="true"/>
   </jump>
   <jump target="Klantar">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-11393.99938" y="-13282.574227" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-poor</group>
-   <radius>13500.000000</radius>
-   <pos x="230.025600" y="2185.243196"/>
-   <density>0.600000</density>
+   <radius>13500</radius>
+   <pos x="968.999311" y="1972.115599"/>
+   <density>0.6</density>
   </asteroid>
   <exclusion>
-   <radius>10000.000000</radius>
+   <radius>10000</radius>
    <pos x="1495.166397" y="1035.115198"/>
   </exclusion>
  </asteroids>

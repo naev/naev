@@ -1,5 +1,5 @@
 <spob name="Jemard">
- <pos x="-5923.799568" y="-7950.928562"/>
+ <pos x="9889.981612" y="704.932634"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>gas</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>A</class>
   <population>50000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

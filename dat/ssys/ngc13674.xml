@@ -1,24 +1,24 @@
 <ssys name="NGC-13674">
  <general>
   <background>blackhole</background>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
- <pos x="-547.292401" y="-401.961960"/>
+ <pos x="-1523.106978" y="-578.891582"/>
  <spobs>
   <spob>Wormhole NGC-13674</spob>
  </spobs>
  <jumps>
   <jump target="Copernicus">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="13568.983674" y="6393.95668" was_auto="true"/>
   </jump>
   <jump target="NGC-1562">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14700.553852" y="2982.233461" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

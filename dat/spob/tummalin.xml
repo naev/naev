@@ -1,19 +1,19 @@
 <spob name="Tummalin">
- <pos x="-10552.541995" y="2257.612042"/>
+ <pos x="-10620.832747" y="-1910.724063"/>
  <GFX>
   <space>moon-M04</space>
   <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.660000</base>
-  <bonus>33.330000</bonus>
+  <base>66.66</base>
+  <bonus>33.33</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>100000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

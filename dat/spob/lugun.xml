@@ -1,20 +1,20 @@
 <spob name="Lugun">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="-1930.617815" y="958.859182"/>
+ <pos x="-1945.288065" y="928.735927"/>
  <GFX>
   <space>zalek_station2</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>66.660000</base>
-  <bonus>33.330000</bonus>
+  <base>66.66</base>
+  <bonus>33.33</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>12000</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services>
    <land/>
    <refuel/>

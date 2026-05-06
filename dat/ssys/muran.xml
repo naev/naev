@@ -1,28 +1,28 @@
 <ssys name="Muran">
  <general>
-  <radius>12000.000000</radius>
+  <radius>12000</radius>
   <spacedust>400</spacedust>
   <interference>24.999975</interference>
  </general>
- <pos x="108.183299" y="672.643489"/>
+ <pos x="-631.055638" y="719.493378"/>
  <spobs/>
  <jumps>
   <jump target="Diadem">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="11158.059318" y="4415.621388" was_auto="true"/>
   </jump>
   <jump target="Forlat">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-10805.784058" y="-5218.719275" was_auto="true"/>
   </jump>
   <jump target="New Haven">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2637.950401" y="-11706.46051" was_auto="true"/>
   </jump>
   <jump target="Wahri">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="6984.776461" y="9757.709658" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

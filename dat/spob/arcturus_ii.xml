@@ -1,5 +1,5 @@
 <spob name="Arcturus II">
- <pos x="1952.095064" y="9979.398915"/>
+ <pos x="5455.314828" y="8581.294655"/>
  <GFX>
   <space>D02</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

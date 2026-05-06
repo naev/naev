@@ -1,20 +1,20 @@
 <spob name="Vigilance Centre">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="2944.327674" y="3312.368633"/>
+ <pos x="224.499199" y="4426.110202"/>
  <GFX>
   <space>zalek_station2</space>
   <exterior>zalek_station2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>3000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

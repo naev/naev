@@ -1,5 +1,5 @@
 <spob name="Brendon I">
- <pos x="-2362.251437" y="2690.207925"/>
+ <pos x="-1294.910656" y="3337.762262"/>
  <GFX>
   <space>moon-D00</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

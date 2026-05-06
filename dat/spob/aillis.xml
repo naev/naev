@@ -1,19 +1,19 @@
 <spob name="Aillis">
- <pos x="7768.189052" y="-13166.249352"/>
+ <pos x="-12286.938698" y="9095.384575"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>mining6</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

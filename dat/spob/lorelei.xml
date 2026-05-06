@@ -1,5 +1,5 @@
 <spob name="Lorelei">
- <pos x="-28481.636218" y="6269.915925"/>
+ <pos x="-28662.273063" y="5384.194477"/>
  <GFX>
   <space>M09</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>6e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

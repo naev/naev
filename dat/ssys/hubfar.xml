@@ -1,36 +1,36 @@
 <ssys name="Hubfar">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="56.762672" y="-490.558663"/>
+ <pos x="-644.599475" y="-515.035853"/>
  <spobs>
   <spob>Hubfar Citadel</spob>
   <spob>Hubfar I</spob>
  </spobs>
  <jumps>
   <jump target="Daravon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="1046.085915" y="-14963.479015" was_auto="true"/>
   </jump>
   <jump target="Majesteka">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7927.634374" y="12733.915863" was_auto="true"/>
   </jump>
   <jump target="Vadornla">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="10949.392635" y="10252.35587" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>4000.000000</radius>
-   <pos x="-47.922000" y="1427.010664"/>
+   <radius>4000</radius>
+   <pos x="-537.696764" y="1322.701078"/>
   </asteroid>
   <exclusion>
-   <radius>3000.000000</radius>
+   <radius>3000</radius>
    <pos x="53.246667" y="1251.296664"/>
   </exclusion>
  </asteroids>

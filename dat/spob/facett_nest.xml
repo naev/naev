@@ -1,20 +1,20 @@
 <spob name="Facett Nest">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="-5141.467977" y="-9293.620418"/>
+ <pos x="-1022.117754" y="-10571.724018"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>500</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

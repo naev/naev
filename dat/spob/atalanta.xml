@@ -1,19 +1,19 @@
 <spob name="Atalanta">
- <pos x="25805.000000" y="-5070.000000"/>
+ <pos x="25036.580835" y="-8048.139229"/>
  <GFX>
   <space>P03</space>
   <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>P</class>
   <population>2e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

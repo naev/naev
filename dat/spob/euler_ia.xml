@@ -1,5 +1,5 @@
 <spob name="Euler Ia">
- <pos x="-10258.523003" y="-4107.836990"/>
+ <pos x="-10408.341915" y="-3711.877895"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>mining4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

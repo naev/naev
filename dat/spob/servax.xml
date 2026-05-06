@@ -1,5 +1,5 @@
 <spob name="Servax">
- <pos x="-6295.057079" y="-2668.425966"/>
+ <pos x="4282.52674" y="-5329.934847"/>
  <GFX>
   <space>X01</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

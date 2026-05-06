@@ -1,19 +1,19 @@
 <spob name="Pity">
- <pos x="6022.050081" y="9158.426648"/>
+ <pos x="10353.176453" y="3599.111442"/>
  <GFX>
   <space>O02</space>
   <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>80.000000</base>
-  <bonus>0.000000</bonus>
+  <base>80</base>
+  <bonus>0</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>1400</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Old Man Jack">
- <pos x="2305.156313" y="-8636.090529"/>
+ <pos x="2939.481629" y="-8441.282663"/>
  <GFX>
   <space>G02</space>
   <exterior>uninhabited-rocky-red-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
   </services>

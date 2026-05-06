@@ -1,5 +1,5 @@
 <spob name="Zemur III">
- <pos x="12471.893149" y="2447.867982"/>
+ <pos x="9917.96907" y="7948.21149"/>
  <GFX>
   <space>moon-H02</space>
   <exterior>desertic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

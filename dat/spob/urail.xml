@@ -1,19 +1,19 @@
 <spob name="Urail">
- <pos x="-14578.000000" y="24198.000000"/>
+ <pos x="-10306.397183" y="26302.841388"/>
  <GFX>
   <space>M00</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.670000</base>
-  <bonus>33.333300</bonus>
+  <base>66.67</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1.5e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

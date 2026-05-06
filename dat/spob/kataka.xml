@@ -1,21 +1,21 @@
 <spob name="Kataka">
  <feature>#pSoromid Homeworld#0</feature>
  <lua>soromid_mil_kataka.lua</lua>
- <pos x="-5945.866695" y="8183.563291"/>
+ <pos x="-8530.210218" y="5436.869736"/>
  <GFX>
   <space>K03</space>
   <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>Y</class>
   <population>3e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

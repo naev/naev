@@ -1,5 +1,5 @@
 <spob name="Gamma">
- <pos x="-2310.000000" y="-11760.000000"/>
+ <pos x="2756.235421" y="-11663.484312"/>
  <GFX>
   <space>A03</space>
   <exterior>mining4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

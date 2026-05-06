@@ -1,5 +1,5 @@
 <spob name="Shikima II">
- <pos x="6360.000000" y="9680.000000"/>
+ <pos x="8905.734399" y="-7405.396329"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

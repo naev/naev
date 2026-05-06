@@ -1,6 +1,6 @@
 <spob name="Seanich">
  <lua>lowclass.lua</lua>
- <pos x="18820.828324" y="10428.462646"/>
+ <pos x="20585.172607" y="6263.152616"/>
  <GFX>
   <space>moon-M00</space>
   <exterior>forest</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>9e+07</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

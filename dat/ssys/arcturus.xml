@@ -1,10 +1,10 @@
 <ssys name="Arcturus">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="191.881983" y="113.774870"/>
+ <pos x="-526.011564" y="129.331482"/>
  <spobs>
   <spob>Antica</spob>
   <spob>Arcturus Enclave</spob>
@@ -17,34 +17,34 @@
  </spobs>
  <jumps>
   <jump target="Borla">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14193.601316" y="10236.780825" was_auto="true"/>
   </jump>
   <jump target="Holly">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="17212.224183" y="3160.591506" was_auto="true"/>
   </jump>
   <jump target="Mural">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-11283.368884" y="-13376.680702" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>2500.000000</radius>
-   <pos x="1955.963274" y="10010.694473"/>
-   <density>0.900000</density>
+   <radius>2500</radius>
+   <pos x="5470.324234" y="8609.027176"/>
+   <density>0.9</density>
   </asteroid>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>7000.000000</radius>
-   <pos x="-1.243842" y="-5886.866260"/>
-   <density>0.300000</density>
+   <radius>7000</radius>
+   <pos x="-2146.937876" y="-5481.409824"/>
+   <density>0.3</density>
   </asteroid>
   <exclusion>
-   <radius>800.000000</radius>
-   <pos x="1947.047174" y="9966.113970"/>
+   <radius>800</radius>
+   <pos x="1947.047174" y="9966.11397"/>
   </exclusion>
  </asteroids>
  <tags>

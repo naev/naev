@@ -1,5 +1,5 @@
 <spob name="Koralis VI">
- <pos x="7391.438009" y="-13450.147648"/>
+ <pos x="-12608.480454" y="8750.202753"/>
  <GFX>
   <space>Y00</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

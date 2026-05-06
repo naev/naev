@@ -1,10 +1,10 @@
 <ssys name="Valerie">
  <general>
-  <radius>23100.000000</radius>
+  <radius>23100</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-150.266900" y="-182.390032"/>
+ <pos x="-1015.119839" y="-222.44243"/>
  <spobs>
   <spob>Nexus Shipyards HQ</spob>
   <spob>Valerie II</spob>
@@ -15,28 +15,28 @@
  </spobs>
  <jumps>
   <jump target="Palejos">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-22263.326805" y="6160.704469" was_auto="true"/>
   </jump>
   <jump target="Shinnok">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="21046.912513" y="9520.371508" was_auto="true"/>
   </jump>
   <jump target="Ux">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-18839.468021" y="-13367.290102" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>5000.000000</radius>
-   <pos x="-8943.395310" y="3776.100242"/>
+   <radius>5000</radius>
+   <pos x="-8912.372337" y="3848.749411"/>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="20000.000000" y="9500.000000">onion04_1</waypoint>
-  <waypoint x="300.000000" y="-3500.000000">onion04_2</waypoint>
-  <waypoint x="-12000.000000" y="-5000.000000">onion04_3</waypoint>
+  <waypoint x="20076.641238" y="9336.9415">onion04_1</waypoint>
+  <waypoint x="271.509871" y="-3502.325283">onion04_2</waypoint>
+  <waypoint x="-12040.288703" y="-4902.188075">onion04_3</waypoint>
  </waypoints>
 </ssys>

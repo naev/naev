@@ -1,5 +1,5 @@
 <spob name="Kraft IV">
- <pos x="-10514.897312" y="-5027.946649"/>
+ <pos x="-11598.367917" y="-1149.42361"/>
  <GFX>
   <space>S00</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>S</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,21 +1,21 @@
 <spob name="Dvaered High Command">
  <feature>#pDvaered Homeworld#0</feature>
  <lua>dvaered_mil_dhc.lua</lua>
- <pos x="-16173.088338" y="-11736.708576"/>
+ <pos x="-13259.100853" y="-14950.430065"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

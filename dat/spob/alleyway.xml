@@ -1,20 +1,20 @@
 <spob name="Alleyway">
  <lua>lawless.lua</lua>
- <pos x="7683.061332" y="4794.949483"/>
+ <pos x="8993.077642" y="1070.292713"/>
  <GFX>
   <space>002</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
    <refuel/>

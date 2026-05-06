@@ -1,34 +1,34 @@
 <ssys name="Gamel">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>200</spacedust>
   <interference>6.818181</interference>
  </general>
- <pos x="97.997977" y="437.063432"/>
+ <pos x="-578.797908" y="467.314108"/>
  <spobs/>
  <jumps>
   <jump target="Bastion">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="10355.860721" y="9421.048175" was_auto="true"/>
   </jump>
   <jump target="Coriolis">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9081.978667" y="-10654.466832" was_auto="true"/>
   </jump>
   <jump target="Dune">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8735.393735" y="-10940.424867" was_auto="true"/>
   </jump>
   <jump target="Haven">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-11499.194381" y="7985.519931" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-2000.000000" y="3000.000000">taiomi05_fightpos</waypoint>
-  <waypoint x="3000.000000" y="-8000.000000">taiomi09_baddies1</waypoint>
-  <waypoint x="3000.000000" y="13000.000000">taiomi09_baddies2</waypoint>
-  <waypoint x="6000.000000" y="6000.000000">taiomi09_wp1</waypoint>
-  <waypoint x="13000.000000" y="-7000.000000">taiomi09_wp2</waypoint>
+  <waypoint x="-1529.558562" y="3265.034548">taiomi05_fightpos</waypoint>
+  <waypoint x="1771.655003" y="-8358.303568">taiomi09_baddies1</waypoint>
+  <waypoint x="4907.752047" y="12406.206907">taiomi09_baddies2</waypoint>
+  <waypoint x="6828.745005" y="5036.689552">taiomi09_wp1</waypoint>
+  <waypoint x="11808.855089" y="-8862.8969">taiomi09_wp2</waypoint>
  </waypoints>
 </ssys>

@@ -1,6 +1,6 @@
 <spob name="Jade Court">
  <lua>jadecourt.lua</lua>
- <pos x="-2507.492761" y="-4718.400357"/>
+ <pos x="-2783.915632" y="-4560.771384"/>
  <GFX>
   <space>station-commerce</space>
   <exterior>traderoom</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>0</class>
   <population>24000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

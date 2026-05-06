@@ -1,19 +1,19 @@
 <spob name="Zhiru">
- <pos x="9549.349193" y="-1582.542056"/>
+ <pos x="8277.451351" y="5017.799167"/>
  <GFX>
   <space>M04</space>
   <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Goddard</faction>
-  <base>200.000000</base>
-  <bonus>50.000000</bonus>
+  <base>200</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>M</class>
   <population>1.3e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

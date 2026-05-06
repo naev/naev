@@ -1,19 +1,19 @@
 <spob name="Outbound Enclave">
- <pos x="-1766.596605" y="7508.035569"/>
+ <pos x="-3330.765754" y="6956.828383"/>
  <GFX>
   <space>station-commerce3</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>1</class>
   <population>5000</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
    <refuel/>

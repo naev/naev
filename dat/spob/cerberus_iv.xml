@@ -1,5 +1,5 @@
 <spob name="Cerberus IV">
- <pos x="-1772.222222" y="30966.666667"/>
+ <pos x="-12519.273987" y="28378.565765"/>
  <GFX>
   <space>D02</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

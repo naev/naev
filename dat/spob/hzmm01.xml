@@ -1,19 +1,19 @@
 <spob name="HZMM-01">
- <pos x="7054.425087" y="2844.189863"/>
+ <pos x="3056.829635" y="6964.920807"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>8.000000</base>
-  <bonus>4.000000</bonus>
+  <base>8</base>
+  <bonus>4</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>A</class>
   <population>1250</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

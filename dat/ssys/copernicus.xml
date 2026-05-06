@@ -1,11 +1,11 @@
 <ssys name="Copernicus">
  <general>
   <background>blackhole</background>
-  <radius>12000.000000</radius>
+  <radius>12000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-453.957040" y="-402.948733"/>
+ <pos x="-1361.778741" y="-492.239017"/>
  <spobs>
   <spob>Galileo Terminal</spob>
   <spob>Ptolemy</spob>
@@ -14,17 +14,17 @@
  </spobs>
  <jumps>
   <jump target="NGC-13674">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-8112.757996" y="-8842.124048" was_auto="true"/>
   </jump>
   <jump target="Octavian">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="1273.454982" y="11932.238365" was_auto="true"/>
   </jump>
   <jump target="Procyon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="9793.494587" y="-6934.512511" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

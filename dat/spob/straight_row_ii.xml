@@ -1,5 +1,5 @@
 <spob name="Straight Row II">
- <pos x="1642.874064" y="-780.158790"/>
+ <pos x="1791.765257" y="-311.865658"/>
  <GFX>
   <space>moon-A00</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

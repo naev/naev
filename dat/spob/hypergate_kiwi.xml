@@ -1,20 +1,20 @@
 <spob name="Hypergate Kiwi">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos x="-470.770104" y="4172.735010"/>
+ <pos x="-73.768784" y="4198.559291"/>
  <GFX>
   <space>hypergate_early_construction_stage</space>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>Construct</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
  <tags>

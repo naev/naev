@@ -1,5 +1,5 @@
 <spob name="Old King Cole">
- <pos x="-8638.593499" y="12524.922010"/>
+ <pos x="-1044.158055" y="15179.219444"/>
  <GFX>
   <space>J06</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

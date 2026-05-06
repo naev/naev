@@ -1,5 +1,5 @@
 <spob name="Massia I">
- <pos x="12852.000000" y="9588.000000"/>
+ <pos x="13182.101821" y="9128.846563"/>
  <GFX>
   <space>A02</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

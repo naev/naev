@@ -1,6 +1,6 @@
 <spob name="Trichu">
  <lua>lowclass.lua</lua>
- <pos x="-14442.412852" y="11180.096085"/>
+ <pos x="-13114.352942" y="12711.867854"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>mining</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>G</class>
   <population>30000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Durumdra">
- <pos x="6810.831786" y="-20480.644679"/>
+ <pos x="17668.886196" y="-12395.753171"/>
  <GFX>
   <space>P01</space>
   <exterior>snow</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>1e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

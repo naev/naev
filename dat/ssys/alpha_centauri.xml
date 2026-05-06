@@ -1,27 +1,27 @@
 <ssys name="Alpha Centauri">
  <general>
-  <radius>16200.000000</radius>
+  <radius>16200</radius>
   <spacedust>400</spacedust>
-  <interference>94.400000</interference>
-  <nebula volatility="3.900000" hue="320.000000">600.000000</nebula>
+  <interference>94.4</interference>
+  <nebula volatility="3.9" hue="320">600</nebula>
   <nolanes/>
  </general>
- <pos x="814.033246" y="457.439564"/>
+ <pos x="67.197854" y="608.459033"/>
  <spobs>
   <spob_virtual>Lost Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Baitas">
-   <pos x="-13737.544729" y="-5932.630800"/>
-   <hide>1.000000</hide>
+   <pos x="-13737.544729" y="-5932.6308"/>
+   <hide>1</hide>
   </jump>
   <jump target="Padonia">
-   <pos x="14898.364220" y="5149.552437"/>
-   <hide>1.200000</hide>
+   <pos x="14898.36422" y="5149.552437"/>
+   <hide>1.2</hide>
   </jump>
   <jump target="Veses">
    <pos x="-315.964321" y="1459.305504"/>
-   <hide>0.730000</hide>
+   <hide>0.73</hide>
   </jump>
  </jumps>
  <tags>

@@ -1,5 +1,5 @@
 <spob name="Gyrios II">
- <pos x="-6205.000000" y="10710.000000"/>
+ <pos x="-3910.328604" y="11743.741107"/>
  <GFX>
   <space>K03</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Santoros I">
- <pos x="10030.486195" y="-2780.891695"/>
+ <pos x="10149.210664" y="-2310.310543"/>
  <GFX>
   <space>J00</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

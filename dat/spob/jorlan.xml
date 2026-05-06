@@ -1,20 +1,20 @@
 <spob name="Jorlan">
  <lua>lowclass.lua</lua>
- <pos x="2166.504922" y="12008.424609"/>
+ <pos x="9825.457775" y="7235.771187"/>
  <GFX>
   <space>D01</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>D</class>
   <population>5e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,19 +1,19 @@
 <spob name="Holly III">
- <pos x="4330.000000" y="-2500.000000"/>
+ <pos x="3983.022016" y="-3022.322883"/>
  <GFX>
   <space>H01</space>
   <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>
-  <base>50.000000</base>
-  <bonus>20.000000</bonus>
+  <base>50</base>
+  <bonus>20</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>F</class>
   <population>3e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

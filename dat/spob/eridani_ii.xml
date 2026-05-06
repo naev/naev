@@ -1,5 +1,5 @@
 <spob name="Eridani II">
- <pos x="7589.327796" y="6139.296163"/>
+ <pos x="6983.719247" y="6820.30199"/>
  <GFX>
   <space>D02</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

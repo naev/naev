@@ -1,5 +1,5 @@
 <spob name="Beth">
- <pos x="16642.352127" y="-10109.625100"/>
+ <pos x="-4820.568964" y="-18866.226937"/>
  <GFX>
   <space>I03</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services/>
  </general>
 </spob>

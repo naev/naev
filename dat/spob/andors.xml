@@ -1,5 +1,5 @@
 <spob name="Andors">
- <pos x="2491.943995" y="1418.491197"/>
+ <pos x="2442.132459" y="1502.628097"/>
  <GFX>
   <space>P05</space>
   <exterior>snow</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>P</class>
   <population>163000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

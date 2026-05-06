@@ -1,5 +1,5 @@
 <spob name="Tepvin Lambda">
- <pos x="-8352.728898" y="5826.078995"/>
+ <pos x="-7680.786921" y="6687.061295"/>
  <GFX>
   <space>I01</space>
   <exterior>oceanic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

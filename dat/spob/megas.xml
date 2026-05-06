@@ -1,5 +1,5 @@
 <spob name="Megas">
- <pos x="2803.400303" y="3353.434540"/>
+ <pos x="3030.837768" y="3149.380715"/>
  <GFX>
   <space>K02</space>
   <exterior>mining</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>J</class>
   <population>654321</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

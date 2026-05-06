@@ -1,5 +1,5 @@
 <spob name="Little Rock">
- <pos x="-1815.726706" y="2195.486540"/>
+ <pos x="-2799.464692" y="529.171098"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>station05</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

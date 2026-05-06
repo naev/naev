@@ -1,5 +1,5 @@
 <spob name="Haven">
- <pos x="8514.404296" y="8209.228516"/>
+ <pos x="7881.932007" y="8818.257264"/>
  <GFX>
   <space>A02</space>
   <exterior>desertic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>Z</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

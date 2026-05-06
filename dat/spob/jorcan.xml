@@ -1,5 +1,5 @@
 <spob name="Jorcan">
- <pos x="14226.623033" y="-4360.650738"/>
+ <pos x="14755.017701" y="-1923.936173"/>
  <GFX>
   <space>G01</space>
   <exterior>mining</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>G</class>
   <population>170000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

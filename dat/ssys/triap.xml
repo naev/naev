@@ -1,10 +1,10 @@
 <ssys name="Triap">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="744.198107" y="-647.137948"/>
+ <pos x="32.519406" y="-591.717018"/>
  <spobs>
   <spob>Khelim</spob>
   <spob>Megan Station</spob>
@@ -12,20 +12,20 @@
  </spobs>
  <jumps>
   <jump target="Brimstone">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="13637.158522" y="20353.818006" was_auto="true"/>
   </jump>
   <jump target="Chraan">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="23768.878377" y="5940.574102" was_auto="true"/>
   </jump>
   <jump target="Haleb">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-24092.638662" y="-4449.130506" was_auto="true"/>
   </jump>
   <jump target="Koit">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="949.226767" y="-24481.604697" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

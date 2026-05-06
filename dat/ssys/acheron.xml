@@ -1,35 +1,35 @@
 <ssys name="Acheron">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>300</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="53.952808" y="233.820330"/>
+ <pos x="-764.331159" y="311.155523"/>
  <spobs/>
  <jumps>
   <jump target="Fortitude">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="15303.164556" y="8489.001976" was_auto="true"/>
   </jump>
   <jump target="Merisi">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="11331.923826" y="-13335.572818" was_auto="true"/>
   </jump>
   <jump target="Sikh">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="5093.046095" y="16742.487314" was_auto="true"/>
   </jump>
   <jump target="Terminus">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-12396.95071" y="-12351.745345" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>6000.000000</radius>
-   <pos x="7552.200484" y="-596.226354"/>
+   <radius>6000</radius>
+   <pos x="-7298.608281" y="-2030.156441"/>
   </asteroid>
  </asteroids>
 </ssys>

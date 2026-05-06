@@ -1,19 +1,19 @@
 <spob name="Shade &amp; Sunshine">
- <pos x="-5993.939706" y="12577.624148"/>
+ <pos x="-5612.477733" y="-12752.412951"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

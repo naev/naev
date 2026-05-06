@@ -1,5 +1,5 @@
 <spob name="Jugreny">
- <pos x="-2500.000000" y="-10800.000000"/>
+ <pos x="3495.918716" y="-10519.912182"/>
  <GFX>
   <space>M02</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>M</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

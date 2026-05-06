@@ -1,5 +1,5 @@
 <spob name="Ginni">
- <pos x="4951.946517" y="16999.507498"/>
+ <pos x="4944.000665" y="17001.820105"/>
  <GFX>
   <space>M00</space>
   <exterior>forest2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>1e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

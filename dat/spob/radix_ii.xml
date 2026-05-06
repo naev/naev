@@ -1,5 +1,5 @@
 <spob name="Radix II">
- <pos x="-28443.962814" y="1087.526273"/>
+ <pos x="-26497.885078" y="-10397.298704"/>
  <GFX>
   <space>H03</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Duros Ia">
- <pos x="4108.333454" y="3767.409191"/>
+ <pos x="5214.827251" y="1969.099418"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

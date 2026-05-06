@@ -1,5 +1,5 @@
 <spob name="Apez V">
- <pos x="-5998.401103" y="10755.037640"/>
+ <pos x="-1186.754545" y="12257.375905"/>
  <GFX>
   <space>L00</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>L</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Brooks">
- <pos x="-10667.555844" y="-4262.926639"/>
+ <pos x="-11487.501154" y="-81.292301"/>
  <GFX>
   <space>M08</space>
   <exterior>aquatic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>7e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

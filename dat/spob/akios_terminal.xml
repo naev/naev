@@ -1,20 +1,20 @@
 <spob name="Akios Terminal">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="-7481.403716" y="12773.423776"/>
+ <pos x="-8591.183515" y="12055.012331"/>
  <GFX>
   <space>zalek_station2</space>
   <exterior>zalek_station2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>5500</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,23 +1,23 @@
 <ssys name="Terminus">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>200</spacedust>
-  <interference>22.000000</interference>
+  <interference>22</interference>
   <nolanes/>
  </general>
- <pos x="145.986751" y="172.057493"/>
+ <pos x="-829.053655" y="240.713241"/>
  <spobs>
   <spob>Foundation Station</spob>
  </spobs>
  <jumps>
   <jump target="Acheron">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="22093.198768" y="10589.644383" was_auto="true"/>
   </jump>
   <jump target="Flok">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="4003.705009" y="-24170.650512" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

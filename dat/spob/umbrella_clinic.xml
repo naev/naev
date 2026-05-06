@@ -1,19 +1,19 @@
 <spob name="Umbrella Clinic">
- <pos x="7087.497144" y="-12612.004456"/>
+ <pos x="148.124507" y="-14466.282566"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>33.333300</base>
-  <bonus>16.666700</bonus>
+  <base>33.3333</base>
+  <bonus>16.6667</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>3000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

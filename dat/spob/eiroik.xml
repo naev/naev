@@ -1,5 +1,5 @@
 <spob name="Eiroik">
- <pos x="438.000000" y="1434.000000"/>
+ <pos x="1198.883386" y="900.487992"/>
  <GFX>
   <space>Z00</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>Z</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

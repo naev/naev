@@ -1,6 +1,6 @@
 <spob name="Daal">
  <lua>highclass.lua</lua>
- <pos x="-8569.235935" y="-26348.291951"/>
+ <pos x="-14732.681926" y="23465.131077"/>
  <GFX>
   <space>moon-M03</space>
   <exterior>forest</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>2e+07</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

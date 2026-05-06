@@ -1,20 +1,20 @@
 <spob name="Avoss">
  <lua>lowclass.lua</lua>
- <pos x="-25201.083266" y="26782.578820"/>
+ <pos x="-5734.595884" y="36325.136421"/>
  <GFX>
   <space>A03</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>A</class>
   <population>600000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

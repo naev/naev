@@ -1,10 +1,10 @@
 <ssys name="Daravon">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="28.983010" y="-586.176569"/>
+ <pos x="-635.70895" y="-591.298345"/>
  <spobs>
   <spob>Daravon I</spob>
   <spob>Daravon III</spob>
@@ -14,24 +14,24 @@
  </spobs>
  <jumps>
   <jump target="Daan">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-14206.402568" y="10219.008076" was_auto="true"/>
   </jump>
   <jump target="Gremlin">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="15414.111955" y="-8285.840489" was_auto="true"/>
   </jump>
   <jump target="Hubfar">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="2176.221806" y="17364.160176" was_auto="true"/>
   </jump>
   <jump target="Perhelion">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="3267.098858" y="-17192.32576" was_auto="true"/>
   </jump>
   <jump target="Pudas">
-   <pos x="-8387.765035" y="-20971.033465"/>
-   <hide>1.000000</hide>
+   <pos x="-4982.17962" y="-22029.905426"/>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

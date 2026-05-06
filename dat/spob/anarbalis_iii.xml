@@ -1,5 +1,5 @@
 <spob name="Anarbalis III">
- <pos x="10212.291799" y="-1801.492703"/>
+ <pos x="8108.684559" y="-6464.171598"/>
  <GFX>
   <space>O03</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

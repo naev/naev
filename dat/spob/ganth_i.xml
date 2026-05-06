@@ -1,5 +1,5 @@
 <spob name="Ganth I">
- <pos x="-7430.205851" y="-5372.576113"/>
+ <pos x="-6109.940985" y="-6836.750268"/>
  <GFX>
   <space>O02</space>
   <exterior>uninhabited-rocky-cyan-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>2.500000</hide>
+  <hide>2.5</hide>
   <services>
    <land/>
   </services>

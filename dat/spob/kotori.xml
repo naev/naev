@@ -1,5 +1,5 @@
 <spob name="Kotori">
- <pos x="25299.285122" y="31660.203761"/>
+ <pos x="38738.193668" y="11906.917367"/>
  <GFX>
   <space>moon-I00</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

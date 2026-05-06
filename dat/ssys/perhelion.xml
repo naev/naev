@@ -1,10 +1,10 @@
 <ssys name="Perhelion">
  <general>
-  <radius>16450.000000</radius>
+  <radius>16450</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="31.743899" y="-679.023131"/>
+ <pos x="-658.058506" y="-710.193096"/>
  <spobs>
   <spob>Handalier</spob>
   <spob>Perhelion Alpha</spob>
@@ -13,17 +13,17 @@
  </spobs>
  <jumps>
   <jump target="Daravon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-3155.37596" y="16144.537854" was_auto="true"/>
   </jump>
   <jump target="Gold">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-16417.122164" y="1039.519047" was_auto="true"/>
   </jump>
   <jump target="Urbanus">
-   <pos x="21791.360195" y="4943.063790"/>
-   <hide>1.000000</hide>
+   <pos x="20697.957654" y="8419.727294"/>
+   <hide>1</hide>
   </jump>
  </jumps>
 </ssys>

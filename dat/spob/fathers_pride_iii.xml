@@ -1,5 +1,5 @@
 <spob name="Father's Pride III">
- <pos x="-17518.973323" y="-4134.486662"/>
+ <pos x="-16745.945846" y="-6601.644033"/>
  <GFX>
   <space>J06</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

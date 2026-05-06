@@ -1,19 +1,19 @@
 <spob name="Semper">
- <pos x="15142.959028" y="-8883.759308"/>
+ <pos x="15591.059145" y="-8071.509294"/>
  <GFX>
   <space>O01</space>
   <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>7.5e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

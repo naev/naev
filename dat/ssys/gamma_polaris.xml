@@ -1,11 +1,11 @@
 <ssys name="Gamma Polaris">
  <general>
   <background>nebu_ngc_2440_2</background>
-  <radius>30000.000000</radius>
+  <radius>30000</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="44.907428" y="-4.022408"/>
+ <pos x="-803.447184" y="20.667395"/>
  <spobs>
   <spob>Emperor's Fist</spob>
   <spob>Emperor's Wrath</spob>
@@ -22,35 +22,35 @@
  </spobs>
  <jumps>
   <jump target="Apez">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="27028.295609" y="13018.11186" was_auto="true"/>
   </jump>
   <jump target="Koralis">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-24362.538736" y="-17506.190513" was_auto="true"/>
   </jump>
   <jump target="Qex">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-7707.505728" y="-28993.005284" was_auto="true"/>
   </jump>
   <jump target="Shakar">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="7924.511524" y="28934.445166" was_auto="true"/>
   </jump>
   <jump target="Sirou">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-26846.268079" y="13389.469377" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>2500.000000</radius>
-   <pos x="4110.490643" y="17324.839687"/>
+   <radius>2500</radius>
+   <pos x="7603.168819" y="16100.870392"/>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
-   <pos x="4056.994040" y="17314.140367"/>
+   <radius>1000</radius>
+   <pos x="4056.99404" y="17314.140367"/>
   </exclusion>
  </asteroids>
  <tags>

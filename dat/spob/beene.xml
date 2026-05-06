@@ -1,20 +1,20 @@
 <spob name="Beene">
  <lua>lowclass.lua</lua>
- <pos x="9360.000000" y="-6320.000000"/>
+ <pos x="-7329.763926" y="-8592.238403"/>
  <GFX>
   <space>G01</space>
   <exterior>mining5</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>G</class>
   <population>600000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

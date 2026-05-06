@@ -1,19 +1,19 @@
 <spob name="Pauldur">
- <pos x="-7605.964301" y="-7782.151406"/>
+ <pos x="-10535.438395" y="2723.437398"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>50.000000</base>
-  <bonus>20.000000</bonus>
+  <base>50</base>
+  <bonus>20</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>M</class>
   <population>1.5e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

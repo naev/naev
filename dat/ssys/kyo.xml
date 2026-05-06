@@ -1,10 +1,10 @@
 <ssys name="Kyo">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="1112.575497" y="-735.241583"/>
+ <pos x="204.212529" y="-904.559771"/>
  <spobs>
   <spob>Berkhere</spob>
   <spob>Khorin</spob>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Druss">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-19999.08" y="-191.830964" was_auto="true"/>
   </jump>
   <jump target="Tartan">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="16422.150089" y="11415.471363" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

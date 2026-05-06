@@ -1,19 +1,19 @@
 <spob name="Stein">
- <pos x="2790.961087" y="-2025.740177"/>
+ <pos x="2586.933478" y="-2280.539898"/>
  <GFX>
   <space>O05</space>
   <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>200.000000</base>
-  <bonus>50.000000</bonus>
+  <base>200</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>O</class>
   <population>650000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

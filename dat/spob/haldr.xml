@@ -1,5 +1,5 @@
 <spob name="Haldr">
- <pos x="-30090.992878" y="13378.186545"/>
+ <pos x="-29600.533959" y="14430.943036"/>
  <GFX>
   <space>X01</space>
   <exterior>aquatic2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>X</class>
   <population>700000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

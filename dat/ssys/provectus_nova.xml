@@ -1,10 +1,10 @@
 <ssys name="Provectus Nova">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-153.317009" y="-423.525617"/>
+ <pos x="-880.321739" y="-546.469826"/>
  <spobs>
   <spob>Provectus Nova I</spob>
   <spob>Provectus Nova Ia</spob>
@@ -12,34 +12,34 @@
  </spobs>
  <jumps>
   <jump target="Goddard">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="13439.39598" y="3922.07033" was_auto="true"/>
   </jump>
   <jump target="Limbo">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="101.483524" y="-13999.632177" was_auto="true"/>
   </jump>
   <jump target="Pultatis">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-11527.634067" y="-7944.410161" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>4000.000000</radius>
-   <pos x="1820.126112" y="-8754.295875"/>
-   <density>0.500000</density>
+   <radius>4000</radius>
+   <pos x="5078.414544" y="-7359.365533"/>
+   <density>0.5</density>
   </asteroid>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>6000.000000</radius>
-   <pos x="1192.452708" y="7817.189975"/>
-   <density>0.300000</density>
+   <radius>6000</radius>
+   <pos x="-1938.421073" y="7666.350259"/>
+   <density>0.3</density>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="0.000000" y="7500.000000">neburesearch_01_ambush</waypoint>
+  <waypoint x="-2913.954442" y="6910.779225">neburesearch_01_ambush</waypoint>
  </waypoints>
  <tags>
   <tag>tradelane</tag>

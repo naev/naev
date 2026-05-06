@@ -1,20 +1,20 @@
 <spob name="Passir">
  <lua>lowclass.lua</lua>
- <pos x="-1258.751198" y="13565.120773"/>
+ <pos x="5420.607248" y="12498.558845"/>
  <GFX>
   <space>M05</space>
   <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>9e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

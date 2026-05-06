@@ -1,5 +1,5 @@
 <spob name="Sergio Vix III">
- <pos x="8200.000000" y="16360.000000"/>
+ <pos x="5421.071823" y="17478.603499"/>
  <GFX>
   <space>G03</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

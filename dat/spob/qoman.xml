@@ -1,5 +1,5 @@
 <spob name="Qoman">
- <pos x="-8896.630538" y="-1774.888885"/>
+ <pos x="-6713.010388" y="-6102.110865"/>
  <GFX>
   <space>Y00</space>
   <exterior>methane</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>Y</class>
   <population>451321</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

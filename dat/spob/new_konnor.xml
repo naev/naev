@@ -1,5 +1,5 @@
 <spob name="New Konnor">
- <pos x="4709.519977" y="3209.336875"/>
+ <pos x="2075.971727" y="5307.519475"/>
  <GFX>
   <space>moon-J00</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

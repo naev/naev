@@ -1,12 +1,12 @@
 <ssys name="Tobanna">
  <general>
-  <radius>11000.000000</radius>
+  <radius>11000</radius>
   <spacedust>400</spacedust>
-  <interference>61.360000</interference>
-  <nebula volatility="19.400000" hue="300.000000">600.000000</nebula>
+  <interference>61.36</interference>
+  <nebula volatility="19.4" hue="300">600</nebula>
   <nolanes/>
  </general>
- <pos x="799.080516" y="-148.086775"/>
+ <pos x="260.508064" y="-34.0635"/>
  <spobs>
   <spob>Ariak</spob>
   <spob>HS-232</spob>
@@ -18,8 +18,8 @@
  </spobs>
  <jumps>
   <jump target="Rotide">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-10981.977721" y="-629.416652" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
@@ -30,9 +30,9 @@
    <group>massive</group>
    <group>golden</group>
    <group>liquid</group>
-   <radius>2000.000000</radius>
-   <pos x="1000.000000" y="-3000.000000"/>
-   <density>0.500000</density>
+   <radius>2000</radius>
+   <pos x="2614.073454" y="1779.499922"/>
+   <density>0.5</density>
   </asteroid>
  </asteroids>
  <tags>

@@ -1,29 +1,29 @@
 <ssys name="Kohler">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="-488.972881" y="-554.370368"/>
+ <pos x="-1271.697259" y="-671.279812"/>
  <spobs>
   <spob>Curie</spob>
  </spobs>
  <jumps>
   <jump target="Corinth">
-   <pos x="15193.599356" y="13573.967466"/>
+   <pos x="12520.729284" y="16072.628669"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Qulam">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="7482.352893" y="-18547.625054" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>6000.000000</radius>
-   <pos x="12385.638953" y="13080.993561"/>
+   <radius>6000</radius>
+   <pos x="9846.223482" y="15085.368008"/>
   </asteroid>
  </asteroids>
 </ssys>

@@ -1,19 +1,19 @@
 <spob name="Skona">
- <pos x="-10623.852497" y="8565.472416"/>
+ <pos x="10638.959753" y="8546.700822"/>
  <GFX>
   <space>M14</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>400.000000</base>
-  <bonus>50.000000</bonus>
+  <base>400</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>K</class>
   <population>400000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

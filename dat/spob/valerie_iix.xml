@@ -1,5 +1,5 @@
 <spob name="Valerie IIX">
- <pos x="23216.212204" y="-12094.980310"/>
+ <pos x="23117.024311" y="-12283.494811"/>
  <GFX>
   <space>A03</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

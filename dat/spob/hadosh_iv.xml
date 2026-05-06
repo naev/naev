@@ -1,5 +1,5 @@
 <spob name="Hadosh IV">
- <pos x="-28008.879241" y="934.522860"/>
+ <pos x="-27212.523346" y="6696.956205"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>mining5</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

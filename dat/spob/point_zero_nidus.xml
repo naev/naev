@@ -1,19 +1,19 @@
 <spob name="Point Zero Nidus">
- <pos x="2859.481738" y="1778.531207"/>
+ <pos x="2505.666346" y="2249.765592"/>
  <GFX>
   <space>station-sphere</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>14000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

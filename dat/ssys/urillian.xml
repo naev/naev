@@ -1,41 +1,41 @@
 <ssys name="Urillian">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>440</spacedust>
-  <interference>21.800000</interference>
+  <interference>21.8</interference>
   <nolanes/>
  </general>
- <pos x="913.948901" y="569.541294"/>
+ <pos x="128.408662" y="532.05263"/>
  <spobs>
   <spob_virtual>Lost Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Hopa">
    <pos x="-3914.339865" y="9316.189104"/>
-   <hide>1.300000</hide>
+   <hide>1.3</hide>
   </jump>
   <jump target="Protera">
-   <pos x="-9451.100460" y="-6298.349495"/>
-   <hide>1.000000</hide>
+   <pos x="-9451.10046" y="-6298.349495"/>
+   <hide>1</hide>
   </jump>
   <jump target="Sagittarius">
    <pos x="14240.408417" y="-3180.504387"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Tasopa">
    <pos x="-9408.305797" y="10585.663613"/>
    <exitonly/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
    <group>nodrop</group>
-   <radius>2700.000000</radius>
+   <radius>2700</radius>
    <pos x="-6258.828338" y="11790.181216"/>
-   <density>0.750000</density>
-   <maxspeed>12.000000</maxspeed>
+   <density>0.75</density>
+   <maxspeed>12</maxspeed>
   </asteroid>
  </asteroids>
  <tags>

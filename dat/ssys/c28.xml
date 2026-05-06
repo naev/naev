@@ -1,11 +1,11 @@
 <ssys name="C-28">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>200</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
- <pos x="-244.041555" y="446.611632"/>
+ <pos x="-938.955014" y="630.930546"/>
  <spobs>
   <spob>P2020</spob>
   <spob>P2021</spob>
@@ -17,17 +17,17 @@
  </spobs>
  <jumps>
   <jump target="C-00">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-24230.826642" y="-3621.745462" was_auto="true"/>
   </jump>
   <jump target="C-59">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14161.371975" y="-19992.637238" was_auto="true"/>
   </jump>
   <jump target="Mason">
-   <autopos/>
    <exitonly/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="22714.435706" y="-9181.743327" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

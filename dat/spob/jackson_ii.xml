@@ -1,5 +1,5 @@
 <spob name="Jackson II">
- <pos x="-1858.444974" y="9043.669433"/>
+ <pos x="758.084991" y="9201.471712"/>
  <GFX>
   <space>K00</space>
   <exterior>uninhabited-rocky-yellow-00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>0.900000</hide>
+  <hide>0.9</hide>
   <services>
    <land/>
   </services>

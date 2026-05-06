@@ -1,5 +1,5 @@
 <spob name="Akrikos">
- <pos x="4776.054003" y="4977.952083"/>
+ <pos x="1742.587463" y="6674.884846"/>
  <GFX>
   <space>J08</space>
   <exterior>uninhabited-rocky-red-01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services>
    <land/>
   </services>

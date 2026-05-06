@@ -1,20 +1,20 @@
 <ssys name="Toaxis">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>500</spacedust>
   <interference>24.999975</interference>
-  <nebula hue="240.000000">150.000000</nebula>
+  <nebula hue="240">150</nebula>
  </general>
- <pos x="557.387569" y="-483.466877"/>
+ <pos x="-162.937562" y="-366.122116"/>
  <spobs/>
  <jumps>
   <jump target="Ingot">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="6907.087346" y="-16079.245765" was_auto="true"/>
   </jump>
   <jump target="Zacron">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-17499.286295" y="-158.047979" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

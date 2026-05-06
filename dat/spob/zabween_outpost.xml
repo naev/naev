@@ -1,19 +1,19 @@
 <spob name="Zabween Outpost">
- <pos x="285.354495" y="12012.328125"/>
+ <pos x="850.872876" y="11985.552532"/>
  <GFX>
   <space>000</space>
   <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>4000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

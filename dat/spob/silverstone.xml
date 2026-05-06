@@ -1,5 +1,5 @@
 <spob name="Silverstone">
- <pos x="-8768.728278" y="746.353155"/>
+ <pos x="-8667.199536" y="1525.546076"/>
  <GFX>
   <space>L00</space>
   <exterior>desertic4</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>L</class>
   <population>120000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

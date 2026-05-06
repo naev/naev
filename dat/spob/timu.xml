@@ -1,19 +1,19 @@
 <spob name="Timu">
- <pos x="2753.842426" y="-4289.403784"/>
+ <pos x="4040.361329" y="-3107.750513"/>
  <GFX>
   <space>moon-P03</space>
   <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>K</class>
   <population>151490</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

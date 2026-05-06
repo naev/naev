@@ -1,10 +1,10 @@
 <ssys name="Tepdania">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="234.767351" y="-394.576052"/>
+ <pos x="-487.308413" y="-329.661148"/>
  <spobs>
   <spob>INSS-3</spob>
   <spob>Tepdania Customs</spob>
@@ -12,28 +12,28 @@
  </spobs>
  <jumps>
   <jump target="Ianella">
-   <pos x="8277.695175" y="-12354.264040"/>
-   <hide>1.000000</hide>
+   <pos x="6557.905111" y="-13346.983102"/>
+   <hide>1</hide>
   </jump>
   <jump target="Poltergeist">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14949.917108" y="1224.73607" was_auto="true"/>
   </jump>
   <jump target="Van Maanen">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="7243.024701" y="13135.394671" was_auto="true"/>
   </jump>
   <jump target="Virgo">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9859.510817" y="11304.425966" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>3500.000000</radius>
-   <pos x="-7314.814066" y="3036.337914"/>
-   <density>1.200000</density>
+   <radius>3500</radius>
+   <pos x="-6845.061217" y="3983.841071"/>
+   <density>1.2</density>
   </asteroid>
  </asteroids>
 </ssys>

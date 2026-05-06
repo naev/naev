@@ -1,5 +1,5 @@
 <spob name="Margot">
- <pos x="4985.911364" y="9649.058473"/>
+ <pos x="7995.921537" y="7350.434021"/>
  <GFX>
   <space>O01</space>
   <exterior>oceanic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>1.5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

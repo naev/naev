@@ -1,5 +1,5 @@
 <spob name="Alsafi II">
- <pos x="2721.969595" y="-6325.703988"/>
+ <pos x="5722.672012" y="-3830.753771"/>
  <GFX>
   <space>D07</space>
   <exterior>uninhabited-rocky-airless-00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
    <nocommodities/>
@@ -15,6 +15,6 @@
   <description>Alsafi II is a barren world that other than some indications of prospection sites looking for mineral, is devoid of anything of interest.</description>
  </general>
  <tech>
-  <item price_mod="0.100000">Neblaze</item>
+  <item price_mod="0.1">Neblaze</item>
  </tech>
 </spob>

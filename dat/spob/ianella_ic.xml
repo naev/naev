@@ -1,5 +1,5 @@
 <spob name="Ianella I-c">
- <pos x="-8623.652354" y="-1320.672612"/>
+ <pos x="-6856.057514" y="-5395.000595"/>
  <GFX>
   <space>moon-I01</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>0.300000</hide>
+  <hide>0.3</hide>
   <services/>
  </general>
 </spob>

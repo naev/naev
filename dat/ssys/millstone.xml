@@ -1,10 +1,10 @@
 <ssys name="Millstone">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="738.704387" y="-830.903654"/>
+ <pos x="-141.186565" y="-783.712727"/>
  <spobs>
   <spob>Marauder Citadel</spob>
   <spob>Omar</spob>
@@ -13,20 +13,20 @@
  </spobs>
  <jumps>
   <jump target="Fidelis">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="9433.91959" y="-3316.799835" was_auto="true"/>
   </jump>
   <jump target="Infinity">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9617.100236" y="-2740.690247" was_auto="true"/>
   </jump>
   <jump target="Maus">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-9307.648282" y="3656.184275" was_auto="true"/>
   </jump>
   <jump target="Slaccid">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="4675.158553" y="8839.846859" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -1,10 +1,10 @@
 <ssys name="Gruz">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="612.297039" y="-964.406156"/>
+ <pos x="-157.987071" y="-914.048728"/>
  <spobs>
   <spob>Brock</spob>
   <spob>Gruz I</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Infinity">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="8022.713126" y="19407.114007" was_auto="true"/>
   </jump>
   <jump target="Palin">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-19092.992552" y="-8744.005682" was_auto="true"/>
   </jump>
   <jump target="Valur Gem">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="19762.890824" y="7101.277791" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

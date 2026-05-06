@@ -3,11 +3,11 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>23000.000000</radius>
+  <radius>23000</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
  </general>
- <pos x="477.546965" y="1031.193006"/>
+ <pos x="-346.92547" y="1376.700742"/>
  <spobs>
   <spob>Hasselt II</spob>
   <spob>Hasselt IV</spob>
@@ -19,17 +19,17 @@
  </spobs>
  <jumps>
   <jump target="Bonanza">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
+   <pos x="-4685.421932" y="-22517.700178" was_auto="true"/>
   </jump>
   <jump target="Klunzar">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-4334.206088" y="22587.931679" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

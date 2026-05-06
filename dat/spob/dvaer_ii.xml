@@ -1,5 +1,5 @@
 <spob name="Dvaer II">
- <pos x="-5061.056717" y="12792.357581"/>
+ <pos x="-7702.494954" y="11398.696374"/>
  <GFX>
   <space>D00</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

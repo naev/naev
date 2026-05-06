@@ -1,20 +1,20 @@
 <spob name="Minerva Station">
  <lua>lawless.lua</lua>
- <pos x="-3354.178874" y="-10499.199403"/>
+ <pos x="2610.165436" y="-10708.442483"/>
  <GFX>
   <space>station-pointy1</space>
   <exterior>scrapped_station</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>50000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

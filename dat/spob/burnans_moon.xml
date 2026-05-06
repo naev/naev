@@ -1,5 +1,5 @@
 <spob name="Burnan's moon">
- <pos x="-5978.756475" y="4450.447601"/>
+ <pos x="-1806.930901" y="7230.975975"/>
  <GFX>
   <space>moon-J02</space>
   <exterior>forest2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Antlejos V">
- <pos x="-4600.101436" y="-196.156312"/>
+ <pos x="-4286.85353" y="-1679.969443"/>
  <GFX>
   <space>moon-K00</space>
   <exterior>uninhabited-rocky-airless-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

@@ -1,5 +1,5 @@
 <spob name="Dvaer IV">
- <pos x="-35250.000000" y="18480.000000"/>
+ <pos x="-38407.498821" y="10437.285769"/>
  <GFX>
   <space>J03</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

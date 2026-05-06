@@ -1,5 +1,5 @@
 <spob name="Ksher II">
- <pos x="-19932.000000" y="7304.000000"/>
+ <pos x="-20847.713313" y="-4000.736133"/>
  <GFX>
   <space>D02</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

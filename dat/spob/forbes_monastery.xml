@@ -1,20 +1,20 @@
 <spob name="Forbes Monastery">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="-941.430646" y="1707.591015"/>
+ <pos x="-775.606921" y="1789.020021"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150</base>
+  <bonus>50</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>1</class>
   <population>16000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

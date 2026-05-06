@@ -1,19 +1,19 @@
 <spob name="Vercingetorix">
- <pos x="13707.007864" y="11514.570448"/>
+ <pos x="15009.452675" y="-9756.214817"/>
  <GFX>
   <space>X01</space>
   <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>X</class>
   <population>100000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

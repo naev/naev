@@ -1,5 +1,5 @@
 <spob name="Gruz III">
- <pos x="-12052.142627" y="2022.171582"/>
+ <pos x="-12027.886479" y="2161.773955"/>
  <GFX>
   <space>A00</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

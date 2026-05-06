@@ -1,19 +1,19 @@
 <spob name="Petaat">
- <pos x="9405.612680" y="15098.052006"/>
+ <pos x="13883.668565" y="11120.272991"/>
  <GFX>
   <space>S01</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>S</class>
   <population>5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

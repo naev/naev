@@ -1,19 +1,19 @@
 <spob name="Khelim">
- <pos x="-5534.972756" y="11532.092902"/>
+ <pos x="140.895632" y="12790.826342"/>
  <GFX>
   <space>Y00</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>Y</class>
   <population>5e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

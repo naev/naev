@@ -1,20 +1,20 @@
 <spob name="Sanchez">
  <lua>pirate_clanworld.lua</lua>
- <pos x="-7331.255945" y="12210.129783"/>
+ <pos x="-80.091454" y="14241.775465"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>mining3</exterior>
  </GFX>
  <presence>
   <faction>Dreamer Clan</faction>
-  <base>400.000000</base>
-  <bonus>50.000000</bonus>
+  <base>400</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>G</class>
   <population>12500</population>
-  <hide>0.300000</hide>
+  <hide>0.3</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Andee II">
- <pos x="-17080.000000" y="630.000000"/>
+ <pos x="-10513.295459" y="13475.67878"/>
  <GFX>
   <space>K00</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

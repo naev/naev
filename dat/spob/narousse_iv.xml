@@ -1,5 +1,5 @@
 <spob name="Narousse IV">
- <pos x="-810.881047" y="8268.647902"/>
+ <pos x="1065.191098" y="8239.747212"/>
  <GFX>
   <space>moon-P01</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

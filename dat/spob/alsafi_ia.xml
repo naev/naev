@@ -1,5 +1,5 @@
 <spob name="Alsafi Ia">
- <pos x="-6256.241107" y="3066.413983"/>
+ <pos x="-1873.086088" y="6710.811873"/>
  <GFX>
   <space>moon-K00</space>
   <exterior>gas</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>0.300000</hide>
+  <hide>0.3</hide>
   <services>
    <land/>
   </services>

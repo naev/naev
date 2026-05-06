@@ -1,19 +1,19 @@
 <spob name="Megan Station">
- <pos x="10991.232815" y="-5153.224088"/>
+ <pos x="7575.152356" y="-9485.777989"/>
  <GFX>
   <space>station-powerplant</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>30.000000</base>
-  <bonus>20.000000</bonus>
+  <base>30</base>
+  <bonus>20</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>300</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

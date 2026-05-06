@@ -1,19 +1,19 @@
 <spob name="Golem">
- <pos x="7524.400163" y="6131.938185"/>
+ <pos x="6604.794876" y="7112.942313"/>
  <GFX>
   <space>K02</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>K</class>
   <population>211243</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

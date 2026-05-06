@@ -1,6 +1,6 @@
 <spob name="Astana">
  <lua>empire_mil_restricted.lua</lua>
- <pos x="4651.529604" y="5344.310609"/>
+ <pos x="1628.766325" y="6895.324778"/>
  <GFX>
   <space>K03</space>
   <exterior>gas</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>K</class>
   <population>25000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

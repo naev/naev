@@ -1,20 +1,20 @@
 <spob name="Ruadan Host">
  <lua>zalek_mil_ruadan.lua</lua>
- <pos x="11792.645737" y="7261.141426"/>
+ <pos x="13703.068132" y="-2004.143716"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>50000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

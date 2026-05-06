@@ -1,5 +1,5 @@
 <spob name="Eneguoz II">
- <pos x="6851.814693" y="-2653.657026"/>
+ <pos x="7056.329019" y="-2048.775478"/>
  <GFX>
   <space>K02</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

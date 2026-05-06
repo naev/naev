@@ -1,5 +1,5 @@
 <spob name="Fidelis IV">
- <pos x="15115.790698" y="-12230.952288"/>
+ <pos x="10199.234253" y="-16554.725698"/>
  <GFX>
   <space>moon-D00</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

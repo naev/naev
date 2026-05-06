@@ -1,10 +1,10 @@
 <ssys name="Nixon">
  <general>
-  <radius>22000.000000</radius>
+  <radius>22000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="1037.731621" y="-399.481157"/>
+ <pos x="240.050376" y="-498.236998"/>
  <spobs>
   <spob>Nixon I</spob>
   <spob>Nixon II</spob>
@@ -15,8 +15,8 @@
  </spobs>
  <jumps>
   <jump target="Neon">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="21016.637014" y="6503.91948" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

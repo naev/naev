@@ -1,5 +1,5 @@
 <spob name="Hassak">
- <pos x="21594.608970" y="10226.293190"/>
+ <pos x="23637.716819" y="3487.485128"/>
  <GFX>
   <space>C00</space>
   <exterior>mining2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>C</class>
   <population>6e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

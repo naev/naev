@@ -1,5 +1,5 @@
 <spob name="Infinity VII">
- <pos x="6640.426299" y="5346.236486"/>
+ <pos x="4445.452431" y="7274.301249"/>
  <GFX>
   <space>J01</space>
   <exterior>station03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="An'ku II">
- <pos x="3570.000000" y="-20440.000000"/>
+ <pos x="-3456.44988" y="-20459.507673"/>
  <GFX>
   <space>L00</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>L</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

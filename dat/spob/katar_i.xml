@@ -1,19 +1,19 @@
 <spob name="Katar I">
- <pos x="-4678.865189" y="-6280.187291"/>
+ <pos x="-3902.69586" y="-6789.808309"/>
  <GFX>
   <space>moon-X00</space>
   <exterior>rocky_small</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>10.000000</base>
-  <bonus>10.000000</bonus>
+  <base>10</base>
+  <bonus>10</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>D</class>
   <population>1000</population>
-  <hide>0.300000</hide>
+  <hide>0.3</hide>
   <services>
    <land/>
    <refuel/>

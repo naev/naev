@@ -1,19 +1,19 @@
 <spob name="Warnecke">
- <pos x="625.881357" y="-569.295766"/>
+ <pos x="846.035168" y="-7.045224"/>
  <GFX>
   <space>J09</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>J</class>
   <population>15000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

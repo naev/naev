@@ -1,6 +1,6 @@
 <spob name="Zaals">
  <lua>lowclass.lua</lua>
- <pos x="-8810.900565" y="15899.369441"/>
+ <pos x="582.474028" y="-18168.176611"/>
  <GFX>
   <space>P03</space>
   <exterior>snow</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>P</class>
   <population>1e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

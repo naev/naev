@@ -1,19 +1,19 @@
 <spob name="Ekta Station">
- <pos x="9509.385492" y="-2399.956164"/>
+ <pos x="2476.543949" y="-9489.727714"/>
  <GFX>
   <space>station-shipyard2</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>5000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,10 +1,10 @@
 <ssys name="Scorpius">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="209.020121" y="-252.571092"/>
+ <pos x="-518.420521" y="-175.604217"/>
  <spobs>
   <spob>Anubis</spob>
   <spob>Scorpii Enclave</spob>
@@ -13,17 +13,17 @@
  </spobs>
  <jumps>
   <jump target="Guntesh">
-   <autopos/>
    <exitonly/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="12462.829072" y="-8347.328406" was_auto="true"/>
   </jump>
   <jump target="Kruger's Pocket">
-   <autopos/>
-   <hide>0.100000</hide>
+   <hide>0.1</hide>
+   <pos x="12761.763996" y="7882.726667" was_auto="true"/>
   </jump>
   <jump target="Wunomi">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-14986.990778" y="-624.585789" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

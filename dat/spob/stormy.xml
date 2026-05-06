@@ -1,19 +1,19 @@
 <spob name="Stormy">
- <pos x="6517.391987" y="7092.455986"/>
+ <pos x="6518.326903" y="7091.596759"/>
  <GFX>
   <space>I02</space>
   <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>I</class>
   <population>3000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

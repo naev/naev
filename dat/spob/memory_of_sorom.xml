@@ -1,6 +1,6 @@
 <spob name="Memory of Sorom">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="7378.896977" y="-6488.413784"/>
+ <pos x="9242.722135" y="-3334.624648"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station05</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>0</class>
   <population>50000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,19 +1,19 @@
 <spob name="Thavma">
- <pos x="6558.489894" y="9804.611155"/>
+ <pos x="11751.256563" y="-1025.747905"/>
  <GFX>
   <space>M10</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>950.000000</base>
-  <bonus>50.000000</bonus>
+  <base>950</base>
+  <bonus>50</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

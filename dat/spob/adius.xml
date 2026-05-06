@@ -1,5 +1,5 @@
 <spob name="Adius">
- <pos x="-2165.400011" y="-9649.663014"/>
+ <pos x="-213.154856" y="-9887.341326"/>
  <GFX>
   <space>moon-C01</space>
   <exterior>gas</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

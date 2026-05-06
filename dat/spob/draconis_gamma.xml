@@ -1,5 +1,5 @@
 <spob name="Draconis Gamma">
- <pos x="-24930.000000" y="-9720.000000"/>
+ <pos x="-25360.182918" y="-8534.894395"/>
  <GFX>
   <space>D01</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

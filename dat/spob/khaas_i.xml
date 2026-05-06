@@ -1,5 +1,5 @@
 <spob name="Khaas I">
- <pos x="4273.825103" y="1065.689184"/>
+ <pos x="4394.474753" y="-299.776735"/>
  <GFX>
   <space>A00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

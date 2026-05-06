@@ -1,5 +1,5 @@
 <spob name="New Mars">
- <pos x="12735.693828" y="-19340.936117"/>
+ <pos x="8462.348194" y="-21555.935845"/>
  <GFX>
   <space>K00</space>
   <exterior>desertic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>K</class>
   <population>100000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

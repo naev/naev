@@ -1,19 +1,19 @@
 <spob name="Zesta">
- <pos x="-5564.779304" y="11195.805981"/>
+ <pos x="-285.995322" y="12499.241854"/>
  <GFX>
   <space>A03</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>450.000000</base>
-  <bonus>50.000000</bonus>
+  <base>450</base>
+  <bonus>50</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>A</class>
   <population>400000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

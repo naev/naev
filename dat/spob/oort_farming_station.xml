@@ -1,5 +1,5 @@
 <spob name="Oort Farming Station">
- <pos x="2120.814729" y="-1665.023263"/>
+ <pos x="1073.63139" y="-2473.352627"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>traderoom</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>0</class>
   <population>15000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

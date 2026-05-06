@@ -1,5 +1,5 @@
 <spob name="Santoros II">
- <pos x="-8520.082931" y="-3559.021984"/>
+ <pos x="-8344.922251" y="-3952.306066"/>
  <GFX>
   <space>D05</space>
   <exterior>uninhabited-rocky-airless-01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

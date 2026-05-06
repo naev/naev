@@ -1,6 +1,6 @@
 <spob name="Poller Mass">
  <lua>poller_mass.lua</lua>
- <pos x="-6830.659875" y="-6470.534921"/>
+ <pos x="-6877.317303" y="-6420.9223"/>
  <GFX>
   <space>C01</space>
   <exterior>asteroid</exterior>
@@ -8,7 +8,7 @@
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

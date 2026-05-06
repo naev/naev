@@ -1,28 +1,28 @@
 <ssys name="Tormulex">
  <general>
-  <radius>28000.000000</radius>
+  <radius>28000</radius>
   <spacedust>400</spacedust>
-  <interference>25.000000</interference>
-  <nebula volatility="0.250000">300.000000</nebula>
+  <interference>25</interference>
+  <nebula volatility="0.25">300</nebula>
   <nolanes/>
  </general>
- <pos x="701.128431" y="-423.458027"/>
+ <pos x="42.918193" y="-335.934183"/>
  <spobs>
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Aneel Azi">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Anger">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Myad">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

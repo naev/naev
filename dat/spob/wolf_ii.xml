@@ -1,5 +1,5 @@
 <spob name="Wolf II">
- <pos x="3714.113093" y="1291.286631"/>
+ <pos x="109.415032" y="3930.659687"/>
  <GFX>
   <space>moon-P02</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services/>
  </general>
 </spob>

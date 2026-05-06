@@ -1,5 +1,5 @@
 <spob name="Gammacron Vb">
- <pos x="18823.239218" y="9932.323873"/>
+ <pos x="15354.694936" y="14737.663844"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

@@ -1,5 +1,5 @@
 <spob name="Diadem II">
- <pos x="-4366.000000" y="3737.000000"/>
+ <pos x="-5380.957596" y="2018.023871"/>
  <GFX>
   <space>K00</space>
   <exterior>asteroid</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

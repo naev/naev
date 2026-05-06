@@ -1,5 +1,5 @@
 <spob name="P-1587">
- <pos x="-5635.272211" y="1375.538886"/>
+ <pos x="-5799.861755" y="100.018695"/>
  <GFX>
   <space>D00</space>
   <exterior>uninhabited-rocky-airless-04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

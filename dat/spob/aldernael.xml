@@ -1,5 +1,5 @@
 <spob name="Aldernael">
- <pos x="7933.811001" y="1040.994517"/>
+ <pos x="7998.427732" y="-232.766832"/>
  <GFX>
   <space>G03</space>
   <exterior>station04</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>G</class>
   <population>1.2e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

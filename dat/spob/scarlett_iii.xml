@@ -1,5 +1,5 @@
 <spob name="Scarlett III">
- <pos x="10588.521232" y="4982.493887"/>
+ <pos x="11349.307418" y="-2852.235672"/>
  <GFX>
   <space>D01</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

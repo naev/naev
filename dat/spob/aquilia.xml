@@ -1,5 +1,5 @@
 <spob name="Aquilia">
- <pos x="-7923.103984" y="-7667.519985"/>
+ <pos x="-7657.077314" y="-7933.196484"/>
  <GFX>
   <space>G01</space>
   <exterior>mining6</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

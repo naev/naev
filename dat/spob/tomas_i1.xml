@@ -1,5 +1,5 @@
 <spob name="Tomas I-1">
- <pos x="7040.899244" y="6774.438955"/>
+ <pos x="9186.675918" y="3327.502198"/>
  <GFX>
   <space>I04</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

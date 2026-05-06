@@ -1,5 +1,5 @@
 <spob name="MGG-007">
- <pos x="9652.744405" y="-9271.950244"/>
+ <pos x="8172.110691" y="-10600.053901"/>
  <GFX>
   <space>I03</space>
   <exterior>lava</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

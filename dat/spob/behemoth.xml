@@ -1,5 +1,5 @@
 <spob name="Behemoth">
- <pos x="2511.437898" y="2385.866003"/>
+ <pos x="1451.66629" y="3145.209353"/>
  <GFX>
   <space>K02</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

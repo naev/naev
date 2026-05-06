@@ -1,5 +1,5 @@
 <spob name="Uuries">
- <pos x="18879.572578" y="-2960.851363"/>
+ <pos x="17890.378711" y="-6718.575076"/>
  <GFX>
   <space>D00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

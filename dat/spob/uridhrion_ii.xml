@@ -1,5 +1,5 @@
 <spob name="Uridhrion II">
- <pos x="-17290.000000" y="-10640.000000"/>
+ <pos x="-4330.21496" y="-19834.387774"/>
  <GFX>
   <space>X00</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

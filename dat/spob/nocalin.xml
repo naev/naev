@@ -1,5 +1,5 @@
 <spob name="Nocalin">
- <pos x="7592.974652" y="-5092.511190"/>
+ <pos x="8717.221107" y="-2756.263858"/>
  <GFX>
   <space>K00</space>
   <exterior>desertic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>K</class>
   <population>5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

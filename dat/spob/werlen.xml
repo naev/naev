@@ -1,20 +1,20 @@
 <spob name="Werlen">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="1553.027775" y="1774.888885"/>
+ <pos x="1042.049037" y="2115.717284"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>mining5</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>D</class>
   <population>453453</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

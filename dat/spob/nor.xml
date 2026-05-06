@@ -1,5 +1,5 @@
 <spob name="Nor">
- <pos x="7315.200103" y="12594.489712"/>
+ <pos x="10532.891772" y="10059.399314"/>
  <GFX>
   <space>J03</space>
   <exterior>gas</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>I</class>
   <population>130000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

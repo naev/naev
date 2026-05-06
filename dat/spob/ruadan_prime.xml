@@ -1,21 +1,21 @@
 <spob name="Ruadan Prime">
  <feature>#pZa'lek Homeworld#0</feature>
  <lua>zalek_mil_ruadan.lua</lua>
- <pos x="5279.566099" y="4132.067302"/>
+ <pos x="6700.648292" y="-221.609671"/>
  <GFX>
   <space>M09</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>450.000000</base>
-  <bonus>50.000000</bonus>
+  <base>450</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

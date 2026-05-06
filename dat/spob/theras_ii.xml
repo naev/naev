@@ -1,5 +1,5 @@
 <spob name="Theras II">
- <pos x="8355.533595" y="-4232.622399"/>
+ <pos x="6385.094756" y="-6852.780383"/>
  <GFX>
   <space>moon-P02</space>
   <exterior>mining2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

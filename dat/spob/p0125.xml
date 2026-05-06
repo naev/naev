@@ -1,5 +1,5 @@
 <spob name="P0125">
- <pos x="1295.028995" y="1003.839044"/>
+ <pos x="1416.044435" y="824.385273"/>
  <GFX>
   <space>D01</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

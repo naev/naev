@@ -1,19 +1,19 @@
 <spob name="Drognain">
- <pos x="11736.452755" y="5635.272211"/>
+ <pos x="7498.986159" y="10642.641718"/>
  <GFX>
   <space>K02</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>K</class>
   <population>12000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

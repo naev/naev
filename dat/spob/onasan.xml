@@ -1,5 +1,5 @@
 <spob name="Onasan">
- <pos x="7761.198150" y="-6443.647780"/>
+ <pos x="4085.416409" y="9223.132125"/>
  <GFX>
   <space>J04</space>
   <exterior>station03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services/>
  </general>
 </spob>

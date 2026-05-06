@@ -1,5 +1,5 @@
 <spob name="Anarbalis II">
- <pos x="-535.769627" y="-8433.275285"/>
+ <pos x="-4502.001563" y="-7151.165153"/>
  <GFX>
   <space>K04</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

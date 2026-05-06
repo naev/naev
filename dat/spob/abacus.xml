@@ -1,6 +1,6 @@
 <spob name="Abacus">
  <lua>lowclass.lua</lua>
- <pos x="15843.686373" y="970.564365"/>
+ <pos x="15338.361975" y="4086.446499"/>
  <GFX>
   <space>A02</space>
   <exterior>methane</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>A</class>
   <population>100</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

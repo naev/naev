@@ -1,5 +1,5 @@
 <spob name="Gliese VI">
- <pos x="-9213.398902" y="4483.443278"/>
+ <pos x="-1143.062872" y="-10182.405915"/>
  <GFX>
   <space>moon-A01</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services/>
  </general>
 </spob>

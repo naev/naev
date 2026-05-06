@@ -1,5 +1,5 @@
 <spob name="Gliese III">
- <pos x="2489.078042" y="743.008371"/>
+ <pos x="1959.680419" y="1705.058237"/>
  <GFX>
   <space>moon-C01</space>
   <exterior>mining5</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

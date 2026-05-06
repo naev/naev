@@ -1,5 +1,5 @@
 <spob name="Phee">
- <pos x="6915.504984" y="1693.555901"/>
+ <pos x="6007.477352" y="3821.329171"/>
  <GFX>
   <space>K04</space>
   <exterior>lava</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>K</class>
   <population>5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

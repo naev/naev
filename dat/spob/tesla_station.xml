@@ -1,20 +1,20 @@
 <spob name="Tesla Station">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="860.225371" y="1014.295587"/>
+ <pos x="344.5523" y="1284.549313"/>
  <GFX>
   <space>zalek_station1</space>
   <exterior>zalek_station1</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>300.000000</base>
-  <bonus>50.000000</bonus>
+  <base>300</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>I</class>
   <population>4000</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
    <refuel/>

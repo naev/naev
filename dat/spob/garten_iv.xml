@@ -1,5 +1,5 @@
 <spob name="Garten IV">
- <pos x="-10356.476646" y="4202.226925"/>
+ <pos x="-9973.725817" y="5043.819284"/>
  <GFX>
   <space>I05</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.500000</hide>
+  <hide>1.5</hide>
   <services/>
  </general>
 </spob>

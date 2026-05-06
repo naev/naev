@@ -1,5 +1,5 @@
 <spob name="Reidd">
- <pos x="-2022.772268" y="-6442.366937"/>
+ <pos x="-1679.66375" y="-6540.216287"/>
  <GFX>
   <space>moon-M04</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>1e+07</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

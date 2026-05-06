@@ -1,5 +1,5 @@
 <spob name="Takeru">
- <pos x="-5332.000000" y="11438.000000"/>
+ <pos x="-3209.487057" y="12204.804825"/>
  <GFX>
   <space>M04</space>
   <exterior>forest</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>1.5e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

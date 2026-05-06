@@ -1,5 +1,5 @@
 <spob name="Sollav II">
- <pos x="-427.972822" y="-353.077578"/>
+ <pos x="-457.095221" y="-314.465373"/>
  <GFX>
   <space>D00</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

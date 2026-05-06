@@ -1,19 +1,19 @@
 <spob name="Cerberus Outpost">
- <pos x="2627.583183" y="-3383.613574"/>
+ <pos x="2494.35806" y="-3482.988955"/>
  <GFX>
   <space>003</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>1400</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

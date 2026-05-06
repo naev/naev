@@ -1,5 +1,5 @@
 <spob name="Virginis Chi">
- <pos x="6164.686068" y="-6808.757747"/>
+ <pos x="7191.987151" y="-5712.955206"/>
  <GFX>
   <space>J06</space>
   <exterior>zalek_station1</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

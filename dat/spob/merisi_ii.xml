@@ -1,5 +1,5 @@
 <spob name="Merisi II">
- <pos x="9800.000000" y="-21140.000000"/>
+ <pos x="23299.191301" y="-295.439837"/>
  <GFX>
   <space>O03</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

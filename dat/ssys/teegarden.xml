@@ -1,19 +1,19 @@
 <ssys name="Teegarden">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
- <pos x="174.117769" y="-195.920139"/>
+ <pos x="-609.46891" y="-140.349178"/>
  <spobs/>
  <jumps>
   <jump target="Eneguoz">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-12667.519652" y="8033.302301" was_auto="true"/>
   </jump>
   <jump target="Wunomi">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-2823.911634" y="-14731.786146" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

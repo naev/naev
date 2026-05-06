@@ -1,6 +1,6 @@
 <spob name="Idio">
  <lua>lowclass.lua</lua>
- <pos x="-11470.095195" y="14466.673893"/>
+ <pos x="-16445.159247" y="8390.73743"/>
  <GFX>
   <space>G02</space>
   <exterior>desertic</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>G</class>
   <population>5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

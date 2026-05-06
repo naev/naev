@@ -1,5 +1,5 @@
 <spob name="Castellan Epsilon">
- <pos x="18083.058544" y="-12066.693018"/>
+ <pos x="19656.775724" y="-9285.109305"/>
  <GFX>
   <space>A03</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

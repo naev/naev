@@ -1,5 +1,5 @@
 <spob name="UHP-1002">
- <pos x="9584.399981" y="-6134.015988"/>
+ <pos x="11314.57512" y="1211.307139"/>
  <GFX>
   <space>J03</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

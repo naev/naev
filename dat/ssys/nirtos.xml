@@ -1,25 +1,25 @@
 <ssys name="Nirtos">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>93.820000</interference>
-  <nebula volatility="11.800000" hue="300.000000">500.000000</nebula>
+  <interference>93.82</interference>
+  <nebula volatility="11.8" hue="300">500</nebula>
   <nolanes/>
  </general>
- <pos x="820.423656" y="632.418811"/>
+ <pos x="319.186036" y="691.074923"/>
  <spobs>
   <spob>Hypergate Protera</spob>
   <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Sagittarius">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-714.716174" y="-14982.963017" was_auto="true"/>
   </jump>
   <jump target="Syndania">
-   <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
+   <pos x="-9411.049274" y="11680.417439" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

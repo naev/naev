@@ -1,5 +1,5 @@
 <spob name="Moordra I">
- <pos x="5339.784581" y="-1694.041544"/>
+ <pos x="5560.814094" y="678.544566"/>
  <GFX>
   <space>C01</space>
   <exterior>mining4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>
