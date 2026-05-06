@@ -1881,11 +1881,19 @@ void diff_remove( const char *name )
  */
 void diff_clear( void )
 {
-   /* Remove in reverse order. */
+   // Remove applied diffs in reverse order.
    while ( array_size( diff_stack ) > 0 )
       diff_removeDiff( &diff_stack[array_size( diff_stack ) - 1] );
    array_free( diff_stack );
    diff_stack = NULL;
+
+   // Now remove the temporary ones, no references should exist so it should be
+   // safe.
+   for ( int i = array_size( diff_available ) - 1; i >= 0; i-- ) {
+      UniDiffData_t *diff = &diff_available[i];
+      if ( diff->temp )
+         array_erase( &diff_available, diff, &diff[1] );
+   }
 
    diff_checkUpdateUniverse();
 }
@@ -1987,7 +1995,8 @@ int diff_save( xmlTextWriterPtr writer )
    if ( diff_stack != NULL ) {
       for ( int i = 0; i < array_size( diff_stack ); i++ ) {
          const UniDiff_t *diff = &diff_stack[i];
-         xmlw_elem( writer, "diff", "%s", diff->data->name );
+         if ( !diff->data->temp )
+            xmlw_elem( writer, "diff", "%s", diff->data->name );
       }
    }
    xmlw_endElem( writer ); /* "diffs" */

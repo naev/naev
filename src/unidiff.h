@@ -184,6 +184,7 @@ typedef struct UniDiffData_ {
    char      *name;     /**< Name of the diff (read from XML). */
    char      *filename; /**< Filename of the diff. */
    UniHunk_t *hunks;    /**< Hunks available. */
+   int        temp;     /**< Whether or not this is a temporary unidiff. */
 } UniDiffData_t;
 
 /* Global functions, manily for player stuff. */
