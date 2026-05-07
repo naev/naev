@@ -19,11 +19,13 @@
 static int diffL_apply( lua_State *L );
 static int diffL_remove( lua_State *L );
 static int diffL_isapplied( lua_State *L );
+static int diffL_newDynamic( lua_State *L );
 
 static const luaL_Reg diffL_methods[] = {
    { "apply", diffL_apply },
    { "remove", diffL_remove },
    { "isApplied", diffL_isapplied },
+   { "newDynamic", diffL_newDynamic },
    { 0, 0 } }; /**< Unidiff Lua methods. */
 
 /**
@@ -91,5 +93,26 @@ static int diffL_isapplied( lua_State *L )
 {
    const char *name = luaL_checkstring( L, 1 );
    lua_pushboolean( L, diff_isApplied( name ) );
+   return 1;
+}
+
+/**
+ * @brief Adds and applies a dynamic unidiff. Unlike normal unidiff, this does
+ * not get saved.
+ *
+ * Note this is experimental API and will be changed in the future, most likely
+ * made much more ergonomic.
+ *
+ *    @luaparam string str XML code of the dynamic diff to parse and apply.
+ * @luafunc newDynamic
+ */
+static int diffL_newDynamic( lua_State *L )
+{
+   const char   *str = luaL_checkstring( L, 1 );
+   UniDiffData_t diff;
+   if ( diff_parseString( &diff, str, "dynamic diff" ) )
+      lua_pushboolean( L, 0 );
+   else
+      lua_pushboolean( L, !diff_addDynamicDiff( &diff ) );
    return 1;
 }

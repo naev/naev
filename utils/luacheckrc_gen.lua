@@ -342,6 +342,7 @@ stds.diff = {
             apply = {},
             remove = {},
             isApplied = {},
+            newDynamic = {},
          }
       }
    }

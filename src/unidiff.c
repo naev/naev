@@ -449,7 +449,8 @@ static UniDiff_t  *diff_newDiff( void );
 static int         diff_removeDiff( UniDiff_t *diff );
 static const char *diff_getAttr( UniHunk_t *hunk, const char *name );
 static void        diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node );
-static int         diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc );
+static int         diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc,
+                                  const char *name );
 static int         diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node );
 static int         diff_parseTech( UniDiffData_t *diff, xmlNodePtr node );
 static int         diff_parseSpob( UniDiffData_t *diff, xmlNodePtr node );
@@ -570,28 +571,31 @@ void diff_exit( void )
    diff_available = NULL;
 }
 
-int diff_parse( UniDiffData_t *diff, char *filename )
+int diff_parse( UniDiffData_t *diff, const char *filename )
 {
    xmlDocPtr doc = xmlParseFile( filename );
-   memset( diff, 0, sizeof( UniDiffData_t ) );
-   diff->filename = filename;
-   if ( doc == NULL )
-      return -1;
-   return diff_parseDoc( diff, doc );
+   return diff_parseDoc( diff, doc, filename );
 }
 
-int diff_parsePhysFS( UniDiffData_t *diff, char *filename )
+int diff_parsePhysFS( UniDiffData_t *diff, const char *filename )
 {
    xmlDocPtr doc = xml_parsePhysFS( filename );
-   memset( diff, 0, sizeof( UniDiffData_t ) );
-   diff->filename = filename;
-   if ( doc == NULL )
-      return -1;
-   return diff_parseDoc( diff, doc );
+   return diff_parseDoc( diff, doc, filename );
 }
 
-static int diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc )
+int diff_parseString( UniDiffData_t *diff, const char *str, const char *name )
 {
+   xmlDocPtr doc = xmlParseMemory( str, strlen( str ) );
+   return diff_parseDoc( diff, doc, name );
+}
+
+static int diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc, const char *name )
+{
+   memset( diff, 0, sizeof( UniDiffData_t ) );
+   diff->filename = strdup( name );
+   if ( doc == NULL )
+      return -1;
+
    xmlNodePtr parent = doc->xmlChildrenNode;
    xmlNodePtr node;
    if ( strcmp( (char *)parent->name, "unidiff" ) ) {
@@ -2156,4 +2160,26 @@ void unidiff_universeDefer( int enable )
    diff_universe_defer = enable;
    if ( defer && !enable )
       diff_checkUpdateUniverse();
+}
+
+/**
+ * @brief Adds and applies a dynamic diff.
+ *
+ *    @param diff Diff to add, moves internal data.
+ *    @return 0 on success.
+ */
+int diff_addDynamicDiff( const UniDiffData_t *diff )
+{
+   for ( int i = 0; i < array_size( diff_available ); i++ ) {
+      if ( strcmp( diff_available[i]->name, diff->name ) == 0 ) {
+         WARN( "Diff '%s' already exists!", diff->name );
+         return -1;
+      }
+   }
+   UniDiffData_t *data = malloc( sizeof( UniDiffData_t ) );
+   memcpy( data, diff, sizeof( UniDiffData_t ) );
+   array_push_back( &diff_available, data );
+   qsort( diff_available, array_size( diff_available ),
+          sizeof( UniDiffData_t * ), diff_cmp );
+   return diff_apply( diff->name );
 }
