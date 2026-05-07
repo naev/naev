@@ -51,6 +51,7 @@ pub struct DamageType {
 }
 
 impl DamageType {
+   /*
    pub fn get(name: &str) -> Option<&'static Self> {
       match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
          Ok(i) => Some(&DAMAGE_TYPES[i]),
@@ -60,6 +61,7 @@ impl DamageType {
          }
       }
    }
+   */
 
    fn load_xml<P: AsRef<Path>>(filename: P) -> Result<Self> {
       let data = ndata::read(filename)?;
