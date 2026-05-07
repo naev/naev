@@ -39,7 +39,7 @@ function background ()
       end
    end
    if maxscale > 0 then
-      nebula.init{ prng=prng, size=5000*maxscale, offset=(system.get("Sol"):pos()-cpos)*2, movemod=0.2 }
+      nebula.init{ prng=prng, size=5000*maxscale, offset=(system.exists("Sol"):pos()-cpos)*2, movemod=0.2 }
    end
 
    -- Haven
