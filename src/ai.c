@@ -1142,8 +1142,8 @@ static void ai_create( Pilot *pilot )
       lua_pushpilot( naevL, pilot->id );
       if ( nlua_pcall( env, 1, 0 ) ) { /* Error has occurred. */
          WARN( _( "Pilot '%s' equip '%s' -> '%s': %s" ), pilot->name,
-               pilot->ai->name, func, lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               pilot->ai->name, func, luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
 
       /* Since the pilot changes outfits and cores, we must heal him up. */
