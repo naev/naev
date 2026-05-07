@@ -27,7 +27,9 @@
 #include "safelanes.h"
 #include "space.h"
 
-static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
+// Now dynamically adding temporary ones, so we need stable references, which
+// means pointer to pointers
+static UniDiffData_t **diff_available = NULL; /**< Available diffs. */
 
 /**
  * @struct UniDiff_t
@@ -467,8 +469,8 @@ int diff_load( xmlNodePtr parent );       /**< Used in save.c */
 static int diff_cmp( const void *p1, const void *p2 )
 {
    const UniDiffData_t *d1, *d2;
-   d1 = (const UniDiffData_t *)p1;
-   d2 = (const UniDiffData_t *)p2;
+   d1 = *( (const UniDiffData_t **)p1 );
+   d2 = *( (const UniDiffData_t **)p2 );
    return strcmp( d1->name, d2->name );
 }
 
@@ -509,12 +511,11 @@ int diff_init( void )
 
    char **diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH );
    diff_available =
-      array_create_size( UniDiffData_t, array_size( diff_files ) );
+      array_create_size( UniDiffData_t *, array_size( diff_files ) );
    for ( int i = 0; i < array_size( diff_files ); i++ ) {
-      UniDiffData_t diff;
+      UniDiffData_t *diff = calloc( 1, sizeof( UniDiffData_t ) );
 
-      memset( &diff, 0, sizeof( diff ) );
-      if ( diff_parsePhysFS( &diff, diff_files[i] ) == 0 )
+      if ( diff_parsePhysFS( diff, diff_files[i] ) == 0 )
          array_push_back( &diff_available, diff );
       // xmlr_attr_strd( node, "name", diff.name );
    }
@@ -522,11 +523,11 @@ int diff_init( void )
    array_shrink( &diff_available );
 
    /* Sort and warn about duplicates. */
-   qsort( diff_available, array_size( diff_available ), sizeof( UniDiffData_t ),
-          diff_cmp );
+   qsort( diff_available, array_size( diff_available ),
+          sizeof( UniDiffData_t * ), diff_cmp );
    for ( int i = 0; i < array_size( diff_available ) - 1; i++ ) {
-      UniDiffData_t       *d  = &diff_available[i];
-      const UniDiffData_t *dn = &diff_available[i + 1];
+      UniDiffData_t       *d  = diff_available[i];
+      const UniDiffData_t *dn = diff_available[i + 1];
       if ( strcmp( d->name, dn->name ) == 0 )
          WARN( _( "Two unidiff have the same name '%s'!" ), d->name );
    }
@@ -561,8 +562,9 @@ void diff_exit( void )
 {
    diff_clear();
    for ( int i = 0; i < array_size( diff_available ); i++ ) {
-      UniDiffData_t *d = &diff_available[i];
+      UniDiffData_t *d = diff_available[i];
       diff_freeData( d );
+      free( d );
    }
    array_free( diff_available );
    diff_available = NULL;
@@ -680,10 +682,6 @@ int diff_apply( const char *name )
  */
 static int diff_applyInternal( const char *name, int oneshot, int warn )
 {
-   UniDiffData_t *d;
-   UniDiff_t     *diff;
-   int            nfailed;
-
    /* Check if already applied. */
    if ( diff_isApplied( name ) )
       return 0;
@@ -692,17 +690,20 @@ static int diff_applyInternal( const char *name, int oneshot, int warn )
    if ( oneshot && !diff_universe_defer )
       diff_universe_changed = 0;
 
-   const UniDiffData_t q = { .name = (char *)name };
-   d = bsearch( &q, diff_available, array_size( diff_available ),
-                sizeof( UniDiffData_t ), diff_cmp );
-   if ( d == NULL ) {
+   const UniDiffData_t  q    = { .name = (char *)name };
+   const UniDiffData_t *qptr = &q;
+   UniDiffData_t      **dsearch =
+      bsearch( &qptr, diff_available, array_size( diff_available ),
+               sizeof( UniDiffData_t * ), diff_cmp );
+   if ( dsearch == NULL ) {
       if ( warn )
          WARN( _( "UniDiff '%s' not found in %s!" ), name, UNIDIFF_DATA_PATH );
       return -1;
    }
+   UniDiffData_t *d = *dsearch;
 
    /* Prepare it. */
-   diff = diff_newDiff();
+   UniDiff_t *diff = diff_newDiff();
    memset( diff, 0, sizeof( UniDiff_t ) );
    diff->data = d;
 
@@ -733,7 +734,7 @@ static int diff_applyInternal( const char *name, int oneshot, int warn )
    }
 
    /* Warn about failures. */
-   nfailed = array_size( diff->failed );
+   int nfailed = array_size( diff->failed );
    if ( nfailed > 0 ) {
       WARN( n_( "Unidiff '%s' failed to apply %d hunk.",
                 "Unidiff '%s' failed to apply %d hunks.", nfailed ),
@@ -1890,9 +1891,11 @@ void diff_clear( void )
    // Now remove the temporary ones, no references should exist so it should be
    // safe.
    for ( int i = array_size( diff_available ) - 1; i >= 0; i-- ) {
-      UniDiffData_t *diff = &diff_available[i];
-      if ( diff->temp )
+      UniDiffData_t *diff = diff_available[i];
+      if ( diff->temp ) {
+         diff_freeData( diff );
          array_erase( &diff_available, diff, &diff[1] );
+      }
    }
 
    diff_checkUpdateUniverse();
