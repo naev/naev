@@ -641,11 +641,16 @@ static int economy_calcPrice( Spob *spob, CommodityRef commodity,
    if ( !spob_hasService( spob, SPOB_SERVICE_COMMODITY ) )
       return 0;
 
+   // Should always be contained
+   double mod = 1.0;
+   tech_hasCommodityPrice( spob->tech, commodity, &mod );
+   double price = round( (double)commodity_price( commodity ) * mod );
+
    /* Constant price. */
    if ( commodity_price_constant( commodity ) ) {
-      credits_t price       = commodity_price( commodity );
-      commodityPrice->price = price;
-      commodityPrice->sum   = price;
+      credits_t cprice      = price;
+      commodityPrice->price = cprice;
+      commodityPrice->sum   = cprice;
       commodityPrice->sum2  = 0.;
       return 0;
    }
@@ -659,7 +664,7 @@ static int economy_calcPrice( Spob *spob, CommodityRef commodity,
    }
 
    /* Reset price to the base commodity price. */
-   commodityPrice->price = commodity_price( commodity );
+   commodityPrice->price = price;
 
    /* Get the cost modifier suitable for spob type/class. */
    cm    = commodity_spob_modifiers( commodity );

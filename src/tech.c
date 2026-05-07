@@ -747,7 +747,8 @@ int tech_hasItem( const tech_group_t *tech, const char *name, int search )
 }
 
 static int tech_hasItemInternal( const tech_group_t *tech,
-                                 const tech_item_t *item, int search )
+                                 const tech_item_t *item, int search,
+                                 double *price )
 {
    if ( tech == NULL )
       return 0;
@@ -761,16 +762,25 @@ static int tech_hasItemInternal( const tech_group_t *tech,
       if ( item->type == itemi->type ) {
          switch ( item->type ) {
          case TECH_TYPE_OUTFIT:
-            if ( item->u.outfit == itemi->u.outfit )
+            if ( item->u.outfit == itemi->u.outfit ) {
+               if ( price != NULL )
+                  *price = item->price_mod;
                return 1;
+            }
             break;
          case TECH_TYPE_SHIP:
-            if ( item->u.ship == itemi->u.ship )
+            if ( item->u.ship == itemi->u.ship ) {
+               if ( price != NULL )
+                  *price = item->price_mod;
                return 1;
+            }
             break;
          case TECH_TYPE_COMMODITY:
-            if ( item->u.comm == itemi->u.comm )
+            if ( item->u.comm == itemi->u.comm ) {
+               if ( price != NULL )
+                  *price = item->price_mod;
                return 1;
+            }
             break;
          default:
             break;
@@ -778,10 +788,11 @@ static int tech_hasItemInternal( const tech_group_t *tech,
       }
 
       if ( itemi->type == TECH_TYPE_GROUP ) {
-         if ( tech_hasItemInternal( &tech_groups[itemi->u.grp], item, search ) )
+         if ( tech_hasItemInternal( &tech_groups[itemi->u.grp], item, search,
+                                    price ) )
             return 1;
       } else if ( itemi->type == TECH_TYPE_GROUP_POINTER ) {
-         if ( tech_hasItemInternal( itemi->u.grpptr, item, search ) )
+         if ( tech_hasItemInternal( itemi->u.grpptr, item, search, price ) )
             return 1;
       }
    }
@@ -802,7 +813,7 @@ int tech_hasShip( const tech_group_t *tech, const Ship *ship, int search )
       .type   = TECH_TYPE_SHIP,
       .u.ship = ship,
    };
-   return tech_hasItemInternal( tech, &item, search );
+   return tech_hasItemInternal( tech, &item, search, NULL );
 }
 
 /**
@@ -819,7 +830,7 @@ int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit, int search )
       .type     = TECH_TYPE_OUTFIT,
       .u.outfit = outfit,
    };
-   return tech_hasItemInternal( tech, &item, search );
+   return tech_hasItemInternal( tech, &item, search, NULL );
 }
 
 /**
@@ -836,7 +847,17 @@ int tech_hasCommodity( const tech_group_t *tech, CommodityRef comm, int search )
       .type   = TECH_TYPE_COMMODITY,
       .u.comm = comm,
    };
-   return tech_hasItemInternal( tech, &item, search );
+   return tech_hasItemInternal( tech, &item, search, NULL );
+}
+
+int tech_hasCommodityPrice( const tech_group_t *tech, CommodityRef comm,
+                            double *price )
+{
+   const tech_item_t item = {
+      .type   = TECH_TYPE_COMMODITY,
+      .u.comm = comm,
+   };
+   return tech_hasItemInternal( tech, &item, 0, price );
 }
 
 /**

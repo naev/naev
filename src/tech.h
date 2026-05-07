@@ -43,6 +43,8 @@ int tech_hasItem( const tech_group_t *tech, const char *item, int search );
 int tech_hasShip( const tech_group_t *tech, const Ship *s, int search );
 int tech_hasOutfit( const tech_group_t *tech, const Outfit *o, int search );
 int tech_hasCommodity( const tech_group_t *tech, CommodityRef c, int search );
+int tech_hasCommodityPrice( const tech_group_t *tech, CommodityRef c,
+                            double *price );
 Outfit      **tech_getOutfit( const tech_group_t *tech, int search );
 Outfit      **tech_getOutfitArray( tech_group_t **tech, int num, int search );
 Ship        **tech_getShip( const tech_group_t *tech, int search );
