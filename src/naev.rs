@@ -273,14 +273,17 @@ fn naevmain() -> Result<()> {
          )
       };
       debugx!(gettext("SDL: {} [compiled: {}]"), &linked, &compiled);
-      if linked > compiled {
-         info!("{}", gettext("SDL is newer than compiled version"));
-      } else if linked < compiled {
-         warn!("{}", gettext("SDL is older than compiled version."));
+      // Patch releases should be compatible.
+      if linked.major != compiled.major || linked.minor != compiled.minor {
+         if linked > compiled {
+            info!("{}", gettext("SDL is newer than compiled version"));
+         } else if linked < compiled {
+            warn!("{}", gettext("SDL is older than compiled version."));
+         }
       }
    }
 
-   /* Set up OpenGL. */
+   // Set up OpenGL.
    let context = renderer::Context::new(sdlvid)?;
 
    unsafe {
