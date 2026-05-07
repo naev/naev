@@ -935,12 +935,12 @@ static int system_cmp( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Get the system from its name.
+ * @brief Get the system from its name, without raising a warning if not found.
  *
  *    @param sysname Name to match.
- *    @return System matching sysname.
+ *    @return System matching sysname or nil if not found.
  */
-StarSystem *system_get( const char *sysname )
+StarSystem *system_getW( const char *sysname )
 {
    if ( sysname == NULL )
       return NULL;
@@ -951,7 +951,6 @@ StarSystem *system_get( const char *sysname )
       for ( int i = 0; i < array_size( systems_stack ); i++ )
          if ( strcmp( systems_stack[i].name, sysname ) == 0 )
             return &systems_stack[i];
-      WARN( _( "System '%s' not found in stack" ), sysname );
       return NULL;
    }
 
@@ -961,8 +960,24 @@ StarSystem *system_get( const char *sysname )
    if ( found != NULL )
       return found;
 
-   WARN( _( "System '%s' not found in stack" ), sysname );
    return NULL;
+}
+
+/**
+ * @brief Get the system from its name.
+ *
+ *    @param sysname Name to match.
+ *    @return System matching sysname.
+ */
+StarSystem *system_get( const char *sysname )
+{
+   if ( sysname == NULL )
+      return NULL;
+
+   StarSystem *sys = system_getW( sysname );
+   if ( sys == NULL )
+      WARN( _( "System '%s' not found in stack" ), sysname );
+   return sys;
 }
 
 /**

@@ -1169,6 +1169,7 @@ stds.system = {
          fields = {
             cur = {},
             get = {},
+            exists = {},
             getAll = {},
             __eq = {},
             name = {},

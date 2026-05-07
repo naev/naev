@@ -513,6 +513,7 @@ StarSystem *system_getAll( void );
 const char *system_existsCase( const char *sysname );
 char      **system_searchFuzzyCase( const char *sysname, int *n );
 StarSystem *system_get( const char *sysname );
+StarSystem *system_getW( const char *sysname );
 StarSystem *system_getIndex( int id );
 int         system_index( const StarSystem *sys );
 int         space_sysReachable( const StarSystem *sys );

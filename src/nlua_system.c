@@ -28,6 +28,7 @@
 /* System metatable methods */
 static int systemL_cur( lua_State *L );
 static int systemL_get( lua_State *L );
+static int systemL_exists( lua_State *L );
 static int systemL_getAll( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
@@ -62,6 +63,7 @@ static int systemL_tags( lua_State *L );
 static const luaL_Reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
+   { "exists", systemL_exists },
    { "getAll", systemL_getAll },
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
@@ -233,11 +235,12 @@ static int systemL_cur( lua_State *L )
  * Behaves differently depending on what you pass as parameter: <br/>
  *    - string : Gets the system by raw (untranslated) name. <br/>
  *    - spob : Gets the system by spob. <br/>
+ *    - system : Returns the same system. <br/>
  *
  * @usage sys = system.get( p ) -- Gets system where spob 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
  *
- *    @luatparam string|Spob param Read description for details.
+ *    @luatparam string|Spob|System param Read description for details.
  *    @luatreturn System System matching parameter.
  * @luafunc get
  */
@@ -266,6 +269,24 @@ static int systemL_get( lua_State *L )
 
    /* return the system */
    lua_pushsystem( L, system_index( ss ) );
+   return 1;
+}
+
+/**
+ * @brief Gets a system if it exists.
+ *
+ *    @luatparam string name Name of the system.
+ *    @luatreturn System|nil System matching name or nil if not found..
+ * @luafunc exists
+ */
+static int systemL_exists( lua_State *L )
+{
+   const char       *name = lua_tostring( L, 1 );
+   const StarSystem *ss   = system_getW( name );
+   if ( ss != NULL )
+      lua_pushsystem( L, system_index( ss ) );
+   else
+      lua_pushnil( L );
    return 1;
 }
 
