@@ -16,6 +16,7 @@ function create ()
    local sb = nc._system_bounty
 
    mem.sys = sb.sys
+   mem.finish = sb.finish
    mem.fct = mem.sys:faction()
    if not mem.fct then return misn.finish(false) end
 
@@ -35,14 +36,23 @@ function create ()
    misn.markerAdd( mem.sys, "computer" )
 end
 
-function accept ()
-   misn.accept()
+local function update_osd()
    misn.osdCreate( _("System Bounty"), {
       fmt.f(_("Travel to the {sys} system"), {sys=mem.sys}),
-      _("Get rid of pirates"),
+      fmt.f(_("Get rid of pirates ({left} left)"), {
+         left = mem.finish - time.cur(),
+      } ),
    } )
+   if system.cur() == mem.sys then
+      misn.osdActive(2)
+   end
+end
+
+function accept ()
+   misn.accept()
 
    hook.enter("enter")
+   hook.date( time.new(0,1,0), "date" )
 end
 
 function enter ()
@@ -71,4 +81,18 @@ function try_give_bounty( plt, attacker )
       amount = points * REWARD,
       pilot  = plt,
    }))
+end
+
+function abort ()
+   misn.finish(false)
+end
+
+function date ()
+   if time.cur() > mem.finish then
+      player.msg("#r"..fmt.f(_("The system bounty in {sys} has expired."), {
+         sys = mem.sys,
+      } ).."#0" )
+      return abort()
+   end
+   update_osd()
 end

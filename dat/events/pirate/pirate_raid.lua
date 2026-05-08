@@ -38,7 +38,8 @@ end
 function mission_start ()
    local nc = naev.cache()
    nc._system_bounty = {
-      sys = mem.sys,
+      sys      = mem.sys,
+      finish   = mem.finish,
    }
    naev.missionStart("System Bounty")
    nc._system_bounty = nil
