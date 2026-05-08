@@ -1884,7 +1884,7 @@ void player_approach( void )
          double d = pilot_getNearestPosPilot(
             player.p, &nearp, player.p->solid.pos.x, player.p->solid.pos.y, 1 );
          if ( ( nearp != NULL ) && !pilot_isFlag( nearp, PILOT_NOBOARD ) &&
-              ( d < pow2( 5e3 ) ) &&
+              ( d < pow2( 2e3 ) ) &&
               ( pilot_isDisabled( nearp ) ||
                 pilot_isFlag( nearp, PILOT_BOARDABLE ) ) ) {
             player_targetSet( nearp->id );
