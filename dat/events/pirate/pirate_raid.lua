@@ -27,6 +27,21 @@ end
 
 -- Create helper mission if applicable
 function land ()
+   local scur = spob.cur()
+   local fct = scur:faction()
+   if not fct or not fct:tags().generic then return false end
+
+   -- TODO check if already accepted
+   hook.safe( "mission_start" )
+end
+
+function mission_start ()
+   local nc = naev.cache()
+   nc._system_bounty = {
+      sys = mem.sys,
+   }
+   naev.missionStart("System Bounty")
+   nc._system_bounty = nil
 end
 
 -- Need to regenerate the diff on start
