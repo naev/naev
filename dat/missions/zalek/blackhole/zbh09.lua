@@ -535,6 +535,7 @@ function heartbeat_ferals ()
       icarus:setHilight(false)
       for k,p in ipairs(pack) do
          p:control( false )
+         p:setHostile(false)
       end
       l:control(true)
       l:hyperspace()
