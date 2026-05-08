@@ -229,10 +229,10 @@ end
 function _bounty_land ()
    local b = mem._bounty
    if not b.job_done or b.finished then return end
-   b.finished = true
 
    -- Allow custom functions
    if b.completefunc then
+      b.finished = true
       return _G[b.completefunc]()
    end
 
