@@ -911,6 +911,11 @@ function board( plt )
       return
    end
 
+   -- Permanently disable hostile enemies
+   if plt:hostile() then
+      plt:setDisable()
+   end
+
    board_wdw = nil
    board_wgt = nil
    board_plt = nil
