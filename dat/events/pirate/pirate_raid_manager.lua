@@ -15,11 +15,13 @@
 local lmisn = require "lmisn"
 
 local PIRATE            = faction.get("Pirate")
-local CHANCE_PER_PERIOD = 5
+local CHANCE_PER_PERIOD = 3
 
 function create ()
+   -- Must clear cache on load / create new game
+   naev.cache()._pirate_raid_active = {}
    mem.time    = time.cur()
-   hook.date( time.new( 0, 3, 0 ), "date" )
+   hook.date( time.new( 0, 1, 0 ), "date" )
 end
 
 local function should_be_active ()
@@ -62,4 +64,5 @@ function date ()
       sys = candidates[ rnd.rnd(#candidates) ],
    }
    naev.eventStart("Pirate System Raid")
+   nc._pirate_raid = nil
 end
