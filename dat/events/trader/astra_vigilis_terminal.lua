@@ -17,12 +17,11 @@ local vn = require "vn"
 local TERMINAL = "minerva_terminal"
 local DIFFICULTY = "bounty_difficulty"
 
-function create ()
-   local difficulty = var.peek(DIFFICULTY)
-   if not difficulty then
-      var.push( DIFFICULTY, N_("Medium") )
-   end
+local function get_difficulty ()
+   return var.peek( "bounty_difficulty" ) or N_("Easy")
+end
 
+function create ()
    evt.npcAdd( "approach", _("Astra Vigilis Terminal"), TERMINAL, _("A terminal to access the Astra Vigilis databases.") )
    hook.enter("enter")
 end
@@ -63,14 +62,14 @@ What do you want to do?]]))
 3. Hard
 4. Challenging
 5. Extreme]]),
-      difficulty = "#b".._(var.peek("bounty_difficulty")).."#0",
+      difficulty = "#b".._(get_difficulty()).."#0",
    } )
    end )
    vn.menu( function ()
       local opts = {
          { _("Nevermind."), "menu_prompt" },
       }
-      local cur = var.peek("bounty_difficulty")
+      local cur = get_difficulty()
       for k,v in ipairs{
          N_("Extreme"),
          N_("Challenging"),
@@ -93,7 +92,7 @@ What do you want to do?]]))
 
    vn.label("difficulty_changed")
    vn.na( function ()
-      local cur = var.peek("bounty_difficulty")
+      local cur = get_difficulty()
       return fmt.f(_([[Bounty difficulty set to {difficulty}.
 
 What do you want to do?]]), {

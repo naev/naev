@@ -436,7 +436,7 @@ end
 
 function create ()
    local payingfaction = spob.cur():faction()
-   local difficulty = var.peek( "bounty_difficulty" ) or "Easy"
+   local difficulty = var.peek( "bounty_difficulty" ) or N_("Easy")
    local points = DIFFICULTIES[difficulty]()
 
    -- Pirate details
