@@ -3101,6 +3101,8 @@ dat/events/pers/thurion.lua
 dat/events/pers/trader.lua
 dat/events/pers/zalek.lua
 dat/events/pirate/fake_transponder.lua
+dat/events/pirate/pirate_raid.lua
+dat/events/pirate/pirate_raid_manager.lua
 dat/events/pirate/shipcheck.lua
 dat/events/poi_enter.lua
 dat/events/poi_generator.lua
