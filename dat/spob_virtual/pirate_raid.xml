@@ -1,0 +1,8 @@
+<spob name="Pirate Raid">
+ <presence>
+  <faction>Pirate</faction>
+  <base>0.000000</base>
+  <bonus>300.000000</bonus>
+  <range>1</range>
+ </presence>
+</spob>

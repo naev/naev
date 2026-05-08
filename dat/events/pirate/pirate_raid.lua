@@ -25,6 +25,10 @@ local function diff_name ()
    return mem.sys:nameRaw().." Pirate Raid"
 end
 
+-- Create helper mission if applicable
+function land ()
+end
+
 -- Need to regenerate the diff on start
 function initialize ()
    local sys = mem.sys:nameRaw()
@@ -63,6 +67,7 @@ function create ()
    } }
 
    hook.load("initialize")
+   hook.land("land")
    hook.date( time.new( 0, 1, 0 ), "date" )
 
    nc._pirate_raid = nil
