@@ -966,6 +966,10 @@ Mission *missions_genList( FactionRef faction, const Spob *pnt,
       if ( misn->avail.loc != loc )
          continue;
 
+      // Explicit 0 is no chance, use 100 if you want 100%
+      if ( misn->avail.chance == 0 )
+         continue;
+
       /* Must hit chance. */
       chance = (double)( misn->avail.chance % 100 ) / 100.;
       if ( chance == 0. ) /* We want to consider 100 -> 100% not 0% */
