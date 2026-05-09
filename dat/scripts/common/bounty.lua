@@ -2,6 +2,7 @@
 
    Framework for dead or alive bounty missions.
 
+   TODO: support for needing to defeat a % of target ships
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
@@ -230,12 +231,6 @@ function _bounty_land ()
    local b = mem._bounty
    if not b.job_done or b.finished then return end
 
-   -- Allow custom functions
-   if b.completefunc then
-      b.finished = true
-      return _G[b.completefunc]()
-   end
-
    local fct = b.payingfaction
    local spbfct = spob.cur():faction()
    if spbfct == nil then return end
@@ -286,6 +281,12 @@ local function _succeed ()
    end
    hook.rm( b.jump_hook )
    hook.rm( b.land_hook )
+
+   -- Allow custom functions
+   if b.completefunc then
+      b.finished = true
+      return _G[b.completefunc]()
+   end
 end
 
 function _bounty_board ()
@@ -436,6 +437,74 @@ function spawn_bounty( params )
    b.land_hook = hook.pilot( target_ship, "land", "_bounty_jump" )
 
    return target_ship
+end
+
+
+function bounty.fleet_points( fleet )
+   local points = 0
+   for k,s in ipairs(fleet) do
+      points = points + s:points()
+   end
+   return points
+end
+
+-- Tries to find a set of ships given a number of points
+function bounty.choose_ships_from_points( shiplist, points )
+   -- Candidate ships
+   local maybeship = {}
+   local maybecap = {}
+   for k,v in ipairs(shiplist) do
+      local p = v:points()
+      if p < points then
+         table.insert( maybeship, v )
+         if p > points*0.5 then
+            table.insert( maybecap, v )
+         end
+      end
+   end
+   if #maybeship <= 0 then
+      table.sort( shiplist, function( a, b ) return a:points() < b:points() end )
+      return {shiplist[1]}
+   end
+   table.sort( maybeship, function( a, b ) return a:points() > b:points() end )
+
+   -- Force top three ships to be considered capitals
+   if #maybecap <= 0 then
+      maybecap = { maybeship[1], maybeship[2], maybeship[3] }
+   end
+
+   -- Choose capship
+   local cap = maybecap[ rnd.rnd(#maybecap) ]
+   points = points - cap:points()
+   local smallest = maybeship[ #maybeship ]:points()
+   if points < smallest then return {cap} end
+
+   -- Must be smaller than capship
+   local cappoints = cap:points()
+   local newships = {}
+   for k,s in ipairs(maybeship) do
+      if s:points() < cappoints then
+         table.insert( newships, s )
+      end
+   end
+   maybeship = newships
+
+   -- Other ships have to be smaller
+   local ships = {cap}
+   while points >= smallest do
+      local candidates = rnd.permutation( maybeship )
+      local s
+      local id = 1
+      repeat
+         s = candidates[id]
+         if not s then return ships end
+         id = id+1
+      until s:points() < points
+      table.insert( ships, s )
+      points = points - s:points()
+   end
+
+   return ships
 end
 
 return bounty
