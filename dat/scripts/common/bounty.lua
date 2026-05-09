@@ -92,7 +92,7 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.alive_only      = params.alive_only
    b.spawnfunc       = params.spawnfunc
    b.completefunc    = params.completefunc
-   b.dynamicfaction  = params.dynamicfaction
+   b.staticfaction   = params.staticfaction
    -- Custom messages (can be tables of messages from which one will be chosen)
    b.msg_subdue      = params.msg_subdue or msg_subdue_def
    b.msg_killed      = params.msg_killed or msg_killed_def
@@ -173,7 +173,7 @@ function bounty.get_faction()
    local b = mem._bounty
    if b.targetfactionfunc then
       return _G[b.targetfactionfunc]()
-   elseif b.dynamicfaction then
+   elseif not b.staticfaction then
       -- Create a dynamic faction
       local fct = faction.get(b.targetfaction)
       return faction.dynAdd( fct, "bounty_"..fct:nameRaw(), fct:name(), {clear_enemies=true, clear_allies=true} )

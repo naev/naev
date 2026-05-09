@@ -393,7 +393,6 @@ function create ()
       payingfaction     = payingfaction,
       reputation        = target.reputation,
       targetfaction     = target.faction,
-      dynamicfaction    = true,
       alive_only        = target.alive_only,
       osd_objective     = target.osd_objective,
       deadline          = mem.deadline,

@@ -124,7 +124,6 @@ function accept ()
       payingfaction  = FACTION,
       reputation     = 20,
       targetfaction  = faction.get("Marauder"),
-      dynamicfaction = true,
       alive_only     = false,
       spawnfunc      = "spawn_pirate",
       completefunc   = "finished",

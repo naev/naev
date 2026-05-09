@@ -95,7 +95,6 @@ function create ()
    bounty.init( missys, pname, pship, reward, {
       payingfaction     = payingfaction,
       targetfaction     = targetfaction,
-      dynamicfaction    = true, -- If not set or false, the player has to be the one to kill it
       spawnfunc         = "spawn_target",
       reputation        = reputation,
       deadline          = mem.deadline,
