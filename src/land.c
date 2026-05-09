@@ -416,6 +416,10 @@ static int bar_genList( unsigned int wid )
  */
 void misn_patchMission( const Mission *misn )
 {
+   if ( mission_computer == NULL ) {
+      WARN( "Trying to patch mission computer before generated." );
+      return;
+   }
    array_push_back( &mission_computer, *misn );
    misn_regen();
 }
