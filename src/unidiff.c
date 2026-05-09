@@ -1898,7 +1898,8 @@ void diff_clear( void )
       UniDiffData_t *diff = diff_available[i];
       if ( diff->temp ) {
          diff_freeData( diff );
-         array_erase( &diff_available, diff, &diff[1] );
+         array_erase( &diff_available, &diff_available[i],
+                      &diff_available[i + 1] );
       }
    }
 
