@@ -76,6 +76,15 @@ function enter ()
    -- Hooks removed on changing system
    hook.pilot( nil, "board", "try_give_bounty" )
    hook.pilot( nil, "death", "try_give_bounty" )
+   hook.pilot( nil, "create", "pilot_create" )
+end
+
+function pilot_create( plt )
+   if not pir.factionIsPirate( plt:faction() ) then return end
+
+   -- We want them to attack everywhere now
+   local pm = plt:memory()
+   pm.lanedistance = 0
 end
 
 function try_give_bounty( plt, attacker )
