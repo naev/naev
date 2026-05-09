@@ -112,7 +112,9 @@ static int diffL_newDynamic( lua_State *L )
    UniDiffData_t diff;
    if ( diff_parseString( &diff, str, "dynamic diff" ) )
       lua_pushboolean( L, 0 );
-   else
+   else {
+      diff.temp = 1;
       lua_pushboolean( L, !diff_addDynamicDiff( &diff ) );
+   }
    return 1;
 }
