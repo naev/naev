@@ -15,7 +15,7 @@
 local lmisn = require "lmisn"
 
 local PIRATE            = faction.get("Pirate")
-local CHANCE_PER_PERIOD = 3
+local CHANCE_PER_PERIOD = 0.03
 
 function create ()
    -- Must clear cache on load / create new game
