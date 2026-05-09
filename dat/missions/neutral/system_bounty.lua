@@ -76,7 +76,7 @@ function enter ()
    -- Hooks removed on changing system
    hook.pilot( nil, "board", "try_give_bounty" )
    hook.pilot( nil, "death", "try_give_bounty" )
-   hook.pilot( nil, "create", "pilot_create" )
+   hook.pilot( nil, "creation", "pilot_create" )
 end
 
 function pilot_create( plt )
@@ -94,14 +94,16 @@ function try_give_bounty( plt, attacker )
    if not plt:hostile() then return end
    -- Only pirates (for now?)
    if not pir.factionIsPirate( plt:faction() ) then return end
+   -- No fighters
+   if plt:mothership() then return end
 
    local points = plt:points()
    player.pay( points * REWARD )
    mem.fct:hit( points * 0.1, system.cur() )
-   player.msg(fmt.f(_([[Obtained {amount} for eliminating {pilot}.]]), {
+   player.msg("#g"..fmt.f(_([[Obtained {amount} for eliminating {pilot}.]]), {
       amount = fmt.credits(points * REWARD),
       pilot  = plt,
-   }))
+   }).."#0")
 end
 
 function abort ()
