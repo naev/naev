@@ -12,7 +12,7 @@
 --]]
 local fmt = require "format"
 
-local RAID_LENGTH       = time.new( 0, 60, 0 )
+local RAID_LENGTH       = time.new( 0, 20, 0 )
 local UNIDIFF           = [[
 <unidiff name="{name}">
  <system name="{sysname}">
