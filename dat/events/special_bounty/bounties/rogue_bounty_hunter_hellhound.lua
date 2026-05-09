@@ -5,14 +5,14 @@ return {
    desc           = _("An ex-Astra Vigilis guild member has gone rogue after betraying a high priority bounty target."),
    escorts        = _("with heavy escorts"),
    reward         = 800e3,
-   missys         = system.get("Alteris"),
+   system         = system.get("Alteris"),
    name           = _("Hellhound"),
-   payingfaction  = faction.get("Space Traders"),
+   payingfaction  = faction.get("Traders Society"),
    reputation     = 50,
    targetfaction  = faction.get("Mercenary"),
    alive_only     = false,
-   targetship     = { ship.get("Starbridge Sigma") },
-   shipfunc       = function( b, params )
+   ships          = { ship.get("Starbridge Sigma") },
+   spawnfunc      = function( b, params )
       local fct = b.get_faction()
       local p = pilot.add( b.targetship[1], fct, params, b.targetname )
       for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.mercenary, 200 )) do

@@ -16,23 +16,27 @@
 local lf = require "love.filesystem"
 local misn_test = require "misn_test"
 
-local bounty_list
 function create ()
-   bounty_list = {}
-   for k,v in ipairs(lf.getDirectoryItems("events/special_bounty")) do
-      table.insert( bounty_list, require( "events.special_bounty."..string.gsub(v,".lua","") ) )
+   mem.bounty_list = {}
+   for k,v in ipairs(lf.getDirectoryItems("events/special_bounty/bounties")) do
+      table.insert( mem.bounty_list, require( "events.special_bounty.bounties."..string.gsub(v,".lua","") ) )
    end
 
    hook.land("land")
+   hook.safe("land")
 end
 
 local function good_candidate( b )
    -- Not already done
-   if not var.peek( b.var ) then
+   if var.peek( b.var ) then
       return false
    end
 
-   -- TODO not too far away and claimable
+   if not naev.claimTest( {b.system}, true ) then
+      return false
+   end
+
+   -- TODO not too far away
 
    -- Conditional met if exists
    if b.cond and not b.cond() then
@@ -59,9 +63,13 @@ function land ()
       return
    end
 
+   hook.safe( "try_gen" )
+end
+
+function try_gen()
    -- Find candidates
    local candidates = {}
-   for k,v in ipairs(bounty_list) do
+   for k,v in ipairs(mem.bounty_list) do
       if good_candidate(v) then
          table.insert( candidates, v )
       end
