@@ -31,7 +31,10 @@ function land ()
    local fct = scur:faction()
    if not fct or not fct:tags().generic then return false end
 
-   -- TODO check if already accepted
+   -- Only start mission if not taken already
+   local nc = naev.cache()
+   local prm = nc._pirate_raid_mission or {}
+   if prm[ mem.sys:nameRaw() ] then return end
    hook.safe( "mission_start" )
 end
 

@@ -8,6 +8,7 @@
 --]]
 local fmt = require "format"
 local lmisn = require "lmisn"
+local pir = require "common.pirate"
 
 local REWARD = 200
 
@@ -48,11 +49,20 @@ local function update_osd()
    end
 end
 
+function add_metadata ()
+   local nc = naev.cache()
+   local prm = nc._pirate_raid_mission or {}
+   prm[ mem.sys:nameRaw() ] = true
+   nc._pirate_raid_mission = prm
+end
+
 function accept ()
    misn.accept()
 
    hook.enter("enter")
    hook.date( time.new(0,1,0), "date" )
+   hook.load( "add_metadata" )
+   add_metadata()
 end
 
 function enter ()
@@ -69,21 +79,27 @@ function enter ()
 end
 
 function try_give_bounty( plt, attacker )
+   -- Player must get killing blow
+   if not attacker or not attacker:withPlayer() then return end
    -- Handles the case the player boarded to permanently disable
    if not plt:hostile() then return end
-   -- Player must get killing blow
-   if not attacker:withPlayer() then return end
+   -- Only pirates (for now?)
+   if not pir.factionIsPirate( plt:faction() ) then return end
 
    local points = plt:points()
    player.pay( points * REWARD )
    mem.fct:hit( points * 0.1, system.cur() )
    player.msg(fmt.f(_([[Obtained {amount} for eliminating {pilot}.]]), {
-      amount = points * REWARD,
+      amount = fmt.credits(points * REWARD),
       pilot  = plt,
    }))
 end
 
 function abort ()
+   local nc = naev.cache()
+   local prm = nc._pirate_raid_mission or {}
+   prm[ mem.sys:nameRaw() ] = nil
+   nc._pirate_raid_mission = prm
    misn.finish(false)
 end
 
