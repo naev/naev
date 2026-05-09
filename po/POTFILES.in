@@ -3123,6 +3123,9 @@ dat/events/sirius/test_of_purification.lua
 dat/events/sirius/test_of_renewal.lua
 dat/events/sol.lua
 dat/events/soromid/ferals.lua
+dat/events/special_bounty/bounties/rogue_bounty_hunter_hellhound.lua
+dat/events/special_bounty/helpers.lua
+dat/events/special_bounty/manager.lua
 dat/events/standing.lua
 dat/events/start.lua
 dat/events/taiomi/find.lua
@@ -3371,6 +3374,7 @@ dat/missions/neutral/runaway/runaway_search.lua
 dat/missions/neutral/seek_n_destroy.lua
 dat/missions/neutral/sightseeing.lua
 dat/missions/neutral/spacefamily.lua
+dat/missions/neutral/special_bounty.lua
 dat/missions/neutral/system_bounty.lua
 dat/missions/neutral/teenager.lua
 dat/missions/neutral/treasure_hunt.lua
