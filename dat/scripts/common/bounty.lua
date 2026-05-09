@@ -231,6 +231,12 @@ function _bounty_land ()
    local b = mem._bounty
    if not b.job_done or b.finished then return end
 
+   -- Allow custom functions
+   if b.completefunc then
+      b.finished = true
+      if not _G[b.completefunc]() then return end
+   end
+
    local fct = b.payingfaction
    local spbfct = spob.cur():faction()
    if spbfct == nil then return end
@@ -281,12 +287,6 @@ local function _succeed ()
    end
    hook.rm( b.jump_hook )
    hook.rm( b.land_hook )
-
-   -- Allow custom functions
-   if b.completefunc then
-      b.finished = true
-      return _G[b.completefunc]()
-   end
 end
 
 function _bounty_board ()

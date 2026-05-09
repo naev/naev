@@ -126,13 +126,11 @@ function accept ()
       targetfaction  = faction.get("Marauder"),
       alive_only     = false,
       spawnfunc      = "spawn_pirate",
-      completefunc   = "finished",
+      completefunc   = "land_done",
       osd_title      = TITLE,
       osd_reward     = fmt.f(_("Land at a {fct} station or planet"),{fct=FACTION}),
    } )
    bounty.accept()
-
-   hook.land( "land_done" )
 end
 
 -- luacheck: globals spawn_pirate
@@ -149,17 +147,8 @@ function spawn_pirate( b )
    return p
 end
 
--- luacheck: globals finished
-function finished ()
-   mem.finished = true
-end
-
+-- luacheck: globals land_done
 function land_done ()
-   if not mem.finished then return end
-
-   local fct = spob.cur():faction()
-   if fct ~= FACTION then return end
-
    vn.reset()
    vn.scene()
    vn.transition()
