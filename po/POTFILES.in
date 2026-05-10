@@ -3107,6 +3107,9 @@ dat/events/pirate/pirate_raid_manager.lua
 dat/events/pirate/shipcheck.lua
 dat/events/poi_enter.lua
 dat/events/poi_generator.lua
+dat/events/priority_bounty/bounties/rogue_bounty_hunter_hellhound.lua
+dat/events/priority_bounty/helpers.lua
+dat/events/priority_bounty/manager.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
 dat/events/restricted_ngc11718.lua
@@ -3123,9 +3126,6 @@ dat/events/sirius/test_of_purification.lua
 dat/events/sirius/test_of_renewal.lua
 dat/events/sol.lua
 dat/events/soromid/ferals.lua
-dat/events/special_bounty/bounties/rogue_bounty_hunter_hellhound.lua
-dat/events/special_bounty/helpers.lua
-dat/events/special_bounty/manager.lua
 dat/events/standing.lua
 dat/events/start.lua
 dat/events/taiomi/find.lua
@@ -3363,6 +3363,7 @@ dat/missions/neutral/poi/soromid_biologist.lua
 dat/missions/neutral/poi/wildspace.lua
 dat/missions/neutral/poi/zalek_drone.lua
 dat/missions/neutral/poi_intro.lua
+dat/missions/neutral/priority_bounty.lua
 dat/missions/neutral/race/tracks_qex.lua
 dat/missions/neutral/race/tracks_zlk.lua
 dat/missions/neutral/race1.lua
@@ -3374,7 +3375,6 @@ dat/missions/neutral/runaway/runaway_search.lua
 dat/missions/neutral/seek_n_destroy.lua
 dat/missions/neutral/sightseeing.lua
 dat/missions/neutral/spacefamily.lua
-dat/missions/neutral/special_bounty.lua
 dat/missions/neutral/system_bounty.lua
 dat/missions/neutral/teenager.lua
 dat/missions/neutral/treasure_hunt.lua

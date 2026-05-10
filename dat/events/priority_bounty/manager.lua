@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Special Bounty Manager">
+<event name="Priority Bounty Manager">
  <location>load</location>
  <chance>100</chance>
  <unique />
@@ -8,7 +8,7 @@
 --]]
 --[[
 
-   Manager to spawn Special Hand-Crafted Bounties
+   Manager to spawn Priority Hand-Crafted Bounties
 
 --]]
 --local fmt = require "format"
@@ -18,8 +18,8 @@ local misn_test = require "misn_test"
 
 function create ()
    mem.bounty_list = {}
-   for k,v in ipairs(lf.getDirectoryItems("events/special_bounty/bounties")) do
-      local filename = "events.special_bounty.bounties."..string.gsub(v,".lua","")
+   for k,v in ipairs(lf.getDirectoryItems("events/priority_bounty/bounties")) do
+      local filename = "events.priority_bounty.bounties."..string.gsub(v,".lua","")
       local b     = require( filename )
       b.filename  = filename
       b.var       = b.var or v
@@ -62,8 +62,8 @@ function land ()
       return
    end
 
-   -- No active special bounty
-   if player.misnActive("Special Bounty") then
+   -- No active priority bounty
+   if player.misnActive("Priority Bounty") then
       return
    end
 
@@ -87,7 +87,7 @@ function try_gen()
 
    -- Trigger bounty
    local nc = naev.cache()
-   nc._special_bounty = bounty
-   naev.missionStart("Special Bounty")
-   nc._special_bounty = nil
+   nc._priority_bounty = bounty
+   naev.missionStart("Priority Bounty")
+   nc._priority_bounty = nil
 end

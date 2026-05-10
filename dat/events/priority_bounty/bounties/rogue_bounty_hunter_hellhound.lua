@@ -1,4 +1,4 @@
-local bhelp = require "events.special_bounty.helpers"
+local bhelp = require "events.priority_bounty.helpers"
 local bounty = require "common.bounty"
 return {
    var            = "bounty_hellhound", -- To control whether or not the player did it

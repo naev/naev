@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Special Bounty">
+<mission name="Priority Bounty">
  <priority>3</priority>
  <chance>0</chance>
  <location>Computer</location>
@@ -21,7 +21,7 @@ function create ()
    misn.claim( {sb.system}, true )
 
    local prefix = (sb.payingfaction and require("common.prefix").prefix(sb.payingfaction)) or ""
-   local title = prefix..fmt.f(_("Special Bounty: {title}"), {title=sb.title})
+   local title = prefix..fmt.f(_("Priority Bounty: {title}"), {title=sb.title})
    local desc = sb.desc.."\n"..fmt.f( [[
 #nTarget:#0 {pilotname} ({shipclass}-class ship {escorts})
 #nWanted:#0 {wanted}
