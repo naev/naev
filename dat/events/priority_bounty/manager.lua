@@ -40,7 +40,9 @@ local function good_candidate( b )
       return false
    end
 
-   -- TODO not too far away
+   if b.system:jumpDist( system.cur() ) > 9 then
+      return false
+   end
 
    -- Conditional met if exists
    if b.cond and not b.cond() then
