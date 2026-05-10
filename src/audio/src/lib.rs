@@ -1309,6 +1309,11 @@ impl AudioBuilder {
       self
    }
 
+   pub fn volume(mut self, volume: f32) -> Self {
+      self.volume = volume;
+      self
+   }
+
    pub fn looping(mut self, looping: bool) -> Self {
       self.looping = looping;
       self
