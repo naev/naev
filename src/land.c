@@ -52,6 +52,7 @@
 #include "save.h"
 #include "sound.h"
 #include "toolkit.h"
+#include "unidiff.h"
 
 /*
  * we use visited flags to not duplicate missions generated
@@ -1310,10 +1311,15 @@ void land_genWindows( int load )
        * function for both hooks. */
       if ( !load )
          hooks_run( "land" );
-      else
+      else {
+         // Since dynamic diffs can be created on load, we want to batch them
+         // together
+         unidiff_universeDefer( 1 );
          hooks_run(
             "load" ); /* Should be run before generating missions, so if the
                          load hook cancels a mission, it can reappear. */
+         unidiff_universeDefer( 0 );
+      }
       NTracingZoneEnd( _ctx_landhooks );
       events_trigger( EVENT_TRIGGER_LAND );
 
