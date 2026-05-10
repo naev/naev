@@ -22,4 +22,5 @@ return {
       end
       return p
    end,
+   cond = bhelp.cond_bounty_points( 200 ),
 }

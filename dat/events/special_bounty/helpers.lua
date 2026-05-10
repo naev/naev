@@ -67,4 +67,10 @@ function bhelp.choose_ships_from_points_and_capship( capship, shiplist, points )
    return ships
 end
 
+function bhelp.cond_bounty_points( points )
+   return function ()
+      return (var.peek( "astra_vigilis_points" ) or 0) > points
+   end
+end
+
 return bhelp
