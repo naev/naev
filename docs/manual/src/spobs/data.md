@@ -11,6 +11,7 @@
             omitted, it will be auto-detected.
           * `<exterior>`: Defines the image displayed on the spob's "Landing Main" tab.
             If extension is omitted, it will be auto-detected.
+          * `<comm>`: Defines the image displayed when hailing the spob. If omitted, it will default to the spob's `<space>` graphic.
       - `<presence>`: Category relating to faction presence, used to generate patrol
         lanes within the parent system.
           * `<faction>`: Defines the spob's owning or dominant faction.
