@@ -288,8 +288,12 @@ local function bounty_setup_pirate( payingfaction, points )
       level = 5
    end
 
-   local credits     = 1e6 * points / 200 * (0.9 + 0.2 * rnd.rnd())
-   local reputation  = 30  * points / 200
+   local calcpoints  = points / 200
+   if points > 200 then
+      calcpoints = 1 + (calcpoints - 1) * 0.5
+   end
+   local credits     = 1e6 * calcpoints * (0.9 + 0.2 * rnd.rnd())
+   local reputation  = 30  * calcpoints
 
    -- Reason for the bounty
    local reason = ""
