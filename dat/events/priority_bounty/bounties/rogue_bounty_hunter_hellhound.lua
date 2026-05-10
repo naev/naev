@@ -6,14 +6,14 @@ return {
    title          = _("A Bark in the Dark"),
    desc           = _("An ex-Astra Vigilis guild member known as Hellhound has gone rogue after betraying a high priority bounty target. They are flying the Hellhound and believed to be accompanied by other rogue members. The Astra Vigilis wants them captured alive."),
    escorts        = _("with heavy escorts"),
-   reward         = 1.3e6,
+   reward         = 1e6,
    system         = system.get("Alteris"),
    name           = _("Hellhound"),
    payingfaction  = faction.get("Traders Society"),
-   reputation     = 50,
+   reputation     = 100,
    targetfaction  = faction.get("Mercenary"),
    alive_only     = true,
-   ships          = { ship.get("Starbridge Sigma") },
+   ships          = { ship.get("Starbridge") },
    spawnfunc      = function( b, params )
       local fct = bounty.get_faction()
       local p = pilot.add( b.targetship[1], fct, params, b.targetname, { naked = true } )
@@ -24,12 +24,12 @@ return {
       local saying = _("What? Astra Vigilis sticking bounty hunters on me?")
       m.taunt = saying
       m.comm_greet = saying
-      for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.mercenary, 200 )) do
+      for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.mercenary, 150 )) do
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
       end
       return p
    end,
-   cond = bhelp.cond_bounty_points( 300 ),
+   cond = bhelp.cond_bounty_points( 200 ),
 }

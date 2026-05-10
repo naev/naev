@@ -3108,6 +3108,7 @@ dat/events/pirate/shipcheck.lua
 dat/events/poi_enter.lua
 dat/events/poi_generator.lua
 dat/events/priority_bounty/bounties/rogue_bounty_hunter_hellhound.lua
+dat/events/priority_bounty/bounties/rogue_bounty_hunter_hellhound_2.lua
 dat/events/priority_bounty/helpers.lua
 dat/events/priority_bounty/manager.lua
 dat/events/proteron/blockade.lua
