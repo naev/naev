@@ -34,16 +34,15 @@ local function realityrip( pos, size, params )
    end
 
    -- Sound is handled separately in outfit
-   local s = spfx.new( math.huge, update, nil, nil, render, pos, params.vel, nil, size, remove )
-   local d  = s:data()
-   d.pos    = pos
-   d.timer  = 0
-   d.size   = size
-   d.strength = params.strength or 1
-   d.shader = pp_shaders.newShader( rip_bg_shader_frag ) -- Have to recreate each time
-   d.shader:send( "u_size", size )
-   d.shader:addPPShader("game", 20)
-   return s
+   return spfx.new( math.huge, update, nil, nil, render, pos, params.vel, nil, size, remove, {
+      pos    = pos,
+      timer  = 0,
+      size   = size,
+      strength = params.strength or 1,
+      shader = pp_shaders.newShader( rip_bg_shader_frag ), -- Have to recreate each time
+      shader:send( "u_size", size ),
+      shader:addPPShader("game", 20),
+   } )
 end
 
 return realityrip

@@ -31,20 +31,13 @@ local function spfx_chakra( pos, vel, size, params )
    if not params.silent then
       sfx = exp_sfx[ rnd.rnd(1,#exp_sfx) ]
    end
-   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5 )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.speed  = speed
-   d.grain  = params.grain or (size/30)^0.5
-   d.r      = rnd.rnd()
-   if params.volume then
-      local ss = s:sfx()
-      if ss then
-         ss:setVolume( params.volume )
-      end
-   end
-   return s
+   return spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5, nil, {
+      timer  = 0,
+      size   = size,
+      speed  = speed,
+      grain  = params.grain or (size/30)^0.5,
+      r      = rnd.rnd(),
+   }, params.volume )
 end
 
 local function exp( pos, vel, radius, params )

@@ -33,10 +33,10 @@ local function blink( p, pos, vel )
    end
 
    local c = lg.newCanvas( p:render() )
-   local s = spfx.new( ttl, update, render, nil, nil, pos, vel, nil, (c.w+c.h)*0.25 )
-   local d  = s:data()
-   d.canvas = c
-   d.timer = 0
+   local s = spfx.new( ttl, update, render, nil, nil, pos, vel, nil, (c.w+c.h)*0.25, nil, {
+      canvas   = c,
+      timer    = 0,
+   } )
    return s
 end
 

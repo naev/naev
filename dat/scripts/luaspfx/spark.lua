@@ -33,18 +33,12 @@ local function spfx_spark( pos, vel, size, params )
       sfx = spark_sfx[ rnd.rnd(1,#spark_sfx) ]
    end
    --]]
-   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5 )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.speed  = speed
-   d.r      = rnd.rnd()
-   if params.volume then
-      local ss = s:sfx()
-      if ss then
-         ss:setVolume( params.volume )
-      end
-   end
+   spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5, nil, {
+      timer  = 0,
+      size   = size,
+      speed  = speed,
+      r      = rnd.rnd(),
+   }, params.volume)
 end
 
 local function spark( pos, vel, radius, _disable, params )

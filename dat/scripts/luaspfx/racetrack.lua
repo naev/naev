@@ -72,16 +72,16 @@ local function racetrack_new( pos, rot, activate, params )
 
    local size = params.size or 500
 
-   local s = spfx.new( math.huge, update, render, nil, nil, pos, nil, nil, size )
-   local d  = s:data()
-   d.size   = size
-   d.col    = params.col or nil
-   d.rot    = rot
-   d.ready  = false
-   d.seg1   = pos-vec2.newP(size*0.5,math.pi/2-rot)
-   d.seg2   = pos+vec2.newP(size*0.5,math.pi/2-rot)
-   d.ppos   = player.pos()
-   d.activate = activate
+   local s = spfx.new( math.huge, update, render, nil, nil, pos, nil, nil, size, nil, {
+      size   = size,
+      col    = params.col or nil,
+      rot    = rot,
+      ready  = false,
+      seg1   = pos-vec2.newP(size*0.5,math.pi/2-rot),
+      seg2   = pos+vec2.newP(size*0.5,math.pi/2-rot),
+      ppos   = player.pos(),
+      activate = activate,
+   } )
 
    local obj = { s=s }
    setmetatable( obj, racetrack_mt )

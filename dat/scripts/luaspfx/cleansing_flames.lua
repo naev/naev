@@ -43,19 +43,13 @@ local function flames( pos, vel, radius, params )
    if not params.silent then
       sfx = flames_sfx[ rnd.rnd(1,#flames_sfx) ]
    end
-   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5 )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.speed  = speed
-   d.grain  = params.grain or (size/30)^0.5
-   d.r      = rnd.rnd()
-   if params.volume then
-      local ss = s:sfx()
-      if ss then
-         ss:setVolume( params.volume )
-      end
-   end
+   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5, nil, {
+      timer  = 0,
+      size   = size,
+      speed  = speed,
+      grain  = params.grain or (size/30)^0.5,
+      r      = rnd.rnd(),
+   }, params.volume )
 
    if params.parent then
       local dmg = params.damage or 1

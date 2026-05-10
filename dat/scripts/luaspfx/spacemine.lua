@@ -154,21 +154,21 @@ local function spacemine( pos, vel, fct, params )
    local duration = params.duration or 90
 
    -- Sound is handled separately in outfit
-   local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, RANGE )
-   local d  = s:data()
-   d.timer     = 0
-   d.check     = rnd.rnd() * CHECK_INTERVAL
-   d.range     = RANGE
-   d.rangemin  = RANGE_MIN
-   d.explosion = RANGE_EXP
-   d.fct       = fct
-   d.damage    = params.damage or DAMAGE
-   d.penetration = params.penetration or PENETRATION
-   d.trackmax  = params.trackmax or TRACKMAX
-   d.trackmin  = params.trackmin or TRACKMIN
-   d.pilot     = params.pilot
-   d.primed    = params.primed or PRIME
-   d.hostile   = params.hostile
+   local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, RANGE, nil, {
+      timer     = 0,
+      check     = rnd.rnd() * CHECK_INTERVAL,
+      range     = RANGE,
+      rangemin  = RANGE_MIN,
+      explosion = RANGE_EXP,
+      fct       = fct,
+      damage    = params.damage or DAMAGE,
+      penetration = params.penetration or PENETRATION,
+      trackmax  = params.trackmax or TRACKMAX,
+      trackmin  = params.trackmin or TRACKMIN,
+      pilot     = params.pilot,
+      primed    = params.primed or PRIME,
+      hostile   = params.hostile,
+   } )
    return s
 end
 

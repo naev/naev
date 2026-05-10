@@ -34,11 +34,10 @@ local function corsair( p, pos, vel )
    end
 
    local c = lg.newCanvas( p:render() )
-   local s = spfx.new( TTL, update, render, nil, nil, pos, vel, nil, (c.w+c.h)*0.25 )
-   local d  = s:data()
-   d.canvas = c
-   d.timer = 0
-   return s
+   return spfx.new( TTL, update, render, nil, nil, pos, vel, nil, (c.w+c.h)*0.25, nil, {
+      canvas = c,
+      timer  = 0,
+   } )
 end
 
 return corsair

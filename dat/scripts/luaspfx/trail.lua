@@ -98,20 +98,19 @@ local function trail( pos, point, params )
    params = params or {}
 
    local size = params.size or 300
-
-   local s = spfx.new( math.huge, nil, nil, nil, render, pos, nil, nil, size )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.col    = params.col or {0, 1.0, 0.7, 0.5} -- in HSV
-   d.colspread = params.colspread or 50
+   local rot
    if point then
       local _m, dir = ((point-pos) * vec2.new(-1, 1)):polar()
-      d.rot = dir
+      rot = dir
    end
-   d.r = {}
-
-   return s
+   return spfx.new( math.huge, nil, nil, nil, render, pos, nil, nil, size, nil, {
+      timer  = 0,
+      size   = size,
+      col    = params.col or {0, 1.0, 0.7, 0.5}, -- in HSV
+      colspread = params.colspread or 50,
+      r      = {},
+      rot    = rot,
+   } )
 end
 
 return trail

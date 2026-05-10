@@ -31,19 +31,13 @@ local function spfx_emp( pos, vel, size, params )
    if not params.silent then
       sfx = emp_sfx[ rnd.rnd(1,#emp_sfx) ]
    end
-   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5 )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.speed  = speed
-   d.grain  = params.grain or math.max( 1.0, size/70 )
-   d.r      = rnd.rnd()
-   if params.volume then
-      local ss = s:sfx()
-      if ss then
-         ss:setVolume( params.volume )
-      end
-   end
+   return spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5, nil, {
+      timer  = 0,
+      size   = size,
+      speed  = speed,
+      grain  = params.grain or math.max( 1.0, size/70 ),
+      r      = rnd.rnd(),
+   }, params.volume )
 end
 
 local function emp( pos, vel, radius, _disable, params )

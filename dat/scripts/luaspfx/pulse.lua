@@ -32,12 +32,11 @@ local function pulse( pos, vel, params )
    local size = params.size or 3000
 
    -- Sound is handled separately in outfit
-   local s = spfx.new( 3, update, nil, nil, render, pos, vel, nil, size )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.col    = params.col or {0.1, 0.3, 0.8, 0.5}
-   return s
+   return spfx.new( 3, update, nil, nil, render, pos, vel, nil, size, nil, {
+      timer  = 0,
+      size   = size,
+      col    = params.col or {0.1, 0.3, 0.8, 0.5},
+   } )
 end
 
 return pulse

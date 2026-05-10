@@ -56,27 +56,21 @@ local function spfx_explosion( pos, vel, size, params )
    local speed = params.speed or math.max( -0.000940296 * size + 0.719132, 0.2 )
    local sfx
    if not params.silent then
-      sfx = explosion_sfx[ rnd.rnd(1,#explosion_sfx) ]
+      sfx = explosion_sfx[ rnd.rnd(#explosion_sfx) ]
    end
-   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5 )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.grain  = params.grain or (0.0016265 * size + 0.0944304)
-   d.speed  = speed
-   d.steps  = params.steps or math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
-   d.smokiness = params.smokiness or 0.588
-   d.colourbase = params.colourbase or {1.2, 0.9, 0.5, 0.7}
-   d.coloursmoke = params.coloursmoke or {0.15, 0.15, 0.15, 0.1}
-   d.smokefade = params.smokefade or 1.4
-   d.rollspeed = params.rollspeed or 1.0
-   d.r      = rnd.rnd()
-   if params.volume then
-      local ss = s:sfx()
-      if ss then
-         ss:setVolume( params.volume )
-      end
-   end
+   return spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx, size*0.5, nil, {
+      timer  = 0,
+      size   = size,
+      grain  = params.grain or (0.0016265 * size + 0.0944304),
+      speed  = speed,
+      steps  = params.steps or math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 ),
+      smokiness = params.smokiness or 0.588,
+      colourbase = params.colourbase or {1.2, 0.9, 0.5, 0.7},
+      coloursmoke = params.coloursmoke or {0.15, 0.15, 0.15, 0.1},
+      smokefade = params.smokefade or 1.4,
+      rollspeed = params.rollspeed or 1.0,
+      r      = rnd.rnd(),
+   }, params.volume )
 end
 
 local function explosion( pos, vel, radius, damage, params )

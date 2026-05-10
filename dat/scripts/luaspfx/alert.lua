@@ -35,11 +35,11 @@ local function alert( pos, params )
    end
 
    local size = params.size or 100
-   local s = spfx.new( 2.2, update, nil, nil, render, pos, nil, alert_sound, size*0.5 )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.col    = params.col or {1, 1, 0, 0.5}
+   local s = spfx.new( 2.2, update, nil, nil, render, pos, nil, alert_sound, size*0.5, nil, {
+      timer  = 0,
+      size   = size,
+      col    = params.col or {1, 1, 0, 0.5},
+   } )
    return s
 end
 

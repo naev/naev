@@ -35,10 +35,9 @@ local function cyberspace( _params )
    end
 
    -- Sound is handled separately in outfit
-   local s = spfx.new( math.huge, update, render, nil, nil, nil, nil, nil, -1 )
-   local d  = s:data()
-   d.str = 0;
-   return s
+   return spfx.new( math.huge, update, render, nil, nil, nil, nil, nil, -1, nil, {
+      str = 0,
+   } )
 end
 
 return cyberspace

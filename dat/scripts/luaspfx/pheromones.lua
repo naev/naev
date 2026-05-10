@@ -32,12 +32,11 @@ local function pheromones( pos, vel, params )
    local size   = params.size or 6000
 
    -- Sound is handled in outfit
-   local s = spfx.new( 8, update, nil, nil, render, pos, vel, nil, size )
-   local d  = s:data()
-   d.timer  = 0
-   d.size   = size
-   d.col    = params.col or {1.0, 0.5, 0.8, 0.5}
-   return s
+   return spfx.new( 8, update, nil, nil, render, pos, vel, nil, size, nil, {
+      timer  = 0,
+      size   = size,
+      col    = params.col or {1.0, 0.5, 0.8, 0.5},
+   } )
 end
 
 return pheromones
