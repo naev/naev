@@ -1,4 +1,5 @@
 local bhelp = require "events.special_bounty.helpers"
+local bounty = require "common.bounty"
 return {
    var            = "bounty_hellhound",
    title          = _("To Hell and Back"),
@@ -13,7 +14,7 @@ return {
    alive_only     = false,
    ships          = { ship.get("Starbridge Sigma") },
    spawnfunc      = function( b, params )
-      local fct = b.get_faction()
+      local fct = bounty.get_faction()
       local p = pilot.add( b.targetship[1], fct, params, b.targetname )
       for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.mercenary, 200 )) do
          local e = pilot.add( s, fct, params )

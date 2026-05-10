@@ -19,7 +19,10 @@ local misn_test = require "misn_test"
 function create ()
    mem.bounty_list = {}
    for k,v in ipairs(lf.getDirectoryItems("events/special_bounty/bounties")) do
-      table.insert( mem.bounty_list, require( "events.special_bounty.bounties."..string.gsub(v,".lua","") ) )
+      local filename = "events.special_bounty.bounties."..string.gsub(v,".lua","")
+      local b = require( filename )
+      b.filename = filename
+      table.insert( mem.bounty_list, b )
    end
 
    hook.land("land")

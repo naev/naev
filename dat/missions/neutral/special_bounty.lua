@@ -41,12 +41,28 @@ function create ()
    -- Modify internals a bit
    sb.completefunc = "finish"
 
+   -- Have to convert from a function to a global
+   if sb.spawnfunc then
+      sb.spawnfunc = "spawnfunc"
+   end
+
    -- Set up bounty
    bounty.init( sb.system, sb.name, sb.ships, sb.reward, sb )
 end
 
+-- Basically a hack to convert the function in the data to a global function that the bounty script can call
+function setup ()
+   local b = require(mem.sb.filename)
+   if b.spawnfunc then
+      -- luacheck: globals spawnfunc
+      spawnfunc = b.spawnfunc
+   end
+end
+
 function accept ()
    bounty.accept()
+   hook.load( "setup" )
+   setup()
 end
 
 -- luacheck: globals finish
