@@ -20,6 +20,10 @@ return {
       equipopt.soromid( p )
       p:outfitAddIntrinsic("Escape Pod")
       local m = p:memory()
+      if not m.lootables then
+         m.lootables = {}
+      end
+      m.lootables["encrypted_data_matrix"] = 1
       m.capturable = true
       local saying = _("What? Astra Vigilis sticking bounty hunters on me?")
       m.taunt = saying
