@@ -259,6 +259,7 @@ impl UserData for LuaSpfxRef {
        *    @luatparam[opt] number radius Radius to use to determine if should render.
        *    @luatparam[opt] Function|nil remove Function to run when removing the
        * spfx.
+       *    @luatparam[opt] data Data to provide to the spfx.
        *    @luatreturn spfx New spfx corresponding to the data or nil if called from a spfx
        *    callback function.
        * @luafunc new
@@ -267,7 +268,20 @@ impl UserData for LuaSpfxRef {
       methods.add_function(
          "new",
          |lua,
-          (ttl, update, render_bg, render_mg, render_fg, pos, vel, sfx, radius, remove): (
+          (
+            ttl,
+            update,
+            render_bg,
+            render_mg,
+            render_fg,
+            pos,
+            vel,
+            sfx,
+            radius,
+            remove,
+            data,
+            volume,
+         ): (
             f64,
             Option<Function>,
             Option<Function>,
@@ -278,6 +292,8 @@ impl UserData for LuaSpfxRef {
             Option<Either<UserDataRef<audio::LuaAudioRef>, UserDataRef<audio::AudioData>>>,
             Option<f64>,
             Option<Function>,
+            Option<mlua::Table>,
+            Option<f32>,
          )|
           -> mlua::Result<Option<Self>> {
             let (pos, ingame) = if let Some(pos) = pos {
@@ -296,7 +312,11 @@ impl UserData for LuaSpfxRef {
                   ));
                }
             };
-            let data = lua.create_table()?;
+            let data = match data {
+               Some(data) => data,
+               None => lua.create_table()?,
+            };
+            let volume = volume.unwrap_or(1.0);
             let sfx = match sfx {
                None => None,
                Some(Either::Left(audio)) => {
@@ -313,6 +333,7 @@ impl UserData for LuaSpfxRef {
                      .position(pos.map(|v| v.into_vector2().cast()))
                      .play(true)
                      .ingame(ingame)
+                     .volume(volume)
                      .build()?;
                   Some(audio::LuaAudioRef {
                      audio,
