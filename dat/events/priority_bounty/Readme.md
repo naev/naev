@@ -1,11 +1,11 @@
-## Special Bounties for Naev
+## Priority Bounties for Naev
 
-These are special bounties that will appear in the mission computer.
+These are priority bounties that will appear in the mission computer.
 The player can only have one active at a time, and they allow for more tailoured and difficult challenges with potentially unique loot.
 
 ### Adding
 
-You can add a new special bounty by creating a lua file in `dat/events/special_bounty/bounties/` (in the case of a plugin, you do not need the first `dat/`).
+You can add a new priority bounty by creating a lua file in `dat/events/priority_bounty/bounties/` (in the case of a plugin, you do not need the first `dat/`).
 The file should return a table with specific fields that determine what the bounty is.
 These fields are documented below:
 
@@ -23,7 +23,7 @@ These fields are documented below:
 * `alive_only`: whether or not the player has to capture them alive.
 * `ships`: the ships to spawn in the fleet. The first will be the flagship and the target. However, this can be overriden with `spawnfunc`, in which case the first ship will be used to create the description only.
 * `spawnfunc` (optional): a Lua function that will be run when spawning the target. This takes two parameters: the first is the bounty data table, and the second is the location parameter that should be used with `pilot.add`. An example is shown below.
-* `cond` (optional): a function that returns a boolean value indicating that this bounty is available or not. Can be used to make special bounties depend on each other or appear later. See the section on conditionals for more information.
+* `cond` (optional): a function that returns a boolean value indicating that this bounty is available or not. Can be used to make priority bounties depend on each other or appear later. See the section on conditionals for more information.
 
 ### Spawn Function
 
@@ -31,7 +31,7 @@ Below is an example of a documented spawn function.
 
 ```lua
 -- These includes should be added at the top of the file.
-local bhelp = require "events.special_bounty.helpers"
+local bhelp = require "events.priority_bounty.helpers"
 local bounty = require "common.bounty"
 
 -- This function should be set as the spawnfunc field of the returned table
@@ -62,7 +62,7 @@ Below is an example of how you can use the conditional function to make a missio
 ```lua
 -- This would be set as the cond field of the returned table
 local function cond ()
-   -- This would appear after another special bounty that matches the var string below is completed
+   -- This would appear after another priority bounty that matches the var string below is completed
    return var.peek( "var_string_of_another_bounty" )
 end
 ```
