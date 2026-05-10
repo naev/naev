@@ -39,7 +39,8 @@ function create ()
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), sb.system ) )
 
    -- Modify internals a bit
-   sb.completefunc = "finish"
+   sb.completefunc   = "finish"
+   sb.osd_title      = sb.title
 
    -- Have to convert from a function to a global
    if sb.spawnfunc then

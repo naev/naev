@@ -20,8 +20,9 @@ function create ()
    mem.bounty_list = {}
    for k,v in ipairs(lf.getDirectoryItems("events/special_bounty/bounties")) do
       local filename = "events.special_bounty.bounties."..string.gsub(v,".lua","")
-      local b = require( filename )
-      b.filename = filename
+      local b     = require( filename )
+      b.filename  = filename
+      b.var       = b.var or v
       table.insert( mem.bounty_list, b )
    end
 
