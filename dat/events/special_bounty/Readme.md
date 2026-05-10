@@ -23,17 +23,18 @@ These fields are documented below:
 * `alive_only`: whether or not the player has to capture them alive.
 * `ships`: the ships to spawn in the fleet. The first will be the flagship and the target. However, this can be overriden with `spawnfunc`, in which case the first ship will be used to create the description only.
 * `spawnfunc` (optional): a Lua function that will be run when spawning the target. This takes two parameters: the first is the bounty data table, and the second is the location parameter that should be used with `pilot.add`. An example is shown below.
+* `cond` (optional): a function that returns a boolean value indicating that this bounty is available or not. Can be used to make special bounties depend on each other or appear later. See the section on conditionals for more information.
 
 ### Spawn Function
 
-Below is an example of a documented spawn script.
+Below is an example of a documented spawn function.
 
 ```lua
 -- These includes should be added at the top of the file.
 local bhelp = require "events.special_bounty.helpers"
 local bounty = require "common.bounty"
 
--- This function should be set as the spawnfunc field of the table returned
+-- This function should be set as the spawnfunc field of the returned table
 -- It should return the target pilot
 local function spawnfunc( b, params )
    -- Get the faction of the bounty, this will automatically be a dynamic or normal faction depending on the settings
@@ -51,5 +52,26 @@ local function spawnfunc( b, params )
 
    -- Return the target pilot
    return p
+end
+```
+
+### Conditional Generation
+
+Below is an example of how you can use the conditional function to make a mission only appear after another.
+
+```lua
+-- This would be set as the cond field of the returned table
+local function cond ()
+   -- This would appear after another special bounty that matches the var string below is completed
+   return var.peek( "var_string_of_another_bounty" )
+end
+```
+
+You can also limit it so it only appears after a certain amount "normal bounties" are done.
+
+```lua
+local function cond ()
+   -- Would appear after 500 points of astra vigilis "normal" bounties are finished
+   return (var.peek( "astra_vigilis_points" ) or 0) > 500
 end
 ```
