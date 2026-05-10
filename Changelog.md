@@ -36,6 +36,7 @@
  ### Content
 
    * 8+ new missions
+       - Bounty rework with need types
    * 8 new events
        - Pirates will raid systems
    * 2 new ships
