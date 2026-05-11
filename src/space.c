@@ -1596,10 +1596,10 @@ void space_init( const char *sysname, int do_simulate )
    weapon_clear();    /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions, must be run after weapon+pilrots
                     clear */
-   gatherable_free();       /* get rid of gatherable stuff. */
-   background_clear();      /* Get rid of the background. */
-   factions_clearDynamic(); /* get rid of dynamic factions. */
-   space_spawn = 1;         /* Spawn is enabled by default. */
+   gatherable_free();  /* get rid of gatherable stuff. */
+   background_clear(); /* Get rid of the background. */
+   // factions_clearDynamic(); /* get rid of dynamic factions. */
+   space_spawn = 1; /* Spawn is enabled by default. */
 
    /* Clear persistent pilot stuff. */
    if ( player.p != NULL ) {
