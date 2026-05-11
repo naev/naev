@@ -181,12 +181,12 @@ impl UserData for Rnd {
        * @brief Gets a random number.  With no parameters it returns a random float
        * between 0 and 1.
        *
-       * With one parameter it returns a whole number between 0 and that number
+       * With one parameter it returns a whole number between 1 and that number
        *  (both included).  With two parameters it returns a whole number between
        *  both parameters (both included).
        *
        * @usage n = rnd.rnd() -- Number in range [0:1].
-       * @usage n = rnd.rnd(5) -- Integer in range [0:5].
+       * @usage n = rnd.rnd(5) -- Integer in range [1:5].
        * @usage n = rnd.rnd(3,5) -- Integer in range [3,5].
        *
        *    @luatparam number x First parameter, read description for details.
@@ -201,6 +201,10 @@ impl UserData for Rnd {
             if let Some(l) = l {
                Ok(if let Some(h) = h {
                   if h < l { range(h..=l) } else { range(l..=h) }
+               } else if l < 1 {
+                  // TODO should we error here? such a range should be invalid and will cause Rust
+                  // to panic
+                  0
                } else {
                   range(1..=l)
                } as mlua::Number)
