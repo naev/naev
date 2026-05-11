@@ -27,13 +27,11 @@
 #include "music.h"
 #include "ndata.h"
 #include "nebula.h"
-#include "nfile.h"
 #include "nstring.h"
 #include "pause.h"
 #include "player.h"
 #include "plugin.h"
 #include "render.h"
-#include "save.h"
 #include "sound.h"
 #include "toolkit.h"
 
