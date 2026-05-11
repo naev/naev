@@ -248,7 +248,7 @@ int pfaction_save( xmlTextWriterPtr writer )
       const FactionRef f = faction_stack[i];
 
       /* Must not be static. */
-      if ( faction_isStatic( f ) )
+      if ( faction_isStatic( f ) || faction_isDynamic( f ) )
          continue;
 
       xmlw_startElem( writer, "faction" );
