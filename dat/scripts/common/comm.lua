@@ -157,7 +157,7 @@ function comm.customComm( plt, menu, setup, label )
    local m = plt:memory()
    m.comm_custom = m.comm_custom or {}
    table.insert( m.comm_custom, {
-      menu = menu,
+      menu  = menu,
       setup = setup,
       label = label,
    } )
