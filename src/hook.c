@@ -944,8 +944,6 @@ int hook_hasEventParent( unsigned int parent )
 
 static int hooks_executeParam( const char *stack, const HookParam *param )
 {
-   int run;
-
    /* Don't update if player is dead. */
    if ( !should_run_hook() )
       return 0;
@@ -957,7 +955,7 @@ static int hooks_executeParam( const char *stack, const HookParam *param )
          h->created  = 0;
       }
 
-   run = 0;
+   int run = 0;
    hook_runningstack++; /* running hooks */
    for ( int j = 1; j >= 0; j-- ) {
       for ( Hook *h = hook_list; h != NULL; h = h->next ) {
