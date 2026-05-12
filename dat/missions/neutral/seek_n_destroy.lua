@@ -39,7 +39,7 @@ local vntk = require "vntk"
 local vni = require "vnimage"
 local ccomm = require "common.comm"
 local pilotai = require "pilotai"
-local var = require "shipvariants"
+local svar = require "shipvariants"
 
 local trigger_ambush, spawn_advisor, next_sys, clear_target_hook -- Forward-declared functions
 local adm_factions, advisor, target_ship -- Non-persistent state
@@ -205,12 +205,12 @@ function create ()
    local ships
    if mem.target_faction == faction.get("FLF") then
       mem.name = pilotname.generic()
-      ships = {"Tristan", var.vendetta(), "Pacifier", "Bedivere"}
+      ships = {"Tristan", svar.vendetta(), "Pacifier", "Bedivere"}
       mem.aship = "Pacifier"
       mem.bship = "Tristan"
    else -- default Pirate
       mem.name = pilotname.pirate()
-      ships = {"Pirate Hyena", var.pirate_shark(), "Pirate Vendetta", "Pirate Ancestor", "Pirate Admonisher", "Pirate Phalanx", "Pirate Starbridge", "Pirate Rhino", var.pirate_kestrel()}
+      ships = {"Pirate Hyena", svar.pirate_shark(), "Pirate Vendetta", "Pirate Ancestor", "Pirate Admonisher", "Pirate Phalanx", "Pirate Starbridge", "Pirate Rhino", svar.pirate_kestrel()}
       mem.aship = "Pirate Phalanx"
       mem.bship = "Pirate Hyena"
    end
