@@ -35,7 +35,9 @@ function land ()
    local nc = naev.cache()
    local prm = nc._pirate_raid_mission or {}
    if prm[ mem.sys:nameRaw() ] then return end
-   hook.safe( "mission_start" )
+   if scur:services().missions then
+      hook.safe( "mission_start" )
+   end
 end
 
 function mission_start ()
