@@ -1481,9 +1481,7 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
             col = &cNeutral;
 
          double size;
-         if ( mode == MAPMODE_EDITOR )
-            size = 0.5;
-         else if ( !sys_isFlag( sys, SYSTEM_HAS_INHABITED ) )
+         if ( !sys_isFlag( sys, SYSTEM_HAS_INHABITED ) )
             size = 0.3;
          else
             size = 0.65;

@@ -233,6 +233,27 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    uniedit_ypos         = 0.;
    uniedit_dt           = 0.;
 
+   // Mark systems
+   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+      StarSystem *sys = &systems_stack[i];
+
+      /* Check to see if system has landable spobs. */
+      sys_rmFlag( sys, SYSTEM_HAS_LANDABLE | SYSTEM_HAS_KNOWN_SPOB |
+                          SYSTEM_HAS_DOMINATED | SYSTEM_HAS_KNOWN_FACTION_SPOB |
+                          SYSTEM_HAS_KNOWN_LANDABLE | SYSTEM_HAS_INHABITED );
+      for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
+         Spob *p = sys->spobs[j];
+         sys_setFlag( sys, SYSTEM_HAS_KNOWN_SPOB );
+         if ( ( p->presence.base + p->presence.bonus ) > 0. )
+            sys_setFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB );
+         if ( !spob_hasService( p, SPOB_SERVICE_LAND ) )
+            continue;
+         if ( spob_hasService( p, SPOB_SERVICE_INHABITED ) ) {
+            sys_setFlag( sys, SYSTEM_HAS_INHABITED );
+         }
+      }
+   }
+
    /* Create the window. */
    wid = window_create( "wdwUniverseEditor", _( "Universe Editor" ), -1, -1, -1,
                         -1 );
