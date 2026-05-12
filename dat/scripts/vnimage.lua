@@ -347,7 +347,7 @@ local function get_soromid( list, species )
    local valid = {}
    for k,v in ipairs(list) do
       if v[2]==species then
-         valid[#valid+1] = v
+         table.insert( valid, v[1] )
       end
    end
    if #valid==0 then
