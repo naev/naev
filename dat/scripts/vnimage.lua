@@ -17,6 +17,9 @@ local function _get_list( lst )
    local p = lst[ rnd.rnd(1,#lst) ]
    local t = type(p)
    if t=="table" then
+      if type(p[1])=="function" then
+         return p[1]()
+      end
       return p[1], p[1]
    elseif t=="function" then
       return p()
