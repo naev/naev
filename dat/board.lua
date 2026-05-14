@@ -258,9 +258,6 @@ local function compute_lootables ( plt )
 
    -- Go over cargo
    local clist = plt:cargoList()
-   for _k,c in ipairs(clist) do
-      c.c = commodity.get(c.name)
-   end
    table.sort( clist, function( a, b )
       -- Handle mission cargoes first
       if a.m and not b.m then
