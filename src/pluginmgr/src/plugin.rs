@@ -36,7 +36,10 @@ impl<'de> de::Deserialize<'de> for Identifier {
                inner.len(),
                &"identifier exceeds maximum of 25 characters",
             ))
-         } else if !inner.chars().all(|c| c.is_ascii_alphanumeric()) {
+         } else if !inner
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || String::from('_').contains(c))
+         {
             Err(de::Error::invalid_value(
                de::Unexpected::Str(&inner),
                &"&identifier contains non-alphanumeric or non-ascii characters",
