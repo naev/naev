@@ -784,9 +784,10 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
       Err(e) => {
          unsafe {
             NLUA.lua.exec_raw_lua(|state| {
-               if let Err(e) = e.push_into_stack_multi(state) {
-                  warn_err!(e);
-               }
+               mlua::ffi::lua_pushstring(
+                  state.state(),
+                  std::ffi::CString::new(e.to_string()).unwrap().as_ptr(),
+               );
             });
          }
          -1

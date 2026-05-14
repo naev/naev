@@ -79,6 +79,7 @@ int board_hook( void *data )
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check" ),
                BOARD_PATH, lua_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          board_boarded = 0;
          free( buf );
          return -1;
@@ -89,7 +90,7 @@ int board_hook( void *data )
    /* Run Lua. */
    nlua_getenv( naevL, board_env, "board" );
    lua_pushpilot( naevL, p->id );
-   if ( nlua_pcall( board_env, 1, 0 ) ) { /* error has occurred */
+   if ( nlua_pcall( board_env, 1, 0 ) != 0 ) { /* error has occurred */
       WARN( _( "Board: '%s'" ), lua_tolstring( naevL, -1, NULL ) );
       lua_pop( naevL, 2 );
    }
