@@ -1314,11 +1314,11 @@ void land_genWindows( int load )
       else {
          // Since dynamic diffs can be created on load, we want to batch them
          // together
-         unidiff_universeDefer( 1 );
+         diff_start();
          hooks_run(
             "load" ); /* Should be run before generating missions, so if the
                          load hook cancels a mission, it can reappear. */
-         unidiff_universeDefer( 0 );
+         diff_end();
       }
       NTracingZoneEnd( _ctx_landhooks );
       events_trigger( EVENT_TRIGGER_LAND );

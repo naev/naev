@@ -195,7 +195,6 @@ NONNULL( 1 ) int diff_apply( const char *name );
 NONNULL( 1 ) void diff_remove( const char *name );
 int  diff_addDynamicDiff( const UniDiffData_t *diff );
 void diff_clear( void );
-void unidiff_universeDefer( int enable );
 int  diff_parse( UniDiffData_t *diff, const char *filename );
 int  diff_parsePhysFS( UniDiffData_t *diff, const char *filename );
 int  diff_parseString( UniDiffData_t *diff, const char *str, const char *name );

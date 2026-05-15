@@ -2661,7 +2661,7 @@ void map_jump( void )
    map_selectCur();
 
    /* update path if set */
-   if ( array_size( map_path ) != 0 ) {
+   if ( array_size( map_path ) > 0 ) {
       array_erase( &map_path, &map_path[0], &map_path[1] );
       if ( array_size( map_path ) == 0 )
          player_targetHyperspaceSet( -1, 1 );
@@ -2678,8 +2678,9 @@ void map_jump( void )
             }
          }
          /* Overrode jump route manually, must clear target. */
-         if ( j >= array_size( cur_system->jumps ) )
+         if ( j >= array_size( cur_system->jumps ) ) {
             player_targetHyperspaceSet( -1, 0 );
+         }
       }
    } else
       player_targetHyperspaceSet( -1, 0 );

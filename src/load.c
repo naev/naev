@@ -1371,7 +1371,7 @@ static int load_gameInternalHook( void *data )
       goto err_doc;
 
    /* Clean up possible stuff that should be cleaned. */
-   unidiff_universeDefer( 1 );
+   diff_start();
    player_cleanup();
    render_postprocessCleanup();
 
@@ -1390,7 +1390,7 @@ static int load_gameInternalHook( void *data )
 
    /* Now begin to load. */
    diff_load( node ); /* Must load first to work properly. */
-   unidiff_universeDefer( 0 );
+   diff_end();
    missions_loadCommodity( node ); /* Must be loaded before player. */
    pfaction_load( node ); /* Must be loaded before player so the messages show
                              up properly. Also before space_playerLoad. */

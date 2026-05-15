@@ -663,16 +663,10 @@ static UniDiff_t *diff_get( const char *name )
  */
 int diff_apply( const char *name )
 {
-   diff_nav_hyperspace = NULL;
-   diff_nav_spob       = NULL;
-   if ( player.p ) {
-      if ( player.p->nav_hyperspace >= 0 )
-         diff_nav_hyperspace =
-            cur_system->jumps[player.p->nav_hyperspace].target->name;
-      if ( player.p->nav_spob >= 0 )
-         diff_nav_spob = cur_system->spobs[player.p->nav_spob]->name;
-   }
-   return diff_applyInternal( name, 1, 1 );
+   diff_start();
+   int ret = diff_applyInternal( name, 1, 1 );
+   diff_end();
+   return ret;
 }
 
 /**
@@ -782,19 +776,28 @@ static int diff_applyInternal( const char *name, int oneshot, int warn )
    /* Update overlay map just in case. */
    ovr_refresh();
 
-   /* Update universe. */
-   if ( oneshot )
-      diff_checkUpdateUniverse();
-
    return 0;
 }
 
+static int diff_apply_depth = 0;
 /**
  * @brief Starts applying a set of diffs.
  */
 void diff_start( void )
 {
-   diff_universe_changed = 0;
+   if ( diff_apply_depth == 0 ) {
+      diff_universe_changed = 0;
+      diff_nav_hyperspace   = NULL;
+      diff_nav_spob         = NULL;
+      if ( player.p != NULL ) {
+         if ( player.p->nav_hyperspace >= 0 )
+            diff_nav_hyperspace =
+               cur_system->jumps[player.p->nav_hyperspace].target->name;
+         if ( player.p->nav_spob >= 0 )
+            diff_nav_spob = cur_system->spobs[player.p->nav_spob]->name;
+      }
+   }
+   diff_apply_depth++;
 }
 
 /**
@@ -802,7 +805,16 @@ void diff_start( void )
  */
 void diff_end( void )
 {
-   diff_checkUpdateUniverse();
+   diff_apply_depth--;
+   if ( diff_apply_depth == 0 )
+      diff_checkUpdateUniverse();
+#if DEBUGGING
+   if ( diff_apply_depth < 0 ) {
+      WARN(
+         "diff_apply_depth became negative. Unmatched diff_start / diff_end." );
+      diff_apply_depth = 0;
+   }
+#endif /* DEBUGGING */
 }
 
 /**
@@ -1876,9 +1888,9 @@ void diff_remove( const char *name )
    if ( diff == NULL )
       return;
 
+   diff_start();
    diff_removeDiff( diff );
-
-   diff_checkUpdateUniverse();
+   diff_end();
 }
 
 /**
@@ -2130,7 +2142,9 @@ static int diff_checkUpdateUniverse( void )
          player_targetSpobSet( -1 );
    } else
       player_targetSpobSet( -1 );
+   DEBUG( "diff_nav_hyperspace %p", diff_nav_hyperspace );
    if ( diff_nav_hyperspace != NULL ) {
+      DEBUG( "Searching for player hyperspace: %s", diff_nav_hyperspace );
       int found = 0;
       for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
          if ( strcmp( cur_system->jumps[i].target->name,
@@ -2148,19 +2162,6 @@ static int diff_checkUpdateUniverse( void )
 
    diff_universe_changed = 0;
    return 1;
-}
-
-/**
- * @brief Sets whether or not to defer universe change stuff.
- *
- *    @param enable Whether or not to enable deferring.
- */
-void unidiff_universeDefer( int enable )
-{
-   int defer           = diff_universe_defer;
-   diff_universe_defer = enable;
-   if ( defer && !enable )
-      diff_checkUpdateUniverse();
 }
 
 /**
