@@ -171,12 +171,17 @@ pub fn manager() -> Result<()> {
    let exe = std::env::current_exe()?;
    MANAGER_OPEN.store(true, Ordering::SeqCst);
    std::thread::spawn(move || {
-      match cargo_util::ProcessBuilder::new(exe)
+      match std::process::Command::new(exe)
          .args(&std::env::args_os().skip(1).collect::<Vec<_>>())
          .arg("--pluginmanager")
-         .exec()
+         .envs(std::env::vars_os())
+         .spawn()
       {
-         Ok(()) => (),
+         Ok(mut child) => {
+            if let Err(e) = child.wait() {
+               warn_err!(e);
+            }
+         }
          Err(e) => {
             warn_err!(e);
          }
