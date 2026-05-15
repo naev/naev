@@ -2142,9 +2142,7 @@ static int diff_checkUpdateUniverse( void )
          player_targetSpobSet( -1 );
    } else
       player_targetSpobSet( -1 );
-   DEBUG( "diff_nav_hyperspace %p", diff_nav_hyperspace );
    if ( diff_nav_hyperspace != NULL ) {
-      DEBUG( "Searching for player hyperspace: %s", diff_nav_hyperspace );
       int found = 0;
       for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
          if ( strcmp( cur_system->jumps[i].target->name,
