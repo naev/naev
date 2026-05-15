@@ -1082,8 +1082,8 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
             v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
             v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
                   trail->pos.v[2];
-            v.x *= pw / p->ship->size;
-            v.y *= ph / p->ship->size;
+            v.x *= pw / s;
+            v.y *= ph / s;
             v.y *= M_SQRT1_2;
          }
 
@@ -1102,8 +1102,8 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
       pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
       px += pw / 2.;
       py += ph / 2.;
-      v.x *= pw / p->ship->size;
-      v.y *= ph / p->ship->size;
+      v.x *= pw / s;
+      v.y *= ph / s;
 
       /* Render it. */
       glUseProgram( shaders.crosshairs.program );
