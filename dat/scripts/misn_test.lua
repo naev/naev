@@ -15,11 +15,8 @@ function misn_test.generic()
       return false -- Restricted places don't offer these missions currently
    end
    local f = sc:faction()
-   if f then
-      local ft = f:tags()
-      if ft.generic then
-         return true
-      end
+   if f and f:tags().generic then
+      return true
    end
    return false
 end
