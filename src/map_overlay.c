@@ -1200,7 +1200,8 @@ unsigned int ovr_mrkAddCircle( const char *text, double x, double y, double r )
       mrk->text = strdup( text );
    vec2_cset( &mrk->pos, x, y );
    mrk->u.circle.r = r;
-   vec2_cset( &mrk->u.circle.textpos, x + r * M_SQRT1_2, y - r * M_SQRT1_2 );
+   r *= CTS.CAMERA_VIEW;
+   vec2_cset( &mrk->u.circle.textpos, x + r, y - r );
 
    /* Refresh if necessary. */
    if ( ovr_open )

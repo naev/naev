@@ -672,7 +672,7 @@ impl Trail {
    }
 }
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Mount {
    id: u32,
    position: Vector3<f32>,

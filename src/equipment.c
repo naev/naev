@@ -1005,8 +1005,10 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
          swd->dir = fmod( swd->dir, 2. * M_PI );
    } else
       equipment_lastick = SDL_GetTicks();
-   double tempdir = p->solid.dir;
-   p->solid.dir   = swd->dir;
+   double tempdir  = p->solid.dir;
+   p->solid.dir    = swd->dir;
+   double temptilt = p->tilt;
+   p->tilt         = 0.0;
    gl_getSpriteFromDir( &p->tsx, &p->tsy, p->ship->sx, p->ship->sy, swd->dir );
 
    s = p->ship->size;
@@ -1076,15 +1078,15 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
          if ( use_3d ) {
             vec3 v2;
             mat4_mul_vec( &v2, &H, &trail->pos );
-            v.x = v2.v[0];
-            v.y = v2.v[1];
+            v.x = v2.v[0] * pw / s;
+            v.y = v2.v[1] * ph / s;
          } else {
             v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
             v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
                   trail->pos.v[2];
             v.x *= pw / s;
             v.y *= ph / s;
-            v.y *= M_SQRT1_2;
+            v.y *= CTS.CAMERA_VIEW;
          }
 
          if ( trail->trail_spec->nebula )
@@ -1100,10 +1102,10 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    if ( ( eq_wgt.slot >= 0 ) && ( eq_wgt.slot < array_size( p->outfits ) ) &&
         p->outfits[eq_wgt.slot]->sslot->slot.type == OUTFIT_SLOT_WEAPON ) {
       pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
-      px += pw / 2.;
-      py += ph / 2.;
+      px += pw * 0.5;
+      py += ph * 0.5;
       v.x *= pw / s;
-      v.y *= ph / s;
+      v.y *= ph / s * CTS.CAMERA_VIEW;
 
       /* Render it. */
       glUseProgram( shaders.crosshairs.program );
@@ -1112,6 +1114,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
                        &cRadar_player, 1 );
    }
 
+   p->tilt      = temptilt;
    p->solid.dir = tempdir;
 }
 

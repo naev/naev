@@ -186,7 +186,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
       sm = sin( p->solid.dir );
       x  = m->pos.v[0] * cm - m->pos.v[1] * sm;
       y  = m->pos.v[0] * sm + m->pos.v[1] * cm + m->pos.v[2];
-      y *= M_SQRT1_2;
+      y *= CTS.CAMERA_VIEW;
    }
 
    /* Get the mount and add the player.p offset. */

@@ -2245,7 +2245,7 @@ void pilot_render( Pilot *p )
             v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
             v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
                   trail->pos.v[2];
-            v.y *= M_SQRT1_2;
+            v.y *= CTS.CAMERA_VIEW;
          }
 
          /* Scale if necessary. */
@@ -2959,7 +2959,7 @@ void pilot_sample_trails( Pilot *p, int none )
          dx = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
          dy = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
               trail->pos.v[2];
-         dy *= M_SQRT1_2;
+         dy *= CTS.CAMERA_VIEW;
          dz = 1.; /* Will always be "above" */
       }
 
