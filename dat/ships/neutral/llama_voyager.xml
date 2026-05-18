@@ -2,14 +2,13 @@
  <gfx size="47">llama_voyager.gltf</gfx>
  <rarity>2</rarity>
  <price>235000</price>
- <description>The Llama's popularity is based on the wide availability of the base ship, and is most pilots introduction to spacefaring. Inspired by the popularity, Melendez Corporation released a premium series nicknamed Voyager. Although the new model nearly sports double the price tag, it comes with more efficient hyperdrive coupling, and more importantly, a built-in fuel ramscoop that is able to capture and filter minuscule space dust to slowly refill fuel.</description>
+ <description>The Llama's popularity is based on the wide availability of the base ship, and is most pilots introduction to spacefaring. Inspired by the popularity, Melendez Corporation released a premium series nicknamed Voyager. Although the new model nearly sports double the price tag, it comes a built-in fuel ramscoop that is able to capture and filter minuscule space dust to slowly refill fuel. The downside of the ramscoop is it takes up some vital engine room, leading to longer jump times.</description>
  <health>
   <armour>25</armour>
  </health>
  <stats>
   <fuel>-100</fuel>
   <fuel_regen>1</fuel_regen>
-  <jump_warmup>-50</jump_warmup>
-  <jump_delay>-50</jump_delay>
+  <jump_delay>50</jump_delay>
  </stats>
 </ship>
