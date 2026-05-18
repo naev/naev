@@ -50,27 +50,30 @@ static _QUIT: AtomicBool = AtomicBool::new(false);
 /// Restarts the process, *should* be cross-platform
 pub fn restart() -> Result<()> {
    use std::env;
-   if cfg!(windows) {
-      // Unable to recreate process, so just spawn new and kill current
-      match std::process::Command::new(env::current_exe()?)
-         .args(&std::env::args_os().skip(1).collect::<Vec<_>>())
-         .envs(std::env::vars_os())
-         .spawn()
-      {
-         Ok(_) => std::process::exit(0),
-         Err(e) => Err(e.into()),
-      }
-   } else if cfg!(unix) {
+
+   #[cfg(windows)]
+   // Unable to recreate process, so just spawn new and kill current
+   return match std::process::Command::new(env::current_exe()?)
+      .args(&std::env::args_os().skip(1).collect::<Vec<_>>())
+      .envs(std::env::vars_os())
+      .spawn()
+   {
+      Ok(_) => std::process::exit(0),
+      Err(e) => Err(e.into()),
+   };
+
+   #[cfg(unix)]
+   {
       use std::os::unix::process::CommandExt;
       let e = std::process::Command::new(env::current_exe()?)
          .args(&env::args_os().skip(1).collect::<Vec<_>>())
          .envs(std::env::vars_os())
          .exec();
       // Only reached if an error occurred.
-      Err(e.into())
-   } else {
-      unimplemented!();
+      return Err(e.into());
    }
+
+   unimplemented!();
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn naev_restart() -> c_int {
