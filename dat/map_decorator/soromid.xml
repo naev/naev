@@ -1,6 +1,6 @@
 <decorator>
  <image>soromid</image>
- <x>24.784035</x>
- <y>1048.777642</y>
+ <x>-300.784035</x>
+ <y>1098.777642</y>
  <detection_radius>100</detection_radius>
 </decorator>
