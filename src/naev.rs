@@ -50,14 +50,26 @@ static _QUIT: AtomicBool = AtomicBool::new(false);
 /// Restarts the process, *should* be cross-platform
 pub fn restart() -> Result<()> {
    use std::env;
-   match cargo_util::ProcessBuilder::new(env::current_exe()?)
-      .args(&env::args_os().skip(1).collect::<Vec<_>>())
-      .exec_replace()
-   {
-      Ok(_) => std::process::exit(0),
-      Err(e) => {
-         std::process::exit(e.downcast::<cargo_util::ProcessError>()?.code.unwrap_or(1));
+   if cfg!(windows) {
+      // Unable to recreate process, so just spawn new and kill current
+      match std::process::Command::new(env::current_exe()?)
+         .args(&std::env::args_os().skip(1).collect::<Vec<_>>())
+         .envs(std::env::vars_os())
+         .spawn()
+      {
+         Ok(_) => std::process::exit(0),
+         Err(e) => Err(e.into()),
       }
+   } else if cfg!(unix) {
+      use std::os::unix::process::CommandExt;
+      let e = std::process::Command::new(env::current_exe()?)
+         .args(&env::args_os().skip(1).collect::<Vec<_>>())
+         .envs(std::env::vars_os())
+         .exec();
+      // Only reached if an error occurred.
+      Err(e.into())
+   } else {
+      unimplemented!();
    }
 }
 #[unsafe(no_mangle)]
