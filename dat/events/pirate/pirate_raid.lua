@@ -11,6 +11,7 @@
    Manages pirate raids in the background.
 --]]
 local fmt = require "format"
+local misn_test = require "misn_test"
 
 local RAID_LENGTH       = time.new( 0, 20, 0 )
 local UNIDIFF           = [[
@@ -30,6 +31,7 @@ function land ()
    local scur = spob.cur()
    local fct = scur:faction()
    if not fct or not fct:tags().generic then return false end
+   if not misn_test.mercenary() then return end
 
    -- Only start mission if not taken already
    local nc = naev.cache()
