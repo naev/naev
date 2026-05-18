@@ -50,7 +50,6 @@ static _QUIT: AtomicBool = AtomicBool::new(false);
 /// Restarts the process, *should* be cross-platform
 pub fn restart() -> Result<()> {
    use std::env;
-
    #[cfg(windows)]
    // Unable to recreate process, so just spawn new and kill current
    return match std::process::Command::new(env::current_exe()?)
@@ -61,7 +60,6 @@ pub fn restart() -> Result<()> {
       Ok(_) => std::process::exit(0),
       Err(e) => Err(e.into()),
    };
-
    #[cfg(unix)]
    {
       use std::os::unix::process::CommandExt;
@@ -72,8 +70,8 @@ pub fn restart() -> Result<()> {
       // Only reached if an error occurred.
       return Err(e.into());
    }
-
-   unimplemented!();
+   #[cfg(all(not(unix), not(windows)))]
+   compile_error!("Platform needs restart implementation");
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn naev_restart() -> c_int {
