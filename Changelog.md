@@ -32,6 +32,7 @@
    * Can only sell ships when a shipyard is available
    * Bounties can feature multiple enemy ships
    * Mercenary licence now obtained from a mission
+   * Llama voyager no longer has a super efficient jumpdrive
 
  ### Content
 
