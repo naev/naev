@@ -35,7 +35,7 @@ local portrait = require "portrait"
 local reward = 100e3
 
 -- helper functions, defined below
-local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast
+local addNerdCargo, rmNerdCargo, nerds_return
 
 -- the mission cargo
 local misn_cargo1 = N_("Group of Nerds")
@@ -53,24 +53,24 @@ local npc_image = portrait.getFullPath( npc_portrait )
 local reward_outfit = outfit.get("Homebrew Processing Unit")
 
 function create ()
-   -- the mission cannot be started with less than two landable spobs in the system
-   if not system_hasAtLeast(2, "land") then
-      misn.finish(false)
+   local cp = spob.cur()
+   mem.srcPlanet = cp
+   for i,p in ipairs(system.spobs(system.cur())) do
+      local fct = p:faction()
+      if fct and fct:tags().generic and spob.services(p)["land"] and p ~= cp and p:canLand() then
+         mem.destPlanet = p
+         break -- atm, just take the first landable planet which is not the current one
+      end
+   end
+   -- Something bad happened and mission didn't spawn
+   if not mem.destPlanet then
+      return misn.finish(false)
    end
 
    misn.setNPC( _("Young People"), npc_portrait, _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.") )
 end
 
 function accept ()
-   local cp = spob.cur()
-   mem.srcPlanet = cp
-   for i,p in ipairs(system.spobs(system.cur())) do
-      if spob.services(p)["land"] and p ~= cp and p:canLand() then
-         mem.destPlanet=p
-         break -- atm, just take the first landable planet which is not the current one
-      end
-   end
-
    local accepted = false
    local fs = player.fleetCargoMissionFree()
 
@@ -372,17 +372,6 @@ function nerds_land3()
 
    pir.reputationNormalMission(rnd.rnd(2,3))
    misn.finish(true)
-end
-
--- to check if the spobs in the current system have at least _amount_ of _service_
-function system_hasAtLeast( amount, service )
-   local p = {}
-   for i,v in ipairs(system.cur():spobs()) do
-      if spob.services(v)[service] and v:canLand() then
-         table.insert(p,v)
-      end
-   end
-   return #p >= amount
 end
 
 -- helper functions, used repeatedly
