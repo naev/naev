@@ -98,28 +98,38 @@ function try_give_bounty( plt, attacker )
    if plt:mothership() then return end
 
    local points = plt:points()
-   player.pay( points * REWARD )
+   local payment = points * REWARD
+   player.pay( payment )
    mem.fct:hit( points * 0.1, system.cur() )
    player.msg("#g"..fmt.f(_([[Obtained {amount} for eliminating {pilot}.]]), {
       amount = fmt.credits(points * REWARD),
       pilot  = plt,
    }).."#0")
+
+   mem.points     = (mem.points or 0) + points
+   mem.destroyed  = (mem.destroyed or 0) + 1
 end
 
-function abort ()
+local function finished( completed )
    local nc = naev.cache()
    local prm = nc._pirate_raid_mission or {}
    prm[ mem.sys:nameRaw() ] = nil
    nc._pirate_raid_mission = prm
-   misn.finish(false)
+   misn.finish( completed )
+end
+
+function abort()
+   finished( false )
 end
 
 function date ()
    if time.cur() > mem.finish then
-      player.msg("#r"..fmt.f(_("The system bounty in {sys} has expired."), {
-         sys = mem.sys,
-      } ).."#0" )
-      return abort()
+      player.msg(fmt.f(_("The system bounty in {sys} has expired. You defeated {defeated} ships and obtained a total of {payment}."), {
+         sys      = mem.sys,
+         defeated = mem.destroyed or 0,
+         payment  = fmt.credits((mem.points or 0) * REWARD),
+      } ) )
+      return finished( true )
    end
    update_osd()
 end
