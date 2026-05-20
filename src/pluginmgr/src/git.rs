@@ -1,6 +1,7 @@
 use crate::install::Progress;
 use anyhow::{Context, Error, Result};
 use iced::task::{Straw, sipper};
+use nlog::warn_err;
 use std::path::Path;
 
 /// Clones a git repository located at a url to a specific path
@@ -12,7 +13,10 @@ pub fn clone<P: AsRef<Path>, U: reqwest::IntoUrl>(
       // Have to wrap the async sender.send to make it a FnMut
       let (send, mut recv) = tokio::sync::mpsc::unbounded_channel();
       let on_progress = move |item| {
-         send.send(item).unwrap();
+         if let Err(e) = send.send(item) {
+            warn_err!(e);
+            //send.send(e);
+         }
       };
 
       let path = path.as_ref().to_path_buf();
@@ -56,7 +60,10 @@ pub fn pull<P: AsRef<Path>>(path: P) -> impl Straw<git2::Repository, Progress, E
       // Have to wrap the async sender.send to make it a FnMut
       let (send, recv) = tokio::sync::mpsc::unbounded_channel();
       let on_progress = move |item| {
-         send.send(item).unwrap();
+         if let Err(e) = send.send(item) {
+            warn_err!(e);
+            //send.send(e);
+         }
       };
       tokio::spawn(async move {
          let mut recv = recv;
