@@ -63,11 +63,11 @@ pub fn restart() -> Result<()> {
    {
       use std::os::unix::process::CommandExt;
       let e = std::process::Command::new(env::current_exe()?)
-         .args(&env::args_os().skip(1).collect::<Vec<_>>())
+         .args(env::args_os().skip(1).collect::<Vec<_>>())
          .envs(std::env::vars_os())
          .exec();
       // Only reached if an error occurred.
-      return Err(e.into());
+      Err(e.into())
    }
    #[cfg(all(not(unix), not(windows)))]
    compile_error!("Platform needs restart implementation");

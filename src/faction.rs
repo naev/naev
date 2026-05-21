@@ -1847,7 +1847,7 @@ impl UserData for FactionRef {
 
             // We have to first see if it exists, and if so, we just update that
             for (k, d) in data.iter_mut() {
-               if &d.data.name == &name {
+               if d.data.name == name {
                   fd.id = k;
                   *d = Faction {
                      api,

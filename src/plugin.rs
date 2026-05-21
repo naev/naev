@@ -172,7 +172,7 @@ pub fn manager() -> Result<()> {
    MANAGER_OPEN.store(true, Ordering::SeqCst);
    std::thread::spawn(move || {
       match std::process::Command::new(exe)
-         .args(&std::env::args_os().skip(1).collect::<Vec<_>>())
+         .args(std::env::args_os().skip(1).collect::<Vec<_>>())
          .arg("--pluginmanager")
          .envs(std::env::vars_os())
          .spawn()

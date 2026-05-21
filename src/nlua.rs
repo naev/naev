@@ -128,7 +128,7 @@ pub fn loader_ndata(lua: &mlua::Lua, filename: mlua::BorrowedStr) -> mlua::Resul
       if ndata::is_file(&p) {
          let d = ndata::read_to_string(&p)?;
          let c = lua.load(d).set_name(&p);
-         return c.into_function().map(|f| mlua::Value::Function(f));
+         return c.into_function().map(mlua::Value::Function);
       }
    }
    Ok(mlua::Value::Nil)
