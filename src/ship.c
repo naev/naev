@@ -7,7 +7,6 @@
  * @brief Handles the ship details.
  */
 /** @cond */
-#include "physfs.h"
 #include <SDL3/SDL_timer.h>
 
 #include "naev.h"

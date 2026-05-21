@@ -4,7 +4,7 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use constcat::concat;
 use gettext::gettext;
-use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
+use mlua::{BorrowedStr, FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 use nlog::{info, warn, warn_err, warnx};
 use std::sync::LazyLock;
 use tracing::instrument;
@@ -72,8 +72,8 @@ pub struct NLua {
    envs: mlua::Table,
 }
 
-#[instrument(skip_all, fields(filename = %filename.display()))]
-fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value> {
+#[instrument(skip(lua))]
+fn require(lua: &mlua::Lua, filename: BorrowedStr) -> mlua::Result<mlua::Value> {
    let globals = lua.globals();
 
    // Try to see if already loaded in the environment
@@ -90,10 +90,10 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
    for f in loaders.sequence_values::<mlua::Function>() {
       match f?.call::<mlua::Value>(&filename)? {
          mlua::Value::Function(mf) => {
-            let mut ret = mf.call::<mlua::Value>(&filename)?;
-            if ret == mlua::Value::Nil {
-               ret = mlua::Value::Boolean(true);
-            }
+            let ret = match mf.call::<mlua::Value>(&filename)? {
+               mlua::Value::Nil => mlua::Value::Boolean(true),
+               other => other,
+            };
             loaded.set(filename, &ret)?;
             return Ok(ret);
          }
@@ -105,9 +105,60 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
    // Failed to load...
    Err(mlua::Error::RuntimeError(format!(
       "module '{filename}'  not found:{errmsg}",
-      filename = filename.to_str()?,
+      filename = filename,
       errmsg = errmsg
    )))
+}
+
+pub fn loader_ndata(lua: &mlua::Lua, filename: mlua::BorrowedStr) -> mlua::Result<mlua::Value> {
+   let globals = lua.globals();
+   let package_val: mlua::Value = globals.get("package")?;
+   let package: mlua::Table = match package_val {
+      mlua::Value::Table(t) => t,
+      _ => {
+         return Ok(mlua::Value::String(
+            lua.create_string(gettext(" package not found."))?,
+         ));
+      }
+   };
+   let filename = filename.replace('.', "/");
+   let path: BorrowedStr = package.get("path")?;
+   for p in path.split(';') {
+      let p = p.replace('?', &filename);
+      if ndata::is_file(&p) {
+         let d = ndata::read_to_string(&p)?;
+         let c = lua.load(d).set_name(&p);
+         return c.into_function().map(|f| mlua::Value::Function(f));
+      }
+   }
+   Ok(mlua::Value::Nil)
+}
+
+pub fn loader_rust_libs(lua: &mlua::Lua, filename: mlua::BorrowedStr) -> mlua::Result<mlua::Value> {
+   match &*filename {
+      "ryaml" => Ok(mlua::Value::Function(lua.create_function(
+         |lua, ()| -> mlua::Result<mlua::Table> { ryaml::ryaml_safe(lua) },
+      )?)),
+      "utf8" => unsafe {
+         Ok(mlua::Value::Function(lua.create_c_function(
+            std::mem::transmute::<CFunctionNaev, CFunctionMLua>(naevc::luaopen_utf8),
+         )?))
+      },
+      "cmark" => unsafe {
+         Ok(mlua::Value::Function(lua.create_c_function(
+            std::mem::transmute::<CFunctionNaev, CFunctionMLua>(naevc::luaopen_cmark),
+         )?))
+      },
+      "enet" => match unsafe { naevc::conf.lua_enet } {
+         0 => Ok(mlua::Value::Nil),
+         _ => unsafe {
+            Ok(mlua::Value::Function(lua.create_c_function(
+               std::mem::transmute::<CFunctionNaev, CFunctionMLua>(naevc::luaopen_enet),
+            )?))
+         },
+      },
+      _ => Ok(mlua::Value::Nil),
+   }
 }
 
 impl NLua {
@@ -336,66 +387,10 @@ impl NLua {
       package.set("preload", lua.create_table()?)?;
       package.set("path", concat!("?.lua;", LUA_INCLUDE_PATH, "?.lua"))?;
       package.set("cpath", "")?;
-      let loaders: mlua::Table = package.get("loaders")?;
-      loaders.push(
-         // Pure Rust Optional libraries
-         lua.create_function(|lua, name: String| -> mlua::Result<mlua::Value> {
-            match name.as_str() {
-               "ryaml" => Ok(mlua::Value::Function(lua.create_function(
-                  |lua, ()| -> mlua::Result<mlua::Table> { ryaml::ryaml_safe(lua) },
-               )?)),
-               "utf8" => unsafe {
-                  Ok(mlua::Value::Function(lua.create_c_function(
-                     std::mem::transmute::<CFunctionNaev, CFunctionMLua>(naevc::luaopen_utf8),
-                  )?))
-               },
-               "cmark" => unsafe {
-                  Ok(mlua::Value::Function(lua.create_c_function(
-                     std::mem::transmute::<CFunctionNaev, CFunctionMLua>(naevc::luaopen_cmark),
-                  )?))
-               },
-               "enet" => match unsafe { naevc::conf.lua_enet } {
-                  0 => Ok(mlua::Value::Nil),
-                  _ => unsafe {
-                     Ok(mlua::Value::Function(lua.create_c_function(
-                        std::mem::transmute::<CFunctionNaev, CFunctionMLua>(naevc::luaopen_enet),
-                     )?))
-                  },
-               },
-               _ => Ok(mlua::Value::Nil),
-            }
-         })?,
-      )?;
-      loaders.push(
-         lua.create_function(|lua, name: String| -> mlua::Result<mlua::Value> {
-            let globals = lua.globals();
-            let package_val: mlua::Value = globals.get("package")?;
-            let package: mlua::Table = match package_val {
-               mlua::Value::Table(t) => t,
-               _ => {
-                  return Ok(mlua::Value::String(
-                     lua.create_string(gettext(" package not found."))?,
-                  ));
-               }
-            };
-            let preload: mlua::Table = package.get("preload")?;
-            let lib: mlua::Value = preload.get(name.clone())?;
-            match lib {
-               mlua::Value::Nil => Ok(mlua::Value::String(
-                  lua.create_string(format!("\n\tno field package.preload['{name}']"))?,
-               )),
-               v => Ok(v),
-            }
-         })?,
-      )?;
-      // TODO reimplement in rust...
-      unsafe {
-         loaders.push(
-            lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-               naevc::nlua_package_loader_lua,
-            ))?,
-         )?;
-      }
+      let loaders: mlua::Table = lua.create_table()?;
+      loaders.push(lua.create_function(loader_ndata)?)?;
+      loaders.push(lua.create_function(loader_rust_libs)?)?;
+      package.set("loaders", loaders)?;
 
       // Global state table _G should refer back to the environment.
       t.set("_G", t.clone())?;
@@ -710,10 +705,8 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
       let lua = &NLUA;
       let mut args = unsafe {
          lua.lua.exec_raw_lua(|state| {
-            //dbg!("pre-args", nargs, mlua::ffi::lua_gettop( state.state() ) );
             let args = mlua::MultiValue::from_stack_multi(nargs + 1, state);
             mlua::ffi::lua_pop(state.state(), nargs + 1);
-            //dbg!("post-args", mlua::ffi::lua_gettop( state.state() ) );
             args
          })
       }?;
