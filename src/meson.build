@@ -93,7 +93,6 @@ source_rust = files(
    'spfx.rs',
    'system.rs',
    'lua/ryaml.rs',
-   'lua/collide.rs',
 )
 ####
 # C Source lists

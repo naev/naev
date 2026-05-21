@@ -38,7 +38,6 @@ mod spfx;
 mod spob;
 mod system;
 mod lua {
-   pub mod collide;
    pub mod ryaml;
 }
 

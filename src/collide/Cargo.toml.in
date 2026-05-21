@@ -25,5 +25,6 @@ tinyvec = { workspace = true }
 fs-err = { workspace = true }
 bitcode = { workspace = true }
 blake3 = { workspace = true }
+mlua = { workspace = true }
 ramer_douglas_peucker = "0.2"
 mint = "0.5"

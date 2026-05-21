@@ -4037,7 +4037,6 @@ src/linebreak.rs
 src/load.c
 src/load.h
 src/log.h
-src/lua/collide.rs
 src/lua/ryaml.rs
 src/lua_enet.c
 src/lua_enet.h
