@@ -8,6 +8,8 @@
 --]]
 --[[
    Handles special scripted bounty missions in a general framework.
+
+   Started from dat/events/priority_bounty/manager.lua
 --]]
 local fmt = require "format"
 local lmisn = require "lmisn"
@@ -15,7 +17,7 @@ local bounty = require "common.bounty"
 
 function create ()
    local nc = naev.cache()
-   local sb = nc._special_bounty
+   local sb = nc._priority_bounty
    mem.sb = sb
 
    misn.claim( {sb.system}, true )
