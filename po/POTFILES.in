@@ -3107,6 +3107,7 @@ dat/events/pirate/pirate_raid_manager.lua
 dat/events/pirate/shipcheck.lua
 dat/events/poi_enter.lua
 dat/events/poi_generator.lua
+dat/events/priority_bounty/bounties/rainbow_goatee.lua
 dat/events/priority_bounty/bounties/rogue_bounty_hunter_hellhound.lua
 dat/events/priority_bounty/bounties/rogue_bounty_hunter_hellhound_2.lua
 dat/events/priority_bounty/helpers.lua
