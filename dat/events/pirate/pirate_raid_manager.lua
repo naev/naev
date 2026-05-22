@@ -58,6 +58,7 @@ function date ()
       if not has_inhabited_generic_spob( sys ) then return false end
       return true
    end )
+   if #candidates <= 0 then return end
 
    -- Set up and run the sub-event
    nc._pirate_raid = {
