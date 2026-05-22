@@ -138,7 +138,8 @@ function spawn_pirate( b )
    -- As easy as possible
    local p = pilot.add( b.targetship[1], bounty.get_faction(), bounty.choose_spawn_pos(), b.targetname, {
       ai          = "baddie",
-      intrinsics  = { outfit.get("Worn Down") },
+      -- If we make it worn down, the player feels a big jump in difficulty with the "real bounties"
+      --intrinsics  = { outfit.get("Worn Down") },
    } )
    local aimem = p:memory()
    aimem.loiter = math.huge -- Should make them loiter forever
