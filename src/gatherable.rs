@@ -232,18 +232,21 @@ pub fn update(dt: f64) {
          naevc::il_size(query)
       };
       for i in 0..s {
-         let ps = &mut pilot_stack[unsafe { naevc::il_get(query, i, 0) } as usize];
-         let p = unsafe { ps.as_mut() };
-         if p.flags[naevc::PILOT_CARRIED as usize] != 0 {
-            continue;
-         }
+         // TODO figure out why this is crashing, or just wait until Rust rewrite
+         if let Some(ps) = &mut pilot_stack.get_mut(unsafe { naevc::il_get(query, i, 0) } as usize)
+         {
+            let p = unsafe { ps.as_mut() };
+            if p.flags[naevc::PILOT_CARRIED as usize] != 0 {
+               continue;
+            }
 
-         if (ps.pos() - g.pos).norm_squared() > GATHER_DIST2 {
-            continue;
-         }
+            if (ps.pos() - g.pos).norm_squared() > GATHER_DIST2 {
+               continue;
+            }
 
-         if !g.gather_pilot(ps) {
-            return false;
+            if !g.gather_pilot(ps) {
+               return false;
+            }
          }
       }
 
