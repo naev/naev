@@ -449,7 +449,6 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Global ship stuff
    local ss = p:shipstat( nil, true ) -- Should include cores!!
    local st = p:stats() -- also include cores
-   st.cpu = st.cpu_max / ss.cpu_mod -- Base value to modulate
 
    -- Modify forward weapon bonus depending on turn rate
    if st.turn < 150 then
@@ -609,7 +608,8 @@ function optimize.optimize( p, cores, outfit_list, params )
    nrows = nrows + ntype_range
    local lp = linopt.new( "equipopt", ncols, nrows, true )
    -- Add space worthy checks
-   lp:set_row( 1, "CPU",          nil, st.cpu_max ) -- Don't multiply by modifiers here or they get affected "twice"
+   -- We use free CPU because of locked outfits
+   lp:set_row( 1, "CPU",          nil, st.cpu ) -- Don't multiply by modifiers here or they get affected "twice"
    local energygoal = math.max((1-params.min_energy_regen)*st.energy_regen, params.min_energy_regen_abs)
    lp:set_row( 2, "energy_regen", energygoal - st.energy_regen )
    local massgoal = math.max( params.max_mass * ss.engine_limit - st.mass, ss.engine_limit*params.min_mass_margin )
