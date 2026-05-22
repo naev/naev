@@ -12,7 +12,7 @@
  <time_mod>0.9</time_mod>
  <fabricator>Unknown</fabricator>
  <faction>Independent</faction>
- <description>TODO</description>
+ <description>The Black Diamond is an autonomous fighter. The hardware that controls this isn't much more complex than House Za'lek combat drones, but it is bigger, and the lack of life support systems and amenities for a pilot allows it to carry extra outfitting space.</description>
  <health>
   <armour>60</armour>
  </health>
