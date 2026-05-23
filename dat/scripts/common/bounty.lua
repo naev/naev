@@ -251,13 +251,7 @@ end
 
 function _bounty_land ()
    local b = mem._bounty
-   if not b.job_done or b.finished then return end
-
-   -- Allow custom functions
-   if b.completefunc then
-      b.finished = true
-      if not _G[b.completefunc]() then return end
-   end
+   if not b.job_done or b.completed then return end
 
    b.last_sys = nil
    b.last_spob = spob.cur()
@@ -280,6 +274,12 @@ function _bounty_land ()
       end
    end
    if not okspob then return end
+
+   -- Allow custom functions
+   if b.completefunc then
+      b.completed = true
+      if not _G[b.completefunc]() then return end
+   end
 
    local pay_text
    if b.target_killed then
