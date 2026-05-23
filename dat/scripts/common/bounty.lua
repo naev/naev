@@ -61,6 +61,7 @@ local osd_title_def  = _("Bounty Hunt")
 local osd_goto_def   = _("Fly to the {sys} system before {time_limit} ({time} remaining)")
 local osd_goto_nodeadline_def   = _("Fly to the {sys} system")
 local osd_objective_def = _("Kill or capture {plt}")
+local osd_objective_capture_def = _("Disable and capture {plt}")
 local osd_reward_def = _("Land in {fct} territory to collect your bounty")
 local osd_reward_static_def = _("Land to collect your bounty")
 
@@ -111,7 +112,14 @@ function bounty.init( system, targetname, targetship, reward, params )
          b.osd_goto = osd_goto_nodeadline_def
       end
    end
-   b.osd_objective   = params.osd_objective or osd_objective_def
+   b.osd_objective   = params.osd_objective
+   if not b.osd_objective_def then
+      if b.alive_only then
+         b.osd_objective =  osd_objective_capture_def
+      else
+         b.osd_objective =  osd_objective_def
+      end
+   end
    b.osd_reward      = params.osd_reward or ((b.payingfaction:static() and osd_reward_static_def) or osd_reward_def)
 
    -- Set up mission information
