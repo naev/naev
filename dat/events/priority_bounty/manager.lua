@@ -27,7 +27,9 @@ function create ()
    end
 
    hook.land("land")
-   hook.safe("land")
+   if player.isLanded() then
+      hook.safe("land")
+   end
 end
 
 local function good_candidate( b )
