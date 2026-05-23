@@ -3602,6 +3602,7 @@ void pilot_reset( Pilot *pilot )
 
    /* AI */
    pilot->shoot_indicator = 0;
+   ai_init( pilot );
 
    /* Run Lua stuff. */
    pilot_outfitOffAll( pilot );
