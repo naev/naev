@@ -153,7 +153,11 @@ function bounty.accept()
 
    update_osd()
 
-   b.last_sys = system.cur()
+   if player.isLanded() then
+      b.last_spob = spob.cur()
+   else
+      b.last_sys = system.cur()
+   end
    b.job_done = false
    b.target_killed = false
 
@@ -192,13 +196,19 @@ end
 function bounty.choose_spawn_pos()
    local b = mem._bounty
    -- Try to find a good location
-   local jmp = jump.get( system.cur(), b.last_sys )
-   local L = lanes.get( bounty.get_faction(), "non-friendly")
-   local m = 3e3 -- margin
    local pos
-   if jmp then
+   local m = 3e3 -- margin
+   local L = lanes.get( bounty.get_faction(), "non-friendly")
+   if b.last_sys then
+      local jmp = jump.get( system.cur(), b.last_sys )
+      if jmp then
+         local r =  6e3
+         local p = jmp:pos()
+         pos = lanes.getNonPoint( L, p, r, m )
+      end
+   elseif b.last_spob then
       local r =  6e3
-      local p = jmp:pos()
+      local p = b.last_spob:pos()
       pos = lanes.getNonPoint( L, p, r, m )
    end
    if not pos then
@@ -214,7 +224,7 @@ function bounty.choose_spawn_pos()
 end
 
 local spawn_bounty
-function _bounty_jumpin ()
+local function _bounty_spawn ()
    local b = mem._bounty
    -- Nothing to do.
    if system.cur() ~= b.system then
@@ -222,17 +232,21 @@ function _bounty_jumpin ()
    end
    spawn_bounty( bounty.choose_spawn_pos() )
 end
+function _bounty_jumpin ()
+   _bounty_spawn()
+end
 
 function _bounty_jumpout ()
    local b = mem._bounty
    b.last_sys = system.cur()
+   b.last_spob = nil
    if not b.job_done and b.last_sys == b.system then
       lmisn.fail( fmt.f( b.msg_leftsystem, {sys=b.last_sys} ) )
    end
 end
 
 function _bounty_takeoff ()
-   spawn_bounty()
+   _bounty_spawn()
 end
 
 function _bounty_land ()
@@ -244,6 +258,9 @@ function _bounty_land ()
       b.finished = true
       if not _G[b.completefunc]() then return end
    end
+
+   b.last_sys = nil
+   b.last_spob = spob.cur()
 
    local fct = b.payingfaction
    local spbfct = spob.cur():faction()
