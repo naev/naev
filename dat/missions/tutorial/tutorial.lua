@@ -20,12 +20,12 @@ local luatk = require "luatk"
 local captainTP -- Non-persistent state
 local msg_info, spawn_captain_tp -- Forward-declared functions
 
-local missys = system.get( "Delta Polaris" )
-local destsys = system.get( "Jade" )
-local start_planet = spob.get( "Bolero" )
+local missys         = system.get( "Delta Polaris" )
+local destsys        = system.get( "Jade" )
+local start_planet   = spob.get( "Bolero" )
 local start_planet_r = 200
-local dest_planet = spob.get( "Benteen" )
-local dest_planet_r = 200
+local dest_planet    = spob.get( "Benteen" )
+local dest_planet_r  = 200
 
 function create ()
    if not misn.claim( missys ) then
@@ -51,6 +51,7 @@ They stare at you for a few seconds.
    vn.label("rename")
    local ainame
    luatk.vn( function ()
+      ainame = nil
       luatk.msgInput( _("Name Ship AI"), _("Please enter a name for your Ship AI"), 50, function( str )
          ainame = str
          if ainame then
