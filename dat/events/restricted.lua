@@ -23,7 +23,7 @@ function create ()
    sysfct = csys:faction()
 
    -- Collective systems are restricted to avoid missions, but we don't want mines and stuff
-   if sysfct == faction.get("Collective") then
+   if (not sysfct) or sysfct==faction.get("Collective") then
       return
    end
 
