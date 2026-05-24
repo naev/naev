@@ -50,6 +50,9 @@
    <pos x="-3119.1029" y="-2240.760926"/>
   </exclusion>
  </asteroids>
+ <stats>
+  <fuel_regen>1</fuel_regen>
+ </stats>
  <tags>
   <tag>northstellarwind</tag>
   <tag>stellarwind</tag>

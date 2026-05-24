@@ -33,6 +33,9 @@
    <tags/>
   </jump>
  </jumps>
+ <stats>
+  <fuel_regen>1</fuel_regen>
+ </stats>
  <tags>
   <tag>stellarwind</tag>
   <tag>spoiler</tag>
