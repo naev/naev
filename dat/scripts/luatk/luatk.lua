@@ -68,7 +68,6 @@ function luatk.joinScissors( x, y, w, h )
 end
 
 function luatk.setup ()
-   luatk._windows = {}
    luatk._canvas = lg.newCanvas( nil, nil, {depth=true} ) -- Should default fullscreen, but we add depth channel
    luatk._dirty = true
 end
