@@ -33,7 +33,7 @@ function buy( _q )
       return false, nobuy
    end
    player.pay( -PRICE )
-   faction.setReputationGlobal( "Independent",  0 )
+   faction.get("Independent"):setReputationGlobal( 0 )
    vntk.msg(_("New You"), _([[With your newly acquired identity, you have cleared your record with all independent governments.]]))
    return true, 0 -- Doesn't actually get added
 end
