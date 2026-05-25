@@ -41,11 +41,13 @@ use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, LazyLock, Weak};
 #[cfg(not(debug_assertions))]
 use std::sync::{Mutex, RwLock};
-use symphonia::core::audio::{Channels, Signal};
-use symphonia::core::conv::{FromSample, IntoSample};
-use symphonia::core::{
-   codecs::Decoder, formats::FormatReader, io::MediaSourceStream, sample::Sample,
-};
+use symphonia::core::audio::Audio as OtherAudio;
+use symphonia::core::audio::GenericAudioBufferRef;
+use symphonia::core::audio::conv::{FromSample, IntoSample};
+use symphonia::core::audio::{Channels, Position};
+use symphonia::core::codecs::audio::AudioDecoder;
+use symphonia::core::codecs::registry::CodecRegistry;
+use symphonia::core::{audio::sample::Sample, formats::FormatReader, io::MediaSourceStream};
 use tracing::instrument;
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, RwLock};
@@ -112,16 +114,14 @@ enum Frame<T> {
 }
 impl<T> Frame<T> {
    /// Loads a Vec of Frame<f32> from an AudioBufferRef
-   fn load_frames_from_buffer_ref(
-      buffer: &symphonia::core::audio::AudioBufferRef,
-   ) -> Result<Vec<Frame<f32>>> {
+   fn load_frames_from_buffer_ref(buffer: &GenericAudioBufferRef) -> Result<Vec<Frame<f32>>> {
       fn load_frames_from_buffer<S: Sample>(
          buffer: &symphonia::core::audio::AudioBuffer<S>,
       ) -> Result<Vec<Frame<f32>>>
       where
          f32: FromSample<S>,
       {
-         match buffer.spec().channels.count() {
+         match buffer.spec().channels().count() {
             1 => Ok(buffer
                .chan(0)
                .iter()
@@ -136,18 +136,17 @@ impl<T> Frame<T> {
             _ => anyhow::bail!("Unsupported channel configuration"),
          }
       }
-      use symphonia::core::audio::AudioBufferRef;
       match buffer {
-         AudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
+         GenericAudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
       }
    }
 
@@ -188,26 +187,21 @@ pub struct ReplayGain {
 impl ReplayGain {
    /// Extracts the replaygain values from a FormatReader
    fn from_formatreader(format: &mut Box<dyn FormatReader>) -> Result<Option<Self>> {
-      use symphonia::core::meta::{StandardTagKey, Tag, Value};
+      use symphonia::core::meta::StandardTag;
       let mut track_gain_db = None;
       let mut track_peak = None;
       if let Some(md) = format.metadata().current() {
          for t in md.tags() {
-            fn tag_to_f32(t: &Tag) -> Result<f32> {
-               match &t.value {
-                  Value::Float(val) => Ok(*val as f32),
-                  // Strings can be like "+3.14 dB" or "0.4728732849"
-                  Value::String(val) => Ok(match val.split_once(" ") {
-                     Some(val) => val.0,
-                     None => val,
-                  }
-                  .parse::<f32>()?),
-                  _ => anyhow::bail!("tag is not a float"),
+            fn tag_to_f32(s: Arc<String>) -> Result<f32> {
+               Ok(match s.split_once(" ") {
+                  Some(val) => val.0,
+                  None => &s,
                }
+               .parse::<f32>()?)
             }
             if let Some(key) = t.std_key {
                match key {
-                  StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
+                  StandardTag::ReplayGainTrackGain(s) => match tag_to_f32(s) {
                      Ok(f) => {
                         track_gain_db = Some(f);
                      }
@@ -215,7 +209,7 @@ impl ReplayGain {
                         warn_err!(e);
                      }
                   },
-                  StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
+                  StandardTag::ReplayGainTrackPeak(s) => match tag_to_f32(s) {
                      Ok(f) => {
                         track_peak = Some(f);
                      }
@@ -283,22 +277,12 @@ impl BufferData {
       let codecs = &CODECS;
       let probe = symphonia::default::get_probe();
       let mss = MediaSourceStream::new(Box::new(src), Default::default());
-      let mut hint = symphonia::core::probe::Hint::new();
+      let mut hint = symphonia::core::formats::probe::Hint::new();
       if let Some(ext) = ext {
          hint.with_extension(ext);
       }
       // Enable gapless so encoded padding (e.g. Opus pre-skip/end trim) is removed.
-      let mut format = probe
-         .format(
-            &hint,
-            mss,
-            &symphonia::core::formats::FormatOptions {
-               enable_gapless: true,
-               ..Default::default()
-            },
-            &Default::default(),
-         )?
-         .format;
+      let mut format = probe.probe(&hint, mss, &Default::default(), &Default::default())?;
 
       // Get replaygain information
       let replay_gain = ReplayGain::from_formatreader(&mut format)?;
@@ -311,10 +295,10 @@ impl BufferData {
       let mut decoder = codecs.make(codec_params, &Default::default())?;
 
       let channels = track.codec_params.channels.context("no channels")?;
-      if !channels.contains(Channels::FRONT_LEFT) {
+      if !channels.contains(Channels::Positioned(Position::FRONT_LEFT)) {
          anyhow::bail!("no mono channel");
       }
-      let stereo = channels.contains(Channels::FRONT_RIGHT);
+      let stereo = channels.contains(Channels::Position(Position::FRONT_RIGHT));
       let delay = codec_params.delay;
       let padding = codec_params.padding;
 
@@ -705,7 +689,7 @@ struct StreamData {
    buffers: [al::Buffer; 2],
    format: Box<dyn FormatReader>,
    track_id: u32,
-   decoder: Box<dyn Decoder>,
+   decoder: Box<dyn AudioDecoder>,
    replaygain: Option<ReplayGain>,
    stereo: bool,
    sample_rate: u32,
@@ -748,10 +732,10 @@ impl StreamData {
       let decoder = codecs.make(codec_params, &Default::default())?;
 
       let channels = track.codec_params.channels.context("no channels")?;
-      if !channels.contains(Channels::FRONT_LEFT) {
+      if !channels.contains(Channels::Positioned(Position::FRONT_LEFT)) {
          anyhow::bail!("no mono channel");
       }
-      let stereo = channels.contains(Channels::FRONT_RIGHT);
+      let stereo = channels.contains(Channels::Positioned(Position::FRONT_RIGHT));
 
       Ok(Self {
          // We use the raw value so it doesn't get dropped here and double free the source
@@ -799,7 +783,9 @@ impl StreamData {
          };
 
          // If the packet does not belong to the selected track, skip over it.
-         if packet.track_id() == self.track_id {
+         if let Some(packet) = packet
+            && packet.track_id == self.track_id
+         {
             // Decode the packet into audio samples.
             let buffer = self.decoder.decode(&packet)?;
             frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
@@ -2126,10 +2112,9 @@ impl System {
 }
 pub static SILENT: AtomicBool = AtomicBool::new(false);
 pub static AUDIO: LazyLock<System> = LazyLock::new(|| System::new().unwrap());
-pub static CODECS: LazyLock<symphonia::core::codecs::CodecRegistry> = LazyLock::new(|| {
-   let mut codec_registry = symphonia::core::codecs::CodecRegistry::new();
-   symphonia::default::register_enabled_codecs(&mut codec_registry);
-   codec_registry.register_all::<symphonia_adapter_libopus::OpusDecoder>();
+pub static CODECS: LazyLock<CodecRegistry> = LazyLock::new(|| {
+   let mut codec_registry = CodecRegistry::new();
+   codec_registry.register_audio_decoder::<OpusDecoder>();
    codec_registry
 });
 
