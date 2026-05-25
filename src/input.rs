@@ -19,8 +19,8 @@ pub fn key_from_str(name: &str) -> Option<sdl::keyboard::Keycode> {
             return None;
          }
       };
-      return match name.parse::<i32>() {
-         Ok(kc) => sdl::keyboard::Keycode::from_i32(kc),
+      return match name.parse::<u32>() {
+         Ok(kc) => sdl::keyboard::Keycode::from_u32(kc),
          Err(_) => None,
       };
    }
@@ -73,7 +73,7 @@ pub extern "C" fn input_keyToStr(key: SDL_Keycode) -> *const c_char {
       return name.as_ptr() as *const c_char;
    }
 
-   let keycode = match sdl::keyboard::Keycode::from_i32(key.0 as i32) {
+   let keycode = match sdl::keyboard::Keycode::from_u32(key.0) {
       Some(kc) => kc,
       None => {
          warn!("keycode '{}' not found!", key.0);

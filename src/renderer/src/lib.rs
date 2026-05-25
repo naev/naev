@@ -621,8 +621,8 @@ impl Context {
       // Final touches
       sdlvid
          .gl_set_swap_interval(match vsync {
-            true => 1,
-            false => 0,
+            true => sdl::video::SwapInterval::VSync,
+            false => sdl::video::SwapInterval::Immediate,
          })
          .unwrap_or_else(|err| {
             warn_err!(anyhow::Error::msg(err).context("unable to set OpenGL swap interval"))
