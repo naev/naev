@@ -66,7 +66,7 @@ pluginmgr = { path="@BUILD@/src/pluginmgr" }
 pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
 formatx = "0.2"
 glow = "0.17"
-nalgebra = { version = "0.34", features = ["bytemuck", "encase", "serde-serialize"] }
+nalgebra = { version = "0.35", features = ["bytemuck", "encase", "serde-serialize"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.25", features = ["derive"] } # Needed for shader voodoo
 regex = "1.12"
@@ -115,7 +115,7 @@ toml = "1.1"
 trash = "5"
 # Git operations
 # Disable ssh2 because it gives compilation issues
-git2 = { version = "0.20", default-features = false, features = ["https"] }
+git2 = { version = "0.21", default-features = false, features = ["https"] }
 # Async runtime and byte buffer types
 #tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 bytes = "1"
