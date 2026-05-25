@@ -1424,6 +1424,10 @@ static void pilot_outfitLRun( Pilot *p,
                                                     const void      *data ),
                               const void *data )
 {
+   // Make sure it's valid
+   if ( pilot_isFlag( p, PILOT_DELETE ) )
+      return;
+
    /* If no ID, we'll hackily add a temporary pilot and undo the changes. */
    PilotTemp tmp = temp_setup( p );
 
