@@ -905,6 +905,13 @@ void ai_think( Pilot *pilot, double dt, int dotask )
       NTracingZoneEnd( _ctx_task );
    }
 
+   /* AI task may have deleted the pilot. */
+   if ( pilot_isFlag( cur_pilot, PILOT_DELETE ) ) {
+      ai_unsetPilot( oldmem );
+      NTracingZoneEnd( _ctx );
+      return;
+   }
+
    /* Have to update potential outfit state changes here. */
    if ( !pilot_isPlayer( cur_pilot ) )
       pilot_weapSetUpdateOutfitState( cur_pilot );

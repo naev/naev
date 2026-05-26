@@ -1452,6 +1452,10 @@ static void pilot_outfitLRun( Pilot *p,
    /* Some clean up. */
    temp_cleanup( tmp, p );
 
+   /* Outfit callbacks may have deleted the pilot. */
+   if ( pilot_isFlag( p, PILOT_DELETE ) )
+      return;
+
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
       /* TODO pilot_calcStats can be called twice here. */
@@ -2554,6 +2558,12 @@ int pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
       ret = 0;
    }
    pilot_outfitLunmem( env, oldmem );
+
+   /* Outfit message callback may have deleted the pilot. */
+   if ( pilot_isFlag( pilot, PILOT_DELETE ) ) {
+      pilotoutfit_modified = modified;
+      return ret;
+   }
 
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
