@@ -24,12 +24,15 @@ impl Cli {
 
 #[derive(Args)]
 struct Ldoc {
-   /// Input source file
-   #[arg(value_name = "INPUT")]
-   input: PathBuf,
-   /// Output file
+   /// Input source files
+   #[arg(value_name = "INPUTS")]
+   input: Vec<PathBuf>,
+   /// Output file (single-file mode)
    #[arg(short, long, value_name = "OUTPUT")]
    output: Option<PathBuf>,
+   /// Output directory (batch mode: writes {modname}.luadoc per file)
+   #[arg(long, value_name = "OUTPUT_DIR")]
+   output_dir: Option<PathBuf>,
 }
 
 #[derive(Args)]
@@ -186,7 +189,30 @@ fn main() -> Result<()> {
 
    let output = match &args.command {
       Mode::Ldoc(ld) => {
-         let txt = fs::read_to_string(&ld.input)?;
+         if let Some(out_dir) = &ld.output_dir {
+            std::fs::create_dir_all(out_dir)?;
+            let mut written = false;
+            for file in &ld.input {
+               let txt = fs::read_to_string(file)?;
+               let blocks = extract_docs(&txt);
+               let mods = lua_mods(&blocks);
+               if mods.is_empty() {
+                  eprintln!("Warning: no @luamod in {}", file.display());
+                  continue;
+               }
+               let content =
+                  ldoc(&blocks).with_context(|| format!("Processing {}", file.display()))?;
+               let out_path = out_dir.join(format!("{}.luadoc", mods[0]));
+               fs::write(&out_path, content)?;
+               written = true;
+            }
+            if !written {
+               anyhow::bail!("No files with @luamod found in batch");
+            }
+            return Ok(());
+         }
+         let input = ld.input.first().context("No input file provided")?;
+         let txt = fs::read_to_string(input)?;
          let blocks = extract_docs(&txt);
          ldoc(&blocks)?
       }

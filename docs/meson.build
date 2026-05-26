@@ -47,12 +47,17 @@ if genLDoc.disabled() == false
    if ldoc.found()
 
       cargo = find_program('cargo')
-      docmaker = generator( cargo,
-         arguments: ['run',
+      docmaker = custom_target(
+         'docmaker',
+         input: nlua_source,
+         output: 'docmaker',
+         command: [
+            cargo, 'run',
             '--manifest-path', meson.project_source_root() / 'utils/docmaker/Cargo.toml',
-            'ldoc', '@INPUT@', '-o', '@OUTPUT@',
+            '--', 'ldoc',
+            '--output-dir', '@OUTPUT@',
+            '@INPUT@',
          ],
-         output: '@BASENAME@.luadoc'
       )
 
       # WARNING: half-assed way to ensure the same directory contains the Lua sources we want to document.
@@ -64,14 +69,13 @@ if genLDoc.disabled() == false
          output   : '@PLAINNAME@'
       )
 
-      clua_source = docmaker.process(nlua_source)
       llua_source = direct.process(lua_source)
 
       lconfig = files('lua/config.ld')
 
       ldoc = custom_target(
          'ldoc',
-         input: [clua_source, llua_source],
+         input: [docmaker, llua_source],
          output: 'lua',
          command: [
          ldoc,
@@ -79,6 +83,7 @@ if genLDoc.disabled() == false
          '-d', '@OUTPUT@',
          '-l', meson.project_source_root() / 'docs/lua',
          '-s', meson.project_source_root() / 'docs/lua',
+         '@INPUT0@',
          '@PRIVATE_DIR@'],
          install: true,
          install_dir: 'doc/naev')
