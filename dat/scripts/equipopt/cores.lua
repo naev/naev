@@ -316,8 +316,12 @@ cores.elite.hulls["Kestrel"] = function ()
    return "Unicorp D-58 Heavy Plating"
 end
 cores.elite.hulls["Pirate Kestrel"] = cores.elite.hulls["Kestrel"]
-cores.elite.hulls["Starbridge"] = function ()
-   return choose_one{ "S&K Battle Plating", "Krain Nanobot Foam Padding" }
+cores.elite.hulls["Starbridge"] = function (secondary)
+   if secondary then
+      return choose_one{ "S&K Battle Plating", "Krain Nanobot Foam Padding" }
+   else
+      return "S&K Battle Plating"
+   end
 end
 cores.elite.hulls["Pirate Starbridge"] = cores.elite.hulls["Starbridge"]
 cores.elite.engines["Starbridge"] = function ()
@@ -394,7 +398,7 @@ function cores.get( p, params )
       local co = ct[ shipname ] or ct[ shipclass ]
       c["systems"] = co()
       if slotinfo.systems_secondary then
-         c["systems_secondary"] = co()
+         c["systems_secondary"] = co(true)
       end
    end
    if hulls then
