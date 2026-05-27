@@ -253,7 +253,7 @@ impl FactionRef {
             return false;
          }
          unsafe {
-            (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() > threshold
+            (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() >= threshold
          }
       } else {
          self
