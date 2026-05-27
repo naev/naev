@@ -316,6 +316,10 @@ cores.elite.hulls["Kestrel"] = function ()
    return "Unicorp D-58 Heavy Plating"
 end
 cores.elite.hulls["Pirate Kestrel"] = cores.elite.hulls["Kestrel"]
+cores.elite.hulls["Starbridge"] = function ()
+   return choose_one{ "S&K Battle Plating", "Krain Nanobot Foam Padding" }
+end
+cores.elite.hulls["Pirate Starbridge"] = cores.elite.hulls["Starbridge"]
 cores.elite.engines["Starbridge"] = function ()
    return choose_one{ "Tricon Cyclone Engine", "Krain Patagium Twin Engine" }
 end
