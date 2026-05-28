@@ -318,7 +318,7 @@ end
 cores.elite.hulls["Pirate Kestrel"] = cores.elite.hulls["Kestrel"]
 cores.elite.hulls["Starbridge"] = function (secondary)
    if secondary then
-      return choose_one{ "S&K Battle Plating", "Krain Nanobot Foam Padding" }
+      return choose_one{ "S&K Battle Plating", "Krain Nanotubes Foam Padding" }
    else
       return "S&K Battle Plating"
    end
