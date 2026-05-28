@@ -1175,15 +1175,15 @@ static void weapon_updateCollide( Weapon *w, double dt )
          /* Beams need to update their properties online. */
          if ( outfit_type( w->outfit ) == OUTFIT_TYPE_BEAM ) {
             w->dam_mod        = p->stats.fwd_damage * p->stats.weapon_damage;
-            w->dam_as_dis_mod = p->stats.fwd_dam_as_dis - 1.;
+            w->dam_as_dis_mod = p->stats.fwd_dam_as_dis;
             w->range_mod      = p->stats.fwd_range * p->stats.weapon_range;
          } else {
             w->dam_mod        = p->stats.tur_damage * p->stats.weapon_damage;
-            w->dam_as_dis_mod = p->stats.tur_dam_as_dis - 1.;
+            w->dam_as_dis_mod = p->stats.tur_dam_as_dis;
             w->range_mod      = p->stats.tur_range * p->stats.weapon_range;
          }
-         w->dam_as_dis_mod *= p->stats.weapon_dam_as_dis - 1.;
-         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
+         w->dam_as_dis_mod *= p->stats.weapon_dam_as_dis;
+         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod - 1. );
       }
       wc.gfx      = NULL;
       wc.polygon  = NULL;
@@ -2607,16 +2607,15 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
 
       if ( outfit_type( outfit ) == OUTFIT_TYPE_BEAM ) {
          w->dam_mod *= parent->stats.fwd_damage * parent->stats.weapon_damage;
-         w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
+         w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis;
          w->range_mod = parent->stats.fwd_range * parent->stats.weapon_range;
       } else {
          w->dam_mod *= parent->stats.tur_damage * parent->stats.weapon_damage;
-         w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
+         w->dam_as_dis_mod = parent->stats.tur_dam_as_dis;
          w->range_mod = parent->stats.tur_range * parent->stats.weapon_range;
       }
-      w->dam_as_dis_mod *= parent->stats.weapon_damage - 1.;
-      w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
-
+      w->dam_as_dis_mod *= parent->stats.weapon_dam_as_dis;
+      w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod - 1. );
       break;
 
    /* Treat seekers together. */
