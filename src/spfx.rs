@@ -374,6 +374,12 @@ impl UserData for LuaSpfxRef {
          },
       );
       /*@
+       * @brief Checks to see if it exists.
+       */
+      methods.add_method_mut("exists", |_, this, ()| -> mlua::Result<bool> {
+         Ok(LUASPFX.read().unwrap().get(*this).is_some())
+      });
+      /*@
        * @brief Removes a special effect.
        *
        *    @luatparam spfx s Spfx to remove.
