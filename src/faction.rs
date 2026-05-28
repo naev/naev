@@ -2149,11 +2149,14 @@ where
    let mut factions = FACTIONS.write().unwrap();
    match factions.get_mut(FactionRef::from_ffi(id)) {
       Some(fct) => {
+         /*
          if fct.dynamic() {
             Ok(f(fct))
          } else {
             anyhow::bail!("trying to modify a non-dynamic faction!")
          }
+         */
+         Ok(f(fct))
       }
       None => anyhow::bail!("faction not found"),
    }
