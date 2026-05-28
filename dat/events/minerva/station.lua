@@ -214,7 +214,8 @@ function tab_random_event_ready ()
 end
 
 function tab_random_event ()
-   if start_tab_random_event and rnd.rnd() < 0.5 then
+   local alter1 = has_event("Minerva Station Altercation 1")
+   if not alter1 and start_tab_random_event and rnd.rnd() < 0.5 then
       random_event()
    end
 end
