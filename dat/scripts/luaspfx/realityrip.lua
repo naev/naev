@@ -33,15 +33,18 @@ local function realityrip( pos, size, params )
       rip_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/realityrip.frag" )
    end
 
+   -- Have to recreate shader each time
+   local shader = pp_shaders.newShader( rip_bg_shader_frag )
+   shader:send( "u_size", size )
+   shader:addPPShader("game", 20)
+
    -- Sound is handled separately in outfit
    return spfx.new( math.huge, update, nil, nil, render, pos, params.vel, nil, size, remove, {
       pos    = pos,
       timer  = 0,
       size   = size,
       strength = params.strength or 1,
-      shader = pp_shaders.newShader( rip_bg_shader_frag ), -- Have to recreate each time
-      shader:send( "u_size", size ),
-      shader:addPPShader("game", 20),
+      shader = shader,
    } )
 end
 
