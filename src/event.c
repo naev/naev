@@ -878,9 +878,11 @@ int events_saveActive( xmlTextWriterPtr writer )
       xmlw_attr( writer, "id", "%u", ev->id );
 
       /* Claims. */
-      xmlw_startElem( writer, "claims" );
-      claim_xmlSave( writer, ev->claims );
-      xmlw_endElem( writer ); /* "claims" */
+      if ( ev->claims != NULL ) {
+         xmlw_startElem( writer, "claims" );
+         claim_xmlSave( writer, ev->claims );
+         xmlw_endElem( writer ); /* "claims" */
+      }
 
       /* Write Lua magic */
       xmlw_startElem( writer, "lua" );

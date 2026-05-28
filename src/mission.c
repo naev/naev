@@ -1429,9 +1429,11 @@ int missions_saveActive( xmlTextWriterPtr writer )
       }
 
       /* Claims. */
-      xmlw_startElem( writer, "claims" );
-      claim_xmlSave( writer, misn->claims );
-      xmlw_endElem( writer ); /* "claims" */
+      if ( misn->claims != NULL ) {
+         xmlw_startElem( writer, "claims" );
+         claim_xmlSave( writer, misn->claims );
+         xmlw_endElem( writer ); /* "claims" */
+      }
 
       /* Write Lua magic */
       xmlw_startElem( writer, "lua" );
