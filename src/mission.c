@@ -1390,22 +1390,26 @@ int missions_saveActive( xmlTextWriterPtr writer )
       xmlw_elem( writer, "reward_value", "%" CREDITS_PRI, misn->reward_value );
 
       /* Markers. */
-      xmlw_startElem( writer, "markers" );
-      for ( int j = 0; j < array_size( misn->markers ); j++ ) {
-         MissionMarker *m = &misn->markers[j];
-         xmlw_startElem( writer, "marker" );
-         xmlw_attr( writer, "id", "%d", m->id );
-         xmlw_attr( writer, "type", "%d", m->type );
-         xmlw_str( writer, "%s", mission_markerTarget( m ) );
-         xmlw_endElem( writer ); /* "marker" */
+      if ( array_size( misn->markers ) > 0 ) {
+         xmlw_startElem( writer, "markers" );
+         for ( int j = 0; j < array_size( misn->markers ); j++ ) {
+            MissionMarker *m = &misn->markers[j];
+            xmlw_startElem( writer, "marker" );
+            xmlw_attr( writer, "id", "%d", m->id );
+            xmlw_attr( writer, "type", "%d", m->type );
+            xmlw_str( writer, "%s", mission_markerTarget( m ) );
+            xmlw_endElem( writer ); /* "marker" */
+         }
+         xmlw_endElem( writer ); /* "markers" */
       }
-      xmlw_endElem( writer ); /* "markers" */
 
       /* Cargo */
-      xmlw_startElem( writer, "cargos" );
-      for ( int j = 0; j < array_size( misn->cargo ); j++ )
-         xmlw_elem( writer, "cargo", "%u", misn->cargo[j] );
-      xmlw_endElem( writer ); /* "cargos" */
+      if ( array_size( misn->cargo ) > 0 ) {
+         xmlw_startElem( writer, "cargos" );
+         for ( int j = 0; j < array_size( misn->cargo ); j++ )
+            xmlw_elem( writer, "cargo", "%u", misn->cargo[j] );
+         xmlw_endElem( writer ); /* "cargos" */
+      }
 
       /* OSD. */
       if ( misn->osd > 0 ) {
