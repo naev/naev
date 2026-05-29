@@ -116,6 +116,11 @@
    * Fixed number of bribeable pilots changing
 
 
+## v0.13.5 (unreleased)
+
+   * Fixed obelisks not being able to be completed
+
+
 ## v0.13.4
 
    * "Show only outfits equippable on any of your ships" should include current
