@@ -29,7 +29,7 @@
   <spfx_shield>Exp-L</spfx_shield>
   <spfx_armour>Exp-L</spfx_armour>
   <trail_generator x="-15">zalek-missileL</trail_generator>
-  <duration blowup="armour">35</duration>
+  <duration blowup="armour">13</duration>
   <accel>200</accel>
   <turn>60</turn>
   <speed_max>220</speed_max>

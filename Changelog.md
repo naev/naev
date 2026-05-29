@@ -33,6 +33,7 @@
    * Bounties can feature multiple enemy ships
    * Mercenary licence now obtained from a mission
    * Llama voyager no longer has a super efficient jumpdrive
+   * Nerfed range on torpedoes and other heavy launcher weapons
 
  ### Content
 
