@@ -47,14 +47,15 @@ void events_trigger( EventTrigger_t trigger );
 /*
  * Handling.
  */
-int         event_exists( unsigned int eventid );
-nlua_env   *event_getEnv( unsigned int eventid );
-Event_t    *event_get( unsigned int eventid );
-void        event_remove( unsigned int eventid );
-int         event_save( unsigned int eventid );
-const char *event_getData( unsigned int eventid );
-int         event_isUnique( unsigned int eventid );
-int         event_priority( unsigned int eventid );
+unsigned int *event_getActiveList( void );
+int           event_exists( unsigned int eventid );
+nlua_env     *event_getEnv( unsigned int eventid );
+Event_t      *event_get( unsigned int eventid );
+void          event_remove( unsigned int eventid );
+int           event_save( unsigned int eventid );
+const char   *event_getData( unsigned int eventid );
+int           event_isUnique( unsigned int eventid );
+int           event_priority( unsigned int eventid );
 
 /*
  * Data.
@@ -72,4 +73,4 @@ int  event_testClaims( unsigned int eventid, int sys );
  * Misc.
  */
 int  event_alreadyRunning( int data );
-void event_toLuaTable( lua_State *L, int eventid );
+void event_toLuaTable( lua_State *L, int eventdataid );

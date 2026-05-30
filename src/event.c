@@ -98,6 +98,17 @@ int                 events_saveActive( xmlTextWriterPtr writer );
 int                 events_loadActive( xmlNodePtr parent );
 static int          events_parseActive( xmlNodePtr parent );
 
+unsigned int *event_getActiveList( void )
+{
+   unsigned int *arr =
+      array_create_size( unsigned int, array_size( event_active ) );
+   for ( int i = 0; i < array_size( event_active ); i++ ) {
+      const Event_t *ev = &event_active[i];
+      array_push_back( &arr, ev->id );
+   }
+   return arr;
+}
+
 /**
  * @brief Gets an event.
  */

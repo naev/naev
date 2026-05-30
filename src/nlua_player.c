@@ -133,6 +133,7 @@ static int playerL_missions( lua_State *L );
 static int playerL_misnActive( lua_State *L );
 static int playerL_misnDone( lua_State *L );
 static int playerL_misnDoneList( lua_State *L );
+static int playerL_events( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_evtDoneList( lua_State *L );
@@ -234,6 +235,7 @@ static const luaL_Reg playerL_methods[] = {
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "misnDoneList", playerL_misnDoneList },
+   { "events", playerL_events },
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    { "evtDoneList", playerL_evtDoneList },
@@ -2025,6 +2027,41 @@ static int playerL_misnDoneList( lua_State *L )
       mission_toLuaTable( L, mission_get( done[i] ) );
       lua_rawseti( L, -2, i + 1 );
    }
+   return 1;
+}
+
+/**
+ * @brief Gets the list of the player's active events.
+ *
+ * @usage n = \#player.events() -- number of active events
+ *
+ *    @luatreturn table Table containing the metadat of active events as
+ * tables. Fields include `name`, `title`', `desc`, `reward`, `loc`, `chance`,
+ * `spob`, `system`, `chapter`, `cond`, `done`, `priority`, `unique`, `memory`,
+ * and `tags`.
+ * @luafunc events
+ */
+static int playerL_events( lua_State *L )
+{
+   if ( player.p == NULL ) {
+      lua_newtable( L );
+      return 1;
+   }
+   int           j   = 1;
+   unsigned int *evt = event_getActiveList();
+   lua_newtable( L );
+   for ( int i = 0; i < array_size( evt ); i++ ) {
+      unsigned int id = evt[i];
+
+      event_toLuaTable( L, event_get( id )->data );
+
+      nlua_env *env = event_getEnv( id );
+      nlua_getenv( L, env, "mem" );
+      lua_setfield( L, -2, "memory" );
+
+      lua_rawseti( L, -2, j++ );
+   }
+   array_free( evt );
    return 1;
 }
 

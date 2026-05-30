@@ -996,6 +996,7 @@ stds.player = {
             misnActive = {},
             misnDone = {},
             misnDoneList = {},
+            events = {},
             evtActive = {},
             evtDone = {},
             evtDoneList = {},
