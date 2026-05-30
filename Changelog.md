@@ -1,6 +1,7 @@
 ## v0.13.5 (unreleased)
 
    * Fixed obelisks not being able to be completed
+   * Fixed combat hologram projector doing missile damage
    * taiomi01: fixed error when scanning preventing from completing the mission
 
 
