@@ -424,6 +424,25 @@ local function can_capture ()
    return true
 end
 
+local function capture_points ()
+   local needed_points = board_plt:points() / loot_mod
+   local needed = needed_points
+   if loot_mod > 1 then
+      needed = fmt.f(_("{pts} (decreased by {dec} due to +{bonus} boarding bonus)"), {
+         pts   = needed_points,
+         dec   = board_plt:points() - needed_points,
+         bonus = 100*(loot_mod-1),
+      } )
+   elseif loot_mod < 1 then
+      needed = fmt.f(_("{pts} (increased by {dec} due to -{bonus} boarding bonus)"), {
+         pts   = needed_points,
+         dec   = needed_points - board_plt:points(),
+         bonus = -100*(loot_mod-1),
+      } )
+   end
+   return needed_points, needed
+end
+
 local function is_capturable ()
    local t = board_plt:ship():tags()
    if t.noplayer then
@@ -437,22 +456,8 @@ local function is_capturable ()
       return false, _("This ship is not capturable.")
    end
    local flttot, fltcur = player.fleetCapacity()
-   local needed_points = board_plt:points() / loot_mod
+   local needed_points, needed = capture_points()
    if flttot-fltcur < needed_points then
-      local needed = needed_points
-      if loot_mod > 1 then
-         needed = string.format(_("{pts} (decreased by {dec} due to +{bonus} boarding bonus)"), {
-            pts   = needed_points,
-            dec   = board_plt:points() - needed_points,
-            bonus = 100*(loot_mod-1),
-         } )
-      elseif loot_mod < 1 then
-         needed = string.format(_("{pts} (increased by {dec} due to -{bonus} boarding bonus)"), {
-            pts   = needed_points,
-            dec   = needed_points - board_plt:points(),
-            bonus = -100*(loot_mod-1),
-         } )
-      end
       return false, fmt.f(_("You do not have enough free fleet capacity to capture the ship. You need {needed}, but only have {have} free fleet capacity."), {
          needed   = needed,
          have     = flttot-fltcur
@@ -518,15 +523,22 @@ local function board_capture ()
       end
    end
 
-   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}%#0 from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
+   local flttot, fltcur = player.fleetCapacity()
+   local fleetcap = flttot-fltcur
+   local _needed_points, needed = capture_points()
+   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}%#0 from crew strength and boarding bonus) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
+
+The captured ship will use {needed} fleet capacity. You have {fleetcap} free fleet capacity.
 
 You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]), {
-         shpname=board_plt:name(),
-         credits=fmt.credits(cost),
-         creditsnaked=fmt.credits(costnaked),
-         playercreds=fmt.credits(player.credits()),
-         fctmsg=factionmsg,
-         sbonus=sbonus
+         shpname     = board_plt:name(),
+         credits     = fmt.credits(cost),
+         creditsnaked= fmt.credits(costnaked),
+         playercreds = fmt.credits(player.credits()),
+         fctmsg      = factionmsg,
+         sbonus      = sbonus,
+         needed      = needed,
+         fleetcap    = fleetcap,
    })
 
    luatk.yesno( _("Capture Ship?"), capturemsg,
