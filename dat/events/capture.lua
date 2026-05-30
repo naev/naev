@@ -47,9 +47,10 @@ function create ()
    oplt = nc.capture_pilot.pilot
    -- We clone the pilot to get a new ID and invalidate all references to the old one
    plt = oplt:clone()
-   mem.cost = nc.capture_pilot.cost
-   mem.costnaked = nc.capture_pilot.costnaked
+   mem.cost       = nc.capture_pilot.cost
+   mem.costnaked  = nc.capture_pilot.costnaked
    mem.outfitsnaked = nc.capture_pilot.outfitsnaked
+   mem.points     = nc.capture_pilot.points
    nc.capture_pilot = nil
 
    -- Free the followers!
