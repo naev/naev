@@ -424,12 +424,12 @@ local function capture_points ()
    if loot_mod > 1 then
       needed = fmt.f(_("{pts} ({bonus} due to boarding bonus)"), {
          pts   = needed_points,
-         bonus = string.format("#g%+d%%#0", loot_mod*100 - 100)
+         bonus = string.format("#g%+d%%#0", 100/loot_mod - 100)
       } )
    elseif loot_mod < 1 then
       needed = fmt.f(_("{pts} ({bonus} due to boarding bonus)"), {
          pts   = needed_points,
-         bonus = string.format("#r%+d%%#0", loot_mod*100 - 100)
+         bonus = string.format("#r%+d%%#0", 100/loot_mod - 100)
       } )
    end
    local flttot, fltcur = player.fleetCapacity()
