@@ -437,9 +437,26 @@ local function is_capturable ()
       return false, _("This ship is not capturable.")
    end
    local flttot, fltcur = player.fleetCapacity()
-   if flttot-fltcur < board_plt:points() then
-      return false, fmt.f(_("You do not have enough free fleet capacity to capture the ship. You need {needed}, but only have {have} free fleet capacity."),
-         {needed=board_plt:points(), have=flttot-fltcur})
+   local needed_points = board_plt:points() / loot_mod
+   if flttot-fltcur < needed_points then
+      local needed = needed_points
+      if loot_mod > 1 then
+         needed = string.format(_("{pts} (decreased by {dec} due to +{bonus} boarding bonus)"), {
+            pts   = needed_points,
+            dec   = board_plt:points() - needed_points,
+            bonus = 100*(loot_mod-1),
+         } )
+      elseif loot_mod < 1 then
+         needed = string.format(_("{pts} (increased by {dec} due to -{bonus} boarding bonus)"), {
+            pts   = needed_points,
+            dec   = needed_points - board_plt:points(),
+            bonus = -100*(loot_mod-1),
+         } )
+      end
+      return false, fmt.f(_("You do not have enough free fleet capacity to capture the ship. You need {needed}, but only have {have} free fleet capacity."), {
+         needed   = needed,
+         have     = flttot-fltcur
+      })
    end
    return true
 end
@@ -455,8 +472,6 @@ local function board_capture ()
    local pp = player.pilot()
    local ps = board_plt:stats()
    local pps = pp:stats()
-   -- TODO should this be affected by loot_mod and how?
-   --local loot_mod = pp:shipstat("loot_mod", true)
    local bonus = (10+ps.crew) / (10+pps.crew) / loot_mod * 0.85
    local cost = board_plt:worth()
    local costnaked = cost
