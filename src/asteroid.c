@@ -895,9 +895,6 @@ void asteroids_render( void )
          debris_renderSingle( d, cx, cy );
    }
 
-   /* Render gatherable stuff. */
-   gatherable_render();
-
    gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
