@@ -2409,7 +2409,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    rdir = angle_clean( rdir );
 
    /* Snapshot. */
-   w->dam_mod *= parent->stats.launch_damage;
+   w->dam_mod *= parent->stats.launch_damage * parent->stats.weapon_damage;
    w->accel_mod = parent->stats.launch_accel;
    w->speed_mod = parent->stats.launch_speed;
    w->turn_mod  = parent->stats.launch_turn;
