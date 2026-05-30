@@ -116,6 +116,7 @@
    * The Junker is no longer bribeable
    * Escort drones give drone-ish messages
    * Fixed number of bribeable pilots changing
+   * Fixed local maps thresholding hide the wrong way
 
 
 ## v0.13.5 (unreleased)
