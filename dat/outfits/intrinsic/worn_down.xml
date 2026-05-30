@@ -25,6 +25,7 @@
   <!-- <energy_regen_mod>-50</energy_regen_mod> -->
   <ew_signature>30</ew_signature>
   <stress_dissipation>-60</stress_dissipation>
+  <cargo_mod>-50</cargo_mod>
  </specific>
  <tags>
   <tag>nosteal</tag>
