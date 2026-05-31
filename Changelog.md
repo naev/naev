@@ -20,7 +20,18 @@
        - Absorption and penetration are no longer percents
        - Core hulls give more absorption in general
        - Increased penetration of launchers
+   * Significant changes to being a mercenary
+       - Mercenary licence now obtained from a mission
+       - Bounties can feature multiple enemy ships
+       - Patrol missions now pay per hostile eliminated
+       - New type of bounty that pays per hostile eliminated in the system
+   * Streamlined capturing
+       - Boarding bonus affects how much fleet capacity you need to capture
+         ships
+       - You can capture more than one ship at once now
    * Ultra-heavy weapons have reduced energy usage
+   * Nerfed range on torpedoes and other heavy launcher weapons
+   * Independent systems have their own standing and memory
    * The +1 reputation from derelict and Dvaered dogfight contest causes no
      longer causes reputation penalties with pirates
    * Added accessibility option to disable screen shaking
@@ -28,14 +39,8 @@
    * Gauntlet NPCs get their fighters disabled when they are disabled
    * Stress starts recovering 5 seconds after taking disable damage instead of
      immediately
-   * Independent systems have their own standing and memory
    * Can only sell ships when a shipyard is available
-   * Bounties can feature multiple enemy ships
-   * Mercenary licence now obtained from a mission
    * Llama voyager no longer has a super efficient jumpdrive
-   * Nerfed range on torpedoes and other heavy launcher weapons
-   * Boarding bonus affects how much fleet capacity you need to capture ships
-   * You can capture more than one ship at once now
 
  ### Content
 
