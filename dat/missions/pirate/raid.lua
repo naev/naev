@@ -56,6 +56,7 @@ end
 function create ()
    local target_factions = {
       "Independent",
+      "Traders Society",
       "Trader",
       "Empire",
       "Soromid",
@@ -138,13 +139,13 @@ function create ()
    local done = var.peek("pir_convoy_raid") or 0
    local mod = math.exp( -done*0.05 ) -- 0.95 for 1, 0.90 for 2 0.86 for 3, etc.
    mod = math.max( 0.5, mod ) -- Limit it so that 50% are large
-   if r < 0.5*mod then
+   if r < 0.6*mod then
       mem.tier = 1
       mem.adjective = p_("raid", "tiny")
-   elseif r < 1.0*mod then
+   elseif r < 0.7*mod then
       mem.tier = 2
       mem.adjective = p_("raid", "small")
-   elseif r < 1.2*mod then
+   elseif r < 0.8*mod then
       mem.tier = 3
       mem.adjective = p_("raid", "medium")
    else
