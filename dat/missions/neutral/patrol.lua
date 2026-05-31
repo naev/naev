@@ -36,7 +36,8 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 -- luacheck: globals abandon_text msg pay_text (shared with derived mission pirate.patrol)
--- luacheck: globals enter jumpout land pilot_leave timer (Hook functions passed by name)
+
+local REWARD = 100
 
 pay_text    = {
    _("After going through some paperwork, an officer hands you your pay and sends you off."),
@@ -156,7 +157,7 @@ function create ()
    if n_enemies == 0 then
       misn.finish( false )
    end
-   mem.credits = n_enemies * 1400
+   mem.credits = n_enemies * 1000
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
    mem.reputation = math.floor( n_enemies / 15 )
 
@@ -180,8 +181,12 @@ function create ()
       local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
 
 #nPatrol System:#0 {sys}
-#nPatrol Points:#0 {amount}]]),
-         {amount=#mem.points, sys=mem.missys})
+#nPatrol Points:#0 {amount}
+#nExtra Payment:#0 {credits} per point of hostile eliminated]]), {
+         amount   = #mem.points,
+         sys      = mem.missys,
+         credits  = REWARD,
+      })
       if not mem.paying_faction:static() then
          desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
             {fct=mem.paying_faction})
@@ -274,6 +279,27 @@ function land ()
    end
 end
 
+function pilot_dead( plt, attacker )
+   -- Remove from list
+   pilot_leave( plt )
+
+   if not attacker or not attacker:withPlayer() then return end
+   if not plt:hostile() then return end
+   if plt:mothership() then return end
+   local pmem = plt:memory()
+   if pmem._bounty_paid then return end
+
+   local points = plt:points()
+   local payment = points * REWARD
+   player.pay( payment )
+   mem.paying_faction:hit( points * 0.05, system.cur() )
+   player.msg("#g"..fmt.f(_([[Obtained {amount} for eliminating {pilot}.]]), {
+      amount = fmt.credits(points * REWARD),
+      pilot  = plt,
+   }).."#0")
+   pmem._bounty_paid = true
+end
+
 function pilot_leave ( pilot )
    local new_hostiles = {}
    for i, j in ipairs( mem.hostiles ) do
@@ -304,7 +330,7 @@ function timer ()
          j:setVisible( true )
          j:setHilight( true )
          j:setHostile( true )
-         hook.pilot( j, "death", "pilot_leave" )
+         hook.pilot( j, "death", "pilot_dead" )
          hook.pilot( j, "jump", "pilot_leave" )
          hook.pilot( j, "land", "pilot_leave" )
          mem.hostiles[ #mem.hostiles + 1 ] = j

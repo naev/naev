@@ -96,6 +96,8 @@ function try_give_bounty( plt, attacker )
    if not pir.factionIsPirate( plt:faction() ) then return end
    -- No fighters
    if plt:mothership() then return end
+   local pmem = plt:memory()
+   if pmem._system_bounty_paid then return end
 
    local points = plt:points()
    local payment = points * REWARD
@@ -105,6 +107,7 @@ function try_give_bounty( plt, attacker )
       amount = fmt.credits(points * REWARD),
       pilot  = plt,
    }).."#0")
+   pmem._system_bounty_paid = true
 
    mem.points     = (mem.points or 0) + points
    mem.destroyed  = (mem.destroyed or 0) + 1
