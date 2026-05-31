@@ -185,7 +185,7 @@ function create ()
 #nExtra Payment:#0 {credits} per point of hostile eliminated]]), {
          amount   = #mem.points,
          sys      = mem.missys,
-         credits  = REWARD,
+         credits  = fmt.credits(REWARD),
       })
       if not mem.paying_faction:static() then
          desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
