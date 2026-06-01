@@ -17,6 +17,23 @@
 
 #include "lib/math.glsl"
 
+// 1d perlin noise, implemented for Naev
+float cnoise(float P)
+{
+   vec2 Pi = floor(vec2(P,P)) + vec2(0.0, 1.0);
+   vec2 Pf = fract(vec2(P,P)) - vec2(0.0, 1.0);
+
+   Pi = mod289( Pi );
+   vec2 i  = permute( Pi );
+
+   vec2 g = fract(i * (1.0 / 41.0)) * 2.0 - 1.0;
+
+   float n0 = g.x * Pf.x;
+   float n1 = g.y * Pf.y;
+
+   return 2.3 * mix(n0, n1, fade(Pf.x));
+}
+
 // Classic Perlin noise
 float cnoise(vec2 P)
 {
