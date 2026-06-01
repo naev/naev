@@ -38,6 +38,9 @@ vec4 permute(vec4 x) {
 vec3 permute(vec3 x) {
    return mod289((34.0 * x + 10.0) * x);
 }
+vec2 permute(vec2 x) {
+   return mod289((34.0 * x + 10.0) * x);
+}
 
 vec4 taylorInvSqrt(vec4 r) {
    return 1.79284291400159 - 0.85373472095314 * r;
@@ -47,6 +50,9 @@ vec3 fade(vec3 t) {
    return t*t*t*(t*(t*6.0-15.0)+10.0);
 }
 vec2 fade(vec2 t) {
+   return t*t*t*(t*(t*6.0-15.0)+10.0);
+}
+float fade(float t) {
    return t*t*t*(t*(t*6.0-15.0)+10.0);
 }
 
@@ -68,6 +74,22 @@ float random(vec2 co)
    highp float dt= dot(co.xy ,vec2(a,b));
    highp float sn= mod(dt,M_PI);
    return fract(sin(sn) * c);
+}
+
+float cnoise(float P)
+{
+   vec2 Pi = floor(vec2(P,P)) + vec2(0.0, 1.0);
+   vec2 Pf = fract(vec2(P,P)) - vec2(0.0, 1.0);
+
+   Pi = mod289( Pi );
+   vec2 i  = permute( Pi );
+
+   vec2 g = fract(i * (1.0 / 41.0)) * 2.0 - 1.0;
+
+   float n0 = g.x * Pf.x;
+   float n1 = g.y * Pf.y;
+
+   return 2.3 * mix(n0, n1, fade(Pf.x));
 }
 
 float snoise(vec2 v)
@@ -949,6 +971,20 @@ vec4 thorn( vec2 uv )
    return colour;
 }
 
+vec4 mote( vec2 uv )
+{
+   const vec3 COLOUR = vec3( 1.0, 1.0, 1.0 );
+
+   float l = length(uv);
+   if (l > 1.0)
+      discard;
+
+   vec4 colour;
+   colour.rgb = COLOUR;
+   colour.a = pow(1.0 - l, 2.0) * (1.0 + 0.2 * cnoise( u_time * 3.7 ) );
+   return colour;
+}
+
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
@@ -971,7 +1007,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = reaver_square( uv_rel );
    //col_out = reaver( uv_rel );
    //col_out = eruptor( uv_rel );
-   col_out = thorn( uv_rel );
+   //col_out = thorn( uv_rel );
+   col_out = mote( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }
