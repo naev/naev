@@ -31,6 +31,13 @@ bhelp.ships = {
       ship.get("Vendetta"),
       ship.get("Vigilance"),
    },
+   empire = {
+      ship.get("Empire Shark"),
+      ship.get("Empire Lancelot"),
+      ship.get("Empire Admonisher"),
+      ship.get("Empire Pacifier"),
+      ship.get("Empire Hawking"),
+   },
 }
 
 function bhelp.choose_ships_from_points_and_capship( capship, shiplist, points )
