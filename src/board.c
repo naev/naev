@@ -226,7 +226,6 @@ int pilot_board( Pilot *p )
    /* Make sure target is valid. */
    target = pilot_getTarget( p );
    if ( target == NULL ) {
-      DEBUG( "NO TARGET" );
       return 0;
    }
 
