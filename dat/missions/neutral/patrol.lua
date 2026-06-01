@@ -357,11 +357,7 @@ function timer ()
       end
 
       if player_pos:dist( point_pos ) < 500 then
-         local new_points = {}
-         for i = 2, #mem.points do
-            new_points[ #new_points + 1 ] = mem.points[i]
-         end
-         mem.points = new_points
+         table.remove( mem.points, 1 )
 
          patrol_msg("#b"..msg[1].."#0")
          mem.osd_msg[2] = n_(
