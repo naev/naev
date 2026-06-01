@@ -1,11 +1,14 @@
+local fmt      = require "format"
 local bhelp    = require "events.priority_bounty.helpers"
 local bounty   = require "common.bounty"
 local equipopt = require "equipopt"
 return {
    var            = "bounty_executor",
    title          = _("Executing the Executioner"),
-   desc           = _([[SECURITY CLASSIFICATION SECRET.
-The Astra Vigilis has received an exceptional order to eliminate a renegade Executioner. Target is flying an Empire Peacemaker and is expected to be extremely dangerous. The target is equipped with an experimental shield aura generator. roceed with caution.]]),
+   desc           = fmt.f(_([[SECURITY CLASSIFICATION SECRET.
+The Astra Vigilis has received an exceptional order to eliminate a renegade Executioner. Target is flying an Empire Peacemaker and is expected to be extremely dangerous. The target is equipped with an experimental {outfit}. roceed with caution.]]), {
+   outfit = "#o".._("shield aura generator").."#0",
+} ),
    escorts        = _("with support"),
    reward         = 2e6,
    system         = system.get("Merisi"),
