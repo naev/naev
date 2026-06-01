@@ -5,7 +5,7 @@ return {
    var            = "bounty_executor",
    title          = _("Executing the Executioner"),
    desc           = _([[SECURITY CLASSIFICATION SECRET.
-The Astra Vigilis has received an exceptional order to eliminate a renegade Executioner. Target is flying an Empire Peacemaker and is expected to be extremely dangerous. Proceed with caution.]]),
+The Astra Vigilis has received an exceptional order to eliminate a renegade Executioner. Target is flying an Empire Peacemaker and is expected to be extremely dangerous. The target is equipped with an experimental shield aura generator. roceed with caution.]]),
    escorts        = _("with support"),
    reward         = 2e6,
    system         = system.get("Merisi"),
