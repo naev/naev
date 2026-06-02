@@ -17,6 +17,7 @@ local function setup( params )
       mem.r = (sw+sh)*0.25 -- Radius
    end
 
+   -- Middle explosion default
    local function boom_default( p )
       mem.timer = 0.08 * (mem.dtimer - mem.timer) / mem.dtimer
       local pos = p:pos() + vec2.newP( mem.r*rnd.rnd(), rnd.angle() )
@@ -30,6 +31,7 @@ local function setup( params )
       explosion( pos, p:vel(), r, nil, prms )
    end
 
+   -- Final explosion default
    local function explode_default( p )
       local a = math.sqrt( p:mass() )
       local r = mem.r * 1.2 * params.exp_size_mod + a
