@@ -892,6 +892,7 @@ stds.pilot = {
             msg = {},
             mothership = {},
             dockslot = {},
+            dockoutfit = {},
             leader = {},
             setLeader = {},
             followers = {},
