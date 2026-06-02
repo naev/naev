@@ -98,6 +98,7 @@ dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
 dat/factions/black_lotus.xml
 dat/factions/collective.xml
+dat/factions/cultist.xml
 dat/factions/derelict.xml
 dat/factions/dreamer_clan.xml
 dat/factions/dummy.xml
@@ -2884,6 +2885,7 @@ dat/ai/core/misc/lanes.lua
 dat/ai/core/misc/pirate.lua
 dat/ai/core/misc/scans.lua
 dat/ai/core/setup.lua
+dat/ai/cultist.lua
 dat/ai/dreamer_clan.lua
 dat/ai/drone_miner.lua
 dat/ai/dummy.lua

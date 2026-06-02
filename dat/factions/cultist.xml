@@ -1,0 +1,10 @@
+<faction name="Cultist">
+ <longname>Harbringers of the Cloud</longname>
+ <ai>mercenary</ai>
+ <static/>
+ <invisible/>
+ <player>0</player>
+ <standing>static</standing>
+ <allies/>
+ <enemies/>
+</faction>

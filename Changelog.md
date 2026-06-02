@@ -49,7 +49,7 @@
    * 8 new events
        - Pirates will raid systems
    * 2 new ships
-   * 7 new outfits
+   * 8 new outfits
    * 1 new ship variant
    * Many more unique pilots
    * Made NGC-11718 a bit more interesting
