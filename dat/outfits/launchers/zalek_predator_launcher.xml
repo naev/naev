@@ -18,7 +18,7 @@
   <reload_time>40</reload_time>
   <amount>14</amount>
   <lockon>5</lockon>
-  <iflockon>1</iflockon>
+  <iflockon>2</iflockon>
   <trackmin>4000</trackmin>
   <trackmax>10000</trackmax>
   <ammo_mass>0.4</ammo_mass>
@@ -36,10 +36,10 @@
   <damage>
    <type>kinetic</type>
    <penetrate>72</penetrate>
-   <physical>85</physical>
+   <physical>45</physical>
   </damage>
-  <armour>25</armour>
-  <absorb>10</absorb>
+  <armour>20</armour>
+  <absorb>4</absorb>
   <ai>smart</ai>
  </specific>
 </outfit>

@@ -36,7 +36,7 @@
   <damage>
    <type>kinetic</type>
    <penetrate>84</penetrate>
-   <physical>120</physical>
+   <physical>100</physical>
   </damage>
   <armour>40</armour>
   <absorb>20</absorb>
