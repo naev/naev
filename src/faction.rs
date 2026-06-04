@@ -258,9 +258,8 @@ impl FactionRef {
       } else {
          self
             .with(|fct| {
-               let std = fct.standing.read().unwrap();
                if let Some(api) = &fct.api {
-                  std.player.round() >= api.friendly_at
+                  fct.player().round() >= api.friendly_at
                } else {
                   false
                }
@@ -293,7 +292,7 @@ impl FactionRef {
          unsafe { naevc::system_getReputationOrGlobal(sys, self.as_ffi()) < 0.0 }
       } else {
          self
-            .with(|fct| fct.standing.read().unwrap().player < 0.)
+            .with(|fct| fct.standing.player().round() < 0.)
             .unwrap_or_else(|err| {
                warn_err!(err);
                false
