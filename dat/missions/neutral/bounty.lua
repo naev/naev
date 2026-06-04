@@ -3,18 +3,14 @@
 <mission name="Bounty">
  <priority>4</priority>
  <cond>
+   local fct = spob.cur():faction()
+   if not fct then return false end
+   local t = fct:tags()
+   if not (t.generic or t.misn_bounty) then return false end
    return require("misn_test").mercenary()
  </cond>
  <chance>660</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Za'lek</faction>
  <notes>
   <tier>3</tier>
  </notes>
@@ -263,7 +259,7 @@ local function bounty_setup_pirate( payingfaction, points )
             end
          end
       end
-      return pir.systemPresence( s ) > math.min( 400, points )
+      return pir.systemPresence( s ) > math.min( 400, points*0.5 )
    end
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3, test_system )

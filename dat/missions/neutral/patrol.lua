@@ -3,20 +3,14 @@
 <mission name="Patrol">
  <priority>4</priority>
  <cond>
+   local fct = spob.cur():faction()
+   if not fct then return false end
+   local t = fct:tags()
+   if not (t.generic or t.misn_patrol) then return false end
    return require("misn_test").mercenary()
  </cond>
  <chance>560</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Proteron</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Za'lek</faction>
  <notes>
   <tier>3</tier>
  </notes>
