@@ -19,13 +19,13 @@
  <licence>Heavy Combat Vessel</licence>
  <cond>require("buyrep")("Empire", 60)</cond>
  <condstr>You need at least 60% reputation with the Empire.</condstr>
- <description>This military grade version of the Hawking is mostly identical in function to a standard Hawking, but with slightly better armour, and shields.</description>
+ <description>This military grade version of the Hawking is mostly identical in function to a standard Hawking, but with slightly better armour and shields.</description>
  <health>
   <armour>1600</armour>
  </health>
  <characteristics>
   <crew>35</crew>
-  <mass>1100</mass>
+  <mass>950</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>110</cargo>
  </characteristics>
@@ -37,6 +37,7 @@
   <weapon size="large" prop="fighter_bay" x="-15" y="0" h="7"/>
   <weapon size="large" prop="fighter_bay" x="-33" y="0" h="7"/>
   <utility size="large" prop="systems" name="systems">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium"/>
   <utility size="large" prop="accessory" name="accessory"/>
   <utility size="large"/>
   <utility size="large"/>

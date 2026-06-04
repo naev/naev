@@ -13,7 +13,7 @@
   <lua_inline>
    require('outfits.lib.multicore').init({
       {'mass', 500, 700},
-      {'cpu_max', 485, 1495},
+      {'cpu_max', 815, 1165},
       {'shield', 765, 225},
       {'shield_regen', 14, 2},
       {'energy', 3075, 1725},

@@ -15,7 +15,7 @@
  </health>
  <characteristics>
   <crew>25</crew>
-  <mass>1400</mass>
+  <mass>1350</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>220</cargo>
  </characteristics>
@@ -32,6 +32,7 @@
   <utility size="medium"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>

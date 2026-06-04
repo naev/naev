@@ -20,7 +20,7 @@
  </health>
  <characteristics>
   <crew>15</crew>
-  <mass>180</mass>
+  <mass>150</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>25</cargo>
  </characteristics>
@@ -38,6 +38,7 @@
   <utility size="small"/>
   <structure size="medium" prop="engines" name="engines">Beat Up Medium Engine</structure>
   <structure size="medium" prop="hull" name="hull">Patchwork Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Patchwork Small Plating</structure>
   <structure size="medium"/>
   <structure size="medium"/>
   <structure size="medium"/>

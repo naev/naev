@@ -22,7 +22,7 @@
  </health>
  <characteristics>
   <crew>13</crew>
-  <mass>160</mass>
+  <mass>130</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>20</cargo>
  </characteristics>
@@ -33,6 +33,7 @@
   <weapon size="small" x="-9" y="-5" h="-9"/>
   <weapon size="small" x="-9" y="5" h="-9"/>
   <utility size="medium" prop="systems" name="systems">Previous Generation Medium Systems</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Previous Generation Small Systems</utility>
   <utility size="medium" prop="accessory" name="accessory"/>
   <utility size="medium"/>
   <utility size="medium"/>

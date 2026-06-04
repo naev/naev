@@ -38,7 +38,7 @@
   <weapon y="8" h="0" size="medium" x="56"/>
   <weapon y="20" h="0" size="medium" x="56"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" name="accessory" size="large"/>
   <utility size="large"/>
   <utility size="large"/>
@@ -48,7 +48,7 @@
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="medium"/>
@@ -61,7 +61,7 @@
   <stress_dissipation>10</stress_dissipation>
   <fbay_rate>25</fbay_rate>
   <fbay_reload>15</fbay_reload>
-  <cargo_mod>40</cargo_mod>
+  <cargo_mod>80</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
  </stats>
  <tags>
