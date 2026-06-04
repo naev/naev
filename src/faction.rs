@@ -289,10 +289,27 @@ impl FactionRef {
 
    fn player_enemy(&self, sys: Option<&naevc::StarSystem>) -> bool {
       if let Some(sys) = sys {
-         unsafe { naevc::system_getReputationOrGlobal(sys, self.as_ffi()) < 0.0 }
+         let threshold = self
+            .with(|fct| match &fct.api {
+               Some(api) => api.hostile_at,
+               None => f32::INFINITY,
+            })
+            .unwrap_or(f32::INFINITY);
+         if threshold == f32::INFINITY {
+            return false;
+         }
+         unsafe {
+            (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() <= threshold
+         }
       } else {
          self
-            .with(|fct| fct.standing.player().round() < 0.)
+            .with(|fct| {
+               if let Some(api) = &fct.api {
+                  fct.player().round() <= api.hostile_at
+               } else {
+                  false
+               }
+            })
             .unwrap_or_else(|err| {
                warn_err!(err);
                false
@@ -335,6 +352,7 @@ struct LuaAPI {
    // Standing Behaviour
    lua_env: LuaEnv,
    friendly_at: f32,
+   hostile_at: f32,
    hit: Function,
    hit_test: Function,
    text_rank: Function,
@@ -389,6 +407,7 @@ impl LuaAPI {
             equip_env,
             sched_env,
             lua_env,
+            hostile_at: -1.0,
             friendly_at: f32::INFINITY,
             hit: noop_f32.clone(),
             hit_test: noop_f32.clone(),
@@ -398,6 +417,7 @@ impl LuaAPI {
          })
       } else {
          let friendly_at = lua_env.get("friendly_at").unwrap_or(70.0);
+         let hostile_at = lua_env.get("hostile_at").unwrap_or(-1.0);
          let hit = load_func(&lua_env, "hit")?;
          let hit_test = load_func(&lua_env, "hit_test")?;
          let text_rank = load_func(&lua_env, "text_rank")?;
@@ -407,6 +427,7 @@ impl LuaAPI {
             equip_env,
             sched_env,
             lua_env,
+            hostile_at,
             friendly_at,
             hit,
             hit_test,
