@@ -376,8 +376,15 @@ end
 
 function create ()
    local payingfaction = spob.cur():faction()
-   local difficulty = var.peek( "bounty_difficulty" ) or N_("Easy")
-   local points = DIFFICULTIES[difficulty]()
+   local difficulty = var.peek( "bounty_difficulty" )
+   local points
+   if difficulty then
+      points = DIFFICULTIES[difficulty]()
+   else
+      local var = var.peek("astra_vigilis_points") or 0
+      -- Starts out like Easy, but pushes towards harder, while keeping easy bounties. Caps out a bit lower than challenging.
+      points = 30 + (100 + math.min(500, 0.5*var)) * rnd.rnd()
+   end
 
    -- Pirate details
    local target = bounty_setup( payingfaction, points )
