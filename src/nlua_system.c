@@ -1057,8 +1057,11 @@ static int systemL_reputation( lua_State *L )
    if ( lua_isnoneornil( L, 2 ) ) {
       lua_newtable( L );
       for ( int i = 0; i < array_size( sys->presence ); i++ ) {
-         const char *name = faction_name( sys->presence[i].faction );
-         lua_pushnumber( L, sys->presence[i].local );
+         FactionRef  f    = sys->presence[i].faction;
+         const char *name = faction_name( f );
+         int         set;
+         double      std = faction_reputationOverride( f, &set );
+         lua_pushnumber( L, set ? std : sys->presence[i].local );
          lua_setfield( L, -2, name );
       }
       return 1;
@@ -1067,7 +1070,9 @@ static int systemL_reputation( lua_State *L )
    FactionRef f = luaL_validfaction( L, 2 );
    for ( int i = 0; i < array_size( sys->presence ); i++ ) {
       if ( sys->presence[i].faction == f ) {
-         lua_pushnumber( L, sys->presence[i].local );
+         int    set;
+         double std = faction_reputationOverride( f, &set );
+         lua_pushnumber( L, set ? std : sys->presence[i].local );
          return 1;
       }
    }
