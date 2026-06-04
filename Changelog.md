@@ -12,8 +12,11 @@
 
  ### Gameplay
 
-   * Faction reputation is gained logarithmically, requiring more standing to
-     increase at higher ranks
+   * Changes in faction reputation
+       - Faction reputation is gained logarithmically, requiring more standing
+         to increase at higher ranks
+       - Most factions don't become hostile until -10, but will not let you
+         land below 0
    * Absorption values have been reworked so that penetration is more useful
    * Some skills have been reworked to use damage reduction instead of
      absorption
