@@ -5,6 +5,7 @@
 --]]
 local fmt = require "format"
 local sbase = {}
+hostile_at = -10 --global
 friendly_at = 70 -- global
 
 local function rep_from_points( p )

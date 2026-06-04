@@ -3,6 +3,7 @@ local fpir = require 'factions.pirate'
 local sbase = require "factions.standing.lib.base"
 
 local spir = {}
+hostile_at = 0 -- Higher than default
 friendly_at = 40 -- Lower default than sbase
 
 function spir.init( args )
