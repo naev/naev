@@ -247,26 +247,30 @@ local function bounty_setup_pirate( payingfaction, points )
    points = bounty.fleet_points( ships ) -- Update points
    -- TODO swap variants in there
 
-   local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
-      function(s)
-         -- Must be claimable
-         if not naev.claimTest( s, true ) then
-            return false
-         end
-         -- More likely to only appear in empty systems with high points
-         if rnd.rnd() < points/200 then
-            for k,spb in ipairs(s:spobs()) do
-               if spb:services().inhabited then
-                  local f = spb:faction()
-                  if not pir.factionIsPirate(f) and fpir:areEnemies(payingfaction) then
-                     return false
-                  end
+   local function test_system( s )
+      -- Must be claimable
+      if not naev.claimTest( s, true ) then
+         return false
+      end
+      -- More likely to only appear in empty systems with high points
+      if rnd.rnd() < points/200 then
+         for k,spb in ipairs(s:spobs()) do
+            if spb:services().inhabited then
+               local f = spb:faction()
+               if not pir.factionIsPirate(f) and fpir:areEnemies(payingfaction) then
+                  return false
                end
             end
          end
-         return pir.systemPresence( s ) > points
-      end )
+      end
+      return pir.systemPresence( s ) > math.min( 400, points )
+   end
 
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 3, test_system )
+   -- Relax a bit if nothing is nearby
+   if #systems == 0 then
+      systems = lmisn.getSysAtDistance( system.cur(), 1, 5, test_system )
+   end
    if #systems == 0 then
       -- No pirates nearby
       return
@@ -275,14 +279,13 @@ local function bounty_setup_pirate( payingfaction, points )
    local missys = systems[ rnd.rnd( 1, #systems ) ]
 
    local level
-   local num_pirates = pir.systemPresence( missys )
    if points <= 50 then
       level = 1
    elseif points <= 100 then
       level = 2
-   elseif num_pirates <= 200 then
+   elseif points <= 200 then
       level = 3
-   elseif num_pirates <= 300 then
+   elseif points <= 300 then
       level = 4
    else
       level = 5
