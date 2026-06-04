@@ -17,11 +17,15 @@
          to increase at higher ranks
        - Most factions don't become hostile until -10, but will not let you
          land below 0
-   * Absorption values have been reworked so that penetration is more useful
-   * Some skills have been reworked to use damage reduction instead of
-     absorption
+       - Independent systems have their own standing and memory
+       - The +1 reputation from derelict and Dvaered dogfight contest causes no
+         longer causes reputation penalties with pirates
+   * Absorption has been reworked
        - Absorption and penetration are no longer percents
-       - Core hulls give more absorption in general
+       - Core hulls give more absorption in general, so that penetration is
+         more useful
+       - Some skills have been reworked to use damage reduction instead of
+         absorption
        - Increased penetration of launchers
    * Significant changes to being a mercenary
        - Mercenary licence now obtained from a mission
@@ -34,9 +38,6 @@
        - You can capture more than one ship at once now
    * Ultra-heavy weapons have reduced energy usage
    * Nerfed range on torpedoes and other heavy launcher weapons
-   * Independent systems have their own standing and memory
-   * The +1 reputation from derelict and Dvaered dogfight contest causes no
-     longer causes reputation penalties with pirates
    * Added accessibility option to disable screen shaking
    * Jump brightness made easier to configure; now defaults to darker
    * Gauntlet NPCs get their fighters disabled when they are disabled
@@ -48,7 +49,7 @@
  ### Content
 
    * 8+ new missions
-       - Bounty rework with need types
+       - Bounty hunting has been reworked with new missions
    * 8 new events
        - Pirates will raid systems
    * 2 new ships
@@ -107,11 +108,10 @@
    * Commodities now support tags
    * Beams use separate shaders instead of subroutines now
    * Added support for aac and mp3 audio by default
-   * Changed rnd.rnd() syntax to be like math.random
+   * Changed rnd.rnd() syntax to be like math.random **[breaking change!!]**
    * Collision polygon generated baked into the engine
    * Time system is completely customizable by plugins now
    * You can define scaling for map decorators
-   * Support for making ships and outfits sell at discount prices
    * Added support for sounds to spfx
    * Added some support for spob domination
 
