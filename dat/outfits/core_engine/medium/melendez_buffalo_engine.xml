@@ -18,7 +18,7 @@
       {'speed', 245, 140},
       {'fuel', 1200, 200},
       {'energy_regen_malus', 9, 13},
-      {'engine_limit', 850},
+      {'engine_limit', 900, 800},
       {'land_delay', -25, 0},
       {'time_mod', 10, 0},
    })
