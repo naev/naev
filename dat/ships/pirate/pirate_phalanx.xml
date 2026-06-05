@@ -38,7 +38,7 @@
   <utility size="small"/>
   <structure size="medium" prop="engines" name="engines">Beat Up Medium Engine</structure>
   <structure size="medium" prop="hull" name="hull">Patchwork Medium Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="small">Patchwork Small Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Patchwork Light Plating</structure>
   <structure size="medium"/>
   <structure size="medium"/>
   <structure size="medium"/>
