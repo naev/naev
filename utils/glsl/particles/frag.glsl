@@ -582,7 +582,7 @@ vec4 chakra( vec2 uv )
 
    float d = sdEgg( uv, b );
    vec2 nuv = vec2(2.0,4.0) * uv * vec2( exp(uv.x), pow(uv.y,0.5) );
-   float n = 0.3*snoise( nuv + 3.0*vec2(u_time,u_r) );
+   float n = 0.3*snoise( uv + 3.0*vec2(u_time,u_r) );
    colour.a *= smoothstep( -0.1, 0.8, -d ) * (n+0.6);
    colour += smoothstep( -0.4, 0.7, -d );
 
@@ -991,7 +991,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    vec2 uv_rel = uv*2.0-1.0;
    uv_rel.y = -uv_rel.y;
 
-   //col_out = chakra( uv_rel );
+   col_out = chakra( uv_rel );
    //col_out = chakra_explosion( uv_rel );
    //col_out = cleansing_flames( uv_rel );
    //col_out = emp_exp( uv_rel );
@@ -1008,7 +1008,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = reaver( uv_rel );
    //col_out = eruptor( uv_rel );
    //col_out = thorn( uv_rel );
-   col_out = mote( uv_rel );
+   //col_out = mote( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }
