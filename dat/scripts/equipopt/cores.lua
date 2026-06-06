@@ -354,7 +354,7 @@ end
 eeng["Yacht"] = seng["Yacht"]
 eeng["Courier"] = seng["Courier"]
 eeng["Freighter"] = seng["Freighter"]
-
+eeng["Armoured Transport"] = seng["Armoured Transport"]
 eeng["Bulk Freighter"] = function ()
    return "Melendez Mammoth Engine"
 end
@@ -366,6 +366,35 @@ cores.elite = {
    engines = eeng,
 }
 
+--[[
+if __debugging then
+   for k,v in ipairs{
+      "Yacht",
+      "Courier",
+      "Freighter",
+      "Armoured Transport",
+      "Bulk Freighter",
+      "Scout",
+      "Interceptor",
+      "Fighter",
+      "Bomber",
+      "Corvette",
+      "Destroyer",
+      "Cruiser",
+      "Battleship",
+      "Carrier",
+   } do
+      for i,s in ipairs{
+         "systems",
+         "hulls",
+         "engines",
+      } do
+         assert( cores.standard[s][v] ~= nil, v.."-"..s.."-standard" )
+         assert( cores.elite[s][v] ~= nil, v.."-"..s.."-elite" )
+      end
+   end
+end
+--]]
 
 --[[
    SHIP-BASED EXCEPTIONS
