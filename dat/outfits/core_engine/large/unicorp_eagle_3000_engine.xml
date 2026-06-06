@@ -18,7 +18,7 @@
       {'speed', 126, 62},
       {'fuel', 2400, 400},
       {'energy_regen_malus', 18, 22},
-      {'engine_limit', 3200, 3300},
+      {'engine_limit', 3400, 3100},
    })
   </lua_inline>
  </specific>

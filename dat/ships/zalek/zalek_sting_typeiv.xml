@@ -18,14 +18,15 @@
   <utility size="medium"/>
   <utility size="medium"/>
   <structure size="medium" prop="engines" name="engines">Unicorp Falcon 700 Engine</structure>
-  <structure size="medium" prop="hull" name="hull">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
   <structure size="medium"/>
   <structure size="medium"/>
   <structure size="small"/>
   <structure size="small"/>
  </slots>
  <stats>
-  <armour_mod>-50</armour_mod>
+  <armour_mod>-30</armour_mod>
   <shield_mod>50</shield_mod>
   <shield_regen_mod>40</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
