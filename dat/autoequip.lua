@@ -21,7 +21,7 @@ function autoequip( p )
    end
 
    -- Make sure
-   if not tk.yesno(_("Autoequip Confirmation"), _("This will re-equip your current pilot, are you sure you want to continue?")) then
+   if not tk.yesno(_("Autoequip Confirmation"), _("This will re-equip your current ship, are you sure you want to continue?")) then
       return
    end
 
