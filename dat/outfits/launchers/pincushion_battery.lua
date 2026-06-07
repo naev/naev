@@ -15,7 +15,7 @@ function onshoot( p, po )
    local pos = po:mount( p )
    local vel = p:vel()
 
-   local elst = p:getEnemies( RANGE )
+   local elst = p:getEnemies( RANGE, nil, nil, false, true )
    table.insert( elst, t )
    local n = #elst
 

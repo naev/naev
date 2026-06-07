@@ -33,7 +33,7 @@ local function activate( p, po )
 
    -- TODO would be great to delay the damage by 0.5 seconds to make it fit better with sound and effects
    local pos = p:pos()
-   for k,t in ipairs(p:getEnemies( radius )) do
+   for k,t in ipairs(p:getEnemies( radius, nil, true, true, true )) do
       local norm, angle = (t:pos() - pos):polar()
       local mod = 1 - norm / radius
       local mass = math.pow( damage / 15, 2 )
