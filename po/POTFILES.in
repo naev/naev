@@ -3838,6 +3838,7 @@ dat/ships/lua/thurion.lua
 dat/ships/lua/vendetta_whiplash.lua
 dat/ships/lua/zalek.lua
 dat/ships/lua/zalek_diablo_rat.lua
+dat/ships/lua/zalek_hephaestus.lua
 dat/ships/lua/zalek_mephisto_type_v.lua
 dat/snd/music.lua
 dat/snd/music/default.lua
