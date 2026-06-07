@@ -1,3 +1,5 @@
+require "ships.lua.zalek"
+
 update_dt = 1
 
 function init( p )
