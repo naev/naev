@@ -4,7 +4,7 @@ local fmt = require "format"
 
 local damage = 100
 local penetration = 100
-local radius = 200
+local radius = 300
 local cooldown = 20
 local duration = 10
 local move_malus = 25
