@@ -577,13 +577,13 @@ const float u_r = 0.0;
 
 vec4 chakra( vec2 uv )
 {
-   const vec2 b = vec2( 0.8, 0.5 );
+   const vec2 b = vec2( 0.6, 0.3 );
    vec4 colour = vec4( 1.0, 0.8, 0.0, 1.0 );
 
    float d = sdEgg( uv, b );
    vec2 nuv = vec2(2.0,4.0) * uv * vec2( exp(uv.x), pow(uv.y,0.5) );
-   float n = 0.3*snoise( nuv + 3.0*vec2(u_time,u_r) );
-   colour.a *= smoothstep( -0.1, 0.8, -d ) * (n+0.6);
+   float n = 0.3*snoise( uv + 3.0*vec2(u_time,u_r) );
+   colour.a *= smoothstep( -0.1, 0.3, -d ) * (n+0.4);
    colour += smoothstep( -0.4, 0.7, -d );
 
    return colour;
@@ -985,6 +985,43 @@ vec4 mote( vec2 uv )
    return colour;
 }
 
+float fbm(float p, int octaveCount) {
+   float value = 0.0;
+   float amplitude = 0.5;
+   for (int i = 0; i < octaveCount; ++i) {
+      value += amplitude * cnoise(p);
+      p *= 2.0;
+      amplitude *= 0.5;
+   }
+   return value;
+}
+vec4 lightning( vec2 uv ) {
+   const vec4 COLOUR = vec4( 0.2, 0.3, 0.8, 1.0 );
+   const int OCTAVES = 7;
+   const float u_scale = 1.0;
+
+   float r = floor(u_time);
+
+   float p = uv.x*u_scale+10.0*r;
+   float f = 0.0;
+   float amplitude = 0.5;
+   for (int i = 0; i < OCTAVES; ++i) {
+      f += amplitude * cnoise(p);
+      p *= 2.0;
+      amplitude *= 0.5;
+   }
+
+   float dist = abs(uv.y + f);
+   vec4 col = COLOUR * 0.08 / dist;
+
+   col = pow(col, vec4(2.0));
+   float a = abs(uv.x);
+   if (a > 0.8)
+      col.a *= 10.0*(1.0-a);
+
+   return col;
+}
+
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
@@ -1008,7 +1045,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = reaver( uv_rel );
    //col_out = eruptor( uv_rel );
    //col_out = thorn( uv_rel );
-   col_out = mote( uv_rel );
+   //col_out = mote( uv_rel );
+   col_out = lightning( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }

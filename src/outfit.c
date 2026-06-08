@@ -10,7 +10,6 @@
  *  a fundamental part of the game.
  */
 /** @cond */
-#include "physfs.h"
 #include <math.h>
 #include <stdlib.h>
 

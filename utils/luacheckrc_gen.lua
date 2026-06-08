@@ -570,6 +570,7 @@ stds.munition = {
             clear = {},
             getAll = {},
             getInrange = {},
+            damage = {},
             pos = {},
             vel = {},
             faction = {},

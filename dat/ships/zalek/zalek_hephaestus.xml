@@ -1,5 +1,5 @@
 <ship name="Za'lek Hephaestus">
- <lua>zalek.lua</lua>
+ <lua>zalek_hephaestus.lua</lua>
  <points>300</points>
  <base_type>Hephaestus</base_type>
  <gfx sy="12" sx="12" size="171">hephaestus.gltf</gfx>
@@ -60,7 +60,6 @@
   <shield_mod>50</shield_mod>
   <shield_regen_mod>35</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
-  <fbay_capacity>50</fbay_capacity>
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
   <cpu_mod>40</cpu_mod>

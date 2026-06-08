@@ -1368,8 +1368,14 @@ static int pilotL_getVisible( lua_State *L )
  */
 static int pilotL_getInrange( lua_State *L )
 {
-   int           k;
-   const vec2   *v   = luaL_checkvector( L, 1 );
+   int         k;
+   const vec2 *v;
+   if ( lua_ispilot( L, 1 ) ) {
+      const Pilot *p = luaL_validpilot( L, 1 );
+      v              = &p->solid.pos;
+   } else {
+      v = luaL_checkvector( L, 1 );
+   }
    double        d   = luaL_checknumber( L, 2 );
    int           dis = lua_toboolean( L, 3 );
    int           x, y, r;

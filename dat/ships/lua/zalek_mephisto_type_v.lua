@@ -1,5 +1,6 @@
-local fmt = require "format"
 require "ships.lua.zalek"
+
+local fmt = require "format"
 
 local OKTYPES = {
    ["Beam Cannon"] = true,
