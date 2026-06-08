@@ -122,7 +122,6 @@ static void weapon_destroy( Weapon *w );
 static void weapon_free( Weapon *w );
 /* Hitting. */
 static int  weapon_checkCanHit( const Weapon *w, const Pilot *p );
-static void weapon_damage( Weapon *w, const Damage *dmg );
 static void weapon_hit( Weapon *w, const WeaponHit *hit );
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt );
 static void weapon_miss( Weapon *w );
@@ -1824,7 +1823,7 @@ static void weapon_miss( Weapon *w )
  *    @param w Weapon being damaged.
  *    @param dmg Damage being applied.
  */
-static void weapon_damage( Weapon *w, const Damage *dmg )
+void weapon_damage( Weapon *w, const Damage *dmg )
 {
    assert( outfit_isLauncher( w->outfit ) );
 
