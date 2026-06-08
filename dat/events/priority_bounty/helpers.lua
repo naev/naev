@@ -38,6 +38,30 @@ bhelp.ships = {
       ship.get("Empire Pacifier"),
       ship.get("Empire Hawking"),
    },
+   flf = {
+      ship.get("Tristan"),
+	  ship.get("Bedivere"),
+	  ship.get("Clydesdale"),	  
+   },   
+   dvaered = {
+      ship.get("Dvaered Vendetta"),
+      ship.get("Dvaered Ancestor"),
+      ship.get("Dvaered Phalanx"),
+     -- ship.get("Dvaered Vigilance"),
+     -- ship.get("Dvaered Retribution"),
+   },
+   sirius = {
+      ship.get("Sirius Fidelity"),
+      ship.get("Sirius Preacher"),
+      ship.get("Sirius Shaman"),
+   },
+   proteron = {
+      ship.get("Proteron Euler"),
+      ship.get("Proteron Dalton"),
+      ship.get("Proteron Hippocrates"),
+      ship.get("Proteron Gauss"),
+      ship.get("Proteron Pythagoras"),
+   },
 }
 
 function bhelp.choose_ships_from_points_and_capship( capship, shiplist, points )
