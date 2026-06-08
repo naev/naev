@@ -2325,7 +2325,7 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
       w->range_mod      = parent->stats.fwd_range * parent->stats.weapon_range;
       speed_mod *= parent->stats.fwd_speed;
    }
-   w->dam_as_dis_mod *= parent->stats.weapon_dam_as_dis - 1.;
+   w->dam_as_dis_mod += parent->stats.weapon_dam_as_dis - 1.;
    /* Clamping, but might not actually be necessary if weird things want to be
     * done. */
    w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
