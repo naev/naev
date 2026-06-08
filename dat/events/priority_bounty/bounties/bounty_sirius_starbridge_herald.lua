@@ -31,12 +31,14 @@ return {
       local saying = _("The Sirichana is dead, and the Nebula is his corpse!")
       m.taunt = saying
       m.comm_greet = saying
+      local enemies = {p}
       for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.sirius, 150 )) do
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
+         table.insert( enemies, e )
       end
-      return p
+      return enemies
    end,
    cond = bhelp.cond_bounty_points( 250 ),
 }

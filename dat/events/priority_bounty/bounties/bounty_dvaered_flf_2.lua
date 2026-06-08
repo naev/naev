@@ -28,12 +28,14 @@ return {
       local saying = _("I'm so close to finding it! And once I do, we'll have the power to crush the Dvaered and Empire alike!")
       m.taunt = saying
       m.comm_greet = saying
+      local enemies = {p}
       for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.flf, 250 )) do
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
+         table.insert( enemies, e )
       end
-      return p
+      return enemies
    end,
    cond = function ()
       return var.peek("bounty_dvaered_flf_1")

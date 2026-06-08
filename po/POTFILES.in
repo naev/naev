@@ -3110,6 +3110,12 @@ dat/events/pirate/pirate_raid_manager.lua
 dat/events/pirate/shipcheck.lua
 dat/events/poi_enter.lua
 dat/events/poi_generator.lua
+dat/events/priority_bounty/bounties/bounty_dvaered_flf_1.lua
+dat/events/priority_bounty/bounties/bounty_dvaered_flf_2.lua
+dat/events/priority_bounty/bounties/bounty_frontier_warlord_1.lua
+dat/events/priority_bounty/bounties/bounty_frontier_warlord_2.lua
+dat/events/priority_bounty/bounties/bounty_frontier_warlord_3.lua
+dat/events/priority_bounty/bounties/bounty_sirius_starbridge_herald.lua
 dat/events/priority_bounty/bounties/rainbow_goatee.lua
 dat/events/priority_bounty/bounties/renegade_executor.lua
 dat/events/priority_bounty/bounties/rogue_bounty_hunter_hellhound.lua

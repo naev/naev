@@ -4,7 +4,7 @@ local equipopt = require "equipopt"
 return {
    var            = "bounty_frontier_warlord_1",
    title          = _("Flak and Frenzy"),
-   desc           = _("Travellers entering Frontier space have been complaining of harrassment and shakedowns from a self-proclaimed 'warlord'. Capture him alive if possible."),
+   desc           = _("Travellers entering Frontier space have been complaining of harassment and shakedowns from a self-proclaimed 'warlord'. Capture him alive if possible."),
    escorts        = _("with small escort"),
    reward         = 1.6e6,
    system         = system.get("Koit"),
@@ -31,12 +31,14 @@ return {
       local saying = _("You must be one of those Frontier weaklings, too!")
       m.taunt = saying
       m.comm_greet = saying
+      local enemies = {p}
       for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.dvaered, 150 )) do
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
+         table.insert( enemies, e )
       end
-      return p
+      return enemies
    end,
    cond = bhelp.cond_bounty_points( 200 ),
 }

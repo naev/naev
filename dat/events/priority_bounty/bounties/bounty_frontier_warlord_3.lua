@@ -20,8 +20,13 @@ return {
       p:outfitAddIntrinsic("Escape Pod")
       equipopt.dvaered( p, {
          outfits_add={"Hyena Bay"},
-         prefer={["Repeating Railgun"] = 100},
-         type_range = {["Bolt Weapon"] = { max = 4 } }, } )
+         prefer={
+            ["Repeating Railgun"] = 100
+         },
+         type_range = {
+            ["Bolt Weapon"] = { max = 4 }
+         },
+      } )
       local m = p:memory()
       if not m.lootables then
          m.lootables = {}
@@ -31,12 +36,14 @@ return {
       local saying = _("Fury and vengeance, wrath and flame! I will take everything from you, as you took my nephew from me!")
       m.taunt = saying
       m.comm_greet = saying
+      local enemies = {p}
       for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.dvaered, 500 )) do
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
+         table.insert( enemies, e )
       end
-      return p
+      return enemies
    end,
    cond = function ()
       return var.peek("bounty_frontier_warlord_2")
