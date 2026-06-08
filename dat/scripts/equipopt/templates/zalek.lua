@@ -69,16 +69,16 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local zalek_cores = {
    ["Za'lek Sting"] = function (_p) return {
          systems = choose_one{ "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System" },
+         systems_secondary = choose_one{ "Milspec Aegis 2201 Core System", "Milspec Thalos 2202 Core System" },
          engines = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
-         hull = choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
+         hull = choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" },
       } end,
    ["Za'lek Demon"] = function (_p) return {
-         systems = choose_one{ "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System" },
-         systems_secondary = choose_one{ "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System" },
+         systems = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
          engines = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          engines_secondary = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          hull = choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
-         hull_secondary = "S&K Battle Plating",
+         hull_secondary = "S&K Skirmish Plating",
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
          systems = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
@@ -148,6 +148,12 @@ local function equip_zalek( p, opt_params )
    local cores = opt_params.cores
    if not cores then
       local zlkcor = zalek_cores[ sname ]
+      if not zlkcor then
+         local inherits = ps:inherits()
+         if inherits then
+            zlkcor = zalek_cores[ inherits:nameRaw() ]
+         end
+      end
       cores = ecores.get( p, { all="elite" } )
       if zlkcor then
          cores = tmerge( cores, zlkcor(p) )
