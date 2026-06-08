@@ -985,13 +985,50 @@ vec4 mote( vec2 uv )
    return colour;
 }
 
+float fbm(float p, int octaveCount) {
+   float value = 0.0;
+   float amplitude = 0.5;
+   for (int i = 0; i < octaveCount; ++i) {
+      value += amplitude * cnoise(p);
+      p *= 2.0;
+      amplitude *= 0.5;
+   }
+   return value;
+}
+vec4 lightning( vec2 uv ) {
+   const vec4 COLOUR = vec4( 0.2, 0.3, 0.8, 1.0 );
+   const int OCTAVES = 7;
+   const float u_scale = 1.0;
+
+   float r = floor(u_time);
+
+   float p = uv.x*u_scale+10.0*r;
+   float f = 0.0;
+   float amplitude = 0.5;
+   for (int i = 0; i < OCTAVES; ++i) {
+      f += amplitude * cnoise(p);
+      p *= 2.0;
+      amplitude *= 0.5;
+   }
+
+   float dist = abs(uv.y + f);
+   vec4 col = COLOUR * 0.08 / dist;
+
+   col = pow(col, vec4(2.0));
+   float a = abs(uv.x);
+   if (a > 0.8)
+      col.a *= 10.0*(1.0-a);
+
+   return col;
+}
+
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
    vec2 uv_rel = uv*2.0-1.0;
    uv_rel.y = -uv_rel.y;
 
-   col_out = chakra( uv_rel );
+   //col_out = chakra( uv_rel );
    //col_out = chakra_explosion( uv_rel );
    //col_out = cleansing_flames( uv_rel );
    //col_out = emp_exp( uv_rel );
@@ -1009,6 +1046,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = eruptor( uv_rel );
    //col_out = thorn( uv_rel );
    //col_out = mote( uv_rel );
+   col_out = lightning( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }
