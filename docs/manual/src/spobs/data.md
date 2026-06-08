@@ -11,7 +11,8 @@
             omitted, it will be auto-detected.
           * `<exterior>`: Defines the image displayed on the spob's "Landing Main" tab.
             If extension is omitted, it will be auto-detected.
-          * `<comm>`: Defines the image displayed when hailing the spob. If omitted, it will default to the spob's `<space>` graphic.
+          * `<comm>`: Defines the image displayed when hailing the spob. If omitted, it
+            will default to the spob's `<space>` graphic.
       - `<presence>`: Category relating to faction presence, used to generate patrol
         lanes within the parent system.
           * `<faction>`: Defines the spob's owning or dominant faction.
@@ -41,7 +42,8 @@
           * `<hide>`: Modifies the range at which your ship's sensors can first discover
             the spob. A value of `1` is default range; values greater than 1 make it
             easier while values between 1 and 0 make it more difficult. A spob with a
-            `hide` value of `0` is defined as a decorative object which cannot be interacted with and does not appear in the system's spob list.
+            `hide` value of `0` is defined as a decorative object which cannot be
+            interacted with and does not appear in the system's spob list.
           * `<services>`: Defines which services are available to the player while landed
             at the spob.
               - `<land>`: Includes the Landing Main tab and allows the player to land on
