@@ -16,7 +16,7 @@
  <licence>Medium Combat Vessel</licence>
  <cond>require("buyrep")("Dvaered", 50)</cond>
  <condstr>You need at least 50% reputation with House Dvaered.</condstr>
- <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry cruiser-scale armor plating, however this did necessitate shrinking some other core systems.</description>
+ <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry cruiser-scale armour plating, however this did necessitate shrinking some other core systems.</description>
  <health>
   <armour>550</armour>
  </health>
