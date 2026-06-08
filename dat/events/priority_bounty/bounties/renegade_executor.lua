@@ -31,12 +31,14 @@ The Astra Vigilis has received an exceptional order to eliminate a renegade Exec
       local saying = _("It seems like the Empire can't even do the dirty work itself.")
       m.taunt = saying
       m.comm_greet = saying
+      local enemies = {p}
       for k,s in ipairs(bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.empire, 200 )) do
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
+         table.insert( enemies, e )
       end
-      return p
+      return enemies
    end,
    cond = bhelp.cond_bounty_points( 500 ),
 }

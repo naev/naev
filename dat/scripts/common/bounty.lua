@@ -92,6 +92,7 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.deadline        = params.deadline
    b.alive_only      = params.alive_only
    b.spawnfunc       = params.spawnfunc
+   b.boardfunc       = params.boardfunc
    b.completefunc    = params.completefunc
    b.staticfaction   = params.staticfaction
    -- Custom messages (can be tables of messages from which one will be chosen)
@@ -314,8 +315,13 @@ local function _succeed ()
    hook.rm( b.land_hook )
 end
 
-function _bounty_board ()
+function _bounty_board( p )
    local b = mem._bounty
+
+   if b.boardfunc then
+      if not _G[b.boardfunc]( p ) then return end
+   end
+
    local pltc = commodity.new( b.targetname, _("A wanted individual captured alive.") )
    local t = fmt.f( b.msg_subdue[ rnd.rnd( 1, #b.msg_subdue ) ], {plt=b.targetname} )
    vntk.msg( _("Captured Alive"), t )
@@ -436,6 +442,13 @@ function spawn_bounty( params )
    target_ship = nil
    if b.spawnfunc then
       target_ship = _G[b.spawnfunc]( b, params )
+      if type(target_ship)=="table" then
+         -- TODO make it so the escorts have to be destroyed in some cases
+         for k,e in ipairs(target_ship) do
+            e:setHostile( true )
+         end
+         target_ship = target_ship[1]
+      end
    else
       for k,s in ipairs(b.targetship) do
          local p = pilot.add( s, bounty.get_faction(), params, b.targetname )

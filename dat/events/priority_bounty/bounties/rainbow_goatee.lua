@@ -29,6 +29,7 @@ return {
       m.comm_greet = saying
 
       -- So the escorts are actually all the previous goatees + the new boss
+      local enemies = {p}
       for k,s in ipairs(tmergei({
          ship.get("Pirate Zebra"),
          ship.get("Pirate Kestrel"),
@@ -42,8 +43,9 @@ return {
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
+         table.insert( enemies, e )
       end
-      return p
+      return enemies
    end,
    cond = function ()
       -- Have to defeat all the goatees first
