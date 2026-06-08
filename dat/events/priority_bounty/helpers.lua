@@ -30,6 +30,7 @@ bhelp.ships = {
       ship.get("Tristan"),
       ship.get("Vendetta"),
       ship.get("Vigilance"),
+      ship.get("Goddard"),
    },
    empire = {
       ship.get("Empire Shark"),
@@ -37,23 +38,29 @@ bhelp.ships = {
       ship.get("Empire Admonisher"),
       ship.get("Empire Pacifier"),
       ship.get("Empire Hawking"),
+      ship.get("Empire Peacemaker"),
    },
    flf = {
       ship.get("Tristan"),
-	  ship.get("Bedivere"),
-	  ship.get("Clydesdale"),	  
-   },   
+      ship.get("Vendetta"),
+      ship.get("Bedivere"),
+      ship.get("Pacifier"),
+      ship.get("Clydesdale"), -- Specially added here
+   },
    dvaered = {
       ship.get("Dvaered Vendetta"),
       ship.get("Dvaered Ancestor"),
       ship.get("Dvaered Phalanx"),
-     -- ship.get("Dvaered Vigilance"),
-     -- ship.get("Dvaered Retribution"),
+      ship.get("Dvaered Vigilance"),
+      ship.get("Dvaered Retribution"),
+      ship.get("Dvaered Goddard"),
    },
    sirius = {
       ship.get("Sirius Fidelity"),
       ship.get("Sirius Preacher"),
       ship.get("Sirius Shaman"),
+      ship.get("Sirius Dogma"),
+      ship.get("Sirius Divinity"),
    },
    proteron = {
       ship.get("Proteron Euler"),
@@ -61,6 +68,8 @@ bhelp.ships = {
       ship.get("Proteron Hippocrates"),
       ship.get("Proteron Gauss"),
       ship.get("Proteron Pythagoras"),
+      ship.get("Proteron Archimedes"),
+      ship.get("Proteron Watson"),
    },
 }
 
