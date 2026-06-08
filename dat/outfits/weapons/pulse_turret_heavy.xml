@@ -1,0 +1,34 @@
+<outfit name="Heavy Pulse Turret">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <licence>Heavy Weapon</licence>
+  <rarity>3</rarity>
+  <mass>36</mass>
+  <price>640000</price>
+  <description>The Heavy Pulse Turret is a terrifying Proteron heavy destroyer and cruiser-scale weapon, considered a more advanced refinement of the venerable Heavy Laser Turret. In Proteron fleet doctrine, cruisers and destroyers will coordinate withering hails of rapid fire from these turrets, destroying all but the largest capital ships with horrific speed.</description>
+  <gfx_store>laserturret2</gfx_store>
+  <cpu>-90</cpu> <!-- 20% more than Heavy Laser Turret -->
+ </general>
+ <specific type="turret bolt">
+  <gfx type="shader" size="10" col_size="6">particles/laser_purple.frag</gfx>
+  <sound>laser</sound>
+  <spfx_shield>Shi-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
+  <delay>0.7</delay>
+  <speed>1400</speed> <!-- 300 more than Heavy Laser Turret -->
+  <range>1850</range> <!-- 100 more than Heavy Laser Turret -->
+  <falloff>1500</falloff> <!-- 100 more than Heavy Laser Turret -->
+  <energy>36</energy> <!-- 20% less energy efficient than Heavy Laser Turret -->
+  <trackmin>2400</trackmin>
+  <trackmax>9600</trackmax>
+  <damage>
+   <type>energy</type>
+   <penetrate>155</penetrate> <!-- 25 more than Heavy Laser Turret -->
+   <physical>30</physical>
+  </damage>
+ </specific>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</outfit>

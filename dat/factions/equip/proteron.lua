@@ -1,6 +1,8 @@
 local equipopt = require 'equipopt'
 local ecargo = require 'equipopt.cargo'
 
+local intrinsic_combatreadiness = outfit.get("High Combat Readiness")
+
 -- Probability of cargo by class.
 local cargo_chance = {
    ["Yacht"]         = 0.95,
@@ -16,6 +18,7 @@ local cargo_chance = {
 --    @param p Pilot to equip
 --]]
 function equip( p )
+   p:outfitAddIntrinsic( intrinsic_combatreadiness )
    local ret = equipopt.proteron( p )
    -- Add cargo
    local cc = cargo_chance[ p:ship():class() ]

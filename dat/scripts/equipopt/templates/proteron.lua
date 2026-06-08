@@ -6,17 +6,17 @@ local eparams = require 'equipopt.params'
 local proteron_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Proteron Dalton Bay",
-   "Grave Beam", "Railgun",
-   "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
-   "Heavy Ripper Turret",
+   "Grave Beam", "Ragnarok Beam",
+   "Heavy Pulse Turret", "Hyperpulse Turret",
    -- Medium Weapons
    "Proteron Dalton Dock",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
-   "Laser Turret MK2", "Plasma Turret MK2",
+   "Medium Pulse Turret",
    -- Small Weapons
-   "Laser Turret MK1", "Laser Cannon MK1",
-   "Plasma Turret MK1", "Plasma Blaster MK1",
+   "Light Pulse Cannon", "Light Pulse Turret",
+   -- Point Defence
+   "Overwatch Pulse CIWS",   
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Hunting Combat AI", "Agility Combat AI",
