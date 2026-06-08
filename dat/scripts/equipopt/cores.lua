@@ -15,84 +15,34 @@ end
       STANDARD CORES
 --]]
 -- STANDARD SYSTEMS
+local function systems_unicorp( _secondary, size )
+   if size=="Large" then
+      return "Unicorp PT-440 Core System"
+   elseif size=="Medium" then
+      return "Unicorp PT-200 Core System"
+   else
+      return "Unicorp PT-16 Core System"
+   end
+end
 local ssys = {}
-ssys["Scout"] = function ()
-   return "Unicorp PT-16 Core System"
-end
-ssys["Interceptor"] = function ()
-   return "Unicorp PT-16 Core System"
-end
-ssys["Fighter"] = function ()
-   return "Unicorp PT-16 Core System"
-end
-ssys["Bomber"] = function ()
-   return "Unicorp PT-16 Core System"
-end
-ssys["Corvette"] = function ( _secondary, size )
-   if size=="Medium" then
-      return "Unicorp PT-200 Core System"
-   else
-      return "Unicorp PT-16 Core System"
-   end
-end
-ssys["Destroyer"] = ssys["Corvette"]
-ssys["Cruiser"] = function ( _secondary, size )
-   if size=="Large" then
-      return "Unicorp PT-440 Core System"
-   elseif size=="Medium" then
-      return "Unicorp PT-200 Core System"
-   else
-      return "Unicorp PT-16 Core System"
-   end
-end
-ssys["Battleship"] = ssys["Cruiser"]
-ssys["Carrier"] = ssys["Cruiser"]
+ssys["Scout"]     = systems_unicorp
+ssys["Interceptor"] = systems_unicorp
+ssys["Fighter"]   = systems_unicorp
+ssys["Bomber"]    = systems_unicorp
+ssys["Corvette"]  = systems_unicorp
+ssys["Destroyer"] = systems_unicorp
+ssys["Cruiser"]   = systems_unicorp
+ssys["Battleship"] = systems_unicorp
+ssys["Carrier"]   = systems_unicorp
 -- Civilian
-ssys["Yacht"] = function ()
-   return "Unicorp PT-16 Core System"
-end
-ssys["Courier"] = ssys["Yacht"]
-ssys["Freighter"] = function ( _secondary, size )
-   if size=="Medium" then
-      return "Unicorp PT-200 Core System"
-   else
-      return "Unicorp PT-16 Core System"
-   end
-end
-ssys["Armoured Transport"] = ssys["Freighter"]
-ssys["Bulk Freighter"] = function ( _secondary, size )
-   if size=="Large" then
-      return "Unicorp PT-440 Core System"
-   elseif size=="Medium" then
-      return "Unicorp PT-200 Core System"
-   else
-      return "Unicorp PT-16 Core System"
-   end
-end
+ssys["Yacht"]     = systems_unicorp
+ssys["Courier"]   = systems_unicorp
+ssys["Freighter"] = systems_unicorp
+ssys["Armoured Transport"] = systems_unicorp
+ssys["Bulk Freighter"] = systems_unicorp
 
 -- STANDARD HULLS
-local shul = {}
-shul["Scout"] = function ()
-   return "Unicorp D-2 Light Plating"
-end
-shul["Interceptor"] = function ()
-   return "Unicorp D-2 Light Plating"
-end
-shul["Fighter"] = function ()
-   return "Unicorp D-2 Light Plating"
-end
-shul["Bomber"] = function ()
-   return "Unicorp D-2 Light Plating"
-end
-shul["Corvette"] = function ( _secondary, size )
-   if size=="Medium" then
-      return "Unicorp D-23 Medium Plating"
-   else
-      return "Unicorp D-2 Light Plating"
-   end
-end
-shul["Destroyer"] = shul["Corvette"]
-shul["Cruiser"] = function ( _secondary, size )
+local function hulls_unicorp( _secondary, size )
    if size=="Large" then
       return "Unicorp D-58 Heavy Plating"
    elseif size=="Medium" then
@@ -101,22 +51,7 @@ shul["Cruiser"] = function ( _secondary, size )
       return "Unicorp D-2 Light Plating"
    end
 end
-shul["Battleship"] = shul["Cruiser"]
-shul["Carrier"] = shul["Cruiser"]
--- Civilian
-shul["Yacht"] = function ()
-   return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
-end
-shul["Courier"] = shul["Yacht"]
-shul["Freighter"] = function ( _secondary, size )
-   if size=="Medium" then
-      return choose_one{ "Unicorp D-23 Medium Plating", "S&K Medium Cargo Hull" }
-   else
-      return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
-   end
-end
-shul["Armoured Transport"] = shul["Freighter"]
-shul["Bulk Freighter"] = function ( _secondary, size )
+local function hulls_unicorp_cargo( _secondary, size )
    if size=="Large" then
       return choose_one{ "Unicorp D-58 Heavy Plating", "S&K Large Cargo Hull" }
    elseif size=="Medium" then
@@ -125,49 +60,57 @@ shul["Bulk Freighter"] = function ( _secondary, size )
       return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
    end
 end
+local shul = {}
+shul["Scout"]        = hulls_unicorp
+shul["Interceptor"]  = hulls_unicorp
+shul["Fighter"]      = hulls_unicorp
+shul["Bomber"]       = hulls_unicorp
+shul["Corvette"]     = hulls_unicorp
+shul["Destroyer"]    = hulls_unicorp
+shul["Cruiser"]      = hulls_unicorp
+shul["Battleship"]   = hulls_unicorp
+shul["Carrier"]      = hulls_unicorp
+-- Civilian
+shul["Yacht"]        = hulls_unicorp_cargo
+shul["Courier"]      = hulls_unicorp_cargo
+shul["Freighter"]    = hulls_unicorp_cargo
+shul["Armoured Transport"] = hulls_unicorp_cargo
+shul["Bulk Freighter"] = hulls_unicorp_cargo
 
 -- STANDARD ENGINES
+local function engines_unicorp( _secondary, size )
+   if size=="Large" then
+      return "Unicorp Eagle 3000 Engine"
+   elseif size=="Medium" then
+      return "Unicorp Falcon 700 Engine"
+   else
+      return "Unicorp Hawk 160 Engine"
+   end
+end
+local function engines_unicorp_melendez( _secondary, size )
+   if size=="Large" then
+      return choose_one{ "Unicorp Eagle 3000 Engine", "Melendez Mammoth Engine" }
+   elseif size=="Medium" then
+      return choose_one{ "Unicorp Falcon 700 Engine", "Melendez Buffalo Engine" }
+   else
+      return choose_one{ "Unicorp Hawk 160 Engine", "Melendez Ox Engine" }
+   end
+end
 local seng = {}
-seng["Scout"] = function ()
-   return "Unicorp Hawk 160 Engine"
-end
-seng["Interceptor"] = function ()
-   return "Unicorp Hawk 160 Engine"
-end
-seng["Fighter"] = function ()
-   return "Unicorp Hawk 160 Engine"
-end
-seng["Bomber"] = function ()
-   return "Unicorp Hawk 160 Engine"
-end
-seng["Corvette"] = function ()
-   return "Unicorp Falcon 700 Engine"
-end
-seng["Destroyer"] = function ()
-   return "Unicorp Falcon 700 Engine"
-end
-seng["Cruiser"] = function ()
-   return "Unicorp Eagle 3000 Engine"
-end
-seng["Battleship"] = function ()
-   return "Unicorp Eagle 3000 Engine"
-end
-seng["Carrier"] = function ()
-   return "Unicorp Eagle 3000 Engine"
-end
-seng["Yacht"] = function ()
-   return "Unicorp Hawk 160 Engine"
-end
-seng["Courier"] = function ()
-   return "Unicorp Hawk 160 Engine"
-end
-seng["Freighter"] = function ()
-   return choose_one{ "Unicorp Falcon 700 Engine", "Melendez Buffalo Engine" }
-end
-seng["Armoured Transport"] = seng["Freighter"]
-seng["Bulk Freighter"] = function ()
-   return choose_one{ "Unicorp Eagle 3000 Engine", "Melendez Mammoth Engine" }
-end
+seng["Scout"]        = engines_unicorp
+seng["Interceptor"]  = engines_unicorp
+seng["Fighter"]      = engines_unicorp
+seng["Bomber"]       = engines_unicorp
+seng["Corvette"]     = engines_unicorp
+seng["Destroyer"]    = engines_unicorp
+seng["Cruiser"]      = engines_unicorp
+seng["Battleship"]   = engines_unicorp
+seng["Carrier"]      = engines_unicorp
+seng["Yacht"]        = engines_unicorp
+seng["Courier"]      = engines_unicorp_melendez
+seng["Freighter"]    = engines_unicorp_melendez
+seng["Armoured Transport"] = engines_unicorp_melendez
+seng["Bulk Freighter"] = engines_unicorp_melendez
 
 -- STANDARD SETS
 cores.standard = {
@@ -179,29 +122,7 @@ cores.standard = {
 --[[
       ELITE CORES
 --]]
--- ELITE SYSTEMS
-local esys = {}
-esys["Scout"] = function ()
-   return "Milspec Orion 2301 Core System"
-end
-esys["Interceptor"] = function ()
-   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Thalos 2202 Core System", "Milspec Prometheus 2203 Core System" }
-end
-esys["Fighter"] = function ()
-   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Thalos 2202 Core System", "Milspec Prometheus 2203 Core System" }
-end
-esys["Bomber"] = function ()
-   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System" }
-end
-esys["Corvette"] = function ( _secondary, size )
-   if size=="Medium" then
-      return choose_one{ "Milspec Orion 4801 Core System", "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System", "Milspec Prometheus 4703 Core System" }
-   else
-      return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Thalos 2202 Core System", "Milspec Prometheus 2203 Core System" }
-   end
-end
-esys["Destroyer"] = esys["Corvette"]
-esys["Cruiser"] = function ( _secondary, size )
+local function systems_all_elite( _secondary, size )
    if size=="Large" then
       return choose_one{ "Milspec Orion 8601 Core System", "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System", "Milspec Prometheus 8503 Core System" }
    elseif size=="Medium" then
@@ -210,20 +131,7 @@ esys["Cruiser"] = function ( _secondary, size )
       return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Thalos 2202 Core System", "Milspec Prometheus 2203 Core System" }
    end
 end
-esys["Battleship"] = esys["Cruiser"]
-esys["Carrier"] = esys["Cruiser"]
--- Civilian
-esys["Yacht"] = ssys["Yacht"]
-esys["Courier"] = ssys["Courier"]
-esys["Freighter"] = ssys["Freighter"]
-esys["Armoured Transport"] = function ( _secondary, size )
-   if size=="Medium" then
-      return choose_one{ "Milspec Orion 4801 Core System", "Milspec Aegis 4701 Core System", "Milspec Prometheus 4703 Core System" }
-   else
-      return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Prometheus 2203 Core System" }
-   end
-end
-esys["Bulk Freighter"] = function ( _secondary, size )
+local function systems_all_but_thalos_elite( _secondary, size )
    if size=="Large" then
       return choose_one{ "Milspec Orion 8601 Core System", "Milspec Aegis 8501 Core System", "Milspec Prometheus 8503 Core System" }
    elseif size=="Medium" then
@@ -232,38 +140,39 @@ esys["Bulk Freighter"] = function ( _secondary, size )
       return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Prometheus 2203 Core System" }
    end
 end
+-- ELITE SYSTEMS
+local esys = {}
+esys["Scout"] = function ()
+   return "Milspec Orion 2301 Core System"
+end
+esys["Interceptor"]  = systems_all_elite
+esys["Fighter"]      = systems_all_elite
+esys["Bomber"] = function ()
+   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System" }
+end
+esys["Corvette"]     = systems_all_elite
+esys["Destroyer"]    = systems_all_elite
+esys["Cruiser"]      = systems_all_elite
+esys["Battleship"]   = systems_all_elite
+esys["Carrier"]      = systems_all_elite -- TODO prefer Thalos?
+-- Civilian
+esys["Yacht"]        = systems_all_but_thalos_elite
+esys["Courier"]      = systems_all_but_thalos_elite
+esys["Freighter"]    = systems_all_but_thalos_elite
+esys["Armoured Transport"] = systems_all_but_thalos_elite
+esys["Bulk Freighter"] = systems_all_but_thalos_elite
 
 -- ELITE HULLS
-local ehul = {}
-ehul["Scout"] = function ()
-   return choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" }
-end
-ehul["Interceptor"] = function ()
-   return choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" }
-end
-ehul["Fighter"] = function (flag)
-   if flag then
-      return "S&K Skirmish Plating"
-   else
-      return choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" }
-   end
-end
-ehul["Bomber"] = ehul["Fighter"]
-ehul["Corvette"] = function ( _secondary, size )
-   if size=="Medium" then
+local function hulls_sk_nexus( _secondary, size )
+   if size=="Large" then
+      return choose_one{ "Nexus Phantasm Weave", "S&K War Plating" }
+   elseif size=="Medium" then
       return choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" }
    else
       return choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" }
    end
 end
-ehul["Destroyer"] = function ( _secondary, size )
-   if size=="Medium" then
-      return "S&K Battle Plating"
-   else
-      return "S&K Skirmish Plating"
-   end
-end
-ehul["Cruiser"] = function ( _secondary, size )
+local function hulls_sk( _secondary, size )
    if size=="Large" then
       return "S&K War Plating"
    elseif size=="Medium" then
@@ -272,56 +181,54 @@ ehul["Cruiser"] = function ( _secondary, size )
       return "S&K Skirmish Plating"
    end
 end
-ehul["Battleship"] = ehul["Cruiser"]
-ehul["Carrier"] = ehul["Cruiser"]
--- Civilian
-ehul["Yacht"] = function ()
-   return choose_one{ "Red Star Small Cargo Hull", "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
-end
-ehul["Courier"] = ehul["Yacht"]
-ehul["Freighter"] = function ( _secondary, size )
-   if size=="Medium" then
-      return choose_one{ "Red Star Medium Cargo Hull", "Unicorp D-23 Medium Plating", "S&K Medium Cargo Hull" }
+local function hulls_nexus_rs_cargo( _secondary, size )
+   if size=="Large" then
+      return choose_one{ "Nexus Phantasm Weave", "Red Star Large Cargo Hull", "S&K Large Cargo Hull" }
+   elseif size=="Medium" then
+      return choose_one{ "Nexus Ghost Weave", "Red Star Medium Cargo Hull", "S&K Medium Cargo Hull" }
    else
-      return choose_one{ "Red Star Small Cargo Hull", "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
+      return choose_one{ "Nexus Shadow Weave", "Red Star Small Cargo Hull", "S&K Small Cargo Hull" }
    end
 end
+local ehul = {}
+ehul["Scout"]        = hulls_sk_nexus
+ehul["Interceptor"]  = hulls_sk_nexus
+ehul["Fighter"]      = function ( secondary, size )
+   if secondary then
+      return hulls_sk( secondary, size )
+   else
+      return hulls_sk_nexus( secondary, size )
+   end
+end
+ehul["Bomber"]       = ehul["Fighter"]
+ehul["Corvette"]     = hulls_sk_nexus
+ehul["Destroyer"]    = hulls_sk
+ehul["Cruiser"]      = hulls_sk
+ehul["Battleship"]   = hulls_sk
+ehul["Carrier"]      = hulls_sk
+-- Civilian
+ehul["Yacht"]        = hulls_nexus_rs_cargo
+ehul["Courier"]      = hulls_nexus_rs_cargo
+ehul["Freighter"]    = hulls_nexus_rs_cargo
 ehul["Armoured Transport"] = function ( secondary, size )
    if secondary then
-      if size=="Medium" then
-         return choose_one{ "Unicorp D-23 Medium Plating", "Red Star Medium Cargo Hull" }
-      else
-         return choose_one{ "Unicorp D-2 Light Plating", "Red Star Small Cargo Hull" }
-      end
+      return hulls_sk( secondary, size )
    else
-      if size=="Medium" then
-         return choose_one{ "Unicorp D-23 Medium Plating", "Nexus Ghost Weave" }
-      else
-         return choose_one{ "Unicorp D-2 Light Plating", "Nexus Shadow Weave" }
-      end
+      return hulls_nexus_rs_cargo( secondary, size )
    end
 end
-ehul["Bulk Freighter"] = function ( secondary, size )
-   if secondary then
-      if size=="Large" then
-         return choose_one{ "Red Star Large Cargo Hull", "Unicorp D-58 Heavy Plating" }
-      elseif size=="Medium" then
-         return choose_one{ "Red Star Medium Cargo Hull", "Unicorp D-23 Medium Plating" }
-      else
-         return choose_one{ "Red Star Small Cargo Hull", "Unicorp D-2 Light Plating" }
-      end
-   else
-      if size=="Large" then
-         return choose_one{ "Red Star Large Cargo Hull", "S&K Medium Cargo Hull" }
-      elseif size=="Medium" then
-         return choose_one{ "Red Star Medium Cargo Hull", "S&K Medium Cargo Hull" }
-      else
-         return choose_one{ "Red Star Small Cargo Hull", "S&K Small Cargo Hull" }
-      end
-   end
-end
+ehul["Bulk Freighter"] = hulls_nexus_rs_cargo
 
 -- ELITE ENGINES
+local function engines_melendez( _secondary, size )
+   if size=="Large" then
+      return "Melendez Mammoth Engine"
+   elseif size=="Medium" then
+      return "Melendez Buffalo Engine"
+   else
+      return "Melendez Ox Engine"
+   end
+end
 local eeng = {}
 eeng["Scout"] = function ()
    return "Tricon Zephyr Engine"
@@ -329,7 +236,6 @@ end
 eeng["Interceptor"] = function ()
    return "Tricon Zephyr Engine"
 end
-
 eeng["Fighter"] = function ()
    return choose_one{ "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
 end
@@ -348,16 +254,12 @@ end
 eeng["Battleship"] = function ()
    return choose_one{ "Tricon Typhoon Engine", "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine" }
 end
-eeng["Carrier"] = function ()
-   return "Melendez Mammoth Engine"
-end
-eeng["Yacht"] = seng["Yacht"]
-eeng["Courier"] = seng["Courier"]
-eeng["Freighter"] = seng["Freighter"]
-eeng["Armoured Transport"] = seng["Armoured Transport"]
-eeng["Bulk Freighter"] = function ()
-   return "Melendez Mammoth Engine"
-end
+eeng["Carrier"]   = engines_melendez
+eeng["Yacht"]     = engines_melendez
+eeng["Courier"]   = engines_melendez
+eeng["Freighter"] = engines_melendez
+eeng["Armoured Transport"] = engines_melendez
+eeng["Bulk Freighter"] = engines_melendez
 
 -- ELITE SETS
 cores.elite = {
@@ -524,7 +426,7 @@ function cores.get( p, params )
       local ct = cores[ engines ].engines
       local co = ct[ shipname ] or ct[ shipclass ]
       -- Implicit assumption engines always match size
-      c["engines"] = co()
+      c["engines"] = co(false,slotinfo.engines)
       if slotinfo.engines_secondary then
          c["engines_secondary"] = c["engines"]
       end
