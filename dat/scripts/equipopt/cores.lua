@@ -386,17 +386,17 @@ function cores.get( p, params )
          local slotinfo = {}
          for i,v in ipairs(slots) do
             if v.property == "systems" then
-               slotinfo.systems = slots.size
+               slotinfo.systems = v.size
             elseif v.property == "engines" then
-               slotinfo.engines = slots.size
+               slotinfo.engines = v.size
             elseif v.property == "hull" then
-               slotinfo.hull = slots.size
+               slotinfo.hull = v.size
             elseif v.property == "systems_secondary" then
-               slotinfo.systems_secondary = slots.size
+               slotinfo.systems_secondary = v.size
             elseif v.property == "engines_secondary" then
-               slotinfo.engines_secondary = slots.size
+               slotinfo.engines_secondary = v.size
             elseif v.property == "hull_secondary" then
-               slotinfo.hull_secondary = slots.size
+               slotinfo.hull_secondary = v.size
             end
          end
          nc.equipopt_slots[ ks:nameRaw() ] = slotinfo
