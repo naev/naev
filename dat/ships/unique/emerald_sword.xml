@@ -12,9 +12,9 @@
  <time_mod>1.3</time_mod>
  <fabricator>Unknown</fabricator>
  <faction>Independent</faction>
- <description>An ancient warship that was crewed by mutineers that fled from their civil war and escaped into interstellar space. Found orbiting a disconnected star, this is an impressively large ship. The ship's main weapon is a fusion-pumped gamma-ray laser called the 'Dragonflame Cannon.' Despite the relatively primitive outfits, it's still a very capable war machine due to its size.</description>
+ <description>This warship is clearly ancient, far predating the Incident. The battleship itself is constructed around a built-in spinal fusion-pumped gamma-ray laser - simple in theory, but utilizing immense energy to terrifying effect. Despite the relatively primitive nature of this weapon, it is a robust and powerful technology, and as a result the Emerald Sword remains a devastatingly powerful warship to this day. One can only wonder from what ancient tomb world, mothballed Imperial project, or museum within the Nebula it was recovered from.</description>
  <health>
-  <armour>1500</armour>
+  <armour>1800</armour>
  </health>
  <characteristics>
   <crew>52</crew>
@@ -27,9 +27,8 @@
   <weapon exclusive="1" prop="fighter_bay" size="large">Black Diamond Bay</weapon>
   <weapon size="large"/>
   <weapon size="large"/>
-  <!--<weapon size="large"/>-->
-  <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems" name="systems" size="large">Milspec Prometheus 8503 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="large">Milspec Prometheus 8503 Core System</utility>
   <utility prop="accessory" name="accessory" size="large"/>
   <utility size="large"/>
   <utility size="large"/>
@@ -44,14 +43,16 @@
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>
+  <structure size="large"/>
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
+  <cpu_mod>-55</cpu_mod> <!-- Outdated technology. Limits expensive weapon options in the two open weapon slots unless you install Thalos cores. (2 Thalos leaves you with 704 CPU, just enough for 2 350 CPU weapons.) -->
   <turn_mod>10</turn_mod>
-  <armour_mod>30</armour_mod>
-  <shield_mod>-30</shield_mod>
+  <armour_mod>20</armour_mod>
+  <shield_mod>-50</shield_mod> <!-- Outdated technology, very low total shield capacity. -->
   <weapon_damage>20</weapon_damage>
-  <fbay_capacity>100</fbay_capacity>
+  <nebu_absorb>15</nebu_absorb> <!-- Refurbished covertly by the Thurion for the FLF when recovering the Emerald Sword. Helps it persist better in the Arandon boss battle. -->
+  <fbay_capacity>100</fbay_capacity> <!-- Ship has reduced weapon slots. Only one fighter bay, but this lets it count it as two. -->
   <misc_instant_jump>1</misc_instant_jump>
  </stats>
  <tags>

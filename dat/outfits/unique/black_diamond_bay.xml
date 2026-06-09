@@ -1,11 +1,13 @@
 <outfit name="Black Diamond Bay">
  <general>
+  <rarity>6</rarity>
+  <unique/>
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
   <mass>145</mass>
   <price>1530000</price>
   <gfx_store>blackdiamond_bay</gfx_store>
-  <description>TODO</description>
+  <description>This fully-automated bay contains unique and strangely ancient machinery dedicated to the repair, rearming, and maintenance of a squadron of Black Diamond fighter-bomber drones.</description>
   <cpu>-555</cpu>
  </general>
  <specific type="fighter bay">
