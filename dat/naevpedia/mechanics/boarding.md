@@ -19,7 +19,7 @@ Looting anything from a ship will lower your reputation with the faction to whic
 This may also make nearby ships angry if they dislike your action.
 
 The amount of loot available is determined by your **Boarding Bonus** modifier.
-Higher values will allow you to obtain more loot from the ships you board.
+Higher values will allow you to obtain more loot from the ships you board, such as more credits, fuel, cargo, and outfits.
 
 ## Stealing Outfits
 
