@@ -24,7 +24,7 @@ function create ()
 
    local prefix = (sb.payingfaction and require("common.prefix").prefix(sb.payingfaction)) or ""
    local title = prefix..fmt.f(_("Priority Bounty: {title}"), {title=sb.title})
-   local desc = sb.desc.."\n"..fmt.f( [[
+   local desc = sb.desc.."\n\n"..fmt.f( [[
 #nTarget:#0 {pilotname} ({shipclass}-class ship {escorts})
 #nWanted:#0 {wanted}
 #nLast seen:#0 {system} system]], {
