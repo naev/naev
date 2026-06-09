@@ -14,7 +14,7 @@
   <cpu>-420</cpu>
  </general>
  <specific type="fighter bay">
-  <delay>5</delay>
+  <delay>3</delay> <!-- Lower delay than other bays because Daltons are containerized for rapid launch. -->
   <reload_time>240</reload_time>
   <amount>4</amount>
   <ship>Proteron Dalton</ship>
