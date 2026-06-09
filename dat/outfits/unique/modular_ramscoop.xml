@@ -1,0 +1,16 @@
+<outfit name="Modular Ramscoop">
+ <general>
+  <typename>Fuel Modifier</typename>
+  <slot>structure</slot>
+  <size>medium</size>
+  <rarity>6</rarity>
+  <unique/>  
+  <mass>5</mass>
+  <price>800000</price>
+  <description>This sail-like structural array is a prototype modular ramscoop. It is capable of passively harvesting small amounts of hyperspace fuel from stellar wind, even in star systems with low levels of charged particles and radiation.</description>
+  <gfx_store>compact_lightsail</gfx_store>
+ </general>
+ <specific type="modification">
+  <fuel_regen>1</fuel_regen>
+ </specific>
+</outfit>
