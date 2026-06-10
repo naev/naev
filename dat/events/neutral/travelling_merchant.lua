@@ -242,6 +242,11 @@ function gen_outfits ()
       if player.fleetCapacity() > 0 then
          table.insert( outfits, "Squadron Synchronizer Module" )
       end
+	  
+      -- If player has defeated the Emerald Sword, offer the Black Diamond Bay in case they missed it (Shame about the Emerald Sword though.)
+      if var.peek("bounty_dvaered_flf_3") then
+         table.insert( outfits, "Black Diamond Bay" )
+      end
    end
 
    -- Other special cases

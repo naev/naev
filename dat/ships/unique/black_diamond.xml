@@ -12,15 +12,16 @@
  <time_mod>0.9</time_mod>
  <fabricator>Unknown</fabricator>
  <faction>Independent</faction>
- <description>The Black Diamond is an autonomous fighter. The hardware that controls this isn't much more complex than House Za'lek combat drones, but it is bigger, and the lack of life support systems and amenities for a pilot allows it to carry extra outfitting space.</description>
+ <description>The Black Diamond is an autonomous fighter-bomber. The hardware that controls this isn't much more complex than House Za'lek combat drones, but it is bigger, and the lack of life support systems and amenities for a pilot allows it to carry extra outfitting space.</description>
  <health>
   <armour>60</armour>
+  <armour_regen>3</armour_regen>  
  </health>
  <characteristics>
-  <crew>4</crew>
+  <crew>1</crew>
   <mass>80</mass>
   <fuel_consumption>100</fuel_consumption>
-  <cargo>15</cargo>
+  <cargo>0</cargo>
  </characteristics>
  <slots>
   <weapon y="0" h="-2" size="medium" x="-3"/>
@@ -29,7 +30,7 @@
   <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" name="accessory" size="small"/>
-  <utility size="small"/>
+  <utility size="medium"/>
   <utility size="small"/>
   <utility size="small"/>
   <structure prop="engines" name="engines" size="small">Unicorp Hawk 160 Engine</structure>
@@ -42,8 +43,12 @@
   <structure size="small"/>
  </slots>
  <stats>
-  <shield_mod>10</shield_mod>
-  <shield_regen_mod>15</shield_regen_mod>
+  <armour_mod>10</armour_mod>
+  <ammo_capacity>25</ammo_capacity>
+  <launch_reload>20</launch_reload>  
+  <cargo_mod>-100</cargo_mod>
+  <nebu_absorb>15</nebu_absorb> <!-- Altered by the Thurion for the FLF when recovering the Emerald Sword. Helps it not implode immediately in Emerald Sword Arandon boss battle. -->
  </stats>
- <tags/>
+ <tags>
+ </tags>
 </ship>

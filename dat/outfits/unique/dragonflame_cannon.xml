@@ -6,25 +6,26 @@
   <rarity>6</rarity>
   <mass>0</mass>
   <price>1510000</price>
-  <description>An ancient superweapon is simple in concept, but the cost involved in developing something like it is exorbitant. It's hard to envision what could have motivated the creation of such a thing. It uses an obscene amount of energy to trigger an extremely powerful thermonuclear reaction, directing most of the energy from the resulting explosion forwards in a devastatingly powerful beam of gamma radiation.</description>
+  <description>"Built into the spinal structure of the Emerald Sword, one can only imagine what terrible hatred could have motivated the creation of a weapon on such scale. Firing it consumes a vast amount of energy in an instant in order to spark a thermonuclear reaction, directing most of the energy from the resulting explosion forwards in a devastatingly powerful beam of gamma radiation.</description>
   <gfx_store>dragonflame_cannon</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="beam">
-  <delay min="15">15</delay>
+  <delay min="8">8</delay>
   <duration>0.3</duration>
-  <range>800</range>
+  <range>2000</range> <!-- This weapon is from Endless Sky, in which it is extremely long ranged. It needs range to offset the almost nil swivel and slow turn rate of a battleship. However, we're keeping it a little below the range of battleship-size 350 CPU weapons. -->
   <energy>3400</energy>
   <swivel>5</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>200</penetrate>
+   <penetrate>250</penetrate>
    <physical>5000</physical>
+   <disable>1000</disable>
   </damage>
   <spfx_shield>Shi-M</spfx_shield>
   <spfx_armour>Exp-M</spfx_armour>
   <sound>beam0</sound>
   <sound_off>beam_off0</sound_off>
-  <shader r="1.0" g="0.3" b="0.3" a="1." width="20.">helix</shader>
+  <shader r="0.8" g="0.9" b="1.0" a="1.0" width="10.0">fuzzy</shader>
  </specific>
 </outfit>
