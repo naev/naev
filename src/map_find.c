@@ -11,7 +11,6 @@
 
 #include "array.h"
 #include "dialogue.h"
-#include "log.h"
 #include "map.h"
 #include "nstring.h"
 #include "player.h"
@@ -206,7 +205,8 @@ static void map_findDisplayResult( unsigned int wid_map_find, map_find_t *found,
 
    /* Create window. */
    wid_results =
-      window_create( "wdwFindResult", _( "Search Results" ), -1, -1, 500, 452 );
+      window_create( "wdwFindResult", _( "Search Results" ),
+                     ( gl_screen.nw - 500 ) * 0.5 + 300., -1, 500, 452 );
    window_setParent( wid_results, wid_map_find );
    window_setAccept( wid_results, map_findDisplayMark );
    window_setCancel( wid_results, window_close );
@@ -998,7 +998,8 @@ void map_inputFind( unsigned int parent, const char *str )
    /* Create the window. */
    w            = 400;
    h            = 220;
-   wid_map_find = window_create( "wdwFind", _( "Find…" ), -1, -1, w, h );
+   wid_map_find = window_create( "wdwFind", _( "Find…" ),
+                                 ( gl_screen.nw - 400 ) * 0.5 + 300, -1, w, h );
    window_setAccept( wid_map_find, map_findSearch );
    window_setCancel( wid_map_find, window_close );
    window_setParent( wid_map_find, parent );
