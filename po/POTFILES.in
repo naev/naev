@@ -105,6 +105,7 @@ dat/factions/dummy.xml
 dat/factions/dvaered.xml
 dat/factions/empire.xml
 dat/factions/flf.xml
+dat/factions/free_trader.xml
 dat/factions/frontier.xml
 dat/factions/goddard.xml
 dat/factions/independent.xml
@@ -3180,6 +3181,8 @@ dat/factions/spawn/empire.lua
 dat/factions/spawn/empire/default.lua
 dat/factions/spawn/flf.lua
 dat/factions/spawn/flf/default.lua
+dat/factions/spawn/free_trader.lua
+dat/factions/spawn/free_trader/default.lua
 dat/factions/spawn/frontier.lua
 dat/factions/spawn/frontier/default.lua
 dat/factions/spawn/goddard.lua
@@ -3677,6 +3680,7 @@ dat/scripts/equipopt/params.lua
 dat/scripts/equipopt/templates/black_lotus.lua
 dat/scripts/equipopt/templates/dvaered.lua
 dat/scripts/equipopt/templates/empire.lua
+dat/scripts/equipopt/templates/free_trader.lua
 dat/scripts/equipopt/templates/generic.lua
 dat/scripts/equipopt/templates/lost.lua
 dat/scripts/equipopt/templates/miner.lua

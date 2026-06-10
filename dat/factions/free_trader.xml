@@ -1,0 +1,38 @@
+<faction name="Free Trader">
+ <mapname>Independent</mapname>
+ <ai>trader</ai>
+ <static/>
+ <invisible/>
+ <known/>
+ <player>0</player>
+ <standing>static</standing>
+ <spawn>free_trader</spawn>
+ <equip>free_trader</equip>
+ <allies/>
+ <enemies/>
+ <neutrals>
+  <neutral>Independent</neutral>
+  <neutral>Miner</neutral>
+  <neutral>Traders Society</neutral>
+  <neutral>Empire</neutral>
+  <neutral>Dvaered</neutral>
+  <neutral>Za'lek</neutral>
+  <neutral>Soromid</neutral>
+  <neutral>Sirius</neutral>
+  <neutral>Thurion</neutral>
+  <neutral>O'rez</neutral>
+  <neutral>Trader</neutral>
+  <neutral>Yetmer</neutral>
+  <neutral>Frontier</neutral>
+  <neutral>Mercenary</neutral>
+  <neutral>Pirate</neutral>
+  <neutral>Marauder</neutral>
+  <neutral>Dreamer Clan</neutral>
+  <neutral>Raven Clan</neutral>
+  <neutral>Wild Ones</neutral>
+  <neutral>Black Lotus</neutral>
+ </neutrals>
+ <tags>
+  <tag>generic</tag>
+ </tags>
+</faction>
