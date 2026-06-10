@@ -16,12 +16,21 @@ return {
    ships          = { ship.get("Dvaered Retribution") },
    spawnfunc      = function( b, params )
       local fct = bounty.get_faction()
-      local p = pilot.add( b.targetship[1], fct, params, b.targetname, { naked = true } )
+      local p = pilot.add( b.targetship[1], fct, params, b.targetname, {ai="baddie_norun", naked = true } )
       p:outfitAddIntrinsic("Escape Pod")
       equipopt.dvaered( p, {
-         outfits_add={"Flak Gun", "Hyena Bay"},
-         prefer={["Flak Gun"] = 100},
-         type_range = {["Bolt Weapon"] = { max = 4 } }, } )
+         outfits_add = {
+			 "Flak Gun"
+		 },
+         prefer = {
+			["Flak Gun"] = 100,
+			["Super-Fast Collider Launcher"] = 100
+		 },
+         type_range = {
+			["Bolt Weapon"] = { min = 4 },
+			["Launcher"] = { max = 2 },
+		 },
+	  } )
       local m = p:memory()
       if not m.lootables then
          m.lootables = {}

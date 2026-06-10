@@ -16,7 +16,7 @@ return {
    ships          = { ship.get("Thurion Apprehension") },
    spawnfunc      = function( b, params )
       local fct = bounty.get_faction()
-      local p = pilot.add( b.targetship[1], fct, params, b.targetname, { naked = true } )
+      local p = pilot.add( b.targetship[1], fct, params, b.targetname, {ai="baddie_norun", naked = true } )
       equipopt.thurion( p )
       p:outfitAddIntrinsic("Escape Pod")
       local m = p:memory()
