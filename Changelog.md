@@ -50,10 +50,11 @@
 
    * 8+ new missions
        - Bounty hunting has been reworked with new missions
+       - 11 new priority bounties
    * 8 new events
        - Pirates will raid systems
-   * 2 new ships
-   * 8 new outfits
+   * 4 new ships
+   * 11 new outfits
    * 1 new ship variant
    * Many more unique pilots
    * Made NGC-11718 a bit more interesting
@@ -125,6 +126,7 @@
    * Escort drones give drone-ish messages
    * Fixed number of bribeable pilots changing
    * Fixed local maps thresholding hide the wrong way
+   * Map find dialogue no longer covers centre of interest
 
 
 ## v0.13.5 (unreleased)
