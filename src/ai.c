@@ -2038,7 +2038,7 @@ static int aiL_careful_face( lua_State *L )
  * time-of-flight
  *
  *    @luatparam Pilot|Asteroid target The pilot to aim at
- *    @luatreturn number The offset from the target aiming position (in
+ *    @luatreturn number The absolute offset from the target aiming position (in
  * radians).
  * @luafunc aim
  */
