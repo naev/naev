@@ -22,6 +22,7 @@
   <amount>4</amount> <!-- 20% less than Imperator launcher -->
   <ammo_mass>6</ammo_mass> <!-- 20% more than Imperator launcher -->
   <gfx>imperator</gfx>
+  <lua>outfits/launchers/proteron_agamemnon_launcher.lua</lua>  
   <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>Exp-L</spfx_shield>
