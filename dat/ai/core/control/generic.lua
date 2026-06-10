@@ -532,9 +532,9 @@ function control_funcs.generic_attack( si, noretarget )
       return false
    else
       -- Cool down, if necessary.
-      should_cooldown()
-
-      atklib.think( target, si, noretarget )
+      if not should_cooldown() then
+         atklib.think( target, si, noretarget )
+      end
    end
 
    -- Handle distress
@@ -669,6 +669,7 @@ function control_funcs.attack_forced ()
    control_funcs.generic_attack( nil, true )
    return true
 end
+control_funcs.attack_forced_kill = control_funcs.attack_forced
 function control_funcs.flyback () return true end
 function control_funcs.hold () return true end
 control_funcs.scan = scans.control_funcs
@@ -1302,6 +1303,7 @@ function should_cooldown()
    elseif atk.seekers_ammo() <= 0.0 then
       mem.cooldown = true
       p:setCooldown(true)
+      return true
    end
 end
 

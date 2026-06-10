@@ -78,6 +78,8 @@ function atk.think( target, si, noretarget )
       if mem._o.jammer and ai.haslockon() then
          if p:energy() > 40 then
             p:outfitToggle( mem._o.jammer, true )
+         else
+            p:outfitToggle( mem._o.jammer, false )
          end
       end
 
@@ -107,9 +109,9 @@ function atk.think( target, si, noretarget )
          end
       end
 
-      -- The bite
+      -- The Bite
       if mem._o.bite and p:outfitReady( mem._o.bite )then
-         if ai.dir( target ) < math.rad(30) then
+         if math.abs( ai.dir( target ) ) < math.rad(30) then
             local dtime = 3
             if mem._o.bite_lust then
                dtime = dtime+2
@@ -149,7 +151,7 @@ function atk.think( target, si, noretarget )
             end
          end
          if mem._o.feather_drive and f > fm * 0.25 and rnd.rnd() < 0.6 then
-            if ai.dir( target ) < math.rad(10) and ai.dist( target ) < 300  then
+            if math.abs( ai.dir( target ) ) < math.rad(10) and ai.dist( target ) < 300  then
                p:outfitToggle( mem._o.feather_drive, true )
             end
          end
