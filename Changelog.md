@@ -70,6 +70,7 @@
    * Can undisable escorts by boarding them
    * Pilot for the baron no longer hassles the player in space, but instead can
      be found at the bar
+   * Can open the map while the VN is open
 
  ### Engine
 
