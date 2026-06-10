@@ -2325,6 +2325,7 @@ static int aiL_brake( lua_State *L )
  * @brief Get the nearest friendly spob to the pilot.
  *
  *    @luatparam[opt=false] boolean only_friend Only check for ally spobs.
+ *    @luatparam[opt=false] boolean nolanes Allow spobs that don't appear in patrol lanes too.
  *    @luatreturn Spob|nil
  * @luafunc nearestlandspob
  */
@@ -2336,6 +2337,7 @@ static int aiL_getnearestlandspob( lua_State *L )
 
    /* Check if we should get only friendlies. */
    int only_friend = lua_toboolean( L, 1 );
+   int nolanes = lua_toboolean( L, 2);
 
    /* Find nearest. */
    double mindist  = HUGE_VAL;
@@ -2349,6 +2351,8 @@ static int aiL_getnearestlandspob( lua_State *L )
       if ( !spob_hasService( pnt, SPOB_SERVICE_LAND ) )
          continue;
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
+         continue;
+      if (!nolanes && spob_isFlag( pnt, SPOB_NOLANES ))
          continue;
 
       /* Check conditions. */
@@ -2448,6 +2452,7 @@ static int aiL_getrndspob( lua_State *L )
  * @brief Get a random friendly spob.
  *
  *    @luatparam[opt=false] boolean only_friend Only check for ally spobs.
+ *    @luatparam[opt=false] boolean nolanes Allow spobs that don't appear in patrol lanes too.
  *    @luatreturn Spob|nil
  * @luafunc landspob
  */
@@ -2464,6 +2469,7 @@ static int aiL_getlandspob( lua_State *L )
 
    /* Check if we should get only friendlies. */
    int only_friend = lua_toboolean( L, 1 );
+   int nolanes = lua_toboolean( L, 2);
 
    /* Allocate memory. */
    ind = array_create_size( int, array_size( cur_system->spobs ) );
@@ -2478,6 +2484,8 @@ static int aiL_getlandspob( lua_State *L )
       if ( !spob_hasService( pnt, SPOB_SERVICE_LAND ) )
          continue;
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
+         continue;
+      if (!nolanes && spob_isFlag( pnt, SPOB_NOLANES ))
          continue;
 
       /* Check conditions. */
