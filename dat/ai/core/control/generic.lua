@@ -37,6 +37,7 @@ mem.safe_distance = 8000 -- Safe distance from enemies to stop running away
 mem.safe_jump_distance = 300 -- Safe distance from enemies to jump
 mem.land_planet   = true -- Should land on planets?
 mem.land_friendly = false -- Only land on friendly planets?
+mem.land_nolanes  = false -- Land on spobs that don't appear on patrol lanes
 mem.distress      = true -- AI distresses
 mem.distress_hit  = 0 -- Amount of faction lost on distress
 mem.distressrate  = 4 -- Number of ticks before calling for help. Should default to about at most 8 seconds with defaults.
@@ -1047,6 +1048,9 @@ function create_pre ()
 
    -- Choose attack algorithm
    atklib.choose()
+
+   -- Criminals will land on spobs with no lanes
+   mem.land_nolanes = p:faction():tags().criminal
 end
 
 -- Finishes create stuff like choose attack and prepare plans
