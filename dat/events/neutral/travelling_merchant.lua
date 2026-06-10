@@ -242,27 +242,30 @@ function gen_outfits ()
       if player.fleetCapacity() > 0 then
          table.insert( outfits, "Squadron Synchronizer Module" )
       end
-
-      -- If player has defeated the Emerald Sword, offer the Black Diamond Bay in case they missed it (Shame about the Emerald Sword though.)
-      if var.peek("bounty_dvaered_flf_3") then
-         table.insert( outfits, "Black Diamond Bay" )
-      end
-
-      -- If player has finished the Za'lek Prototype Ramscoop bounty missions, offer it for sale in case they missed looting it.
-      if var.peek("bounty_zalek_renegade_3") then
-         table.insert( outfits, "Prototype Ramscoop" )
-      end
    end
 
-   -- Other special cases
-   local rr = "Rackham's Razor"
-   if player.outfitNum(rr) <= 0 and ((var.peek("poi_red_rackham") or 0)>=3) then
-      table.insert( outfits, rr )
+   -- Other special cases based on variables
+   local special_variables = {
+      { "poi_red_rackham",          "Rackham's Razor", 3 },
+      -- If player has defeated the Emerald Sword, offer the Black Diamond Bay in case they missed it (Shame about the Emerald Sword though.)
+      { "bounty_dvaered_flf_3",     "Black Diamond Bay" },
+      -- If player has finished the Za'lek Prototype Ramscoop bounty missions, offer it for sale in case they missed looting it.
+      { "bounty_zalek_renegade_3",  "Prototype Ramscoop" },
+   }
+   for k,v in ipairs(special_variables) do
+      local test = var.peek(v[1])
+      if v[3] then
+         test = (test >= v[3])
+      end
+      if player.outfitNum( v[2] ) <= 0 and test then
+         table.insert( outfits, v[2] )
+      end
    end
 
    -- Add a few of the more normal trinkets to spice things up
    local outfits_mundane = rnd.permutation({
-      "Milspec Aegis 2201 Core System", -- Some high quality small cores
+      -- Some high quality small cores
+      "Milspec Aegis 2201 Core System",
       "Milspec Orion 2301 Core System",
       "Milspec Prometheus 2203 Core System",
       "Milspec Thalos 2202 Core System",
@@ -273,7 +276,8 @@ function gen_outfits ()
       "S&K Small Cargo Hull",
       "S&K Skirmish Plating",
 
-      "Cryogenic Repair Nanobots", -- Utilities
+      -- Utilities
+      "Cryogenic Repair Nanobots",
       "Droid Repair Crew",
       "Droid Repair Crew MK2",
       "Emergency Shield Booster",
@@ -295,12 +299,14 @@ function gen_outfits ()
       "Nexus Concealment Coating",
       "Photo-Voltaic Nanobot Coating",
 
-      "Active Plating", -- Structuralsies
+      -- Structuralsies
+      "Active Plating",
       "Engine Reroute",
       "Improved Stabilizer",
       "Compact Lightsail",
 
-      "Map: Pirate Strongholds", -- Interesting maps
+      -- Interesting maps
+      "Map: Pirate Strongholds",
       "Map: New Haven's Secrets",
       "Map: Qorel Tunnel",
       "Map: Kretogg's Hypergate",
