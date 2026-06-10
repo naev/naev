@@ -60,6 +60,33 @@ function atk.think( target, si, noretarget )
    if mem._o then
       local p = ai.pilot()
 
+      -- Some logic to see if should try to approach to engage
+      -- TODO also handle the bite?
+      if mem._o.movement then
+         local approaching = p:vel():dot( target:pos()-p:pos() ) > p:speedMax() * 0.5
+         if approaching then
+            local dist = ai.dist( target )
+            local range = libatk.primary_range()
+            if dist > range * 1.5 and math.abs(ai.dir(target)) < math.rad(15) then
+               if mem._o.blink_drive and p:energy() > 85 then
+                  p:outfitToggle( mem._o.blink_drive, true )
+               elseif mem._o.blink_engine and p:energy() > 85 then
+                  p:outfitToggle( mem._o.blink_engine, true )
+               elseif mem._o.afterburner and p:energy() > 85 then
+                  p:outfitToggle( mem._o.afterburner, true )
+               elseif mem._o.feather_drive then
+                  local f = flow.get( p )
+                  local fm = flow.max( p )
+                  if f > fm * 0.4 then
+                     p:outfitToggle( mem._o.feather_drive, true )
+                  end
+               end
+            elseif mem._o.afterburner and (dist < range or p:energy() < 0.7) then
+               p:outfitToggle( mem._o.afterburner, false )
+            end
+         end
+      end
+
       -- Turn off ionizer when going for a kill
       if mem._o.ionizer and mem.atk_kill and target:disabled() then
          p:outfitToggle( mem._o.ionizer, false )
