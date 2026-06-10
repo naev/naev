@@ -408,6 +408,8 @@ function vn.keypressed( key, isrepeat )
    if not tkopen and string.lower(naev.keyGet( "menu" )) == key then
       naev.menuSmall()
       return true
+   elseif string.lower(naev.keyGet( "starmap" )) == key then
+      naev.mapOpen()
    end
 
    if vn._show_options then

@@ -631,6 +631,7 @@ stds.naev = {
             plugins = {},
             menuInfo = {},
             menuSmall = {},
+            mapOpen = {},
             isPaused = {},
             pause = {},
             unpause = {},
