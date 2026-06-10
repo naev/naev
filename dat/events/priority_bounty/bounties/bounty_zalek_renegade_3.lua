@@ -6,9 +6,9 @@ return {
    var            = "bounty_zalek_renegade_3",
    title          = _("Buyer's Remorse"),
    desc           = fmt.f(_([[Za'lek intelligence has located the stolen {outfit} in the possession of a Black Lotus crime lord. Za'lek authorities don't care about the final disposition of the prototype, but this contract stipulates that it not be left in pirate hands.]]),
-{
-   outfit = "#o".._("prototype modular ramscoop").."#0",
-} ),
+   {
+      outfit = "#o".._("prototype modular ramscoop").."#0",
+   } ),
    escorts        = _("with a dangerous pirate fleet"),
    reward         = 2.5e6,
    system         = system.get("Nunavut"),

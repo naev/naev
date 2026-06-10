@@ -20,14 +20,14 @@ return {
       p:outfitAddIntrinsic("Escape Pod")
       equipopt.dvaered( p, {
          prefer = {
-			["Repeating Railgun"] = 100,
-			["Super-Fast Collider Launcher"] = 100
-		 },
+            ["Repeating Railgun"] = 100,
+            ["Super-Fast Collider Launcher"] = 100
+         },
          type_range = {
-			["Bolt Weapon"] = { min = 4 },
-			["Launcher"] = { max = 2 },
-		 },
-	  } )
+            ["Bolt Weapon"] = { min = 4 },
+            ["Launcher"] = { max = 2 },
+         },
+      } )
       local m = p:memory()
       if not m.lootables then
          m.lootables = {}

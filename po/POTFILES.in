@@ -3122,6 +3122,12 @@ dat/events/priority_bounty/bounties/bounty_frontier_warlord_1.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_2.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_3.lua
 dat/events/priority_bounty/bounties/bounty_sirius_starbridge_herald.lua
+dat/events/priority_bounty/bounties/bounty_soromid_poachers_1.lua
+dat/events/priority_bounty/bounties/bounty_soromid_poachers_2.lua
+dat/events/priority_bounty/bounties/bounty_soromid_poachers_3.lua
+dat/events/priority_bounty/bounties/bounty_zalek_renegade_1.lua
+dat/events/priority_bounty/bounties/bounty_zalek_renegade_2.lua
+dat/events/priority_bounty/bounties/bounty_zalek_renegade_3.lua
 dat/events/priority_bounty/bounties/rainbow_goatee.lua
 dat/events/priority_bounty/bounties/renegade_executor.lua
 dat/events/priority_bounty/bounties/rogue_bounty_hunter_hellhound.lua

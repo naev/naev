@@ -247,11 +247,11 @@ function gen_outfits ()
       if var.peek("bounty_dvaered_flf_3") then
          table.insert( outfits, "Black Diamond Bay" )
       end
-	  
+
       -- If player has finished the Za'lek Prototype Ramscoop bounty missions, offer it for sale in case they missed looting it.
       if var.peek("bounty_zalek_renegade_3") then
          table.insert( outfits, "Prototype Ramscoop" )
-      end	  
+      end
    end
 
    -- Other special cases

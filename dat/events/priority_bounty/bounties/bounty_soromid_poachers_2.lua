@@ -20,15 +20,15 @@ return {
       p:outfitAddIntrinsic("Escape Pod")
       equipopt.pirate( p, {
          outfits_add = {
-			 "Plasma Eruptor"
-		 },
+            "Plasma Eruptor"
+         },
          prefer = {
-			["Plasma Eruptor"] = 100
-		 },
+            ["Plasma Eruptor"] = 100
+         },
          type_range = {
-			["Plasma Weapon"] = { max = 2 },
-		 },
-	  } )
+            ["Plasma Weapon"] = { max = 2 },
+         },
+      } )
       local m = p:memory()
       if not m.lootables then
          m.lootables = {}
