@@ -10,8 +10,7 @@ local proteron_outfits = eoutfits.merge{{
    "Heavy Pulse Turret", "Hyperpulse Turret",
    -- Medium Weapons
    "Proteron Dalton Dock",
-   "Enygma Systems Turreted Fury Launcher",
-   "Enygma Systems Turreted Headhunter Launcher",
+   "Proteron Agamemnon Launcher", --Nuclear torpedo, will be used by Hippocrates as a bomber.
    "Medium Pulse Turret",
    -- Small Weapons
    "Light Pulse Cannon", "Light Pulse Turret",
