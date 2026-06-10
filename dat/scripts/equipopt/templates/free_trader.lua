@@ -39,10 +39,10 @@ local function equip_free_trader( p, opt_params, cores, outfits )
    -- Get cores, but overwrite hull to use either shadow or cargo
    local ocores = ecores.get( p, { all=cores } )
    if ocores.hull then
-      ocores.hull = hulls_nexus_cargo
+      ocores.hull = hulls_nexus_cargo()
    end
    if ocores.hull_secondary then
-      ocores.hull_secondary = hulls_nexus_cargo
+      ocores.hull_secondary = hulls_nexus_cargo()
    end
 
    -- Set some pilot meta-data

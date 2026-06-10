@@ -3161,6 +3161,7 @@ dat/events/wormhole.lua
 dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
+dat/factions/equip/free_trader.lua
 dat/factions/equip/generic.lua
 dat/factions/equip/lost.lua
 dat/factions/equip/marauder.lua
