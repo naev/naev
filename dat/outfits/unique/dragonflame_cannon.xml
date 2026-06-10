@@ -13,7 +13,8 @@
  <specific type="beam">
   <delay min="8">8</delay>
   <duration>0.3</duration>
-  <range>2000</range> <!-- This weapon is from Endless Sky, in which it is extremely long ranged. It needs range to offset the almost nil swivel and slow turn rate of a battleship. However, we're keeping it a little below the range of battleship-size 350 CPU weapons. -->
+  <!-- This weapon is from Endless Sky, in which it is extremely long ranged. It needs range to offset the almost nil swivel and slow turn rate of a battleship. However, we're keeping it a little below the range of battleship-size 350 CPU weapons. -->
+  <range>2000</range>
   <energy>3400</energy>
   <swivel>5</swivel>
   <damage>

@@ -46,13 +46,17 @@
   <structure size="large"/>
  </slots>
  <stats>
-  <cpu_mod>-55</cpu_mod> <!-- Outdated technology. Limits expensive weapon options in the two open weapon slots unless you install Thalos cores. (2 Thalos leaves you with 704 CPU, just enough for 2 350 CPU weapons.) -->
+  <!-- Outdated technology. Limits expensive weapon options in the two open weapon slots unless you install Thalos cores. (2 Thalos leaves you with 704 CPU, just enough for 2 350 CPU weapons.) -->
+  <cpu_mod>-55</cpu_mod>
   <turn_mod>10</turn_mod>
   <armour_mod>20</armour_mod>
-  <shield_mod>-50</shield_mod> <!-- Outdated technology, very low total shield capacity. -->
+  <!-- Outdated technology, very low total shield capacity. -->
+  <shield_mod>-50</shield_mod>
   <weapon_damage>20</weapon_damage>
-  <nebu_absorb>15</nebu_absorb> <!-- Refurbished covertly by the Thurion for the FLF when recovering the Emerald Sword. Helps it persist better in the Arandon boss battle. -->
-  <fbay_capacity>100</fbay_capacity> <!-- Ship has reduced weapon slots. Only one fighter bay, but this lets it count it as two. -->
+  <!-- Refurbished covertly by the Thurion for the FLF when recovering the Emerald Sword. Helps it persist better in the Arandon boss battle. -->
+  <nebu_absorb>15</nebu_absorb>
+  <!-- Ship has reduced weapon slots. Only one fighter bay, but this lets it count it as two. -->
+  <fbay_capacity>100</fbay_capacity>
   <misc_instant_jump>1</misc_instant_jump>
  </stats>
  <tags>
