@@ -143,7 +143,7 @@ function __atk_d_flyby( target, dist )
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
-      if dir < math.rad(10) and dir > -math.rad(10) then
+      if dir < math.rad(10) then
          --atk.keep_distance()
          atk_spiral_approach(target, dist)  -- mod
          ai.accel()
@@ -156,9 +156,9 @@ function __atk_d_flyby( target, dist )
       --dir = ai.idir(target)
       dir = ai.aim(target)  -- drones need to aim more to avoid circling
       --test if we're facing the target. If we are, keep approaching
-      if dir <= math.rad(30) and dir > -math.rad(30) then
+      if dir < math.rad(30) then
          ai.iface(target)
-         if dir < math.rad(10) and dir > -math.rad(10) then
+         if dir < math.rad(10) then
             ai.accel()
          end
       elseif dir > math.rad(30) and dir < math.pi then
@@ -201,7 +201,7 @@ function __atk_d_space_sup( target, dist )
    --if we're far away from the target, then turn and approach
    if dist > (1.1*range) then
       dir = ai.idir(target)
-      if dir < math.rad(10) and dir > -math.rad(10) then
+      if dir < math.rad(10) then
          atk.keep_distance()
          ai.accel()
       else
@@ -214,7 +214,7 @@ function __atk_d_space_sup( target, dist )
       --course facing and accelerate to close
       --dir = ai.iface(target)
       dir = ai.aim(target)
-      if dir < math.rad(15) and dir > -math.rad(15) then
+      if dir < math.rad(15) then
          ai.accel()
       end
 
@@ -225,7 +225,7 @@ function __atk_d_space_sup( target, dist )
 
       --accelerate and try to close
       --but only accel if it will be productive
-      if dir2 < math.rad(15) and dir2 > -math.rad(15) and ai.relvel(target) > -math.rad(10) then
+      if dir2 < math.rad(15) and ai.relvel(target) > -math.rad(10) then
          ai.accel()
       end
 
