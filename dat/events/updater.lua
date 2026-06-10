@@ -21,6 +21,23 @@ local fcts = require "factions"
 local apply_all_ships = require 'scripts.map_all_ships'
 
 -- Runs on saves older than 0.13.0
+local function updater0140( _did0130, _did0120, _did0110, _did0100, _did090 )
+   -- OK, so we never marked ships as captured in older versions, so we have to mark them
+   -- Have to mark the text as translatable so it grabs it in translated versions too
+   for k,name in ipairs(player.ships()) do
+      if not player.shipvarPeek( "captured", name ) then
+         local md = player.shipMetadata(name)
+         if string.find( md.acquired, "You captured this ship in the" )
+            -- Translator's note, please use the same substring as in the
+            -- corresponding capture string so it can be found
+            and string.find( md.acquired, p_("save_updater", "You captured this ship in the") ) then
+            player.shipvarPush( "captured", true, name )
+         end
+      end
+   end
+end
+
+-- Runs on saves older than 0.13.0
 local function updater0130( did0120, did0110, did0100, did090 )
    -- TODO stuff we want to add before the release
    -- 1. Ships autodisabling at low health
@@ -361,7 +378,7 @@ function create ()
    local _game_version, save_version = naev.version()
    local didupdate = false
 
-   local did090, did0100, did0110, did0120
+   local did090, did0100, did0110, did0120, did0130
    -- Run on saves older than 0.9.0
    if not save_version or naev.versionTest( save_version, "<0.9.0" ) then
       updater090()
@@ -390,6 +407,7 @@ function create ()
    if not save_version or naev.versionTest( save_version, "<0.13.0") then
       updater0130( did0120, did0110, did0100, did090 )
       didupdate = true
+      did0130 = true
    end
    -- Small bug fixed in 0.13.2 requires updating
    if not save_version or naev.versionTest( save_version, "<0.13.2") then
@@ -397,6 +415,10 @@ function create ()
       if var.peek("disc_frontier") then
          fcts.setKnown( faction.get("FLF"), true )
       end
+   end
+   -- Run on saves older than 0.14.0
+   if not save_version or naev.versionTest( save_version, "<0.14.0") then
+      updater0140( did0130, did0120, did0110, did0100, did090 )
    end
 
    -- Note that games before 0.10.0 will have lastplayed set days from the unix epoch

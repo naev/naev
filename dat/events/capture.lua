@@ -242,6 +242,8 @@ function land ()
       local newname = player.shipAdd( mem.ship, mem.name, fmt.f(_("You captured this ship in the {sys} system."), {sys=mem.system}) )
       local name = player.pilot():name()
       player.shipSwap( newname, true )
+      -- Mark ship as captured
+      player.shipvarPush( "captured", true, newname )
       local pp = player.pilot()
       if naked then
          pp:outfitsEquip( mem.outfitsnaked )
