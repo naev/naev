@@ -1749,6 +1749,7 @@ dat/spob/skona.xml
 dat/spob/sleuth_ii.xml
 dat/spob/slofeldt_museum.xml
 dat/spob/smaal.xml
+dat/spob/smugglers_den.xml
 dat/spob/socrates_academy_monastery.xml
 dat/spob/sola.xml
 dat/spob/sollav_ii.xml
@@ -3056,6 +3057,7 @@ dat/events/news.lua
 dat/events/news/dvaered.lua
 dat/events/news/empire.lua
 dat/events/news/flf.lua
+dat/events/news/free_trader.lua
 dat/events/news/frontier.lua
 dat/events/news/generic.lua
 dat/events/news/goddard.lua
