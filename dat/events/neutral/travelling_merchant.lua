@@ -250,7 +250,7 @@ function gen_outfits ()
       -- If player has defeated the Emerald Sword, offer the Black Diamond Bay in case they missed it (Shame about the Emerald Sword though.)
       { "bounty_dvaered_flf_3",     "Black Diamond Bay" },
       -- If player has finished the Za'lek Prototype Ramscoop bounty missions, offer it for sale in case they missed looting it.
-      { "bounty_zalek_renegade_3",  "Prototype Ramscoop" },
+      { "bounty_zalek_renegade_3",  "Modular Ramscoop" },
    }
    for k,v in ipairs(special_variables) do
       local test = var.peek(v[1])
