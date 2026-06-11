@@ -178,7 +178,8 @@ end
    @brief Gets whether or not the pilot is in a pirate ship
 --]]
 function pir.isPirateShip( p )
-   return p:ship():tags().pirate
+   -- Captured ships count as pirate ships for now...
+   return p:ship():tags().pirate or player.shipvarPeek("captured")
 end
 
 --[[
