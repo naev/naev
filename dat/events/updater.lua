@@ -24,13 +24,15 @@ local apply_all_ships = require 'scripts.map_all_ships'
 local function updater0140( _did0130, _did0120, _did0110, _did0100, _did090 )
    -- OK, so we never marked ships as captured in older versions, so we have to mark them
    -- Have to mark the text as translatable so it grabs it in translated versions too
-   for k,name in ipairs(player.ships()) do
+   for k,s in ipairs(player.ships()) do
+      local name = s.name
       if not player.shipvarPeek( "captured", name ) then
          local md = player.shipMetadata(name)
-         if string.find( md.acquired, "You captured this ship in the" )
+         if md.acquired
+            and (string.find( md.acquired, "You captured this ship in the" )
             -- Translator's note, please use the same substring as in the
             -- corresponding capture string so it can be found
-            and string.find( md.acquired, p_("save_updater", "You captured this ship in the") ) then
+            or string.find( md.acquired, p_("save_updater", "You captured this ship in the") )) then
             player.shipvarPush( "captured", true, name )
          end
       end

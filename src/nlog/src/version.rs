@@ -50,6 +50,11 @@ fn parse_cstr(ver: *const c_char) -> Result<semver::Version> {
    Ok(semver::Version::parse(&ptr.to_string_lossy())?)
 }
 
+// Custom comparator that actually compares prereleases instead of just making it skip all
+// comparisons. This makes sense if you use prereleases as something that is not consumed at all,
+// but that's not what we do in some of the checks. In particular, we want to be able to do things
+// like check if 0.13.0-alpha.1 is >0.12.0 or <0.13.0 which is false in both cases according to the
+// spec.
 fn version_matches(version: &semver::Version, req: &semver::VersionReq) -> bool {
    // Standard comparison
    if req.matches(version) {
