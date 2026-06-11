@@ -182,7 +182,7 @@ function pir.isPirateShip( p )
    if p:ship():tags().pirate then
       return true
    end
-   for k,o in ipairs(p:outfitsList()) do
+   for k,o in ipairs(p:outfitsList("all")) do
       -- TODO better tag?
       if o:tags().pirate then
          return true
