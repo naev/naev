@@ -1,4 +1,5 @@
 <spob name="The Pit">
+ <lua>lawless.lua</lua>
  <pos x="-17371.027610" y="-2648.965101"/>
  <GFX>
   <space>moon-Y00.avif</space>
