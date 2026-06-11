@@ -9,6 +9,7 @@ function init( p, po )
    if pir.isPirateShip( p ) then
       po:set( "loot_mod", 10 )
       po:set( "jam_chance", 10 )
+      po:set( "fwd_firerate", 5 )
    else
       po:clear()
    end
