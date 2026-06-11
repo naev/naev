@@ -50,6 +50,34 @@ fn parse_cstr(ver: *const c_char) -> Result<semver::Version> {
    Ok(semver::Version::parse(&ptr.to_string_lossy())?)
 }
 
+fn version_matches(version: &semver::Version, req: &semver::VersionReq) -> bool {
+   // Standard comparison
+   if req.matches(version) {
+      return true;
+   }
+
+   // Fall back to comparator ordering
+   req.comparators.iter().all(|cmp| {
+      let target = semver::Version {
+         major: cmp.major,
+         minor: cmp.minor.unwrap_or(0),
+         patch: cmp.patch.unwrap_or(0),
+         pre: cmp.pre.clone(),
+         build: Default::default(),
+      };
+
+      match cmp.op {
+         semver::Op::Less => version < &target,
+         semver::Op::LessEq => version <= &target,
+         semver::Op::Greater => version > &target,
+         semver::Op::GreaterEq => version >= &target,
+         semver::Op::Exact => version == &target,
+         // Fallback for complex operators, this is not good, but what are we going to do? :D
+         _ => req.matches(version),
+      }
+   })
+}
+
 #[unsafe(no_mangle)]
 pub extern "C" fn naev_versionCompare(version: *const c_char) -> c_int {
    let ver = match parse_cstr(version) {
@@ -101,5 +129,22 @@ pub extern "C" fn naev_versionMatchReq(version: *const c_char, req: *const c_cha
          return 0;
       }
    };
-   req.matches(&vera) as c_int
+   version_matches(&vera, &req) as c_int
+}
+
+#[test]
+fn test_version() {
+   let ver = semver::Version::parse("0.13.0-alpha.2").unwrap();
+   let tv = |s| version_matches(&ver, &semver::VersionReq::parse(s).unwrap());
+   assert_eq!(tv("<0.14.0"), true);
+   assert_eq!(tv(">0.14.0"), false);
+   assert_eq!(tv("<0.13.0"), true);
+   assert_eq!(tv(">0.13.0"), false);
+   assert_eq!(tv(">0.13.1"), false);
+   assert_eq!(tv(">0.13.0-alpha.1"), true);
+   assert_eq!(tv("<0.13.0-alpha.1"), false);
+   assert_eq!(tv(">0.13.0-alpha.3"), false);
+   assert_eq!(tv("<0.13.0-alpha.3"), true);
+   assert_eq!(tv("<0.13.0-beta.1"), true);
+   assert_eq!(tv(">0.13.0-beta.1"), false);
 }
