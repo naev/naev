@@ -15,7 +15,7 @@ return {
             outfit.get("Convulsion Launcher"),
             outfit.get("Convulsion Launcher"),
             outfit.get("Laser Cannon MK1"),
-            outfit.get("Nexus Concealment Coating"),
+            outfit.get("Nebula Resistant Coating"),
             outfit.get("Unicorp Scrambler"),
          }
       end
