@@ -179,7 +179,16 @@ end
 --]]
 function pir.isPirateShip( p )
    -- Captured ships count as pirate ships for now...
-   return p:ship():tags().pirate or player.shipvarPeek("captured")
+   if p:ship():tags().pirate then
+      return true
+   end
+   for k,o in ipairs(p:outfitsList()) do
+      -- TODO better tag?
+      if o:tags().pirate then
+         return true
+      end
+   end
+   return false
 end
 
 --[[
