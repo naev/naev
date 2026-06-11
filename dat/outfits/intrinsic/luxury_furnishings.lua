@@ -7,15 +7,18 @@ require("outfits.lib.custom_price").setup( function ()
    return 250e3 * math.pow(1+size, 2) * mod -- 1 million for size 1, 12.25 million for size 6
 end )
 
-function descextra()
-   return _("Ship will count as a luxury ship when applicable.")
+local odescextra = descextra
+function descextra( p, o, po )
+   return odescextra( p, o, po ).."\n".._("Ship will count as a luxury ship when applicable.")
 end
+
+local REASON_ALREADY_LUXURY = _("Your ship is already a luxury vessel.")
 
 local oprice = price
 function price( q )
    local pricestr, canbuy, cansell, youhave =  oprice( q )
    if lmisn.is_luxury( player.pilot() ) then
-      return  pricestr, false, false, youhave
+      return  pricestr, REASON_ALREADY_LUXURY, false, youhave
    end
    return pricestr, canbuy, cansell, youhave
 end
@@ -23,7 +26,7 @@ end
 local obuy = buy
 function buy( q )
    if lmisn.is_luxury( player.pilot() ) then
-      return false, _("Your ship is already a luxury vessel.")
+      return false, REASON_ALREADY_LUXURY
    end
    return obuy( q )
 end

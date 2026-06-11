@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>Carefully handcrafted markings that indicate a captured vessel as belonging to a pirate. Pirate craftsmen take great pride in the aesthetics and details of ship, maybe even more so than the more functional aspects. Detailing a captured ship with pirate branding will immediately make the ship recognizable by other pilots, especially non-clans pirates, who will respect the captain of the ship more. The details are sophisticated enough that any most non-pirate captains are completely unable to tell the ship apart from a regular one. Popular craftsmen have cycles-long waiting lists for their work.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>/gfx/logo/pirate</gfx_store>
   <rarity>1</rarity>
   <limit>pirate_branding</limit>
  </general>
