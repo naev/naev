@@ -1379,7 +1379,11 @@ static PlayerShip_t *playerL_shipvarShip( lua_State *L, int idx )
 {
    if ( lua_isnoneornil( L, idx ) )
       return &player.ps;
-   return player_getPlayerShip( luaL_checkstring( L, idx ) );
+   const char   *name = luaL_checkstring( L, idx );
+   PlayerShip_t *ps   = player_getPlayerShip( name );
+   if ( ps == NULL )
+      NLUA_ERROR( L, "Unknown player ship '%s'", name );
+   return ps;
 }
 
 /**
