@@ -54,6 +54,6 @@
   <ammo_capacity>50</ammo_capacity>
   <cpu_mod>10</cpu_mod>
   <ew_hide>-25</ew_hide>
-  <nebu_absorb>15</nebu_absorb>
+  <nebu_absorb>25</nebu_absorb>
  </stats>
 </ship>
