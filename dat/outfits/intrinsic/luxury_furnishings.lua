@@ -7,6 +7,10 @@ require("outfits.lib.custom_price").setup( function ()
    return 250e3 * math.pow(1+size, 2) * mod -- 1 million for size 1, 12.25 million for size 6
 end )
 
+function descextra()
+   return _("Ship will count as a luxury ship when applicable.")
+end
+
 local oprice = price
 function price( q )
    local pricestr, canbuy, cansell, youhave =  oprice( q )
