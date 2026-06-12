@@ -3122,10 +3122,14 @@ dat/events/priority_bounty/bounties/bounty_dvaered_flf_3.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_1.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_2.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_3.lua
+dat/events/priority_bounty/bounties/bounty_sirius_conversion_1.lua
+dat/events/priority_bounty/bounties/bounty_sirius_conversion_2.lua
+dat/events/priority_bounty/bounties/bounty_sirius_conversion_3.lua
 dat/events/priority_bounty/bounties/bounty_sirius_starbridge_herald.lua
 dat/events/priority_bounty/bounties/bounty_soromid_poachers_1.lua
 dat/events/priority_bounty/bounties/bounty_soromid_poachers_2.lua
 dat/events/priority_bounty/bounties/bounty_soromid_poachers_3.lua
+dat/events/priority_bounty/bounties/bounty_zalek_hijacked.lua
 dat/events/priority_bounty/bounties/bounty_zalek_renegade_1.lua
 dat/events/priority_bounty/bounties/bounty_zalek_renegade_2.lua
 dat/events/priority_bounty/bounties/bounty_zalek_renegade_3.lua

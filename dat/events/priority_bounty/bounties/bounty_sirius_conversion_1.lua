@@ -27,14 +27,14 @@ return {
             "Compact Lightsail",
          },
          prefer = {
-			["Scanning Combat AI"] = 0,
-			["Blink Drive"] = 100,
-			["Bio-Neural Combat AI"] = 100,
-			["Milspec Scrambler"] = 100,
-			["Reconstructive Nanobot Coating"] = 100,
-			["Compact Lightsail"] = 100,
-			["Reactor Class III"] = 100,
-			["Heavy Laser Turret"] = 100
+            ["Scanning Combat AI"] = 0,
+            ["Blink Drive"] = 100,
+            ["Bio-Neural Combat AI"] = 100,
+            ["Milspec Scrambler"] = 100,
+            ["Reconstructive Nanobot Coating"] = 100,
+            ["Compact Lightsail"] = 100,
+            ["Reactor Class III"] = 100,
+            ["Heavy Laser Turret"] = 100
          },
       } )
       local m = p:memory()

@@ -13,17 +13,17 @@ return {
    reputation     = 200,
    targetfaction  = faction.get("Mercenary"),
    alive_only     = false,
-   ships          = { ship.get("Za'lek Diablo RAT") },   
-   spawnfunc      = function( b, params )  
+   ships          = { ship.get("Za'lek Diablo RAT") },
+   spawnfunc      = function( b, params )
       local fct = bounty.get_faction()
       local p = pilot.add( b.targetship[1], fct, params, b.targetname, {ai="baddie_norun", naked = true } )
       equipopt.zalek( p, {
          prefer = {
-			["Za'lek Reaper Launcher"] = 100
+            ["Za'lek Reaper Launcher"] = 100
          },
          type_range = {
             ["Launcher"] = { min = 4 },
-         },		 
+         },
       } )
       local m = p:memory()
       if not m.lootables then
@@ -33,17 +33,17 @@ return {
       m.capturable = true
       local saying = _("[ERR-7F3A] IFF_TABLE_CORRUPT :: CORE_AI_REVERT FOUND TEMPLATE 'DESTROY-ALL-HUMANS'")
       m.taunt = saying
-      m.comm_greet = saying	  
+      m.comm_greet = saying
       local enemies = {p}
       for k,s in ipairs(tmergei({
-         ship.get("Za'lek Demon"),
-         ship.get("Za'lek Demon"),
-         ship.get("Za'lek Demon"),
-         ship.get("Za'lek Demon"),
-         ship.get("Za'lek Demon")
-      },
+            ship.get("Za'lek Demon"),
+            ship.get("Za'lek Demon"),
+            ship.get("Za'lek Demon"),
+            ship.get("Za'lek Demon"),
+            ship.get("Za'lek Demon")
+         },
          bhelp.choose_ships_from_points_and_capship( ship.get("Za'lek Demon"), bhelp.ships.mercenary, 200 ))
-	  ) do
+      ) do
          local e = pilot.add( s, fct, params )
          equipopt.zalek( e )
          e:memory().capturable = true
@@ -55,6 +55,6 @@ return {
    boardfunc = function( p )
       p:rename( _("the ship's AI core") )
       return true
-   end,   
+   end,
    cond = bhelp.cond_bounty_points( 500 ),
 }

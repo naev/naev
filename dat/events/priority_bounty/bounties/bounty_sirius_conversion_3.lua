@@ -22,19 +22,19 @@ return {
          outfits_add = {
             "Emergency Stasis Inducer",
             "Hunting Combat AI",
-			"Astral Projection"
+            "Astral Projection"
          },
          prefer = {
-			["Pinpoint Combat AI"] = 0,
-			["Hunting Combat AI"] = 100,
-			["Emergency Stasis Inducer"] = 100,
-			["Astral Projection"] = 100,
-			["Seeking Chakra"] = 0,
-			["Large Flow Amplifier"] = 100
+            ["Pinpoint Combat AI"] = 0,
+            ["Hunting Combat AI"] = 100,
+            ["Emergency Stasis Inducer"] = 100,
+            ["Astral Projection"] = 100,
+            ["Seeking Chakra"] = 0,
+            ["Large Flow Amplifier"] = 100
          },
          type_range = {
             ["Launcher"] = { max = 0 },
-         },		 
+         },
       } )
       local m = p:memory()
       if not m.lootables then
@@ -42,7 +42,7 @@ return {
       end
       m.lootables["encrypted_data_matrix"] = 2
       m.capturable = true
-      local saying = _("I was one of them once, now my wings are no longer clipped. I can see so many colors in the astral.")
+      local saying = _("I was one of them once, now my wings are no longer clipped. I can see so many colours in the astral.")
       m.taunt = saying
       m.comm_greet = saying
       local enemies = {p}

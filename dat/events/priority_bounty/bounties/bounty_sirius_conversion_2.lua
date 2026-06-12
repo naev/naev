@@ -27,12 +27,12 @@ return {
             "Milspec Impacto-Plastic Coating"
          },
          prefer = {
-			["Scanning Combat AI"] = 0,
-			["Blink Drive"] = 100,
-			["Cyclic Combat AI"] = 100,
-			["Milspec Scrambler"] = 100,
-			["Milspec Impacto-Plastic Coating"] = 100,
-			["Reaver Cannon"] = 100
+            ["Scanning Combat AI"] = 0,
+            ["Blink Drive"] = 100,
+            ["Cyclic Combat AI"] = 100,
+            ["Milspec Scrambler"] = 100,
+            ["Milspec Impacto-Plastic Coating"] = 100,
+            ["Reaver Cannon"] = 100
          },
       } )
       local m = p:memory()
