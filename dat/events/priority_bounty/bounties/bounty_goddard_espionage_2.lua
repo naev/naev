@@ -10,7 +10,7 @@ return {
    system         = system.get("Overture"),
    name           = _("Shadowrunner"),
    payingfaction  = faction.get("Goddard"),
-   reputation     = 100,
+   reputation     = 150,
    targetfaction  = faction.get("Mercenary"),
    alive_only     = false,
    ships          = { ship.get("Pirate Starbridge") },
