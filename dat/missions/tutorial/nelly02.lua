@@ -528,7 +528,7 @@ local spotter_msglist = {
    _([[I know you're out there Nelly. Please come forward voluntarily.]]),
    _([[Stop hiding Nelly, you know this is futile.]]),
    _([[Let us face this like adults, Nelly.]]),
-   _([[Nelly, if you come out now I would hold this against you.]]),
+   _([[Nelly, if you come out now I won't hold this against you.]]),
    _([[You're seriously going to make me have to scan the entire universe to find you Nelly?]]),
    _([[Just come on out and let's get this over with, Nelly.]]),
 }
