@@ -21,15 +21,15 @@
   <delay>3.4</delay>
   <speed>600</speed>
   <range>2000</range>
-  <falloff>1600</falloff>
+  <falloff>1500</falloff>
   <gfx_end>massL-end</gfx_end>
-  <energy>240</energy>
-  <trackmin>3000</trackmin>
-  <trackmax>9000</trackmax>
+  <energy>210</energy>
+  <trackmin>4000</trackmin>
+  <trackmax>12000</trackmax>
   <swivel>28</swivel>
   <damage>
    <type>kinetic</type>
-   <penetrate>131</penetrate>
+   <penetrate>151</penetrate>
    <physical>54</physical>
   </damage>
   <shots>6</shots>

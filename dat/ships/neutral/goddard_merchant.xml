@@ -1,17 +1,20 @@
 <ship name="Goddard Merchantman" inherits="Goddard">
  <gfx sy="12" sx="12" size="125">goddard_merchant.gltf</gfx>
+ <points>150</points> 
  <rarity>2</rarity>
  <price>6850000</price>
+ <class>Bulk Freighter</class>
+ <licence>Large Civilian Vessel</licence>
  <description>It all began with an insurance dispute at Manuel Station when a sensor malfunction resulted in a Zebra being damaged beyond repair while delivering a large shipment of gambling chips and bar furniture to Minerva Station. Due to the cargo job's importance and strict deadline, the insurance provider offered the Zebra captain a used Goddard that had recently been sold by a retired bounty hunter. The Captain, knowing that a Goddard is worth more than a Zebra, agreed with the idea of later trading it in. The goods would not have fit had it not been for the idea of filling the fighter bays up to the brim with gambling chips.
 While contemplating a replacement, the captain realized that she encountered none of the regular harassment in the Goddard, which was instead permanently reconfigured for cargo transport. Sightings of the brilliant captain in her trading Goddard turned to gossip and stories, leading to an eventual standardization of the reconfiguration. Although not many captains choose a ship like this for freight, they are common enough that a large amount of second hand Goddards are reconfigured and re-sold as 'Merchantman' variants.</description>
  <health>
-  <armour>1900</armour>
+  <armour>1400</armour>
  </health>
  <characteristics>
   <crew>42</crew>
-  <mass>2200</mass>
+  <mass>2000</mass>
   <fuel_consumption>400</fuel_consumption>
-  <cargo>590</cargo>
+  <cargo>290</cargo>
  </characteristics>
  <slots>
   <weapon y="-13" h="2" size="large" x="-10"/>
@@ -19,13 +22,13 @@ While contemplating a replacement, the captain realized that she encountered non
   <weapon y="-25" h="3" size="large" x="-15"/>
   <weapon y="25" h="3" size="large" x="-15"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" name="accessory" size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
@@ -33,13 +36,13 @@ While contemplating a replacement, the captain realized that she encountered non
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
   <armour_mod>5</armour_mod>
   <energy_mod>10</energy_mod>
-  <cargo_inertia>-10</cargo_inertia>
+  <cargo_inertia>-20</cargo_inertia>
+  <cargo_mod>20</cargo_mod>
  </stats>
 </ship>
