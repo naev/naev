@@ -12,8 +12,11 @@ return {
             engines = outfit.get("Nexus Dart 160 Engine"),
             hull = outfit.get("Unicorp D-2 Light Plating"),
             -- Other outfits
-            outfit.get("Laser Cannon MK2"),
-            outfit.get("Nexus Concealment Coating"),
+            outfit.get("Laser Cannon MK1"),
+            outfit.get("Laser Cannon MK1"),
+            outfit.get("Nebula Resistant Coating"),
+            outfit.get("Unicorp Scrambler"),
+            outfit.get("Flicker Drive"),
             outfit.get("Reactor Class I"),
          }
       end

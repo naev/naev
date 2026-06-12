@@ -16,7 +16,7 @@
  <faction>Thurion</faction>
  <cond>require("buyrep")("Thurion", 30)</cond>
  <condstr>You need at least 30% reputation with the Thurion.</condstr>
- <description>The Thurion Ingenuity is a fighter built for survival. Like all Thurian ships, it puts defensive capabilities first and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurian ship, the electronics are well above average.</description>
+ <description>The Thurion Ingenuity is a fighter built for survival. Like all Thurion ships, it puts defensive capabilities first and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurion ship, the electronics are well above average.</description>
  <health>
   <armour>100</armour>
  </health>
@@ -28,6 +28,7 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
+  <weapon y="0" h="-2" size="medium" x="-3"/> 
   <weapon y="-5" h="-2" size="small" x="8"/>
   <weapon y="5" h="-2" size="small" x="8"/>
   <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
@@ -46,7 +47,10 @@
   <structure size="small"/>
  </slots>
  <stats>
+  <shield_mod>10</shield_mod>
+  <shield_regen_mod>15</shield_regen_mod> 
   <ew_hide>-25</ew_hide>
-  <nebu_absorb>15</nebu_absorb>
+  <nebu_absorb>25</nebu_absorb>
+  <jam_chance>40</jam_chance>  
  </stats>
 </ship>
