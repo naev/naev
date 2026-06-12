@@ -421,12 +421,14 @@ pub extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
    if soft_over == 0 {
       if follow != 0 {
          let p = unsafe { naevc::pilot_get(follow) };
-         let x = unsafe { (*p).solid.pos.x };
-         let y = unsafe { (*p).solid.pos.y };
-         cam.pos.x = x;
-         cam.pos.y = y;
-         cam.old.x = x;
-         cam.old.y = y;
+         if !p.is_null() {
+            let x = unsafe { (*p).solid.pos.x };
+            let y = unsafe { (*p).solid.pos.y };
+            cam.pos.x = x;
+            cam.pos.y = y;
+            cam.old.x = x;
+            cam.old.y = y;
+         }
       }
       cam.fly = false;
    } else {
@@ -462,7 +464,7 @@ pub extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
 #[unsafe(no_mangle)]
 pub extern "C" fn cam_getTarget() -> c_uint {
    let cam = CAMERA.read().unwrap();
-   cam.follow_pilot.unwrap_or_default()
+   cam.follow_pilot.unwrap_or(0)
 }
 
 #[unsafe(no_mangle)]
