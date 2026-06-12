@@ -16,7 +16,7 @@ pirate_base.outfits = eoutfits.merge{{
    "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    -- Medium Weapons
-   "Pirate Hyena Dock",
+   "Pirate Hyena Dock", "Pirate Ancestor Dock",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
    "Laser Turret MK2", "Turreted Vulcan Gun",
