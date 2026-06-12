@@ -10,7 +10,7 @@ return {
    system         = system.get("Pas"),
    name           = _("Gunhead"),
    payingfaction  = faction.get("Goddard"),
-   reputation     = 100,
+   reputation     = 200,
    targetfaction  = faction.get("Mercenary"),
    alive_only     = false,
    ships          = { ship.get("Goddard Merchantman") },
