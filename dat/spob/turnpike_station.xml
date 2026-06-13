@@ -2,7 +2,7 @@
  <pos x="-4572.698915" y="5352.948853"/>
  <GFX>
   <space>station-commerce2</space>
-  <exterior>forest</exterior>
+  <exterior>station03.avif</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
