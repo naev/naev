@@ -332,12 +332,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
    while !unsafe { *list }.is_null() {
       unsafe {
          let filename = CStr::from_ptr(*list).to_str().unwrap().to_owned();
-         // Even though physfs internally uses '/', for some reason, enumerating on windows can
-         // contain backslashes, so just replace them on the platform
-         #[cfg(windows)]
-         res.push(filename.replace('\\', "/"));
-         #[cfg(not(windows))]
-         res.push(filename);
+         res.push(filename)
       }
       list = ((list as usize) + std::mem::size_of_val(&list)) as _;
    }

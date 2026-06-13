@@ -999,7 +999,7 @@ pub fn load() -> Result<()> {
    let base: PathBuf = "factions/".into();
    let files: Vec<_> = ndata::read_dir(&base)?
       .into_iter()
-      .filter(|filename| filename.extension() == Some(OsStr::new("xml")))
+      .filter(|filename| PathBuf::from(filename).extension() == Some(OsStr::new("xml")))
       .collect();
    let mut data = FACTIONS.write().unwrap();
    let mut load = SecondaryMap::new();
@@ -1025,7 +1025,7 @@ pub fn load() -> Result<()> {
             |filename| match FactionData::new(&ctx, base.join(filename)) {
                Ok(sp) => Some(sp),
                Err(e) => {
-                  warn!("Unable to load Faction '{}': {e}", filename.display());
+                  warn!("Unable to load Faction '{}': {e}", filename);
                   None
                }
             },

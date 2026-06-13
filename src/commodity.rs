@@ -341,7 +341,7 @@ pub fn load() -> Result<()> {
    let base: PathBuf = "commodities/".into();
    let files: Vec<_> = ndata::read_dir(&base)?
       .into_iter()
-      .filter(|filename| filename.extension() == Some(OsStr::new("xml")))
+      .filter(|filename| PathBuf::from(filename).extension() == Some(OsStr::new("xml")))
       .collect();
    let mut data = COMMODITIES.write().unwrap();
    let mut load = SecondaryMap::new();
