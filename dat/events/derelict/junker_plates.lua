@@ -7,7 +7,7 @@ local OUTFIT = outfit.get("Junker Pack")
 
 return function ()
    -- Have gotten the pack already
-   if player.outfitNum(OUTFIT) <= 0 then
+   if player.outfitNum(OUTFIT) > 0 then
       return
    end
    -- Must be a system the junker likes
