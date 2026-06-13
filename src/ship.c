@@ -654,7 +654,7 @@ int ship_gfxLoadPost3D( Ship *s )
    if ( nmounts > 0 ) {
       ship_setFlag( s, SHIP_3DMOUNTS );
       if ( nmounts < array_size( s->outfit_weapon ) )
-         WARN( _( "Number of 3D weapon mounts from GLTF file for ship '%s' "
+         INFO( _( "Number of 3D weapon mounts from GLTF file for ship '%s' "
                   "is less than the "
                   "number of ship weapons! Got %d, expected at least %d." ),
                s->name, nmounts, array_size( s->outfit_weapon ) );

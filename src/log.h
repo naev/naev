@@ -16,6 +16,7 @@
       info_rust( _LOGBUF );                                                    \
    } while ( 0 )
 #define LOGERR LOG
+#define INFO LOG
 #define WARN( str, ... )                                                       \
    do {                                                                        \
       char _LOGBUF[LOGMAX];                                                    \
