@@ -77,7 +77,7 @@ function accept ()
 
    vn.label("01_astra_vigilis")
    npc(_([["You must have heard of us. The Astra Vigilis is the largest mercenary guild of the Space Trader's Society. We play an important role in keeping peace and order. Our mere existence is enough to deter piracy and law-breaking from happening in the first place!"]]))
-   npc(_([[They lean forward with meticulously calculated glean of excitement in their eyes.
+   npc(_([[They lean forward with a meticulously calculated gleam of excitement in their eyes.
 "Not only is the pay great, but as you get a better reputation for a job well done you'll get access to a lot of fancy new perks. However, the adrenaline rush from bounty hunting itself is the largest reward of all!"]]))
    vn.menu{
       { _([["If the Astra Vigilis is so good, why so many pirates then?"]]), "01_pirates" },
