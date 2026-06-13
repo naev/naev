@@ -30,7 +30,7 @@ return {
       } )
       local m = p:memory()
       if not m.lootables then
-      m.lootables = {}
+         m.lootables = {}
       end
       m.lootables["encrypted_data_matrix"] = 2
       m.capturable = true
@@ -45,7 +45,7 @@ return {
          table.insert( enemies, e )
       end
       return enemies
-   end,  
+   end,
    cond = function ()
       return var.peek("bounty_goddard_espionage_1")
          and (var.peek("astra_vigilis_points") or 0) > 200

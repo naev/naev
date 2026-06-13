@@ -32,7 +32,7 @@ return {
       } )
       local m = p:memory()
       if not m.lootables then
-      m.lootables = {}
+         m.lootables = {}
       end
       m.lootables["encrypted_data_matrix"] = 1
       m.capturable = true

@@ -3,7 +3,7 @@
   <slot>weapon</slot>
   <size>large</size>
   <licence>Heavy Weapon</licence>
-  <rarity>2</rarity>  
+  <rarity>2</rarity>
   <mass>24</mass>
   <price>375000</price>
   <description>A recent House Goddard innovation, the Railcannon uses heavy magnetic pulses to accelerate multiple railgun-caliber projectiles at a target vector, with some inaccuracy. Capable of extreme damage at close ranges, it does however compare poorly to the tried and true Railgun in long ranged combat.</description>

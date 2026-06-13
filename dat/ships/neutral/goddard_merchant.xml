@@ -1,6 +1,6 @@
 <ship name="Goddard Merchantman" inherits="Goddard">
  <gfx sy="12" sx="12" size="125">goddard_merchant.gltf</gfx>
- <points>150</points> 
+ <points>150</points>
  <rarity>2</rarity>
  <price>6850000</price>
  <class>Bulk Freighter</class>

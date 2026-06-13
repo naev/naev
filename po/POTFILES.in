@@ -545,6 +545,7 @@ dat/outfits/weapons/plasma_eruptor.xml
 dat/outfits/weapons/plasma_turret_mk1.xml
 dat/outfits/weapons/plasma_turret_mk2.xml
 dat/outfits/weapons/ragnarok_beam.xml
+dat/outfits/weapons/railcannon.xml
 dat/outfits/weapons/railgun.xml
 dat/outfits/weapons/railgun_turret.xml
 dat/outfits/weapons/razor_artillery_s1.xml
@@ -3124,6 +3125,9 @@ dat/events/priority_bounty/bounties/bounty_dvaered_flf_3.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_1.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_2.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_3.lua
+dat/events/priority_bounty/bounties/bounty_goddard_espionage_1.lua
+dat/events/priority_bounty/bounties/bounty_goddard_espionage_2.lua
+dat/events/priority_bounty/bounties/bounty_goddard_espionage_3.lua
 dat/events/priority_bounty/bounties/bounty_sirius_conversion_1.lua
 dat/events/priority_bounty/bounties/bounty_sirius_conversion_2.lua
 dat/events/priority_bounty/bounties/bounty_sirius_conversion_3.lua
