@@ -76,7 +76,7 @@ function accept ()
    }
 
    vn.label("01_astra_vigilis")
-   npc(_([["You must have heard of us. The Astra Vigilis is the largest merceneary guild of the Space Trader's Society. We play an important role in keeping peace and order. Our mere existence is enough to deter piracy and law-breaking from happening in the first place!"]]))
+   npc(_([["You must have heard of us. The Astra Vigilis is the largest mercenary guild of the Space Trader's Society. We play an important role in keeping peace and order. Our mere existence is enough to deter piracy and law-breaking from happening in the first place!"]]))
    npc(_([[They lean forward with meticulously calculated glean of excitement in their eyes.
 "Not only is the pay great, but as you get a better reputation for a job well done you'll get access to a lot of fancy new perks. However, the adrenaline rush from bounty hunting itself is the largest reward of all!"]]))
    vn.menu{
@@ -96,7 +96,7 @@ function accept ()
    vn.label("01_details")
    npc(_([[Their eyes bright in a way only recruiters can do.
 "Great! Now, joining the Astra Vigilis isn't as simple as just doing paperwork or buying a mercenary license. You have to prove that you have the prowess to take down bounties."]]))
-   npc(fmt.f(_([["It seems like there's just the thing for you. There's a pirate by the name of {name} who is usually raiding around the {sys} system, and is flying a {ship}. Cleaning them out would make you eligible for joining the Astral Vigilis and partaking in much more challenging requests in the future. What do you say? Are you ready to go guns blazing?"]]), {
+   npc(fmt.f(_([["It seems like there's just the thing for you. There's a pirate by the name of {name} who is usually raiding around the {sys} system, and is flying a {ship}. Cleaning them out would make you eligible for joining the Astra Vigilis and partaking in much more challenging requests in the future. What do you say? Are you ready to go guns blazing?"]]), {
       name  = mem.name,
       sys   = mem.sys,
       ship  = SHIP,
