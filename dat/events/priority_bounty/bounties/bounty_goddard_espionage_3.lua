@@ -52,4 +52,8 @@ return {
       return var.peek("bounty_goddard_espionage_2")
          and (var.peek("astra_vigilis_points") or 0) > 300
    end,
+   completefunc = function ()
+      diff.apply("railcannon_available")
+      return true -- Doesn't block normal finishing
+   end,
 }
