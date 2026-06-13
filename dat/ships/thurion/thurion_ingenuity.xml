@@ -28,7 +28,7 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon y="0" h="-2" size="medium" x="-3"/> 
+  <weapon y="0" h="-2" size="medium" x="-3"/>
   <weapon y="-5" h="-2" size="small" x="8"/>
   <weapon y="5" h="-2" size="small" x="8"/>
   <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
@@ -48,9 +48,9 @@
  </slots>
  <stats>
   <shield_mod>10</shield_mod>
-  <shield_regen_mod>15</shield_regen_mod> 
+  <shield_regen_mod>15</shield_regen_mod>
   <ew_hide>-25</ew_hide>
   <nebu_absorb>25</nebu_absorb>
-  <jam_chance>40</jam_chance>  
+  <jam_chance>40</jam_chance>
  </stats>
 </ship>

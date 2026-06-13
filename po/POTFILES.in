@@ -258,12 +258,14 @@ dat/outfits/core_system/small/milspec_prometheus_2203_core_system.xml
 dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml
 dat/outfits/core_system/small/previous_generation_small_systems.xml
 dat/outfits/core_system/small/unicorp_pt16_core_system.xml
+dat/outfits/fighter_bays/ancestor_bay.xml
 dat/outfits/fighter_bays/drone_bay.xml
 dat/outfits/fighter_bays/empire_lancelot_bay.xml
 dat/outfits/fighter_bays/gorgon_lancelot_bay.xml
 dat/outfits/fighter_bays/hyena_bay.xml
 dat/outfits/fighter_bays/hyena_dock.xml
 dat/outfits/fighter_bays/lancelot_bay.xml
+dat/outfits/fighter_bays/pirate_ancestor_dock.xml
 dat/outfits/fighter_bays/pirate_hyena_bay.xml
 dat/outfits/fighter_bays/pirate_hyena_dock.xml
 dat/outfits/fighter_bays/proteron_dalton_bay.xml
@@ -3679,10 +3681,12 @@ dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
 dat/scripts/equipopt/fighterbays.lua
+dat/scripts/equipopt/fighterbays/ancestor.lua
 dat/scripts/equipopt/fighterbays/black_diamond.lua
 dat/scripts/equipopt/fighterbays/empire_lancelot.lua
 dat/scripts/equipopt/fighterbays/hyena.lua
 dat/scripts/equipopt/fighterbays/lancelot.lua
+dat/scripts/equipopt/fighterbays/pirate_ancestor.lua
 dat/scripts/equipopt/fighterbays/pirate_hyena.lua
 dat/scripts/equipopt/fighterbays/proteron_dalton.lua
 dat/scripts/equipopt/fighterbays/sirius_fidelity.lua

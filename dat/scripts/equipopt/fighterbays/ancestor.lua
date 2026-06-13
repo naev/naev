@@ -16,7 +16,7 @@ return {
             hull_secondary = outfit.get("Unicorp D-2 Light Plating"),
             -- Other outfits
             outfit.get("TeraCom Vengeance Launcher"),
-			outfit.get("TeraCom Banshee Launcher"),
+            outfit.get("TeraCom Banshee Launcher"),
             outfit.get("TeraCom Mace Launcher"),
             outfit.get("TeraCom Mace Launcher"),
          }
