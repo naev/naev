@@ -1873,7 +1873,7 @@ static int aiL_face( lua_State *L )
       double d = lua_tonumber( L, 1 );
       diff     = angle_diff( cur_pilot->solid.dir, d );
       /* Make pilot turn. */
-      pilot_turn = k_diff * diff;
+      pilot_turn = k_diff * diff / ( cur_pilot->turn * ai_dt );
       /* Return angle away from target. */
       lua_pushnumber( L, ABS( diff ) );
       return 1;
@@ -1916,7 +1916,7 @@ static int aiL_face( lua_State *L )
    diff = angle_diff( cur_pilot->solid.dir, atan2( dy, dx ) );
 
    /* Make pilot turn. */
-   pilot_turn = k_diff * diff;
+   pilot_turn = k_diff * diff / ( cur_pilot->turn * ai_dt );
 
    /* Return angle away from target. */
    lua_pushnumber( L, ABS( diff ) );
