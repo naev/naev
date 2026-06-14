@@ -6,7 +6,9 @@
   <nolanes/>
  </general>
  <pos x="375.276915" y="-1342.924876"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Lazuli">
    <hide>1</hide>
