@@ -9,7 +9,7 @@ local bioship = require 'bioship'
 local ai_setup = require "ai.core.setup"
 local fmt = require "format"
 local lf = require "love.filesystem"
-local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+local function choose_one( t ) return t[ rnd.rnd(#t) ] end
 
 local fighterbays_data = {}
 for k,v in ipairs(lf.getDirectoryItems("scripts/equipopt/fighterbays")) do
@@ -423,7 +423,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Special case bioships
    if pt.bioship and not p:shipvarPeek("bioship_init") then
       local stage = bioship.maxstage( p )
-      bioship.simulate( p, rnd.rnd(1,stage) )
+      bioship.simulate( p, rnd.rnd(stage) )
    end
 
    -- Handle cores
