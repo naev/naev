@@ -1837,10 +1837,10 @@ impl UserData for FactionRef {
                      enemies,
                      // TODO more stuff
                      f_static: true,
-                     f_invisible: base.f_invisible,
                      f_known: base.f_known,
                      f_dynamic: true,
                      f_useshiddenjumps: base.f_useshiddenjumps,
+                     f_invisible: true,
                      tags: base.tags.clone(),
                      ..Default::default()
                   },
@@ -1855,6 +1855,7 @@ impl UserData for FactionRef {
                      ai,
                      f_dynamic: true,
                      f_static: true,
+                     f_invisible: true,
                      ..Default::default()
                   },
                   None,
@@ -1865,7 +1866,7 @@ impl UserData for FactionRef {
                player: fd.player_def,
                p_override: None,
                f_known: fd.f_known,
-               f_invisible: fd.f_invisible,
+               f_invisible: true,
             });
 
             // We have to first see if it exists, and if so, we just update that
