@@ -244,7 +244,7 @@ pub fn update(dt: f64) {
                continue;
             }
 
-            if !g.gather_pilot(ps) {
+            if g.gather_pilot(ps) {
                return false;
             }
          }
