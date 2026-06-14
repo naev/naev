@@ -74,6 +74,11 @@
 #ifndef __VALGRIND_H
 #define __VALGRIND_H
 
+// Disable valgrind stuff when not compiling in debug mode
+#if !DEBUGGING
+#  define NVALGRIND
+#endif
+
 
 /* ------------------------------------------------------------------ */
 /* VERSION NUMBER OF VALGRIND                                         */
