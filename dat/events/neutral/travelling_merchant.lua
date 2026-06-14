@@ -255,7 +255,7 @@ function gen_outfits ()
    for k,v in ipairs(special_variables) do
       local test = var.peek(v[1])
       if v[3] then
-         test = (test >= v[3])
+         test = ((test or 0) >= v[3])
       end
       if player.outfitNum( v[2] ) <= 0 and test then
          table.insert( outfits, v[2] )
