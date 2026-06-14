@@ -3,8 +3,7 @@ require "ships.lua.zalek"
 local fmt = require "format"
 
 local OKTYPES = {
-   ["Beam Cannon"] = true,
-   ["Beam Turret"] = true,
+   ["Beam Weapon"] = true,
    ["Fighter Bay"] = true,
 }
 local BONUSES = {
@@ -26,7 +25,7 @@ function init( p )
 
    local ok = true
    for k,o in ipairs(p:outfitsList("weapon")) do
-      local t = o:type()
+      local t = o:typeBroad()
       if not OKTYPES[t] then
          ok = false
          break
@@ -34,9 +33,8 @@ function init( p )
    end
 
    -- Add bonuses if ship has only beam / fighter bays
+   p:shippropReset()
    if ok then
       p:shippropSet( BONUSES )
-   else
-      p:shippropReset()
    end
 end
