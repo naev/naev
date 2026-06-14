@@ -794,7 +794,7 @@ static int linoptL_readProblem( lua_State *L )
    lp.prob = glp_create_prob();
    ret     = glpk_format ? glp_read_prob( lp.prob, 0, fpath )
                          : glp_read_mps( lp.prob, GLP_MPS_FILE, NULL, fpath );
-   free( fpath );
+   SDL_free( fpath );
    if ( ret != 0 ) {
       glp_delete_prob( lp.prob );
       return NLUA_ERROR( L, _( "Failed to read LP problem \"%s\"!" ), fname );
@@ -827,7 +827,7 @@ static int linoptL_writeProblem( lua_State *L )
    SDL_asprintf( &fpath, "%s/%s", dirname, fname );
    ret = glpk_format ? glp_write_prob( lp->prob, 0, fpath )
                      : glp_write_mps( lp->prob, GLP_MPS_FILE, NULL, fpath );
-   free( fpath );
+   SDL_free( fpath );
    lua_pushboolean( L, ret == 0 );
    return 1;
 }
