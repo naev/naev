@@ -1836,9 +1836,12 @@ impl UserData for FactionRef {
                      allies,
                      enemies,
                      // TODO more stuff
-                     tags: base.tags.clone(),
-                     f_dynamic: true,
                      f_static: true,
+                     f_invisible: base.f_invisible,
+                     f_known: base.f_known,
+                     f_dynamic: true,
+                     f_useshiddenjumps: base.f_useshiddenjumps,
+                     tags: base.tags.clone(),
                      ..Default::default()
                   },
                   fct.api.clone(),
