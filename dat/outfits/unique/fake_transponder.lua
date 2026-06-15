@@ -9,16 +9,18 @@
 --]]
 -- This outfit applies to all factions it is illegal with!
 -- Creates this table once when loading data.
-local factions
+local FACTIONS
 function onload( o )
-   factions = o:illegality()
+   FACTIONS = o:illegality()
+   -- Not illegal to independent but resets them too
+   table.insert( FACTIONS, faction.get("Independent") )
 end
 
 local function reset( p, po )
    -- Only works on the player
    if p ~= player.pilot() then return end
 
-   for k,f in ipairs(factions) do
+   for k,f in ipairs(FACTIONS) do
       local ds = f:reputationDefault() -- default standing
       local os = f:reputationOverride()
       if not os then
@@ -37,7 +39,7 @@ local function disable( p, po, domsg )
    if not mem.isactive then return end
 
    -- Clear overrides
-   for k,f in ipairs(factions) do
+   for k,f in ipairs(FACTIONS) do
       local ds = f:reputationDefault() -- default standing
       local os = f:reputationOverride()
       if os==ds then
@@ -66,7 +68,7 @@ end
 function onscanned( p, po, scanner )
    -- Only uncovered by people who care
    local fct = scanner:faction()
-   if inlist( factions, fct ) then
+   if inlist( FACTIONS, fct ) then
       disable( p, po, true )
    end
 end
