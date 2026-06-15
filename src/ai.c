@@ -1858,7 +1858,7 @@ static int aiL_face( lua_State *L )
 
    /* Default gain. */
    k_diff = 1. / ( cur_pilot->turn * ai_dt );
-   k_vel  = 100.; /* overkill gain! */
+   k_vel  = 10.; /* overkill gain! */
 
    /* Check if must invert. */
    if ( lua_toboolean( L, 2 ) )
@@ -1873,7 +1873,7 @@ static int aiL_face( lua_State *L )
       double d = lua_tonumber( L, 1 );
       diff     = angle_diff( cur_pilot->solid.dir, d );
       /* Make pilot turn. */
-      pilot_turn = k_diff * diff / ( cur_pilot->turn * ai_dt );
+      pilot_turn = k_diff * diff;
       /* Return angle away from target. */
       lua_pushnumber( L, ABS( diff ) );
       return 1;
@@ -1916,7 +1916,7 @@ static int aiL_face( lua_State *L )
    diff = angle_diff( cur_pilot->solid.dir, atan2( dy, dx ) );
 
    /* Make pilot turn. */
-   pilot_turn = k_diff * diff / ( cur_pilot->turn * ai_dt );
+   pilot_turn = k_diff * diff;
 
    /* Return angle away from target. */
    lua_pushnumber( L, ABS( diff ) );
