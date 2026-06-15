@@ -11,14 +11,14 @@ return {
          outfit.get("Convulsion Launcher"),
       }
       local nebu = select(2, system.cur():nebula())
-      if nebu >= 7 then
+      if nebu >= 8 then
          o["systems"] = outfit.get("Milspec Aegis 2201 Core System")
          table.insert(o, outfit.get("Nebula Resistant Coating"))
       else
          table.insert(o, outfit.get("Nexus Concealment Coating"))
          table.insert(o, outfit.get("Laser Cannon MK1"))
       end
-      if nebu >= 14 then
+      if nebu >= 17 then
          o["engines"] = outfit.get("Melendez Ox Engine")
          table.insert(o, outfit.get("Reactor Class I"))
          table.insert(o, outfit.get("Small Shield Booster"))
