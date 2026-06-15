@@ -2024,7 +2024,7 @@ static int aiL_careful_face( lua_State *L )
    diff = angle_diff( cur_pilot->solid.dir, VANGLE( F ) );
 
    /* Make pilot turn. */
-   pilot_turn = k_diff * diff;
+   pilot_turn = k_diff * diff / ( cur_pilot->turn * ai_dt );
 
    /* Return angle away from target. */
    lua_pushnumber( L, ABS( diff ) );
@@ -2044,7 +2044,7 @@ static int aiL_careful_face( lua_State *L )
  */
 static int aiL_aim( lua_State *L )
 {
-   double diff, mod, angle;
+   double diff, angle;
 
    if ( lua_isasteroid( L, 1 ) ) {
       const Asteroid *a = luaL_validasteroid( L, 1 );
@@ -2056,9 +2056,8 @@ static int aiL_aim( lua_State *L )
    }
 
    /* Calculate what we need to turn */
-   mod        = 1. / ( cur_pilot->turn * ai_dt );
    diff       = angle_diff( cur_pilot->solid.dir, angle );
-   pilot_turn = mod * diff;
+   pilot_turn = diff / ( cur_pilot->turn * ai_dt );
 
    lua_pushnumber( L, ABS( diff ) );
    return 1;
