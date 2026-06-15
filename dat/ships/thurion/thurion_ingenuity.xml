@@ -51,6 +51,6 @@
   <shield_regen_mod>15</shield_regen_mod>
   <ew_hide>-25</ew_hide>
   <nebu_absorb>25</nebu_absorb>
-  <jam_chance>40</jam_chance>
+  <jam_chance>35</jam_chance>
  </stats>
 </ship>

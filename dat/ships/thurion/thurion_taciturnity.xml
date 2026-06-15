@@ -48,10 +48,13 @@
   <structure size="medium"/>
  </slots>
  <stats>
+  <shield_mod>10</shield_mod>
+  <shield_regen_mod>15</shield_regen_mod>
   <cargo_mod>20</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
   <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
+  <jam_chance>35</jam_chance>
  </stats>
  <tags>
   <tag>transport</tag>

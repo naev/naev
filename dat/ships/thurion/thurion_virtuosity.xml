@@ -49,6 +49,8 @@
   <structure size="medium"/>
  </slots>
  <stats>
+  <shield_mod>10</shield_mod>
+  <shield_regen_mod>15</shield_regen_mod>
   <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
   <launch_calibration>-50</launch_calibration>
