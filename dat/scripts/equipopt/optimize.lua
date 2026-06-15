@@ -818,7 +818,11 @@ function optimize.optimize( p, cores, outfit_list, params )
       if not z then
          if try >= 5 then
             -- Maybe should be error instead?
-            warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
+            warn(fmt.f("Failed to solve equipopt linear program for pilot '{name}' ('{ship}' ship): {err}", {
+               name = p:name(),
+               ship = p:ship():name(),
+               err  = x
+            }))
             print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
          end
 
@@ -829,7 +833,11 @@ function optimize.optimize( p, cores, outfit_list, params )
             for j,o in ipairs(s.outfits) do
                if x[c] == 1 then
                   if not  p:outfitAddSlot( o, s.id, true ) then
-                     warn(string.format(_("Unable to equip outfit '%s' on '%s'!"), o,  p:name()))
+                     warn(fmt.f("Unable to equip outfit '{outfit}' on '{name}' ('{ship}' ship)!", {
+                        outfit= o,
+                        name  = p:name(),
+                        ship  = p:ship():name(),
+                     }))
                   end
                end
                c = c + 1
@@ -843,13 +851,22 @@ function optimize.optimize( p, cores, outfit_list, params )
       if not z or (stn.energy_regen < energygoal and try <= 5 and (emod*energygoal - stn.energy_regen) > min_energy) then
          p:outfitsEquip( outfits_base ) -- Should restore initial outfits
          emod = emod / 1.5
-         print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 5, emod ))
+         print(fmt.f("Pilot '{name}' ('{ship}' ship): optimization attempt {try} of {trymax}: emod={emod}", {
+            name = p:name(),
+            ship = p:ship():name(),
+            try  = try,
+            trymax = 5,
+            emod = string.format("%.3f", emod),
+         }))
          lp:set_row( 2, "energy_regen", math.max( min_energy, emod*energygoal - stn.energy_regen ))
          done = false
       end
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
    if not done then
-      warn(string.format(_("Failed to equip pilot '%s'!"), p:name()))
+      warn(fmt.f("Failed to equip pilot '{name}' ('{ship}' ship)!", {
+         name = p:name(),
+         ship = p:ship():name(),
+      }))
       print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
       return false
    end
@@ -865,7 +882,11 @@ function optimize.optimize( p, cores, outfit_list, params )
    if __debugging then
       local b, s = p:spaceworthy()
       if not b then
-         warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
+         warn(fmt.f("Pilot '{name}' ('{ship}' ship) is not space worthy after equip script is run! Reason: {reason}", {
+            name = p:name(),
+            ship = p:ship():name(),
+            reason = s,
+         }))
          print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
          return false
       end
