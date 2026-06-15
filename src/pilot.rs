@@ -17,6 +17,16 @@ impl PilotWrapper {
       let p = unsafe { self.0.as_ref() };
       Vector2::new(p.solid.pos.x, p.solid.pos.y)
    }
+
+   pub fn vel(&self) -> Vector2<f64> {
+      let p = unsafe { self.0.as_ref() };
+      Vector2::new(p.solid.vel.x, p.solid.vel.y)
+   }
+
+   pub fn speed(&self) -> f64 {
+      let p = unsafe { self.0.as_ref() };
+      p.speed
+   }
 }
 
 pub fn player() -> Option<PilotWrapper> {

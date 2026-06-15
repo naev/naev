@@ -14,6 +14,7 @@ use tracing::instrument;
 
 const GATHER_DIST: f64 = 30.0;
 const GATHER_DIST2: f64 = GATHER_DIST * GATHER_DIST;
+const GATHER_SPEED_RATIO: f64 = 0.5;
 const NOSCOOP_DELAY: f64 = 2.0;
 
 static NOSCOOP_TIMER: AtomicF64 = AtomicF64::new(0.0);
@@ -241,6 +242,10 @@ pub fn update(dt: f64) {
             }
 
             if (ps.pos() - g.pos).norm_squared() > GATHER_DIST2 {
+               continue;
+            }
+
+            if (ps.vel() - g.vel).norm_squared() > GATHER_SPEED_RATIO * ps.speed() {
                continue;
             }
 
