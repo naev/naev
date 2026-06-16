@@ -2,18 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "naev.h"
 /** @endcond */
 
-#include "lualib.h"
-
 #include "constants.h"
 #include "log.h"
-#include "ndata.h"
-#include "nlua.h"
 #include "physics.h"
 
 /**
