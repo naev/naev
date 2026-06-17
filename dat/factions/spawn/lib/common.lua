@@ -195,6 +195,10 @@ function scom.spawn( pilots )
    -- Get properties prioritizing overwrites
    local patrol    = getprop( scom._params.patrol,    pilots.__patrol )
    local stealth   = getprop( scom._params.stealth,   pilots.__stealth )
+   local guerrilla = getprop( scom._params.guerrilla, pilots.__guerilla )
+   if stealth then
+      guerrilla = true
+   end
    local ai        = getprop( scom._params.ai,        pilots.__ai )
    local nofleet   = getprop( scom._params.nofleet,   pilots.__nofleet )
    local formation = getprop( scom._params.formation, pilots.__formation )
@@ -212,8 +216,8 @@ function scom.spawn( pilots )
    local leader
    local origin
    if issim then
-      -- Stealth should avoid enemies nearby
-      if stealth then
+      -- guerrilla should avoid enemies nearby
+      if guerrilla then
          local r = system.cur():radius() * 0.8
          local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
          local m = 3000 -- margin
@@ -232,7 +236,7 @@ function scom.spawn( pilots )
       end
    end
    if not origin then
-      origin = pilot.choosePoint( fct, false, stealth ) -- Find a suitable spawn point
+      origin = pilot.choosePoint( fct, false, guerrilla ) -- Find a suitable spawn point
    end
    for _k,v in ipairs(pilots) do
       local params = v.params or {}
