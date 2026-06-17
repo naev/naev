@@ -356,7 +356,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
    let mut res = vec![];
    while !unsafe { *list }.is_null() {
       unsafe {
-         let filename = CStr::from_ptr(*list).to_str().unwrap().to_owned();
+         let filename = CStr::from_ptr(*list).to_string_lossy().to_string();
          res.push(filename)
       }
       list = ((list as usize) + std::mem::size_of_val(&list)) as _;
@@ -401,7 +401,7 @@ pub fn blacklisted<P: AsRef<Path>>(filename: P) -> bool {
       return false;
    }
    let realdir = unsafe { CStr::from_ptr(realdir) };
-   realdir.to_str().unwrap() == "naev.BLACKLIST"
+   realdir.to_string_lossy() == "naev.BLACKLIST"
 }
 
 use symphonia::core::io::MediaSource;
@@ -439,7 +439,7 @@ pub fn search_path() -> Result<Vec<String>> {
       if sp.is_null() {
          break;
       }
-      paths.push(unsafe { CStr::from_ptr(sp).to_str().unwrap().to_owned() });
+      paths.push(unsafe { CStr::from_ptr(sp).to_string_lossy().to_string() });
       i += 1;
    }
    unsafe { naevc::PHYSFS_freeList(search_path as *mut c_void) };
