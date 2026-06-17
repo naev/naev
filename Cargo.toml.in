@@ -64,7 +64,7 @@ collide = { path="@BUILD@/src/collide" }
 physics = { path="@BUILD@/src/physics" }
 pluginmgr = { path="@BUILD@/src/pluginmgr" }
 pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
-formatx = "0.2"
+formatx = "0.3"
 glow = "0.17"
 nalgebra = { version = "0.35", features = ["bytemuck", "encase", "serde-serialize"] }
 encase = { version = "0.12" } # Needed for shader voodoo
@@ -94,7 +94,7 @@ base64 = "0.22"
 iced = { version = "0.14.0", default-features = false, features = ["wayland", "x11", "wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
-itertools = "0.14"
+itertools = "0.15"
 tinyvec = "1"
 
 # Plugin Manager dependencies

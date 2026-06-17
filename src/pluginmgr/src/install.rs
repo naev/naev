@@ -43,7 +43,7 @@ impl Installer {
             .send(Progress {
                message: formatx!(
                   pgettext("plugins", "Installing plugin '{}'"),
-                  &self.plugin.name
+                  self.plugin.name
                )
                .ok(),
                value: 0.0,
@@ -66,7 +66,7 @@ impl Installer {
             .send(Progress {
                message: formatx!(
                   pgettext("plugins", "Updating plugin '{}'"),
-                  &self.plugin.name
+                  self.plugin.name
                )
                .ok(),
                value: 0.0,
@@ -160,7 +160,7 @@ impl Installer {
          fs::write(&dest_zip, &bytes)?;
          info!(
             "Successfully updated '{}' to version {:?}",
-            &info.name, info.version
+            info.name, info.version
          );
          Ok(())
       })
@@ -173,7 +173,7 @@ impl Installer {
             .send(Progress {
                message: formatx!(
                   pgettext("plugins", "Uninstalling plugin '{}'"),
-                  &self.plugin.identifier
+                  self.plugin.identifier
                )
                .ok(),
                value: 0.0,

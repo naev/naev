@@ -93,6 +93,7 @@ impl Gatherable {
       if q > 0 {
          if isplayer {
             let msg = self.commodity.with(|c| {
+               let name = c.name();
                formatx!(
                   ngettext(
                      "{} tonne of {} gathered.",
@@ -100,7 +101,7 @@ impl Gatherable {
                      q as u64
                   ),
                   q,
-                  c.name()
+                  name
                )
                .unwrap_or_else(|e| {
                   warn_err!(e);

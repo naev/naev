@@ -1885,9 +1885,9 @@ impl System {
       if al_renderer != "OpenAL Soft" {
          warn!("Not using OpenAL Soft renderer! Things may catch on fire.");
       }
-      debugx!(gettext("Renderer: {}"), &al_renderer);
+      debugx!(gettext("Renderer: {}"), al_renderer);
       let al_version = al::get_parameter_str(AL_VERSION)?;
-      debugx!(gettext("Version: {}"), &al_version);
+      debugx!(gettext("Version: {}"), al_version);
       let mut extensions: Vec<String> = Vec::new();
       if has_debug {
          extensions.push("debug".to_string());
@@ -1919,7 +1919,8 @@ impl System {
       if has_system_events {
          extensions.push("system_events".to_string());
       }
-      debugx!(gettext("   with {}"), extensions.join(", "));
+      let extstr = extensions.join(", ");
+      debugx!(gettext("   with {}"), extstr);
       debug!("");
 
       // Create the compression sound here

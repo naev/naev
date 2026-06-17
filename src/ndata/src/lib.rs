@@ -97,7 +97,8 @@ pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
          .format("%Y-%m-%d_%H-%M-%S.txt")
          .to_string(),
    );
-   infox!(gettext("Logging to {}"), logfile.to_string_lossy());
+   let logging = logfile.display();
+   infox!(gettext("Logging to {}"), logging);
    let guard = match nlog::set_log_file(&logfile.to_string_lossy()) {
       Ok(g) => Some(g),
       Err(e) => {
@@ -211,8 +212,8 @@ pub fn check_version() -> anyhow::Result<()> {
          gettext(
             "ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}."
          ),
-         &*version::VERSION_HUMAN,
-         &version_str
+         *version::VERSION_HUMAN,
+         version_str
       )?;
       warn!("{}", &err_str);
       if diff.abs() > 2 {
