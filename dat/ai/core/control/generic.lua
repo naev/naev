@@ -1106,6 +1106,7 @@ end
 mem._taunted = {}
 function consider_taunt( target, offensive )
    if mem.carried then return end -- Fighters don't taunt
+   if ai.pilot():disabled() then return end -- disabled don't taunt
    local rtarget = target:leader() or target -- Always consider leader
    local id = rtarget:id()
    local last_taunted = mem._taunted[id] or -100
@@ -1247,6 +1248,7 @@ end
 -- Handles generating distress messages
 function gen_distress( target )
    if not mem.distress then return end
+   if ai.pilot():disabled() then return end -- disabled don't distress
 
    -- Must have a valid distress rate
    if mem.distressrate <= 0 then
