@@ -3857,6 +3857,22 @@ Pilot *pilot_setPlayer( Pilot *after )
    return after;
 }
 
+static int nearby_enemy( const vec2 *pos, FactionRef lf )
+{
+   const int      R = 3000; // Range
+   const IntList *qt =
+      pilot_collideQuery( pos->x - R, pos->y - R, pos->x + R, pos->y + R );
+   for ( int i = 0; i < il_size( qt ); i++ ) {
+      const Pilot *plt = pilot_stack[il_get( qt, i, 0 )];
+      if ( !pilot_canTarget( plt ) )
+         continue;
+
+      if ( areEnemiesSystem( plt->faction, lf, cur_system ) )
+         return 1;
+   }
+   return 0;
+}
+
 /**
  * @brief Finds a spawn point for a pilot
  *
@@ -3883,10 +3899,12 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, FactionRef lf,
    for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
       const Spob *pnt = cur_system->spobs[i];
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) ||
-           areEnemies( lf, pnt->presence.faction ) )
+           areEnemiesSystem( lf, pnt->presence.faction, cur_system ) )
          continue;
       if ( spob_isFlag( pnt, SPOB_RESTRICTED ) &&
            !areAllies( lf, pnt->presence.faction ) )
+         continue;
+      if ( guerrilla && nearby_enemy( &pnt->pos, lf ) )
          continue;
       array_push_back( &ind, i );
    }
