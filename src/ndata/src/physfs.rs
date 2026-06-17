@@ -1,6 +1,7 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
 use fs_err as fs;
+use nlog::warn_err;
 use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
@@ -171,10 +172,28 @@ pub struct File {
    //mode: Mode,
 }
 
+#[inline]
+fn pathref_to_cstring<P: AsRef<Path>>(filename: P) -> Result<CString> {
+   if cfg!(windows) {
+      Ok(CString::new(
+         filename
+            .as_ref()
+            .to_string_lossy()
+            .replace('\\', "/")
+            .as_str()
+            .as_bytes(),
+      )?)
+   } else {
+      Ok(CString::new(
+         filename.as_ref().as_os_str().as_encoded_bytes(),
+      )?)
+   }
+}
+
 impl File {
    /// Opens a file with a specific mode.
    pub fn open<P: AsRef<Path>>(filename: P, mode: Mode) -> Result<File> {
-      let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes())?;
+      let c_filename = pathref_to_cstring(&filename)?;
       let raw = unsafe {
          match mode {
             Mode::Append => naevc::PHYSFS_openAppend(c_filename.as_ptr()),
@@ -316,12 +335,18 @@ impl Drop for File {
 }
 
 pub fn exists<P: AsRef<Path>>(path: P) -> bool {
-   let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
+   let c_path = match pathref_to_cstring(&path) {
+      Ok(p) => p,
+      Err(e) => {
+         warn_err!(e);
+         return false;
+      }
+   };
    !matches!(unsafe { naevc::PHYSFS_exists(c_path.as_ptr()) }, 0)
 }
 
 pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
-   let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
+   let c_path = pathref_to_cstring(&path)?;
    let mut list = unsafe { naevc::PHYSFS_enumerateFiles(c_path.as_ptr()) };
    if list.is_null() {
       return Err(error_as_io_error_with_file("PHYSFS_enumerateFiles", path));
@@ -345,7 +370,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
 
 pub fn iostream<P: AsRef<Path>>(filename: P, mode: Mode) -> Result<IOStream<'static>> {
    let raw = unsafe {
-      let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes()).unwrap();
+      let c_filename = pathref_to_cstring(&filename)?;
       let phys = match mode {
          Mode::Append => naevc::PHYSFS_openAppend(c_filename.as_ptr()),
          Mode::Read => naevc::PHYSFS_openRead(c_filename.as_ptr()),
@@ -364,7 +389,13 @@ pub fn iostream<P: AsRef<Path>>(filename: P, mode: Mode) -> Result<IOStream<'sta
 }
 
 pub fn blacklisted<P: AsRef<Path>>(filename: P) -> bool {
-   let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes()).unwrap();
+   let c_filename = match pathref_to_cstring(&filename) {
+      Ok(f) => f,
+      Err(e) => {
+         warn_err!(e);
+         return false;
+      }
+   };
    let realdir = unsafe { naevc::PHYSFS_getRealDir(c_filename.as_ptr()) };
    if realdir.is_null() {
       return false;
@@ -384,7 +415,7 @@ impl MediaSource for File {
 }
 
 pub fn mkdir<P: AsRef<Path>>(path: P) -> Result<()> {
-   let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
+   let c_path = pathref_to_cstring(&path)?;
    match unsafe { naevc::PHYSFS_mkdir(c_path.as_ptr()) } {
       0 => Err(error_as_io_error_with_file("PHYSFS_mkdir", path)),
       _ => Ok(()),
@@ -392,7 +423,7 @@ pub fn mkdir<P: AsRef<Path>>(path: P) -> Result<()> {
 }
 
 pub fn remove_file<P: AsRef<Path>>(path: P) -> Result<()> {
-   let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
+   let c_path = pathref_to_cstring(&path)?;
    match unsafe { naevc::PHYSFS_delete(c_path.as_ptr()) } {
       0 => Err(error_as_io_error_with_file("PHYSFS_delete", path)),
       _ => Ok(()),
