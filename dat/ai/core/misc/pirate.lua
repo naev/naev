@@ -108,7 +108,7 @@ pirate.taunt_list_defensive = {
    _("Ye aim worse than a blindfolded asteroid!"),
    _("Ye call that an attack? Ye're more of a nuisance than a threat!"),
    _("Ye'll have to do better than that, ye spineless amoeba!"),
-   _("Is that the best ye got, ye cowards?"),
+   _("Is that ye best, coward?"),
    _("Ye'll need more than that to scratch me hull!"),
    _("Ye're about as threatening as a malfunctioning Za'lek drone!"),
 }
