@@ -45,7 +45,7 @@ rust-version = @RUSTCVERSION@ # Note this has to be set in meson.build too!
 not_unsafe_ptr_arg_deref = "allow"
 
 [patch.crates-io]
-gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "3def30c9caf96f2dbc85238179ea5a6152c5cf22" }
+gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "50d65229477fe5f785c2c90df21eb59c93ea2261" }
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
