@@ -2675,7 +2675,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
                           temp->u.lau.delay,
                        &disable_rate_opts );
    l = os_printD_rate( temp->summary_raw, l, temp->u.lau.energy, &energy_opts,
-                       1, temp->u.lau.delay * temp->u.lau.energy, &power_opts );
+                       1, temp->u.lau.energy / temp->u.lau.delay, &power_opts );
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration,
                   &penetration_opts );
