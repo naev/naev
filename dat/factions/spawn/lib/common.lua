@@ -14,17 +14,25 @@ local function enemy_nearby( pos, fct )
 end
 
 local function valid_spob( s, fct, guerrilla )
+   -- No spawning from uninhabited spobs
    if not s:services().inhabited then
       return false
    end
+   -- Must not be an enemy
    local sfct = s:faction()
    if fct:areEnemies( sfct ) then
       return false
    end
+   -- Must be ally to spawn from restricted spobs
    local t = s:tags()
    if t.restricted and not fct:areAllies( sfct ) then
       return false
    end
+   -- Only criminals take off from criminal places
+   if not fct:tags().criminal and t.criminal then
+      return false
+   end
+   -- Avoid enemies nearby if spawnining guerrilla style
    if guerrilla and enemy_nearby( s:pos(), fct ) then
       return false
    end
@@ -32,24 +40,30 @@ local function valid_spob( s, fct, guerrilla )
 end
 
 local function valid_jump( j, fct, guerrilla )
+   -- Of course can't be exit only
    if j:exitonly() then
       return false
    end
+   -- Only guerrilla use hidden jumps
    if j:hidden() and not guerrilla then
       return false
    end
+   -- Must have presence on the other side
    local dest = j:dest()
    local pres = dest:presence( fct )
    if pres <= 0 then
       return false
    end
+   -- Only come in from "safe" places
+   --[[
    local limit = 0
    for k,f in ipairs(fct:enemies()) do
       limit = limit + dest:presence( f ) or 0
    end
-   if pres < limit then
+   if pres < limit * 0.5 then
       return false
    end
+   --]]
    return true
 end
 
