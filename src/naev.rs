@@ -405,7 +405,7 @@ fn naevmain() -> Result<()> {
 
       if naevc::conf.devmode != 0 {
          let elapsed = start.elapsed().as_secs_f32();
-         infox!(gettext("Reached main menu in {:.3f} s"), elapsed);
+         infox!(gettext("Reached main menu in {:.3} s"), elapsed);
       } else {
          info!("{}", gettext("Reached main menu"));
       }
