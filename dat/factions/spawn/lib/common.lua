@@ -4,6 +4,94 @@ local lf = require "love.filesystem"
 
 local scom = {}
 
+local function enemy_nearby( pos, fct )
+   for k,v in ipairs(pilot.getEnemies( fct, 3000, pos )) do
+      if not v:disabled() and v:faction():areEnemies( fct ) then
+         return true
+      end
+   end
+   return false
+end
+
+local function valid_spob( s, fct, guerrilla )
+   if not s:services().inhabited then
+      return false
+   end
+   local sfct = s:faction()
+   if fct:areEnemies( sfct ) then
+      return false
+   end
+   local t = s:tags()
+   if t.restricted and not fct:areAllies( sfct ) then
+      return false
+   end
+   if guerrilla and enemy_nearby( s:pos(), fct ) then
+      return false
+   end
+   return true
+end
+
+local function valid_jump( j, fct, guerrilla )
+   if j:exitonly() then
+      return false
+   end
+   if j:hidden() and not guerrilla then
+      return false
+   end
+   local dest = j:dest()
+   local pres = dest:presence( fct )
+   if pres <= 0 then
+      return false
+   end
+   local limit = 0
+   for k,f in ipairs(fct:enemies()) do
+      limit = limit + dest:presence( f ) or 0
+   end
+   if pres < limit then
+      return false
+   end
+   return true
+end
+
+local function choose_point( fct, guerrilla )
+   local scur = system.cur()
+   local candidates = {}
+   for k,v in ipairs(scur:spobs()) do
+      if valid_spob( v, fct, guerrilla ) then
+         table.insert( candidates, v )
+      end
+   end
+   for k,v in ipairs(scur:jumps()) do
+      if valid_jump( v, fct, guerrilla ) then
+         table.insert( candidates, v )
+      end
+   end
+   -- Nothing found, expand with pretty much anything...
+   if #candidates <= 0 then
+      for k,v in ipairs(scur:jumps()) do
+         if not v:exitonly() and not v:hidden() then
+            table.insert( candidates, v )
+         end
+      end
+   end
+   if #candidates <= 0 and guerrilla then
+      for k,v in ipairs(scur:jumps()) do
+         if not v:exitonly() then
+            table.insert( candidates, v )
+         end
+      end
+   end
+   if #candidates <= 0 then
+      warn(fmt.f("unable to find spawn point for faction {fct}",{
+         fct = fct,
+      }))
+      return vec2.new()
+   end
+
+   candidates = rnd.permutation( candidates )
+   return candidates[1]:pos()
+end
+
 --[[--
    Creates a distribution of ships based on variants and weights.
 --]]
@@ -236,7 +324,7 @@ function scom.spawn( pilots )
       end
    end
    if not origin then
-      origin = pilot.choosePoint( fct, false, guerrilla ) -- Find a suitable spawn point
+      origin = choose_point( fct, guerrilla )
    end
    for _k,v in ipairs(pilots) do
       local params = v.params or {}
