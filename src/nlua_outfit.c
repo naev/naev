@@ -771,7 +771,7 @@ static int outfitL_weapStats( lua_State *L )
          break;
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
-         mod_energy = 1.;
+         mod_energy = p->stats.launch_energy;
          mod_damage = p->stats.launch_damage;
          mod_shots  = 1. / p->stats.launch_rate;
          break;
@@ -800,7 +800,7 @@ static int outfitL_weapStats( lua_State *L )
       dps     = shots * mod_damage * dmg->damage;
       disable = shots * mod_damage * dmg->disable;
    }
-   eps = shots * mod_energy * MAX( outfit_energy( o ), 0. );
+   eps = mod_energy * MAX( outfit_energy( o ), 0. );
 
    lua_pushnumber( L, dps );
    lua_pushnumber( L, disable );
