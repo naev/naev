@@ -1,0 +1,8 @@
+<unidiff name="drone_carrier_available">
+ <tech name="Empire Elite Outfits">
+  <item_add>Heavy Drone Bay</item_add>
+ </tech>
+ <tech name="Empire Ships Large">
+  <item_add>Drone Carrier</item_add>
+ </tech>
+</unidiff>

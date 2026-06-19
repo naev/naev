@@ -62,6 +62,24 @@ bhelp.ships = {
       ship.get("Sirius Dogma"),
       ship.get("Sirius Divinity"),
    },
+   zalek = {
+      ship.get("Za'lek Light Drone"),
+      ship.get("Za'lek Heavy Drone"),
+      ship.get("Za'lek Bomber Drone"),
+      ship.get("Za'lek Sting"),
+      ship.get("Za'lek Demon"),
+      ship.get("Za'lek Diablo"),
+      ship.get("Za'lek Mephisto"),
+   },
+   soromid = {
+      ship.get("Soromid Brigand"),
+      ship.get("Soromid Reaver"),
+      ship.get("Soromid Marauder"),
+      ship.get("Soromid Odium"),
+      ship.get("Soromid Nyx"),
+      ship.get("Soromid Ira"),
+      ship.get("Soromid Arx"),
+   },
    proteron = {
       ship.get("Proteron Euler"),
       ship.get("Proteron Dalton"),
@@ -71,6 +89,10 @@ bhelp.ships = {
       ship.get("Proteron Archimedes"),
       ship.get("Proteron Watson"),
    },
+   collective = {
+      ship.get("Drone"),
+      ship.get("Heavy Drone"),
+   },   
 }
 
 function bhelp.choose_ships_from_points_and_capship( capship, shiplist, points )

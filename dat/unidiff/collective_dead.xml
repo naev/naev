@@ -27,9 +27,6 @@
  <tech name="Empire Elite Outfits">
   <item_add>__Collective Outfits</item_add>
  </tech>
- <tech name="Empire Ships Large">
-  <item_add>Drone Carrier</item_add>
- </tech>
  <tech name="Empire Ships Small">
   <item_add>Drone</item_add>
   <item_add>Heavy Drone</item_add>
