@@ -1,15 +1,19 @@
 local fb = require "equipopt.fighterbays"
+local ob -- Lazy load the outfits
 return {
    priority = 10,
    ship = ship.get("Thurion Scintillation"),
    equip = function ( p )
-      local o = {
-         systems = outfit.get("Milspec Thalos 2202 Core System"),
-         engines = outfit.get("Unicorp Hawk 160 Engine"),
-         hull = outfit.get("Unicorp D-2 Light Plating"),
-         outfit.get("Convulsion Launcher"),
-         outfit.get("Convulsion Launcher"),
-      }
+      if not ob then
+         ob = {
+            systems = outfit.get("Milspec Thalos 2202 Core System"),
+            engines = outfit.get("Unicorp Hawk 160 Engine"),
+            hull = outfit.get("Unicorp D-2 Light Plating"),
+            outfit.get("Convulsion Launcher"),
+            outfit.get("Convulsion Launcher"),
+         }
+      end
+      local o = tcopy( ob )
       local nebu = select(2, system.cur():nebula())
       if nebu >= 8 then
          o["systems"] = outfit.get("Milspec Aegis 2201 Core System")
