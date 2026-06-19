@@ -20,7 +20,7 @@ return {
       equipopt.empire( p, {
          outfits_add = {
             "Heavy Drone Bay",
-         },	  
+         },
          prefer = {
             ["Drone Bay"] = 100,
             ["Heavy Drone Bay"] = 100,
@@ -53,8 +53,8 @@ return {
       return diff.isApplied("collective_dead") --Only available post-Collective plot. Serves as worldbuilding for Taomi.
          and (var.peek("astra_vigilis_points") or 0) > 300
    end,
- 	completefunc = function ()
-	  diff.apply("drone_carrier_available") --On completion, add Drone Carrier and Heavy Drone Bay to Empire elite ships & outfits.
-	  return true
+   completefunc = function ()
+      diff.apply("drone_carrier_available") --On completion, add Drone Carrier and Heavy Drone Bay to Empire elite ships & outfits.
+      return true
    end,
 }

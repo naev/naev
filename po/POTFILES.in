@@ -262,6 +262,7 @@ dat/outfits/fighter_bays/ancestor_bay.xml
 dat/outfits/fighter_bays/drone_bay.xml
 dat/outfits/fighter_bays/empire_lancelot_bay.xml
 dat/outfits/fighter_bays/gorgon_lancelot_bay.xml
+dat/outfits/fighter_bays/heavy_drone_bay.xml
 dat/outfits/fighter_bays/hyena_bay.xml
 dat/outfits/fighter_bays/hyena_dock.xml
 dat/outfits/fighter_bays/lancelot_bay.xml
@@ -2824,6 +2825,7 @@ dat/unidiff/antlejosv_8.xml
 dat/unidiff/antlejosv_9.xml
 dat/unidiff/chapter_0.xml
 dat/unidiff/collective_dead.xml
+dat/unidiff/drone_carrier_available.xml
 dat/unidiff/durea_safe.xml
 dat/unidiff/energy_harpoon.xml
 dat/unidiff/eye_of_night_station.xml
@@ -3123,6 +3125,9 @@ dat/events/poi_generator.lua
 dat/events/priority_bounty/bounties/bounty_dvaered_flf_1.lua
 dat/events/priority_bounty/bounties/bounty_dvaered_flf_2.lua
 dat/events/priority_bounty/bounties/bounty_dvaered_flf_3.lua
+dat/events/priority_bounty/bounties/bounty_empire_collective_1.lua
+dat/events/priority_bounty/bounties/bounty_empire_collective_2.lua
+dat/events/priority_bounty/bounties/bounty_empire_collective_3.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_1.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_2.lua
 dat/events/priority_bounty/bounties/bounty_frontier_warlord_3.lua

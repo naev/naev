@@ -92,7 +92,7 @@ bhelp.ships = {
    collective = {
       ship.get("Drone"),
       ship.get("Heavy Drone"),
-   },   
+   },
 }
 
 function bhelp.choose_ships_from_points_and_capship( capship, shiplist, points )

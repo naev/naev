@@ -1,6 +1,5 @@
 local bhelp    = require "events.priority_bounty.helpers"
 local bounty   = require "common.bounty"
-local equipopt = require "equipopt"
 return {
    var            = "bounty_empire_collective_1",
    title          = _("Abominable Intelligence"),
