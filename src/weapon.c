@@ -1684,6 +1684,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
    dmg.damage      = MAX( 0., damage * ( 1. - w->dam_as_dis_mod ) );
    dmg.penetration = odmg->penetration;
    dmg.type        = odmg->type;
+   dmg.knockback   = odmg->knockback;
    dmg.disable     = MAX( 0., w->dam_mod * w->strength * odmg->disable +
                                  damage * w->dam_as_dis_mod );
 
