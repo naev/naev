@@ -43,14 +43,8 @@ msgid "energy"
 msgstr ""
 
 #: dat/damagetype/energy.toml:1
-#: dat/damagetype/energy_noknockback.toml:1
 msgctxt "damagetype"
 msgid "#gEnergy#0"
-msgstr ""
-
-#: dat/damagetype/energy_noknockback.toml:1
-msgctxt "damagetype"
-msgid "energy_noknockback"
 msgstr ""
 
 #: dat/damagetype/explosion_splash.toml:1
