@@ -14,7 +14,6 @@
   <amount>1</amount>
   <trackmin>0</trackmin>
   <trackmax>1000</trackmax>
-  <ammo_mass>0.4</ammo_mass>
   <gfx type="shader" size="13" col_size="10">particles/thorn.frag</gfx>
   <sound>plasma</sound>
   <spfx_shield>Exp-S</spfx_shield>
