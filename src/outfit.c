@@ -131,8 +131,9 @@ static os_opts disable_rate_opts = {
    N_( "Disable Rate" ), _UNIT_POWER, 0, 0, 1, 1 };
 static os_opts fire_rate_opts = {
    N_( "Fire Rate" ), _UNIT_PER_TIME, 0, 0, 0, 1 };
-static os_opts energy_opts     = { N_( "Energy" ), _UNIT_ENERGY, 0, 1, 1, 1 };
-static os_opts impulse_opts    = { N_( "Impulse" ), _UNIT_IMPULSE, 0, 0, 1, 1 };
+static os_opts energy_opts    = { N_( "Energy" ), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts knockback_opts = {
+   N_( "Knockback" ), _UNIT_IMPULSE, 0, 0, 1, 1 };
 static os_opts power_opts      = { N_( "Power" ), _UNIT_POWER, 0, 0, 1, 1 };
 static os_opts range_opts      = { N_( "Range" ), _UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts speed_opts      = { N_( "Speed" ), _UNIT_SPEED, 0, 0, 1, 0 };
@@ -2210,7 +2211,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
                        1, (double)temp->u.blt.energy / temp->u.blt.delay,
                        &power_opts );
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.knockback,
-                  &impulse_opts );
+                  &knockback_opts );
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.penetration,
                   &penetration_opts );
@@ -2413,7 +2414,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
                   &disable_rate_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.energy, &power_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.knockback,
-                  &impulse_opts );
+                  &knockback_opts );
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration,
                   &penetration_opts );
@@ -2657,7 +2658,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    l = os_printD_rate( temp->summary_raw, l, temp->u.lau.energy, &energy_opts,
                        1, temp->u.lau.energy / temp->u.lau.delay, &power_opts );
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.knockback,
-                  &impulse_opts );
+                  &knockback_opts );
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration,
                   &penetration_opts );
