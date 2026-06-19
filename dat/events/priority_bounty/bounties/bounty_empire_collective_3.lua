@@ -33,7 +33,7 @@ return {
       end
       m.lootables["encrypted_data_matrix"] = 3
       m.capturable = true
-      local saying = _("ERR.EER.ERr.eRr.S1gn@l R3c1ev3d. I aM n0t @l0ne.")
+      local saying = _("ERR.EER.ERr.eRr.S1gn@l R3c1ev3d. I aM n0t @l0ne. WARNING: OBSTACLES DETECTED. DESTROY. DESTROY.")
       m.taunt = saying
       m.comm_greet = saying
       local enemies = {p}
