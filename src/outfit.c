@@ -600,8 +600,6 @@ double outfit_massAmmo( const Outfit *o )
 {
    if ( outfit_isLauncher( o ) )
       return o->u.lau.ammo_mass;
-   else if ( outfit_isFighterBay( o ) )
-      return o->u.bay.ship_mass;
    return 0.;
 }
 const char *outfit_license( const Outfit *o )
@@ -1207,8 +1205,6 @@ double outfit_ammoMass( const Outfit *o )
 {
    if ( outfit_isLauncher( o ) )
       return o->u.lau.ammo_mass;
-   else if ( outfit_isFighterBay( o ) )
-      return o->u.bay.ship_mass;
    return 0.;
 }
 int outfit_shots( const Outfit *o )
@@ -2922,10 +2918,17 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "delay", temp->u.bay.delay );
       xmlr_float( node, "reload_time", temp->u.bay.reload_time );
       xmlr_strd( node, "ship", temp->u.bay.shipname );
-      xmlr_float( node, "ship_mass", temp->u.bay.ship_mass );
       xmlr_int( node, "amount", temp->u.bay.amount );
       xmlr_strd( node, "lua", temp->lua_file );
       xmlr_strd( node, "lua_inline", temp->lua_inline );
+
+      // TODO remove for 0.15.0
+      if ( xml_isNode( node, "ship_mass" ) ) {
+         LOG( "Outfit '%s' is using deprecated 'ship_mass' tag. Will be "
+              "removed for 0.15.0.",
+              temp->name );
+         continue;
+      }
 
       /* Stats. */
       temp->stats = ss_listFromXMLSingle( temp->stats, node );
@@ -2934,21 +2937,12 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
-   /* Post-processing. */
-   temp->mass -= temp->u.bay.ship_mass * temp->u.bay.amount;
-   if ( temp->mass < 0. )
-      WARN( _( "Fighter bay outfit '%s' has negative mass when subtracting "
-               "ship mass!" ),
-            temp->name );
-
    /* Set short description. */
    temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-   l = os_printD( temp->summary_raw, l,
-                  temp->mass + temp->u.bay.ship_mass * temp->u.bay.amount,
-                  &mass_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
    SDESC_ADD( l, temp, _( "\n  Holds %d ships" ), temp->u.bay.amount );
    l = os_printD( temp->summary_raw, l, temp->u.bay.delay, &shots_delay_opts );
    /*l =*/os_printD( temp->summary_raw, l, temp->u.bay.reload_time,
@@ -2959,7 +2953,6 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    WARN( _( "Outfit '%s' missing/invalid '%s' element" ), temp->name,          \
          s ) /**< Define to help check for data errors. */
    MELEMENT( temp->u.bay.shipname == NULL, "ship" );
-   MELEMENT( temp->u.bay.ship_mass <= 0., "ship_mass" );
    MELEMENT( temp->u.bay.delay == 0, "delay" );
    MELEMENT( temp->u.bay.reload_time == 0., "reload_time" );
    // MELEMENT( temp->cpu == 0., "cpu" );

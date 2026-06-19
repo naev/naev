@@ -331,7 +331,6 @@ struct Ship; /* Bit of a horrible hack to allow us to avoid circular
 typedef struct OutfitFighterBayData_ {
    char              *shipname;    /**< Name of the ships to use as ammo. */
    const struct Ship *ship;        /**< Ship to use as ammo. */
-   double             ship_mass;   /**< Mass of a fighter. */
    double             delay;       /**< Delay between launches. */
    int                amount;      /**< Amount of ammo it can store. */
    double             reload_time; /**< Time it takes to reload 1 ammo. */
