@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use nlog::{warn, warn_err};
+use nlog::{info, warn, warn_err};
 use rayon::prelude::*;
 use serde::{Deserialize, Deserializer, de};
 use std::ffi::{CStr, CString, OsStr};
@@ -40,7 +40,6 @@ pub struct DamageType {
    shield_mod: f64,
    #[serde(rename = "armour")]
    armour_mod: f64,
-   knockback: f64,
    // Hack for C to be rustified when shipstats get ported
    shield_stat: Option<Stat>,
    armour_stat: Option<Stat>,
@@ -103,7 +102,12 @@ impl DamageType {
                dt.armour_stat = node.attribute("stat").and_then(stat_offset);
                dt.armour_mod = nxml::node_f64(node)?
             }
-            "knockback" => dt.knockback = nxml::node_f64(node)?,
+            "knockback" => {
+               info!(
+                  "Damage Type '{}' using obsolete field 'knockback'. Please define 'knockback' on a per-weapon bases now.",
+                  dt.name
+               );
+            }
             tag => nxml_warn_node_unknown!("Damage Type", &dt.name, tag),
          }
       }
@@ -150,7 +154,6 @@ impl Default for DamageType {
          cdisplay: None,
          shield_mod: 1.0,
          armour_mod: 1.0,
-         knockback: 0.0,
          shield_stat: None,
          armour_stat: None,
       }
@@ -223,12 +226,7 @@ pub extern "C" fn dtype_damageTypeToStr(dtid: c_int) -> *const c_char {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn dtype_raw(
-   dtid: c_int,
-   shield: *mut f64,
-   armour: *mut f64,
-   knockback: *mut f64,
-) -> c_int {
+pub extern "C" fn dtype_raw(dtid: c_int, shield: *mut f64, armour: *mut f64) -> c_int {
    match get_c(dtid) {
       Some(dt) => {
          if !shield.is_null() {
@@ -239,11 +237,6 @@ pub extern "C" fn dtype_raw(
          if !armour.is_null() {
             unsafe {
                *armour = dt.armour_mod;
-            }
-         }
-         if !knockback.is_null() {
-            unsafe {
-               *knockback = dt.knockback;
             }
          }
          0
@@ -257,7 +250,6 @@ pub extern "C" fn dtype_calcDamage(
    dshield: *mut f64,
    darmour: *mut f64,
    absorb: f64,
-   knockback: *mut f64,
    dmg: *const naevc::Damage,
    ss: *const naevc::ShipStats,
 ) {
@@ -281,11 +273,6 @@ pub extern "C" fn dtype_calcDamage(
       if !darmour.is_null() {
          let mult = get_stat(dt.armour_stat, ss);
          unsafe { *darmour = dt.armour_mod * (*dmg).damage * absorb * mult }
-      }
-      if !knockback.is_null() {
-         unsafe {
-            *knockback = dt.knockback;
-         }
       }
    }
 }

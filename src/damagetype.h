@@ -16,7 +16,6 @@ const char *dtype_damageTypeToStr( int type );
 /*
  * misc
  */
-int  dtype_raw( int type, double *shield, double *armour, double *knockback );
+int  dtype_raw( int type, double *shield, double *armour );
 void dtype_calcDamage( double *dshield, double *darmour, double absorb,
-                       double *knockback, const Damage *dmg,
-                       const ShipStats *s );
+                       const Damage *dmg, const ShipStats *s );

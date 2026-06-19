@@ -647,9 +647,6 @@ static void map_showOutfitDetail( unsigned int wid, const char *wgtname, int x,
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
-   /* Launchers and fighter bays have non-zero ammo mass. */
-   mass += outfit_amount( outfit ) * outfit_ammoMass( outfit );
-
    window_modifyText( wid, "txtDescription",
                       pilot_outfitDescription( player.p, outfit, NULL ) );
    credits2str( buf_price, outfit_price( outfit ), 2 );

@@ -134,6 +134,7 @@ static os_opts disable_rate_opts = {
 static os_opts fire_rate_opts = {
    N_( "Fire Rate" ), _UNIT_PER_TIME, 0, 0, 0, 1 };
 static os_opts energy_opts     = { N_( "Energy" ), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts impulse_opts    = { N_( "Impulse" ), _UNIT_IMPULSE, 0, 0, 1, 1 };
 static os_opts power_opts      = { N_( "Power" ), _UNIT_POWER, 0, 0, 1, 1 };
 static os_opts range_opts      = { N_( "Range" ), _UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts speed_opts      = { N_( "Speed" ), _UNIT_SPEED, 0, 0, 1, 0 };
@@ -595,12 +596,6 @@ void outfit_rmProp( Outfit *o, unsigned int prop )
 double outfit_mass( const Outfit *o )
 {
    return o->mass;
-}
-double outfit_massAmmo( const Outfit *o )
-{
-   if ( outfit_isLauncher( o ) )
-      return o->u.lau.ammo_mass;
-   return 0.;
 }
 const char *outfit_license( const Outfit *o )
 {
@@ -1195,17 +1190,6 @@ const Sound *outfit_soundOff( const Outfit *o )
    if ( outfit_isBeam( o ) )
       return o->u.bem.sound_off;
    return NULL;
-}
-/**
- * @brief Gets the outfit's ammunition mass.
- *    @param o Outfit to get ammunition mass from.
- *    @return Outfit's ammunition's mass.
- */
-double outfit_ammoMass( const Outfit *o )
-{
-   if ( outfit_isLauncher( o ) )
-      return o->u.lau.ammo_mass;
-   return 0.;
 }
 int outfit_shots( const Outfit *o )
 {
@@ -1917,6 +1901,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
    dmg->damage      = 0.;
    dmg->penetration = 0.;
    dmg->disable     = 0.;
+   dmg->knockback   = 0.;
 
    cur = node->xmlChildrenNode;
    do {
@@ -1926,6 +1911,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       xmlr_float( cur, "penetrate", dmg->penetration );
       xmlr_float( cur, "physical", dmg->damage );
       xmlr_float( cur, "disable", dmg->disable );
+      xmlr_float( cur, "knockback", dmg->knockback );
 
       /* Get type */
       if ( xml_isNode( cur, "type" ) ) {
@@ -2063,7 +2049,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
-   double     dshield, darmour, dknockback;
+   double     dshield, darmour;
    int        l;
 
    /* Defaults */
@@ -2205,11 +2191,10 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
               _( outfit_getType( temp ) ),
               pgettext_var( "damagetype",
                             dtype_damageTypeToStr( temp->u.blt.dmg.type ) ) );
-   dtype_raw( temp->u.blt.dmg.type, &dshield, &darmour, &dknockback );
+   dtype_raw( temp->u.blt.dmg.type, &dshield, &darmour );
    // new_opts(name, unit, colour, threshold, hidezero, precision)
    l = os_printD( temp->summary_raw, l, darmour * 100., &darmour_opts );
    l = os_printD( temp->summary_raw, l, dshield * 100., &dshield_opts );
-   l = os_printD( temp->summary_raw, l, dknockback * 100., &dknockback_opts );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
    l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
    /* Higher level stats. */
@@ -2226,6 +2211,8 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    l = os_printD_rate( temp->summary_raw, l, temp->u.blt.energy, &energy_opts,
                        1, (double)temp->u.blt.energy / temp->u.blt.delay,
                        &power_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.knockback,
+                  &impulse_opts );
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.penetration,
                   &penetration_opts );
@@ -2294,7 +2281,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
 {
    int        l;
    xmlNodePtr node;
-   double     dshield, darmour, dknockback;
+   double     dshield, darmour;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -2416,10 +2403,9 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
               pgettext_var( "damagetype",
                             dtype_damageTypeToStr( temp->u.bem.dmg.type ) ) );
-   dtype_raw( temp->u.bem.dmg.type, &dshield, &darmour, &dknockback );
+   dtype_raw( temp->u.bem.dmg.type, &dshield, &darmour );
    l = os_printD( temp->summary_raw, l, darmour * 100., &darmour_opts );
    l = os_printD( temp->summary_raw, l, dshield * 100., &dshield_opts );
-   l = os_printD( temp->summary_raw, l, dknockback * 100., &dknockback_opts );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
    l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
    /* Higher level stats. */
@@ -2428,6 +2414,8 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.disable,
                   &disable_rate_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.energy, &power_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.knockback,
+                  &impulse_opts );
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration,
                   &penetration_opts );
@@ -2566,7 +2554,14 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "speed", temp->u.lau.speed );
       xmlr_float( node, "speed_max", temp->u.lau.speed_max );
       xmlr_float( node, "energy", temp->u.lau.energy );
-      xmlr_float( node, "ammo_mass", temp->u.lau.ammo_mass );
+      // TODO remove for 0.15.0
+      if ( xml_isNode( node, "ammo_mass" ) ) {
+         LOG( "Outfit '%s' is using deprecated 'ammo_mass' tag. Will be "
+              "removed for 0.15.0. Please specify knockback with the "
+              "'knockback' field.",
+              temp->name );
+         continue;
+      }
       if ( xml_isNode( node, "gfx" ) ) {
          outfit_loadGFX( temp, node );
          continue;
@@ -2623,13 +2618,6 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Post processing. */
-   if ( !outfit_isProp( temp, OUTFIT_PROP_TEMPLATE ) ) {
-      temp->mass -= temp->u.lau.ammo_mass * temp->u.lau.amount;
-      if ( temp->mass < 0. )
-         WARN( _( "Launcher outfit '%s' has negative mass when subtracting "
-                  "ammo mass!" ),
-               temp->name );
-   }
    temp->u.lau.swivel *= M_PI / 180.;
    temp->u.lau.arc *= M_PI / 180.;
    /* Note that arc will be 0. for turrets. */
@@ -2651,13 +2639,11 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
               pgettext_var( "damagetype",
                             dtype_damageTypeToStr( temp->u.lau.dmg.type ) ) );
-   dtype_raw( temp->u.lau.dmg.type, &dshield, &darmour, &dknockback );
+   dtype_raw( temp->u.lau.dmg.type, &dshield, &darmour );
    l = os_printD( temp->summary_raw, l, darmour * 100., &darmour_opts );
    l = os_printD( temp->summary_raw, l, dshield * 100., &dshield_opts );
-   l = os_printD( temp->summary_raw, l, dknockback * 100., &dknockback_opts );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-   l = os_printD( temp->summary_raw, l,
-                  temp->mass + temp->u.lau.ammo_mass * temp->u.lau.amount,
+   l = os_printD( temp->summary_raw, l, temp->mass,
                   &mass_opts ); /* Include ammo. */
    /* Higher level stats. */
    l = os_printD_rate( temp->summary_raw, l, temp->u.lau.dmg.damage,
@@ -2672,6 +2658,8 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
                        &disable_rate_opts );
    l = os_printD_rate( temp->summary_raw, l, temp->u.lau.energy, &energy_opts,
                        1, temp->u.lau.energy / temp->u.lau.delay, &power_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.knockback,
+                  &impulse_opts );
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration,
                   &penetration_opts );
@@ -2741,7 +2729,6 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    // MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT( temp->u.lau.amount == 0., "amount" );
    MELEMENT( temp->u.lau.reload_time == 0., "reload_time" );
-   MELEMENT( temp->u.lau.ammo_mass == 0., "ammo_mass" );
    // MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.gfx_space==NULL,"gfx");
    /*
    MELEMENT( !outfit_isProp( temp, OUTFIT_PROP_SHOOT_DRY ) &&

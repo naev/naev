@@ -1831,7 +1831,7 @@ void weapon_damage( Weapon *w, const Damage *dmg )
    double absorb = pow(
       0.99, MAX( 0., outfit_launcherAbsorb( w->outfit ) - dmg->penetration ) );
 
-   dtype_calcDamage( NULL, &damage_armour, absorb, NULL, dmg, NULL );
+   dtype_calcDamage( NULL, &damage_armour, absorb, dmg, NULL );
    w->armour -= damage_armour + dmg->disable;
 
    /* Still alive so nothing really happens. */
@@ -2421,7 +2421,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
 
    /* Set up ammo details. */
-   mass     = outfit_massAmmo( w->outfit );
+   mass     = 1.;
    w->timer = outfit_launcherDuration( w->outfit ) *
               parent->stats.launch_range * parent->stats.weapon_range /
               w->speed_mod;

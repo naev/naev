@@ -1379,8 +1379,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    /* Calculate the damage. */
    absorb  = pow( 0.99, MAX( 0., p->dmg_absorb - rdmg.penetration ) );
    disable = rdmg.disable;
-   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, &rdmg,
-                     &p->stats );
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &rdmg, &p->stats );
 
    /*
     * Delay undisable if necessary. Amount varies with damage, as e.g. a
@@ -1515,14 +1514,8 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    }
 
    if ( w != NULL )
-      /* knock back effect is dependent on both damage and mass of the weapon
-       * should probably get turned into a partial conservative collision */
-      vec2_cadd(
-         &p->solid.vel,
-         knockback *
-            ( w->vel.x * ( dam_mod / 9. + w->mass / p->solid.mass / 6. ) ),
-         knockback *
-            ( w->vel.y * ( dam_mod / 9. + w->mass / p->solid.mass / 6. ) ) );
+      // Knockback doesn't consider weapon velocity, maybe it should?
+      vec2_padd( &p->solid.vel, dmg->knockback / p->solid.mass, w->dir );
 
    /* On hit weapon effects. */
    if ( ( outfit != NULL ) && ( outfit_luaOnImpact( outfit ) != LUA_NOREF ) ) {

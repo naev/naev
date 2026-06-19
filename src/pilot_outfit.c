@@ -811,8 +811,6 @@ int pilot_addAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity )
    s->u.ammo.quantity += quantity;
    s->u.ammo.quantity = MIN( max, s->u.ammo.quantity );
    q                  = s->u.ammo.quantity - q; /* Amount actually added. */
-   pilot->mass_outfit += q * outfit_ammoMass( s->outfit );
-   pilot_updateMass( pilot );
 
    return q;
 }
@@ -841,8 +839,6 @@ int pilot_rmAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity )
    /* Remove ammo. */
    q = MIN( quantity, s->u.ammo.quantity );
    s->u.ammo.quantity -= q;
-   pilot->mass_outfit -= q * outfit_ammoMass( s->outfit );
-   pilot_updateMass( pilot );
    /* We don't set the outfit to null so it "remembers" old ammo. */
 
    return q;
@@ -1018,9 +1014,6 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
    /* Keep a separate counter for required (core) outfits. */
    if ( sp_required( outfit_slotProperty( o ) ) )
       pilot->base_mass += outfit_mass( o );
-
-   /* Add ammo mass. */
-   pilot->mass_outfit += slot->u.ammo.quantity * outfit_ammoMass( o );
 
    if ( outfit_isAfterburner( o ) ) /* Afterburner */
       pilot->afterburner = slot;    /* Set afterburner */

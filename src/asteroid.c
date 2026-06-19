@@ -673,6 +673,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
    at->material    = array_create( AsteroidReward );
    at->damage      = 100;
    at->penetration = FULL_PENETRATION;
+   at->knockback   = 1000.0;
    at->exp_radius  = 50.;
    at->alert_range = 7000.;
 
@@ -1167,7 +1168,7 @@ void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity,
 {
    double darmour;
    double absorb = pow( 0.99, MAX( 0., a->type->absorb - dmg->penetration ) );
-   dtype_calcDamage( NULL, &darmour, absorb, NULL, dmg, NULL );
+   dtype_calcDamage( NULL, &darmour, absorb, dmg, NULL );
 
    a->armour -= darmour;
    if ( a->armour <= 0 )
@@ -1196,6 +1197,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    dmg.type        = dtype_get( "explosion_splash" );
    dmg.damage      = at->damage;
    dmg.penetration = at->penetration; /* Full penetration. */
+   dmg.knockback   = at->knockback;
    dmg.disable     = 0.;
    expl_explode( a->sol.pos.x, a->sol.pos.y, a->sol.vel.x, a->sol.vel.y,
                  at->exp_radius, &dmg, NULL, EXPL_MODE_SHIP );
