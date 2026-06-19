@@ -19,7 +19,6 @@
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
-  <ammo_mass>1.5</ammo_mass>
   <gfx>seeker</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>

@@ -22,7 +22,6 @@
   <arc>75</arc>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
-  <ammo_mass>0.16</ammo_mass>
   <gfx>pincushion</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>
