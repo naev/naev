@@ -121,8 +121,6 @@ static os_opts darmour_opts = {
    N_( "Armour Damage" ), _UNIT_PERCENT, 1, 100, 0, 0 };
 static os_opts dshield_opts = {
    N_( "Shield Damage" ), _UNIT_PERCENT, 1, 100, 0, 0 };
-static os_opts dknockback_opts = {
-   N_( "Knockback" ), _UNIT_PERCENT, 0, 0, 1, 0 };
 static os_opts cpu_opts         = { N_( "CPU" ), _UNIT_CPU, 1, 0, 1, 0 };
 static os_opts mass_opts        = { N_( "Mass" ), _UNIT_MASS, 0, 0, 1, 0 };
 static os_opts penetration_opts = { N_( "Penetration" ), NULL, 0, 0, 1, 0 };
@@ -2462,7 +2460,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
 static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
-   double     dshield, darmour, dknockback;
+   double     dshield, darmour;
    int        l;
 
    temp->u.lau.trackmin    = -1.;

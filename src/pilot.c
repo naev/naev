@@ -1356,8 +1356,8 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
                   int reset )
 {
    int    shooter;
-   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, ddis,
-      absorb, dmod, start;
+   double damage_shield, damage_armour, disable, ddmg, ddis, absorb, dmod,
+      start;
    double tdshield, tdarmour;
 
    /* Invincible means no damage. */
@@ -1371,7 +1371,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    rdmg.damage *= p->stats.damage_taken;
 
    /* Defaults. */
-   dam_mod = 0.;
    ddmg    = 0.;
    ddis    = 0.;
    shooter = ( pshooter == NULL ) ? 0 : pshooter->id;
@@ -1405,7 +1404,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       start = p->shield;
       ddmg  = damage_shield;
       p->shield -= damage_shield;
-      dam_mod = damage_shield / p->shield_max;
 
       /*
        * Disabling damage leaks accordingly:
@@ -1445,8 +1443,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       tdarmour = dmod * damage_armour;
       p->armour -= tdarmour;
       p->stress += dmod * disable;
-      dam_mod = ( damage_shield + damage_armour ) /
-                ( ( p->shield_max + p->armour_max ) / 2. );
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
