@@ -185,6 +185,7 @@ typedef struct OutfitBoltData_ {
    double falloff; /**< Point at which damage falls off. */
    double energy;  /**< Energy usage */
    Damage dmg;     /**< Damage done. */
+   double recoil;  /**< Recoil of the weapon. */
    double radius;  /**< Explosion radius .*/
 
    double trackmin;   /**< Ewarfare minimal tracking. */
@@ -229,6 +230,7 @@ typedef struct OutfitBeamData_ {
    double turn;       /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy;     /**< Amount of energy it drains (per second). */
    Damage dmg;        /**< Damage done. */
+   double recoil;     /**< Recoil of the weapon. */
    double swivel;     /**< Amount of swivel (semiarc in radians of deviation the
                          weapon can correct). */
    int mining_rarity; /**< Maximum mining rarity the weapon can mine. */
@@ -277,6 +279,7 @@ typedef struct OutfitLauncherData_ {
    double accel;     /**< Acceleration */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
+   double recoil;    /**< Recoil of the weapon. */
    double radius;    /**< Explosion radius. */
 
    /* Health stuff. */
@@ -594,6 +597,7 @@ const ShipStatList *outfit_stats( const Outfit *o );
 int                 outfit_spfxArmour( const Outfit *o );
 int                 outfit_spfxShield( const Outfit *o );
 const Damage       *outfit_damage( const Outfit *o );
+double              outfit_recoil( const Outfit *o );
 double              outfit_radius( const Outfit *o );
 double              outfit_delay( const Outfit *o );
 int                 outfit_amount( const Outfit *o );

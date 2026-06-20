@@ -1149,7 +1149,16 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
       p->energy -= energy;
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
          for ( int i = 0; i < outfit_shots( w->outfit ); i++ ) {
-            weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
+            const Weapon *ww = weapon_add( w, NULL, p->solid.dir, &vp, &vv, p,
+                                           target, time, aim );
+            if ( i == 0 ) {
+               // Recoil
+               // TODO use average of shots and not just the first one to
+               // determine direction
+               double recoil = outfit_recoil( w->outfit );
+               vec2_padd( &p->solid.vel, recoil / p->solid.mass,
+                          ww->solid.dir );
+            }
          }
       }
    }
@@ -1221,8 +1230,18 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
       p->energy -= energy;
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
          int n = outfit_shots( w->outfit );
-         for ( int i = 0; i < n; i++ )
-            weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
+         for ( int i = 0; i < n; i++ ) {
+            const Weapon *ww = weapon_add( w, NULL, p->solid.dir, &vp, &vv, p,
+                                           target, time, aim );
+            if ( i == 0 ) {
+               // Recoil
+               // TODO use average of shots and not just the first one to
+               // determine direction
+               double recoil = outfit_recoil( w->outfit );
+               vec2_padd( &p->solid.vel, recoil / p->solid.mass,
+                          ww->solid.dir );
+            }
+         }
       }
 
       pilot_rmAmmo( p, w, 1 );

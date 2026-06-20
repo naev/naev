@@ -952,6 +952,16 @@ const Damage *outfit_damage( const Outfit *o )
       return &o->u.lau.dmg;
    return NULL;
 }
+double outfit_recoil( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.recoil;
+   else if ( outfit_isBeam( o ) )
+      return o->u.bem.recoil;
+   else if ( outfit_isLauncher( o ) )
+      return o->u.lau.recoil;
+   return 0.;
+}
 /**
  * @brief Gets the outfit's explosion radius.
  *    @param o Outfit to get information from.
@@ -2165,6 +2175,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.blt.dmg, node );
          continue;
       }
+      xmlr_float( node, "recoil", temp->u.blt.recoil );
 
       /* Stats. */
       temp->stats = ss_listFromXMLSingle( temp->stats, node );
@@ -2322,6 +2333,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.bem.dmg, node );
          continue;
       }
+      xmlr_float( node, "recoil", temp->u.bem.recoil );
 
       /* Graphic stuff. */
       if ( xml_isNode( node, "shader" ) ) {
@@ -2585,6 +2597,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.lau.dmg, node );
          continue;
       }
+      xmlr_float( node, "recoil", temp->u.lau.recoil );
       if ( xml_isNode( node, "trail_generator" ) ) {
          xmlr_attr_float( node, "x", temp->u.lau.trail_x_offset );
          char *buf = xml_get( node );

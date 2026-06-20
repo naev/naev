@@ -613,6 +613,10 @@ static void think_beam( Weapon *w, double dt )
    default:
       return;
    }
+
+   // Recoil
+   double recoil = outfit_recoil( w->outfit );
+   vec2_padd( &p->solid.vel, recoil * dt / p->solid.mass, w->solid.dir );
 }
 
 /**
@@ -1872,7 +1876,7 @@ void weapon_damage( Weapon *w, const Damage *dmg )
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 {
    Pilot        *parent;
-   double        damage, firerate, mod;
+   double        damage, firerate, mod, frmod;
    Damage        dmg;
    const Damage *odmg;
 
@@ -1883,12 +1887,14 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       firerate = parent->stats.tur_firerate;
    else
       firerate = parent->stats.fwd_firerate;
-   mod = w->dam_mod * w->strength * firerate * parent->stats.weapon_firerate *
-         parent->stats.action_speed * dt;
+   frmod           = firerate * parent->stats.weapon_firerate *
+                     parent->stats.action_speed * dt;
+   mod             = w->dam_mod * w->strength * frmod;
    damage          = odmg->damage * mod;
    dmg.damage      = MAX( 0., damage * ( 1. - w->dam_as_dis_mod ) );
    dmg.penetration = odmg->penetration;
    dmg.type        = odmg->type;
+   dmg.knockback   = odmg->knockback * frmod;
    dmg.disable = MAX( 0., odmg->disable * mod + damage * w->dam_as_dis_mod );
 
    if ( hit->type == TARGET_PILOT ) {
