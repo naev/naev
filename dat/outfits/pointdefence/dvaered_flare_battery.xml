@@ -1,5 +1,6 @@
 <outfit name="Dvaered Flare Battery">
  <general>
+  <stealth_on/>
   <shortname>D. Flare B.</shortname>
   <slot>weapon</slot>
   <size>large</size>

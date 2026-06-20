@@ -1,5 +1,6 @@
 <outfit name="Spittle Tubuloid Cluster">
  <general>
+  <stealth_on/>
   <slot>utility</slot>
   <size>medium</size>
   <licence>Medium Weapon</licence>

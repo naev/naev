@@ -1,5 +1,6 @@
 <outfit name="ZIBS-16">
  <general>
+  <stealth_on/>
   <slot>weapon</slot>
   <size>medium</size>
   <licence>Medium Weapon</licence>

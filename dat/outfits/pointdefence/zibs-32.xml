@@ -1,5 +1,6 @@
 <outfit name="ZIBS-32">
  <general>
+  <stealth_on/>
   <slot>weapon</slot>
   <size>large</size>
   <licence>Heavy Weapon</licence>
