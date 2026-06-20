@@ -272,7 +272,7 @@ local function bounty_setup_pirate( payingfaction, points )
       return
    end
 
-   local missys = systems[ rnd.rnd( 1, #systems ) ]
+   local missys = systems[ rnd.rnd( #systems ) ]
 
    local level
    if points <= 50 then
@@ -407,7 +407,6 @@ function create ()
       osd_objective     = target.osd_objective,
       deadline          = mem.deadline,
    } )
-
 end
 
 function accept ()
