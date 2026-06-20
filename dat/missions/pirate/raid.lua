@@ -10,6 +10,7 @@
  <faction>Raven Clan</faction>
  <faction>Dreamer Clan</faction>
  <faction>Pirate</faction>
+ <faction>Free Trader</faction>
  <notes>
   <tier>1</tier>
  </notes>
