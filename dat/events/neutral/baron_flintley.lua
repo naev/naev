@@ -21,7 +21,11 @@ local portrait = require "portrait"
 local prt = "neutral/unique/flintley"
 
 function create ()
+   if not evt.claim( {"flintley"} ) then return evt.finish(false) end
+
    evt.npcAdd("flintley", _("Flintley"), prt, _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 6)
+
+   hook.enter( "enter" )
 end
 
 function flintley()
@@ -33,4 +37,8 @@ function flintley()
 You spend some time chatting with Flintley, then you get back to work.]]),
       {player=player.name()}))
    vn.run()
+end
+
+function enter ()
+   evt.finish(false)
 end
