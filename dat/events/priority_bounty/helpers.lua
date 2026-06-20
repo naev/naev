@@ -32,6 +32,16 @@ bhelp.ships = {
       ship.get("Vigilance"),
       ship.get("Goddard"),
    },
+   trader = {
+      ship.get("Gawain"),
+      ship.get("Llama"),
+      ship.get("Koala"),
+      ship.get("Quicksilver"),
+      ship.get("Mule"),
+      ship.get("Rhino"),
+      ship.get("Clydesdale"),
+      ship.get("Zebra"),
+   },
    empire = {
       ship.get("Empire Shark"),
       ship.get("Empire Lancelot"),
@@ -45,6 +55,15 @@ bhelp.ships = {
       ship.get("Vendetta"),
       ship.get("Bedivere"),
       ship.get("Pacifier"),
+      ship.get("Clydesdale"), -- Specially added here
+   },
+   frontier = { -- Slightly different from the spawn scripts
+      ship.get("Hyena"),
+      ship.get("Tristan"),
+      ship.get("Lancelot"),
+      ship.get("Ancestor"),
+      ship.get("Phalanx"),
+      ship.get("Bedivere"),
       ship.get("Clydesdale"), -- Specially added here
    },
    dvaered = {
