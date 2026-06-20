@@ -302,11 +302,16 @@ function luaspob.comm ()
 
    mem.params.hostile   = mem.spob:hostile()
    mem.params.dominated = mem.spob:dominated()
+   if mem.params.dominated then
+      mem.params.hostile = false
+   end
 
    vn.clear()
    vn.scene()
    local spb = ccomm.newCharacterSpob( vn, mem.spob, {
-      bribed = mem.bribed,
+      bribed      = mem.bribed,
+      hostile     = mem.params.hostile,
+      dominated   = mem.params.dominated,
    } )
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with the authorities at {spb}."),
