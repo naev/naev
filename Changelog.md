@@ -36,6 +36,10 @@
        - Boarding bonus affects how much fleet capacity you need to capture
          ships
        - You can capture more than one ship at once now
+   * Reworked knockback and added weapon recoil
+       - Ammunition / fighter mass mechanics have been removed
+       - Knockback and recoil are now explicit weapon statistics
+       - Made knockback values more diverse and gave many weapons recoil
    * Ultra-heavy weapons have reduced energy usage
    * Nerfed range on torpedoes and other heavy launcher weapons
    * Added accessibility option to disable screen shaking
