@@ -162,7 +162,6 @@ local function bounty_setup( targetfct, points )
    }
 end
 
-local succeed
 function create ()
    -- Determine paying faction probabilistic
    mem.paying_faction = pir.systemClanP( system.cur() )
@@ -272,12 +271,13 @@ function create ()
       targetfaction     = mem.target_faction,
       alive_only        = false,
       deadline          = mem.deadline,
-      completefunc      = succeed,
+      completefunc      = "finish",
    } )
 end
 
 -- Succeed the mission
-function succeed ()
+-- luacheck: globals finish
+function finish ()
    lmisn.sfxMoney()
    player.msg( "#g"..fmt.f(_("MISSION SUCCESS! Pay of {credits} has been transferred into your account."),{credits=fmt.credits(mem.credits)}).."#0" )
    player.pay( mem.credits )
