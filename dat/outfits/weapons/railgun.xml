@@ -29,7 +29,9 @@
    <type>kinetic</type>
    <penetrate>151</penetrate>
    <physical>68</physical>
+   <knockback>10000</knockback>
   </damage>
+  <recoil>8000</recoil>
  </specific>
  <tags>
   <tag>dvaered</tag>
