@@ -1787,7 +1787,9 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg,
       ddmg.damage = dmg->damage * ( 1. - sqrt( dist / rad2 ) );
 
       /* Impact settings. */
-      s.mass  = pow2( dmg->damage ) / 30.;
+      s.mass  = 1.;
+      s.pos.x = x;
+      s.pos.y = y;
       s.vel.x = rx;
       s.vel.y = ry;
 
@@ -2594,6 +2596,7 @@ void pilot_update( Pilot *pilot, double dt )
                MAX( 0., 2. * ( a * ( 1. + sqrt( pilot->fuel + 1. ) / 28. ) ) );
             dmg.penetration = FULL_PENETRATION; /* Full penetration. */
             dmg.disable     = 0.;
+            dmg.knockback   = dmg.damage * 300.0;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                           pilot->solid.vel.x, pilot->solid.vel.y,
                           pilot->ship->size / 2. / PILOT_SIZE_APPROX + a, &dmg,
