@@ -128,6 +128,8 @@ function bhelp.choose_ships_from_points_and_capship( capship, shiplist, points )
    else
       maybeship = shiplist
    end
+   -- If no ships found, return empty
+   if #maybeship <= 0 then return {} end
    table.sort( maybeship, function( a, b ) return a:points() > b:points() end )
    local smallest = maybeship[ #maybeship ]:points()
 
