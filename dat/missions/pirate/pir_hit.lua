@@ -263,7 +263,7 @@ function create ()
    misn.setDesc( mdesc )
    misn.setReward( target.reward )
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys) )
-   mem.marker = misn.markerAdd( mem.missys, "computer" )
+   mem.deadline = time.cur() + mem.deadline
 
    bounty.init( mem.missys, target.name, target.ships, target.reward, {
       trackingvar       = { "pirate_bounty_points", target.points },
@@ -271,7 +271,7 @@ function create ()
       reputation        = target.reputation,
       targetfaction     = mem.target_faction,
       alive_only        = false,
-      deadline          = time.cur() + mem.deadline,
+      deadline          = mem.deadline,
       completefunc      = succeed,
    } )
 end

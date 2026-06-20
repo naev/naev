@@ -174,7 +174,7 @@ end
 function _bounty_date ()
    local b = mem._bounty
    if system.cur() ~= b.system and not b.job_done then
-      if time.cur() > mem.deadline then
+      if time.cur() > b.deadline then
          return lmisn.fail( fmt.f(_("{plt} got away."), {plt=b.targetname} ))
       end
       update_osd()
