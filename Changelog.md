@@ -1,4 +1,4 @@
-## v0.13.5 (unreleased)
+## v0.13.5
 
    * Fixed obelisks not being able to be completed
    * Fixed combat hologram projector doing missile damage
