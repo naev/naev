@@ -419,7 +419,7 @@ local function can_capture ()
 end
 
 local function capture_points ()
-   local needed_points = math.floor( board_plt:points() / loot_mod ^ 0.5 )
+   local needed_points = math.floor( board_plt:points() / loot_mod ^ 0.5 + 0.5 )
    local needed = needed_points
    if loot_mod > 1 then
       needed = fmt.f(_("{pts} ({bonus} due to boarding bonus)"), {
