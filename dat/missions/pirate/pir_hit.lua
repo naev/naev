@@ -109,7 +109,6 @@ local function bounty_setup( targetfct, points )
    else
       error(fmt.f("pir_hit: unknown faction {fct}", {fct=targetfct}))
    end
-   assert( #ships > 0 )
 
    local pilots = bounty.choose_ships_from_points( ships, points )
    -- If we use separate escorts, make sure they get added after the main pilot
@@ -232,6 +231,11 @@ function create ()
    local title = fmt.f( misn_title[target.level], {
       sys = mem.missys,
    } )
+   -- Faction prefix
+   if not mem.paying_faction:static() then
+      local prefix = require("common.prefix").prefix(mem.paying_faction)
+      title = prefix..title
+   end
 
    local mdesc = fmt.f( misn_desc, {
       fct   = mem.target_faction,
