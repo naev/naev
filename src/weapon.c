@@ -615,7 +615,7 @@ static void think_beam( Weapon *w, double dt )
    }
 
    // Recoil
-   double recoil = outfit_recoil( w->outfit );
+   double recoil = -outfit_recoil( w->outfit );
    vec2_padd( &p->solid.vel, recoil * dt / p->solid.mass, w->solid.dir );
 }
 

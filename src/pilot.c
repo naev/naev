@@ -1509,9 +1509,12 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       player.ps.dmg_done_armour += tdarmour;
    }
 
-   if ( w != NULL )
-      // Knockback doesn't consider weapon velocity, maybe it should?
-      vec2_padd( &p->solid.vel, dmg->knockback / p->solid.mass, w->dir );
+   if ( w != NULL ) {
+      // TODO knockback doesn't consider weapon velocity, maybe it should?
+      double dir =
+         atan2( p->solid.pos.y - w->pos.y, p->solid.pos.x - w->pos.x );
+      vec2_padd( &p->solid.vel, dmg->knockback / p->solid.mass, dir );
+   }
 
    /* On hit weapon effects. */
    if ( ( outfit != NULL ) && ( outfit_luaOnImpact( outfit ) != LUA_NOREF ) ) {

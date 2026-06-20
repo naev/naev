@@ -1155,7 +1155,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
                // Recoil
                // TODO use average of shots and not just the first one to
                // determine direction
-               double recoil = outfit_recoil( w->outfit );
+               double recoil = -outfit_recoil( w->outfit );
                vec2_padd( &p->solid.vel, recoil / p->solid.mass,
                           ww->solid.dir );
             }
@@ -1237,7 +1237,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
                // Recoil
                // TODO use average of shots and not just the first one to
                // determine direction
-               double recoil = outfit_recoil( w->outfit );
+               double recoil = -outfit_recoil( w->outfit );
                vec2_padd( &p->solid.vel, recoil / p->solid.mass,
                           ww->solid.dir );
             }
