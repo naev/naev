@@ -319,6 +319,78 @@ intrinsics["Soromid Nyx"] = {
       },
    },
 }
+intrinsics["Soromid Nyx Symbiotic"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Largum Cerebrum I",
+         "Largus Cortex I",
+         "Supernus Gene Drive I",
+         "Talon Organ I",
+         "Talon Organ I",
+      },
+      slot = {
+         "brain",
+         "shell",
+         "genedrive",
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cortex Growth I"),
+      outfit = "Largus Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth"),
+      outfit = "Supernus Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Talon Organ II",
+         "Talon Organ II",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cerebrum Growth"),
+      outfit = "Largum Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Talon Organ III",
+         "Talon Organ III",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cortex Growth II"),
+      outfit = "Largus Cortex III",
+      slot = "shell",
+   },
+   {
+      name = _("Weapon Organ Growth III"),
+      outfit = {
+         "Talon Organ IV",
+         "Talon Organ IV",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+}
 
 -- Copia (Bulk Freighter) intrinsics
 intrinsics["Soromid Copia"] = {
