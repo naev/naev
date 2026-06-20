@@ -708,6 +708,7 @@ stds.pilot = {
    read_globals = {
       pilot = {
          fields = {
+            choosePoint = {},
             add = {},
             clone = {},
             rm = {},
