@@ -673,7 +673,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
    at->material    = array_create( AsteroidReward );
    at->damage      = 100;
    at->penetration = FULL_PENETRATION;
-   at->knockback   = 1000.0;
+   at->knockback   = 5000.0;
    at->exp_radius  = 50.;
    at->alert_range = 7000.;
 
@@ -693,6 +693,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
       xmlr_float( node, "damage", at->damage );
       xmlr_float( node, "disable", at->disable );
       xmlr_float( node, "penetration", at->penetration );
+      xmlr_float( node, "knockback", at->knockback );
       xmlr_float( node, "exp_radius", at->exp_radius );
       xmlr_float( node, "alert_range", at->alert_range );
 
