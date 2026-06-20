@@ -1356,8 +1356,8 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
                   int reset )
 {
    int    shooter;
-   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, ddis,
-      absorb, dmod, start;
+   double damage_shield, damage_armour, disable, ddmg, ddis, absorb, dmod,
+      start;
    double tdshield, tdarmour;
 
    /* Invincible means no damage. */
@@ -1371,7 +1371,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    rdmg.damage *= p->stats.damage_taken;
 
    /* Defaults. */
-   dam_mod = 0.;
    ddmg    = 0.;
    ddis    = 0.;
    shooter = ( pshooter == NULL ) ? 0 : pshooter->id;
@@ -1379,8 +1378,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    /* Calculate the damage. */
    absorb  = pow( 0.99, MAX( 0., p->dmg_absorb - rdmg.penetration ) );
    disable = rdmg.disable;
-   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, &rdmg,
-                     &p->stats );
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &rdmg, &p->stats );
 
    /*
     * Delay undisable if necessary. Amount varies with damage, as e.g. a
@@ -1406,7 +1404,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       start = p->shield;
       ddmg  = damage_shield;
       p->shield -= damage_shield;
-      dam_mod = damage_shield / p->shield_max;
 
       /*
        * Disabling damage leaks accordingly:
@@ -1446,8 +1443,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       tdarmour = dmod * damage_armour;
       p->armour -= tdarmour;
       p->stress += dmod * disable;
-      dam_mod = ( damage_shield + damage_armour ) /
-                ( ( p->shield_max + p->armour_max ) / 2. );
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
@@ -1514,15 +1509,12 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       player.ps.dmg_done_armour += tdarmour;
    }
 
-   if ( w != NULL )
-      /* knock back effect is dependent on both damage and mass of the weapon
-       * should probably get turned into a partial conservative collision */
-      vec2_cadd(
-         &p->solid.vel,
-         knockback *
-            ( w->vel.x * ( dam_mod / 9. + w->mass / p->solid.mass / 6. ) ),
-         knockback *
-            ( w->vel.y * ( dam_mod / 9. + w->mass / p->solid.mass / 6. ) ) );
+   if ( w != NULL ) {
+      // TODO knockback doesn't consider weapon velocity, maybe it should?
+      double dir =
+         atan2( p->solid.pos.y - w->pos.y, p->solid.pos.x - w->pos.x );
+      vec2_padd( &p->solid.vel, dmg->knockback / p->solid.mass, dir );
+   }
 
    /* On hit weapon effects. */
    if ( ( outfit != NULL ) && ( outfit_luaOnImpact( outfit ) != LUA_NOREF ) ) {
@@ -1795,7 +1787,9 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg,
       ddmg.damage = dmg->damage * ( 1. - sqrt( dist / rad2 ) );
 
       /* Impact settings. */
-      s.mass  = pow2( dmg->damage ) / 30.;
+      s.mass  = 1.;
+      s.pos.x = x;
+      s.pos.y = y;
       s.vel.x = rx;
       s.vel.y = ry;
 
@@ -2602,6 +2596,7 @@ void pilot_update( Pilot *pilot, double dt )
                MAX( 0., 2. * ( a * ( 1. + sqrt( pilot->fuel + 1. ) / 28. ) ) );
             dmg.penetration = FULL_PENETRATION; /* Full penetration. */
             dmg.disable     = 0.;
+            dmg.knockback   = dmg.damage * 300.0;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                           pilot->solid.vel.x, pilot->solid.vel.y,
                           pilot->ship->size / 2. / PILOT_SIZE_APPROX + a, &dmg,

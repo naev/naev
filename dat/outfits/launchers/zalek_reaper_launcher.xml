@@ -22,7 +22,6 @@
   <trackmin>0</trackmin>
   <trackmax>25000</trackmax>
   <amount>5</amount>
-  <ammo_mass>5</ammo_mass>
   <gfx>zalek_reaper</gfx>
   <sound>1-second-detachment</sound>
   <sound_hit>lrgexp0</sound_hit>

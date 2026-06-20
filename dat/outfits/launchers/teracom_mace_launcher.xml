@@ -17,7 +17,6 @@
   <swivel>22</swivel>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
-  <ammo_mass>0.1</ammo_mass>
   <gfx>mace</gfx>
   <sound>mace</sound>
   <sound_hit>lrgexp0</sound_hit>

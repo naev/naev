@@ -171,6 +171,7 @@ typedef struct Damage_ {
       damage; /**< Amount of damage, this counts towards killing the ship. */
    double disable; /**< Amount of disable damage, this counts towards disabling
                       the ship. */
+   double knockback; /**< Amount of knockback in impulse. */
 } Damage;
 
 /**
@@ -184,6 +185,7 @@ typedef struct OutfitBoltData_ {
    double falloff; /**< Point at which damage falls off. */
    double energy;  /**< Energy usage */
    Damage dmg;     /**< Damage done. */
+   double recoil;  /**< Recoil of the weapon. */
    double radius;  /**< Explosion radius .*/
 
    double trackmin;   /**< Ewarfare minimal tracking. */
@@ -228,6 +230,7 @@ typedef struct OutfitBeamData_ {
    double turn;       /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy;     /**< Amount of energy it drains (per second). */
    Damage dmg;        /**< Damage done. */
+   double recoil;     /**< Recoil of the weapon. */
    double swivel;     /**< Amount of swivel (semiarc in radians of deviation the
                          weapon can correct). */
    int mining_rarity; /**< Maximum mining rarity the weapon can mine. */
@@ -266,10 +269,9 @@ typedef struct OutfitLauncherData_ {
    int    shots;            /**< Number of particles shot when fired. */
    int    mining_rarity;    /**< Maximum mining rarity the weapon can mine. */
 
-   double       ammo_mass; /**< How heavy it is. */
-   double       duration;  /**< How long the ammo lives. */
-   double       resist;    /**< Lowers chance of jamming by this amount */
-   OutfitAmmoAI ai;        /**< Smartness of ammo. */
+   double       duration; /**< How long the ammo lives. */
+   double       resist;   /**< Lowers chance of jamming by this amount */
+   OutfitAmmoAI ai;       /**< Smartness of ammo. */
 
    double speed;     /**< Initial speed. */
    double speed_max; /**< Maximum speed. Defaults to speed if not set. */
@@ -277,6 +279,7 @@ typedef struct OutfitLauncherData_ {
    double accel;     /**< Acceleration */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
+   double recoil;    /**< Recoil of the weapon. */
    double radius;    /**< Explosion radius. */
 
    /* Health stuff. */
@@ -480,7 +483,6 @@ int            outfit_isProp( const Outfit *o, unsigned int prop );
 void           outfit_setProp( Outfit *o, unsigned int prop );
 void           outfit_rmProp( Outfit *o, unsigned int prop );
 double         outfit_mass( const Outfit *o );
-double         outfit_massAmmo( const Outfit *o );
 const char    *outfit_license( const Outfit *o );
 credits_t      outfit_price( const Outfit *o );
 const char    *outfit_getPrice( const Outfit *outfit, unsigned int q,
@@ -595,6 +597,7 @@ const ShipStatList *outfit_stats( const Outfit *o );
 int                 outfit_spfxArmour( const Outfit *o );
 int                 outfit_spfxShield( const Outfit *o );
 const Damage       *outfit_damage( const Outfit *o );
+double              outfit_recoil( const Outfit *o );
 double              outfit_radius( const Outfit *o );
 double              outfit_delay( const Outfit *o );
 int                 outfit_amount( const Outfit *o );
@@ -617,7 +620,6 @@ int                 outfit_miningRarity( const Outfit *o );
 const Sound        *outfit_sound( const Outfit *o );
 const Sound        *outfit_soundHit( const Outfit *o );
 const Sound        *outfit_soundOff( const Outfit *o );
-double              outfit_ammoMass( const Outfit *o );
 int                 outfit_shots( const Outfit *o );
 double              outfit_dispersion( const Outfit *o );
 double              outfit_speed_dispersion( const Outfit *o );

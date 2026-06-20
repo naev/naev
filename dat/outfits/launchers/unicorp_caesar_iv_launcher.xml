@@ -20,7 +20,6 @@
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
   <amount>6</amount>
-  <ammo_mass>4</ammo_mass>
   <gfx>caesar</gfx>
   <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>

@@ -73,6 +73,7 @@
 #include "array.h"
 #include "board.h"
 #include "conf.h"
+#include "constants.h"
 #include "faction.h"
 #include "gatherable.h"
 #include "hook.h"

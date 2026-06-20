@@ -55,6 +55,7 @@ pub struct Type {
    absorb: f64,
    damage: f64,
    disable: f64,
+   knockback: f64,
    penetration: f64,
    exp_radius: f64,
    alert_range: f64,
@@ -98,6 +99,7 @@ impl Type {
             "absorb" => at.absorb = nxml::node_f64(node)?,
             "damage" => at.damage = nxml::node_f64(node)?,
             "disable" => at.disable = nxml::node_f64(node)?,
+            "knockback" => at.knockback = nxml::node_f64(node)?,
             "penetration" => at.penetration = nxml::node_f64(node)?,
             "exp_radius" => at.exp_radius = nxml::node_f64(node)?,
             "alert_range" => at.alert_range = nxml::node_f64(node)?,
@@ -947,7 +949,6 @@ pub extern "C" fn _asteroid_hit(
       std::ptr::null_mut(),
       &mut darmour,
       absorb,
-      std::ptr::null_mut(),
       dmg,
       std::ptr::null(),
    );
@@ -967,6 +968,7 @@ pub extern "C" fn _asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonu
       damage: at.damage,
       penetration: at.penetration,
       disable: at.disable,
+      knockback: at.knockback,
    };
    unsafe {
       naevc::expl_explode(

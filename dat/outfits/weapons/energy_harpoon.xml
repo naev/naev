@@ -25,7 +25,7 @@
   <trackmax>7200</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>energy_noknockback</type>
+   <type>energy</type>
    <penetrate>90</penetrate>
    <physical>146</physical>
   </damage>
