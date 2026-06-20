@@ -626,10 +626,11 @@ int lua_ispilot( lua_State *L, int ind )
  *    @luatparam[opt=false] boolean g Whether to behave as guerilla (spawn in
  * deep space)
  *    @luatreturn Spob|Vec2|Jump A randomly chosen suitable spawn point.
- * @luafunc choosePoint
+ * @deprecated luafunc choosePoint
  */
 static int pilotL_choosePoint( lua_State *L )
 {
+   NLUA_DEPRECATED( L, "pilot.choosePoint" );
    LuaFaction lf;
    int        ignore_rules, guerilla;
    Spob      *spob = NULL;
