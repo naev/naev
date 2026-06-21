@@ -11,6 +11,7 @@ function fb.spawnerOutfit( p )
 end
 
 function fb.equip( p, olist )
+   p:outfitRm("purge")
    for k,v in pairs(olist) do
       if type(k)=="string" then
          if not p:outfitAddSlot( v, k, true ) then
