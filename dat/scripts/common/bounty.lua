@@ -93,6 +93,7 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.alive_only      = params.alive_only
    b.spawnfunc       = params.spawnfunc
    b.boardfunc       = params.boardfunc
+   b.deathfunc       = params.deathfunc
    b.completefunc    = params.completefunc
    b.staticfaction   = params.staticfaction
    -- Custom messages (can be tables of messages from which one will be chosen)
@@ -319,7 +320,7 @@ function _bounty_board( p )
    local b = mem._bounty
 
    if b.boardfunc then
-      if not _G[b.boardfunc]( p ) then return end
+      if not _G[b.boardfunc]( b, p ) then return end
    end
 
    local pltc = commodity.new( b.targetname, _("A wanted individual captured alive.") )
@@ -353,11 +354,15 @@ function _bounty_attacked( _p, attacker, dmg )
    end
 end
 
-function _bounty_death( _p, attacker )
+function _bounty_death( p, attacker )
    local b = mem._bounty
 
    if b.alive_only then
       lmisn.fail( fmt.f( _("{plt} has been killed."), {plt=b.targetname} ) )
+   end
+
+   if b.deathfunc then
+      if not _G[b.deathfunc]( b, p, attacker ) then return end
    end
 
    if attacker and attacker:withPlayer() then
