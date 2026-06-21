@@ -271,17 +271,27 @@ function create ()
       targetfaction     = mem.target_faction,
       alive_only        = false,
       deadline          = mem.deadline,
-      completefunc      = "finish",
+      deathfunc         = "finish",
+      boardfunc         = "finish",
    } )
 end
 
 -- Succeed the mission
 -- luacheck: globals finish
-function finish ()
+function finish( b )
    lmisn.sfxMoney()
-   player.msg( "#g"..fmt.f(_("MISSION SUCCESS! Pay of {credits} has been transferred into your account."),{credits=fmt.credits(mem.credits)}).."#0" )
-   player.pay( mem.credits )
-   mem.paying_faction:hit( mem.reputation )
+   player.msg( "#g"..fmt.f(_("MISSION SUCCESS! Pay of {credits} has been transferred into your account."),{
+      credits = fmt.credits(b.reward)
+   }).."#0" )
+   player.pay( b.reward )
+   if b.reputation then
+      b.payingfaction:hit( b.reputation )
+      pir.reputationNormalMission( b.reputation )
+   end
+   if b.trackingvar then
+      local v = var.peek( b.trackingvar[1] ) or 0
+      var.push( b.trackingvar[1], v+b.trackingvar[2] )
+   end
    misn.finish( true )
 end
 
