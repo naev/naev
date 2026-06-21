@@ -22,6 +22,8 @@ function prefix.prefix( fct )
       return require("common.proteron").prefix
    elseif fct == faction.get("Yetmer") then
       return require("common.yetmer").prefix
+   elseif fct == faction.get("Traders Society") then
+      return require("common.trader").prefix
    elseif inlist( pir.factions, fct ) then
       return pir.prefix( fct )
    end
@@ -48,6 +50,8 @@ function prefix.colour( fct )
       return require("common.proteron").colour
    elseif fct == faction.get("Yetmer") then
       return require("common.yetmer").colour
+   elseif fct == faction.get("Traders Society") then
+      return require("common.trader").colour
    elseif inlist( pir.factions, fct ) then
       return pir.colour
    end
