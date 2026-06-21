@@ -38,6 +38,7 @@ local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 local bounty = require "common.bounty"
 local bhelp = require "events.priority_bounty.helpers"
+local prefix = require "common.prefix"
 
 -- Mission details
 local misn_title = {}
@@ -223,12 +224,12 @@ function create ()
    } )
    -- Faction prefix
    if not mem.paying_faction:static() then
-      local prefix = require("common.prefix").prefix(mem.paying_faction)
-      title = prefix..title
+      local pre = prefix.prefix(mem.paying_faction)
+      title = pre..title
    end
 
    local mdesc = fmt.f( misn_desc, {
-      fct   = mem.target_faction,
+      fct   = prefix.colour(mem.target_faction)..mem.target_faction:name().."#0",
       plt   = mem.name,
       sys   = mem.missys,
       shipclass = _(ship.get(target.ships[1]):classDisplay()),
