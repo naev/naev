@@ -238,6 +238,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE, jump_distance, N_( "Jump Distance" ) ),
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP, jump_warmup, N_( "Jump Warm-up" ) ),
    D__ELEM( SS_TYPE_D_MINING_BONUS, mining_bonus, N_( "Mining Bonus" ) ),
+   D__ELEM( SS_TYPE_D_PRICE, ship_price, N_( "Ship Price" ) ),
 
    A__ELEM( SS_TYPE_A_ACCEL, accel, N_( "Accel" ), _UNIT_ACCEL ),
    A__ELEM( SS_TYPE_A_TURN, turn, N_( "Turn Rate" ), _UNIT_ROTATION ),

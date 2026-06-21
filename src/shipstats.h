@@ -127,6 +127,7 @@ typedef enum ShipStatsType {
                                which the pilot can jump. */
    SS_TYPE_D_JUMP_WARMUP, /**< Modifies the time it takes to warm up to jump. */
    SS_TYPE_D_MINING_BONUS, /**< Bonus when mining asteroids. */
+   SS_TYPE_D_PRICE,        /**< Ship price. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -342,6 +343,7 @@ typedef struct ShipStats {
                                   around. */
    double asteroid_scan; /**< Distance at which asteroids can be scanned. */
    double mining_bonus;  /**< Bonus when mining asteroids. */
+   double ship_price;    /**< Base price of the ship. */
    int    misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
    int    fuel;                    /**< Maximum fuel modifier. */
    double fuel_regen;              /**< Absolute fuel regeneration. */

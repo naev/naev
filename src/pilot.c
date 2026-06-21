@@ -4610,7 +4610,7 @@ double pilot_relhp( const Pilot *cur_pilot, const Pilot *p )
 credits_t pilot_worth( const Pilot *p, int count_unique )
 {
    /* Ship price is base price + outfit prices. */
-   credits_t price = ship_basePrice( p->ship );
+   credits_t price = MAX( 0, ship_basePrice( p->ship ) * p->stats.ship_price );
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       const Outfit *o = p->outfits[i]->outfit;
       if ( o == NULL )
