@@ -3934,7 +3934,8 @@ static int pilotL_outfitAddSlot( lua_State *L )
  *
  * `"all"` will remove all outfits except cores, locked outfits, and intrinsic
  * outfits. "cores" will remove all cores, but nothing else. `"intrinsic"` will
- * remove all intrinsic outfits.
+ * remove all intrinsic outfits. `"clean"` will remove all not-locked outfits.
+ * `"purge"` will remove all outfits.
  *
  * @usage p:outfitRm( "all" ) -- Leaves the pilot naked (except for cores and
  * locked outfits).
@@ -3965,13 +3966,15 @@ static int pilotL_outfitRm( lua_State *L )
    if ( lua_isstring( L, 2 ) ) {
       const char *outfit = luaL_checkstring( L, 2 );
 
-      /* If outfit is "all", we remove everything except cores and locked
-       * outfits. */
+      /* If outfit is "all", we remove everything except cores, locked, and
+       * required outfits. */
       if ( strcmp( outfit, "all" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
             if ( p->outfits[i]->outfit == NULL )
                continue;
             if ( p->outfits[i]->sslot->required )
+               continue;
+            if ( outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_CORE ) )
                continue;
             if ( p->outfits[i]->sslot->locked )
                continue;
@@ -3986,8 +3989,26 @@ static int pilotL_outfitRm( lua_State *L )
       /* If outfit is "cores", we remove cores only. */
       else if ( strcmp( outfit, "cores" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
-            if ( !p->outfits[i]->sslot->required )
+            if ( !outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_CORE ) )
                continue;
+            if ( p->outfits[i]->sslot->locked )
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
+      } else if ( strcmp( outfit, "clean" ) == 0 ) {
+         for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            if ( p->outfits[i]->sslot->locked )
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
+      } else if ( strcmp( outfit, "purge" ) == 0 ) {
+         for ( int i = 0; i < array_size( p->outfits ); i++ ) {
             pilot_rmOutfitRaw( p, p->outfits[i] );
             removed++;
          }
