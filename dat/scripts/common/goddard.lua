@@ -3,8 +3,9 @@
    Goddard Common Functions
 
 --]]
-local srs = {}
+local gd = {}
 
-srs.prefix = "#b".._("GODDARD: ").."#0"
+gd.colour = "#b"
+gd.prefix = gd.colour.._("GODDARD: ").."#0"
 
-return srs
+return gd

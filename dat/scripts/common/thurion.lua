@@ -5,7 +5,8 @@ local vn = require "vn"
 
 local thurion = {}
 
-thurion.prefix = "#n".._("THURION: ").."#0" -- Repeatable mission prefix
+thurion.colour = "#n"
+thurion.prefix = thurion.colour.._("THURION: ").."#0" -- Repeatable mission prefix
 
 thurion.liao = {
    portrait = "liao",

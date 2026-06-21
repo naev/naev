@@ -9,8 +9,9 @@ local vn = require "vn"
 
 local emp = {}
 
-emp.prefix_raw = "#g".._("EMPIRE").."#0"
-emp.prefix = "#g".._("EMPIRE: ").."#0" -- Repeatable Empire mission prefix
+emp.colour = "#g"
+emp.prefix_raw = emp.colour.._("EMPIRE").."#0"
+emp.prefix = emp.colour.._("EMPIRE: ").."#0" -- Repeatable Empire mission prefix
 
 function emp.addShippingLog( text )
    shiplog.create("empire_shipping", _("Empire Shipping"), _("Empire"))

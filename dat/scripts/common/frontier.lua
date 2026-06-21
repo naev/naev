@@ -5,6 +5,7 @@
 --]]
 local srs = {}
 
-srs.prefix = "#y".._("FRONTIER: ").."#0"
+srs.colour = "#y"
+srs.prefix = srs.colour.._("FRONTIER: ").."#0"
 
 return srs

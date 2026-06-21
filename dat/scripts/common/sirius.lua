@@ -10,7 +10,8 @@ local luaspfx = require "luaspfx"
 
 local srs = {}
 
-srs.prefix = "#y".._("SIRIUS: ").."#0"
+srs.colour = "#y"
+srs.prefix = srs.colour.._("SIRIUS: ").."#0"
 
 function srs.playerIsPsychic ()
    return (var.peek("sirius_psychic")==true)

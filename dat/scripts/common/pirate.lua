@@ -28,6 +28,7 @@ pir.factions_clans = {
 local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")
 
+pir.colour = "#H"
 local _prefix = {
    ["Raven Clan"]    = _("RAVEN CLAN: "),
    ["Wild Ones"]     = _("WILD ONES: "),
@@ -39,7 +40,7 @@ function pir.prefix( fct )
    if not p then
       p = _("PIRATE: ")
    end
-   return "#H"..p.."#0"
+   return pir.colour..p.."#0"
 end
 
 --[[

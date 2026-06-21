@@ -7,6 +7,9 @@ local pir = require "common.pirate"
 
 local flf = {}
 
+flf.colour = "#g"
+flf.prefix = flf.colour.._("FLF: ").."#0"
+
 -- Get a random system with FLF presence.
 function flf.getSystem ()
    local choices = {}

@@ -5,6 +5,7 @@
 --]]
 local ytm = {}
 
-ytm.prefix = "#r".._("YETMER: ").."#0"
+ytm.colour = "#r"
+ytm.prefix = ytm.colour.._("YETMER: ").."#0"
 
 return ytm
