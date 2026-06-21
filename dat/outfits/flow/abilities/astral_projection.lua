@@ -55,6 +55,7 @@ local function turnon( p, po )
    -- Astral projection
    local pos = p:pos() + vec2.newP( 20, p:dir() )
    local np = pilot.add( mem.projection, p:faction(), pos, _("Astral Projection"), {ai="escort"} )
+   np:setNoDisable(true)
    mem.p = np
    np:effectAdd("Astral Projection")
 

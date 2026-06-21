@@ -88,6 +88,7 @@ function create ()
          if #r <= 0 then
             local p = pilot.add("Psychic Orb", "Independent", s, nil, {ai="dummy"} )
             p:setInvincible(true)
+            p:setNoDisable(true)
             p:setHostile(true)
             p:effectAdd("Psychic Orb On")
          end
