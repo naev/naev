@@ -286,7 +286,6 @@ function finish( b )
    player.pay( b.reward )
    if b.reputation then
       b.payingfaction:hit( b.reputation )
-      pir.reputationNormalMission( b.reputation )
    end
    if b.trackingvar then
       local v = var.peek( b.trackingvar[1] ) or 0
