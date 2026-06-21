@@ -3989,6 +3989,8 @@ static int pilotL_outfitRm( lua_State *L )
       /* If outfit is "cores", we remove cores only. */
       else if ( strcmp( outfit, "cores" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            if ( p->outfits[i]->outfit == NULL )
+               continue;
             if ( !outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_CORE ) )
                continue;
             if ( p->outfits[i]->sslot->locked )
@@ -4000,6 +4002,8 @@ static int pilotL_outfitRm( lua_State *L )
          matched = 1;
       } else if ( strcmp( outfit, "clean" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            if ( p->outfits[i]->outfit == NULL )
+               continue;
             if ( p->outfits[i]->sslot->locked )
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
@@ -4009,6 +4013,8 @@ static int pilotL_outfitRm( lua_State *L )
          matched = 1;
       } else if ( strcmp( outfit, "purge" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            if ( p->outfits[i]->outfit == NULL )
+               continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
             removed++;
          }
