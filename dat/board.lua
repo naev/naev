@@ -418,32 +418,6 @@ local function can_capture ()
    return true
 end
 
-local function capture_points ()
-   local needed_points = math.floor( board_plt:points() / loot_mod + 0.5 )
-   local needed = needed_points
-   if loot_mod > 1 then
-      needed = fmt.f(_("{pts} ({bonus} due to boarding bonus)"), {
-         pts   = needed_points,
-         bonus = string.format("#g%+d%%#0", 100/loot_mod - 100)
-      } )
-   elseif loot_mod < 1 then
-      needed = fmt.f(_("{pts} ({bonus} due to boarding bonus)"), {
-         pts   = needed_points,
-         bonus = string.format("#r%+d%%#0", 100/loot_mod - 100)
-      } )
-   end
-   local flttot, fltcur = player.fleetCapacity()
-   local freepoints = flttot-fltcur
-   for k,v in ipairs(player.events()) do
-      if v.name=="Ship Capture" then
-         local vmem  = v.memory
-         local pts   = vmem.points or vmem.ship:points()
-         freepoints  = freepoints - pts
-      end
-   end
-   return needed_points, needed, freepoints
-end
-
 local function is_capturable ()
    local t = board_plt:ship():tags()
    if t.noplayer then
@@ -455,13 +429,6 @@ local function is_capturable ()
    local pm = board_plt:memory()
    if not pm.natural and not pm.capturable then
       return false, _("This ship is not capturable.")
-   end
-   local needed_points, needed, freepoints = capture_points()
-   if freepoints < needed_points then
-      return false, fmt.f(_("You do not have enough free fleet capacity to capture the ship. You need {needed}, but only have {have} free fleet capacity."), {
-         needed   = needed,
-         have     = freepoints,
-      })
    end
    return true
 end
@@ -523,10 +490,7 @@ local function board_capture ()
       end
    end
 
-   local needed_points, needed, freepoints = capture_points()
    local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}% from crew strength and boarding bonus) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
-
-The captured ship will use {needed} fleet capacity. You have {fleetcap} free fleet capacity.
 
 You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]), {
          shpname     = board_plt:name(),
@@ -535,8 +499,6 @@ You will still have to escort the ship and land with it to perform the repairs a
          playercreds = fmt.credits(player.credits()),
          fctmsg      = factionmsg,
          sbonus      = sbonus,
-         needed      = needed,
-         fleetcap    = freepoints,
    })
 
    luatk.yesno( _("Capture Ship?"), capturemsg,
@@ -561,7 +523,6 @@ You will still have to escort the ship and land with it to perform the repairs a
             cost        = cost,
             costnaked   = costnaked,
             outfitsnaked= outfitsnaked,
-            points      = needed_points,
          }
          naev.eventStart("Ship Capture")
          board_close()
