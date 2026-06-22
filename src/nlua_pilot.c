@@ -3974,8 +3974,6 @@ static int pilotL_outfitRm( lua_State *L )
                continue;
             if ( p->outfits[i]->sslot->required )
                continue;
-            if ( outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_CORE ) )
-               continue;
             if ( p->outfits[i]->sslot->locked )
                continue;
             if ( outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_CORE ) )
