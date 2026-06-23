@@ -9,8 +9,10 @@ local sadmonisher = ship.get("Pirate Admonisher")
 local srhino      = ship.get("Pirate Rhino")
 local sbedivere   = ship.get("Pirate Bedivere")
 local sstarbridge = ship.get("Pirate Starbridge")
---local skestrel    = ship.get("Pirate Kestrel")
-
+local skestrel    = scom.variants{
+   { w=1,    s=ship.get("Pirate Kestrel") },
+   { w=0.05, s=ship.get("Pirate Kestrel (Dreamer)") },
+}
 local prefer_fleets, hostile_system
 
 local table_loner_strong = {
@@ -27,6 +29,12 @@ local table_squad = {
    { w=0.85, sadmonisher, svendetta, var.pirate_shark, shyena },
    { sstarbridge, var.pirate_shark, var.pirate_shark },
 }
+local table_capship = {
+   { w=0.3, skestrel },
+   { w=0.6, skestrel, sphalanx, sadmonisher, svendetta, var.pirate_shark },
+   { w=0.9, skestrel, svendetta, sancestor, var.pirate_shark },
+   { skestrel, sphalanx, sadmonisher, svendetta, sancestor, var.pirate_shark },
+}
 
 local function spawn_loner_strong ()
    return scom.doTable( {
@@ -41,6 +49,14 @@ local function spawn_squad ()
       __nofleet = not prefer_fleets and (rnd.rnd() < 0.6),
       __stealth = (hostile_system or (rnd.rnd() < 0.6)),
    }, table_squad )
+end
+
+-- @brief Spawns a capship with escorts.
+local function spawn_capship ()
+   return scom.doTable( {
+      __nofleet = not prefer_fleets and (rnd.rnd() < 0.5),
+      __stealth = (hostile_system or (rnd.rnd() < 0.5)),
+   }, table_capship )
 end
 
 return function( t, _max, params )

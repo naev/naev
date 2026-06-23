@@ -13,7 +13,7 @@ return {
    reputation     = 200,
    targetfaction  = faction.get("Dreamer Clan"),
    alive_only     = true,
-   ships          = { ship.get("Pirate Kestrel") },
+   ships          = { ship.get("Pirate Kestrel (Dreamer)") },
    spawnfunc      = function( b, params )
       local fct = bounty.get_faction()
       local p = pilot.add( b.targetship[1], fct, params, b.targetname, {ai="baddie_norun", naked = true } )
@@ -30,7 +30,6 @@ return {
             ["Emergency Stasis Inducer"] = 100,
             ["Astral Projection"] = 100,
             ["Seeking Chakra"] = 0,
-            ["Large Flow Amplifier"] = 100
          },
          type_range = {
             ["Launcher"] = { max = 0 },

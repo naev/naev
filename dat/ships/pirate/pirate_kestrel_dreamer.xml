@@ -1,0 +1,9 @@
+<ship name="Pirate Kestrel (Dreamer)" inherits="Pirate Kestrel">
+ <rarity>3</rarity>
+ <gfx size="125" sx="10" sy="10">kestrel_pirate_dreamer.gltf</gfx>
+ <price>5350000</price>
+ <description>Boasting a far-out paint finish, this Dreamer Clan Kestrel has been retrofitted with facilities to amplify and channel flow for the few Dreamers capable of doing so.</description>
+ <intrinsics>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
+ </intrinsics>
+</ship>
