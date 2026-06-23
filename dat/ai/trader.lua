@@ -22,8 +22,13 @@ function create ()
    mem.safe_distance = 2000 + 1000 * ps:size()
 
    -- A bit more skilled if not a transport
-   if not ps:tags().transport then
+   local t = ps:tags()
+   if not t.transport then
       mem.atk_skill  = 0.5 + 0.3*rnd.sigma()
+   -- See if we should be more aggressive
+      mem.shield_run = 0
+      mem.armour_run = 100
+      mem.defensive  = true
    end
 
    -- Finish up creation

@@ -265,6 +265,8 @@ function create ()
       deadline          = mem.deadline,
       deathfunc         = "finish",
       boardfunc         = "finish",
+      osd_objective     = _([[Assassinate {plt}]]),
+      osd_reward        = false,
    } )
 end
 

@@ -519,6 +519,9 @@ function control_funcs.generic_attack( si, noretarget )
    local target_parmour, target_pshield = target:health()
    local parmour, pshield = ai.pilot():health()
 
+   -- Use some outfits in some non-combat situations
+   atklib.think_control()
+
    -- Runaway if needed
    if not mem.norun and (pshield < mem.shield_run
             and pshield < target_pshield ) or

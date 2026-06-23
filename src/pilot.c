@@ -930,9 +930,7 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    /* Disable active outfits. */
    pilotoutfit_modified = 0;
-   if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
-      pilot_calcStats( p );
-   // pilot_weapSetUpdateOutfitState( p );
+   pilot_outfitOffAll( p );
 
    /*
     * Base delay of about 9.5s for a Lancelot, 32.8s for a Peacemaker.
@@ -944,6 +942,9 @@ void pilot_cooldown( Pilot *p, int dochecks )
    /* Run outfit cooldown start hook. */
    pilot_outfitLCooldown( p, 0, 0, p->ctimer );
    pilot_shipLCooldown( p, 0, 0, p->ctimer );
+
+   pilot_calcStats( p );
+   // pilot_weapSetUpdateOutfitState( p );
 }
 
 /**
@@ -983,6 +984,9 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
       pilot_outfitLCooldown( p, 1, 0, 0. );
       pilot_shipLCooldown( p, 1, 0, 0. );
    }
+
+   pilot_calcStats( p );
+   // pilot_weapSetUpdateOutfitState( p );
 }
 
 /**

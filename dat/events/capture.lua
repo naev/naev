@@ -111,14 +111,14 @@ function create ()
    for k,v in pairs(mem.outfits) do
       -- Ignore outfits that can't be stolen
       if v and v:tags().nosteal then
-         mem.outfits[k] = nil
+         mem.outfits[k] = false
       end
    end
    mem.system = system.cur()
-   mem.intrinsics = oplt:outfitsList("intrinsic")
-   for k,v in pairs(mem.intrinsics) do
-      if v:tags().nosteal then
-         mem.intrinsics[k] = nil
+   mem.intrinsics = {}
+   for k,v in ipairs( oplt:outfitsList("intrinsic" ) ) do
+      if not v:tags().nosteal then
+         table.insert( mem.intrinsics, v )
       end
    end
    setup_pilot( plt )

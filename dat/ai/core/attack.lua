@@ -49,6 +49,43 @@ function atk.choose ()
    end
 end
 
+-- Handles some other offensive outfits when not doing necessarily combat stuff
+function atk.think_control()
+   -- Update some high level stats
+   mem.ranged_ammo = libatk.seekers_ammo()
+
+   -- Use special outfits
+   if not mem._o then return end
+   local p = ai.pilot()
+
+   -- Use shield booster if applicable
+   if mem._o.shield_booster then
+      local s = p:shield()
+      local e = p:energy()
+      if s < 50 and e > 20 then
+         p:outfitToggle( mem._o.shield_booster, true )
+      end
+   end
+
+   -- Jam stuff
+   if mem._o.jammer and ai.haslockon() then
+      if p:energy() > 40 then
+         p:outfitToggle( mem._o.jammer, true )
+      else
+         p:outfitToggle( mem._o.jammer, false )
+      end
+   end
+
+   -- Plasma Burst
+   if mem._o.plasma_burst and p:outfitReady( mem._o.plasma_burst ) then
+      local RADIUS = 300
+      local e = p:getEnemies( RADIUS, nil, nil, nil, true )
+      if #e >= 2 then
+         p:outfitToggle( mem._o.plasma_burst, true )
+      end
+   end
+end
+
 --[[
 -- Wrapper for the think functions.
 --]]
