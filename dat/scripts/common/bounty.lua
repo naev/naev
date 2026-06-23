@@ -457,6 +457,7 @@ function spawn_bounty( params )
    else
       for k,s in ipairs(b.targetship) do
          local p = pilot.add( s, bounty.get_faction(), params, b.targetname )
+         p:setHostile(true)
          local aimem = p:memory()
          aimem.loiter = math.huge -- Should make them loiter forever
          aimem.capturable = true
