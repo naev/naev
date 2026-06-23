@@ -469,8 +469,9 @@ function spawn_bounty( params )
          local p = pilot.add( s, fct, params, b.targetname )
          p:setHostile(true)
          local aimem = p:memory()
-         aimem.loiter = math.huge -- Should make them loiter forever
-         aimem.capturable = true
+         aimem.defensive   = true -- Always try to be defensive
+         aimem.loiter      = math.huge -- Should make them loiter forever
+         aimem.capturable  = true
          if not target_ship then
             target_ship = p
             -- Make esaier to spot but not fight
