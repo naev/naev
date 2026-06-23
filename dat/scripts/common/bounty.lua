@@ -122,7 +122,11 @@ function bounty.init( system, targetname, targetship, reward, params )
          b.osd_objective =  osd_objective_def
       end
    end
-   b.osd_reward      = params.osd_reward or ((b.payingfaction:static() and osd_reward_static_def) or osd_reward_def)
+   if params.osd_reward ~= nil then
+      b.osd_erward = params.osd_reward
+   else
+      b.osd_reward = (b.payingfaction:static() and osd_reward_static_def) or osd_reward_def
+   end
 
    -- Set up mission information
    b.marker = misn.markerAdd( b.system, "computer" )
@@ -134,18 +138,23 @@ local function update_osd ()
       local active = misn.osdGetActive() or 1
       -- Only care if first is selected, or time is ignored
       if active==1 then
-         misn.osdCreate( b.osd_title, {
+         local objective = {
             fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.cur())} ),
             fmt.f( b.osd_objective, {plt=b.targetname} ),
-            fmt.f( b.osd_reward,    {fct=b.payingfaction} )
-         } )
+         }
+         if b.osd_reward then
+            table.insert( objective, fmt.f( b.osd_reward, {fct=b.payingfaction} ) )
+         end
       end
    else
-      misn.osdCreate( b.osd_title, {
+      local objective = {
          fmt.f( b.osd_goto,      {sys=b.system} ),
          fmt.f( b.osd_objective, {plt=b.targetname} ),
-         fmt.f( b.osd_reward,    {fct=b.payingfaction} )
-      } )
+      }
+      if b.osd_reward then
+         table.insert( objective, fmt.f( b.osd_reward, {fct=b.payingfaction} ) )
+      end
+      misn.osdCreate( b.osd_title, objective )
    end
 end
 
