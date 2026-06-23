@@ -6,4 +6,13 @@
  <intrinsics>
   <intrinsic>Internal Flow Amplifier</intrinsic>
  </intrinsics>
+ <stats>
+  <speed_mod>10</speed_mod>
+  <turn_mod>10</turn_mod>
+  <accel_mod>5</accel_mod>
+  <stress_dissipation>20</stress_dissipation>
+  <armour_mod>-10</armour_mod>
+  <ew_hide>-10</ew_hide>
+  <fuel>400</fuel>
+ </stats>
 </ship>
