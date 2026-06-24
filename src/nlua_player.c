@@ -1531,9 +1531,12 @@ static int playerL_shipOutfits( lua_State *L )
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       if ( p->outfits[i]->outfit == NULL )
          continue;
-
       /* Set the outfit. */
       lua_pushoutfit( L, p->outfits[i]->outfit );
+      lua_rawseti( L, -2, j++ );
+   }
+   for ( int i = 0; i < array_size( p->outfit_intrinsic ); i++ ) {
+      lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
       lua_rawseti( L, -2, j++ );
    }
 
