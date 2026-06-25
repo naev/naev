@@ -3156,6 +3156,7 @@ dat/events/proteron/blockade.lua
 dat/events/restricted.lua
 dat/events/restricted_ngc11718.lua
 dat/events/settings.lua
+dat/events/ship_repairs.lua
 dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
