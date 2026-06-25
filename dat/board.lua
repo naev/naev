@@ -794,6 +794,22 @@ _board_close = function ( )
    -- Player stole something to make it not spaceworthy, sorry bud, you're not waking up.
    if not board_plt:spaceworthy() then
       board_plt:setDisable(false) -- Permanently disable
+
+      -- They'll infinitely stay around the disabled sihp unless told otherwise, so tell the followers to scram
+      local newleader
+      for k,e in ipairs(board_plt:followers()) do
+         if e:mothership()==board_plt then
+            -- Fade out fighters
+            e:effectAdd("Fade-Out")
+         else
+            if not newleader then
+               newleader = e
+               e:setLeader()
+            else
+               e:setLeader( newleader )
+            end
+         end
+      end
    end
 end
 
