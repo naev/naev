@@ -11,7 +11,7 @@ local sbedivere   = ship.get("Pirate Bedivere")
 local sstarbridge = ship.get("Pirate Starbridge")
 local skestrel    = scom.variants{
    { w=1,    s=ship.get("Pirate Kestrel") },
-   { w=0.05, s=ship.get("Pirate Kestrel (Dreamer)") },
+   { w=0.05, s=ship.get("Pirate Kestrel Galaxy Soul") },
 }
 local prefer_fleets, hostile_system
 

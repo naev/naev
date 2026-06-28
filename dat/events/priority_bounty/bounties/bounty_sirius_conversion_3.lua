@@ -13,23 +13,19 @@ return {
    reputation     = 200,
    targetfaction  = faction.get("Dreamer Clan"),
    alive_only     = true,
-   ships          = { ship.get("Pirate Kestrel (Dreamer)") },
+   ships          = { ship.get("Pirate Kestrel Galaxy Soul") },
    spawnfunc      = function( b, params )
       local fct = bounty.get_faction()
       local p = pilot.add( b.targetship[1], fct, params, b.targetname, {ai="baddie_norun", naked = true } )
       p:outfitAddIntrinsic("Escape Pod")
-      equipopt.sirius( p, {
+      equipopt.pirate( p, {
          outfits_add = {
             "Emergency Stasis Inducer",
-            "Hunting Combat AI",
-            "Astral Projection"
+            "House of Mirrors"
          },
          prefer = {
-            ["Pinpoint Combat AI"] = 0,
-            ["Hunting Combat AI"] = 100,
             ["Emergency Stasis Inducer"] = 100,
-            ["Astral Projection"] = 100,
-            ["Seeking Chakra"] = 0,
+            ["House of Mirrors"] = 100,
          },
          type_range = {
             ["Launcher"] = { max = 0 },

@@ -1,10 +1,10 @@
-<ship name="Pirate Kestrel (Dreamer)" inherits="Pirate Kestrel">
+<ship name="Pirate Kestrel Galaxy Soul" inherits="Pirate Kestrel">
  <rarity>3</rarity>
  <gfx size="125" sx="10" sy="10">kestrel_pirate_dreamer.gltf</gfx>
  <price>5350000</price>
- <description>Boasting a far-out paint finish, this Dreamer Clan Kestrel has been retrofitted with facilities to amplify and channel flow for the few Dreamers capable of doing so.</description>
+ <description>Boasting a far-out paint finish, this Kestrel has been retrofitted by Dreamer Clan pirates with facilities to amplify and channel flow for the few Dreamers capable of doing so. For some reason, this seems to involve a concerning quantity of lava lamps.</description>
  <intrinsics>
-  <intrinsic>Internal Flow Amplifier</intrinsic>
+  <intrinsic>Internal Groove Synthesizer</intrinsic>
  </intrinsics>
  <stats>
   <speed_mod>10</speed_mod>
