@@ -60,10 +60,11 @@ local function spawn_capship ()
 end
 
 return function( t, _max, params )
-   prefer_fleets = params.prefer_fleets
+   prefer_fleets  = params.prefer_fleets
    hostile_system = params.hostile_system
 
    -- Overwrite stuff
-   t.loner_strong.f = spawn_loner_strong
-   t.squad.f = spawn_squad
+   t.loner_strong.f  = spawn_loner_strong
+   t.squad.f         = spawn_squad
+   t.capship.f       = spawn_capship
 end, 10
