@@ -2630,9 +2630,14 @@ static void outfitLOnanyimpact( const Pilot *pilot, PilotOutfitSlot *po,
    lua_pushpilot( naevL, pilot->id );
    lua_pushpilotoutfit( naevL, po );
    lua_pushpilot( naevL, dat->t->id );
-   lua_pushvector( naevL, dat->w->pos ); /* f, p, p, x */
-   lua_pushvector( naevL, dat->w->vel ); /* f, p, p, x, v */
-   lua_pushoutfit( naevL, dat->o );      /* f, p, p, x, v, o */
+   if ( dat->w != NULL ) {
+      lua_pushvector( naevL, dat->w->pos ); /* f, p, p, x */
+      lua_pushvector( naevL, dat->w->vel ); /* f, p, p, x, v */
+   } else {
+      lua_pushvector( naevL, dat->t->solid.pos );
+      lua_pushvector( naevL, dat->t->solid.vel );
+   }
+   lua_pushoutfit( naevL, dat->o ); /* f, p, p, x, v, o */
    lua_pushnumber( naevL, dat->armour );
    lua_pushnumber( naevL, dat->shield );
    lua_pushnumber( naevL, dat->disable );
