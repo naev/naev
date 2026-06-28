@@ -2641,8 +2641,8 @@ static void outfitLOnanyimpact( const Pilot *pilot, PilotOutfitSlot *po,
    lua_pushnumber( naevL, dat->armour );
    lua_pushnumber( naevL, dat->shield );
    lua_pushnumber( naevL, dat->disable );
-   if ( nlua_pcall( env, 8, 0 ) ) { /* */
-      outfitLRunWarning( pilot, o, "ondeath",
+   if ( nlua_pcall( env, 9, 0 ) ) { /* */
+      outfitLRunWarning( pilot, o, "onanyimpact",
                          luaL_tolstring( naevL, -1, NULL ) );
       lua_pop( naevL, 2 );
    }
