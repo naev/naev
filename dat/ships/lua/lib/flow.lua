@@ -24,6 +24,12 @@ local flow_base = {
    ["Medium Meditation Chamber"] = 140,
    ["Small Meditation Chamber"]  = 70,
    ["Astral Flow Amplifier"]     = 100,
+   ["Large Groove Synthesizer"]  = 300,
+   ["Medium Groove Synthesizer"] = 150,
+   ["Small Groove Synthesizer"]  = 75,
+   ["Large Groove Pit"]          = 200,
+   ["Medium Groove Pit"]         = 100,
+   ["Small Groove Pit"]          = 50,
 }
 flow.list_base = flow_base
 
@@ -46,6 +52,9 @@ local flow_regen = {
    ["Medium Flow Resonator"]     = 4,
    ["Small Flow Resonator"]      = 2,
    ["Astral Flow Amplifier"]     = 10,
+   ["Large Groove Synthesizer"]  = 4,
+   ["Medium Groove Synthesizer"] = 2,
+   ["Small Groove Synthesizer"]  = 1,
 }
 flow.list_regen = flow_regen
 
@@ -106,9 +115,13 @@ function flow.deactivate( p )
    sm._flow_active = math.max(fa-1)
 end
 
+local function default_capacity( sm )
+   return (sm._flow_dreamer and 0.25) or 0.5
+end
+
 function flow.reset( p )
    local sm = p:shipMemory()
-   sm._flow = 0.5*(sm._flow_base or 0)
+   sm._flow = (sm._flow_base or 0) * default_capacity(sm)
    sm._flow_active = 0
 end
 
@@ -129,7 +142,7 @@ function flow.update( p, dt )
    local sm = p:shipMemory()
    local fb = sm._flow_base or 0
    local f = sm._flow or 0
-   local cap = 0.5
+   local cap = default_capacity(sm)
    if sm._flow < cap*fb then
       local fa = sm._flow_active or 0
       if fa <= 0 then
@@ -151,24 +164,30 @@ end
 function flow.recalculate( p )
    local sm = p:shipMemory()
    local has_amplifier = false
+   local is_dreamer = false
    local fm, fb, fr
 
+   -- Try to find the amplifier if applicable
    local wplayer = p:withPlayer()
-   if (not wplayer) or (wplayer and srs.playerIsPsychic()) then
-      local sn = p:ship():nameRaw()
-      fm = flow_mod[ sn ] or 1
-      fb = flow_base[ sn ] or 0
-      fr = flow_regen[ sn ] or 0
-      for k,v in ipairs(p:outfitsList("all")) do
-         local vn = v:nameRaw()
-         fm = fm * (flow_mod[ vn ] or 1)
-         fb = fb + (flow_base[ vn ] or 0)
-         fr = fr + (flow_regen[ vn ] or 0)
-         if v:tags().flow_amplifier then
-            has_amplifier = true
-         end
+   local sn = p:ship():nameRaw()
+   fm = flow_mod[ sn ] or 1
+   fb = flow_base[ sn ] or 0
+   fr = flow_regen[ sn ] or 0
+   for k,v in ipairs(p:outfitsList("all")) do
+      local vn = v:nameRaw()
+      fm = fm * (flow_mod[ vn ] or 1)
+      fb = fb + (flow_base[ vn ] or 0)
+      fr = fr + (flow_regen[ vn ] or 0)
+      local t = v:tags()
+      if t.flow_amplifier and (not wplayer) or (wplayer and srs.playerIsPsychic()) or t.dreamer then
+         has_amplifier = true
       end
+      if t.dreamer then
+         is_dreamer = true
+      end
+   end
 
+   if has_amplifier then
       -- Get bonus from abilities to player
       if p==player.pilot() then
          local fam = 1
@@ -179,15 +198,23 @@ function flow.recalculate( p )
          end
          fm = fm * fam
       end
-   end
-   if has_amplifier then
-      sm._flow_mod = fm
-      sm._flow_base = fb * fm
+
+      -- Base stats
+      sm._flow_mod   = fm
+      sm._flow_base  = fb * fm
       sm._flow_regen = fr
+
+      -- Dreamers change behaiour a bit
+      if is_dreamer then
+         sm._flow_dreamer = true
+      else
+         sm._flow_dreamer = false
+      end
    else
       sm._flow_mod = nil
       sm._flow_base = nil
       sm._flow_regen = nil
+      sm._flow_dreamer = nil
    end
 
    -- Reset just in case
@@ -198,19 +225,20 @@ local amp_size = {
    ["Small Flow Amplifier"]   = 1,
    ["Medium Flow Amplifier"]  = 2,
    ["Large Flow Amplifier"]   = 3,
+   ["Small Groove Synthesizer"]   = 1,
+   ["Medium Groove Synthesizer"]  = 2,
+   ["Large Groove Synthesizer"]   = 3,
 }
 function flow.size( p )
    -- Sirius ships are determined by their size
-   local ps = p:ship()
-   if ps:tags().sirius then
-      return math.floor( ps:size()*0.5 + 0.5 )
-   end
    for k,v in ipairs(p:outfitsList()) do
       if v:tags().flow_amplifier then
          return amp_size[ v:nameRaw() ]
       end
    end
-   return 0
+   -- We default to ship size if not using an explicit amplifier
+   local ps = p:ship()
+   return math.floor( ps:size()*0.5 + 0.5 )
 end
 
 local prefix = {

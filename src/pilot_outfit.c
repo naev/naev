@@ -1230,6 +1230,10 @@ void pilot_calcStats( Pilot *pilot )
       }
    }
 
+   // Lower absorption when active cooling
+   if ( pilot_isFlag( pilot, PILOT_COOLDOWN ) )
+      pilot->dmg_absorb *= 0.5;
+
    /* Dump excess fuel */
    pilot->fuel = MIN( pilot->fuel, pilot->fuel_max );
 

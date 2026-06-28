@@ -1379,8 +1379,10 @@ static PlayerShip_t *playerL_shipvarShip( lua_State *L, int idx )
 {
    if ( lua_isnoneornil( L, idx ) )
       return &player.ps;
-   const char   *name = luaL_checkstring( L, idx );
-   PlayerShip_t *ps   = player_getPlayerShip( name );
+   const char *name = luaL_checkstring( L, idx );
+   if ( strcmp( name, player.p->name ) == 0 )
+      return &player.ps;
+   PlayerShip_t *ps = player_getPlayerShip( name );
    if ( ps == NULL )
       NLUA_ERROR( L, "Unknown player ship '%s'", name );
    return ps;
@@ -1531,9 +1533,12 @@ static int playerL_shipOutfits( lua_State *L )
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       if ( p->outfits[i]->outfit == NULL )
          continue;
-
       /* Set the outfit. */
       lua_pushoutfit( L, p->outfits[i]->outfit );
+      lua_rawseti( L, -2, j++ );
+   }
+   for ( int i = 0; i < array_size( p->outfit_intrinsic ); i++ ) {
+      lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
       lua_rawseti( L, -2, j++ );
    }
 

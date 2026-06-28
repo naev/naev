@@ -17,6 +17,8 @@ Each point of absorption reduces the damage you would take by 1%.
 However, this reduction can be nullified by penetration, which is directly subtracted from the absorption.
 Note that penetration can not increase the damage past 100%.
 
+Note that a ship that is performing active cooldown will have its absorption reduced by 50%.
+
 ## Disable Damage and Stress
 
 Disable damage is the only way to disable ships, by applying stress.

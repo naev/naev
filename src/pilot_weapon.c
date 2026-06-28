@@ -239,10 +239,10 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
 
          if ( pos->state == PILOT_OUTFIT_OFF ) {
             int n = pilot_outfitOn( p, pos );
-            if ( ( n > 0 ) &&
-                 !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
-               breakstealth = 1;
-            else
+            if ( n > 0 ) {
+               if ( !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
+                  breakstealth = 1;
+            } else
                pos->flags &= ~( PILOTOUTFIT_ISON | PILOTOUTFIT_DYNAMIC_FLAGS );
             non += n;
          }

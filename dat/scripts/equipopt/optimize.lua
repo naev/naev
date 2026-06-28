@@ -788,7 +788,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          massgoal = mmod * params.max_mass * ss.engine_limit - st.mass
          lp:set_row( 3, "mass", nil, massgoal )
          -- Energy constraint, ensure doesn't go over base
-         energygoal = energygoal / 1.5
+         --energygoal = energygoal * (5 - try) / 5
          lp:set_row( 2, "energy_regen", math.max( min_energy, emod*energygoal - st.energy_regen ))
 
          -- Re-solve
@@ -850,14 +850,16 @@ function optimize.optimize( p, cores, outfit_list, params )
       local stn = p:stats()
       if not z or (stn.energy_regen < energygoal and try <= 5 and (emod*energygoal - stn.energy_regen) > min_energy) then
          p:outfitsEquip( outfits_base ) -- Should restore initial outfits
-         emod = emod / 1.5
-         print(fmt.f("Pilot '{name}' ('{ship}' ship): optimization attempt {try} of {trymax}: emod={emod}", {
-            name = p:name(),
-            ship = p:ship():name(),
-            try  = try,
-            trymax = 5,
-            emod = string.format("%.3f", emod),
-         }))
+         emod = (5 - try ) / 5
+         if try >= 3 then
+            print(fmt.f("Pilot '{name}' ('{ship}' ship): optimization attempt {try} of {trymax}: emod={emod}", {
+               name = p:name(),
+               ship = p:ship():name(),
+               try  = try,
+               trymax = 5,
+               emod = string.format("%.3f", emod),
+            }))
+         end
          lp:set_row( 2, "energy_regen", math.max( min_energy, emod*energygoal - stn.energy_regen ))
          done = false
       end

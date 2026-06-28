@@ -313,6 +313,7 @@ dat/outfits/intrinsic/defective.xml
 dat/outfits/intrinsic/escape_pod.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
+dat/outfits/intrinsic/heavily_damaged.xml
 dat/outfits/intrinsic/hyperdrive_retool.xml
 dat/outfits/intrinsic/luxury_furnishings.xml
 dat/outfits/intrinsic/machiavellian_fortune.xml
@@ -3155,6 +3156,7 @@ dat/events/proteron/blockade.lua
 dat/events/restricted.lua
 dat/events/restricted_ngc11718.lua
 dat/events/settings.lua
+dat/events/ship_repairs.lua
 dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
@@ -3555,6 +3557,7 @@ dat/outfits/flow/abilities/reality_rip.lua
 dat/outfits/flow/abilities/seeking_chakra.lua
 dat/outfits/flow/astral_projection/astral_cannon.lua
 dat/outfits/flow/flow_amplifier.lua
+dat/outfits/flow/groove_amplifier.lua
 dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/intrinsic/escape_pod.lua
