@@ -6,6 +6,7 @@ local flow_base = {
    -- Ships
    ["Sirius Divinity"]           = 500,
    ["Sirius Dogma"]              = 500,
+   ["Pirate Kestrel Galaxy Soul"]  = 400, --Dreamer ships use Internal Groove Synthesizer.
    ["Sirius Providence"]         = 300,
    ["Starbridge Herald"]         = 200,
    ["Sirius Preacher"]           = 160,
@@ -36,6 +37,7 @@ local flow_regen = {
    -- Ships
    ["Sirius Divinity"]           = 7,
    ["Sirius Dogma"]              = 7,
+   ["Pirate Kestrel Galaxy Soul"]  = 6, --Dreamer ships use Internal Groove Synthesizer.
    ["Sirius Providence"]         = 5,
    ["Starbridge Herald"]         = 4,
    ["Sirius Preacher"]           = 3,
