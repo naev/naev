@@ -20,6 +20,7 @@ local OUTFIT = outfit.get("Heavily Damaged")
 
 function create ()
    hook.land("land")
+   hook.safe("land")
 end
 
 local function is_damaged( name )
@@ -107,9 +108,13 @@ You have {amount}.]]), {
 
       player.pay( -cost )
       local curship = player.pilot():name()
-      player.shipSwap( r.name, true )
-      player.pilot():outfitRmIntrinsic( OUTFIT )
-      player.shipSwap( curship, true )
+      if curship==r.name then
+         player.pilot():outfitRmIntrinsic( OUTFIT )
+      else
+         player.shipSwap( r.name, true )
+         player.pilot():outfitRmIntrinsic( OUTFIT )
+         player.shipSwap( curship, true )
+      end
    end )
    vn.na(_([[You pay the heft sum, and watch via remote holo-vid how they do thorough repairs on your ships as you sip drinks idly in the bar. Eventually they come back covered in sweat after a job well down, and down a pitcher. Work hard, play hard you guess.]]))
    vn.func( function ()
