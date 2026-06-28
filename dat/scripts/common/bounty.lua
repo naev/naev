@@ -145,6 +145,7 @@ local function update_osd ()
          if b.osd_reward then
             table.insert( objective, fmt.f( b.osd_reward, {fct=b.payingfaction} ) )
          end
+         misn.osdCreate( b.osd_title, objective )
       end
    else
       local objective = {
