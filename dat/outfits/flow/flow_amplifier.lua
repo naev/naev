@@ -20,8 +20,11 @@ function descextra( p, o )
    else
       amount = flow.list_base[o:nameRaw()]
    end
-   return fmt.f("#y".._("Provides {flow} maximum flow capacity and allows a ship to use flow and allows gaining 10% of damage received as flow.{powers}").."#0",
-      { flow=amount, powers=powers })
+   return fmt.f("#y".._("Provides {flow} maximum flow capacity and allows a ship to use flow and allows gaining {amount}% of damage received as flow.{powers}").."#0", {
+      flow  = amount,
+      powers= powers,
+      amount= 10,
+   })
 end
 
 function init( p )
@@ -33,7 +36,7 @@ function update( p, _po, dt )
 end
 
 function onhit( p, _po, armour, shield )
-   flow.onhit( p, armour, shield )
+   flow.inc( p, 0.1*(armour+shield) )
 end
 
 function onremove( p, _po )

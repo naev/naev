@@ -18,9 +18,11 @@ function descextra( p, o )
       amount = flow.list_base[o:nameRaw()]
       regen  = flow.list_regen[o:nameRaw()]
    end
-   return fmt.f("#y".._("Provides {flow} maximum flow capacity, {regen} flow regeneration per second up to 25% maximum capacity, and allows a ship to use flow and allows gaining 10% of damage done as flow.").."#0", {
-      flow = amount,
-      regen = regen,
+   return fmt.f("#y".._("Provides {flow} maximum flow capacity, {regen} flow regeneration per second up to {capacity}% maximum capacity, and allows a ship to use flow and allows gaining {amount}% of damage done as flow.").."#0", {
+      flow     = amount,
+      regen    = regen,
+      capacity = 10,
+      amount   = 33,
    })
 end
 
@@ -34,7 +36,7 @@ end
 
 -- Done onanyimpact and not onhit
 function onanyimpact( p, _po, _target, _pos, _vel, _o, armour, shield, _disable )
-   flow.onhit( p, armour, shield )
+   flow.inc( p, 0.33*(armour+shield) )
 end
 
 function onremove( p, _po )

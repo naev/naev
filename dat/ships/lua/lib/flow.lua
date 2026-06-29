@@ -116,7 +116,7 @@ function flow.deactivate( p )
 end
 
 local function default_capacity( sm )
-   return (sm._flow_dreamer and 0.25) or 0.5
+   return (sm._flow_dreamer and 0.1) or 0.5
 end
 
 function flow.reset( p )
@@ -154,11 +154,6 @@ function flow.update( p, dt )
       -- Lose 2% a second when over cap
       sm._flow = math.max( cap*fb, f - dt*0.02*fb )
    end
-end
-
-function flow.onhit( p, armour, shield )
-   local dmg = armour+shield
-   flow.inc( p, dmg*0.1 )
 end
 
 function flow.recalculate( p )
