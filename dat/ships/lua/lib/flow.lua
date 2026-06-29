@@ -185,14 +185,14 @@ function flow.recalculate( p )
    if has_amplifier then
       -- Get bonus from abilities to player
       if p==player.pilot() then
-         local fam = 1
+         local fam = 0
          -- Abilities are unique, so we can only check unequipped
          for k,o in ipairs(player.outfits(true)) do
             if o:tags().flow_ability then
-               fam = fam + 0.05
+               fam = fam + 1
             end
          end
-         fm = fm * fam
+         fm = fm + 0.05 * math.max( 0, fam-1 )
       end
 
       -- Base stats
