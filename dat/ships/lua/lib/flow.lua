@@ -186,7 +186,8 @@ function flow.recalculate( p )
       -- Get bonus from abilities to player
       if p==player.pilot() then
          local fam = 1
-         for k,o in ipairs(player.outfits()) do
+         -- Abilities are unique, so we can only check unequipped
+         for k,o in ipairs(player.outfits(true)) do
             if o:tags().flow_ability then
                fam = fam + 0.05
             end
