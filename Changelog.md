@@ -33,15 +33,18 @@
        - Patrol missions now pay per hostile eliminated
        - New type of bounty that pays per hostile eliminated in the system
    * Streamlined capturing
-       - Boarding bonus affects how much fleet capacity you need to capture
-         ships
+       - Captured ships are now towed by your ship and do not require fleet
+         points
        - You can capture more than one ship at once now
+       - Ships can be stored for later restoration instead of requiring
+         immediate payment
    * Reworked knockback and added weapon recoil
        - Ammunition / fighter mass mechanics have been removed
        - Knockback and recoil are now explicit weapon statistics
        - Made knockback values more diverse and gave many weapons recoil
    * Ultra-heavy weapons have reduced energy usage
    * Nerfed range on torpedoes and other heavy launcher weapons
+   * Nerfed Soromid bioship shields and armour
    * Added accessibility option to disable screen shaking
    * Jump brightness made easier to configure; now defaults to darker
    * Gauntlet NPCs get their fighters disabled when they are disabled
@@ -59,7 +62,8 @@
        - Pirates will raid systems
    * 4 new ships
    * 14 new outfits
-   * 1 new ship variant
+   * 2 new ship variants
+   * Groove
    * Many more unique pilots
 
  ### Quality of Life
@@ -130,6 +134,7 @@
    * Escort drones give drone-ish messages
    * Fixed number of bribeable pilots changing
    * Fixed local maps thresholding hide the wrong way
+   * Fixed how flow bonus was being computed that was overcounting bonus
    * Map find dialogue no longer covers centre of interest
 
 
