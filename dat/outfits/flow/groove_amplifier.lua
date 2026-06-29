@@ -35,8 +35,8 @@ function update( p, _po, dt )
 end
 
 -- Done onanyimpact and not onhit
-function onanyimpact( p, _po, _target, _pos, _vel, _o, armour, shield, _disable )
-   flow.inc( p, 0.33*(armour+shield) )
+function onanyimpact( p, _po, _target, _pos, _vel, _o, armour, shield, disable )
+   flow.inc( p, 0.33*(armour+shield+disable) )
 end
 
 function onremove( p, _po )
