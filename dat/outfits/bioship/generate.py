@@ -127,25 +127,23 @@ typename['hull'] = N_("Bioship Shell")
 
 ## Cortex recipe:
 ##    "price":        lerpr(     <S&K>/2, <S&K>),
-##    "absorb":       lerpr( <Unicorp>-3, <S&K>-3 ),
+##    "absorb":       lerpr( <Unicorp>*0.9, <S&K>*0.9 ),
 ##    "armour":       lerp(    <Unicorp>, <S&K> )
 ##    "cargo":        lerpr(       <S&K>, (<S&K>+<Unicorp>)/2 ),
 ##    "mass":         <S&K>,
 ##    "armour":       lerp(    <Unicorp>, <S&K> )
 
-## Cerebrum recipe part 1 (small):
-##    "price":        lerpr(  <orion>, <orion>*1.5 ),
-##    "mass":         lerpr(  <orion>, <orion>*1.25 ),
-##    "shield" :      lerp(   <orion>, <orion>*1.25 ),
-##    "shield_regen": lerp(   <orion>, <orion>*1.25 ),
+## Cerebrum recipe part 1 (small/medium):
+##    "shield" :      lerp(   <orion>*0.25, <orion>*0.5),
+##    "shield_regen": lerp(   <orion>*0.25, <orion>*0.5),
 
 ## Cerebrum recipe part 1 (medium/large):
-##    "price":        lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
-##    "mass":         lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
-##    "shield":       lerp(   <orion>, <orion>+1/2*<shield capacitor> ),
-##    "shield_regen": lerp(   <orion>, <orion>+1/2*<shield_booster> ),
+##    "shield":       lerp(   <orion>*0.1, <orion>*0.25 ),
+##    "shield_regen": lerp(   <orion>*0.1, <orion>*0.25 ),
 
 ## Cerebrum recipe part 2:
+##    "price":        lerpr(  <orion>, <orion>*1.5 ),
+##    "mass":         lerpr(  <orion>, <orion>*1.25 ),
 ##    "energy" :      lerp(   <orion>, <orion>*1.25 ),
 ##    "energy_regen": lerp(   <orion>, <orion>*1.25 ),
 ##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
@@ -218,7 +216,7 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
       'desc':         desc['hull'],
       'gfx_store':    'organic_hull_' + gfx,
       'cargo':        lerpr( ref2['cargo'],    round((ref1['cargo']+ref2['cargo'])/2.0) ),
-      'absorb':       lerpr( ref1['absorb']-3, ref2['absorb']-3 ),
+      'absorb':       lerpr( ref1['absorb']*0.9, ref2['absorb']*0.9 ),
       'armour':       lerpr( ref1['armour'],   ref2['armour'] )
    } ).run( [ N_(output_pref + " Cortex " + s) for s in outputs ] )
 
@@ -243,19 +241,23 @@ for siz, nam, dbl, gfx, output_pref, outputs, cpu in [
 ]:
    ref = get_outfit_dict(path.join('core_system', siz), nam, True, dbl)
 
+   price = 0.5*ref['price']
+   mass = 0.25*ref['mass']
    if gfx[0] == 's':
-      price = 0.5*ref['price']
-      mass = 0.25*ref['mass']
       shield = 0.25*ref['shield']
       shield_regen = 0.25*ref['shield_regen']
+      ref['shield'] *= 0.25
+      ref['shield_regen'] *= 0.25
+   elif gfx[0] == 'm':
+      shield = 0.5*ref['shield']
+      shield_regen = 0.5*ref['shield_regen']
+      ref['shield'] *= 0.25
+      ref['shield_regen'] *= 0.25
    else:
-      shield_capacitor = get_outfit_dict('structure', 'shield_capacitor_ii'+('i' if gfx[0] ==' l' else '')+'.xml')
-      shield_booster = get_outfit_dict('structure', ref['size']+'_shield_booster.xml')
-
-      price = 0.5*(shield_booster['price']+shield_capacitor['price'])
-      mass = 0.5*(shield_booster['mass']+shield_capacitor['mass'])
-      shield = 0.5*shield_capacitor['shield']
-      shield_regen = 0.5*shield_booster['shield_regen']
+      shield = 0.15*ref['shield']
+      shield_regen = 0.15*ref['shield_regen']
+      ref['shield'] *= 0.1
+      ref['shield_regen'] *= 0.1
 
    BioOutfit( 'cerebrum.xml.template', {
       'price':          lerpr(ref['price'],        ref['price']+price),
