@@ -1,0 +1,54 @@
+<outfit name="Agamemnon Launcher">
+ <general>
+  <shortname>Agamemnon L.</shortname>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <licence>Heavy Weapon</licence>
+  <rarity>3</rarity>
+  <!-- 20% more than Imperator launcher -->
+  <mass>60</mass>
+  <price>500000</price>
+  <description>The Agamemnon Fission Torpedo is a two-stage atomic weapon, designed to cripple capital armour with an initial impact before triggering an immense nuclear explosion as a finishing blow.</description>
+  <gfx_store>imperatorlauncher</gfx_store>
+  <!-- ~50% more than Imperator launcher -->
+  <cpu>-25</cpu>
+ </general>
+ <specific type="launcher" secondary="1">
+  <delay>8</delay>
+  <!-- 50% slower than Imperator launcher -->
+  <reload_time>180</reload_time>
+  <lockon>4</lockon>
+  <iflockon>4.5</iflockon>
+  <arc>60</arc>
+  <trackmin>0</trackmin>
+  <trackmax>30000</trackmax>
+  <!-- 20% less than Imperator launcher -->
+  <amount>4</amount>
+  <gfx>imperator</gfx>
+  <lua>outfits/launchers/agamemnon_launcher.lua</lua>
+  <sound>torpedo</sound>
+  <sound_hit>lrgexp0</sound_hit>
+  <spfx_shield>Exp-L</spfx_shield>
+  <spfx_armour>Exp-L</spfx_armour>
+  <trail_generator x="-10">missileL</trail_generator>
+  <duration blowup="armour">25</duration>
+  <!-- +20 from Imperator -->
+  <accel>75</accel>
+  <!-- Half turn rate of Imperator -->
+  <turn>10</turn>
+  <!-- +40 from Imperator. Bad turn, so if it misses its target, it won't be able to turn around well. -->
+  <speed_max>200</speed_max>
+  <resist>160</resist>
+  <damage>
+   <type>kinetic</type>
+   <penetrate>250</penetrate>
+   <!-- First stage explosion. Second stage should be 1000 more damage. -->
+   <physical>250</physical>
+  </damage>
+  <!-- First stage explosion. Second stage should be 300. -->
+  <radius friendlyfire="1">60</radius>
+  <armour>200</armour>
+  <absorb>50</absorb>
+  <ai>smart</ai>
+ </specific>
+</outfit>

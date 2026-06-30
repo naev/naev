@@ -32,4 +32,3 @@ L = list(pos.items())
 
 for (k, v) in L:
    pos[k] -= center
-

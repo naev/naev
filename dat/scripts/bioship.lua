@@ -506,12 +506,12 @@ function bioship.window ()
       for k,s in pairs(skills) do
          skill_disable( pp, s )
       end
-      skillpoints = stage - _skill_count( skills )
+      skillpoints = math.max( 0, stage - _skill_count( skills ) )
       skill_text()
    end
 
    stage = pp:shipvarPeek( "biostage" ) or 1
-   skillpoints = stage - _skill_count( skills )
+   skillpoints = math.max( 0, stage - _skill_count( skills ) )
 
    for k,s in ipairs(intrinsics) do
       if stage >= s.stage then

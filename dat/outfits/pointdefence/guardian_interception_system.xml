@@ -1,5 +1,6 @@
 <outfit name="Guardian Interception System">
  <general>
+  <stealth_on/>
   <shortname>Guardian I.S.</shortname>
   <slot>weapon</slot>
   <size>medium</size>

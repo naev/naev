@@ -21,7 +21,7 @@ function autoequip( p )
    end
 
    -- Make sure
-   if not tk.yesno(_("Autoequip Confirmation"), _("This will re-equip your current pilot, are you sure you want to continue?")) then
+   if not tk.yesno(_("Autoequip Confirmation"), _("This will re-equip your currently selected ship, are you sure you want to continue?")) then
       return
    end
 
@@ -29,7 +29,7 @@ function autoequip( p )
    for k,v in ipairs( s:getSlots() ) do
       if not v.required and not v.locked then
          local o = p:outfitGet(k)
-         if o then
+         if o and not o:tags().core then
             -- Store and remove old
             player.outfitAdd( o )
             p:outfitRm( o )
@@ -61,7 +61,7 @@ function autoequip( p )
    for k,v in ipairs( s:getSlots() ) do
       if not v.required and not v.locked then
          local o = p:outfitGet(k)
-         if o then
+         if o and not o:tags().core then
             player.outfitRm( o )
          end
       end

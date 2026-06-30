@@ -108,6 +108,7 @@ function create ()
          if d > 500 then
             local m = pilot.add("Psychic Orb", "Independent", p, nil, {ai="dummy"} )
             m:setInvincible(true)
+            m:setNoDisable(true)
             m:effectAdd("Psychic Orb On")
             table.insert( markers, m )
             lp = p

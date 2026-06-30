@@ -6,17 +6,11 @@
  *
  * @brief Handles gigantic explosions.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
 
 #include "explosion.h"
 
-#include "log.h"
 #include "pilot.h"
-#include "rng.h"
 #include "spfx.h"
-#include "weapon.h"
 
 static int exp_s   = -1; /**< Small explosion spfx. */
 static int exp_m   = -1; /**< Medium explosion spfx. */

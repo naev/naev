@@ -12,39 +12,59 @@
 
  ### Gameplay
 
-   * Faction reputation is gained logarithmically, requiring more standing to
-     increase at higher ranks
-   * Absorption values have been reworked so that penetration is more useful
-   * Some skills have been reworked to use damage reduction instead of
-     absorption
+   * Changes in faction reputation
+       - Faction reputation is gained logarithmically, requiring more standing
+         to increase at higher ranks
+       - Most factions don't become hostile until -10, but will not let you
+         land below 0
+       - Independent systems have their own standing and memory
+       - The +1 reputation from derelict and Dvaered dogfight contest causes no
+         longer causes reputation penalties with pirates
+   * Absorption has been reworked
        - Absorption and penetration are no longer percents
-       - Core hulls give more absorption in general
+       - Core hulls give more absorption in general, so that penetration is
+         more useful
+       - Some skills have been reworked to use damage reduction instead of
+         absorption
        - Increased penetration of launchers
+   * Significant changes to being a mercenary
+       - Mercenary licence now obtained from a mission
+       - Bounties can feature multiple enemy ships
+       - Patrol missions now pay per hostile eliminated
+       - New type of bounty that pays per hostile eliminated in the system
+   * Streamlined capturing
+       - Captured ships are now towed by your ship and do not require fleet
+         points
+       - You can capture more than one ship at once now
+       - Ships can be stored for later restoration instead of requiring
+         immediate payment
+   * Reworked knockback and added weapon recoil
+       - Ammunition / fighter mass mechanics have been removed
+       - Knockback and recoil are now explicit weapon statistics
+       - Made knockback values more diverse and gave many weapons recoil
    * Ultra-heavy weapons have reduced energy usage
-   * The +1 reputation from derelict and Dvaered dogfight contest causes no
-     longer causes reputation penalties with pirates
+   * Nerfed range on torpedoes and other heavy launcher weapons
+   * Nerfed Soromid bioship shields and armour
    * Added accessibility option to disable screen shaking
    * Jump brightness made easier to configure; now defaults to darker
    * Gauntlet NPCs get their fighters disabled when they are disabled
    * Stress starts recovering 5 seconds after taking disable damage instead of
      immediately
-   * Independent systems have their own standing and memory
    * Can only sell ships when a shipyard is available
-   * Bounties can feature multiple enemy ships
-   * Mercenary licence now obtained from a mission
    * Llama voyager no longer has a super efficient jumpdrive
 
  ### Content
 
    * 8+ new missions
-       - Bounty rework with need types
+       - Bounty hunting has been reworked with new missions
+       - 28 new priority bounties
    * 8 new events
        - Pirates will raid systems
-   * 2 new ships
-   * 7 new outfits
-   * 1 new ship variant
+   * 4 new ships
+   * 14 new outfits
+   * 2 new ship variants
+   * Groove
    * Many more unique pilots
-   * Made NGC-11718 a bit more interesting
 
  ### Quality of Life
 
@@ -57,6 +77,7 @@
    * Can undisable escorts by boarding them
    * Pilot for the baron no longer hassles the player in space, but instead can
      be found at the bar
+   * Can open the map while the VN is open
 
  ### Engine
 
@@ -96,11 +117,10 @@
    * Commodities now support tags
    * Beams use separate shaders instead of subroutines now
    * Added support for aac and mp3 audio by default
-   * Changed rnd.rnd() syntax to be like math.random
+   * Changed rnd.rnd() syntax to be like math.random **[breaking change!!]**
    * Collision polygon generated baked into the engine
    * Time system is completely customizable by plugins now
    * You can define scaling for map decorators
-   * Support for making ships and outfits sell at discount prices
    * Added support for sounds to spfx
    * Added some support for spob domination
 
@@ -113,6 +133,16 @@
    * The Junker is no longer bribeable
    * Escort drones give drone-ish messages
    * Fixed number of bribeable pilots changing
+   * Fixed local maps thresholding hide the wrong way
+   * Fixed how flow bonus was being computed that was overcounting bonus
+   * Map find dialogue no longer covers centre of interest
+
+
+## v0.13.5 (unreleased)
+
+   * Fixed obelisks not being able to be completed
+   * Fixed combat hologram projector doing missile damage
+   * taiomi01: fixed error when scanning preventing from completing the mission
 
 
 ## v0.13.4

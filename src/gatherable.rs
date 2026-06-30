@@ -14,6 +14,7 @@ use tracing::instrument;
 
 const GATHER_DIST: f64 = 30.0;
 const GATHER_DIST2: f64 = GATHER_DIST * GATHER_DIST;
+const GATHER_SPEED_RATIO: f64 = 0.5;
 const NOSCOOP_DELAY: f64 = 2.0;
 
 static NOSCOOP_TIMER: AtomicF64 = AtomicF64::new(0.0);
@@ -92,6 +93,7 @@ impl Gatherable {
       if q > 0 {
          if isplayer {
             let msg = self.commodity.with(|c| {
+               let name = c.name();
                formatx!(
                   ngettext(
                      "{} tonne of {} gathered.",
@@ -99,7 +101,7 @@ impl Gatherable {
                      q as u64
                   ),
                   q,
-                  c.name()
+                  name
                )
                .unwrap_or_else(|e| {
                   warn_err!(e);
@@ -244,7 +246,11 @@ pub fn update(dt: f64) {
                continue;
             }
 
-            if !g.gather_pilot(ps) {
+            if (ps.vel() - g.vel).norm_squared() > GATHER_SPEED_RATIO * ps.speed() {
+               continue;
+            }
+
+            if g.gather_pilot(ps) {
                return false;
             }
          }

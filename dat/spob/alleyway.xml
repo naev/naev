@@ -6,7 +6,7 @@
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
-  <faction>Independent</faction>
+  <faction>Free Trader</faction>
   <base>70</base>
   <bonus>30</bonus>
   <range>0</range>
@@ -20,6 +20,7 @@
    <refuel/>
    <bar/>
    <missions/>
+   <nolanes/>
   </services>
   <description>Originally intended to be a trading hub and refuelling stop for merchants, this station has effectively turned into a hub for both pirates and bounty hunters. Authorities have long ago given up any hope of controlling the chaos, so everyone knows to be armed and remain vigilant at all times.</description>
   <bar>The bar is a mix of mostly pirates and bounty hunters, with a handful of merchants and gamblers. Fights often break out and it's hard to tell who to trust, so most people keep to themselves and avoid eye contact with others.</bar>

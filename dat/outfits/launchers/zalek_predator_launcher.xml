@@ -21,7 +21,6 @@
   <iflockon>2</iflockon>
   <trackmin>4000</trackmin>
   <trackmax>10000</trackmax>
-  <ammo_mass>0.4</ammo_mass>
   <gfx>empgrenade</gfx>
   <sound>grenadefire</sound>
   <sound_hit>grenade</sound_hit>
@@ -35,7 +34,7 @@
   <resist>36</resist>
   <damage>
    <type>kinetic</type>
-   <penetrate>72</penetrate>
+   <penetrate>112</penetrate>
    <physical>45</physical>
   </damage>
   <armour>20</armour>

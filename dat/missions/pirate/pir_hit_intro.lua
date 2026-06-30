@@ -26,7 +26,7 @@
  <faction>Raven Clan</faction>
  <faction>Dreamer Clan</faction>
  <faction>Pirate</faction>
- <faction>Independent</faction>
+ <faction>Free Trader</faction>
  <notes>
   <tier>3</tier>
  </notes>

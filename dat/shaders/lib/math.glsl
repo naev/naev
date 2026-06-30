@@ -62,6 +62,9 @@ vec3 fade(vec3 t) {
 vec2 fade(vec2 t) {
    return t*t*t*(t*(t*6.0-15.0)+10.0);
 }
+float fade(float t) {
+   return t*t*t*(t*(t*6.0-15.0)+10.0);
+}
 
 /* Returns a value in the [0,1] range. */
 float random(float n)

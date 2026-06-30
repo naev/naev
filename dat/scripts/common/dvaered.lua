@@ -1,6 +1,7 @@
 local dv = {}
 
-dv.prefix = "#o".._("DVAERED: ").."#0" -- Repeatable mission prefix
+dv.colour = "#o"
+dv.prefix = dv.colour.._("DVAERED: ").."#0" -- Repeatable mission prefix
 
 function dv.addAntiFLFLog( text )
    shiplog.create( "dv_antiflf", _("Anti-FLF Campaign"), _("Dvaered") )

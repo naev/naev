@@ -16,6 +16,7 @@ function spir.initDirectory( dir, faction, params )
 
    params = params or {}
    params.faction = faction
+   params.guerrilla = true -- Always guerrilla
 
    -- Set up directory
    local spawners = {}

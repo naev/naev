@@ -122,7 +122,6 @@ static void weapon_destroy( Weapon *w );
 static void weapon_free( Weapon *w );
 /* Hitting. */
 static int  weapon_checkCanHit( const Weapon *w, const Pilot *p );
-static void weapon_damage( Weapon *w, const Damage *dmg );
 static void weapon_hit( Weapon *w, const WeaponHit *hit );
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt );
 static void weapon_miss( Weapon *w );
@@ -614,6 +613,10 @@ static void think_beam( Weapon *w, double dt )
    default:
       return;
    }
+
+   // Recoil
+   double recoil = -outfit_recoil( w->outfit );
+   vec2_padd( &p->solid.vel, recoil * dt / p->solid.mass, w->solid.dir );
 }
 
 /**
@@ -1175,15 +1178,15 @@ static void weapon_updateCollide( Weapon *w, double dt )
          /* Beams need to update their properties online. */
          if ( outfit_type( w->outfit ) == OUTFIT_TYPE_BEAM ) {
             w->dam_mod        = p->stats.fwd_damage * p->stats.weapon_damage;
-            w->dam_as_dis_mod = p->stats.fwd_dam_as_dis - 1.;
+            w->dam_as_dis_mod = p->stats.fwd_dam_as_dis;
             w->range_mod      = p->stats.fwd_range * p->stats.weapon_range;
          } else {
             w->dam_mod        = p->stats.tur_damage * p->stats.weapon_damage;
-            w->dam_as_dis_mod = p->stats.tur_dam_as_dis - 1.;
+            w->dam_as_dis_mod = p->stats.tur_dam_as_dis;
             w->range_mod      = p->stats.tur_range * p->stats.weapon_range;
          }
-         w->dam_as_dis_mod *= p->stats.weapon_dam_as_dis - 1.;
-         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
+         w->dam_as_dis_mod *= p->stats.weapon_dam_as_dis;
+         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod - 1. );
       }
       wc.gfx      = NULL;
       wc.polygon  = NULL;
@@ -1685,6 +1688,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
    dmg.damage      = MAX( 0., damage * ( 1. - w->dam_as_dis_mod ) );
    dmg.penetration = odmg->penetration;
    dmg.type        = odmg->type;
+   dmg.knockback   = odmg->knockback;
    dmg.disable     = MAX( 0., w->dam_mod * w->strength * odmg->disable +
                                  damage * w->dam_as_dis_mod );
 
@@ -1824,7 +1828,7 @@ static void weapon_miss( Weapon *w )
  *    @param w Weapon being damaged.
  *    @param dmg Damage being applied.
  */
-static void weapon_damage( Weapon *w, const Damage *dmg )
+void weapon_damage( Weapon *w, const Damage *dmg )
 {
    assert( outfit_isLauncher( w->outfit ) );
 
@@ -1832,7 +1836,7 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
    double absorb = pow(
       0.99, MAX( 0., outfit_launcherAbsorb( w->outfit ) - dmg->penetration ) );
 
-   dtype_calcDamage( NULL, &damage_armour, absorb, NULL, dmg, NULL );
+   dtype_calcDamage( NULL, &damage_armour, absorb, dmg, NULL );
    w->armour -= damage_armour + dmg->disable;
 
    /* Still alive so nothing really happens. */
@@ -1872,7 +1876,7 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 {
    Pilot        *parent;
-   double        damage, firerate, mod;
+   double        damage, firerate, mod, frmod;
    Damage        dmg;
    const Damage *odmg;
 
@@ -1883,12 +1887,14 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       firerate = parent->stats.tur_firerate;
    else
       firerate = parent->stats.fwd_firerate;
-   mod = w->dam_mod * w->strength * firerate * parent->stats.weapon_firerate *
-         parent->stats.action_speed * dt;
+   frmod           = firerate * parent->stats.weapon_firerate *
+                     parent->stats.action_speed * dt;
+   mod             = w->dam_mod * w->strength * frmod;
    damage          = odmg->damage * mod;
    dmg.damage      = MAX( 0., damage * ( 1. - w->dam_as_dis_mod ) );
    dmg.penetration = odmg->penetration;
    dmg.type        = odmg->type;
+   dmg.knockback   = odmg->knockback * frmod;
    dmg.disable = MAX( 0., odmg->disable * mod + damage * w->dam_as_dis_mod );
 
    if ( hit->type == TARGET_PILOT ) {
@@ -2326,7 +2332,7 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
       w->range_mod      = parent->stats.fwd_range * parent->stats.weapon_range;
       speed_mod *= parent->stats.fwd_speed;
    }
-   w->dam_as_dis_mod *= parent->stats.weapon_dam_as_dis - 1.;
+   w->dam_as_dis_mod += parent->stats.weapon_dam_as_dis - 1.;
    /* Clamping, but might not actually be necessary if weird things want to be
     * done. */
    w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
@@ -2409,7 +2415,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    rdir = angle_clean( rdir );
 
    /* Snapshot. */
-   w->dam_mod *= parent->stats.launch_damage;
+   w->dam_mod *= parent->stats.launch_damage * parent->stats.weapon_damage;
    w->accel_mod = parent->stats.launch_accel;
    w->speed_mod = parent->stats.launch_speed;
    w->turn_mod  = parent->stats.launch_turn;
@@ -2422,7 +2428,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
 
    /* Set up ammo details. */
-   mass     = outfit_massAmmo( w->outfit );
+   mass     = 1.;
    w->timer = outfit_launcherDuration( w->outfit ) *
               parent->stats.launch_range * parent->stats.weapon_range /
               w->speed_mod;
@@ -2607,16 +2613,15 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
 
       if ( outfit_type( outfit ) == OUTFIT_TYPE_BEAM ) {
          w->dam_mod *= parent->stats.fwd_damage * parent->stats.weapon_damage;
-         w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
+         w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis;
          w->range_mod = parent->stats.fwd_range * parent->stats.weapon_range;
       } else {
          w->dam_mod *= parent->stats.tur_damage * parent->stats.weapon_damage;
-         w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
+         w->dam_as_dis_mod = parent->stats.tur_dam_as_dis;
          w->range_mod = parent->stats.tur_range * parent->stats.weapon_range;
       }
-      w->dam_as_dis_mod *= parent->stats.weapon_damage - 1.;
-      w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
-
+      w->dam_as_dis_mod *= parent->stats.weapon_dam_as_dis;
+      w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod - 1. );
       break;
 
    /* Treat seekers together. */

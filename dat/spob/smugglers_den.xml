@@ -1,0 +1,35 @@
+<spob name="Smuggler's Den">
+ <lua>lawless.lua</lua>
+ <pos x="-2302.137136" y="-1187.624580"/>
+ <GFX>
+  <space>002.avif</space>
+  <exterior>station_scene.avif</exterior>
+ </GFX>
+ <presence>
+  <faction>Free Trader</faction>
+  <base>60.000000</base>
+  <bonus>30.000000</bonus>
+  <range>8</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>7000</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <blackmarket/>
+   <nolanes/>
+  </services>
+  <description>A haphazardly constructed station in the heart of the Empire, Smuggler's Den provides respite to all those who want to avoid unwanted attention. Although built in the centre of an asteroid field, collisions are rare, but not entirely unheard of. The station does not seem to have any advanced early warning systems and, which doesn't help you put your mind to rest. Statistically you're more likely to get shot by an angry pirate or free trader at the station than get impacted by a meteorite, so that is that.
+
+Rumour says that the station's existence is tolerated given that it has its paperwork in order, however, it is somewhat a dubious claim as it does not appear in any of the Imperial maps.</description>
+  <bar>Half of the spaceport bar is located outside of the station, with food being served on both sides of the airlock. Such an unorthodox setup allows, for grabbing food on the go, or even when there is no free docking space for ships. For an extra charge you can have a small atmospheric dome to preserve the food from the harshness of direct space contact, however, the Blastin' Burritos are designed to survive the vacuum of space without any changes in flavour or texture, making them the staple food of the station.</bar>
+ </general>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
+</spob>

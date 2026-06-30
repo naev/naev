@@ -190,21 +190,30 @@ macro_rules! warn {
 #[macro_export]
 macro_rules! infox {
     ($($arg:tt)*) => {
-        $crate::info!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+        $crate::info!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or_else( |e| {
+           warn_err!(e);
+           String::from("Unknown")
+        } ) )
     };
 }
 
 #[macro_export]
 macro_rules! debugx {
     ($($arg:tt)*) => {
-        $crate::debug!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+        $crate::debug!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or_else( |e| {
+           warn_err!(e);
+           String::from("Unknown")
+        } ) )
     };
 }
 
 #[macro_export]
 macro_rules! warnx {
     ($($arg:tt)*) => {
-        $crate::warn!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+        $crate::warn!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or_else( |e| {
+           warn_err!(e);
+           String::from("Unknown")
+        } ) )
     };
 }
 

@@ -28,6 +28,7 @@ pir.factions_clans = {
 local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")
 
+pir.colour = "#H"
 local _prefix = {
    ["Raven Clan"]    = _("RAVEN CLAN: "),
    ["Wild Ones"]     = _("WILD ONES: "),
@@ -39,7 +40,7 @@ function pir.prefix( fct )
    if not p then
       p = _("PIRATE: ")
    end
-   return "#H"..p.."#0"
+   return pir.colour..p.."#0"
 end
 
 --[[
@@ -178,7 +179,17 @@ end
    @brief Gets whether or not the pilot is in a pirate ship
 --]]
 function pir.isPirateShip( p )
-   return p:ship():tags().pirate
+   -- Captured ships count as pirate ships for now...
+   if p:ship():tags().pirate then
+      return true
+   end
+   for k,o in ipairs(p:outfitsList("all")) do
+      -- TODO better tag?
+      if o:tags().pirate then
+         return true
+      end
+   end
+   return false
 end
 
 --[[

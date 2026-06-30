@@ -97,7 +97,8 @@ pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
          .format("%Y-%m-%d_%H-%M-%S.txt")
          .to_string(),
    );
-   infox!(gettext("Logging to {}"), logfile.to_string_lossy());
+   let logging = logfile.display();
+   infox!(gettext("Logging to {}"), logging);
    let guard = match nlog::set_log_file(&logfile.to_string_lossy()) {
       Ok(g) => Some(g),
       Err(e) => {
@@ -211,8 +212,8 @@ pub fn check_version() -> anyhow::Result<()> {
          gettext(
             "ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}."
          ),
-         &*version::VERSION_HUMAN,
-         &version_str
+         *version::VERSION_HUMAN,
+         version_str
       )?;
       warn!("{}", &err_str);
       if diff.abs() > 2 {
@@ -277,7 +278,12 @@ pub fn exists<P: AsRef<Path>>(path: P) -> bool {
 }
 
 /// Recursively lists all the files in a directory.
-pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
+///
+/// We can't return PathBuf here, because physfs only understands forward slashes, and PathBuf
+/// converts to backslashes on Windows. Returning String lets us enforce forward slashes so it all
+/// works.
+//pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
+pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
    let path = path.as_ref();
    Ok(physfs::read_dir(path)?
       .into_iter()
@@ -285,8 +291,9 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
          let full = path.join(&f);
          match is_dir(&full) {
             true => read_dir(&full).ok().map(|v| {
-               let base: PathBuf = f.into();
-               v.iter().map(|file| base.join(file)).collect()
+               //let base: PathBuf = f.into();
+               //v.iter().map(|file| base.join(file)).collect()
+               v.iter().map(|file| format!("{f}/{file}")).collect()
             }),
             false => match physfs::blacklisted(&full) {
                true => None,

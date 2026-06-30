@@ -161,6 +161,18 @@ function create()
    -- End event on takeoff.
    hook.takeoff( "leave" )
    hook.custom( "minerva_molecaught", "molecaught" )
+   for k,h in ipairs{
+      "land",
+      "outfits",
+      "shipyard",
+      "bar",
+      "mission",
+      "commodity",
+      "equipment",
+   } do
+      hook.land( "tab_random_event", h )
+   end
+   hook.safe( "tab_random_event_ready" )
 end
 
 local function has_event( name )
@@ -193,6 +205,18 @@ local function random_event()
    -- Spa Propaganda
    elseif maikki2 and player.misnActive("Minerva Pirates 3") and not spapropaganda then
       hook.safe( "start_spapropaganda" )
+   end
+end
+
+local start_tab_random_event = false
+function tab_random_event_ready ()
+   start_tab_random_event = true
+end
+
+function tab_random_event ()
+   local alter1 = has_event("Minerva Station Altercation 1")
+   if not alter1 and start_tab_random_event and rnd.rnd() < 0.5 then
+      random_event()
    end
 end
 

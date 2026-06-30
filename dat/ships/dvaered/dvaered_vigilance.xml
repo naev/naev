@@ -16,7 +16,7 @@
  <licence>Medium Combat Vessel</licence>
  <cond>require("buyrep")("Dvaered", 50)</cond>
  <condstr>You need at least 50% reputation with House Dvaered.</condstr>
- <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry more payload.</description>
+ <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry cruiser-scale armour plating, however this did necessitate shrinking some other core systems.</description>
  <health>
   <armour>550</armour>
  </health>
@@ -34,7 +34,7 @@
   <weapon y="-8" h="-0" prop="fighter_bay" x="-22" size="medium"/>
   <weapon y="8" h="-0" prop="fighter_bay" x="-22" size="medium"/>
   <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" name="accessory" size="medium"/>
   <utility size="large"/>
   <utility size="large"/>
@@ -42,8 +42,7 @@
   <utility size="medium"/>
   <structure prop="engines" name="engines" size="medium">Unicorp Falcon 700 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="medium">Unicorp Falcon 700 Engine</structure>
-  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="medium"/>
@@ -56,7 +55,7 @@
   <energy_regen_mod>-10</energy_regen_mod>
   <fwd_damage>10</fwd_damage>
   <fwd_energy>5</fwd_energy>
-  <engine_limit_rel>15</engine_limit_rel>
+  <engine_limit_rel>20</engine_limit_rel>
  </stats>
  <tags>
   <tag>dvaered</tag>

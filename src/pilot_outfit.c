@@ -811,8 +811,6 @@ int pilot_addAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity )
    s->u.ammo.quantity += quantity;
    s->u.ammo.quantity = MIN( max, s->u.ammo.quantity );
    q                  = s->u.ammo.quantity - q; /* Amount actually added. */
-   pilot->mass_outfit += q * outfit_ammoMass( s->outfit );
-   pilot_updateMass( pilot );
 
    return q;
 }
@@ -841,8 +839,6 @@ int pilot_rmAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity )
    /* Remove ammo. */
    q = MIN( quantity, s->u.ammo.quantity );
    s->u.ammo.quantity -= q;
-   pilot->mass_outfit -= q * outfit_ammoMass( s->outfit );
-   pilot_updateMass( pilot );
    /* We don't set the outfit to null so it "remembers" old ammo. */
 
    return q;
@@ -1018,9 +1014,6 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
    /* Keep a separate counter for required (core) outfits. */
    if ( sp_required( outfit_slotProperty( o ) ) )
       pilot->base_mass += outfit_mass( o );
-
-   /* Add ammo mass. */
-   pilot->mass_outfit += slot->u.ammo.quantity * outfit_ammoMass( o );
 
    if ( outfit_isAfterburner( o ) ) /* Afterburner */
       pilot->afterburner = slot;    /* Set afterburner */
@@ -1237,6 +1230,10 @@ void pilot_calcStats( Pilot *pilot )
       }
    }
 
+   // Lower absorption when active cooling
+   if ( pilot_isFlag( pilot, PILOT_COOLDOWN ) )
+      pilot->dmg_absorb *= 0.5;
+
    /* Dump excess fuel */
    pilot->fuel = MIN( pilot->fuel, pilot->fuel_max );
 
@@ -1451,6 +1448,10 @@ static void pilot_outfitLRun( Pilot *p,
 
    /* Some clean up. */
    temp_cleanup( tmp, p );
+
+   /* Outfit callbacks may have deleted the pilot. */
+   if ( pilot_isFlag( p, PILOT_DELETE ) )
+      return;
 
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
@@ -2555,6 +2556,12 @@ int pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
    }
    pilot_outfitLunmem( env, oldmem );
 
+   /* Outfit message callback may have deleted the pilot. */
+   if ( pilot_isFlag( pilot, PILOT_DELETE ) ) {
+      pilotoutfit_modified = modified;
+      return ret;
+   }
+
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
       /* TODO pilot_calcStats can be called twice here. */
@@ -2623,14 +2630,19 @@ static void outfitLOnanyimpact( const Pilot *pilot, PilotOutfitSlot *po,
    lua_pushpilot( naevL, pilot->id );
    lua_pushpilotoutfit( naevL, po );
    lua_pushpilot( naevL, dat->t->id );
-   lua_pushvector( naevL, dat->w->pos ); /* f, p, p, x */
-   lua_pushvector( naevL, dat->w->vel ); /* f, p, p, x, v */
-   lua_pushoutfit( naevL, dat->o );      /* f, p, p, x, v, o */
+   if ( dat->w != NULL ) {
+      lua_pushvector( naevL, dat->w->pos ); /* f, p, p, x */
+      lua_pushvector( naevL, dat->w->vel ); /* f, p, p, x, v */
+   } else {
+      lua_pushvector( naevL, dat->t->solid.pos );
+      lua_pushvector( naevL, dat->t->solid.vel );
+   }
+   lua_pushoutfit( naevL, dat->o ); /* f, p, p, x, v, o */
    lua_pushnumber( naevL, dat->armour );
    lua_pushnumber( naevL, dat->shield );
    lua_pushnumber( naevL, dat->disable );
-   if ( nlua_pcall( env, 8, 0 ) ) { /* */
-      outfitLRunWarning( pilot, o, "ondeath",
+   if ( nlua_pcall( env, 9, 0 ) ) { /* */
+      outfitLRunWarning( pilot, o, "onanyimpact",
                          luaL_tolstring( naevL, -1, NULL ) );
       lua_pop( naevL, 2 );
    }

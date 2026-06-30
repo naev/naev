@@ -1,5 +1,6 @@
 <outfit name="ZIBS-16">
  <general>
+  <stealth_on/>
   <slot>weapon</slot>
   <size>medium</size>
   <licence>Medium Weapon</licence>
@@ -19,8 +20,8 @@
   <energy>41</energy>
   <damage>
    <type>energy</type>
-   <penetrate>17</penetrate>
-   <physical>190</physical>
+   <penetrate>3</penetrate>
+   <physical>170</physical>
   </damage>
   <pointdefence/>
   <spfx_shield>Shi-S</spfx_shield>

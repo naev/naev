@@ -242,10 +242,8 @@ fn naevmain() -> Result<()> {
       // Set up I/O.
       naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
    }
-   infox!(
-      gettext("Loaded configuration: {}"),
-      conf_file_path.display()
-   );
+   let conf_file_path_str = conf_file_path.display();
+   infox!(gettext("Loaded configuration: {}"), conf_file_path_str);
    let mut buf = String::from(gettext("Read locations, searched in order:"));
    let search_path = ndata::physfs::search_path()?;
    buf.push_str("\n   ");
@@ -253,10 +251,9 @@ fn naevmain() -> Result<()> {
    info!("{buf}");
 
    /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
-   infox!(
-      gettext("Write location: {}\n"),
-      ndata::physfs::get_write_dir().display()
-   );
+   let write_dir = ndata::physfs::get_write_dir();
+   let write_loc = write_dir.display();
+   infox!(gettext("Write location: {}\n"), write_loc);
 
    nlua::init()?;
    //let _lua = nlua::NLua::new()?;
@@ -284,7 +281,7 @@ fn naevmain() -> Result<()> {
             linked.patch.into(),
          )
       };
-      debugx!(gettext("SDL: {} [compiled: {}]"), &linked, &compiled);
+      debugx!(gettext("SDL: {} [compiled: {}]"), linked, compiled);
       // Patch releases should be compatible.
       if linked.major != compiled.major || linked.minor != compiled.minor {
          if linked > compiled {
@@ -407,10 +404,8 @@ fn naevmain() -> Result<()> {
       naevc::menu_main();
 
       if naevc::conf.devmode != 0 {
-         infox!(
-            gettext("Reached main menu in {:.3f} s"),
-            start.elapsed().as_secs_f32()
-         );
+         let elapsed = start.elapsed().as_secs_f32();
+         infox!(gettext("Reached main menu in {:.3} s"), elapsed);
       } else {
          info!("{}", gettext("Reached main menu"));
       }

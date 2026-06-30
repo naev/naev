@@ -3265,7 +3265,7 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
 
       /* More checks, we'll only find systems on the other find of a jump if we
        * find the jump. */
-      if ( mod * jp->hide > detect )
+      if ( ( jp->hide > 0. ) && ( mod * jp->hide < detect ) )
          continue;
 
       /* Early recursive application, will apply multiple times to the same
@@ -3289,7 +3289,7 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
       Spob *p = sys->spobs[i];
       if ( !spob_hasSystem( p ) )
          continue;
-      if ( mod * p->hide > detect )
+      if ( ( p->hide > 0. ) && ( mod * p->hide < detect ) )
          continue;
       if ( spob_isKnown( p ) )
          continue;

@@ -20,14 +20,13 @@
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
   <amount>6</amount>
-  <ammo_mass>4</ammo_mass>
   <gfx>caesar</gfx>
   <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>Exp-L</spfx_shield>
   <spfx_armour>Exp-L</spfx_armour>
   <trail_generator x="-10">fire-missileL</trail_generator>
-  <duration blowup="armour">33</duration>
+  <duration blowup="armour">20</duration>
   <accel>70</accel>
   <turn>25</turn>
   <speed_max>190</speed_max>

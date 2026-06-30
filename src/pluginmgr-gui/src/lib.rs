@@ -588,13 +588,14 @@ impl App {
                   })
                   .collect();
                if !missing_deps.is_empty() {
+                  let missing_deps_str = missing_deps.join("\n * ");
                   let msg = formatx!(
                      pgettext(
                         "plugins",
                         "Install the following missing dependencies required by '{}'?\n * {}"
                      ),
-                     &plugin.name,
-                     missing_deps.join("\n * ")
+                     plugin.name,
+                     missing_deps_str
                   )
                   .unwrap_or("Install missing dependencies for this plugin too/".to_string());
                   self.modal = Some(Modal {
@@ -637,7 +638,7 @@ impl App {
                            formatx!(
                               pgettext("plugins", "Can not find dependency '{}' for plugin '{}'."),
                               p,
-                              &plugin.name
+                              plugin.name
                            )
                            .unwrap_or("Failed to find dependency for plugin!".to_string()),
                         ));
@@ -679,9 +680,9 @@ impl App {
             let msg = if let Ok(s) = fs_extra::dir::get_size(&self.catalog.conf.install_path)
                && s > 20 * 1024 * 1024
             {
-               Some(formatx!(pgettext( "plugins", "Are you sure you want to delete the very large plugin '{}'? It will be moved to the trash." ), &plugin.name ).unwrap_or("Are you sure you want to delete the very large plugin? It will be moved to the trash.".to_string()))
+               Some(formatx!(pgettext( "plugins", "Are you sure you want to delete the very large plugin '{}'? It will be moved to the trash." ), plugin.name ).unwrap_or("Are you sure you want to delete the very large plugin? It will be moved to the trash.".to_string()))
             } else if noremote {
-               Some(formatx!(pgettext( "plugins", "Are you sure you want to delete the local plugin '{}'? It will be moved to the trash."), &plugin.name ).unwrap_or("Are you sure you want to delete the local plugin? It will be moved to the trash.".to_string()))
+               Some(formatx!(pgettext( "plugins", "Are you sure you want to delete the local plugin '{}'? It will be moved to the trash."), plugin.name ).unwrap_or("Are you sure you want to delete the local plugin? It will be moved to the trash.".to_string()))
             } else {
                None
             };
@@ -752,12 +753,13 @@ impl App {
                && let Ok((issues, _plugins)) = self.catalog.check_issues()
                && !issues.is_empty()
             {
+               let issuesstr = issues.join("\n\n");
                let msg = formatx!(
                   pgettext(
                      "plugins",
                      "Are you sure you want to exit with the following issues unresolved?\n\n{}"
                   ),
-                  issues.join("\n\n")
+                  issuesstr
                )
                .unwrap_or(
                   "Are you sure you want to exit with unresolved plugin conflicts?".to_string(),
@@ -978,8 +980,8 @@ impl App {
                text(
                   formatx!(
                      pgettext("plugins", "{} [{} available]"),
-                     &local.version,
-                     &remote.version
+                     local.version,
+                     remote.version
                   )
                   .unwrap_or(local.version.to_string()),
                )
@@ -996,7 +998,7 @@ impl App {
                   true => "".to_string(),
                   false => formatx!(
                      pgettext("plugins", " [incompatible with Naev {}]"),
-                     &*nlog::version::VERSION
+                     *nlog::version::VERSION
                   )
                   .unwrap_or(format!(
                      " [incompatible with Naev {}]",

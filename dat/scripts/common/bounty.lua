@@ -92,6 +92,8 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.deadline        = params.deadline
    b.alive_only      = params.alive_only
    b.spawnfunc       = params.spawnfunc
+   b.boardfunc       = params.boardfunc
+   b.deathfunc       = params.deathfunc
    b.completefunc    = params.completefunc
    b.staticfaction   = params.staticfaction
    -- Custom messages (can be tables of messages from which one will be chosen)
@@ -120,7 +122,11 @@ function bounty.init( system, targetname, targetship, reward, params )
          b.osd_objective =  osd_objective_def
       end
    end
-   b.osd_reward      = params.osd_reward or ((b.payingfaction:static() and osd_reward_static_def) or osd_reward_def)
+   if params.osd_reward ~= nil then
+      b.osd_erward = params.osd_reward
+   else
+      b.osd_reward = (b.payingfaction:static() and osd_reward_static_def) or osd_reward_def
+   end
 
    -- Set up mission information
    b.marker = misn.markerAdd( b.system, "computer" )
@@ -132,18 +138,24 @@ local function update_osd ()
       local active = misn.osdGetActive() or 1
       -- Only care if first is selected, or time is ignored
       if active==1 then
-         misn.osdCreate( b.osd_title, {
+         local objective = {
             fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.cur())} ),
             fmt.f( b.osd_objective, {plt=b.targetname} ),
-            fmt.f( b.osd_reward,    {fct=b.payingfaction} )
-         } )
+         }
+         if b.osd_reward then
+            table.insert( objective, fmt.f( b.osd_reward, {fct=b.payingfaction} ) )
+         end
+         misn.osdCreate( b.osd_title, objective )
       end
    else
-      misn.osdCreate( b.osd_title, {
+      local objective = {
          fmt.f( b.osd_goto,      {sys=b.system} ),
          fmt.f( b.osd_objective, {plt=b.targetname} ),
-         fmt.f( b.osd_reward,    {fct=b.payingfaction} )
-      } )
+      }
+      if b.osd_reward then
+         table.insert( objective, fmt.f( b.osd_reward, {fct=b.payingfaction} ) )
+      end
+      misn.osdCreate( b.osd_title, objective )
    end
 end
 
@@ -173,7 +185,7 @@ end
 function _bounty_date ()
    local b = mem._bounty
    if system.cur() ~= b.system and not b.job_done then
-      if time.cur() > mem.deadline then
+      if time.cur() > b.deadline then
          return lmisn.fail( fmt.f(_("{plt} got away."), {plt=b.targetname} ))
       end
       update_osd()
@@ -314,8 +326,13 @@ local function _succeed ()
    hook.rm( b.land_hook )
 end
 
-function _bounty_board ()
+function _bounty_board( p )
    local b = mem._bounty
+
+   if b.boardfunc then
+      if not _G[b.boardfunc]( b, p ) then return end
+   end
+
    local pltc = commodity.new( b.targetname, _("A wanted individual captured alive.") )
    local t = fmt.f( b.msg_subdue[ rnd.rnd( 1, #b.msg_subdue ) ], {plt=b.targetname} )
    vntk.msg( _("Captured Alive"), t )
@@ -347,11 +364,15 @@ function _bounty_attacked( _p, attacker, dmg )
    end
 end
 
-function _bounty_death( _p, attacker )
+function _bounty_death( p, attacker )
    local b = mem._bounty
 
    if b.alive_only then
       lmisn.fail( fmt.f( _("{plt} has been killed."), {plt=b.targetname} ) )
+   end
+
+   if b.deathfunc then
+      if not _G[b.deathfunc]( b, p, attacker ) then return end
    end
 
    if attacker and attacker:withPlayer() then
@@ -436,12 +457,22 @@ function spawn_bounty( params )
    target_ship = nil
    if b.spawnfunc then
       target_ship = _G[b.spawnfunc]( b, params )
+      if type(target_ship)=="table" then
+         -- TODO make it so the escorts have to be destroyed in some cases
+         for k,e in ipairs(target_ship) do
+            e:setHostile( true )
+         end
+         target_ship = target_ship[1]
+      end
    else
+      local fct = bounty.get_faction()
       for k,s in ipairs(b.targetship) do
-         local p = pilot.add( s, bounty.get_faction(), params, b.targetname )
+         local p = pilot.add( s, fct, params, b.targetname )
+         p:setHostile(true)
          local aimem = p:memory()
-         aimem.loiter = math.huge -- Should make them loiter forever
-         aimem.capturable = true
+         aimem.defensive   = true -- Always try to be defensive
+         aimem.loiter      = math.huge -- Should make them loiter forever
+         aimem.capturable  = true
          if not target_ship then
             target_ship = p
             -- Make esaier to spot but not fight

@@ -16,6 +16,7 @@ extern const char _UNIT_PER_TIME[];
 extern const char _UNIT_DISTANCE[];
 extern const char _UNIT_SPEED[];
 extern const char _UNIT_ACCEL[];
+extern const char _UNIT_IMPULSE[];
 extern const char _UNIT_ENERGY[];
 extern const char _UNIT_POWER[];
 extern const char _UNIT_ANGLE[];
@@ -29,6 +30,7 @@ extern const char _UNIT_PERCENT[];
 #define UNIT_DISTANCE _( _UNIT_DISTANCE )
 #define UNIT_SPEED _( _UNIT_SPEED )
 #define UNIT_ACCEL _( _UNIT_ACCEL )
+#define UNIT_IMPULSE _( _UNIT_IMPULSE )
 #define UNIT_ENERGY _( _UNIT_ENERGY )
 #define UNIT_POWER _( _UNIT_POWER )
 #define UNIT_ANGLE _( _UNIT_ANGLE )

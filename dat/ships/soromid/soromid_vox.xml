@@ -50,9 +50,7 @@
   <structure size="large"/>
  </slots>
  <stats>
-  <armour_mod>90</armour_mod>
-  <shield_mod>30</shield_mod>
-  <shield_regen_mod>20</shield_regen_mod>
+  <armour_mod>30</armour_mod>
   <tur_damage>30</tur_damage>
  </stats>
  <tags>

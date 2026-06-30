@@ -3,8 +3,9 @@
    Proteron Common Functions
 
 --]]
-local srm = {}
+local ptr = {}
 
-srm.prefix = "#p".._("PROTERON: ").."#0"
+ptr.colour = "#p"
+ptr.prefix = ptr.colour.._("PROTERON: ").."#0"
 
-return srm
+return ptr

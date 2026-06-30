@@ -163,9 +163,11 @@ unsigned int pilot_getNextID( unsigned int id, int mode )
    /* Get first hostile in range. */
    if ( mode == 1 ) {
       while ( p < array_size( pilot_stack ) ) {
+         int inrange = 0;
          if ( !pilot_isWithPlayer( pilot_stack[p] ) &&
-              pilot_validTarget( player.p, pilot_stack[p] ) &&
-              pilot_isHostile( pilot_stack[p] ) )
+              pilot_isHostile( pilot_stack[p] ) &&
+              pilot_validTargetRange( player.p, pilot_stack[p], &inrange ) &&
+              ( inrange > 0 ) )
             return pilot_stack[p]->id;
          p++;
       }
@@ -214,10 +216,11 @@ unsigned int pilot_getPrevID( unsigned int id, int mode )
    /* Get first hostile in range. */
    else if ( mode == 1 ) {
       while ( p >= 0 ) {
+         int inrange = 0;
          if ( !pilot_isWithPlayer( pilot_stack[p] ) &&
-              !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-              pilot_validTarget( player.p, pilot_stack[p] ) &&
-              pilot_isHostile( pilot_stack[p] ) )
+              pilot_isHostile( pilot_stack[p] ) &&
+              pilot_validTargetRange( player.p, pilot_stack[p], &inrange ) &&
+              ( inrange > 0 ) )
             return pilot_stack[p]->id;
          p--;
       }
@@ -930,9 +933,7 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    /* Disable active outfits. */
    pilotoutfit_modified = 0;
-   if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
-      pilot_calcStats( p );
-   // pilot_weapSetUpdateOutfitState( p );
+   pilot_outfitOffAll( p );
 
    /*
     * Base delay of about 9.5s for a Lancelot, 32.8s for a Peacemaker.
@@ -944,6 +945,9 @@ void pilot_cooldown( Pilot *p, int dochecks )
    /* Run outfit cooldown start hook. */
    pilot_outfitLCooldown( p, 0, 0, p->ctimer );
    pilot_shipLCooldown( p, 0, 0, p->ctimer );
+
+   pilot_calcStats( p );
+   // pilot_weapSetUpdateOutfitState( p );
 }
 
 /**
@@ -983,6 +987,9 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
       pilot_outfitLCooldown( p, 1, 0, 0. );
       pilot_shipLCooldown( p, 1, 0, 0. );
    }
+
+   pilot_calcStats( p );
+   // pilot_weapSetUpdateOutfitState( p );
 }
 
 /**
@@ -1356,8 +1363,8 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
                   int reset )
 {
    int    shooter;
-   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, ddis,
-      absorb, dmod, start;
+   double damage_shield, damage_armour, disable, ddmg, ddis, absorb, dmod,
+      start;
    double tdshield, tdarmour;
 
    /* Invincible means no damage. */
@@ -1371,7 +1378,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    rdmg.damage *= p->stats.damage_taken;
 
    /* Defaults. */
-   dam_mod = 0.;
    ddmg    = 0.;
    ddis    = 0.;
    shooter = ( pshooter == NULL ) ? 0 : pshooter->id;
@@ -1379,8 +1385,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    /* Calculate the damage. */
    absorb  = pow( 0.99, MAX( 0., p->dmg_absorb - rdmg.penetration ) );
    disable = rdmg.disable;
-   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, &rdmg,
-                     &p->stats );
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &rdmg, &p->stats );
 
    /*
     * Delay undisable if necessary. Amount varies with damage, as e.g. a
@@ -1406,7 +1411,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       start = p->shield;
       ddmg  = damage_shield;
       p->shield -= damage_shield;
-      dam_mod = damage_shield / p->shield_max;
 
       /*
        * Disabling damage leaks accordingly:
@@ -1446,8 +1450,6 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       tdarmour = dmod * damage_armour;
       p->armour -= tdarmour;
       p->stress += dmod * disable;
-      dam_mod = ( damage_shield + damage_armour ) /
-                ( ( p->shield_max + p->armour_max ) / 2. );
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
@@ -1514,15 +1516,12 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       player.ps.dmg_done_armour += tdarmour;
    }
 
-   if ( w != NULL )
-      /* knock back effect is dependent on both damage and mass of the weapon
-       * should probably get turned into a partial conservative collision */
-      vec2_cadd(
-         &p->solid.vel,
-         knockback *
-            ( w->vel.x * ( dam_mod / 9. + w->mass / p->solid.mass / 6. ) ),
-         knockback *
-            ( w->vel.y * ( dam_mod / 9. + w->mass / p->solid.mass / 6. ) ) );
+   if ( w != NULL ) {
+      // TODO knockback doesn't consider weapon velocity, maybe it should?
+      double dir =
+         atan2( p->solid.pos.y - w->pos.y, p->solid.pos.x - w->pos.x );
+      vec2_padd( &p->solid.vel, dmg->knockback / p->solid.mass, dir );
+   }
 
    /* On hit weapon effects. */
    if ( ( outfit != NULL ) && ( outfit_luaOnImpact( outfit ) != LUA_NOREF ) ) {
@@ -1795,7 +1794,9 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg,
       ddmg.damage = dmg->damage * ( 1. - sqrt( dist / rad2 ) );
 
       /* Impact settings. */
-      s.mass  = pow2( dmg->damage ) / 30.;
+      s.mass  = 1.;
+      s.pos.x = x;
+      s.pos.y = y;
       s.vel.x = rx;
       s.vel.y = ry;
 
@@ -2602,6 +2603,7 @@ void pilot_update( Pilot *pilot, double dt )
                MAX( 0., 2. * ( a * ( 1. + sqrt( pilot->fuel + 1. ) / 28. ) ) );
             dmg.penetration = FULL_PENETRATION; /* Full penetration. */
             dmg.disable     = 0.;
+            dmg.knockback   = dmg.damage * 300.0;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                           pilot->solid.vel.x, pilot->solid.vel.y,
                           pilot->ship->size / 2. / PILOT_SIZE_APPROX + a, &dmg,
@@ -3857,6 +3859,22 @@ Pilot *pilot_setPlayer( Pilot *after )
    return after;
 }
 
+static int nearby_enemy( const vec2 *pos, FactionRef lf )
+{
+   const int      R = 3000; // Range
+   const IntList *qt =
+      pilot_collideQuery( pos->x - R, pos->y - R, pos->x + R, pos->y + R );
+   for ( int i = 0; i < il_size( qt ); i++ ) {
+      const Pilot *plt = pilot_stack[il_get( qt, i, 0 )];
+      if ( !pilot_canTarget( plt ) )
+         continue;
+
+      if ( areEnemiesSystem( plt->faction, lf, cur_system ) )
+         return 1;
+   }
+   return 0;
+}
+
 /**
  * @brief Finds a spawn point for a pilot
  *
@@ -3883,10 +3901,12 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, FactionRef lf,
    for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
       const Spob *pnt = cur_system->spobs[i];
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) ||
-           areEnemies( lf, pnt->presence.faction ) )
+           areEnemiesSystem( lf, pnt->presence.faction, cur_system ) )
          continue;
       if ( spob_isFlag( pnt, SPOB_RESTRICTED ) &&
            !areAllies( lf, pnt->presence.faction ) )
+         continue;
+      if ( guerrilla && nearby_enemy( &pnt->pos, lf ) )
          continue;
       array_push_back( &ind, i );
    }
@@ -4597,7 +4617,7 @@ double pilot_relhp( const Pilot *cur_pilot, const Pilot *p )
 credits_t pilot_worth( const Pilot *p, int count_unique )
 {
    /* Ship price is base price + outfit prices. */
-   credits_t price = ship_basePrice( p->ship );
+   credits_t price = MAX( 0, ship_basePrice( p->ship ) * p->stats.ship_price );
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       const Outfit *o = p->outfits[i]->outfit;
       if ( o == NULL )

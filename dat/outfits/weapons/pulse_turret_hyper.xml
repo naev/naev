@@ -1,0 +1,40 @@
+<outfit name="Hyperpulse Turret">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <licence>Heavy Weapon</licence>
+  <rarity>3</rarity>
+  <mass>75</mass>
+  <price>1400000</price>
+  <description>Cycles of extravagantly funded Proteron weapons research programs resulted in the Hyperpulse Turret, a battleship-scale 'superweapon'. Compared to the Turbolaser, its predecessor in Proteron fleet doctrine, the Hyperpulse Turret fires even faster energy pulses with better penetration against even the toughest battleship and carrier hull plating.</description>
+  <gfx_store>laserturret2</gfx_store>
+  <!-- 20% more than Turbolaser -->
+  <cpu>-420</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx type="shader" size="15" col_size="8">particles/laser_purple.frag</gfx>
+  <sound>laser</sound>
+  <spfx_shield>Shi-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
+  <delay>0.725</delay>
+  <!-- 300 more than Turbolaser -->
+  <speed>1600</speed>
+  <!-- 100 more than Turbolaser -->
+  <range>2500</range>
+  <!-- 100 more than Turbolaser -->
+  <falloff>1900</falloff>
+  <!-- >25% less energy efficient than Turbolaser -->
+  <energy>90</energy>
+  <trackmin>6000</trackmin>
+  <trackmax>24000</trackmax>
+  <damage>
+   <type>energy</type>
+   <!-- 30 more than Turbolaser -->
+   <penetrate>206</penetrate>
+   <physical>45</physical>
+  </damage>
+ </specific>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</outfit>

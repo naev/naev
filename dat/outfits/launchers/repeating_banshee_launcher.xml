@@ -20,7 +20,6 @@
   <swivel>22</swivel>
   <trackmin>2000</trackmin>
   <trackmax>8000</trackmax>
-  <ammo_mass>0.1</ammo_mass>
   <gfx>banshee</gfx>
   <sound>missile</sound>
   <sound_hit>bansheeexp</sound_hit>

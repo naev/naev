@@ -65,7 +65,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
       let repo = if repo_path.exists() {
          sender
             .send(Progress {
-               message: formatx!(pgettext("plugins", "Updating plugin remote {}"), &urlstr).ok(),
+               message: formatx!(pgettext("plugins", "Updating plugin remote {}"), urlstr).ok(),
                value: 0.0,
             })
             .await;
@@ -73,7 +73,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
       } else {
          sender
             .send(Progress {
-               message: formatx!(pgettext("plugins", "Cloning plugin remote {}"), &urlstr).ok(),
+               message: formatx!(pgettext("plugins", "Cloning plugin remote {}"), urlstr).ok(),
                value: 0.0,
             })
             .await;
@@ -85,7 +85,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
       let workdir = repo.workdir().context("naev-plugins directory is bare")?;
       sender
          .send(Progress {
-            message: formatx!(pgettext("plugins", "Updating plugins found in {}"), &urlstr).ok(),
+            message: formatx!(pgettext("plugins", "Updating plugins found in {}"), urlstr).ok(),
             value: 0.2,
          })
          .await;

@@ -664,19 +664,18 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    (void)unused;
    unsigned int wid;
    int          n, h, k;
-   Spob        *spobs;
    char       **str;
-   FactionRef  *factions;
 
    /* Find usable factions. */
-   factions = faction_getAll();
-   spobs    = spob_getAll();
+   FactionRef *factions = faction_getAll();
+   Spob       *spobs    = spob_getAll();
    for ( int i = 0; i < array_size( factions ); i++ ) {
       FactionRef f       = factions[i];
       int        hasfact = 0;
       for ( int j = 0; j < array_size( spobs ); j++ ) {
          Spob *p = &spobs[j];
          if ( ( p->presence.faction != f ) &&
+              ( p->presence.faction != FACTION_NULL ) &&
               !factionGenerates( p->presence.faction, f, NULL ) )
             continue;
          if ( p->presence.base == 0. && p->presence.bonus == 0. )

@@ -16,20 +16,19 @@
  <licence>Light Combat Vessel</licence>
  <cond>require("buyrep")("Proteron", 20)</cond>
  <condstr>You need at least 20% reputation with the Proteron.</condstr>
- <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Daltons is still a foe to be reckoned with. It's the latest in a long line of largely carrier-based interceptors. The Dalton's armour shell can be retracted and functions as cargo box for more convenient handling and storage. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+ <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Daltons is still a foe to be reckoned with. It's the latest in a long line of largely carrier-based interceptors. The Dalton's armour shell can be retracted and functions as cargo box for more convenient handling and storage. Packing relatively little firepower, they're ill-suited to dueling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
  <health>
-  <armour>35</armour>
+  <armour>40</armour>
  </health>
  <characteristics>
   <crew>2</crew>
   <mass>35</mass>
-  <fuel_consumption>150</fuel_consumption>
+  <fuel_consumption>100</fuel_consumption>
   <cargo>5</cargo>
  </characteristics>
  <slots>
   <weapon size="small" x="9" y="6" h="0"/>
   <weapon size="small" x="9" y="-6" h="0"/>
-  <weapon size="small" x="9" y="-12" h="0"/>
   <utility size="small" prop="systems" name="systems">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" name="accessory"/>
   <utility size="small"/>
@@ -40,8 +39,10 @@
   <structure size="small"/>
   <structure size="small"/>
   <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
+  <energy_regen_mod>5</energy_regen_mod>
   <armour_mod>5</armour_mod>
   <shield_mod>5</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>

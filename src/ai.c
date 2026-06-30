@@ -73,6 +73,7 @@
 #include "array.h"
 #include "board.h"
 #include "conf.h"
+#include "constants.h"
 #include "faction.h"
 #include "gatherable.h"
 #include "hook.h"
@@ -903,6 +904,13 @@ void ai_think( Pilot *pilot, double dt, int dotask )
       }
 
       NTracingZoneEnd( _ctx_task );
+   }
+
+   /* AI task may have deleted the pilot. */
+   if ( pilot_isFlag( cur_pilot, PILOT_DELETE ) ) {
+      ai_unsetPilot( oldmem );
+      NTracingZoneEnd( _ctx );
+      return;
    }
 
    /* Have to update potential outfit state changes here. */
@@ -1851,7 +1859,7 @@ static int aiL_face( lua_State *L )
 
    /* Default gain. */
    k_diff = 1. / ( cur_pilot->turn * ai_dt );
-   k_vel  = 100.; /* overkill gain! */
+   k_vel  = 10.; /* overkill gain! */
 
    /* Check if must invert. */
    if ( lua_toboolean( L, 2 ) )
@@ -2017,7 +2025,7 @@ static int aiL_careful_face( lua_State *L )
    diff = angle_diff( cur_pilot->solid.dir, VANGLE( F ) );
 
    /* Make pilot turn. */
-   pilot_turn = k_diff * diff;
+   pilot_turn = k_diff * diff / ( cur_pilot->turn * ai_dt );
 
    /* Return angle away from target. */
    lua_pushnumber( L, ABS( diff ) );
@@ -2031,13 +2039,13 @@ static int aiL_careful_face( lua_State *L )
  * time-of-flight
  *
  *    @luatparam Pilot|Asteroid target The pilot to aim at
- *    @luatreturn number The offset from the target aiming position (in
+ *    @luatreturn number The absolute offset from the target aiming position (in
  * radians).
  * @luafunc aim
  */
 static int aiL_aim( lua_State *L )
 {
-   double diff, mod, angle;
+   double diff, angle;
 
    if ( lua_isasteroid( L, 1 ) ) {
       const Asteroid *a = luaL_validasteroid( L, 1 );
@@ -2049,9 +2057,8 @@ static int aiL_aim( lua_State *L )
    }
 
    /* Calculate what we need to turn */
-   mod        = 1. / ( cur_pilot->turn * ai_dt );
    diff       = angle_diff( cur_pilot->solid.dir, angle );
-   pilot_turn = mod * diff;
+   pilot_turn = diff / ( cur_pilot->turn * ai_dt );
 
    lua_pushnumber( L, ABS( diff ) );
    return 1;
@@ -2318,6 +2325,8 @@ static int aiL_brake( lua_State *L )
  * @brief Get the nearest friendly spob to the pilot.
  *
  *    @luatparam[opt=false] boolean only_friend Only check for ally spobs.
+ *    @luatparam[opt=false] boolean nolanes Allow spobs that don't appear in
+ * patrol lanes too.
  *    @luatreturn Spob|nil
  * @luafunc nearestlandspob
  */
@@ -2329,6 +2338,7 @@ static int aiL_getnearestlandspob( lua_State *L )
 
    /* Check if we should get only friendlies. */
    int only_friend = lua_toboolean( L, 1 );
+   int nolanes     = lua_toboolean( L, 2 );
 
    /* Find nearest. */
    double mindist  = HUGE_VAL;
@@ -2342,6 +2352,8 @@ static int aiL_getnearestlandspob( lua_State *L )
       if ( !spob_hasService( pnt, SPOB_SERVICE_LAND ) )
          continue;
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
+         continue;
+      if ( !nolanes && spob_isFlag( pnt, SPOB_NOLANES ) )
          continue;
 
       /* Check conditions. */
@@ -2441,6 +2453,8 @@ static int aiL_getrndspob( lua_State *L )
  * @brief Get a random friendly spob.
  *
  *    @luatparam[opt=false] boolean only_friend Only check for ally spobs.
+ *    @luatparam[opt=false] boolean nolanes Allow spobs that don't appear in
+ * patrol lanes too.
  *    @luatreturn Spob|nil
  * @luafunc landspob
  */
@@ -2457,6 +2471,7 @@ static int aiL_getlandspob( lua_State *L )
 
    /* Check if we should get only friendlies. */
    int only_friend = lua_toboolean( L, 1 );
+   int nolanes     = lua_toboolean( L, 2 );
 
    /* Allocate memory. */
    ind = array_create_size( int, array_size( cur_system->spobs ) );
@@ -2471,6 +2486,8 @@ static int aiL_getlandspob( lua_State *L )
       if ( !spob_hasService( pnt, SPOB_SERVICE_LAND ) )
          continue;
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
+         continue;
+      if ( !nolanes && spob_isFlag( pnt, SPOB_NOLANES ) )
          continue;
 
       /* Check conditions. */

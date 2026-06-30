@@ -14,7 +14,7 @@ local pir = require "common.pirate"
 local vni = {}
 
 local function _get_list( lst )
-   local p = lst[ rnd.rnd(1,#lst) ]
+   local p = lst[ rnd.rnd(#lst) ]
    local t = type(p)
    if t=="table" then
       if type(p[1])=="function" then
@@ -339,6 +339,7 @@ local soromid = {
    -- Image Generators
    {gen("soromid/soromid_dark_01"), "dark"},
    {gen("soromid/soromid_aquatic_01"), "aquatic"},
+   {gen("soromid/soromid_heavy_01"), "heavy"},
 }
 local soromid_mil = {
    {"soromid/soromid_heavy_military_3", "heavy"},

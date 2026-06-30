@@ -4,4 +4,7 @@
  <icon>/gfx/misc/icons/galaxy</icon>
  <shader>effects/blink.frag</shader>
  <priority>2</priority>
+ <stats>
+  <invincible>1</invincible>
+ </stats>
 </effect>

@@ -573,8 +573,7 @@ void outfits_update( unsigned int wid, const char *str )
    else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
 
-   mass = outfit_mass( outfit ) +
-          outfit_amount( outfit ) * outfit_massAmmo( outfit );
+   mass = outfit_mass( outfit );
    tonnes2str( buf_mass, (int)round( mass ) );
 
    outfit_getNameWithClass( outfit, buf, sizeof( buf ) );

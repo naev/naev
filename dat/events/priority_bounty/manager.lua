@@ -75,6 +75,8 @@ function land ()
 end
 
 function try_gen()
+   if not player.isLanded() then return end
+
    -- Find candidates
    local candidates = {}
    for k,v in ipairs(mem.bounty_list) do

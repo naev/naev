@@ -37,6 +37,7 @@ mem.safe_distance = 8000 -- Safe distance from enemies to stop running away
 mem.safe_jump_distance = 300 -- Safe distance from enemies to jump
 mem.land_planet   = true -- Should land on planets?
 mem.land_friendly = false -- Only land on friendly planets?
+mem.land_nolanes  = false -- Land on spobs that don't appear on patrol lanes
 mem.distress      = true -- AI distresses
 mem.distress_hit  = 0 -- Amount of faction lost on distress
 mem.distressrate  = 4 -- Number of ticks before calling for help. Should default to about at most 8 seconds with defaults.
@@ -518,6 +519,9 @@ function control_funcs.generic_attack( si, noretarget )
    local target_parmour, target_pshield = target:health()
    local parmour, pshield = ai.pilot():health()
 
+   -- Use some outfits in some non-combat situations
+   atklib.think_control()
+
    -- Runaway if needed
    if not mem.norun and (pshield < mem.shield_run
             and pshield < target_pshield ) or
@@ -531,9 +535,9 @@ function control_funcs.generic_attack( si, noretarget )
       return false
    else
       -- Cool down, if necessary.
-      should_cooldown()
-
-      atklib.think( target, si, noretarget )
+      if not should_cooldown() then
+         atklib.think( target, si, noretarget )
+      end
    end
 
    -- Handle distress
@@ -668,6 +672,7 @@ function control_funcs.attack_forced ()
    control_funcs.generic_attack( nil, true )
    return true
 end
+control_funcs.attack_forced_kill = control_funcs.attack_forced
 function control_funcs.flyback () return true end
 function control_funcs.hold () return true end
 control_funcs.scan = scans.control_funcs
@@ -1047,6 +1052,9 @@ function create_pre ()
 
    -- Choose attack algorithm
    atklib.choose()
+
+   -- Criminals will land on spobs with no lanes
+   mem.land_nolanes = p:faction():tags().criminal
 end
 
 -- Finishes create stuff like choose attack and prepare plans
@@ -1101,6 +1109,7 @@ end
 mem._taunted = {}
 function consider_taunt( target, offensive )
    if mem.carried then return end -- Fighters don't taunt
+   if ai.pilot():disabled() then return end -- disabled don't taunt
    local rtarget = target:leader() or target -- Always consider leader
    local id = rtarget:id()
    local last_taunted = mem._taunted[id] or -100
@@ -1242,6 +1251,7 @@ end
 -- Handles generating distress messages
 function gen_distress( target )
    if not mem.distress then return end
+   if ai.pilot():disabled() then return end -- disabled don't distress
 
    -- Must have a valid distress rate
    if mem.distressrate <= 0 then
@@ -1298,6 +1308,7 @@ function should_cooldown()
    elseif atk.seekers_ammo() <= 0.0 then
       mem.cooldown = true
       p:setCooldown(true)
+      return true
    end
 end
 

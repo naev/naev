@@ -144,9 +144,9 @@ function atk.decide_zz( target, dist )
    local _m2, d2 = vec2.polar( target:pos() - pilot:pos() )
    local d = d1-d2
 
-   return ( (dist > range) and (ai.hasprojectile())
-      and (dir < math.rad(10)) and (dir > -math.rad(10))
-      and (d < math.rad(10)) and (d > -math.rad(10)) )
+   return (dist > range) and (ai.hasprojectile())
+      and (math.abs(dir) < math.rad(10))
+      and (math.abs(d) < math.rad(10))
 end
 
 --[[
@@ -154,7 +154,7 @@ end
 --]]
 function atk.dogfight_seekers( dist, dir )
    if dist > 100 then
-      if dist < atk.seekers_range() and dir < math.rad(20)  then
+      if dist < atk.seekers_range() and math.abs(dir) < math.rad(20)  then
          atk.seekers()
       elseif dist < atk.seeker_turrets_range() then
          atk.seeker_turrets()
@@ -239,7 +239,7 @@ function atk.flyby( target, dist )
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
-      if dir < math.rad(10) and dir > -math.rad(10) then
+      if math.abs(dir) < math.rad(10) then
          atk.keep_distance()
          ai.accel()
       else
@@ -250,9 +250,9 @@ function atk.flyby( target, dist )
    elseif dist > (0.75 * range) then
       dir = ai.idir(target)
       --test if we're facing the target. If we are, keep approaching
-      if dir <= math.rad(30) and dir > -math.rad(30) then
+      if math.abs(dir) <= math.rad(30) then
          ai.iface(target)
-         if dir < math.rad(10) and dir > -math.rad(10) then
+         if math.abs(dir) < math.rad(10) then
             ai.accel()
          end
       elseif dir > math.rad(30) and dir < math.pi then
@@ -300,7 +300,7 @@ function atk.space_sup( target, dist )
    --if we're far away from the target, then turn and approach
    if dist > (range) then
       dir = ai.idir(target)
-      if dir < math.rad(10) and dir > -math.rad(10) then
+      if math.abs(dir) < math.rad(10) then
          atk.keep_distance()
          ai.accel()
       else
@@ -311,7 +311,7 @@ function atk.space_sup( target, dist )
       --drifting away from target, so emphasize intercept
       --course facing and accelerate to close
       dir = ai.iface(target)
-      if dir < math.rad(10) and dir > -math.rad(10) then
+      if math.abs(dir) < math.rad(10) then
          ai.accel()
       end
 
@@ -322,7 +322,7 @@ function atk.space_sup( target, dist )
 
       --accelerate and try to close
       --but only accel if it will be productive
-      if dir2 < math.rad(15) and dir2 > -math.rad(15) and ai.relvel(target) > -math.rad(10) then
+      if math.abs(dir2) < math.rad(15) and ai.relvel(target) > -math.rad(10) then
          ai.accel()
       end
 
@@ -352,7 +352,7 @@ local function ___atk_g_ranged_dogfight( target, dist )
 
    -- Check if in range to shoot missiles
    if dist < atk.seekers_range() then
-      if dir < math.rad(30) then
+      if math.abs(dir) < math.rad(30) then
          atk.seekers()
       else
          atk.seeker_turrets()
@@ -365,7 +365,7 @@ local function ___atk_g_ranged_dogfight( target, dist )
    end
 
    -- Approach for melee
-   if dir < math.rad(10) then
+   if math.abs(dir) < math.rad(10) then
       ai.accel()
       atk.primary()
    end

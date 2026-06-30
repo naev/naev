@@ -253,14 +253,13 @@ impl FactionRef {
             return false;
          }
          unsafe {
-            (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() > threshold
+            (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() >= threshold
          }
       } else {
          self
             .with(|fct| {
-               let std = fct.standing.read().unwrap();
                if let Some(api) = &fct.api {
-                  std.player.round() >= api.friendly_at
+                  fct.player().round() >= api.friendly_at
                } else {
                   false
                }
@@ -290,10 +289,27 @@ impl FactionRef {
 
    fn player_enemy(&self, sys: Option<&naevc::StarSystem>) -> bool {
       if let Some(sys) = sys {
-         unsafe { naevc::system_getReputationOrGlobal(sys, self.as_ffi()) < 0.0 }
+         let threshold = self
+            .with(|fct| match &fct.api {
+               Some(api) => api.hostile_at,
+               None => f32::INFINITY,
+            })
+            .unwrap_or(f32::INFINITY);
+         if threshold == f32::INFINITY {
+            return false;
+         }
+         unsafe {
+            (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() <= threshold
+         }
       } else {
          self
-            .with(|fct| fct.standing.read().unwrap().player < 0.)
+            .with(|fct| {
+               if let Some(api) = &fct.api {
+                  fct.player().round() <= api.hostile_at
+               } else {
+                  false
+               }
+            })
             .unwrap_or_else(|err| {
                warn_err!(err);
                false
@@ -336,6 +352,7 @@ struct LuaAPI {
    // Standing Behaviour
    lua_env: LuaEnv,
    friendly_at: f32,
+   hostile_at: f32,
    hit: Function,
    hit_test: Function,
    text_rank: Function,
@@ -390,6 +407,7 @@ impl LuaAPI {
             equip_env,
             sched_env,
             lua_env,
+            hostile_at: -1.0,
             friendly_at: f32::INFINITY,
             hit: noop_f32.clone(),
             hit_test: noop_f32.clone(),
@@ -399,6 +417,7 @@ impl LuaAPI {
          })
       } else {
          let friendly_at = lua_env.get("friendly_at").unwrap_or(70.0);
+         let hostile_at = lua_env.get("hostile_at").unwrap_or(-1.0);
          let hit = load_func(&lua_env, "hit")?;
          let hit_test = load_func(&lua_env, "hit_test")?;
          let text_rank = load_func(&lua_env, "text_rank")?;
@@ -408,6 +427,7 @@ impl LuaAPI {
             equip_env,
             sched_env,
             lua_env,
+            hostile_at,
             friendly_at,
             hit,
             hit_test,
@@ -979,7 +999,7 @@ pub fn load() -> Result<()> {
    let base: PathBuf = "factions/".into();
    let files: Vec<_> = ndata::read_dir(&base)?
       .into_iter()
-      .filter(|filename| filename.extension() == Some(OsStr::new("xml")))
+      .filter(|filename| PathBuf::from(filename).extension() == Some(OsStr::new("xml")))
       .collect();
    let mut data = FACTIONS.write().unwrap();
    let mut load = SecondaryMap::new();
@@ -1005,7 +1025,7 @@ pub fn load() -> Result<()> {
             |filename| match FactionData::new(&ctx, base.join(filename)) {
                Ok(sp) => Some(sp),
                Err(e) => {
-                  warn!("Unable to load Faction '{}': {e}", filename.display());
+                  warn!("Unable to load Faction '{}': {e}", filename);
                   None
                }
             },
@@ -1073,6 +1093,7 @@ pub fn load() -> Result<()> {
    #[cfg(debug_assertions)]
    {
       let n = data.len();
+      let elapsed = start.elapsed().as_secs_f32();
       debugx!(
          gettext::ngettext(
             "Loaded {} Faction in {:.3} s",
@@ -1080,7 +1101,7 @@ pub fn load() -> Result<()> {
             n as u64
          ),
          n,
-         start.elapsed().as_secs_f32()
+         elapsed
       );
    }
    #[cfg(not(debug_assertions))]
@@ -1816,9 +1837,12 @@ impl UserData for FactionRef {
                      allies,
                      enemies,
                      // TODO more stuff
-                     tags: base.tags.clone(),
-                     f_dynamic: true,
                      f_static: true,
+                     f_known: base.f_known,
+                     f_dynamic: true,
+                     f_useshiddenjumps: base.f_useshiddenjumps,
+                     f_invisible: true,
+                     tags: base.tags.clone(),
                      ..Default::default()
                   },
                   fct.api.clone(),
@@ -1832,6 +1856,7 @@ impl UserData for FactionRef {
                      ai,
                      f_dynamic: true,
                      f_static: true,
+                     f_invisible: true,
                      ..Default::default()
                   },
                   None,
@@ -1842,7 +1867,7 @@ impl UserData for FactionRef {
                player: fd.player_def,
                p_override: None,
                f_known: fd.f_known,
-               f_invisible: fd.f_invisible,
+               f_invisible: true,
             });
 
             // We have to first see if it exists, and if so, we just update that
@@ -2149,11 +2174,14 @@ where
    let mut factions = FACTIONS.write().unwrap();
    match factions.get_mut(FactionRef::from_ffi(id)) {
       Some(fct) => {
+         /*
          if fct.dynamic() {
             Ok(f(fct))
          } else {
             anyhow::bail!("trying to modify a non-dynamic faction!")
          }
+         */
+         Ok(f(fct))
       }
       None => anyhow::bail!("faction not found"),
    }

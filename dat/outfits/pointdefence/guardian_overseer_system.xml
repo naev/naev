@@ -1,5 +1,6 @@
 <outfit name="Guardian Overseer System">
  <general>
+  <stealth_on/>
   <shortname>Guardian O.S.</shortname>
   <slot>weapon</slot>
   <size>large</size>

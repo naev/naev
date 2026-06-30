@@ -741,7 +741,7 @@ static int outfitL_weapStats( lua_State *L )
       mod_shots = shots / ( shots + mod_shots * outfit_delay( o ) );
       dmg       = outfit_damage( o );
       /* Modulate the damage by average of damage types. */
-      if ( dtype_raw( dmg->type, &sdmg, &admg, NULL ) != 0 )
+      if ( dtype_raw( dmg->type, &sdmg, &admg ) != 0 )
          return NLUA_ERROR( L, _( "Outfit has invalid damage type." ) );
       mod_damage *= 0.5 * ( sdmg + admg );
       /* Calculate good damage estimates. */
@@ -771,7 +771,7 @@ static int outfitL_weapStats( lua_State *L )
          break;
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
-         mod_energy = 1.;
+         mod_energy = p->stats.launch_energy;
          mod_damage = p->stats.launch_damage;
          mod_shots  = 1. / p->stats.launch_rate;
          break;
@@ -794,13 +794,13 @@ static int outfitL_weapStats( lua_State *L )
       disable = 0.;
    } else {
       /* Modulate the damage by average of damage types. */
-      dtype_raw( dmg->type, &sdmg, &admg, NULL );
+      dtype_raw( dmg->type, &sdmg, &admg );
       mod_damage *= 0.5 * ( sdmg + admg );
       /* Calculate good damage estimates. */
       dps     = shots * mod_damage * dmg->damage;
       disable = shots * mod_damage * dmg->disable;
    }
-   eps = shots * mod_energy * MAX( outfit_energy( o ), 0. );
+   eps = mod_energy * MAX( outfit_energy( o ), 0. );
 
    lua_pushnumber( L, dps );
    lua_pushnumber( L, disable );

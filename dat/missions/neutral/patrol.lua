@@ -3,20 +3,14 @@
 <mission name="Patrol">
  <priority>4</priority>
  <cond>
+   local fct = spob.cur():faction()
+   if not fct then return false end
+   local t = fct:tags()
+   if not (t.generic or t.misn_patrol) then return false end
    return require("misn_test").mercenary()
  </cond>
  <chance>560</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Proteron</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Za'lek</faction>
  <notes>
   <tier>3</tier>
  </notes>
@@ -36,7 +30,8 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 -- luacheck: globals abandon_text msg pay_text (shared with derived mission pirate.patrol)
--- luacheck: globals enter jumpout land pilot_leave timer (Hook functions passed by name)
+
+local REWARD = 100
 
 pay_text    = {
    _("After going through some paperwork, an officer hands you your pay and sends you off."),
@@ -72,7 +67,7 @@ mem.use_hidden_jumps = false
 local function get_enemies( sys )
    local enemies = 0
    for i, j in ipairs( mem.paying_faction:enemies() ) do
-      local p = sys:presences()[j:nameRaw()]
+      local p = sys:presence(j)
       if p ~= nil then
          enemies = enemies + p
       end
@@ -85,12 +80,12 @@ function create ()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2,
       function(s)
-         local this_faction = s:presences()[mem.paying_faction:nameRaw()]
+         local this_faction = s:presence(mem.paying_faction)
          local enemies = get_enemies(s)
          return this_faction ~= nil and this_faction > 0 and enemies > 0 and enemies < 700
       end, nil, mem.use_hidden_jumps )
    if get_enemies( system.cur() ) then
-      systems[ #systems + 1 ] = system.cur()
+      systems[ #systems+1 ] = system.cur()
    end
 
    if #systems <= 0 then
@@ -118,28 +113,35 @@ function create ()
       misn.finish( false )
    end
 
-   mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   mem.missys = systems[ rnd.rnd( #systems ) ]
    -- Have to be able to do an inclusive claim
    if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
-   local planets = mem.missys:spobs()
-   local numpoints = math.min( rnd.rnd( 2, 5 ), #planets )
-   mem.points = {}
-   while numpoints > 0 and #planets > 0 do
-      local p = rnd.rnd( 1, #planets )
-      mem.points[ #mem.points + 1 ] = planets[p]
-      numpoints = numpoints - 1
-
-      local new_planets = {}
-      for i, j in ipairs( planets ) do
-         if i ~= p then
-            new_planets[ #new_planets + 1 ] = j
-         end
+   local points = {}
+   for k,v in ipairs( mem.missys:spobs() ) do
+      table.insert( points, v:pos() )
+   end
+   -- Add asteroid fields if not enough
+   if #points < 3 then
+      for k,v in ipairs( mem.missys:asteroidFields() ) do
+         table.insert( points, v.pos + vec2.newP( v.radius*rnd.rnd(), rnd.angle() ) )
       end
-      planets = new_planets
+   end
+   -- Add jumps if we still need more
+   if #points < 3 then
+      for k,v in ipairs( mem.missys:jumps() ) do
+         local p = v:pos()
+         table.insert( points, vec2.newP( p:mod()-rnd.rnd(300,500), p:angle() ) )
+      end
+   end
+   local numpoints = math.min( rnd.rnd( 2, 5 ), #points )
+   points = rnd.permutation( points )
+   mem.points = {}
+   for i = 1,numpoints do
+      table.insert( mem.points, points[i] )
    end
    if #mem.points < 2 then
-      misn.finish( false )
+      return misn.finish( false )
    end
 
    mem.hostiles = {}
@@ -149,7 +151,7 @@ function create ()
    if n_enemies == 0 then
       misn.finish( false )
    end
-   mem.credits = n_enemies * 1400
+   mem.credits = n_enemies * 1000
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
    mem.reputation = math.floor( n_enemies / 15 )
 
@@ -173,8 +175,12 @@ function create ()
       local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
 
 #nPatrol System:#0 {sys}
-#nPatrol Points:#0 {amount}]]),
-         {amount=#mem.points, sys=mem.missys})
+#nPatrol Points:#0 {amount}
+#nExtra Payment:#0 {credits} per point of hostile eliminated]]), {
+         amount   = #mem.points,
+         sys      = mem.missys,
+         credits  = fmt.credits(REWARD),
+      })
       if not mem.paying_faction:static() then
          desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
             {fct=mem.paying_faction})
@@ -267,6 +273,27 @@ function land ()
    end
 end
 
+function pilot_dead( plt, attacker )
+   -- Remove from list
+   pilot_leave( plt )
+
+   if not attacker or not attacker:withPlayer() then return end
+   if not plt:hostile() then return end
+   if plt:mothership() then return end
+   local pmem = plt:memory()
+   if pmem._bounty_paid then return end
+
+   local points = plt:points()
+   local payment = points * REWARD
+   player.pay( payment )
+   mem.paying_faction:hit( points * 0.05, system.cur() )
+   player.msg("#g"..fmt.f(_([[Obtained {amount} for eliminating {pilot}.]]), {
+      amount = fmt.credits(points * REWARD),
+      pilot  = plt,
+   }).."#0")
+   pmem._bounty_paid = true
+end
+
 function pilot_leave ( pilot )
    local new_hostiles = {}
    for i, j in ipairs( mem.hostiles ) do
@@ -297,7 +324,7 @@ function timer ()
          j:setVisible( true )
          j:setHilight( true )
          j:setHostile( true )
-         hook.pilot( j, "death", "pilot_leave" )
+         hook.pilot( j, "death", "pilot_dead" )
          hook.pilot( j, "jump", "pilot_leave" )
          hook.pilot( j, "land", "pilot_leave" )
          mem.hostiles[ #mem.hostiles + 1 ] = j
@@ -317,18 +344,14 @@ function timer ()
       end
       misn.osdActive( 2 )
 
-      local point_pos = mem.points[1]:pos()
+      local point_pos = mem.points[1]
 
       if mem.mark == nil then
          mem.mark = system.markerAdd( point_pos, _("Patrol Point") )
       end
 
       if player_pos:dist( point_pos ) < 500 then
-         local new_points = {}
-         for i = 2, #mem.points do
-            new_points[ #new_points + 1 ] = mem.points[i]
-         end
-         mem.points = new_points
+         table.remove( mem.points, 1 )
 
          patrol_msg("#b"..msg[1].."#0")
          mem.osd_msg[2] = n_(

@@ -18,6 +18,7 @@
 
 #include "array.h"
 #include "conf.h"
+#include "constants.h"
 #include "debug.h"
 #include "dialogue.h"
 #include "equipment.h"

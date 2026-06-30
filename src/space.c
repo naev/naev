@@ -1601,16 +1601,6 @@ void space_init( const char *sysname, int do_simulate )
    // factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* Spawn is enabled by default. */
 
-   /* Clear persistent pilot stuff. */
-   if ( player.p != NULL ) {
-      Pilot *const *pilot_stack = pilot_getAll();
-      for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
-         Pilot *p = pilot_stack[i];
-         pilot_lockClear( p );
-         pilot_clearTimers( p ); /* Clear timers. */
-      }
-   }
-
    if ( ( sysname == NULL ) && ( cur_system == NULL ) ) {
       WARN(
          _( "Cannot reinit system if there is no system previously loaded" ) );
@@ -1696,8 +1686,16 @@ void space_init( const char *sysname, int do_simulate )
       pilot_setFlag( player.p, PILOT_HIDE );
       for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
          Pilot *p = pilot_stack[i];
-         if ( pilot_isWithPlayer( p ) )
+         if ( pilot_isWithPlayer( p ) ) {
             pilot_setFlag( p, PILOT_HIDE );
+            pilot_lockClear( p );
+            pilot_clearTimers( p ); /* Clear timers. */
+            if ( p->intrinsic_stats ) {
+               ss_free( p->intrinsic_stats );
+               p->intrinsic_stats = NULL;
+               pilot_calcStats( p ); // TODO can we avoid this call?
+            }
+         }
       }
    }
    player_messageToggle( 0 );

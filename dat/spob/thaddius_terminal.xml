@@ -6,7 +6,7 @@
   <exterior>station05</exterior>
  </GFX>
  <presence>
-  <faction>Independent</faction>
+  <faction>Free Trader</faction>
   <base>33.3333</base>
   <bonus>16.6667</bonus>
   <range>1</range>
@@ -19,8 +19,10 @@
    <land/>
    <refuel/>
    <bar/>
+   <missions/>
    <outfits/>
    <blackmarket/>
+   <nolanes/>
   </services>
   <description>Ostensibly a 'research station' this rickety station is in fact a gambling den and smuggling outpost for the criminal underbelly in Za'lek space. There is a diverse array of goods available to the captain who is carefully incurious about the origins. Scientists looking into illegal research (what little there is in Za'lek space), 'private military contractors', 'free traders', it's all here.</description>
   <bar>This bar contains most of the flaws of both pirate and Za'lek 'sensibilities'. It is poorly laid-out, filthy, full of suspicious characters, and overlooked by bouncers who seem somewhat overeager to find troublemakers. At least the drinks are strong.</bar>

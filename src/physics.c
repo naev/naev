@@ -2,18 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "naev.h"
 /** @endcond */
 
-#include "lualib.h"
-
 #include "constants.h"
 #include "log.h"
-#include "ndata.h"
-#include "nlua.h"
 #include "physics.h"
 
 /**
@@ -25,6 +18,7 @@ const char _UNIT_PER_TIME[] = N_( "/sec" );
 const char _UNIT_DISTANCE[] = N_( "km" );
 const char _UNIT_SPEED[]    = N_( "km/s" );
 const char _UNIT_ACCEL[]    = N_( "km/s²" );
+const char _UNIT_IMPULSE[]  = N_( "GN•s" );
 const char _UNIT_ENERGY[]   = N_( "GJ" );
 const char _UNIT_POWER[]    = N_( "GW" );
 const char _UNIT_ANGLE[]    = N_( "°" );

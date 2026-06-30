@@ -6,7 +6,8 @@
 local srm = {}
 
 -- Should be brownish-red, but we don't have that option.
-srm.prefix = "#b".._("SOROMID: ").."#0"
+srm.colour = "#b"
+srm.prefix = srm.colour.._("SOROMID: ").."#0"
 
 local function isbioship( s )
    return s:tags().bioship

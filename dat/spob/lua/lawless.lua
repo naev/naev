@@ -10,3 +10,6 @@ luaspob.setup{
       _([["It's a free port."]]),
    },
 }
+
+-- Don't care about distresses
+function distress () end

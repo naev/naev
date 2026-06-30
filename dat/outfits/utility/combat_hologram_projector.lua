@@ -23,6 +23,7 @@ local function turnon( p, po )
    local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), {ai="escort", naked=true} )
    mem.p = np
    np:setHealth( p:health() ) -- Copy health
+   np:setNoDisable( true )
    np:setNoDeath( true ) -- Doesn't die
    -- Copy outfits
    np:outfitRm("all")

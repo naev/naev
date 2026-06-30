@@ -247,6 +247,7 @@ static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
 static int pilotL_mothership( lua_State *L );
 static int pilotL_dockslot( lua_State *L );
+static int pilotL_dockoutfit( lua_State *L );
 static int pilotL_leader( lua_State *L );
 static int pilotL_setLeader( lua_State *L );
 static int pilotL_followers( lua_State *L );
@@ -462,6 +463,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "msg", pilotL_msg },
    { "mothership", pilotL_mothership },
    { "dockslot", pilotL_dockslot },
+   { "dockoutfit", pilotL_dockoutfit },
    { "leader", pilotL_leader },
    { "setLeader", pilotL_setLeader },
    { "followers", pilotL_followers },
@@ -1366,8 +1368,14 @@ static int pilotL_getVisible( lua_State *L )
  */
 static int pilotL_getInrange( lua_State *L )
 {
-   int           k;
-   const vec2   *v   = luaL_checkvector( L, 1 );
+   int         k;
+   const vec2 *v;
+   if ( lua_ispilot( L, 1 ) ) {
+      const Pilot *p = luaL_validpilot( L, 1 );
+      v              = &p->solid.pos;
+   } else {
+      v = luaL_checkvector( L, 1 );
+   }
    double        d   = luaL_checknumber( L, 2 );
    int           dis = lua_toboolean( L, 3 );
    int           x, y, r;
@@ -3926,7 +3934,8 @@ static int pilotL_outfitAddSlot( lua_State *L )
  *
  * `"all"` will remove all outfits except cores, locked outfits, and intrinsic
  * outfits. "cores" will remove all cores, but nothing else. `"intrinsic"` will
- * remove all intrinsic outfits.
+ * remove all intrinsic outfits. `"clean"` will remove all not-locked outfits.
+ * `"purge"` will remove all outfits.
  *
  * @usage p:outfitRm( "all" ) -- Leaves the pilot naked (except for cores and
  * locked outfits).
@@ -3957,8 +3966,8 @@ static int pilotL_outfitRm( lua_State *L )
    if ( lua_isstring( L, 2 ) ) {
       const char *outfit = luaL_checkstring( L, 2 );
 
-      /* If outfit is "all", we remove everything except cores and locked
-       * outfits. */
+      /* If outfit is "all", we remove everything except cores, locked, and
+       * required outfits. */
       if ( strcmp( outfit, "all" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
             if ( p->outfits[i]->outfit == NULL )
@@ -3978,7 +3987,31 @@ static int pilotL_outfitRm( lua_State *L )
       /* If outfit is "cores", we remove cores only. */
       else if ( strcmp( outfit, "cores" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
-            if ( !p->outfits[i]->sslot->required )
+            if ( p->outfits[i]->outfit == NULL )
+               continue;
+            if ( !outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_CORE ) )
+               continue;
+            if ( p->outfits[i]->sslot->locked )
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
+      } else if ( strcmp( outfit, "clean" ) == 0 ) {
+         for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            if ( p->outfits[i]->outfit == NULL )
+               continue;
+            if ( p->outfits[i]->sslot->locked )
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
+      } else if ( strcmp( outfit, "purge" ) == 0 ) {
+         for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            if ( p->outfits[i]->outfit == NULL )
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
             removed++;
@@ -6531,7 +6564,7 @@ static int pilotL_mothership( lua_State *L )
 /**
  * @brief Gets a pilots outfit slot that created the pilot.
  *
- * @usage local creation_outfit = p:mothership():outfits()[ p:dockslot() ] --
+ * @usage local creation_outfit = p:mothership():outfitGet( p:dockslot() ) --
  * Gets the outfit that created the pilot (will error if the pilot is not
  * created from a fighter bay outfit and/or the mothership is not a valid
  * pilot)
@@ -6547,6 +6580,37 @@ static int pilotL_dockslot( lua_State *L )
    const Pilot *p = luaL_validpilot( L, 1 );
    if ( p->dockslot >= 0 ) {
       lua_pushinteger( L, p->dockslot + 1 );
+   } else
+      lua_pushnil( L );
+   return 1;
+}
+
+/**
+ * @brief Gets a pilots outfit slot that created the pilot.
+ *
+ * @usage local creation_outfit = p:mothership():outfits()[ p:dockslot() ] --
+ * Gets the outfit that created the pilot (will error if the pilot is not
+ * created from a fighter bay outfit and/or the mothership is not a valid
+ * pilot)
+ *
+ *    @luatparam Pilot p Pilot to get the dockoutfit of.
+ *    @luatreturn Outfit|nil The outfit the pilot was created from or nil if not
+ * found.
+ * @luafunc dockoutfit
+ */
+static int pilotL_dockoutfit( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot( L, 1 );
+   if ( p->dockpilot != 0 ) {
+      const Pilot *l = pilot_get( p->dockpilot );
+      if ( ( l == NULL ) || pilot_isFlag( l, PILOT_DEAD ) ) {
+         lua_pushnil( L );
+      } else {
+         if ( p->dockslot >= 0 )
+            lua_pushoutfit( L, l->outfits[p->dockslot]->outfit );
+         else
+            lua_pushnil( L );
+      }
    } else
       lua_pushnil( L );
    return 1;

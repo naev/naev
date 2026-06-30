@@ -26,6 +26,7 @@
 #include "info.h"
 #include "input.h"
 #include "land.h"
+#include "map.h"
 #include "menu.h"
 #include "nlua_misn.h"
 #include "nlua_system.h"
@@ -66,6 +67,7 @@ static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
 static int naevL_menuInfo( lua_State *L );
 static int naevL_menuSmall( lua_State *L );
+static int naevL_mapOpen( lua_State *L );
 static int naevL_isPaused( lua_State *L );
 static int naevL_pause( lua_State *L );
 static int naevL_unpause( lua_State *L );
@@ -112,6 +114,7 @@ static const luaL_Reg naev_methods[] = {
    { "plugins", naevL_plugins },
    { "menuInfo", naevL_menuInfo },
    { "menuSmall", naevL_menuSmall },
+   { "mapOpen", naevL_mapOpen },
    { "isPaused", naevL_isPaused },
    { "pause", naevL_pause },
    { "unpause", naevL_unpause },
@@ -859,6 +862,17 @@ static int naevL_menuSmall( lua_State *L )
 {
    menu_small( 0, lua_toboolean( L, 1 ), lua_toboolean( L, 2 ),
                lua_toboolean( L, 3 ) );
+   return 0;
+}
+
+/**
+ * @brief Opens the in-game map.
+ * @luafunc mapOpen
+ */
+static int naevL_mapOpen( lua_State *L )
+{
+   (void)L;
+   map_open();
    return 0;
 }
 

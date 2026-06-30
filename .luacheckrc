@@ -116,6 +116,7 @@ stds.API_faction = {globals={
    "text_rank",      -- C functions: faction_getStandingText
    "text_broad",     -- C functions: faction_getStandingBroad
    "reputation_max", -- C functions: faction_reputationMax
+   "hostile_at",
    "friendly_at",
 }}
 stds.API_land = {globals={"land"}}      -- C function: spob_updateLand

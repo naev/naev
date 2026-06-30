@@ -46,7 +46,7 @@ local npc_name = _("Unaffiliated Pilot")
 local npc_image, npc_portrait = vni.pirate()
 function create ()
    -- Can do inclusives as pilot.clear() is not called
-   if not misn.claim({ sys1, sys2 }, true) then
+   if not misn.claim({ sys1, sys2, "flintley" }, true) then
       warn(_("Unable to claim systems that should be claimed from event!"))
       abort()
    end

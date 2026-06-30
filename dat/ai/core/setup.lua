@@ -90,6 +90,11 @@ function setup.setup( p )
    -- Some tweaks to default AI for certain cases
    -- TODO probably move atk.choose here if we use this in all cases we initialize pilots (see issue #2197)
 
+   -- Denote we have a movement ability here
+   if o.blink_drive or o.blink_engine or o.feather_drive or o.afterburner then
+      o.movement = true
+   end
+
    -- Set up some ammo variables
    m.ranged_ammo = p:weapsetAmmo(1) -- secondary set
    m.equipopt_params = m.equipopt_params or {}

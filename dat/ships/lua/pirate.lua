@@ -1,3 +1,5 @@
+-- Pirate common behaviour
+
 function init( p )
    if p then
       -- Pirates get twice the effect of stellar winds

@@ -16,5 +16,6 @@
   <lua>outfits/accessory/rackham_razor.lua</lua>
   <loot_mod>10</loot_mod>
   <jam_chance>10</jam_chance>
+  <fwd_firerate>5</fwd_firerate>
  </specific>
 </outfit>

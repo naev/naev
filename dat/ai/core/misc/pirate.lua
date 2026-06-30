@@ -75,9 +75,9 @@ pirate.taunt_list_offensive = {
    _("Sorry, but I'm a private tracker."),
    _("Prepare to be plundered, ye interstellar fools!"),
    _("Time to hand over the loot, ye spineless starfarers!"),
-   _("Say goodbye to yer valuables, ye cosmic weaklings!"),
+   _("Say goodbye to yer valuables, ye weaklings!"),
    _("By the stars, we'll strip ye of every shiny trinket ye hold dear!"),
-   _("Brace yourselves for a taste of cosmic plunder!"),
+   _("Brace yourselves for a taste of plunder!"),
    _("Yo ho yo ho a pirate life for me!"), -- From the space pirate shanty
 }
 pirate.taunt_list_defensive = {
@@ -103,12 +103,12 @@ pirate.taunt_list_defensive = {
    _("Stop dodging!"),
    _("Okay, that's enough of that!"),
    _("I'm gonna torrent you to bits!"),
-   _("Is that the best ye've got, ye scurvy galactic amateurs?"),
+   _("Is that the best ye've got, ye scurvy amateurs?"),
    _("Bring it on, ye sorry excuse for spacefaring scum!"),
    _("Ye aim worse than a blindfolded asteroid!"),
    _("Ye call that an attack? Ye're more of a nuisance than a threat!"),
-   _("Ye'll have to do better than that, ye spineless space amoebas!"),
-   _("Is that the best ye got, ye cosmic cowards?"),
+   _("Ye'll have to do better than that, ye spineless amoeba!"),
+   _("Is that ye best, coward?"),
    _("Ye'll need more than that to scratch me hull!"),
    _("Ye're about as threatening as a malfunctioning Za'lek drone!"),
 }

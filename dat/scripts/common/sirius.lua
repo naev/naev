@@ -10,7 +10,8 @@ local luaspfx = require "luaspfx"
 
 local srs = {}
 
-srs.prefix = "#y".._("SIRIUS: ").."#0"
+srs.colour = "#y"
+srs.prefix = srs.colour.._("SIRIUS: ").."#0"
 
 function srs.playerIsPsychic ()
    return (var.peek("sirius_psychic")==true)
@@ -29,7 +30,7 @@ end
 local sfxGong
 function srs.sfxGong()
    if not sfxGong then
-      sfxGong = audio.newSource( 'snd/sounds/gamelan_gong' )
+      sfxGong = audio.newSoundData( 'snd/sounds/gamelan_gong' )
    end
    luaspfx.sfx( false, nil, sfxGong )
 end

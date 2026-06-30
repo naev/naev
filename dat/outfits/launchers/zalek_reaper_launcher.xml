@@ -22,14 +22,13 @@
   <trackmin>0</trackmin>
   <trackmax>25000</trackmax>
   <amount>5</amount>
-  <ammo_mass>5</ammo_mass>
   <gfx>zalek_reaper</gfx>
   <sound>1-second-detachment</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>Exp-L</spfx_shield>
   <spfx_armour>Exp-L</spfx_armour>
   <trail_generator x="-15">zalek-missileL</trail_generator>
-  <duration blowup="armour">35</duration>
+  <duration blowup="armour">16</duration>
   <accel>200</accel>
   <turn>60</turn>
   <speed_max>220</speed_max>

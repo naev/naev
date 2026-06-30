@@ -24,11 +24,13 @@ local function setup_pilot( p )
    plt:setLeader( pp )
    plt:changeAI( "capture" )
    plt:rename( mem.name )
+   plt:setDisable()
    plt:setNoClear()
    plt:setFriendly(true)
    plt:setInvincPlayer(true)
    plt:setFaction( faction.player() )
-   plt:outfitRm("all")
+   plt:setNoBoard(true)
+   plt:outfitRm("purge")
    plt:outfitRm("intrinsic")
    plt:outfitsEquip( mem.outfits )
    for k,v in ipairs(mem.intrinsics) do
@@ -36,9 +38,34 @@ local function setup_pilot( p )
    end
    plt:weapsetCleanup() -- Hopefully won't do anything now
 
+   -- Assume hooked up to the player for now
+   -- Full mass is a bit too harsh due to quadratic penalty scaling, so reduce somewhat
+   drag_change()
+
    -- Set hooks
    hook.pilot( plt, "death", "plt_death" )
    hook.pilot( plt, "hail", "plt_hail" )
+end
+
+function drag( dt )
+   if not plt or not plt:exists() then return end
+
+   local pp = player.pilot()
+   local tdist = pp:radius() * 1.2 + 20
+   local relpos = plt:pos() - pp:pos()
+   local dist = relpos:dist()
+   if dist < tdist then return end
+
+   local mod = (tdist - dist) * pp:mass() / plt:mass()
+   local pos = plt:pos()
+   local vel = plt:vel()
+   local acc = relpos:normalize() * mod
+   vel = vel + acc * dt
+   pos = pos + vel * dt
+   plt:setPos( pos )
+   plt:setVel( vel )
+
+   -- TODO some sort of dragging visual, energy tether?
 end
 
 local oplt
@@ -47,8 +74,8 @@ function create ()
    oplt = nc.capture_pilot.pilot
    -- We clone the pilot to get a new ID and invalidate all references to the old one
    plt = oplt:clone()
-   mem.cost = nc.capture_pilot.cost
-   mem.costnaked = nc.capture_pilot.costnaked
+   mem.cost       = nc.capture_pilot.cost
+   mem.costnaked  = nc.capture_pilot.costnaked
    mem.outfitsnaked = nc.capture_pilot.outfitsnaked
    nc.capture_pilot = nil
 
@@ -56,7 +83,7 @@ function create ()
    for k,f in ipairs(oplt:followers()) do
       if f:flags("carried") then
          -- Just disable and make them fade out. Not sure if anything else can be done here.
-         f:setDisable(true)
+         f:setDisable()
          f:effectAdd("Fade-Out")
       else
          f:setLeader()
@@ -84,19 +111,17 @@ function create ()
    for k,v in pairs(mem.outfits) do
       -- Ignore outfits that can't be stolen
       if v and v:tags().nosteal then
-         mem.outfits[k] = nil
+         mem.outfits[k] = false
       end
    end
    mem.system = system.cur()
-   mem.intrinsics = oplt:outfitsList("intrinsic")
-   for k,v in pairs(mem.intrinsics) do
-      if v:tags().nosteal then
-         mem.intrinsics[k] = nil
+   mem.intrinsics = {}
+   for k,v in ipairs( oplt:outfitsList("intrinsic" ) ) do
+      if not v:tags().nosteal then
+         table.insert( mem.intrinsics, v )
       end
    end
    setup_pilot( plt )
-   local a,s = oplt:health()
-   plt:setHealth( a, s ) -- Clears disabled state
    local pp = player.pilot()
    if pp:target()==oplt then
       -- Move the target over for the player only
@@ -106,6 +131,8 @@ function create ()
    hook.land( "land" )
    hook.jumpout( "jumpout" )
    hook.enter( "enter" )
+   hook.update( "drag" )
+   hook.custom( "drag_change", "drag_change" )
 
    evt.save(true)
 
@@ -125,7 +152,19 @@ end
 function plt_death ()
    player.msg(fmt.f(_("Your captured ship {shp} was destroyed!"),
       {shp=plt:ship():name()}))
+   plt = nil
+   player.pilot():intrinsicSet( "mass", 0 )
+   naev.trigger( "drag_change" )
    evt.finish(false)
+end
+
+-- We handle mass updates here, because this is being hacked through instead of
+-- being something more robust
+function drag_change ()
+   if plt:exists() then
+      local m = plt:mass()
+      player.pilot():intrinsicSet( "mass", m * 0.5 )
+   end
 end
 
 function plt_hail ()
@@ -148,7 +187,7 @@ function plt_hail ()
    vn.na(_([[Are you sure you wish to abandon this captured ship? #rThis is irreversible.#0]]))
    vn.menu{
       {_([[Cancel.]]), "menu"},
-      {_([[Abandon the ship.]]), "abandon_yes"},
+      {"#r".._([[Abandon the ship.]]).."#0", "abandon_yes"},
    }
 
    vn.label("abandon_yes")
@@ -169,6 +208,9 @@ function plt_hail ()
       plt:rename( mem.o.name )
       plt:setFriendly(false)
       plt:setInvincPlayer(false)
+      plt = nil
+      player.pilot():intrinsicSet( "mass", 0 )
+      naev.trigger( "drag_change" )
       evt.finish(false)
    end
 end
@@ -176,7 +218,7 @@ end
 function land ()
    local cur = spob.cur()
    if cur:services()['refuel'] and not cur:tags().noshipcapture then
-      local abandon = false
+      local repair = false
       local naked = false
 
       -- Success!
@@ -189,19 +231,19 @@ function land ()
       vn.menu{
          {fmt.f(_([[Repair the {shp} for {amount}]]),{shp=mem.ship, amount=fmt.credits(mem.cost)}), "repair"},
          {fmt.f(_([[Repair the {shp} for {amount} (without outfits)]]),{shp=mem.ship, amount=fmt.credits(mem.costnaked)}), "repair_naked"},
-         {fmt.f(_([[Abandon the {shp}]]),{shp=mem.ship}), "abandon"},
+         {fmt.f(_([[Keep the {shp} without repairing (without outfits)]]),{shp=mem.ship}), "norepair"},
       }
 
-      vn.label("abandon")
-      vn.na(fmt.f(_([[You refuse to pay the reparation costs and your captured {shp} becomes destined to be scraps. Oh, well.]]),
-         {shp=mem.ship}))
-      vn.func( function () abandon = true end )
+      vn.label("norepair")
+      vn.na(fmt.f(_([[You decide to keep your captured {shp} without doing any repairs, at least the ship isn't lost. All the non-critical outfits are lost, but you may be able to fix it up so it is usable in the future.]]), {
+         shp = mem.ship,
+      }))
       vn.done()
 
       vn.label("broke")
-      vn.na(fmt.f(_([[You sadly do not have enough to pay the reparation costs and your captured {shp} becomes destined to be scraps. Oh, well.]]),
-         {shp=mem.ship}))
-      vn.func( function () abandon = true end )
+      vn.na(fmt.f(_([[You sadly do not have enough to pay the reparation costs and your captured {shp}, but at least you can keep the ship in its shoddy state.]]), {
+         shp = mem.ship,
+      }))
       vn.done()
 
       vn.label("repair_naked")
@@ -211,11 +253,14 @@ function land ()
             return
          end
          naked = true
+         repair = true
          player.pay( -mem.costnaked )
       end )
       vn.sfxMoney()
-      vn.na(fmt.f(_([[You pay {amt} to repair the {shp} to be good as new, minus the outfits.]]),
-         {shp=mem.ship, amt=fmt.credits(mem.costnaked)}))
+      vn.na(fmt.f(_([[You pay {amt} to repair the {shp} to be good as new, minus the outfits.]]), {
+         shp = mem.ship,
+         amt = fmt.credits(mem.costnaked),
+      }))
       vn.done()
 
       vn.label("repair")
@@ -225,30 +270,37 @@ function land ()
             return
          end
          player.pay( -mem.cost )
+         repair = true
       end )
       vn.sfxMoney()
-      vn.na(fmt.f(_([[You pay {amt} to repair the {shp} to be good as new.]]),
-         {shp=mem.ship, amt=fmt.credits(mem.cost)}))
+      vn.na(fmt.f(_([[You pay {amt} to repair the {shp} to be good as new.]]), {
+         shp = mem.ship,
+         amt = fmt.credits(mem.cost),
+      }))
       vn.done()
 
       vn.run()
 
-      if abandon then
-         evt.finish(false)
-         return
-      end
-
       local newname = player.shipAdd( mem.ship, mem.name, fmt.f(_("You captured this ship in the {sys} system."), {sys=mem.system}) )
+      -- Mark ship as captured, before swapping
+      player.shipvarPush( "captured", true, newname )
       local name = player.pilot():name()
       player.shipSwap( newname, true )
       local pp = player.pilot()
-      if naked then
-         pp:outfitsEquip( mem.outfitsnaked )
+      if repair then
+         if naked then
+            pp:outfitsEquip( mem.outfitsnaked )
+         else
+            pp:outfitsEquip( mem.outfits )
+         end
+         for k,v in ipairs(mem.intrinsics) do
+            pp:outfitAddIntrinsic( v )
+         end
       else
-         pp:outfitsEquip( mem.outfits )
-      end
-      for k,v in ipairs(mem.intrinsics) do
-         pp:outfitAddIntrinsic( v )
+         pp:outfitRm( "purge" )
+         pp:outfitAddIntrinsic( outfit.get("Heavily Damaged") )
+         -- Store cost to repair for the future
+         player.shipvarPush( "repair_cost", mem.costnaked )
       end
       player.shipSwap( name, true )
 
@@ -267,8 +319,11 @@ function land ()
          vn.run()
       end
 
+      plt = nil
+      pp:intrinsicSet( "mass", 0 )
       evt.finish(true)
    end
+
    mem.spb = cur
 end
 

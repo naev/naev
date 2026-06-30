@@ -11,7 +11,7 @@ local cargo_chance = {
 }
 
 --[[
--- @brief Does Dvaered pilot equipping
+-- @brief Does Empire pilot equipping
 --
 --    @param p Pilot to equip
 --]]

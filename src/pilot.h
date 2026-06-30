@@ -7,7 +7,6 @@
 
 #include "ai.h"
 #include "commodity.h"
-#include "constants.h"
 #include "effect.h"
 #include "faction.h"
 #include "intlist.h"

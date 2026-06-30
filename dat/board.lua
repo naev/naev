@@ -248,7 +248,7 @@ local function compute_lootables ( plt )
             -- TODO better criteria
             local id = rnd.rnd(1,#ocand)
             local o = ocand[id]
-            local price = o:price() * (10+ps.crew) / (10+pps.crew) / loot_mod * 0.85
+            local price = o:price() * (10+ps.crew) / (12+pps.crew) / loot_mod
             local lo = outfit_loot( o, price )
             table.insert( lootables, lo )
             table.remove( ocand, id ) -- Remove from candidates
@@ -415,12 +415,6 @@ local function can_capture ()
    if player.fleetCapacity() <= 0 then
       return false
    end
-   -- For now, only allow capturing one ship at a time. Potentially, make it so
-   -- the player can have multiple if it fits fleet capacity, just a bit
-   -- trickier to do interface-wise
-   if player.evtActive("Ship Capture") then
-      return false
-   end
    return true
 end
 
@@ -436,11 +430,6 @@ local function is_capturable ()
    if not pm.natural and not pm.capturable then
       return false, _("This ship is not capturable.")
    end
-   local flttot, fltcur = player.fleetCapacity()
-   if flttot-fltcur < board_plt:points() then
-      return false, fmt.f(_("You do not have enough free fleet capacity to capture the ship. You need {needed}, but only have {have} free fleet capacity."),
-         {needed=board_plt:points(), have=flttot-fltcur})
-   end
    return true
 end
 
@@ -455,9 +444,7 @@ local function board_capture ()
    local pp = player.pilot()
    local ps = board_plt:stats()
    local pps = pp:stats()
-   -- TODO should this be affected by loot_mod and how?
-   --local loot_mod = pp:shipstat("loot_mod", true)
-   local bonus = (10+ps.crew) / (10+pps.crew) / loot_mod * 0.85
+   local bonus = (10+ps.crew) / (12+pps.crew) / loot_mod
    local cost = board_plt:worth()
    local costnaked = cost
    local outfitsnaked = board_plt:outfits(nil,true) -- Get non-locked
@@ -475,16 +462,16 @@ local function board_capture ()
    costnaked = math.min( cost, costnaked * bonus ) -- Always a bit more expensive, but never more than base
    local sbonus
    if bonus > 1 then
-      sbonus = string.format("#r%+d", bonus*100 - 100)
+      sbonus = string.format("#r%+d#0", bonus*100 - 100)
    else
-      sbonus = string.format("#g%+d", bonus*100 - 100)
+      sbonus = string.format("#g%+d#0", bonus*100 - 100)
    end
 
    local fct = board_plt:faction()
    local fcthit = board_plt:points()
    local factionmsg = ""
    if not (fct:static() or fct:invisible()) then
-      local rep = board_plt:reputation()
+      local rep = math.floor( board_plt:reputation() + 0.5 )
       local fcthittest = fct:hitTest( -fcthit, system.cur(), "capture" )
       if board_fcthit ~= 0 then
          fcthittest = fcthittest + fct:hitTest( -board_fcthit, system.cur(), "board" )
@@ -503,15 +490,15 @@ local function board_capture ()
       end
    end
 
-   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}%#0 from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
+   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}% from crew strength and boarding bonus) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
 
-You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]), {
-         shpname=board_plt:name(),
-         credits=fmt.credits(cost),
-         creditsnaked=fmt.credits(costnaked),
-         playercreds=fmt.credits(player.credits()),
-         fctmsg=factionmsg,
-         sbonus=sbonus
+You will still have to escort the ship and land with it to perform the repairs to bring the ship to a usable state. Your ship will have to drag the captured ship and will be lost if destroyed.]]), {
+         shpname     = board_plt:name(),
+         credits     = fmt.credits(cost),
+         creditsnaked= fmt.credits(costnaked),
+         playercreds = fmt.credits(player.credits()),
+         fctmsg      = factionmsg,
+         sbonus      = sbonus,
    })
 
    luatk.yesno( _("Capture Ship?"), capturemsg,
@@ -532,10 +519,10 @@ You will still have to escort the ship and land with it to perform the repairs a
          -- Start capture script
          local nc = naev.cache()
          nc.capture_pilot = {
-            pilot=board_plt,
-            cost=cost,
-            costnaked=costnaked,
-            outfitsnaked=outfitsnaked,
+            pilot       = board_plt,
+            cost        = cost,
+            costnaked   = costnaked,
+            outfitsnaked= outfitsnaked,
          }
          naev.eventStart("Ship Capture")
          board_close()
@@ -768,6 +755,22 @@ _board_close = function ( )
    -- Player stole something to make it not spaceworthy, sorry bud, you're not waking up.
    if not board_plt:spaceworthy() then
       board_plt:setDisable(false) -- Permanently disable
+
+      -- They'll infinitely stay around the disabled sihp unless told otherwise, so tell the followers to scram
+      local newleader
+      for k,e in ipairs(board_plt:followers()) do
+         if e:mothership()==board_plt then
+            -- Fade out fighters
+            e:effectAdd("Fade-Out")
+         else
+            if not newleader then
+               newleader = e
+               e:setLeader()
+            else
+               e:setLeader( newleader )
+            end
+         end
+      end
    end
 end
 

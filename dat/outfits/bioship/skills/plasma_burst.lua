@@ -4,7 +4,7 @@ local fmt = require "format"
 
 local damage = 100
 local penetration = 100
-local radius = 200
+local radius = 300
 local cooldown = 20
 local duration = 10
 local move_malus = 25
@@ -33,7 +33,7 @@ local function activate( p, po )
 
    -- TODO would be great to delay the damage by 0.5 seconds to make it fit better with sound and effects
    local pos = p:pos()
-   for k,t in ipairs(p:getEnemies( radius )) do
+   for k,t in ipairs(p:getEnemies( radius, nil, true, true, true )) do
       local norm, angle = (t:pos() - pos):polar()
       local mod = 1 - norm / radius
       local mass = math.pow( damage / 15, 2 )

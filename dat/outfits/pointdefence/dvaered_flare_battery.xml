@@ -1,5 +1,6 @@
 <outfit name="Dvaered Flare Battery">
  <general>
+  <stealth_on/>
   <shortname>D. Flare B.</shortname>
   <slot>weapon</slot>
   <size>large</size>
@@ -25,7 +26,6 @@
   <duration>0.5</duration>
   <trackmin>0</trackmin>
   <trackmax>4000</trackmax>
-  <ammo_mass>0.1</ammo_mass>
   <damage>
    <type>kinetic</type>
    <penetrate>0</penetrate>

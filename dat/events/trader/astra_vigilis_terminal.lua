@@ -18,7 +18,7 @@ local TERMINAL = "minerva_terminal"
 local DIFFICULTY = "bounty_difficulty"
 
 local function get_difficulty ()
-   return var.peek( "bounty_difficulty" ) or N_("Easy")
+   return var.peek( "bounty_difficulty" ) or N_("Unspecified")
 end
 
 function create ()
@@ -61,7 +61,8 @@ What do you want to do?]]))
 2. Medium
 3. Hard
 4. Challenging
-5. Extreme]]),
+5. Extreme
+6. Unspecified (whatever is available)]]),
       difficulty = "#b".._(get_difficulty()).."#0",
    } )
    end )
@@ -76,6 +77,7 @@ What do you want to do?]]))
          N_("Hard"),
          N_("Medium"),
          N_("Easy"),
+         N_("Unspecified"),
       } do
          if v ~= cur then
             table.insert( opts, 1, {v, {k,v}} )
@@ -86,7 +88,11 @@ What do you want to do?]]))
       if type(opt)==string then
          return vn.jump(opt)
       end
-      var.push( DIFFICULTY, opt[2] )
+      if opt[2]==N_("Unspecified") then
+         var.pop( DIFFICULTY )
+      else
+         var.push( DIFFICULTY, opt[2] )
+      end
       vn.jump("difficulty_changed")
    end)
 

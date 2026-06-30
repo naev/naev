@@ -14,4 +14,8 @@
   <bonus>-100000.000000</bonus>
   <range>1</range>
  </presence>
+ <presence>
+  <faction>Free Trader</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
 </spob>

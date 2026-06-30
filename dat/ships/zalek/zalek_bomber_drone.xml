@@ -34,7 +34,8 @@
   <cpu>24</cpu>
  </characteristics>
  <slots>
-  <weapon prop="builtin" size="small" x="0" y="0" h="-2">Za'lek Predator Launcher</weapon>
+  <weapon prop="builtin" size="small">Za'lek Predator Launcher</weapon>
+  <weapon prop="builtin" size="small">Za'lek Predator Launcher</weapon>
   <utility size="small"/>
   <structure size="small"/>
  </slots>

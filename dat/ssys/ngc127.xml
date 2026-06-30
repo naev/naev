@@ -9,6 +9,7 @@
  <spobs>
   <spob>P-8493</spob>
   <spob>Pirate's Cove</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Lazuli">

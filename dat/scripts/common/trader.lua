@@ -8,7 +8,8 @@ local traderfct = require "factions.trader_society"
 
 local trader = {}
 
-trader.prefix = "#b".._("TRADER: ").."#0"
+trader.colour = "#b"
+trader.prefix = trader.colour.._("TRADER: ").."#0"
 
 trader.vrata_steve = {
    portrait = "vrata/unique/yearning_steve",

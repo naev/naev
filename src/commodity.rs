@@ -341,7 +341,7 @@ pub fn load() -> Result<()> {
    let base: PathBuf = "commodities/".into();
    let files: Vec<_> = ndata::read_dir(&base)?
       .into_iter()
-      .filter(|filename| filename.extension() == Some(OsStr::new("xml")))
+      .filter(|filename| PathBuf::from(filename).extension() == Some(OsStr::new("xml")))
       .collect();
    let mut data = COMMODITIES.write().unwrap();
    let mut load = SecondaryMap::new();
@@ -404,6 +404,7 @@ pub fn load() -> Result<()> {
    #[cfg(debug_assertions)]
    {
       let n = data.len();
+      let elapsed = start.elapsed().as_secs_f32();
       debugx!(
          gettext::ngettext(
             "Loaded {} Commodity in {:.3} s",
@@ -411,7 +412,7 @@ pub fn load() -> Result<()> {
             n as u64
          ),
          n,
-         start.elapsed().as_secs_f32()
+         elapsed
       );
    }
    #[cfg(not(debug_assertions))]

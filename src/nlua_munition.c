@@ -15,6 +15,7 @@
 #include "nlua_munition.h"
 
 #include "array.h"
+#include "damagetype.h"
 #include "nlua.h"
 #include "nlua_faction.h"
 #include "nlua_outfit.h"
@@ -32,6 +33,7 @@ static int munitionL_exists( lua_State *L );
 static int munitionL_clear( lua_State *L );
 static int munitionL_getAll( lua_State *L );
 static int munitionL_getInrange( lua_State *L );
+static int munitionL_damage( lua_State *L );
 static int munitionL_pos( lua_State *L );
 static int munitionL_vel( lua_State *L );
 static int munitionL_faction( lua_State *L );
@@ -49,6 +51,7 @@ static const luaL_Reg munitionL_methods[] = {
    { "clear", munitionL_clear },
    { "getAll", munitionL_getAll },
    { "getInrange", munitionL_getInrange },
+   { "damage", munitionL_damage },
    /* Get properties. */
    { "pos", munitionL_pos },
    { "vel", munitionL_vel },
@@ -344,6 +347,28 @@ static int munitionL_getInrange( lua_State *L )
       lua_pushmunition( L, w );
       lua_rawseti( L, -2, n++ );
    }
+   return 1;
+}
+
+/**
+ * @brief Applies damage to a munition.
+ *
+ *    @luatparam Pilot p Pilot being damaged.
+ *    @luatparam number dmg Damage being done.
+ *    @luatparam[opt=0.] number disable Disable being done.
+ *    @luatparam[opt=0.] number penetration Penetration.
+ *    @luatparam[opt="raw"] string type Damage type being done.
+ * @luafunc damage
+ */
+static int munitionL_damage( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   Damage  dmg;
+   dmg.damage      = luaL_checknumber( L, 2 );
+   dmg.disable     = luaL_optnumber( L, 3, 0. );
+   dmg.penetration = luaL_optnumber( L, 4, 0. );
+   dmg.type        = dtype_get( luaL_optstring( L, 5, "raw" ) );
+   weapon_damage( w, &dmg );
    return 1;
 }
 

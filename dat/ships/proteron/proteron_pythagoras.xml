@@ -35,6 +35,7 @@
   <weapon size="large" prop="fighter_bay" x="-26" y="8" h="1"/>
   <weapon size="large" prop="fighter_bay" x="-26" y="-8" h="1"/>
   <utility size="large" prop="systems" name="systems">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility size="large" prop="accessory" name="accessory"/>
   <utility size="large"/>
   <utility size="large"/>
@@ -42,6 +43,7 @@
   <utility size="large"/>
   <structure size="large" prop="engines" name="engines">Unicorp Eagle 3000 Engine</structure>
   <structure size="large" prop="hull" name="hull">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>

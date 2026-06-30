@@ -19,9 +19,9 @@ static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
 
 #[instrument(skip_all)]
 fn process_messages(luaspfx: &mut slotmap::SlotMap<LuaSpfxRef, LuaSpfx>) {
-   pub fn notfound(id: LuaSpfxRef) {
-      warn!("LuaSpfx '{:?}' not found", id);
-   }
+   //pub fn notfound(id: LuaSpfxRef) {
+   //   warn!("LuaSpfx '{:?}' not found", id);
+   //}
    for msg in MESSAGES.lock().unwrap().drain(..) {
       match msg {
          Message::Insert(data) => {
@@ -40,14 +40,14 @@ fn process_messages(luaspfx: &mut slotmap::SlotMap<LuaSpfxRef, LuaSpfx>) {
             if let Some(spfx) = luaspfx.get_mut(id) {
                spfx.pos = Some(pos);
             } else {
-               notfound(id);
+               //notfound(id);
             }
          }
          Message::SetVel(id, vel) => {
             if let Some(spfx) = luaspfx.get_mut(id) {
                spfx.vel = Some(vel);
             } else {
-               notfound(id);
+               //notfound(id);
             }
          }
       }
@@ -373,6 +373,12 @@ impl UserData for LuaSpfxRef {
             }
          },
       );
+      /*@
+       * @brief Checks to see if it exists.
+       */
+      methods.add_method_mut("exists", |_, this, ()| -> mlua::Result<bool> {
+         Ok(LUASPFX.read().unwrap().get(*this).is_some())
+      });
       /*@
        * @brief Removes a special effect.
        *

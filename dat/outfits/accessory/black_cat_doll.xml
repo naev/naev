@@ -15,5 +15,6 @@
  <specific type="modification">
   <lua>outfits/accessory/black_cat_doll.lua</lua>
   <speed_mod>25</speed_mod>
+  <jump_distance>50</jump_distance>
  </specific>
 </outfit>

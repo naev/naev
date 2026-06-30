@@ -791,9 +791,11 @@ credits_t player_shipSellPrice( const char *shipname )
       return -1;
    }
 
-   return round( (double)( pilot_worth( ship, 0 ) - ship->ship->price ) *
-                    CTS.SELL_OUTFIT_MODIFIER +
-                 ship->ship->price * CTS.SELL_SHIP_MODIFIER );
+   double mod = ship->stats.ship_price;
+   return round(
+      (double)( pilot_worth( ship, 0 ) - MAX( 0, ship->ship->price * mod ) ) *
+         CTS.SELL_OUTFIT_MODIFIER +
+      MAX( 0, mod * ship->ship->price ) * CTS.SELL_SHIP_MODIFIER );
 }
 
 void player_rmPlayerShip( PlayerShip_t *ps )

@@ -15,10 +15,21 @@ function create ()
    create_pre()
 
    -- Credits.
-   local price = ai.pilot():ship():price()
+   local p = ai.pilot()
+   local price = p:ship():price()
    ai.setcredits( rnd.rnd(price/150, price/50) ) -- Target for crime
 
    mem.atk_skill = 0.3 + 0.3*rnd.sigma()
+
+   -- A bit more skilled if not a transport
+   local t = p:ship():tags()
+   if not t.transport then
+      mem.atk_skill  = 0.5 + 0.3*rnd.sigma()
+      -- See if we should be more aggressive
+      mem.shield_run = 0
+      mem.armour_run = 100
+      mem.defensive  = true
+   end
 
    create_post()
 end

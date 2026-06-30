@@ -36,13 +36,16 @@
   <utility size="small"/>
   <utility size="small"/>
   <utility size="small"/>
+  <utility size="small"/>
   <structure size="small" prop="engines" name="engines">Unicorp Hawk 160 Engine</structure>
   <structure size="small" prop="hull" name="hull">Unicorp D-2 Light Plating</structure>
   <structure size="small"/>
   <structure size="small"/>
  </slots>
  <stats>
-  <cpu_mod>10</cpu_mod>
+  <shield_mod>10</shield_mod>
+  <shield_regen_mod>15</shield_regen_mod>
+  <speed_mod>10</speed_mod>
   <ew_hide>-25</ew_hide>
   <nebu_absorb>40</nebu_absorb>
  </stats>

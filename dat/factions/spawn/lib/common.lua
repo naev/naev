@@ -4,6 +4,108 @@ local lf = require "love.filesystem"
 
 local scom = {}
 
+local function enemy_nearby( pos, fct )
+   for k,v in ipairs(pilot.getEnemies( fct, 3000, pos )) do
+      if not v:disabled() and v:faction():areEnemies( fct ) then
+         return true
+      end
+   end
+   return false
+end
+
+local function valid_spob( s, fct, guerrilla )
+   -- No spawning from uninhabited spobs
+   if not s:services().inhabited then
+      return false
+   end
+   -- Must not be an enemy
+   local sfct = s:faction()
+   if fct:areEnemies( sfct ) then
+      return false
+   end
+   -- Must be ally to spawn from restricted spobs
+   local t = s:tags()
+   if t.restricted and not fct:areAllies( sfct ) then
+      return false
+   end
+   -- Only criminals take off from criminal places
+   if not fct:tags().criminal and t.criminal then
+      return false
+   end
+   -- Avoid enemies nearby if spawnining guerrilla style
+   if guerrilla and enemy_nearby( s:pos(), fct ) then
+      return false
+   end
+   return true
+end
+
+local function valid_jump( j, fct, guerrilla )
+   -- Of course can't be exit only
+   if j:exitonly() then
+      return false
+   end
+   -- Only guerrilla use hidden jumps
+   if j:hidden() and not guerrilla then
+      return false
+   end
+   -- Must have presence on the other side
+   local dest = j:dest()
+   local pres = dest:presence( fct )
+   if pres <= 0 then
+      return false
+   end
+   -- Only come in from "safe" places
+   --[[
+   local limit = 0
+   for k,f in ipairs(fct:enemies()) do
+      limit = limit + dest:presence( f ) or 0
+   end
+   if pres < limit * 0.5 then
+      return false
+   end
+   --]]
+   return true
+end
+
+local function choose_point( fct, guerrilla )
+   local scur = system.cur()
+   local candidates = {}
+   for k,v in ipairs(scur:spobs()) do
+      if valid_spob( v, fct, guerrilla ) then
+         table.insert( candidates, v )
+      end
+   end
+   for k,v in ipairs(scur:jumps()) do
+      if valid_jump( v, fct, guerrilla ) then
+         table.insert( candidates, v )
+      end
+   end
+   -- Nothing found, expand with pretty much anything...
+   if #candidates <= 0 then
+      for k,v in ipairs(scur:jumps()) do
+         if not v:exitonly() and not v:hidden() then
+            table.insert( candidates, v )
+         end
+      end
+   end
+   if #candidates <= 0 and guerrilla then
+      for k,v in ipairs(scur:jumps()) do
+         if not v:exitonly() then
+            table.insert( candidates, v )
+         end
+      end
+   end
+   if #candidates <= 0 then
+      warn(fmt.f("unable to find spawn point for faction {fct}",{
+         fct = fct,
+      }))
+      return vec2.new()
+   end
+
+   candidates = rnd.permutation( candidates )
+   return candidates[1]:pos()
+end
+
 --[[--
    Creates a distribution of ships based on variants and weights.
 --]]
@@ -195,6 +297,10 @@ function scom.spawn( pilots )
    -- Get properties prioritizing overwrites
    local patrol    = getprop( scom._params.patrol,    pilots.__patrol )
    local stealth   = getprop( scom._params.stealth,   pilots.__stealth )
+   local guerrilla = getprop( scom._params.guerrilla, pilots.__guerilla )
+   if stealth then
+      guerrilla = true
+   end
    local ai        = getprop( scom._params.ai,        pilots.__ai )
    local nofleet   = getprop( scom._params.nofleet,   pilots.__nofleet )
    local formation = getprop( scom._params.formation, pilots.__formation )
@@ -212,8 +318,8 @@ function scom.spawn( pilots )
    local leader
    local origin
    if issim then
-      -- Stealth should avoid enemies nearby
-      if stealth then
+      -- guerrilla should avoid enemies nearby
+      if guerrilla then
          local r = system.cur():radius() * 0.8
          local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
          local m = 3000 -- margin
@@ -232,7 +338,7 @@ function scom.spawn( pilots )
       end
    end
    if not origin then
-      origin = pilot.choosePoint( fct, false, stealth ) -- Find a suitable spawn point
+      origin = choose_point( fct, guerrilla )
    end
    for _k,v in ipairs(pilots) do
       local params = v.params or {}

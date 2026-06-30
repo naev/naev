@@ -1,0 +1,42 @@
+<outfit name="Overwatch Pulse CIWS">
+ <general>
+  <shortname>Overwatch CIWS</shortname>
+  <slot>weapon</slot>
+  <size>large</size>
+  <licence>Heavy Weapon</licence>
+  <rarity>3</rarity>
+  <typename>Point Defence</typename>
+  <mass>60</mass>
+  <price>1700000</price>
+  <description>The Overwatch Close In Weapons System, or CIWS, is the application of Proteron pulse laser technology to automated anti-missile tracking and defense. Its rapid rate of fire and effective penetration can make quick work of even a large volume of incoming ordinance. Although designed for intercepting torpedoes, the targeting system is also efficient at tracking small enemy craft.</description>
+  <gfx_store>pd2</gfx_store>
+  <!-- 20% more than Guardian Overseer -->
+  <cpu>-120</cpu>
+ </general>
+ <specific type="turret bolt">
+  <lua>outfits/pointdefence/pointdefence.lua</lua>
+  <gfx type="shader" size="10" col_size="8">particles/laser_purple.frag</gfx>
+  <sound>laser</sound>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
+  <delay>0.6</delay>
+  <!-- 200 more than Guardian Overseer -->
+  <speed>1000</speed>
+  <range>1000</range>
+  <falloff>850</falloff>
+  <!-- 20% less energy efficient than Guardian Overseer -->
+  <energy>50</energy>
+  <trackmin>0</trackmin>
+  <trackmax>5500</trackmax>
+  <damage>
+   <type>energy</type>
+   <!-- 15 more than Guardian Overseer -->
+   <penetrate>66</penetrate>
+   <physical>45</physical>
+  </damage>
+  <pointdefence/>
+ </specific>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</outfit>

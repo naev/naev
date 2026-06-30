@@ -1,5 +1,6 @@
 <outfit name="ZIBS-32">
  <general>
+  <stealth_on/>
   <slot>weapon</slot>
   <size>large</size>
   <licence>Heavy Weapon</licence>
@@ -19,8 +20,8 @@
   <energy>113</energy>
   <damage>
    <type>energy</type>
-   <penetrate>41</penetrate>
-   <physical>370</physical>
+   <penetrate>10</penetrate>
+   <physical>320</physical>
   </damage>
   <pointdefence/>
   <spfx_shield>Shi-S</spfx_shield>

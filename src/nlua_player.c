@@ -133,6 +133,7 @@ static int playerL_missions( lua_State *L );
 static int playerL_misnActive( lua_State *L );
 static int playerL_misnDone( lua_State *L );
 static int playerL_misnDoneList( lua_State *L );
+static int playerL_events( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_evtDoneList( lua_State *L );
@@ -234,6 +235,7 @@ static const luaL_Reg playerL_methods[] = {
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "misnDoneList", playerL_misnDoneList },
+   { "events", playerL_events },
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    { "evtDoneList", playerL_evtDoneList },
@@ -1377,7 +1379,13 @@ static PlayerShip_t *playerL_shipvarShip( lua_State *L, int idx )
 {
    if ( lua_isnoneornil( L, idx ) )
       return &player.ps;
-   return player_getPlayerShip( luaL_checkstring( L, idx ) );
+   const char *name = luaL_checkstring( L, idx );
+   if ( strcmp( name, player.p->name ) == 0 )
+      return &player.ps;
+   PlayerShip_t *ps = player_getPlayerShip( name );
+   if ( ps == NULL )
+      NLUA_ERROR( L, "Unknown player ship '%s'", name );
+   return ps;
 }
 
 /**
@@ -1525,9 +1533,12 @@ static int playerL_shipOutfits( lua_State *L )
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       if ( p->outfits[i]->outfit == NULL )
          continue;
-
       /* Set the outfit. */
       lua_pushoutfit( L, p->outfits[i]->outfit );
+      lua_rawseti( L, -2, j++ );
+   }
+   for ( int i = 0; i < array_size( p->outfit_intrinsic ); i++ ) {
+      lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
       lua_rawseti( L, -2, j++ );
    }
 
@@ -1890,9 +1901,9 @@ static int playerL_shipSwap( lua_State *L )
  * @usage n = \#player.missions() -- number of active missions
  *
  *    @luatreturn table Table containing the metadat of active missions as
- * tables. Fields include `name`, `desc`, `reward`, `loc`, `chance`, `spob`,
- * `system`, `chapter`, `cond`, `done`, `priority`, `unique`, `memory`, and
- * `tags`.
+ * tables. Fields include `name`, `title`', `desc`, `reward`, `loc`, `chance`,
+ * `spob`, `system`, `chapter`, `cond`, `done`, `priority`, `unique`, `memory`,
+ * and `tags`.
  * @luafunc missions
  */
 static int playerL_missions( lua_State *L )
@@ -1909,7 +1920,9 @@ static int playerL_missions( lua_State *L )
       if ( pm->id == 0 )
          continue;
 
+      // Handles most of the data
       misn_pushMissionData( L, md );
+
       /* Add player mission-specific data. */
       if ( pm->title != NULL ) {
          lua_pushstring( L, pm->title );
@@ -1923,34 +1936,7 @@ static int playerL_missions( lua_State *L )
          lua_pushstring( L, pm->reward );
          lua_setfield( L, -2, "reward" );
       }
-      lua_pushinteger( L, md->avail.chance );
-      lua_setfield( L, -2, "chance" );
-      lua_pushinteger( L, md->avail.priority );
-      lua_setfield( L, -2, "priority" );
-      if ( md->avail.chapter != NULL ) {
-         lua_pushstring( L, md->avail.chapter );
-         lua_setfield( L, -2, "chapter" );
-      }
-      if ( md->avail.cond != NULL ) {
-         lua_pushstring( L, md->avail.cond );
-         lua_setfield( L, -2, "cond" );
-      }
-      if ( md->avail.done != NULL ) {
-         lua_pushstring( L, md->avail.done );
-         lua_setfield( L, -2, "done" );
-      }
-      if ( md->avail.spob != NULL ) {
-         lua_pushstring( L, md->avail.spob );
-         lua_setfield( L, -2, "spob" );
-      }
-      if ( md->avail.system != NULL ) {
-         lua_pushstring( L, md->avail.system );
-         lua_setfield( L, -2, "system" );
-      }
-      if ( mis_isFlag( md, MISSION_UNIQUE ) ) {
-         lua_pushboolean( L, 1 );
-         lua_setfield( L, -2, "unique" );
-      }
+
       lua_newtable( L );
       for ( int k = 0; k < array_size( pm->markers ); k++ ) {
          const MissionMarker *m = &pm->markers[k];
@@ -1978,13 +1964,7 @@ static int playerL_missions( lua_State *L )
 
       nlua_getenv( L, pm->env, "mem" );
       lua_setfield( L, -2, "memory" );
-      /* Tags. */
-      lua_newtable( L );
-      for ( int k = 0; k < array_size( md->tags ); k++ ) {
-         lua_pushboolean( L, 1 );
-         lua_setfield( L, -2, md->tags[k] );
-      }
-      lua_setfield( L, -2, "tags" );
+
       lua_rawseti( L, -2, j++ );
    }
    return 1;
@@ -2056,6 +2036,41 @@ static int playerL_misnDoneList( lua_State *L )
       mission_toLuaTable( L, mission_get( done[i] ) );
       lua_rawseti( L, -2, i + 1 );
    }
+   return 1;
+}
+
+/**
+ * @brief Gets the list of the player's active events.
+ *
+ * @usage n = \#player.events() -- number of active events
+ *
+ *    @luatreturn table Table containing the metadat of active events as
+ * tables. Fields include `name`, `title`', `desc`, `reward`, `loc`, `chance`,
+ * `spob`, `system`, `chapter`, `cond`, `done`, `priority`, `unique`, `memory`,
+ * and `tags`.
+ * @luafunc events
+ */
+static int playerL_events( lua_State *L )
+{
+   if ( player.p == NULL ) {
+      lua_newtable( L );
+      return 1;
+   }
+   int           j   = 1;
+   unsigned int *evt = event_getActiveList();
+   lua_newtable( L );
+   for ( int i = 0; i < array_size( evt ); i++ ) {
+      unsigned int id = evt[i];
+
+      event_toLuaTable( L, event_get( id )->data );
+
+      nlua_env *env = event_getEnv( id );
+      nlua_getenv( L, env, "mem" );
+      lua_setfield( L, -2, "memory" );
+
+      lua_rawseti( L, -2, j++ );
+   }
+   array_free( evt );
    return 1;
 }
 

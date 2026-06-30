@@ -21,7 +21,7 @@ end
 outfits.standard = {}
 outfits.standard.weapons = {
    -- Heavy Weapons
-   "Lancelot Bay", "Hyena Bay",
+   "Lancelot Bay", "Hyena Bay", "Ancestor Bomber Bay",
    "Heavy Laser Turret", "Railgun Turret", "Heavy Ion Turret",
    "Railgun", "Grave Beam",
    -- Medium Weapons

@@ -180,7 +180,7 @@ repos:
       # able to do threading there and keep it sequential here.
       #require_serial: true
 - repo: https://github.com/shssoichiro/oxipng
-  rev: v10.1.0
+  rev: v10.1.1
   hooks:
     - id: oxipng
       args: ["-o", "max", "--strip", "safe", "--alpha"]
@@ -189,4 +189,6 @@ repos:
   rev: v0.9.3
   hooks:
     - id: taplo-format
+    # Currently broken with scheme. See https://github.com/ComPWA/taplo-pre-commit/issues/35
     - id: taplo-lint
+      args: [--no-schema]

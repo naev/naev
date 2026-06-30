@@ -1126,20 +1126,23 @@ static void spfx_renderStack( SPFX *spfx_stack )
 
       /* Render shader. */
       if ( effect->shader >= 0 ) {
-         double x, y, z, s2;
+         double x, y, z;
          double w, h;
          mat4   projection;
 
          /* Translate coords. */
-         s2 = effect->size / 2.;
-         z  = cam_getZoom();
-         gl_gameToScreenCoords( &x, &y, spfx->pos.x - s2, spfx->pos.y - s2 );
+         z = cam_getZoom();
+         gl_gameToScreenCoords( &x, &y, spfx->pos.x, spfx->pos.y );
          w = h = effect->size * z;
 
          /* Check if inbounds. */
          if ( ( x < -w ) || ( x > SCREEN_W + w ) || ( y < -h ) ||
               ( y > SCREEN_H + h ) )
             continue;
+
+         // Correct location
+         x -= w * 0.5;
+         y -= h * 0.5;
 
          /* Let's get to business. */
          glUseProgram( effect->shader );

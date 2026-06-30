@@ -740,7 +740,6 @@ static void map_system_array_update( unsigned int wid, const char *str )
       else
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _( license ) );
 
-      mass += outfit_amount( outfit ) * outfit_massAmmo( outfit );
       snprintf( buf_mass, sizeof( buf_mass ),
                 n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );
 
