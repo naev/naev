@@ -1,5 +1,6 @@
---This is literally just the energy harpoon lua. Replace it entirely
-function onimpact( _p, target, pos, vel, _o )
-   local m = math.min( 1000, target:mass() )
-   target:knockback( m, -vel, pos, 0 )
+local nuke = require "luaspfx.agamemnon"
+
+-- Second stage nuke
+function onimpact( p, _target, pos, vel, _o )
+   nuke( p, pos, vel*0.1 )
 end
