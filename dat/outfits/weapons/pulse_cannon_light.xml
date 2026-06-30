@@ -1,5 +1,5 @@
-<!-- Laser variants for Proteron. Higher projectile speed, fire rate, and penetration. Less energy efficient. -->
 <outfit name="Light Pulse Cannon">
+<!-- Laser variants for Proteron. Higher projectile speed, fire rate, and penetration. Less energy efficient. -->
  <general>
   <slot>weapon</slot>
   <size>small</size>
