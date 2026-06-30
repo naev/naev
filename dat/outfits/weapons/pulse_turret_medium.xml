@@ -1,0 +1,34 @@
+<outfit name="Medium Pulse Turret">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <licence>Medium Weapon</licence>
+  <rarity>3</rarity>  
+  <mass>24</mass>
+  <price>170000</price>
+  <description>The Medium Pulse Turret is a mainstay of the Proteron fleet for use on destroyer class ships. Devastating to small and medium craft, this turret is capable of fully penetrating plating on even the heaviest fighters and bombers.</description>
+  <gfx_store>laserturret2</gfx_store>
+  <cpu>-60</cpu> <!-- 20% more than Laser Turret MK2 -->
+ </general>
+ <specific type="turret bolt">
+  <gfx type="shader" size="8" col_size="5">particles/laser_purple.frag</gfx>
+  <sound>laser</sound>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
+  <delay>0.5</delay>
+  <speed>1400</speed> <!-- 300 more than Laser Turret MK2 -->
+  <range>1200</range> <!-- 100 more than Laser Turret MK2 -->
+  <falloff>1050</falloff> <!-- 100 more than Laser Turret MK2 -->
+  <energy>22</energy> <!-- 16.25% less energy efficient than Laser Turret MK2 -->
+  <trackmin>1200</trackmin>
+  <trackmax>4800</trackmax>
+  <damage>
+   <type>energy</type>
+   <penetrate>74</penetrate> <!-- 20 more than Laser Turret MK2 -->
+   <physical>20</physical>
+  </damage>
+ </specific>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</outfit>

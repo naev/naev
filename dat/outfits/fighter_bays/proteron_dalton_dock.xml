@@ -4,7 +4,7 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
   <licence>Light Combat Vessel</licence>
-  <rarity>2</rarity>
+  <rarity>3</rarity>
   <cond>require("buyrep")("Proteron", 50)</cond>
   <condstr>You need at least 50% reputation with the Sovereign Proteron Autarchy.</condstr>
   <mass>85</mass>
@@ -14,7 +14,7 @@
   <cpu>-165</cpu>
  </general>
  <specific type="fighter bay">
-  <delay>5</delay>
+  <delay>3</delay> <!-- Lower delay than other bays because Daltons are containerized for rapid launch. -->
   <reload_time>240</reload_time>
   <amount>2</amount>
   <ship>Proteron Dalton</ship>
