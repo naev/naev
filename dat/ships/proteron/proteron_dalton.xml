@@ -39,10 +39,10 @@
   <structure size="small"/>
   <structure size="small"/>
   <structure size="small"/>
-  <structure size="small"/>  
+  <structure size="small"/>
  </slots>
  <stats>
-  <energy_regen_mod>5</energy_regen_mod>  
+  <energy_regen_mod>5</energy_regen_mod>
   <armour_mod>5</armour_mod>
   <shield_mod>5</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>

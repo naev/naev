@@ -3,12 +3,13 @@
   <slot>weapon</slot>
   <size>small</size>
   <licence>Medium Weapon</licence>
-  <rarity>3</rarity>  
+  <rarity>3</rarity>
   <mass>18</mass>
   <price>40000</price>
   <description>A pair of further overcharged Light Pulse Cannons mounted on a rotating turret, this turret can penetrate small plating with relative ease, although it is energy-hungry and requires computing power to operate at rates that can be difficult for small craft to support.</description>
   <gfx_store>laserturret</gfx_store>
-  <cpu>-30</cpu> <!-- 25% more than Laser Turret MK1 -->
+  <!-- 25% more than Laser Turret MK1 -->
+  <cpu>-30</cpu>
  </general>
  <specific type="turret bolt">
   <gfx type="shader" size="7" col_size="5">particles/laser_purple.frag</gfx>
@@ -16,15 +17,20 @@
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
   <delay>0.4</delay>
-  <speed>1400</speed> <!-- 100 more than Laser Turret MK1 -->
-  <range>1000</range> <!-- 100 more than Laser Turret MK1 -->
-  <falloff>850</falloff> <!-- 100 more than Laser Turret MK1 -->
-  <energy>6</energy> <!-- 15% less energy efficient for raw damage dealt than Laser Turret MK1 -->
+  <!-- 100 more than Laser Turret MK1 -->
+  <speed>1400</speed>
+  <!-- 100 more than Laser Turret MK1 -->
+  <range>1000</range>
+  <!-- 100 more than Laser Turret MK1 -->
+  <falloff>850</falloff>
+  <!-- 15% less energy efficient for raw damage dealt than Laser Turret MK1 -->
+  <energy>6</energy>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
   <damage>
    <type>energy</type>
-   <penetrate>30</penetrate> <!-- 15 more than Laser Turret MK1 -->
+   <!-- 15 more than Laser Turret MK1 -->
+   <penetrate>30</penetrate>
    <physical>13</physical>
   </damage>
  </specific>

@@ -315,6 +315,7 @@ dat/outfits/intrinsic/escape_pod.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
 dat/outfits/intrinsic/heavily_damaged.xml
+dat/outfits/intrinsic/high_combat_readiness.xml
 dat/outfits/intrinsic/hyperdrive_retool.xml
 dat/outfits/intrinsic/luxury_furnishings.xml
 dat/outfits/intrinsic/machiavellian_fortune.xml
@@ -332,6 +333,7 @@ dat/outfits/launchers/enygma_systems_spearhead_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml
 dat/outfits/launchers/pincushion_battery.xml
+dat/outfits/launchers/proteron_agamemnon_launcher.xml
 dat/outfits/launchers/repeating_banshee_launcher.xml
 dat/outfits/launchers/shatterer_launcher.xml
 dat/outfits/launchers/space_mine_layer.xml
@@ -389,6 +391,7 @@ dat/outfits/misc/treasure_map.xml
 dat/outfits/pointdefence/dvaered_flare_battery.xml
 dat/outfits/pointdefence/guardian_interception_system.xml
 dat/outfits/pointdefence/guardian_overseer_system.xml
+dat/outfits/pointdefence/overwatch_pulse_ciws.xml
 dat/outfits/pointdefence/ratchet_point_defence.xml
 dat/outfits/pointdefence/spittle_tubuloid_cluster.xml
 dat/outfits/pointdefence/zibs-16.xml
@@ -547,6 +550,11 @@ dat/outfits/weapons/plasma_cluster_cannon.xml
 dat/outfits/weapons/plasma_eruptor.xml
 dat/outfits/weapons/plasma_turret_mk1.xml
 dat/outfits/weapons/plasma_turret_mk2.xml
+dat/outfits/weapons/pulse_cannon_light.xml
+dat/outfits/weapons/pulse_turret_heavy.xml
+dat/outfits/weapons/pulse_turret_hyper.xml
+dat/outfits/weapons/pulse_turret_light.xml
+dat/outfits/weapons/pulse_turret_medium.xml
 dat/outfits/weapons/ragnarok_beam.xml
 dat/outfits/weapons/railcannon.xml
 dat/outfits/weapons/railgun.xml
@@ -3569,6 +3577,7 @@ dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/luxury_furnishings.lua
 dat/outfits/intrinsic/pirate_branding.lua
 dat/outfits/launchers/pincushion_battery.lua
+dat/outfits/launchers/proteron_agamemnon_launcher.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/alone.lua
 dat/outfits/lib/bioplasma.lua
@@ -3777,6 +3786,7 @@ dat/scripts/love/video.lua
 dat/scripts/love/window.lua
 dat/scripts/love_shaders.lua
 dat/scripts/luaspfx.lua
+dat/scripts/luaspfx/agamemnon.lua
 dat/scripts/luaspfx/alert.lua
 dat/scripts/luaspfx/blink.lua
 dat/scripts/luaspfx/chakra_explosion.lua

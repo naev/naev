@@ -1,30 +1,39 @@
-<outfit name="Light Pulse Cannon"> <!-- Laser variants for Proteron. Higher projectile speed, fire rate, and penetration. Less energy efficient. -->
+<!-- Laser variants for Proteron. Higher projectile speed, fire rate, and penetration. Less energy efficient. -->
+<outfit name="Light Pulse Cannon">
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <rarity>3</rarity>  
+  <rarity>3</rarity>
   <mass>3</mass>
   <price>16000</price>
   <description>The Light Pulse Cannon is a technologically advanced upgrade to the Laser Cannon, firing rapid charged energy pulses that penetrate more effectively than standard lasers, although it operates less efficiently.</description>
   <gfx_store>laser</gfx_store>
-  <cpu>-6</cpu> <!-- 20% more than Laser Cannon MK1 -->
+  <!-- 20% more than Laser Cannon MK1 -->
+  <cpu>-6</cpu>
  </general>
  <specific type="bolt">
   <gfx type="shader" size="7" col_size="5">particles/laser_purple.frag</gfx>
   <sound>laser</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
-  <delay>0.4</delay> <!-- 50% faster than Laser Cannon MK1. -->
-  <speed>1400</speed> <!-- 300 more than Laser Cannon MK1 -->
-  <range>1000</range> <!-- 100 more than Laser Cannon MK1 -->
-  <falloff>850</falloff> <!-- 100 more than Laser Cannon MK1 -->
-  <energy>3</energy> <!-- ~15% less energy efficient for raw damage dealt than Laser Cannon Mk1. -->
+  <!-- 50% faster than Laser Cannon MK1. -->
+  <delay>0.4</delay>
+  <!-- 300 more than Laser Cannon MK1 -->
+  <speed>1400</speed>
+  <!-- 100 more than Laser Cannon MK1 -->
+  <range>1000</range>
+  <!-- 100 more than Laser Cannon MK1 -->
+  <falloff>850</falloff>
+  <!-- ~15% less energy efficient for raw damage dealt than Laser Cannon Mk1. -->
+  <energy>3</energy>
   <trackmin>0</trackmin>
   <trackmax>2400</trackmax>
-  <swivel>22</swivel> <!-- 4 more than Laser Cannon MK1 -->
+  <!-- 4 more than Laser Cannon MK1 -->
+  <swivel>22</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>12</penetrate> <!-- 10 more than Laser Cannon MK1 -->
+   <!-- 10 more than Laser Cannon MK1 -->
+   <penetrate>12</penetrate>
    <physical>11</physical>
   </damage>
  </specific>
@@ -32,5 +41,3 @@
   <tag>proteron</tag>
  </tags>
 </outfit>
-
-

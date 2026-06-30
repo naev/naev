@@ -8,12 +8,12 @@
  </general>
  <specific type="modification">
   <ew_track>10</ew_track>
-  <cpu_mod>20</cpu_mod>  
+  <cpu_mod>20</cpu_mod>
   <armour_mod>10</armour_mod>
   <shield_mod>10</shield_mod>
   <energy_mod>10</energy_mod>
   <energy_regen_mod>20</energy_regen_mod>
-  <stress_dissipation>10</stress_dissipation>  
+  <stress_dissipation>10</stress_dissipation>
  </specific>
  <tags>
   <tag>nosteal</tag>

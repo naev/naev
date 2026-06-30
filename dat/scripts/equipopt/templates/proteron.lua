@@ -15,7 +15,7 @@ local proteron_outfits = eoutfits.merge{{
    -- Small Weapons
    "Light Pulse Cannon", "Light Pulse Turret",
    -- Point Defence
-   "Overwatch Pulse CIWS",   
+   "Overwatch Pulse CIWS",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Hunting Combat AI", "Agility Combat AI",
