@@ -304,6 +304,7 @@ function land ()
          vn.run()
       end
 
+      pp:intrinsicSet( "mass", 0 )
       evt.finish(true)
    end
 
