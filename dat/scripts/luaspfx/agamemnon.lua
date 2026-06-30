@@ -6,7 +6,7 @@ local explosion = require 'luaspfx.explosion'
 local agamemnon_shader
 
 local DURATION = 2
-local SIZE_SHADER = 50 -- Size of the shader
+local SIZE_SHADER = 70 -- Size of the shader
 local SIZE     = 300
 local DAMAGE   = 1000
 
