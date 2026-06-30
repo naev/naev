@@ -101,7 +101,7 @@ tinyvec = "1"
 # Serialization / XML
 serde = { version = "1", features = ["derive"] }
 serde-seeded = "0"
-quick-xml = { version = "0.40", features = ["serialize"] }
+quick-xml = { version = "0.41", features = ["serialize"] }
 # Networking and archive handling
 reqwest = { version = "0.13", default-features = false, features = ["stream", "blocking", "charset", "http2", "system-proxy", "native-tls"] }
 url = { version = "2.5", features = ["serde"] }
