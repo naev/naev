@@ -1,6 +1,6 @@
-<outfit name="Proteron Agamemnon Launcher">
+<outfit name="Agamemnon Launcher">
  <general>
-  <shortname>P. Agamemnon L.</shortname>
+  <shortname>Agamemnon L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <licence>Heavy Weapon</licence>
@@ -25,7 +25,7 @@
   <!-- 20% less than Imperator launcher -->
   <amount>4</amount>
   <gfx>imperator</gfx>
-  <lua>outfits/launchers/proteron_agamemnon_launcher.lua</lua>
+  <lua>outfits/launchers/agamemnon_launcher.lua</lua>
   <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>Exp-L</spfx_shield>

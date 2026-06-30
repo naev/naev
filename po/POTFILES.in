@@ -325,6 +325,7 @@ dat/outfits/intrinsic/pirate_branding.xml
 dat/outfits/intrinsic/port_and_polish.xml
 dat/outfits/intrinsic/wild_space_taint.xml
 dat/outfits/intrinsic/worn_down.xml
+dat/outfits/launchers/agamemnon_launcher.xml
 dat/outfits/launchers/convulsion_launcher.xml
 dat/outfits/launchers/electron_burst_cannon.xml
 dat/outfits/launchers/emp_grenade_launcher.xml
@@ -333,7 +334,6 @@ dat/outfits/launchers/enygma_systems_spearhead_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml
 dat/outfits/launchers/pincushion_battery.xml
-dat/outfits/launchers/proteron_agamemnon_launcher.xml
 dat/outfits/launchers/repeating_banshee_launcher.xml
 dat/outfits/launchers/shatterer_launcher.xml
 dat/outfits/launchers/space_mine_layer.xml
@@ -3576,8 +3576,8 @@ dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/luxury_furnishings.lua
 dat/outfits/intrinsic/pirate_branding.lua
+dat/outfits/launchers/agamemnon_launcher.lua
 dat/outfits/launchers/pincushion_battery.lua
-dat/outfits/launchers/proteron_agamemnon_launcher.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/alone.lua
 dat/outfits/lib/bioplasma.lua
