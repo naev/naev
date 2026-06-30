@@ -134,6 +134,8 @@ local goodness_special = {
    ["Disruptor Artillery S1"] = 1 / 0.80,
    ["Disruptor Artillery S2"] = 1 / 0.80,
    ["Disruptor Battery S3"] = 1 / 0.80,
+   -- Nukes does second stage damage
+   ["Proteron Agamemnon Launcher"] = 1300 / 300, -- Total of 1300 despite weapon saying 300.
 }
 
 
