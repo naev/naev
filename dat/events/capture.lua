@@ -40,8 +40,7 @@ local function setup_pilot( p )
 
    -- Assume hooked up to the player for now
    -- Full mass is a bit too harsh due to quadratic penalty scaling, so reduce somewhat
-   local m = plt:mass()
-   pp:intrinsicSet( "mass", m * 0.5 )
+   drag_change()
 
    -- Set hooks
    hook.pilot( plt, "death", "plt_death" )
@@ -49,7 +48,7 @@ local function setup_pilot( p )
 end
 
 function drag( dt )
-   if not plt:exists() then return end
+   if not plt or not plt:exists() then return end
 
    local pp = player.pilot()
    local tdist = pp:radius() * 1.2 + 20
@@ -133,6 +132,7 @@ function create ()
    hook.jumpout( "jumpout" )
    hook.enter( "enter" )
    hook.update( "drag" )
+   hook.custom( "drag_change", "drag_change" )
 
    evt.save(true)
 
@@ -152,7 +152,19 @@ end
 function plt_death ()
    player.msg(fmt.f(_("Your captured ship {shp} was destroyed!"),
       {shp=plt:ship():name()}))
+   plt = nil
+   player.pilot():intrinsicSet( "mass", 0 )
+   naev.trigger( "drag_change" )
    evt.finish(false)
+end
+
+-- We handle mass updates here, because this is being hacked through instead of
+-- being something more robust
+function drag_change ()
+   if plt:exists() then
+      local m = plt:mass()
+      player.pilot():intrinsicSet( "mass", m * 0.5 )
+   end
 end
 
 function plt_hail ()
@@ -196,6 +208,9 @@ function plt_hail ()
       plt:rename( mem.o.name )
       plt:setFriendly(false)
       plt:setInvincPlayer(false)
+      plt = nil
+      player.pilot():intrinsicSet( "mass", 0 )
+      naev.trigger( "drag_change" )
       evt.finish(false)
    end
 end
@@ -304,6 +319,7 @@ function land ()
          vn.run()
       end
 
+      plt = nil
       pp:intrinsicSet( "mass", 0 )
       evt.finish(true)
    end
