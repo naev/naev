@@ -785,11 +785,25 @@ pub struct AudioStream {
 }
 impl Drop for AudioStream {
    fn drop(&mut self) {
-      // Need to stop the source and remove stuff first
-      self.stop();
+      // Since we hack around and give direct al::Source access to the thread, we have to make sure
+      // that the source is stopped and dequeued before we can drop the source. OpenAL SOFT
+      // guarantees the order so it should be safe.
+      self.stop_thread();
    }
 }
 impl AudioStream {
+   /// Stops the running thread without waiting or joining.
+   fn stop_thread(&mut self) {
+      let mut lock = self.finish.lock().unwrap();
+      let source = &self.source.inner;
+      source.stop();
+      let queued = source.get_parameter_i32(AL_BUFFERS_QUEUED);
+      for _ in 0..queued {
+         source.unqueue_buffer();
+      }
+      *lock = true;
+   }
+
    fn thread(
       finish: Arc<Mutex<bool>>,
       elapsed: Arc<Mutex<f32>>,
@@ -801,11 +815,6 @@ impl AudioStream {
             // invalidated
             let lock = finish.lock().unwrap();
             if *lock {
-               data.source.stop();
-               let queued = data.source.get_parameter_i32(AL_BUFFERS_QUEUED);
-               for _ in 0..queued {
-                  data.source.unqueue_buffer();
-               }
                return Ok(());
             }
 
@@ -893,7 +902,7 @@ impl AudioStream {
 
    fn stop(&mut self) {
       if let Some(th) = self.thread.take() {
-         *self.finish.lock().unwrap() = true;
+         self.stop_thread();
          if let Err(e) = th.join().unwrap() {
             warn_err!(e);
          }
