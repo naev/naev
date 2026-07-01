@@ -37,6 +37,7 @@ local function setup_pilot( p )
       plt:outfitAddIntrinsic( v )
    end
    plt:weapsetCleanup() -- Hopefully won't do anything now
+   plt:intrinsicSet( "nebu_absorb", 10e3 )
 
    -- Assume hooked up to the player for now
    -- Full mass is a bit too harsh due to quadratic penalty scaling, so reduce somewhat
