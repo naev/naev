@@ -57,11 +57,11 @@
 
    * 8+ new missions
        - Bounty hunting has been reworked with new missions
-       - 28 new priority bounties
+       - 29 new priority bounties
    * 8 new events
        - Pirates will raid systems
    * 4 new ships
-   * 14 new outfits
+   * 21 new outfits
    * 2 new ship variants
    * Groove
    * Many more unique pilots
