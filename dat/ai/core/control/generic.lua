@@ -533,7 +533,7 @@ function control_funcs.generic_attack( si, noretarget )
       ai.pilot():taskClear()
       ai.pushtask( "flyback", true )
       return false
-   elseif not should_cooldown() then
+   elseif not should_cooldown( si ) then
       -- Cool down, if necessary.
       atklib.think( target, si, noretarget )
    end
@@ -987,7 +987,7 @@ function control( dt )
       elseif l then -- Leader should be set already
          ai.pushtask("follow_fleet")
       else
-         if not should_cooldown() then
+         if not should_cooldown( si ) then
             idle()
          end
       end
@@ -1304,7 +1304,8 @@ end
 
 local HOPLITE = ship.exists("Empire Pacifier Hoplite")
 -- Puts the pilot into cooldown mode if necessary.
-function should_cooldown()
+function should_cooldown( si )
+   si = si or _stateinfo( ai.taskname() )
    local p = ai.pilot()
 
    -- TODO maybe make sure enemies aren't nearby as cooling down reduced absorb
@@ -1314,11 +1315,15 @@ function should_cooldown()
    -- By default, 15 ticks will be 30 seconds.
    if mem.tickssincecooldown < 15 then
       return
+
+   -- Reload weapons, TODO probably avoid doing this in combat?
    elseif atk.seekers_ammo() <= 0.0 then
       mem.cooldown = true
       p:setCooldown(true)
       return true
-   elseif p:ship()==HOPLITE and p:shield() <= 0 then
+
+   -- Hoplite will only try to regenerate shield when not in combat
+   elseif not si.attack and p:ship()==HOPLITE and p:shield() <= 0 then
       mem.cooldown = true
       p:setCooldown(true)
       return true
