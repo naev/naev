@@ -24,8 +24,9 @@ return {
             ["Agamemnon Launcher"] = 100
          },
          type_range = {
-            ["Point Defense"] = { min = 1 },
-            ["Launcher"] = { max = 2 },
+            ["Bolt Turret"] = { min = 1 },
+            ["Point Defence"] = { min = 1, max = 1 },
+            ["Launcher"] = { min = 1 },			
          },
       } )
       p:outfitAddIntrinsic("Escape Pod")
