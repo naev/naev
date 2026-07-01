@@ -592,10 +592,8 @@ local _board_close
 local _board
 
 local function _board_cannibalize(spare)
-   local armour, shield = board_plt:health(true)
+   local armour, shield, stress = board_plt:health(true)
    local cannibal2 = player.shipvarPeek("bio_bite2")
-
-   local bs = board_plt:stats()
 
    local pp = player.pilot()
    local ps = pp:stats()
@@ -614,7 +612,7 @@ local function _board_cannibalize(spare)
       end
    end
 
-   board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
+   board_plt:setHealthAbs( armour-dmg, shield, stress )
 
    local heal_armour
    if cannibal2 then
@@ -628,7 +626,7 @@ local function _board_cannibalize(spare)
    end
 
    if heal_armour > 0 then
-      pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
+      pp:setHealthAbs( parmour+heal_armour, pshield, pstress )
       player.msg(fmt.f(_("Your ship cannibalized {armour} armour from {plt}."),{armour=fmt.number(heal_armour), plt=board_plt}))
       board_fcthit_apply( heal_armour )
    end
