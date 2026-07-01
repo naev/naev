@@ -120,10 +120,10 @@ impl ReplayGain {
       let mut track_peak = None;
       if let Some(md) = format.metadata().current() {
          for t in &md.media.tags {
-            fn tag_to_f32(s: &String) -> Result<f32> {
+            fn tag_to_f32(s: &str) -> Result<f32> {
                Ok(match s.split_once(" ") {
                   Some(val) => val.0,
-                  None => &s,
+                  None => s,
                }
                .parse::<f32>()?)
             }
@@ -241,7 +241,7 @@ impl BufferData {
       codec_params.with_channels(if stereo {
          Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
       } else {
-         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+         Channels::Positioned(Position::FRONT_LEFT)
       });
 
       let mut decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
@@ -675,7 +675,7 @@ impl StreamData {
       codec_params.with_channels(if stereo {
          Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
       } else {
-         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+         Channels::Positioned(Position::FRONT_LEFT)
       });
 
       let decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
@@ -855,10 +855,8 @@ impl AudioStream {
 macro_rules! check_audio {
    ($self: ident) => {{
       match $self {
-         Audio::Static(this) | Audio::LuaStatic(this) => {
-            if this.data == None {
-               return Default::default();
-            }
+         Audio::Static(this) | Audio::LuaStatic(this) if this.data.is_none() => {
+            return Default::default();
          }
          _ => (),
       }
@@ -1976,10 +1974,8 @@ impl System {
       let voices = self.voices.lock().unwrap();
       for (_, v) in voices.iter() {
          match v {
-            Audio::Static(_this) | Audio::LuaStatic(_this) => {
-               if v.is_playing() {
-                  v.pause();
-               }
+            Audio::Static(_this) | Audio::LuaStatic(_this) if v.is_playing() => {
+               v.pause();
             }
             _ => (),
          }
@@ -1989,11 +1985,7 @@ impl System {
    pub fn resume(&self) {
       for (_, v) in self.voices.lock().unwrap().iter_mut() {
          match v {
-            Audio::Static(_this) | Audio::LuaStatic(_this) => {
-               if v.is_paused() {
-                  v.play()
-               }
-            }
+            Audio::Static(_this) | Audio::LuaStatic(_this) if v.is_paused() => v.play(),
             _ => (),
          }
       }
