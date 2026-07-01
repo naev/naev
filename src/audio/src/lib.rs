@@ -41,11 +41,10 @@ use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, LazyLock, Weak};
 #[cfg(not(debug_assertions))]
 use std::sync::{Mutex, RwLock};
-use symphonia::core::audio::{Channels, Signal};
-use symphonia::core::conv::{FromSample, IntoSample};
-use symphonia::core::{
-   codecs::Decoder, formats::FormatReader, io::MediaSourceStream, sample::Sample,
-};
+use symphonia::core::audio::{Channels, Position};
+use symphonia::core::codecs::audio::AudioDecoder;
+use symphonia::core::codecs::registry::CodecRegistry;
+use symphonia::core::{audio::sample::Sample, formats::FormatReader, io::MediaSourceStream};
 use tracing::instrument;
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, RwLock};
@@ -105,78 +104,6 @@ impl AudioType {
    }
 }
 
-/// Small wrapper for Mono/Stereo frames
-enum Frame<T> {
-   Mono(T),
-   Stereo(T, T),
-}
-impl<T> Frame<T> {
-   /// Loads a Vec of Frame<f32> from an AudioBufferRef
-   fn load_frames_from_buffer_ref(
-      buffer: &symphonia::core::audio::AudioBufferRef,
-   ) -> Result<Vec<Frame<f32>>> {
-      fn load_frames_from_buffer<S: Sample>(
-         buffer: &symphonia::core::audio::AudioBuffer<S>,
-      ) -> Result<Vec<Frame<f32>>>
-      where
-         f32: FromSample<S>,
-      {
-         match buffer.spec().channels.count() {
-            1 => Ok(buffer
-               .chan(0)
-               .iter()
-               .map(|sample| Frame::Mono((*sample).into_sample()))
-               .collect()),
-            2 => Ok(buffer
-               .chan(0)
-               .iter()
-               .zip(buffer.chan(1).iter())
-               .map(|(left, right)| Frame::Stereo((*left).into_sample(), (*right).into_sample()))
-               .collect()),
-            _ => anyhow::bail!("Unsupported channel configuration"),
-         }
-      }
-      use symphonia::core::audio::AudioBufferRef;
-      match buffer {
-         AudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
-         AudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
-      }
-   }
-
-   /// Converts a vector of frames to a raw interleaved data vector usable by OpenAL
-   fn vec_to_data(f: Vec<Frame<T>>, stereo: bool) -> Vec<T>
-   where
-      T: Copy,
-   {
-      match stereo {
-         true => {
-            use std::iter::once;
-            f.iter()
-               .flat_map(|x| match x {
-                  Frame::Mono(x) => once(*x).chain(once(*x)),
-                  Frame::Stereo(l, r) => once(*l).chain(once(*r)),
-               })
-               .collect()
-         }
-         false => f
-            .iter()
-            .map(|x| match x {
-               Frame::Mono(x) => *x,
-               Frame::Stereo(l, _) => *l,
-            })
-            .collect(),
-      }
-   }
-}
-
 /// Handles loading and filtering replaygain based on symphonia
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct ReplayGain {
@@ -188,26 +115,21 @@ pub struct ReplayGain {
 impl ReplayGain {
    /// Extracts the replaygain values from a FormatReader
    fn from_formatreader(format: &mut Box<dyn FormatReader>) -> Result<Option<Self>> {
-      use symphonia::core::meta::{StandardTagKey, Tag, Value};
+      use symphonia::core::meta::StandardTag;
       let mut track_gain_db = None;
       let mut track_peak = None;
       if let Some(md) = format.metadata().current() {
-         for t in md.tags() {
-            fn tag_to_f32(t: &Tag) -> Result<f32> {
-               match &t.value {
-                  Value::Float(val) => Ok(*val as f32),
-                  // Strings can be like "+3.14 dB" or "0.4728732849"
-                  Value::String(val) => Ok(match val.split_once(" ") {
-                     Some(val) => val.0,
-                     None => val,
-                  }
-                  .parse::<f32>()?),
-                  _ => anyhow::bail!("tag is not a float"),
+         for t in &md.media.tags {
+            fn tag_to_f32(s: &String) -> Result<f32> {
+               Ok(match s.split_once(" ") {
+                  Some(val) => val.0,
+                  None => &s,
                }
+               .parse::<f32>()?)
             }
-            if let Some(key) = t.std_key {
+            if let Some(key) = &t.std {
                match key {
-                  StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
+                  StandardTag::ReplayGainTrackGain(s) => match tag_to_f32(s) {
                      Ok(f) => {
                         track_gain_db = Some(f);
                      }
@@ -215,7 +137,7 @@ impl ReplayGain {
                         warn_err!(e);
                      }
                   },
-                  StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
+                  StandardTag::ReplayGainTrackPeak(s) => match tag_to_f32(s) {
                      Ok(f) => {
                         track_peak = Some(f);
                      }
@@ -283,93 +205,86 @@ impl BufferData {
       let codecs = &CODECS;
       let probe = symphonia::default::get_probe();
       let mss = MediaSourceStream::new(Box::new(src), Default::default());
-      let mut hint = symphonia::core::probe::Hint::new();
+      let mut hint = symphonia::core::formats::probe::Hint::new();
       if let Some(ext) = ext {
          hint.with_extension(ext);
       }
       // Enable gapless so encoded padding (e.g. Opus pre-skip/end trim) is removed.
-      let mut format = probe
-         .format(
-            &hint,
-            mss,
-            &symphonia::core::formats::FormatOptions {
-               enable_gapless: true,
-               ..Default::default()
-            },
-            &Default::default(),
-         )?
-         .format;
+      let mut format = probe.probe(&hint, mss, Default::default(), Default::default())?;
 
       // Get replaygain information
       let replay_gain = ReplayGain::from_formatreader(&mut format)?;
 
-      let track = format.default_track().context("No default track")?;
+      let track = format
+         .default_track(symphonia::core::formats::TrackType::Audio)
+         .context("No default track")?;
       let track_id = track.id;
 
-      let codec_params = &track.codec_params;
+      let binding = track.codec_params.clone().context("No codec parameters")?;
+      let mut codec_params = binding
+         .audio()
+         .context("Not audio codec parameters")?
+         .clone();
       let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
-      let mut decoder = codecs.make(codec_params, &Default::default())?;
 
-      let channels = track.codec_params.channels.context("no channels")?;
-      if !channels.contains(Channels::FRONT_LEFT) {
-         anyhow::bail!("no mono channel");
-      }
-      let stereo = channels.contains(Channels::FRONT_RIGHT);
-      let delay = codec_params.delay;
-      let padding = codec_params.padding;
+      let stereo = match codec_params.channels {
+         Some(Channels::Positioned(p)) => {
+            if !p.contains(Position::FRONT_LEFT) {
+               anyhow::bail!("no left channel");
+            }
+            p.contains(Position::FRONT_RIGHT)
+         }
+         _ => {
+            anyhow::bail!("no usable channels");
+         }
+      };
+      codec_params.with_channels(if stereo {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      } else {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      });
 
-      let mut frames: Vec<Frame<f32>> = vec![];
-      loop {
-         // Get the next packet from the media format.
-         let packet = match format.next_packet() {
-            Ok(packet) => packet,
-            Err(e) => match e {
-               symphonia::core::errors::Error::IoError(e) => {
-                  if e.kind() == std::io::ErrorKind::UnexpectedEof
-                     && e.to_string() == "end of stream"
-                  {
-                     break;
-                  }
-                  return Err(symphonia::core::errors::Error::IoError(e).into());
-               }
-               e => anyhow::bail!(e),
-            },
-         };
+      let mut decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
+      let mut samples: Vec<f32> = Default::default();
+      // Read and decode all packets from the format reader.
+      while let Some(packet) = format.next_packet().unwrap() {
+         // If the packet does not belong to the selected track, skip it.
+         if packet.track_id != track_id {
+            continue;
+         }
 
-         // If the packet does not belong to the selected track, skip over it.
-         if packet.track_id() == track_id {
-            // Decode the packet into audio samples.
-            let buffer = decoder.decode(&packet)?;
-            frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
+         // Decode the packet into audio samples, ignoring any decode errors.
+         match decoder.decode(&packet) {
+            Ok(audio_buf) => {
+               // The decoded audio samples may now be accessed via the generic audio buffer
+               // returned by the decoder. You may match on the buffer to access a sample-format
+               // specific buffer, or use generic routines to copy out the audio samples in the
+               // desired sample format.
+               //
+               // In the example below, we will copy the all the samples into a vector in
+               // the f32 sample format in channel interleaved order.
+
+               // Ensure the vector is large enough to hold all the samples.
+               let l = samples.len();
+               samples.resize(l + audio_buf.samples_interleaved(), f32::MID);
+
+               // Copy the audio samples from the generic audio buffer to the vector in interleaved
+               // order. The sample format to convert to is inferred from the type of the Vec.
+               audio_buf.copy_to_slice_interleaved(&mut samples[l..]);
+            }
+            Err(symphonia::core::errors::Error::DecodeError(e)) => {
+               anyhow::bail!(e);
+            }
+            Err(_) => break,
          }
       }
-
-      // I'm not sure exactly what's going on here, but the usage of padding+delay seems to be the
-      // opposite to what is mentioned in the Symphonia docs at least as of 0.5.5. As this seems
-      // to give correct results (for now), I am leaving it as is.
-      if let Some(padding) = delay {
-         frames.truncate(frames.len() - padding as usize);
-      }
-      if let Some(delay) = padding {
-         let delay = delay as usize;
-         if delay >= frames.len() {
-            anyhow::bail!(format!(
-               "Audio '{}' is draining all frames!",
-               path.display()
-            ));
-         }
-         frames.drain(..delay);
-      }
-
-      // Squish the frames together
-      let data: Vec<f32> = Frame::vec_to_data(frames, stereo);
 
       Ok(Self {
          name: path,
          stereo,
          replay_gain,
          sample_rate,
-         data,
+         data: samples,
       })
    }
 }
@@ -705,7 +620,7 @@ struct StreamData {
    buffers: [al::Buffer; 2],
    format: Box<dyn FormatReader>,
    track_id: u32,
-   decoder: Box<dyn Decoder>,
+   decoder: Box<dyn AudioDecoder>,
    replaygain: Option<ReplayGain>,
    stereo: bool,
    sample_rate: u32,
@@ -721,38 +636,49 @@ impl StreamData {
       let codecs = &CODECS;
       let probe = symphonia::default::get_probe();
       let mss = MediaSourceStream::new(Box::new(file), Default::default());
-      let mut format = probe
-         .format(
-            &Default::default(),
-            mss,
-            // For long streams (music), enable gapless to honor encoder padding.
-            &symphonia::core::formats::FormatOptions {
-               enable_gapless: true,
-               ..Default::default()
-            },
-            &Default::default(),
-         )?
-         .format;
+      let mut format = probe.probe(
+         &Default::default(),
+         mss,
+         Default::default(),
+         Default::default(),
+      )?;
 
       // Replaygain
       let replaygain = ReplayGain::from_formatreader(&mut format)?;
 
-      let track = format.default_track().context("No default track")?;
-      let track_id = track.id;
-
       // Set up buffers
       let buffers: [al::Buffer; 2] = [al::Buffer::new()?, al::Buffer::new()?];
 
-      let codec_params = &track.codec_params;
+      let track = format
+         .default_track(symphonia::core::formats::TrackType::Audio)
+         .context("No default track")?;
+      let track_id = track.id;
+
+      let binding = track.codec_params.clone().context("No codec parameters")?;
+      let mut codec_params = binding
+         .audio()
+         .context("Not audio codec parameters")?
+         .clone();
       let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
-      let decoder = codecs.make(codec_params, &Default::default())?;
 
-      let channels = track.codec_params.channels.context("no channels")?;
-      if !channels.contains(Channels::FRONT_LEFT) {
-         anyhow::bail!("no mono channel");
-      }
-      let stereo = channels.contains(Channels::FRONT_RIGHT);
+      let stereo = match codec_params.channels {
+         Some(Channels::Positioned(p)) => {
+            if !p.contains(Position::FRONT_LEFT) {
+               anyhow::bail!("no left channel");
+            }
+            p.contains(Position::FRONT_RIGHT)
+         }
+         _ => {
+            anyhow::bail!("no usable channels");
+         }
+      };
+      codec_params.with_channels(if stereo {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      } else {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      });
 
+      let decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
       Ok(Self {
          // We use the raw value so it doesn't get dropped here and double free the source
          source: ManuallyDrop::new(al::Source(source.0)),
@@ -769,52 +695,65 @@ impl StreamData {
 
    fn queue_next_buffer(&mut self) -> Result<bool> {
       let mut rewind = false;
-      let mut frames: Vec<Frame<f32>> = vec![];
-      loop {
-         // Get the next packet from the media format.
-         let packet = match self.format.next_packet() {
-            Ok(packet) => packet,
-            Err(e) => match e {
-               symphonia::core::errors::Error::IoError(e) => {
-                  if e.kind() == std::io::ErrorKind::UnexpectedEof
-                     && e.to_string() == "end of stream"
-                  {
-                     if !rewind && self.source.get_parameter_i32(AL_LOOPING) != 0 {
-                        rewind = true; // Only rewind once.
-                        self.format.seek(
-                           symphonia::core::formats::SeekMode::Coarse,
-                           symphonia::core::formats::SeekTo::Time {
-                              time: symphonia::core::units::Time::new(0, 0.),
-                              track_id: Some(self.track_id),
-                           },
-                        )?;
-                        continue;
-                     }
-                     break;
-                  }
-                  return Err(symphonia::core::errors::Error::IoError(e).into());
-               }
-               e => anyhow::bail!(e),
-            },
-         };
+      let mut samples: Vec<f32> = Default::default();
+      while let Some(packet) = self.format.next_packet().unwrap() {
+         // If the packet does not belong to the selected track, skip it.
+         if packet.track_id != self.track_id {
+            continue;
+         }
 
-         // If the packet does not belong to the selected track, skip over it.
-         if packet.track_id() == self.track_id {
-            // Decode the packet into audio samples.
-            let buffer = self.decoder.decode(&packet)?;
-            frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
-            if frames.len() > STREAMING_BUFFER_LENGTH {
-               break;
+         // Decode the packet into audio samples, ignoring any decode errors.
+         match self.decoder.decode(&packet) {
+            Ok(audio_buf) => {
+               // The decoded audio samples may now be accessed via the generic audio buffer
+               // returned by the decoder. You may match on the buffer to access a sample-format
+               // specific buffer, or use generic routines to copy out the audio samples in the
+               // desired sample format.
+               //
+               // In the example below, we will copy the all the samples into a vector in
+               // the f32 sample format in channel interleaved order.
+
+               // Ensure the vector is large enough to hold all the samples.
+               let l = samples.len();
+               samples.resize(l + audio_buf.samples_interleaved(), f32::MID);
+
+               // Copy the audio samples from the generic audio buffer to the vector in interleaved
+               // order. The sample format to convert to is inferred from the type of the Vec.
+               audio_buf.copy_to_slice_interleaved(&mut samples[l..]);
+               if samples.len() > STREAMING_BUFFER_LENGTH {
+                  break;
+               }
             }
+            Err(symphonia::core::errors::Error::DecodeError(e)) => {
+               anyhow::bail!(e);
+            }
+            Err(symphonia::core::errors::Error::IoError(e)) => {
+               if e.kind() == std::io::ErrorKind::UnexpectedEof && e.to_string() == "end of stream"
+               {
+                  if !rewind && self.source.get_parameter_i32(AL_LOOPING) != 0 {
+                     rewind = true; // Only rewind once.
+                     self.format.seek(
+                        symphonia::core::formats::SeekMode::Coarse,
+                        symphonia::core::formats::SeekTo::Time {
+                           time: symphonia::core::units::Time::ZERO,
+                           track_id: Some(self.track_id),
+                        },
+                     )?;
+                     continue;
+                  }
+                  break;
+               }
+               return Err(symphonia::core::errors::Error::IoError(e).into());
+            }
+            Err(_) => break,
          }
       }
 
-      if !frames.is_empty() {
-         let mut data: Vec<f32> = Frame::vec_to_data(frames, self.stereo);
+      if !samples.is_empty() {
          if let Some(replaygain) = self.replaygain {
-            replaygain.filter(&mut data);
+            replaygain.filter(&mut samples);
          }
-         self.buffers[self.active].data_f32(&data, self.stereo, self.sample_rate as ALsizei);
+         self.buffers[self.active].data_f32(&samples, self.stereo, self.sample_rate as ALsizei);
          self.source.queue_buffer(&self.buffers[self.active]);
          self.active = 1 - self.active;
          Ok(true)
@@ -2127,10 +2066,9 @@ impl System {
 }
 pub static SILENT: AtomicBool = AtomicBool::new(false);
 pub static AUDIO: LazyLock<System> = LazyLock::new(|| System::new().unwrap());
-pub static CODECS: LazyLock<symphonia::core::codecs::CodecRegistry> = LazyLock::new(|| {
-   let mut codec_registry = symphonia::core::codecs::CodecRegistry::new();
-   symphonia::default::register_enabled_codecs(&mut codec_registry);
-   codec_registry.register_all::<symphonia_adapter_libopus::OpusDecoder>();
+pub static CODECS: LazyLock<CodecRegistry> = LazyLock::new(|| {
+   let mut codec_registry = CodecRegistry::new();
+   codec_registry.register_audio_decoder::<symphonia_adapter_libopus::OpusDecoder>();
    codec_registry
 });
 
