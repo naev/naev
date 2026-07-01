@@ -7,7 +7,7 @@ return {
    desc           = _("The Sirius government has placed a bounty on a pirate operating in the southern reaches of Sirian space. We have been told that this pirate has been 'leading the flock astray', and is to be delivered alive for re-education."),
    escorts        = _("with a small band of pirates"),
    reward         = 1.2e6,
-   system         = system.get("Quai"),
+   system         = system.get("Lapis"),
    name           = _("Captain Freejoy"),
    payingfaction  = faction.get("Sirius"),
    reputation     = 100,
