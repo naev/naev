@@ -533,11 +533,9 @@ function control_funcs.generic_attack( si, noretarget )
       ai.pilot():taskClear()
       ai.pushtask( "flyback", true )
       return false
-   else
+   elseif not should_cooldown() then
       -- Cool down, if necessary.
-      if not should_cooldown() then
-         atklib.think( target, si, noretarget )
-      end
+      atklib.think( target, si, noretarget )
    end
 
    -- Handle distress
@@ -557,6 +555,7 @@ function control_funcs.loiter ()
          end
       end
    end
+   should_cooldown()
    return false
 end
 control_funcs.loiter_last = control_funcs.loiter
@@ -676,6 +675,10 @@ control_funcs.attack_forced_kill = control_funcs.attack_forced
 function control_funcs.flyback () return true end
 function control_funcs.hold () return true end
 control_funcs.scan = scans.control_funcs
+function control_funcs.follow_fleet ()
+   should_cooldown()
+   return false
+end
 function attacked_manual( attacker )
    local p = ai.pilot()
    -- Ignore hits from dead or stealthed pilots.
@@ -984,7 +987,9 @@ function control( dt )
       elseif l then -- Leader should be set already
          ai.pushtask("follow_fleet")
       else
-         idle()
+         if not should_cooldown() then
+            idle()
+         end
       end
       return -- Should have gotten a new task
    end
@@ -1297,15 +1302,23 @@ function gen_distress_attacked( attacker )
    mem.distressed = 1
 end
 
+local HOPLITE = ship.exists("Empire Pacifier Hoplite")
 -- Puts the pilot into cooldown mode if necessary.
 function should_cooldown()
    local p = ai.pilot()
+
+   -- TODO maybe make sure enemies aren't nearby as cooling down reduced absorb
+   -- by 50%...
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
    if mem.tickssincecooldown < 15 then
       return
    elseif atk.seekers_ammo() <= 0.0 then
+      mem.cooldown = true
+      p:setCooldown(true)
+      return true
+   elseif p:ship()==HOPLITE and p:shield() <= 0 then
       mem.cooldown = true
       p:setCooldown(true)
       return true
