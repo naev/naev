@@ -5,7 +5,7 @@ return {
    var            = "bounty_empire_baron",
    title          = _("The Baron's End"),
    desc           = _("Baron Sauterfeldt, the governor of the independent world Ulios in the Ingot system, is wanted for trial by the Empire under suspicion of masterminding theft from a Great House and trafficking in illegal Nebula artifacts. He is known to be in command of a rare military model of pre-Incident destroyer and is likely to be supported by larger vessels from the Ulios planetary defense fleet."),
-   escorts        = _("supported by the Ulios planetary defense fleet."),
+   escorts        = _("supported by the Ulios planetary defense fleet"),
    reward         = 2.5e6,
    system         = system.get("Ingot"),
    name           = _("Baron Sauterfeldt"),
