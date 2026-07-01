@@ -475,7 +475,7 @@ function choose( str )
    choose_func()
 end
 
-local enemy_dist = 5e3
+local ENEMY_DIST = 3e3
 --[[
 See if we should switch to playing combat music.
 --]]
@@ -486,7 +486,7 @@ local function should_combat ()
    end
 
    -- Enforce minimum play time
-   if music_played < 10 then
+   if music_played < 7 then
       return false
    end
 
@@ -508,7 +508,7 @@ local function should_combat ()
    end
 
    -- Nearby enemies targeting the player will also switch
-   local enemies = pp:getEnemies( enemy_dist )
+   local enemies = pp:getEnemies( ENEMY_DIST )
    for k,v in ipairs(enemies) do
       local tgt = v:target()
       if tgt and tgt:withPlayer() then
@@ -528,13 +528,20 @@ local function should_ambient ()
       return false
    end
 
+   -- Some autonav speed will force changing back to ambient
+   local an, speed = player.autonav()
+   if an and speed > 3 then
+      choose( "ambient" )
+      return true
+   end
+
    -- Enforce minimum play time
-   if music_played < 10 then
+   if music_played < 7 then
       return false
    end
 
    -- Enemies nearby
-   local enemies = pp:getEnemies( enemy_dist )
+   local enemies = pp:getEnemies( ENEMY_DIST )
    if #enemies > 0 then
       return false
    end
