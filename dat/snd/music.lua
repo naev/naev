@@ -318,7 +318,7 @@ function choose_table.ambient ()
       end
 
       -- Do not change songs too soon
-      if track.m:tell() < 10 then
+      if track.m:tell() < 7 then
          return false
       end
    end
@@ -540,15 +540,18 @@ local function should_ambient ()
       return false
    end
 
-   -- Enemies nearby
-   local enemies = pp:getEnemies( ENEMY_DIST )
-   if #enemies > 0 then
-      return false
-   end
-
    -- Still locked on
    if pp:lockon() > 0 then
       return false
+   end
+
+   -- Enemies nearby
+   local enemies = pp:getEnemies( ENEMY_DIST )
+   for k,v in ipairs(enemies) do
+      local tgt = v:target()
+      if tgt and tgt:withPlayer() then
+         return false
+      end
    end
 
    choose( "ambient" )
@@ -614,7 +617,7 @@ function update( dt )
    end
 
    -- See if we should spice up the music a bit
-   if not tk.isOpen() and (not curtrack or music_played > 10) then
+   if (not tk.isOpen()) and ((not curtrack) or music_played > 5) then
       if music_situation == "ambient" then
          if should_combat() then
             return
