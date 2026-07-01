@@ -41,7 +41,7 @@ use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, LazyLock, Weak};
 #[cfg(not(debug_assertions))]
 use std::sync::{Mutex, RwLock};
-use symphonia::core::audio::Position;
+use symphonia::core::audio::{Channels, Position};
 use symphonia::core::codecs::audio::AudioDecoder;
 use symphonia::core::codecs::registry::CodecRegistry;
 use symphonia::core::{audio::sample::Sample, formats::FormatReader, io::MediaSourceStream};
@@ -220,22 +220,31 @@ impl BufferData {
          .context("No default track")?;
       let track_id = track.id;
 
-      let binding = &track.codec_params.clone().context("No codec parameters")?;
-      let codec_params = &binding.audio().context("Not audio codec parameters")?;
+      let binding = track.codec_params.clone().context("No codec parameters")?;
+      let mut codec_params = binding
+         .audio()
+         .context("Not audio codec parameters")?
+         .clone();
       let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
 
-      let channels = codec_params.channels.clone().context("no channels")?;
-      if !channels
-         .get_canonical_index_for_positioned_channel(Position::FRONT_LEFT)
-         .is_some()
-      {
-         anyhow::bail!("no mono channel");
-      }
-      let stereo = channels
-         .get_canonical_index_for_positioned_channel(Position::FRONT_RIGHT)
-         .is_some();
+      let stereo = match codec_params.channels {
+         Some(Channels::Positioned(p)) => {
+            if !p.contains(Position::FRONT_LEFT) {
+               anyhow::bail!("no left channel");
+            }
+            p.contains(Position::FRONT_RIGHT)
+         }
+         _ => {
+            anyhow::bail!("no usable channels");
+         }
+      };
+      codec_params.with_channels(if stereo {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      } else {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      });
 
-      let mut decoder = codecs.make_audio_decoder(codec_params, &Default::default())?;
+      let mut decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
       let mut samples: Vec<f32> = Default::default();
       // Read and decode all packets from the format reader.
       while let Some(packet) = format.next_packet().unwrap() {
@@ -645,22 +654,31 @@ impl StreamData {
          .context("No default track")?;
       let track_id = track.id;
 
-      let binding = &track.codec_params.clone().context("No codec parameters")?;
-      let codec_params = &binding.audio().context("Not audio codec parameters")?;
+      let binding = track.codec_params.clone().context("No codec parameters")?;
+      let mut codec_params = binding
+         .audio()
+         .context("Not audio codec parameters")?
+         .clone();
       let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
 
-      let channels = codec_params.channels.clone().context("no channels")?;
-      if !channels
-         .get_canonical_index_for_positioned_channel(Position::FRONT_LEFT)
-         .is_some()
-      {
-         anyhow::bail!("no mono channel");
-      }
-      let stereo = channels
-         .get_canonical_index_for_positioned_channel(Position::FRONT_RIGHT)
-         .is_some();
+      let stereo = match codec_params.channels {
+         Some(Channels::Positioned(p)) => {
+            if !p.contains(Position::FRONT_LEFT) {
+               anyhow::bail!("no left channel");
+            }
+            p.contains(Position::FRONT_RIGHT)
+         }
+         _ => {
+            anyhow::bail!("no usable channels");
+         }
+      };
+      codec_params.with_channels(if stereo {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      } else {
+         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
+      });
 
-      let decoder = codecs.make_audio_decoder(codec_params, &Default::default())?;
+      let decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
       Ok(Self {
          // We use the raw value so it doesn't get dropped here and double free the source
          source: ManuallyDrop::new(al::Source(source.0)),
