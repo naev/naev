@@ -297,7 +297,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
             }),
             false => match physfs::blacklisted(&full) {
                true => None,
-               false => Some(vec![f.into()]),
+               false => Some(vec![f]),
             },
          }
       })

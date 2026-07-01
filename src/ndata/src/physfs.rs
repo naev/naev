@@ -180,7 +180,6 @@ fn pathref_to_cstring<P: AsRef<Path>>(filename: P) -> Result<CString> {
             .as_ref()
             .to_string_lossy()
             .replace('\\', "/")
-            .as_str()
             .as_bytes(),
       )?)
    } else {
