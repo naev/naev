@@ -108,7 +108,8 @@
 static AI_Profile *profiles  = NULL; /**< Array of AI_Profiles loaded. */
 static nlua_env   *equip_env = NULL; /**< Equipment enviornment. */
 static IntList     ai_qtquery;       /**< Quadtree query. */
-static double ai_dt = 0.; /**< Current update tick, useful in some cases. **/
+static double      ai_dt =
+   DOUBLE_TOL; /**< Current update tick, useful in some cases. **/
 
 /*
  * prototypes
