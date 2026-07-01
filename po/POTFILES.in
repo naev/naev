@@ -3137,6 +3137,7 @@ dat/events/poi_generator.lua
 dat/events/priority_bounty/bounties/bounty_dvaered_flf_1.lua
 dat/events/priority_bounty/bounties/bounty_dvaered_flf_2.lua
 dat/events/priority_bounty/bounties/bounty_dvaered_flf_3.lua
+dat/events/priority_bounty/bounties/bounty_empire_baron.lua
 dat/events/priority_bounty/bounties/bounty_empire_collective_1.lua
 dat/events/priority_bounty/bounties/bounty_empire_collective_2.lua
 dat/events/priority_bounty/bounties/bounty_empire_collective_3.lua

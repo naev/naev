@@ -4,7 +4,7 @@ local equipopt = require "equipopt"
 return {
    var            = "bounty_empire_baron",
    title          = _("The Baron's End"),
-   desc           = _("Baron Sauterfeldt, the governor of the independent world Ulios in the Ingot system, is wanted for trial by the Empire under suspicion of masterminding theft from a Great House and trafficking in illegal Nebula artifacts. He is known to be in command of a rare military model of pre-Incident destroyer and is likely to be supported by larger vessels from the Ulios planetary defense fleet."),
+   desc           = _("Baron Sauterfeldt, the governor of the independent world Ulios in the Ingot system, is wanted for trial by the Empire under suspicion of masterminding theft from a Great House and trafficking in illegal Nebula artefacts. He is known to be in command of a rare military model of pre-Incident destroyer and is likely to be supported by larger vessels from the Ulios planetary defense fleet."),
    escorts        = _("supported by the Ulios planetary defense fleet"),
    reward         = 2.5e6,
    system         = system.get("Ingot"),
@@ -26,7 +26,7 @@ return {
          type_range = {
             ["Bolt Turret"] = { min = 1 },
             ["Point Defence"] = { min = 1, max = 1 },
-            ["Launcher"] = { min = 1 },			
+            ["Launcher"] = { min = 1 },
          },
       } )
       p:outfitAddIntrinsic("Escape Pod")
@@ -41,14 +41,14 @@ return {
       m.comm_greet = saying
       local enemies = {p} --Main force of Ulios planetary defense fleet
       for k,s in ipairs(tmergei({
-         ship.get("Goddard"),
-         ship.get("Pacifier"),
-         ship.get("Pacifier"),
-         ship.get("Vigilance"),
-         ship.get("Vigilance")
-      },
-      bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.mercenary, 200 ))
-	) do --And some smaller than destroyer-size ships
+            ship.get("Goddard"),
+            ship.get("Pacifier"),
+            ship.get("Pacifier"),
+            ship.get("Vigilance"),
+            ship.get("Vigilance")
+         },
+         bhelp.choose_ships_from_points_and_capship( p:ship(), bhelp.ships.mercenary, 200 ))
+      ) do --And some smaller than destroyer-size ships
          local e = pilot.add( s, fct, params )
          e:memory().capturable = true
          e:setLeader(p)
