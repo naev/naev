@@ -2155,6 +2155,7 @@ pub static SILENT: AtomicBool = AtomicBool::new(false);
 pub static AUDIO: LazyLock<System> = LazyLock::new(|| System::new().unwrap());
 pub static CODECS: LazyLock<CodecRegistry> = LazyLock::new(|| {
    let mut codec_registry = CodecRegistry::new();
+   symphonia::default::register_enabled_codecs(&mut codec_registry);
    codec_registry.register_audio_decoder::<symphonia_adapter_libopus::OpusDecoder>();
    codec_registry
 });
