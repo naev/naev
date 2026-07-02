@@ -467,7 +467,7 @@ function spawn_bounty( params )
    else
       local fct = bounty.get_faction()
       for k,s in ipairs(b.targetship) do
-         local p = pilot.add( s, fct, params, b.targetname )
+         local p = pilot.add( s, fct, params )
          p:setHostile(true)
          local aimem = p:memory()
          aimem.defensive   = true -- Always try to be defensive
@@ -475,6 +475,7 @@ function spawn_bounty( params )
          aimem.capturable  = true
          if not target_ship then
             target_ship = p
+            p:rename( b.targetname )
             -- Make esaier to spot but not fight
             p:intrinsicSet( "ew_detected", 50 )
          else
