@@ -29,3 +29,4 @@ symphonia = { workspace = true }
 # no Rust support for Opus, so we use libopus through the adapter
 symphonia-adapter-libopus = { version = "0.3", default-features = false }
 tracing = { workspace = true}
+portable-atomic = { workspace = true }

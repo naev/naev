@@ -96,6 +96,7 @@ tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
 itertools = "0.15"
 tinyvec = "1"
+portable-atomic = { version = "1", default-features = false, features = ["float"] }
 
 # Plugin Manager dependencies
 # Serialization / XML
@@ -163,6 +164,7 @@ tracing = { workspace = true }
 tracing-mutex = { workspace = true }
 static_assertions = { workspace = true }
 itertools = { workspace = true }
+portable-atomic = { workspace = true }
 
 
 # Probably useful
