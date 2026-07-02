@@ -698,7 +698,7 @@ impl StreamData {
       })
    }
 
-   fn queue_next_buffer(&mut self, elapsed: Arc<Mutex<f32>>) -> Result<bool> {
+   fn queue_next_buffer(&mut self, elapsed: &AtomicF32) -> Result<bool> {
       let mut rewind = false;
       let mut samples: Vec<f32> = Default::default();
       while let Some(packet) = self.format.next_packet().unwrap() {
@@ -758,8 +758,10 @@ impl StreamData {
          if let Some(replaygain) = self.replaygain {
             replaygain.filter(&mut samples);
          }
-         *elapsed.lock().unwrap() +=
-            self.buffers[self.active].get_parameter_f32(AL_SEC_LENGTH_SOFT);
+         elapsed.fetch_add(
+            self.buffers[self.active].get_parameter_f32(AL_SEC_LENGTH_SOFT),
+            Ordering::Relaxed,
+         );
          self.buffers[self.active].data_f32(&samples, self.stereo, self.sample_rate as ALsizei);
          self.source.queue_buffer(&self.buffers[self.active]);
          self.active = 1 - self.active;
@@ -781,7 +783,7 @@ pub struct AudioStream {
    data: Option<StreamData>,
    stereo: bool,
    sample_rate: u32,
-   elapsed: Arc<Mutex<f32>>,
+   elapsed: Arc<AtomicF32>,
 }
 impl Drop for AudioStream {
    fn drop(&mut self) {
@@ -806,7 +808,7 @@ impl AudioStream {
 
    fn thread(
       finish: Arc<Mutex<bool>>,
-      elapsed: Arc<Mutex<f32>>,
+      elapsed: Arc<AtomicF32>,
       mut data: StreamData,
    ) -> Result<()> {
       loop {
@@ -822,7 +824,7 @@ impl AudioStream {
                let processed = data.source.get_parameter_i32(AL_BUFFERS_PROCESSED);
                if processed > 0 {
                   data.source.unqueue_buffer();
-                  data.queue_next_buffer(elapsed.clone())?;
+                  data.queue_next_buffer(&elapsed)?;
                }
             }
          }
@@ -839,7 +841,7 @@ impl AudioStream {
       let src = ndata::open(&path)?;
 
       let finish = Arc::new(Mutex::new(false));
-      let elapsed = Arc::new(Mutex::new(0.0));
+      let elapsed = Arc::new(AtomicF32::new(0.0));
       let mut source = Source::new(source);
       source.g_pitch = None;
 
@@ -882,12 +884,14 @@ impl AudioStream {
             )?;
          }
          for _ in 0..2 {
-            data.queue_next_buffer(self.elapsed.clone())?;
+            data.queue_next_buffer(&self.elapsed)?;
          }
          if let Some(seek) = seek {
-            *self.elapsed.lock().unwrap() = seek.as_secs_f64() as f32;
+            self
+               .elapsed
+               .store(seek.as_secs_f64() as f32, Ordering::Relaxed);
          } else {
-            *self.elapsed.lock().unwrap() = 0.0;
+            self.elapsed.store(0.0, Ordering::Relaxed);
          }
          *self.finish.lock().unwrap() = false;
          let finish = self.finish.clone();
@@ -1097,8 +1101,8 @@ impl Audio {
             AudioSeek::Samples => self.al_source().get_parameter_f32(AL_SAMPLE_OFFSET),
          },
          Self::LuaStream(stream) => {
-            let elapsed =
-               *stream.elapsed.lock().unwrap() + self.al_source().get_parameter_f32(AL_SEC_OFFSET);
+            let elapsed = stream.elapsed.load(Ordering::Relaxed)
+               + self.al_source().get_parameter_f32(AL_SEC_OFFSET);
             match unit {
                AudioSeek::Seconds => elapsed,
                AudioSeek::Samples => elapsed * stream.sample_rate as f32,
