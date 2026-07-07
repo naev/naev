@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2026-07-05 09:59+0000\n"
+"PO-Revision-Date: 2026-07-07 02:07+0000\n"
 "Last-Translator: Manrique <manrique@noreply.codeberg.org>\n"
 "Language-Team: Spanish <https://translate.codeberg.org/projects/naev/naev-0-"
 "13-x/es/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 2026.6.1\n"
 
 msgid "Active Plating"
-msgstr "Activo Revestimiento"
+msgstr "Revestimiento Activo"
 
 #, fuzzy
 msgid "<widget mainimg />"
@@ -59,9 +59,8 @@ msgstr ""
 "No tienes conocimiento de ningún lugar donde <%= o:name() %> está disponible "
 "para comprar."
 
-#, fuzzy
 msgid "Adaptive Camouflage Plating"
-msgstr "Sigilo Adaptativo Revestimiento"
+msgstr "Revestimiento de Sigilo Adaptativo"
 
 msgid "Adaptive Jump"
 msgstr "Salto Adaptativo"
@@ -30512,7 +30511,7 @@ msgid "Sidhe"
 msgstr "Sidhe"
 
 msgid "Silverstone"
-msgstr "Piedraplateada"
+msgstr "Piedra Plateada"
 
 msgid ""
 "Silverstone is one of the Soromid's greatest producers of ships and weapons. "
@@ -132166,9 +132165,8 @@ msgstr ""
 "Za'lek retira rápidamente el motor experimental y descarga con entusiasmo "
 "los datos de tu vuelo antes de pagarte tu cuota."
 
-#, fuzzy
 msgid "You travelled without the engine."
-msgstr "Has viajado sin el motor."
+msgstr "Viajaste sin motor."
 
 #. Breakdowns
 #. Player is teleported in another system
@@ -132256,13 +132254,11 @@ msgctxt "standings"
 msgid "#%c%+d%%#0   [ %s ]"
 msgstr "#%c%+d%%#0   [ %s ]"
 
-#, fuzzy
 msgid "Allies:"
-msgstr "Gliese"
+msgstr "Aliados:"
 
-#, fuzzy
 msgid "Enemies:"
-msgstr "Enemigos Dobles"
+msgstr "Enemigos:"
 
 msgid "{fct} {class}"
 msgstr ""
@@ -132334,6 +132330,9 @@ msgid ""
 "thorn is launched at the attacker dealing {damage} damage with {penetration}"
 "% penetration."
 msgstr ""
+"Reduce el daño recibido por {reflect}%. Cada {trigger} de daño recibido, se "
+"lanza una espina buscadora al atacante que inflige {damage} de daño con "
+"{penetration}% penetración."
 
 #. Doesn't actually prevent death!
 #. Accumulate damage and break off
@@ -132378,13 +132377,12 @@ msgstr ""
 "Sangre] y la nave recupera un 25% de la armadura mordida [Mandíbulas "
 "fuertes]."
 
-#, fuzzy
 msgid ""
 "On successful bite, #g{heal}%#0 of bitten armour is restored to the ship "
 "#p[Cannibal II]#0"
 msgstr ""
 "El daño por mordedura aumenta un 50%, y el 25% de blindaje mordido se "
-"restablece a tu nave."
+"restablece a tu nave"
 
 msgid ""
 "Makes the ship lunge at the target to take a bite out of it. Damage is based "
@@ -132404,9 +132402,10 @@ msgstr ""
 #. Can't turn off the bite.
 #. return turnoff( p, po )
 #. Core bonuses
-#, fuzzy
 msgid "Gain {speed_mod}% speed while stealthed."
-msgstr "Otorga una bonificación de velocidad de +40% cuando se está en sigilo."
+msgstr ""
+"Otorga una bonificación de velocidad de {speed_mod}% cuando se está en "
+"sigilo."
 
 #. Core bonuses
 msgid "Gain {aregen} {unit} armour regeneration while stealthed."
