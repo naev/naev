@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2026-07-14 15:08+0000\n"
+"PO-Revision-Date: 2026-07-15 16:08+0000\n"
 "Last-Translator: raazqaer <raazqaer@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev-0-"
 "13-x/fr/>\n"
@@ -2568,8 +2568,8 @@ msgid ""
 "Outpost in the Doeston system or Zabween Outpost in Draconis."
 msgstr ""
 "Cependant, l'Empire possède des avant-postes situés en plein territoire "
-"hostile, comme l'avant-poste de Cerberus dans le système de Doeston ou "
-"l'avant-poste de Zabween dans le système de Draconis."
+"hostile, comme l'Avant-Poste Cerbère dans le système de Doeston ou l'Avant-"
+"Poste Zabween dans le système de Draconis."
 
 msgid ""
 "The core systems, those in the vicinity of Gamma Polaris, are heavily "
@@ -16935,7 +16935,7 @@ msgid ""
 msgstr ""
 "Dans un univers froid et inhospitalier, la Maison Sirius a fondé cette "
 "colonie sur Adrian à l’époque où elle commençait tout juste à s’étendre vers "
-"Édredon. À l’époque, le système était sous le contrôle de l’Empire, mais "
+"Eiderdown. À l’époque, le système était sous le contrôle de l’Empire, mais "
 "grâce à cette position stratégique solidement établie, il n’a fallu que "
 "quelques cycles aux Siriens pour prendre le pouvoir. Aujourd’hui, Adrian "
 "continue d’exister, bien qu’elle ait rempli sa seule et unique mission."
@@ -18421,13 +18421,13 @@ msgid "Baba Yaga"
 msgstr "Baba Yaga"
 
 msgid "Babylon I"
-msgstr "Babylon I"
+msgstr "Babylone I"
 
 msgid "Babylon II"
-msgstr "Babylon II"
+msgstr "Babylone II"
 
 msgid "Babylon IIa"
-msgstr "Babylon IIa"
+msgstr "Babylone IIa"
 
 msgid "Baf I"
 msgstr "Baf I"
@@ -19103,13 +19103,13 @@ msgstr ""
 "ressemblent à des scientifiques, des chercheurs ou des ingénieurs."
 
 msgid "Capricorn II"
-msgstr "Capricorne II"
+msgstr "Capricornus II"
 
 msgid "Capricorn III"
-msgstr "Capricorne III"
+msgstr "Capricornus III"
 
 msgid "Capricorn IIIa"
-msgstr "Capricorne IIIa"
+msgstr "Capricornus IIIa"
 
 msgid "Castellan Epsilon"
 msgstr "Castellan Epsilon"
@@ -19280,7 +19280,7 @@ msgid "Cerberus IV"
 msgstr "Cerbère IV"
 
 msgid "Cerberus Outpost"
-msgstr "Avant-poste Cerbère"
+msgstr "Avant-Poste Cerbère"
 
 msgid ""
 "Aptly named after the guardian dog of the underworld, Cerberus Outpost was "
@@ -20787,10 +20787,10 @@ msgstr ""
 "lieu à des échanges et des rencontres particulièrement animés."
 
 msgid "Eiderdown I"
-msgstr "Édredon I"
+msgstr "Eiderdown I"
 
 msgid "Eiderdown III"
-msgstr "Édredon III"
+msgstr "Eiderdown III"
 
 msgid "Eiger"
 msgstr "Eiger"
@@ -22801,10 +22801,10 @@ msgstr ""
 "la Nébuleuse a envahi le système."
 
 msgid "Gutter I"
-msgstr "Gouttière I"
+msgstr "Gutter I"
 
 msgid "Gutter III"
-msgstr "Gouttière III"
+msgstr "Gutter III"
 
 msgid "Gyrios II"
 msgstr "Gyrios II"
@@ -28777,7 +28777,7 @@ msgid "Porro III"
 msgstr "Porro III"
 
 msgid "Possum II"
-msgstr "Opossum II"
+msgstr "Possum II"
 
 msgid "Praxis"
 msgstr "Praxis"
@@ -33979,7 +33979,7 @@ msgstr ""
 "Le Monastère Violon est l'un des avant-postes militaires les plus importants "
 "de la Maison Sirius. Le trafic étant particulièrement dense dans le système "
 "de Churchill, des mesures de sécurité renforcées s'imposent. Le monastère "
-"intervient également lorsque des troubles éclatent sur Édredon, notamment "
+"intervient également lorsque des troubles éclatent sur Eiderdown, notamment "
 "lorsque l'Essoreuse recommence à semer le chaos."
 
 msgid "Virginis Alpha"
@@ -34287,7 +34287,7 @@ msgstr ""
 "est un paradis sous contrôle : aucun touriste."
 
 msgid "Warden's End"
-msgstr ""
+msgstr "Angle Mort"
 
 msgid ""
 "Warden's End exists as a place for less-than-legal wares to be bought and "
@@ -34296,12 +34296,13 @@ msgid ""
 "merchant has gained - and lost - a fortune here. The station itself is made "
 "out of the welded-together ships of merchants who became destitute."
 msgstr ""
-"Warden's End est un lieu où l'on peut acheter et vendre des marchandises peu "
-"légales. Connu comme l'un des rares marchés véritablement libres, de "
-"nombreux marchands moins réputés de la galaxie viennent y vendre leurs "
-"marchandises. Nombreux sont les marchands qui ont gagné - et perdu - une "
-"fortune ici. La station elle-même est constituée des vaisseaux soudés des "
-"marchands qui se sont retrouvés dans la misère."
+"Angle Mort existe comme un lieu où les marchandises plus ou moins illégales "
+"peuvent être achetées et vendues. Considéré comme l'un des rares véritables "
+"marchés \"libres\", il attire de nombreux marchands peu recommandables venus "
+"de toute la galaxie pour écouler leurs produits. Nombreux sont les "
+"négociants qui y ont gagné ou perdu une fortune. La station elle-même est "
+"construite à partir des vaisseaux assemblés et soudés entre eux de marchands "
+"tombés dans la misère."
 
 msgid ""
 "Many of the denizens of Warden's End are richer and the bar caters to this "
@@ -34309,14 +34310,15 @@ msgid ""
 "check by the small armies that seem to surround every seedy merchant, "
 "keeping the place quieter and, tensely, stable."
 msgstr ""
-"La plupart des habitants de Warden's End sont plus riches et le bar s'y "
-"adapte en affichant une allure plus huppée. Les pirates habituellement "
-"turbulents sont tenus en échec par les petites armées qui semblent entourer "
-"chaque marchand miteux, ce qui rend l'endroit plus calme et, dans une "
-"certaine mesure, plus stable."
+"Une grande partie des habitants d'Angle Mort dispose d'une certaine "
+"richesse, et le bar reflète cette clientèle avec une apparence légèrement "
+"plus luxueuse. Les pirates habituellement turbulents y sont maintenus en "
+"respect par les petites armées privées qui semblent accompagner chaque "
+"marchand douteux, rendant l'endroit plus calme, mais dans une atmosphère de "
+"tension permanente."
 
 msgid "Warei"
-msgstr ""
+msgstr "Warei"
 
 msgid ""
 "Part of the reason why Warei's surface is permanently frozen is because the "
@@ -34325,12 +34327,12 @@ msgid ""
 "as there are vast amounts of raw minerals to be had under the crust. The "
 "Soromid have set up a parts and ship manufacturing complex here."
 msgstr ""
-"Si la surface de Warei est gelée en permanence, c'est en partie parce que le "
-"cœur de la planète est froid. Il s'agit d'une aberration fascinante par "
-"rapport au modèle planétaire standard mais, plus encore, cela offre de "
-"grandes possibilités économiques car il y a de grandes quantités de minéraux "
-"bruts à trouver sous la croûte. Les Soromides y ont installé un complexe de "
-"fabrication de pièces et de vaisseaux."
+"L'une des raisons pour lesquelles la surface de Warei reste gelée en "
+"permanence est que son noyau planétaire lui-même est froid. Cette anomalie "
+"fascinante par rapport aux modèles planétaires classiques représente "
+"également une formidable opportunité économique, car d'immenses quantités de "
+"minerais bruts se trouvent sous la croûte. Les Soromides y ont établi un "
+"complexe de fabrication de pièces détachées et de vaisseaux."
 
 msgid ""
 "Even the Soromid need protection from the cold climate, but they're "
@@ -34338,13 +34340,13 @@ msgid ""
 "visiting Warei complain about the cold - the ambient temperature in the bar "
 "is far from comfortable."
 msgstr ""
-"Même les Soromides ont besoin de se protéger du froid, mais ils y sont "
-"certainement plus résistants que les humains normaux. La plupart des "
-"commerçants non soromides qui visitent Warei se plaignent du froid - la "
-"température ambiante dans le bar est loin d'être confortable."
+"Même les Soromides ont besoin d'une protection contre un climat aussi froid, "
+"bien qu'ils y résistent naturellement bien mieux que les humains ordinaires. "
+"La plupart des marchands non-Soromides visitant Warei se plaignent du froid "
+": la température ambiante du bar est loin d'être confortable."
 
 msgid "Warnecke"
-msgstr ""
+msgstr "Warnecke"
 
 msgid ""
 "This gas giant is the epicentre of a gas mining operation for the Za'lek "
@@ -34352,12 +34354,12 @@ msgid ""
 "Za'lek's new ring drives. Obviously, scientists here also work obsessively "
 "on building new and better forms of engines for the house's vessels."
 msgstr ""
-"Cette géante gazeuse est l'épicentre d'une opération d'extraction de gaz "
-"pour la marine Za'lek et la marine marchande. Les gaz sont transformés en "
-"carburant pour les nouveaux anneaux de propulsion des Za'lek. Bien entendu, "
-"les scientifiques travaillent également de manière obsessionnelle à la "
-"construction de nouveaux et meilleurs moteurs pour les vaisseaux de la "
-"maison."
+"Cette géante gazeuse constitue le centre d'une exploitation de gaz destinée "
+"à l'armée et à la flotte commerciale Za'lek. Les gaz extraits ici sont "
+"raffinés afin de produire le carburant nécessaire aux nouveaux propulseurs "
+"annulaires des Za'lek. Naturellement, les scientifiques présents sur place "
+"travaillent également sans relâche à la conception de moteurs toujours plus "
+"performants pour les vaisseaux de la Maison."
 
 msgid ""
 "This bar smells faintly of the refining going on throughout the orbital "
@@ -34365,22 +34367,24 @@ msgid ""
 "very little to impress, and the bartender apologizes for the poor air "
 "scrubbers labouring in the corners."
 msgstr ""
-"Ce bar sent légèrement le raffinage en cours dans la station orbitale qui "
-"frôle la haute atmosphère de la géante gazeuse Warnecke. Il n'impressionne "
-"guère et le barman s'excuse pour les pauvres épurateurs d'air qui "
-"travaillent dans les coins."
+"Le bar porte une légère odeur provenant des installations de raffinage qui "
+"s'étendent dans toute la station orbitale, occupée à exploiter les couches "
+"supérieures de l'atmosphère de Warnecke. L'endroit n'a rien de "
+"particulièrement remarquable, et le barman s'excuse d'ailleurs pour les "
+"purificateurs d'air défaillants qui peinent à fonctionner dans les coins de "
+"la salle."
 
 msgid "Warnecke I"
-msgstr ""
+msgstr "Warnecke I"
 
 msgid "Warnecke II"
-msgstr ""
+msgstr "Warnecke II"
 
 msgid "Waterhole"
-msgstr ""
+msgstr "Aiguade"
 
 msgid "Waterhole's Moon"
-msgstr ""
+msgstr "Lune d'Aiguade"
 
 msgid ""
 "In the days of the Old Empire, Waterhole was the farthest outpost of the "
@@ -34393,6 +34397,16 @@ msgid ""
 "for traders venturing out of Imperial space, and the first of those coming "
 "in."
 msgstr ""
+"À l'époque de l'Ancien Empire, Aiguade était l'avant-poste Impérial le plus "
+"éloigné. Pour les Impériaux, il représentait la dernière frontière de la "
+"civilisation, le dernier bastion de sécurité avant de s'aventurer vers les "
+"systèmes inconnus au-delà. C'est pour cette raison que le système et la "
+"planète Aiguade tirent leur nom de cette fonction. Des siècles plus tard, "
+"Aiguade reste encore aux limites de l'espace Impérial. Bien qu'il ne soit "
+"plus aujourd'hui la frontière de la société civilisée, notamment depuis "
+"l'apparition des Maisons Za'lek et Goddard. Il demeure le dernier arrêt pour "
+"les marchands quittant l'espace Impérial, et le premier pour ceux qui y "
+"pénètrent."
 
 msgid ""
 "Waterhole's Moon wouldn't be Waterhole's Moon if its bar wasn't called The "
@@ -34401,11 +34415,11 @@ msgid ""
 "nothing creates a longing for home like being away from it for prolonged "
 "periods of time."
 msgstr ""
-"Waterhole's Moon ne serait pas Waterhole's Moon si son bar ne s'appelait pas "
-"The Waterhole. Bien que l'endroit soit ouvert aux visiteurs de toutes "
-"origines et de tous horizons, la majorité de la clientèle est impériale. Il "
-"semble que rien ne suscite plus la nostalgie du foyer que le fait d'en être "
-"éloigné pendant de longues périodes."
+"La lune d'Aiguade ne serait pas vraiment la lune d'Aiguade si son bar ne "
+"s'appelait pas L'Aiguade. Bien que l'établissement accueille des visiteurs "
+"de toutes origines et de tous horizons, la majorité de sa clientèle reste "
+"Impériale. Il semblerait que rien ne fasse davantage ressentir le mal du "
+"pays que d'en être éloigné pendant une longue période."
 
 msgid "Wayline"
 msgstr "Escale"
@@ -34418,9 +34432,9 @@ msgid ""
 msgstr ""
 "Escale est une boule de glace à peine habitée. Sa seule véritable raison "
 "d'être est de servir de point d'étape dans les régions australes. Les "
-"Dvaeriens l'utilisent également comme planète-prison, en raison de son "
+"Dvaériens l'utilisent également comme planète-prison, en raison de son "
 "éloignement. Peu de gens aiment s'y arrêter, et les visiteurs les plus "
-"fréquents restent les vaisseaux-prisons dvaériens."
+"fréquents restent les vaisseaux-prisons Dvaériens."
 
 msgid "Wayline m1"
 msgstr "Escale m1"
@@ -34429,7 +34443,7 @@ msgid "Wayline m2"
 msgstr "Escale m2"
 
 msgid "Wellen"
-msgstr ""
+msgstr "Wellen"
 
 msgid ""
 "Wellen is a good example of how the individual planetary management policy "
@@ -34440,12 +34454,13 @@ msgid ""
 "down, oftentimes half-finished, buildings."
 msgstr ""
 "Wellen est un bon exemple de la façon dont la politique de gestion "
-"planétaire individuelle de l'Empire peut mal tourner. Lancé comme un projet "
-"prestigieux, ce monde devait être une société parfaite, avec de bons "
-"logements et des équipements pour tous, beaucoup de verdure et aucune "
-"pollution. Cependant, les objectifs étaient trop ambitieux, les fonds trop "
-"limités et la direction insuffisante. Aujourd'hui, Wellen est un bidonville "
-"composé de bâtiments délabrés, souvent à moitié achevés."
+"planétaire de l'Empire peut mal tourner. À l'origine, il s'agissait d'un "
+"projet prestigieux : créer une société idéale, avec des logements et des "
+"infrastructures de qualité pour tous, une abondance d'espaces verts et une "
+"absence totale de pollution. Cependant, les objectifs étaient trop "
+"ambitieux, les financements insuffisants et la direction inadaptée. "
+"Aujourd'hui, Wellen n'est plus qu'un immense bidonville composé de bâtiments "
+"délabrés, souvent inachevés."
 
 msgid ""
 "The spaceport was the first facility to be constructed on the planet when it "
@@ -34461,17 +34476,17 @@ msgstr ""
 "entrant dans les zones urbaines que la misère commence à se faire sentir."
 
 msgid "Werlen"
-msgstr ""
+msgstr "Werlen"
 
 msgid ""
 "Werlen is a world devoted to the cultivation of the raw materials the "
 "Soromid use to fabricate their ships. The world is off-limits to casual "
 "traffic, and only those trusted by the Soromid are permitted access."
 msgstr ""
-"Werlen est un monde consacré à la culture des matières premières que les "
-"Soromid utilisent pour fabriquer leurs vaisseaux. Le monde est interdit au "
-"trafic occasionnel, et seules les personnes de confiance des Soromid ont le "
-"droit d'y accéder."
+"Werlen est un monde entièrement consacré à la culture des matières premières "
+"utilisées par les Soromides pour fabriquer leurs vaisseaux. La planète est "
+"interdite au trafic non autorisé, et seuls ceux bénéficiant de la confiance "
+"des Soromides peuvent y accéder."
 
 msgid ""
 "Virtually spotless despite being situated on a mining colony, this bar is an "
@@ -34479,31 +34494,35 @@ msgid ""
 "automated cleaning apparatus, the sides of which are covered in dire warning "
 "labels. The other patrons appear to be giving the machine a wide berth."
 msgstr ""
-"Pratiquement impeccable bien qu'il soit situé sur une colonie minière, ce "
-"bar est une anomalie. Sa propreté semble être due, en grande partie, à un "
-"appareil de nettoyage automatisé, dont les côtés sont couverts d'étiquettes "
-"d'avertissement. Les autres clients semblent ignorer la machine."
+"Étonnamment impeccable pour une colonie minière, ce bar constitue une "
+"véritable anomalie. Sa propreté semble due en grande partie à un appareil de "
+"nettoyage automatisé dont les parois sont couvertes d'avertissements "
+"alarmants. Les autres clients semblent d'ailleurs prendre soin de garder "
+"leurs distances avec la machine."
 
-#, fuzzy
 msgid "Westeros Nest"
-msgstr "Testeurs"
+msgstr "Le Nid de Westeros"
 
 msgid ""
 "Serving as an auxiliary trading platform for the nearby mining colony of "
 "Ahmed, Westeros Nest allows for merchants to not have to brave the "
 "atmosphere of the nearby planetoid, making bulk transfers far easier."
 msgstr ""
+"Servant de plateforme commerciale auxiliaire pour la colonie minière voisine "
+"d'Ahmed, le Nid de Westeros permet aux marchands d'éviter d'avoir à "
+"affronter l'atmosphère hostile du planétoïde voisin, facilitant ainsi "
+"grandement les transferts de marchandises en grande quantité."
 
 msgid ""
 "Being a station primarily for bulk merchants, the bar is posh, with "
 "comfortable seats looking out over big views of the planetary system."
 msgstr ""
-"Comme il s'agit d'une station destinée principalement aux marchands de "
-"produits en vrac, le bar est chic, avec des sièges confortables donnant sur "
-"de grandes vues du système planétaire."
+"Étant principalement destinée aux négociants en cargaisons massives, la "
+"station possède un bar particulièrement élégant, avec des sièges "
+"confortables offrant une vue imprenable sur le système planétaire."
 
 msgid "Wigheta"
-msgstr ""
+msgstr "Wigheta"
 
 msgid ""
 "While the main line of Soromid military ship production is located on "
@@ -34514,15 +34533,15 @@ msgid ""
 "produces a useful result once every few cycles, but without the work done "
 "here the Soromid bioship technology will never evolve."
 msgstr ""
-"Alors que la principale ligne de production de navires militaires soromides "
-"est située sur Heronus en Uridhrion, il y a une usine secondaire de "
-"production de navires sur Wigheta. Cependant, Wigheta ne produit pas les "
-"modèles habituels. Le monde sert plutôt de centre de recherche pour les "
-"vaisseaux biologiques, où de nouveaux modèles et de nouvelles méthodes de "
-"croissance sont inventés et testés. C'est un processus lent et coûteux, et "
-"Wigheta ne produit un résultat utile qu'une fois tous les quelques cycles, "
-"mais sans le travail effectué ici, la technologie des vaisseaux biologiques "
-"soromides n'évoluera jamais."
+"Bien que la principale chaîne de production des vaisseaux militaires "
+"Soromides soit située sur Heronus, dans le système Uridhrion, une usine "
+"secondaire existe ici, sur Wigheta. Cette planète ne produit toutefois pas "
+"les modèles classiques. Elle sert plutôt de centre de recherche consacré aux "
+"vaisseaux biologiques, où de nouvelles conceptions et méthodes de croissance "
+"sont inventées puis testées. Le processus est long et extrêmement coûteux. "
+"Wigheta ne produit un résultat réellement exploitable qu'une fois tous les "
+"quelques cycles, mais sans les travaux qui y sont menés, la technologie des "
+"vaisseaux biologiques Soromides ne pourrait jamais progresser."
 
 msgid ""
 "Wigheta's spaceport bar is located very close to the actual landing docks of "
@@ -34530,13 +34549,13 @@ msgid ""
 "precaution is being taken to prevent visitors from wandering into places "
 "they shouldn't."
 msgstr ""
-"Le bar du port spatial de Wigheta est situé tout près des quais "
-"d'atterrissage du port spatial. Les recherches menées sur Wigheta étant top "
-"secrètes, toutes les précautions sont prises pour éviter que les visiteurs "
-"ne s'aventurent dans des endroits où ils ne devraient pas se trouver."
+"Le bar du spatioport de Wigheta se trouve à proximité immédiate des quais "
+"d'atterrissage. Les recherches menées ici étant strictement confidentielles, "
+"toutes les précautions sont prises afin d'empêcher les visiteurs de pénétrer "
+"dans des zones qui ne leur sont pas destinées."
 
 msgid "Wikon"
-msgstr ""
+msgstr "Wikon"
 
 msgid ""
 "Wikon is a high-profile Sirian world, one of the driving economic forces in "
@@ -34544,6 +34563,12 @@ msgid ""
 "ideal Class M, it is both attractive for habitation and industry. Land "
 "values are rather high, and the population tends toward the Serra echelon."
 msgstr ""
+"Wikon est un monde Sirien de premier plan, l'un des principaux moteurs "
+"économiques du cœur de l'espace Sirius. Avec des caractéristiques "
+"planétaires proches des conditions idéales d'une planète de classe M, il est "
+"à la fois particulièrement attractif pour l'habitat et favorable au "
+"développement industriel. La valeur des terrains y est très élevée, et la "
+"population appartient majoritairement à l'échelon Serra."
 
 msgid ""
 "A better name for the spaceport bar would be \"spaceport lounge\". The "
@@ -34552,18 +34577,17 @@ msgid ""
 "dine here too, and the menu is far from modest. Of course all this comes "
 "with a considerable price tag, but the economic climate allows for that."
 msgstr ""
-"Un meilleur nom pour le bar du port spatial serait \"salon du port "
-"spatial\". L'établissement est luxueux, même selon les normes d'un port "
-"spatial, et offre diverses installations de loisirs en plus des "
-"installations habituelles. Il est également possible d'y dîner, et le menu "
-"est loin d'être modeste. Bien sûr, tout cela a un prix considérable, mais le "
-"climat économique le permet."
+"Le bar du spatioport mériterait davantage le nom de \"salon spatial\". "
+"L'établissement est luxueux même selon des standards qui dépassent largement "
+"ceux des simples bars de spatioport, offrant de nombreuses installations de "
+"loisirs en plus des services habituels. Il est également possible d'y dîner, "
+"avec un menu loin d'être modeste. Bien entendu, tout cela a un prix "
+"considérable, mais le contexte économique local permet largement de se "
+"l'offrir."
 
-#, fuzzy
 msgid "Wildwood Nest"
-msgstr "Soif de sang"
+msgstr "Le Nid de Bois Sauvage"
 
-#, fuzzy
 msgid ""
 "Almost anyone who seeks to travel from Empire to Soromid space, or the other "
 "way around, stops by Wildwood on the way. It's a long haul and Wildwood is "
@@ -34572,35 +34596,35 @@ msgid ""
 "military outpost. The ships stationed here provide a bare minimum of "
 "protection to the traffic that passes through the system."
 msgstr ""
-"Presque tous ceux qui cherchent à se rendre de l'espace Dvaered à l'espace "
-"Soromid, ou l'inverse, s'arrêtent à Wildwood en chemin. C'est un long trajet "
-"et Wildwood est l'un des rares fournisseurs de ravitaillement le long de la "
-"route. Bien qu'il s'agisse principalement d'une installation à vocation "
-"commerciale, Wildwood abrite également un petit avant-poste militaire "
-"soromidien. Les vaisseaux stationnés ici assurent un minimum de protection "
-"au trafic qui traverse le système."
+"Presque tous ceux qui voyagent entre l'espace Impérial et l'espace Soromide, "
+"dans un sens comme dans l'autre, font halte à Bois Sauvage. Le trajet est "
+"long, et Bois Sauvage est l'un des rares points de ravitaillement "
+"disponibles sur cette route. Bien qu'il s'agisse principalement d'une "
+"installation commerciale, la station abrite également un petit avant-poste "
+"militaire Soromide. Les vaisseaux qui y sont stationnés offrent une "
+"protection minimale au trafic traversant le système."
 
 msgid ""
 "Ships need fuel, so do their captains. Wildwood's spacedock bar, though "
 "modest, offers visiting captains a respectable choice in beverages and "
 "pastimes before they have to move on."
 msgstr ""
-"Les navires ont besoin de carburant, et leurs capitaines aussi. Le bar de "
-"Wildwood, bien que modeste, offre aux capitaines de passage un choix "
-"respectable de boissons et de loisirs avant qu'ils ne soient obligés de "
-"repartir."
+"Les vaisseaux ont besoin de carburant, tout comme leurs pilotes. Le bar du "
+"spatioport de Bois Sauvage, bien que modeste, propose aux capitaines de "
+"passage un choix respectable de boissons et de divertissements avant qu'ils "
+"ne reprennent leur route."
 
 msgid "Wolf I"
-msgstr ""
+msgstr "Loup I"
 
 msgid "Wolf II"
-msgstr ""
+msgstr "Loup II"
 
 msgid "Wolf VII"
-msgstr ""
+msgstr "Loup VII"
 
 msgid "Wonclock"
-msgstr ""
+msgstr "Wonclock"
 
 msgid ""
 "The Soromid have more or less stabilized as a genetically modified offshoot "
@@ -34610,6 +34634,13 @@ msgid ""
 "here, and being a researcher on Wonclok carries a lot of prestige with the "
 "Soromid."
 msgstr ""
+"Les Soromides se sont plus ou moins stabilisés en tant que branche "
+"génétiquement modifiée de l'humanité, mais cela ne signifie pas que la "
+"recherche sur les modifications génétiques est terminée. Wonclock abrite "
+"l'un des plus grands centres de recherche biologique de l'espace Soromide. "
+"De nombreux traitements génétiques vendus dans le commerce y ont été "
+"développés, et être chercheur sur Wonclock représente un immense prestige "
+"dans la société Soromide."
 
 msgid ""
 "Being such an important location for Soromid society, security on Wonclok is "
@@ -34617,45 +34648,51 @@ msgid ""
 "sure they're not here with a Za'lek agenda. The spaceport bar can only be "
 "accessed after pilots have passed all the security protocols."
 msgstr ""
+"En raison de son importance capitale pour la civilisation Soromide, la "
+"sécurité sur Wonclock est particulièrement stricte. Les visiteurs font "
+"notamment l'objet d'une vérification approfondie de leurs antécédents, afin "
+"de s'assurer qu'ils ne viennent pas avec des intentions liées aux Za'leks. "
+"Le bar du spatioport n'est accessible aux pilotes qu'après avoir franchi "
+"tous les protocoles de sécurité."
 
 msgid "Worgen"
-msgstr ""
+msgstr "Worgen"
 
 msgid "Wormhole Carrza"
-msgstr ""
+msgstr "Trou de ver Carrza"
 
 msgid "#bWormhole#0"
-msgstr ""
+msgstr "#bTrou de ver#0"
 
 msgid "Wormhole"
-msgstr ""
+msgstr "Trou de ver"
 
 msgid "Wormhole Ivella"
-msgstr ""
+msgstr "Trou de ver Ivella"
 
 msgid "Wormhole NGC-13674"
-msgstr ""
+msgstr "Trou de ver NGC-13674"
 
 msgid "Wormhole NGC-15670"
-msgstr ""
+msgstr "Trou de ver NGC-15670"
 
 msgid "Wormhole NGC-1931"
-msgstr ""
+msgstr "Trou de ver NGC-1931"
 
 msgid "Wormhole NGC-4087"
-msgstr ""
+msgstr "Trou de ver NGC-4087"
 
 msgid "Wormhole Rei"
-msgstr ""
+msgstr "Trou de ver Rei"
 
 msgid "Wormhole Surano"
-msgstr ""
+msgstr "Trou de ver Surano"
 
 msgid "Wormhole Zied"
-msgstr ""
+msgstr "Trou de ver Zied"
 
 msgid "Worscha"
-msgstr ""
+msgstr "Worscha"
 
 msgid ""
 "Worscha is a relatively wealthy Sirian world with a mild climate and "
@@ -34663,10 +34700,11 @@ msgid ""
 "25% longer than that of old Earth, which has led to the daily rhythm being a "
 "little slower than elsewhere."
 msgstr ""
-"Worscha est un monde sirien relativement riche, au climat doux et aux "
-"conditions planétaires agréables. Sa rotation est un peu longue, environ 25 "
-"% de plus que celle de l'ancienne Terre, ce qui a entraîné un rythme "
-"quotidien un peu plus lent qu'ailleurs."
+"Worscha est un monde Sirien relativement prospère, bénéficiant d'un climat "
+"doux et de conditions planétaires agréables. Sa rotation est toutefois un "
+"peu plus lente que la normale, avec des journées environ 25 % plus longues "
+"que celles de l'ancienne Terre. Le rythme quotidien de ses habitants s'en "
+"trouve naturellement ralenti."
 
 msgid ""
 "Many Sirian bars have some sort of layout separation for the various "
@@ -34674,13 +34712,14 @@ msgid ""
 "sometimes leads to Sirian traders getting confused, as they are used to "
 "placing themselves in the correct section of the bar."
 msgstr ""
-"De nombreux bars siriens disposent d'une sorte de séparation entre les "
-"différents échelons, mais le bar de Worscha n'a rien de tel. Les commerçants "
-"siriens sont donc parfois désorientés, car ils ont l'habitude de se placer "
-"dans la bonne section du bar."
+"De nombreux bars Siriens possèdent une séparation physique ou symbolique "
+"entre les différents échelons sociaux, mais celui de Worscha ne dispose "
+"d'aucun aménagement de ce type. Cela entraîne parfois une certaine confusion "
+"chez les marchands Siriens, habitués à se placer dans la section "
+"correspondant à leur rang."
 
 msgid "WSTHVN D-1"
-msgstr ""
+msgstr "WSTHVN D-1"
 
 msgid ""
 "Although scanners pick up traces of rare minerals, an impressive layer of "
@@ -34690,9 +34729,16 @@ msgid ""
 "terraforming potential, but they seem to be more of a pipe dream than "
 "anything that can be made into reality."
 msgstr ""
+"Bien que les scanners détectent des traces de minerais rares, une "
+"impressionnante couche de régolithe instable, des impacts constants de micro-"
+"météorites et une localisation peu avantageuse ont jusqu'à présent empêché "
+"toute exploitation de ces ressources. Plusieurs projets visant à exploiter "
+"le potentiel minier et à terraformer la planète ont été proposés, mais ils "
+"semblent davantage relever du rêve irréalisable que d'un projet pouvant "
+"réellement voir le jour."
 
 msgid "WSTHVN P-1"
-msgstr ""
+msgstr "WSTHVN P-1"
 
 msgid ""
 "Although designated as an emergency source of water by House Za'lek, WSTHVN "
@@ -34706,24 +34752,41 @@ msgid ""
 "is mainly visited by individuals coming from Thaddius Terminals, although it "
 "is not entirely clear what they are doing here."
 msgstr ""
+"Bien que désignée par la Maison Za'lek comme une réserve d'eau d'urgence, "
+"WSTHVN P-1 n'a encore jamais eu à remplir cette fonction. L'origine de cette "
+"planète demeure incertaine, mais elle semble constituée d'un petit noyau "
+"extrêmement dense recouvert de plusieurs centaines de kilomètres de glace. "
+"Les scientifiques Za'leks supposent que cette glace est d'origine "
+"extraterrestre, probablement accumulée au fil du temps à partir d'astéroïdes "
+"errants ou d'un phénomène cosmique inhabituel.\n"
+"\n"
+"À l'exception de quelques doctorants ou chercheurs postdoctoraux venus y "
+"mener des travaux, la planète est principalement visitée par des individus "
+"en provenance du Terminal Thaddius. La raison exacte de leur présence reste "
+"toutefois difficile à déterminer."
 
 msgid "Wunomi"
-msgstr ""
+msgstr "Wunomi"
 
 msgid "Wunomi I"
-msgstr ""
+msgstr "Wunomi I"
 
 msgid "Wunomi I-a"
-msgstr ""
+msgstr "Wunomi I-a"
 
 msgid ""
 "A small and dusty moon with no discernible atmosphere. There is a small "
 "mining facility used to obtain materials for construction and operations on "
 "Wunomi's World, but no resources useful enough to export to other systems."
 msgstr ""
+"Petite lune poussiéreuse dépourvue d'atmosphère détectable. Elle abrite une "
+"modeste exploitation minière destinée à fournir les matériaux nécessaires à "
+"la construction et au fonctionnement de Monde de Wunomi, mais aucune "
+"ressource suffisamment intéressante pour être exportée vers d'autres "
+"systèmes."
 
 msgid "Wunomi's Moon"
-msgstr ""
+msgstr "Lune de Wunomi"
 
 msgid ""
 "Wunomi's Moon was originally a large asteroid that was adjusted and pushed "
@@ -34733,9 +34796,18 @@ msgid ""
 "the mass to extend the period of orbit. Like Wunomi's World, Wunomi's Moon "
 "is strictly controlled, with permission needed for most activities."
 msgstr ""
+"La Lune de Wunomi était à l'origine un vaste astéroïde qui fut déplacé puis "
+"placé en orbite autour de Monde de Wunomi afin de donner à la planète une "
+"apparence plus proche de celle de l'ancienne Terre. Techniquement, son "
+"orbite devrait l'amener à entrer en collision avec Monde de Wunomi dans "
+"environ 500 cycles. Cependant, le gouvernement local prévoit d'effectuer des "
+"modifications majeures afin d'en réduire la masse et ainsi prolonger sa "
+"période orbitale. Comme le Monde de Wunomi, la Lune de Wunomi est soumise à "
+"un contrôle strict, et la plupart des activités nécessitent une autorisation "
+"préalable."
 
 msgid "Wunomi's World"
-msgstr ""
+msgstr "Monde de Wunomi"
 
 msgid ""
 "Wunomi's World is an old world that was colonized early for its similarity "
@@ -34754,6 +34826,25 @@ msgid ""
 "transpiration of bulk goods and encourages the sale of ships. For this "
 "reason, it is easy to find many supplies tailored for traders."
 msgstr ""
+"Le Monde de Wunomi est un monde ancien, colonisé très tôt en raison de sa "
+"grande ressemblance avec l'ancienne Terre aujourd'hui disparue. Cependant, "
+"contrairement à celle-ci, son gouverneur souhaitait préserver la planète "
+"dans un état moins développé, en conservant une grande partie de sa faune "
+"naturelle et de ses paysages. Le développement industriel fut donc déplacé "
+"vers l'espace, où un immense anneau géostationnaire fut construit : l'Anneau "
+"de Wunomi. Seules quelques villes subsistent à la surface, principalement "
+"consacrées à la gestion du tourisme. La majorité de la population vit "
+"désormais dans l'anneau, qui s'est légèrement densifié depuis l'Incident. "
+"Malgré cela, Monde de Wunomi demeure un important centre commercial "
+"régional. Le travail y reste abondant grâce à un système de contrôle "
+"démographique relativement strict, conçu pour préserver le caractère unique "
+"de la planète et, par extension, celui de son anneau.\n"
+"La majorité de la population et des infrastructures urbaines se trouvant "
+"dans l'anneau plutôt qu'à la surface, celui-ci ressemble davantage à une "
+"station spatiale qu'à une planète. La faible gravité facilite le transport "
+"des marchandises en grande quantité et favorise le commerce de vaisseaux. Il "
+"est donc facile d'y trouver de nombreux équipements spécialement adaptés aux "
+"besoins des marchands."
 
 msgid ""
 "The bar has a unique design where you enter through small vertical glass "
@@ -34764,9 +34855,18 @@ msgid ""
 "floating at sea. Although confusing first, when you get used to it, you "
 "begin to admire the architectural design and thought that went into bar."
 msgstr ""
+"Le bar possède une architecture unique : on y entre depuis le couloir "
+"principal de l'Anneau grâce à de petites plateformes d'ascenseurs verticaux "
+"en verre. La salle elle-même est conçue comme un dôme de verre concave "
+"orienté vers la planète, offrant une vue spectaculaire sur la splendeur du "
+"Monde de Wunomi. Des plateformes portant tables et canapés sont suspendues "
+"dans l'espace intérieur, donnant presque l'impression de bateaux flottant "
+"sur une mer. L'aménagement peut sembler déroutant au premier abord, mais une "
+"fois habitué, on ne peut qu'admirer la conception architecturale et "
+"l'attention portée aux détails."
 
 msgid "Wyrmwood"
-msgstr ""
+msgstr "Wyrmwood"
 
 msgid ""
 "Wyrmwood is extremely well camouflaged in the asteroid field of Octantis, "
@@ -34780,6 +34880,19 @@ msgid ""
 "locals are, in general, somewhat oblivious to the surrounding galaxy and are "
 "mainly focused on happenings at Wyrmwood."
 msgstr ""
+"Wyrmwood est extrêmement bien camouflée au sein du champ d'astéroïdes "
+"d'Octantis, raison pour laquelle elle n'a été colonisée que relativement "
+"récemment. Entourée et constamment bombardée par des astéroïdes, on pourrait "
+"penser qu'une planète comme Wyrmwood serait incapable d'abriter et de "
+"développer la vie. Pourtant, son écosystème s'est remarquablement adapté, "
+"reposant sur les nutriments et les ressources libérés par les impacts "
+"incessants à sa surface. Les Soromides se sont eux aussi rapidement adaptés "
+"à cet environnement, et une communauté scientifique riche et prospère s'est "
+"développée principalement dans les profondeurs des océans, afin de réduire "
+"les risques liés aux impacts directs d'astéroïdes. Les habitants locaux sont "
+"généralement assez peu concernés par les événements de la galaxie "
+"environnante et concentrent surtout leur attention sur ce qui se passe sur "
+"Wyrmwood."
 
 msgid ""
 "The bar is extremely dimly lit as the locals have been genetically modified "
@@ -34788,15 +34901,21 @@ msgid ""
 "atmosphere is very quiet which contrasts starkly with the occasional boom of "
 "an asteroid impact on the surface of the planet."
 msgstr ""
+"Le bar est très sombre, les habitants ayant été génétiquement modifiés afin "
+"de posséder une vision nocturne particulièrement sensible. Les visiteurs "
+"moins adaptés peuvent toutefois emprunter des globes lumineux flottants. "
+"L'ambiance y est très calme, ce qui contraste fortement avec les explosions "
+"occasionnelles provoquées par les impacts d'astéroïdes à la surface de la "
+"planète."
 
 msgid "Xavier"
-msgstr ""
+msgstr "Xavier"
 
 msgid "XO-4"
-msgstr ""
+msgstr "XO-4"
 
 msgid "Yak Nest"
-msgstr ""
+msgstr "Le Nid Yack"
 
 msgid ""
 "This military station was originally supposed to be built in the "
@@ -34806,22 +34925,22 @@ msgid ""
 "leading through a jump point."
 msgstr ""
 "Cette station militaire devait à l'origine être construite dans le système "
-"voisin de Bonanza, mais l'armée soromidienne a choisi de changer "
-"d'emplacement pour des raisons logistiques. Hasselt compte plusieurs "
-"planètes habitées, et les routes d'approvisionnement dans le système sont "
-"toujours plus faciles à maintenir que celles qui passent par un point de "
-"saut."
+"voisin de Bonanza, mais l'armée Soromide a choisi d'en modifier "
+"l'emplacement pour des raisons logistiques. Hasselt possède plusieurs "
+"planètes habitées, et les routes d'approvisionnement à l'intérieur d'un même "
+"système sont toujours plus faciles à maintenir que celles nécessitant de "
+"franchir un point de saut."
 
 msgid ""
 "Most of the people in this bar are Soromid soldiers. There are few officers, "
 "since they have their own facility elsewhere on the station."
 msgstr ""
-"La plupart des personnes présentes dans ce bar sont des soldats soromides. "
-"Il y a peu d'officiers, car ils ont leurs propres installations ailleurs sur "
-"la station."
+"La plupart des clients de ce bar sont des soldats Soromides. Les officiers y "
+"sont rares, car ils disposent de leur propre établissement ailleurs dans la "
+"station."
 
 msgid "Yaroslav Farming Station"
-msgstr ""
+msgstr "Station Agricole de Yaroslav"
 
 msgid ""
 "This farming facility provides the nearby systems with food. Due to the "
@@ -34831,6 +34950,14 @@ msgid ""
 "Station is so successful at production, that although some of the produce is "
 "shipped to the nearby world of Boowoy, the majority is traded out of system."
 msgstr ""
+"Cette installation agricole fournit de la nourriture aux systèmes voisins. "
+"En raison de l'intense activité des tempêtes de plasma dans ce système, il "
+"est généralement plus efficace de produire des végétaux en masse dans des "
+"stations spécialement isolées, dotées d'un environnement entièrement "
+"contrôlé, plutôt que de risquer de faibles rendements sur des planètes. La "
+"Station Agricole de Yaroslav connaît un tel succès que, bien qu'une partie "
+"de sa production soit envoyée vers le monde voisin de Boowoy, la majorité "
+"est exportée hors du système."
 
 msgid ""
 "Most visitors to this spaceport bar are here for the same reason. They want "
@@ -34838,17 +34965,17 @@ msgid ""
 "Some merchants time their purchase right after one of the harvests that "
 "happen once every dozen decaperiods or so to get the lowest prices possible."
 msgstr ""
-"La plupart des visiteurs du bar du port spatial sont là pour la même raison. "
-"Ils veulent acheter de la nourriture pour la revendre à une planète qui "
-"l'importe à profit. Certains marchands effectuent leurs achats juste après "
-"l'une des récoltes qui ont lieu toutes les douze décapériodes environ, afin "
-"d'obtenir les prix les plus bas possibles."
+"La plupart des visiteurs du bar du spatioport sont ici pour la même raison : "
+"acheter de la nourriture afin de la revendre avec profit sur des planètes "
+"importatrices. Certains marchands attendent même les périodes suivant "
+"immédiatement les récoltes, qui ont lieu environ tous les douze "
+"décapériodes, afin d'obtenir les prix les plus bas possibles."
 
 msgid "Yetmer-O'rez"
-msgstr ""
+msgstr "Yetmer-O'rez"
 
 msgid "Yrina"
-msgstr ""
+msgstr "Yrina"
 
 msgid ""
 "Yrina is a resource world that's being strip-mined by the Sirii. The climate "
@@ -34858,13 +34985,14 @@ msgid ""
 "some of the more exotic elements are exported to other parts of Sirius "
 "space, and beyond."
 msgstr ""
-"Yrina est une planète riche en ressources qui fait l'objet d'une "
-"exploitation à ciel ouvert par les Siriens. Le climat y est rude et la quasi-"
-"totalité de la surface de la planète est gelée, mais cela s'avère parfois "
-"avantageux, car les substances qui seraient normalement à l'état liquide se "
-"présentent ici sous forme solide, ce qui facilite leur extraction. Yrina "
-"approvisionne principalement Aesir, mais certains des matériaux les plus "
-"rares sont exportés vers d'autres régions de l'espace de Sirius, et au-delà."
+"Yrina est un monde de ressources exploité par les Siriens au moyen d'une "
+"extraction minière intensive. Son climat est extrêmement rude et presque "
+"toute sa surface est gelée. Dans certains cas, cette caractéristique est "
+"toutefois un avantage : des substances qui seraient normalement liquides y "
+"sont solidifiées, ce qui facilite grandement leur extraction. Yrina "
+"approvisionne principalement Aesir, mais certains éléments plus rares ou "
+"plus exotiques sont exportés vers d'autres régions de l'espace Sirius, voire "
+"au-delà."
 
 msgid ""
 "The bar has various displays that provide the patrons with details about the "
@@ -34873,14 +35001,15 @@ msgid ""
 "least hand it to the Sirius that they take an informative approach to their "
 "operation here."
 msgstr ""
-"Le bar dispose de plusieurs écrans qui fournissent aux clients des détails "
-"sur le processus d'exploitation minière et sur l'état actuel de l'opération "
-"dans différents domaines. Bien que la plupart des visiteurs n'y voient qu'un "
-"intérêt passager, il faut reconnaître à Sirius qu'ils ont une approche "
-"informative de leurs activités."
+"Le bar possède différents écrans fournissant aux clients des informations "
+"détaillées sur les procédés miniers ainsi que sur l'état actuel des "
+"opérations dans les différentes zones d'exploitation. Pour la plupart des "
+"visiteurs, cela ne représente qu'une curiosité passagère, mais il faut "
+"reconnaître aux Siriens qu'ils adoptent une approche particulièrement "
+"transparente et pédagogique de leurs activités."
 
 msgid "Zaals"
-msgstr ""
+msgstr "Zaals"
 
 msgid ""
 "A bit of an odd planet, Zaals has a rotational period almost (but not quite) "
@@ -34891,13 +35020,14 @@ msgid ""
 "current settlement is predicted to stay in the light for another forty "
 "cycles."
 msgstr ""
-"Planète un peu particulière, Zaals a une période de rotation presque "
-"identique (mais pas tout à fait) à sa période orbitale. Sur Zaals, une "
-"journée dure de très nombreux cycles. L'habitation soromidienne a été "
-"construite du côté du soleil, là où les conditions sont encore acceptables. "
-"Il s'agit en fait de la deuxième itération de la colonie, la première ayant "
-"commencé à glisser du côté obscur. La colonie actuelle devrait rester dans "
-"la lumière pendant encore quarante cycles."
+"Zaals est une planète pour le moins étrange : sa période de rotation est "
+"presque (mais pas totalement) identique à sa période orbitale. Une journée "
+"sur Zaals dure donc de nombreux cycles. L'habitat Soromide a été construit "
+"sur la face tournée vers le soleil, là où les conditions restent "
+"acceptables. Il s'agit en réalité de la seconde version de la colonie, la "
+"première ayant progressivement basculé dans la face plongée dans "
+"l'obscurité. La colonie actuelle devrait rester exposée à la lumière pendant "
+"encore environ quarante cycles."
 
 msgid ""
 "This spaceport bar offers excursions to the old, abandoned spaceport that's "
@@ -34905,13 +35035,13 @@ msgid ""
 "quite thrilling to roam around such a large complex that has been completely "
 "left to the elements."
 msgstr ""
-"Ce bar du port spatial propose des excursions dans le vieux port spatial "
-"abandonné qui se trouve dans la zone crépusculaire de la planète. Pour "
-"certains aventuriers, il peut être très excitant de se promener dans un "
-"complexe aussi vaste qui a été complètement abandonné aux éléments."
+"Le bar du spatioport propose des excursions vers l'ancien spatioport "
+"abandonné, situé dans la zone crépusculaire de la planète. Pour les plus "
+"aventureux, explorer un complexe aussi vaste entièrement abandonné aux "
+"éléments peut s'avérer une expérience particulièrement excitante."
 
 msgid "Zabween Outpost"
-msgstr ""
+msgstr "Avant-Poste Zabween"
 
 msgid ""
 "Zabween outpost is an old station. It was first created as an outpost to "
@@ -34921,6 +35051,13 @@ msgid ""
 "Soromid border. It keeps a museum with all sorts of ships and weapons that "
 "were used in the final fight against Haven."
 msgstr ""
+"L'avant-poste Zabween est une ancienne station. Il fut initialement "
+"construit pour lutter contre la piraterie, mais après la destruction du "
+"Havre, il a progressivement retrouvé un rôle plus traditionnel. Aujourd'hui, "
+"il fonctionne principalement comme une station commerciale, échangeant de "
+"nombreuses marchandises tout en surveillant la frontière soromide. Il abrite "
+"également un musée présentant toutes sortes de vaisseaux et d'armes utilisés "
+"lors du combat final contre Le Havre."
 
 msgid ""
 "The bar walls are decorated with pictures of Empire soldiers who have fallen "
@@ -34929,15 +35066,15 @@ msgid ""
 "their lives protecting the Empire's ideals. They are working on another "
 "addition to be able to fit more pictures."
 msgstr ""
-"Les murs du bar sont décorés de photos de soldats de l'Empire tombés dans la "
-"lutte contre Haven et la piraterie en général. L'Empire a pris l'habitude "
-"d'afficher les photos de ceux qui sont tombés au combat, en hommage à ceux "
-"qui ont donné leur vie pour protéger les idéaux de l'Empire. L'Empire "
-"travaille actuellement à l'ajout d'un nouvel élément afin de pouvoir "
-"afficher davantage de photos."
+"Les murs du bar sont décorés de portraits de soldats Impériaux tombés au "
+"combat contre Le Havre et contre la piraterie en général. Il est devenu une "
+"tradition Impériale d'afficher les portraits des disparus afin d'honorer "
+"ceux qui ont donné leur vie pour défendre les idéaux de l'Empire. Une "
+"nouvelle extension est actuellement en préparation afin de pouvoir "
+"accueillir davantage de portraits."
 
 msgid "Zalebus"
-msgstr ""
+msgstr "Zalébus"
 
 msgid ""
 "Zalebus is a nice planet that was terraformed by the Soromid shortly before "
@@ -34945,41 +35082,42 @@ msgid ""
 "one of the fastest in human history. Now, there are billions of people "
 "living here."
 msgstr ""
-"Zalebus est une belle planète qui a été terraformée par les Soromid peu "
-"avant l'Incident. C'était déjà une planète de classe M, et le processus a "
-"été l'un des plus rapides de l'histoire de l'humanité. Aujourd'hui, des "
-"milliards de personnes vivent ici."
+"Zalébus est une planète agréable qui fut terraformée par les Soromides peu "
+"avant l'Incident. Elle se trouvait déjà à la limite de la classe M "
+"habitable, ce qui fit de sa transformation l'une des opérations les plus "
+"rapides de l'histoire humaine. Aujourd'hui, plusieurs milliards d'individus "
+"y vivent."
 
 msgid ""
 "The age demographic of Zalebus tends toward younger citizens. As a result, "
 "the spaceport bar is often full of youngsters preparing for a trip into "
 "space or just returning from one."
 msgstr ""
-"La population de Zalebus est plutôt jeune. Par conséquent, le bar du port "
-"spatial est souvent rempli de jeunes qui se préparent à un voyage dans "
-"l'espace ou qui en reviennent."
+"La population de Zalébus est majoritairement jeune. En conséquence, le bar "
+"du spatioport est souvent rempli de jeunes gens se préparant à partir dans "
+"l'espace ou revenant tout juste d'un voyage."
 
 msgid "Za'lek II"
-msgstr ""
+msgstr "Za'lek II"
 
 msgid "Za'lek IV"
-msgstr ""
+msgstr "Za'lek IV"
 
 msgid "Zaren"
-msgstr ""
+msgstr "Zaren"
 
 msgid ""
 "Zaren is a world where rare and valuable gasses are mined, to be used as "
 "propellant by House Dvaered. It is one of the harshest planets in Dvaered "
 "space, so convicts are the ones usually used to get the gasses necessary."
 msgstr ""
-"Zaren est un monde où l'on extrait des gaz rares et précieux, utilisés comme "
-"propulseurs par la Maison Dvaered. C'est l'une des planètes les plus dures "
-"de l'espace Dvaered, c'est pourquoi les condamnés sont généralement utilisés "
-"pour obtenir les gaz nécessaires."
+"Zaren est un monde où sont extraits des gaz rares et précieux destinés à "
+"servir de propergol aux vaisseaux de la Maison Dvaered. C'est l'une des "
+"planètes les plus hostiles de l'espace Dvaered, et ce sont donc généralement "
+"des condamnés qui sont employés pour récupérer les gaz nécessaires."
 
 msgid "Zazarin"
-msgstr ""
+msgstr "Zazarin"
 
 msgid ""
 "Zazarin was a human habitable world to begin with, but it didn't get settled "
@@ -34990,13 +35128,14 @@ msgid ""
 "amount of buildable real estate. That real estate is now being occupied by "
 "heavy industry."
 msgstr ""
-"Zazarin était un monde habitable par les humains à l'origine, mais il n'a "
-"été colonisé que relativement récemment. La raison en est simple : c'est un "
-"monde laid. Il n'y a rien qui le rende attrayant. Sa surface est "
-"essentiellement plate, son ciel est jauni par la poussière, son air est "
-"vicié et son sol est dépourvu de tout matériau de valeur. La seule chose "
-"qu'elle a à offrir est une grande quantité de biens immobiliers "
-"constructibles. Ces terrains sont aujourd'hui occupés par l'industrie lourde."
+"Zazarin était à l'origine une planète habitable pour l'humanité, mais elle "
+"n'a été colonisée que relativement récemment. La raison en est simple : "
+"c'est un monde sans attrait. Rien sur cette planète ne la rend "
+"particulièrement séduisante. Sa surface est principalement plate, son ciel "
+"est jaune à cause des poussières en suspension, son atmosphère est "
+"étouffante et son sol ne contient aucune ressource de valeur. La seule chose "
+"qu'elle offre est une immense quantité de terrains constructibles. Ces "
+"espaces sont aujourd'hui occupés par des industries lourdes."
 
 msgid ""
 "Reflecting the poor state of planet Zazarin, this spaceport bar is a sad "
@@ -35004,14 +35143,14 @@ msgid ""
 "bare minimum of maintenance, which has left tables rickety and chairs "
 "broken. It's a miracle the basic facilities are mostly in working order."
 msgstr ""
-"Reflétant l'état déplorable de la planète Zazarin, ce bar du port spatial "
-"est une triste affaire. Le personnel n'est manifestement pas assez motivé "
-"pour faire autre chose que le strict minimum en matière d'entretien, ce qui "
-"fait que les tables sont branlantes et les chaises cassées. C'est un miracle "
-"que les équipements de base soient encore en état de marche."
+"À l'image du piètre état général de Zazarin, le bar du spatioport est un "
+"endroit plutôt triste. Le personnel ne semble guère motivé à faire autre "
+"chose que l'entretien minimum, laissant les tables bancales et les chaises "
+"cassées s'accumuler. C'est presque un miracle que les installations "
+"essentielles fonctionnent encore correctement."
 
 msgid "Zembla Shakar"
-msgstr ""
+msgstr "Zembla Shakar"
 
 msgid ""
 "Zembla Shakar is like a resort for the elite within the Shakar system. The "
@@ -35019,12 +35158,11 @@ msgid ""
 "all of. Most of the planet is off-limits to offworlders, and most traffic to "
 "the planet consists of imports of luxury goods and exports of waste products."
 msgstr ""
-"Zembla Shakar est une sorte de station balnéaire pour l'élite du système "
-"Shakar. Ses habitants vivent dans de gigantesques propriétés dont ils n'ont "
-"généralement pas vu la totalité. La majeure partie de la planète est "
-"interdite aux étrangers, et le trafic vers la planète consiste "
-"essentiellement en importations de produits de luxe et en exportations de "
-"déchets."
+"Zembla Shakar est une sorte de station balnéaire réservée à l'élite du "
+"système Shakar. Ses habitants vivent dans d'immenses domaines privés dont "
+"ils n'ont généralement jamais exploré l'intégralité. La majeure partie de la "
+"planète est interdite aux visiteurs extérieurs, et l'essentiel du trafic "
+"consiste en l'importation de biens de luxe et l'exportation de déchets."
 
 msgid ""
 "The bar is where traders wait until their cargo is loaded and unloaded. "
@@ -35032,16 +35170,16 @@ msgid ""
 "surface of the planet will be disappointed, as there is very little to see "
 "here."
 msgstr ""
-"Le bar est l'endroit où les commerçants attendent que leur cargaison soit "
-"chargée et déchargée. Les pilotes qui viennent ici dans l'espoir d'avoir un "
-"aperçu des riches terres qui couvrent la surface de la planète seront déçus, "
-"car il n'y a pas grand-chose à voir ici."
+"Le bar sert principalement de salle d'attente aux marchands pendant le "
+"chargement et le déchargement de leurs cargaisons. Les pilotes venus ici "
+"dans l'espoir d'apercevoir les riches terres qui recouvrent la surface de la "
+"planète seront déçus : il y a très peu de choses à voir depuis cet endroit."
 
 msgid "Zemur III"
-msgstr ""
+msgstr "Zémur III"
 
 msgid "Zeo"
-msgstr ""
+msgstr "Zéo"
 
 msgid ""
 "Most of Zeo's habitation is recently constructed. After the Incident, real "
@@ -35050,12 +35188,12 @@ msgid ""
 "Imperial citizens. Though the population is still on the low side compared "
 "to older civilian worlds, the number of people living here rises by the day."
 msgstr ""
-"La plupart des habitations de Zeo ont été construites récemment. Après "
-"l'Incident, les prix de l'immobilier ont connu une forte hausse dans toute "
-"la galaxie et Zeo, autrefois négligée, est rapidement devenue une terre "
-"d'élection pour les citoyens impériaux. Bien que la population soit encore "
-"faible par rapport aux mondes civils plus anciens, le nombre de personnes "
-"vivant ici augmente de jour en jour."
+"La majorité des habitats de Zéo sont de construction récente. Après "
+"l'Incident, les prix de l'immobilier ont subi une profonde transformation "
+"dans toute la galaxie, et le monde autrefois délaissé de Zéo est rapidement "
+"devenu une destination de choix pour les citoyens Impériaux souhaitant "
+"s'installer. Bien que sa population reste encore faible comparée à celle des "
+"anciens mondes civils, le nombre d'habitants augmente chaque jour."
 
 msgid ""
 "Because of Zeo's abrupt rise in value after the Incident, the antiquated "
@@ -35063,14 +35201,14 @@ msgid ""
 "colonists. As a result, most of the infrastructure here is relatively "
 "modern. You won't find anything out of order or slow to respond in this bar."
 msgstr ""
-"En raison de la brusque augmentation de la valeur de Zeo après l'Incident, "
-"les installations vétustes de l'époque ont dû être remplacées pour faire "
-"face à l'afflux de colons impériaux. Par conséquent, la plupart des "
-"infrastructures sont relativement modernes. Vous ne trouverez rien de "
-"défectueux ou de lent à réagir dans ce bar."
+"En raison de l'augmentation brutale de la valeur de Zéo après l'Incident, "
+"les infrastructures vieillissantes de l'époque ont dû être remplacées afin "
+"d'accueillir l'afflux de colons Impériaux. La majorité des installations "
+"sont donc relativement modernes. Dans ce bar, vous ne trouverez rien de "
+"défectueux ni de service lent à répondre."
 
 msgid "Zepei"
-msgstr ""
+msgstr "Zepeï"
 
 msgid ""
 "Zepei has a modest native population, and a sizeable non-permanent "
@@ -35079,36 +35217,36 @@ msgid ""
 "Soromid. Non-modified humans would find the recreational activities too "
 "rough for comfort."
 msgstr ""
-"Zepei a une population autochtone modeste et une population non permanente "
-"importante. La surface de la planète est couverte de centres de vacances, de "
-"parcs naturels et de zones de sport en plein air. La plupart des vacanciers "
-"sont des Soromides. Les humains non modifiés trouveraient les activités "
-"récréatives trop rudes pour se sentir à l'aise."
+"Zepeï possède une population autochtone modeste ainsi qu'une importante "
+"population temporaire. La surface de la planète est couverte de stations de "
+"vacances, de parcs naturels et d'installations consacrées aux sports de "
+"plein air. La plupart des vacanciers sont des Soromides. Les humains non-"
+"modifiés trouveraient probablement ces activités de loisirs beaucoup trop "
+"éprouvantes pour être agréables."
 
-#, fuzzy
 msgid ""
 "The spaceport bar is not frequented much. The Soromid who come here on "
 "vacation typically go straight to the terminals, and they constitute most of "
 "the spaceport's traffic. The bar is used only by the captains of the supply "
 "and trade ships that land on Zepei."
 msgstr ""
-"Le bar du spatioport n'est pas très fréquenté. Les Soromides qui viennent "
-"ici en vacances se rendent généralement directement aux terminaux, et ils "
-"constituent la majeure partie du trafic du spatioport. Le bar n'est "
-"fréquenté que par les capitaines des vaisseaux de ravitaillement et de "
-"commerce qui atterrissent sur Zeppei."
+"Le bar du spatioport est peu fréquenté. Les Soromides venant ici en vacances "
+"se rendent généralement directement aux terminaux, et constituent "
+"l'essentiel du trafic de la station. Le bar n'est principalement utilisé que "
+"par les capitaines des vaisseaux de ravitaillement et de commerce faisant "
+"escale sur Zepeï."
 
 msgid "Zero-Eleven"
-msgstr ""
+msgstr "Zéro-Onze"
 
 msgid "Zero-Five"
-msgstr ""
+msgstr "Zéro-Cinq"
 
 msgid "Zero-One"
-msgstr ""
+msgstr "Zéro-Un"
 
 msgid "Zesta"
-msgstr ""
+msgstr "Zesta"
 
 msgid ""
 "Mineral-rich, but unbearably hot, Zesta has been established as a high-"
@@ -35116,16 +35254,16 @@ msgid ""
 "routinely used as part of the extraction process, and to prevent severe "
 "burns to the miners."
 msgstr ""
-"Riche en minéraux, mais d'une chaleur insupportable, Zesta a été établie "
-"comme une colonie minière à haute intensité par le Proteron. De l'eau et de "
-"la glace provenant d'Amianta sont régulièrement utilisées dans le cadre du "
-"processus d'extraction et pour éviter de graves brûlures aux mineurs."
+"Riche en minerais mais accablante de chaleur, Zesta a été établie par les "
+"Protérons comme une colonie minière à haut rendement. L'eau et la glace "
+"prélevées sur Amianta sont régulièrement utilisées dans le processus "
+"d'extraction, ainsi que pour éviter de graves brûlures aux mineurs."
 
 msgid "Zethus"
-msgstr ""
+msgstr "Zethus"
 
 msgid "Zhang Lu"
-msgstr ""
+msgstr "Zhang Lu"
 
 msgid ""
 "Zhang Lu is a world with vast mountain ranges, the biggest of which reaches "
@@ -35135,12 +35273,13 @@ msgid ""
 "countless peaks that have never been conquered, so tourists like to try and "
 "be the first to climb one."
 msgstr ""
-"Zhang Lu est un monde aux vastes chaînes de montagnes, dont la plus grande "
-"atteint presque un tiers de la planète. Ce monde est tout à fait "
-"inintéressant pour l'habitation, même selon les normes de Soromid, mais le "
-"terrain accidenté est irrésistible pour les amateurs d'alpinisme. "
-"D'innombrables sommets n'ont jamais été conquis, et les touristes aiment "
-"essayer d'être les premiers à en gravir un."
+"Zhang Lu est un monde aux immenses chaînes montagneuses, dont la plus grande "
+"s'étend sur près d'un tiers de la circonférence de la planète. Le monde "
+"présente un intérêt quasiment nul pour l'habitation, même selon les critères "
+"Soromides, mais ses reliefs accidentés sont irrésistibles pour les amateurs "
+"d'alpinisme. D'innombrables sommets n'ont encore jamais été conquis, et de "
+"nombreux touristes viennent tenter d'être les premiers à en atteindre le "
+"sommet."
 
 msgid ""
 "The spaceport is built in a valley. The reason for this is that tourists "
@@ -35149,15 +35288,15 @@ msgid ""
 "is less than practical from a pilot's point of view, as having mountains all "
 "around the spaceport severely limits the choice in approach vectors."
 msgstr ""
-"Le port spatial est construit dans une vallée. La raison en est que les "
-"touristes qui arrivent sont immédiatement confrontés à des montagnes qui les "
-"dominent de tous les côtés, ce qui les met vraiment dans l'ambiance. "
-"Malheureusement, cet emplacement n'est pas très pratique du point de vue du "
-"pilote, car la présence de montagnes tout autour du spatioport limite "
-"considérablement le choix des vecteurs d'approche."
+"Le spatioport est construit dans une vallée. La raison en est simple : les "
+"visiteurs arrivant sur la planète sont immédiatement entourés de montagnes "
+"gigantesques qui se dressent tout autour d'eux, ce qui contribue fortement à "
+"l'ambiance d'aventure recherchée. Malheureusement, cet emplacement est loin "
+"d'être idéal du point de vue des pilotes, car les montagnes entourant le "
+"spatioport limitent considérablement les trajectoires d'approche possibles."
 
 msgid "Zhiru"
-msgstr ""
+msgstr "Zhiru"
 
 msgid ""
 "Zhiru was once home to Eduard Manuel Goddard, the man who single-handedly "
@@ -35168,13 +35307,14 @@ msgid ""
 "Zhiru, which allows the massive spacecraft to land and take off with little "
 "difficulty."
 msgstr ""
-"Zhiru était autrefois la patrie d'Eduard Manuel Goddard, l'homme qui a conçu "
-"à lui seul le croiseur de combat Goddard, alors révolutionnaire, et qui a "
-"fondé la Maison Goddard. Aujourd'hui, Zhiru possède une industrie spatiale "
-"en plein essor, spécialisée dans la création et l'entretien des vaisseaux "
-"Goddard. Tout cela est possible grâce à la faible gravité et à l'atmosphère "
-"qui enveloppent Zhiru, ce qui permet aux énormes vaisseaux spatiaux "
-"d'atterrir et de décoller sans trop de difficultés."
+"Zhiru fut autrefois le foyer d'Eduard Manuel Goddard, l'homme qui conçut à "
+"lui seul le croiseur de bataille Goddard, alors révolutionnaire, et qui "
+"fonda par la suite la petite Maison Goddard. Aujourd'hui, Zhiru possède une "
+"industrie spatiale florissante, spécialisée dans la construction et "
+"l'entretien des vaisseaux Goddard. Cela est rendu possible par la faible "
+"gravité et la faible densité atmosphérique de la planète, qui permettent aux "
+"gigantesques appareils d'atterrir et de décoller avec relativement peu de "
+"difficultés."
 
 msgid ""
 "The Goddard Bar is, unsurprisingly, an obsolete model of their eponymous "
@@ -35182,22 +35322,23 @@ msgid ""
 "comfortable and cozy as a bar, although every so often you can hear creaking "
 "in the ancient metal frame."
 msgstr ""
-"Le Goddard Bar est, sans surprise, un modèle obsolète du navire éponyme, "
-"dépouillé et réaménagé en bar. Il est étonnamment confortable et accueillant "
-"en tant que bar, bien que l'on entende de temps à autre des grincements dans "
-"l'ancienne structure métallique."
+"Le Bar Goddard est, sans surprise, installé dans un ancien modèle obsolète "
+"du vaisseau qui lui a donné son nom, dépouillé de ses équipements puis "
+"réaménagé en établissement de boisson. Pour un bar, il est étonnamment "
+"confortable et chaleureux, même si l'on entend parfois les craquements "
+"inquiétants de sa vieille structure métallique."
 
 msgid "Zintar IV"
-msgstr ""
+msgstr "Zintar IV"
 
 msgid "Zintar V"
-msgstr ""
+msgstr "Zintar V"
 
 msgid "Ziz"
-msgstr ""
+msgstr "Ziz"
 
 msgid "Zuner"
-msgstr ""
+msgstr "Zuner"
 
 msgid ""
 "Zuner's surface has been dedicated almost entirely to crop growing. While "
@@ -35207,13 +35348,13 @@ msgid ""
 "are in no way out of touch with the rest of the galaxy and are, in fact, "
 "quite wealthy, due to how lucrative Zuner's choice of food production is."
 msgstr ""
-"La surface de Zuner est presque entièrement consacrée à la culture. Bien que "
-"quelques centres urbains soient disséminés sur la planète, leur population "
-"est faible comparée aux mégaplexes résidentiels des mondes plus densément "
-"peuplés. Bien que la communauté soit, dans une large mesure, agricole, les "
-"habitants ne sont pas déconnectés du reste de la galaxie et sont, en fait, "
-"assez riches, en raison du caractère lucratif du choix de Zuner en matière "
-"de production alimentaire."
+"La surface de Zuner est presque entièrement consacrée à la culture agricole. "
+"Bien que quelques centres urbains soient dispersés à travers le monde, leur "
+"population reste faible comparée aux mégapoles résidentielles des planètes "
+"plus densément peuplées. Même si la communauté locale est largement tournée "
+"vers l'agriculture, ses habitants ne sont absolument pas coupés du reste de "
+"la galaxie. Ils sont même plutôt aisés, grâce à la grande rentabilité des "
+"productions alimentaires spécialisées de Zuner."
 
 msgid ""
 "Many spacers think of agricultural worlds as backwater places that lag way "
@@ -35221,10 +35362,11 @@ msgid ""
 "case of Zuner. The spaceport is as modern as can be and its bar wouldn't be "
 "out of place even in the Sirius core."
 msgstr ""
-"De nombreux spationautes considèrent les mondes agricoles comme des endroits "
-"reculés, à la traîne du reste de la galaxie. Ils ont parfois raison, mais ce "
-"n'est pas le cas de Zuner. Le spatioport est on ne peut plus moderne et son "
-"bar ne dépareillerait pas, même au cœur de Sirius."
+"De nombreux voyageurs spatiaux considèrent les mondes agricoles comme des "
+"endroits arriérés, incapables de suivre le rythme du reste de la galaxie. "
+"Parfois, cette impression est justifiée, mais certainement pas dans le cas "
+"de Zuner. Le spatioport y est aussi moderne que possible, et son bar ne "
+"dépareillerait pas même au cœur de l'espace Sirius."
 
 msgid "Dvaered Small"
 msgstr "Dvaered"
@@ -35391,76 +35533,76 @@ msgid "Adran"
 msgstr "Adran"
 
 msgid "Aesir"
-msgstr ""
+msgstr "Aesir"
 
 msgid "Aesria"
-msgstr ""
+msgstr "Aesria"
 
 msgid "Aet"
-msgstr ""
+msgstr "Aet"
 
 msgid "Akodu"
-msgstr ""
+msgstr "Akodu"
 
 msgid "Akra"
-msgstr ""
+msgstr "Akra"
 
 msgid "Allous"
-msgstr ""
+msgstr "Allous"
 
 msgid "Alpha Centauri"
-msgstr ""
+msgstr "Alpha Centauri"
 
 msgid "Alsafi"
-msgstr ""
+msgstr "Alsafi"
 
 msgid "Altair"
-msgstr ""
+msgstr "Altaïr"
 
 msgid "Alteris"
 msgstr "Altéris"
 
 msgid "Amaroq"
-msgstr ""
+msgstr "Amaroq"
 
 msgid "Amatiri"
-msgstr ""
+msgstr "Amatiri"
 
 msgid "#rHaze (-50% Shield and Shield Regen)#0"
 msgstr ""
 
 msgid "Amlet"
-msgstr ""
+msgstr "Amlet"
 
 msgid "#bStellar Wind (1 fuel regen)#0"
 msgstr "#bVents Stellaires (1 regen de carburant)#0"
 
 msgid "Anarbalis"
-msgstr ""
+msgstr "Anarbalis"
 
 msgid "Andee"
-msgstr ""
+msgstr "Andee"
 
 msgid "Andres"
 msgstr ""
 
 msgid "Aneel Azi"
-msgstr ""
+msgstr "Aneel Azi"
 
 msgid "Anger"
-msgstr ""
+msgstr "Anger"
 
 msgid "An'ku"
-msgstr ""
+msgstr "An'ku"
 
 msgid "Anrique"
-msgstr ""
+msgstr "Anrique"
 
 msgid "Antares"
-msgstr ""
+msgstr "Antarès"
 
 msgid "Antlejos"
-msgstr ""
+msgstr "Antlejos"
 
 #. subtitle = _("None"),
 #. PlasmaStorm = {
@@ -35500,94 +35642,94 @@ msgid "Anubis Black Hole"
 msgstr "Trou Noir Anubis"
 
 msgid "Apez"
-msgstr ""
+msgstr "Apez"
 
 msgid "Apik"
-msgstr ""
+msgstr "Apik"
 
 msgid "Arandon"
-msgstr ""
+msgstr "Arandon"
 
 msgid "Arcanis"
-msgstr ""
+msgstr "Arcanis"
 
 msgid "Arcturus"
-msgstr ""
+msgstr "Arcturus"
 
 msgid "Ariadus"
-msgstr ""
+msgstr "Ariadus"
 
 msgid "Arietis"
-msgstr ""
+msgstr "Arietis"
 
 msgid "Armorhead"
 msgstr ""
 
 msgid "Atlantis"
-msgstr ""
+msgstr "Atlantis"
 
 msgid "Attaria"
-msgstr ""
+msgstr "Attaria"
 
 msgid "Auger"
-msgstr ""
+msgstr "Auger"
 
 msgid "Awowa"
-msgstr ""
+msgstr "Awowa"
 
 msgid "Babylon"
-msgstr ""
+msgstr "Babylone"
 
 msgid "Baf"
-msgstr ""
+msgstr "Baf"
 
 msgid "#oRestricted#0"
 msgstr ""
 
 msgid "Baitas"
-msgstr ""
+msgstr "Baitas"
 
 msgid "Barnard's Star"
-msgstr ""
+msgstr "Étoile de Barnard"
 
 msgid "Basel"
-msgstr ""
+msgstr "Bâle"
 
 msgid "Bastion"
-msgstr ""
+msgstr "Bastion"
 
 msgid "Bedimann"
 msgstr "Bedimann"
 
 msgid "Beeklo"
-msgstr ""
+msgstr "Beeklo"
 
 msgid "Behar"
 msgstr "Béhar"
 
 msgid "Blacin"
-msgstr ""
+msgstr "Blacin"
 
 msgid "Blackwell"
-msgstr ""
+msgstr "Blackwell"
 
 msgid "Blunderbuss"
 msgstr "Blunderbuss"
 
 msgid "Bonanza"
-msgstr ""
+msgstr "Bonanza"
 
 msgid "Booster"
 msgstr ""
 
 msgid "Borla"
-msgstr ""
+msgstr "Borla"
 
 msgid "Botarn"
-msgstr ""
+msgstr "Botarn"
 
 msgid "Brendon"
-msgstr ""
+msgstr "Brendon"
 
 msgid "Brimstone"
 msgstr "Géhenne"
@@ -35599,22 +35741,22 @@ msgid "Brumeria"
 msgstr ""
 
 msgid "C-00"
-msgstr ""
+msgstr "C-00"
 
 msgid "C-14"
-msgstr ""
+msgstr "C-14"
 
 msgid "C-28"
-msgstr ""
+msgstr "C-28"
 
 msgid "C-43"
-msgstr ""
+msgstr "C-43"
 
 msgid "C-59"
-msgstr ""
+msgstr "C-59"
 
 msgid "Capricorn"
-msgstr ""
+msgstr "Capricornus"
 
 msgid "Carnis Major"
 msgstr ""
@@ -35623,152 +35765,152 @@ msgid "Carnis Minor"
 msgstr ""
 
 msgid "Carrza"
-msgstr ""
+msgstr "Carrza"
 
 msgid "Castellan"
-msgstr ""
+msgstr "Castellan"
 
 msgid "Cebus"
-msgstr ""
+msgstr "Cebus"
 
 msgid "Cerberus"
-msgstr ""
+msgstr "Cerbère"
 
 msgid "Chloe"
-msgstr ""
+msgstr "Chloé"
 
 msgid "Chraan"
-msgstr ""
+msgstr "Chraan"
 
 msgid "Churchill"
-msgstr ""
+msgstr "Churchill"
 
 msgid "Cleai"
 msgstr ""
 
 msgid "Copernicus"
-msgstr ""
+msgstr "Copernic"
 
 msgid "Corinth"
-msgstr ""
+msgstr "Corinthe"
 
 msgid "Coriolis"
-msgstr ""
+msgstr "Coriolis"
 
 msgid "Corvus"
-msgstr ""
+msgstr "Corvus"
 
 #. Create the OSD
 msgid "Crimson Gauntlet"
 msgstr "L'Épreuve Écarlate"
 
 msgid "Cygni"
-msgstr ""
+msgstr "Cygni"
 
 msgid "Cygnus"
 msgstr ""
 
 msgid "Daan"
-msgstr ""
+msgstr "Daan"
 
 msgid "Dakron"
-msgstr ""
+msgstr "Dakron"
 
 msgid "Daled"
-msgstr ""
+msgstr "Daled"
 
 msgid "Damien"
-msgstr ""
+msgstr "Damien"
 
 msgid "Daravon"
-msgstr ""
+msgstr "Daravon"
 
 msgid "Darkstone"
 msgstr "Obsidienne"
 
 msgid "Defa"
-msgstr ""
+msgstr "Defa"
 
 msgid "Delta Pavonis"
-msgstr ""
+msgstr "Delta Pavonis"
 
 msgid "Delta Polaris"
-msgstr ""
+msgstr "Delta Polaris"
 
 msgid "Dendria"
-msgstr ""
+msgstr "Dendria"
 
 msgid "Deneb"
-msgstr ""
+msgstr "Deneb"
 
 msgid "Diadem"
-msgstr ""
+msgstr "Diadème"
 
 msgid "Doeston"
-msgstr ""
+msgstr "Doeston"
 
 msgid "Dohriabi"
-msgstr ""
+msgstr "Dohriabi"
 
 msgid "Doowa"
-msgstr ""
+msgstr "Doowa"
 
 msgid "Doranthex"
-msgstr ""
+msgstr "Doranthex"
 
 msgid "Draconis"
-msgstr ""
+msgstr "Draconis"
 
 msgid "Draygar"
-msgstr ""
+msgstr "Draygar"
 
 msgid "Druid"
-msgstr ""
+msgstr "Druide"
 
 msgid "Druss"
-msgstr ""
+msgstr "Druss"
 
 msgid "Dune"
-msgstr ""
+msgstr "Dune"
 
 msgid "Duros"
-msgstr ""
+msgstr "Duros"
 
 msgid "Dvaer"
-msgstr ""
+msgstr "Dvaer"
 
 msgid "Effetey"
-msgstr ""
+msgstr "Effetey"
 
 msgid "Eiderdown"
-msgstr "Édredon"
+msgstr "Eiderdown"
 
 msgid "Eisenhorn"
 msgstr ""
 
 msgid "Ekkodu"
-msgstr ""
+msgstr "Ekkodu"
 
 msgid "Ekta"
-msgstr ""
+msgstr "Ekta"
 
 msgid "Elixir"
-msgstr ""
+msgstr "Élixir"
 
 msgid "Elza"
-msgstr ""
+msgstr "Elza"
 
 msgid "Eneguoz"
-msgstr ""
+msgstr "Eneguoz"
 
 msgid "Eridani"
 msgstr "Éridani"
 
 msgid "Esker"
-msgstr ""
+msgstr "Esker"
 
 msgid "Euler"
-msgstr ""
+msgstr "Euler"
 
 msgid "#pPlasma Storm (-50% energy and -50% stress dissipation)#0"
 msgstr ""
@@ -35777,915 +35919,913 @@ msgid "Eye of Night"
 msgstr "Œil de la nuit"
 
 msgid "Farizel"
-msgstr ""
+msgstr "Farizel"
 
 msgid "Father's Pride"
 msgstr "Fierté du Patriarche"
 
 msgid "Faust"
-msgstr ""
+msgstr "Faust"
 
 msgid "Felzen"
-msgstr ""
+msgstr "Felzen"
 
 msgid "Fern"
 msgstr ""
 
 msgid "Fertile Crescent"
-msgstr ""
+msgstr "Croissant Fertile"
 
 msgid "Feye"
-msgstr ""
+msgstr "Feye"
 
 msgid "Fidelis"
-msgstr ""
+msgstr "Fidelis"
 
 msgid "Firk"
-msgstr ""
+msgstr "Firk"
 
 msgid "Flok"
-msgstr ""
+msgstr "Flok"
 
 msgid "Flow"
 msgstr ""
 
 msgid "Forlat"
-msgstr ""
+msgstr "Forlat"
 
 msgid "Fortitude"
-msgstr ""
+msgstr "Fortitude"
 
 msgid "Fried"
 msgstr ""
 
 msgid "Frolina"
-msgstr ""
+msgstr "Frolina"
 
 msgid "Fulcrum"
-msgstr ""
+msgstr "Fulcrum"
 
 msgid "Fury"
-msgstr ""
+msgstr "Furie"
 
 msgid "Gamel"
-msgstr ""
+msgstr "Gamel"
 
 msgid "Gamma Polaris"
-msgstr ""
+msgstr "Gamma Polaris"
 
 msgid "Gammacron"
-msgstr ""
+msgstr "Gammacron"
 
 msgid "Ganth"
-msgstr ""
+msgstr "Ganth"
 
 msgid "Garten"
-msgstr ""
+msgstr "Garten"
 
 msgid "Gewirn"
-msgstr ""
+msgstr "Gewirn"
 
 msgid "Gilligan's Light"
 msgstr "Lumière de Gilligan"
 
 msgid "Ginger"
-msgstr ""
+msgstr "Rousse"
 
 msgid "Gliese"
-msgstr ""
+msgstr "Gliese"
 
 msgid "Gliese Minor"
-msgstr ""
+msgstr "Gliese Minor"
 
 msgid "Gorman"
-msgstr ""
+msgstr "Gorman"
 
 msgid "Gremlin"
-msgstr ""
+msgstr "Gremlin"
 
 msgid "Griffin"
-msgstr ""
+msgstr "Griffin"
 
 msgid "Groombridge"
 msgstr ""
 
 msgid "Gruz"
-msgstr ""
+msgstr "Gruz"
 
 msgid "Guntesh"
-msgstr ""
+msgstr "Guntesh"
 
 msgid "Gutter"
-msgstr ""
+msgstr "Gutter"
 
 msgid "Gyrios"
-msgstr ""
+msgstr "Gyrios"
 
 msgid "Hades"
-msgstr ""
+msgstr "Hadès"
 
 msgid "Hadosh"
-msgstr ""
+msgstr "Hadosh"
 
 msgid "Haered"
 msgstr ""
 
 msgid "Hakoi"
-msgstr ""
+msgstr "Hakoi"
 
 msgid "Haleb"
-msgstr ""
+msgstr "Haleb"
 
 msgid "Halo"
-msgstr ""
+msgstr "Halo"
 
 msgid "Hargen"
-msgstr ""
+msgstr "Hargen"
 
 msgid "Hasselt"
-msgstr ""
+msgstr "Hasselt"
 
 msgid "Hatter"
-msgstr ""
+msgstr "Hatter"
 
 msgid "Hekaras"
-msgstr ""
+msgstr "Hekaras"
 
 msgid "Hephaestus"
-msgstr ""
+msgstr "Héphaïstos"
 
 msgid "Herakin"
-msgstr ""
+msgstr "Herakin"
 
 msgid "Herculis"
 msgstr ""
 
 msgid "Hideyoshi's Star"
-msgstr ""
+msgstr "Étoile d'Hideyoshi"
 
 msgid "Holly"
-msgstr ""
+msgstr "Holly"
 
 msgid "Hopa"
-msgstr ""
+msgstr "Hopa"
 
 msgid "Hubfar"
-msgstr ""
+msgstr "Hubfar"
 
 msgid "Humdrum"
-msgstr ""
+msgstr "Humdrum"
 
 msgid "Hystera"
-msgstr ""
+msgstr "Hystera"
 
 msgid "Ianella"
-msgstr ""
+msgstr "Ianella"
 
 msgid "Infinity"
-msgstr ""
+msgstr "Infinité"
 
 msgid "Ingot"
-msgstr ""
+msgstr "Lingot"
 
 msgid "Iris"
-msgstr ""
+msgstr "Iris"
 
 msgid "Ivella"
-msgstr ""
+msgstr "Ivella"
 
 msgid "Jackson"
-msgstr ""
+msgstr "Jackson"
 
 msgid "Jade"
-msgstr ""
+msgstr "Jade"
 
 msgid "Jervis"
-msgstr ""
+msgstr "Jervis"
 
 msgid "Jommel"
-msgstr ""
+msgstr "Jommel"
 
 msgid "Kansas"
-msgstr ""
+msgstr "Kansas"
 
 msgid "Karman"
-msgstr ""
+msgstr "Karman"
 
 msgid "Katami"
-msgstr ""
+msgstr "Katami"
 
 msgid "Kelvos"
-msgstr ""
+msgstr "Kelvos"
 
 msgid "Kenvis"
-msgstr ""
+msgstr "Kenvis"
 
 msgid "Khaas"
-msgstr ""
+msgstr "Khaas"
 
 msgid "Kiwi"
-msgstr ""
+msgstr "Kiwi"
 
 msgid "Klantar"
-msgstr ""
+msgstr "Klantar"
 
 msgid "Klintus"
-msgstr ""
+msgstr "Klintus"
 
 msgid "Klunzar"
-msgstr ""
+msgstr "Klunzar"
 
 msgid "Knave"
 msgstr ""
 
 msgid "Kobopos"
-msgstr ""
+msgstr "Kobopos"
 
 msgid "Kohler"
-msgstr ""
+msgstr "Kohler"
 
 msgid "Koit"
-msgstr ""
+msgstr "Koit"
 
 msgid "Koralis"
-msgstr ""
+msgstr "Koralis"
 
 msgid "Korifa"
-msgstr ""
+msgstr "Korifa"
 
 msgid "Korma"
-msgstr ""
+msgstr "Korma"
 
 msgid "Kraft"
-msgstr ""
+msgstr "Kraft"
 
 msgid "Kretogg"
-msgstr ""
+msgstr "Kretogg"
 
 msgid "Kruger"
-msgstr ""
+msgstr "Kruger"
 
 msgid "Kruger's Pocket"
 msgstr ""
 
 msgid "Ksher"
-msgstr ""
+msgstr "Ksher"
 
 msgid "K'tos"
-msgstr ""
+msgstr "K'tos"
 
 msgid "Kyo"
-msgstr ""
+msgstr "Kyo"
 
 msgid "Lalande"
-msgstr ""
+msgstr "Lalande"
 
 msgid "Lapis"
-msgstr ""
+msgstr "Lapis"
 
 msgid "Lazuli"
-msgstr ""
+msgstr "Lazuli"
 
 msgid "Leporis"
-msgstr ""
+msgstr "Léporis"
 
 msgid "Limbo"
-msgstr ""
+msgstr "Limbes"
 
-#, fuzzy
 msgid "Logania"
-msgstr "Dr. Logan"
+msgstr "Logania"
 
 msgid "Longbow"
-msgstr ""
+msgstr "Longarc"
 
 msgid "Lynx"
-msgstr ""
+msgstr "Lynx"
 
 msgid "Machea"
-msgstr ""
+msgstr "Machea"
 
 msgid "Majesteka"
-msgstr ""
+msgstr "Majesteka"
 
 msgid "Marat"
-msgstr ""
+msgstr "Marat"
 
 msgid "Margarita"
-msgstr ""
+msgstr "Margarita"
 
 msgid "Maron"
-msgstr ""
+msgstr "Maron"
 
 msgid "Mason"
-msgstr ""
+msgstr "Mason"
 
 msgid "Massia"
-msgstr ""
+msgstr "Massia"
 
 msgid "Maus"
-msgstr ""
+msgstr "Maus"
 
 msgid "Mayla"
-msgstr ""
+msgstr "Mayla"
 
 msgid "Merisi"
-msgstr ""
+msgstr "Merisi"
 
 msgid "Metsys"
-msgstr ""
+msgstr "Metsys"
 
 msgid "Mida"
-msgstr ""
+msgstr "Mida"
 
 msgid "Midoros"
-msgstr ""
+msgstr "Midoros"
 
 msgid "Millstone"
-msgstr ""
+msgstr "Meule"
 
 msgid "Mirror"
-msgstr ""
+msgstr "Mirroir"
 
 msgid "Mizar"
-msgstr ""
+msgstr "Mizar"
 
 msgid "Modus Manis"
-msgstr ""
+msgstr "Modus Manis"
 
 msgid "Monogram"
-msgstr ""
+msgstr "Monogramme"
 
 msgid "Moor"
-msgstr ""
+msgstr "Moor"
 
 msgid "Moordra"
-msgstr ""
+msgstr "Moordra"
 
 msgid "Muirat"
-msgstr ""
+msgstr "Muirat"
 
 msgid "Mural"
 msgstr ""
 
 msgid "Muran"
-msgstr ""
+msgstr "Muran"
 
 msgid "Myad"
-msgstr ""
+msgstr "Myad"
 
 msgid "Narousse"
-msgstr ""
+msgstr "Narousse"
 
 msgid "Nartur"
-msgstr ""
+msgstr "Nartur"
 
 msgid "Nasona"
-msgstr ""
+msgstr "Nasona"
 
 msgid "Nava"
-msgstr ""
+msgstr "Nava"
 
 msgid "Neexi"
-msgstr ""
+msgstr "Neexi"
 
 msgid "Neon"
-msgstr ""
+msgstr "Néon"
 
 msgid "Newmarch"
-msgstr ""
+msgstr "Newmarch"
 
 msgid "NGC-1001"
-msgstr ""
+msgstr "NGC-1001"
 
 msgid "NGC-10081"
-msgstr ""
+msgstr "NGC-10081"
 
 msgid "NGC-10180"
-msgstr ""
+msgstr "NGC-10180"
 
 msgid "NGC-10284"
-msgstr ""
+msgstr "NGC-10284"
 
 msgid "NGC-10452"
-msgstr ""
+msgstr "NGC-10452"
 
 msgid "NGC-10653"
-msgstr ""
+msgstr "NGC-10653"
 
 msgid "NGC-10789"
-msgstr ""
+msgstr "NGC-10789"
 
 msgid "NGC-10907"
-msgstr ""
+msgstr "NGC-10907"
 
 msgid "NGC-1098"
-msgstr ""
+msgstr "NGC-1098"
 
 msgid "NGC-11050"
-msgstr ""
+msgstr "NGC-11050"
 
 msgid "NGC-11231"
-msgstr ""
+msgstr "NGC-11231"
 
 msgid "NGC-11444"
-msgstr ""
+msgstr "NGC-11444"
 
 msgid "NGC-11718"
-msgstr ""
+msgstr "NGC-11718"
 
 msgid "NGC-11935"
-msgstr ""
+msgstr "NGC-11935"
 
 msgid "NGC-12056"
-msgstr ""
+msgstr "NGC-12056"
 
 msgid "NGC-12108"
-msgstr ""
+msgstr "NGC-12108"
 
 msgid "NGC-12261"
-msgstr ""
+msgstr "NGC-12261"
 
 msgid "NGC-12654"
-msgstr ""
+msgstr "NGC-12654"
 
 msgid "NGC-127"
-msgstr ""
+msgstr "NGC-127"
 
 msgid "NGC-12882"
-msgstr ""
+msgstr "NGC-12882"
 
 msgid "NGC-1292"
-msgstr ""
+msgstr "NGC-1292"
 
 msgid "NGC-1317"
-msgstr ""
+msgstr "NGC-1317"
 
 msgid "NGC-13322"
-msgstr ""
+msgstr "NGC-13322"
 
 msgid "NGC-13522"
-msgstr ""
+msgstr "NGC-13522"
 
 msgid "NGC-13564"
-msgstr ""
+msgstr "NGC-13564"
 
 msgid "NGC-13674"
-msgstr ""
+msgstr "NGC-13674"
 
 msgid "NGC-13747"
-msgstr ""
+msgstr "NGC-13747"
 
 msgid "NGC-13798"
-msgstr ""
+msgstr "NGC-13798"
 
 msgid "NGC-14337"
-msgstr ""
+msgstr "NGC-14337"
 
 msgid "NGC-14430"
-msgstr ""
+msgstr "NGC-14430"
 
 msgid "NGC-14479"
-msgstr ""
+msgstr "NGC-14479"
 
 msgid "NGC-14549"
-msgstr ""
+msgstr "NGC-14549"
 
 msgid "NGC-14676"
-msgstr ""
+msgstr "NGC-14676"
 
 msgid "NGC-1562"
-msgstr ""
+msgstr "NGC-1562"
 
 msgid "NGC-15670"
-msgstr ""
+msgstr "NGC-15670"
 
 msgid "NGC-18269"
-msgstr ""
+msgstr "NGC-18269"
 
 msgid "NGC-18451"
-msgstr ""
+msgstr "NGC-18451"
 
 msgid "NGC-1872"
-msgstr ""
+msgstr "NGC-1872"
 
 msgid "NGC-1931"
-msgstr ""
+msgstr "NGC-1931"
 
 msgid "NGC-20489"
-msgstr ""
+msgstr "NGC-20489"
 
 msgid "NGC-2175"
-msgstr ""
+msgstr "NGC-2175"
 
 msgid "NGC-2232"
-msgstr ""
+msgstr "NGC-2232"
 
 msgid "NGC-22375"
-msgstr ""
+msgstr "NGC-22375"
 
 msgid "NGC-23"
-msgstr ""
+msgstr "NGC-23"
 
 msgid "NGC-2601"
-msgstr ""
+msgstr "NGC-2601"
 
 msgid "NGC-2836"
-msgstr ""
+msgstr "NGC-2836"
 
 msgid "NGC-2948"
-msgstr ""
+msgstr "NGC-2948"
 
 msgid "NGC-2954"
-msgstr ""
+msgstr "NGC-2954"
 
 msgid "NGC-3219"
-msgstr ""
+msgstr "NGC-3219"
 
 msgid "NGC-3371"
-msgstr ""
+msgstr "NGC-3371"
 
 msgid "NGC-344"
-msgstr ""
+msgstr "NGC-344"
 
 msgid "NGC-3858"
-msgstr ""
+msgstr "NGC-3858"
 
 msgid "NGC-4087"
-msgstr ""
+msgstr "NGC-4087"
 
 msgid "NGC-4131"
-msgstr ""
+msgstr "NGC-4131"
 
 msgid "NGC-4363"
-msgstr ""
+msgstr "NGC-4363"
 
 msgid "NGC-4746"
-msgstr ""
+msgstr "NGC-4746"
 
 msgid "NGC-4766"
-msgstr ""
+msgstr "NGC-4766"
 
 msgid "NGC-4771"
-msgstr ""
+msgstr "NGC-4771"
 
 msgid "NGC-5240"
-msgstr ""
+msgstr "NGC-5240"
 
 msgid "NGC-5362"
-msgstr ""
+msgstr "NGC-5362"
 
 msgid "NGC-5483"
-msgstr ""
+msgstr "NGC-5483"
 
 msgid "NGC-5838"
-msgstr ""
+msgstr "NGC-5838"
 
 msgid "NGC-5882"
-msgstr ""
+msgstr "NGC-5882"
 
 msgid "NGC-6057"
-msgstr ""
+msgstr "NGC-6057"
 
 msgid "NGC-6610"
-msgstr ""
+msgstr "NGC-6610"
 
 msgid "NGC-6901"
-msgstr ""
+msgstr "NGC-6901"
 
 msgid "NGC-7061"
-msgstr ""
+msgstr "NGC-7061"
 
 msgid "NGC-7078"
-msgstr ""
+msgstr "NGC-7078"
 
 msgid "NGC-728"
-msgstr ""
+msgstr "NGC-728"
 
 msgid "NGC-7319"
-msgstr ""
+msgstr "NGC-7319"
 
 msgid "NGC-7402"
-msgstr ""
+msgstr "NGC-7402"
 
 msgid "NGC-7533"
-msgstr ""
+msgstr "NGC-7533"
 
 msgid "NGC-7784"
-msgstr ""
+msgstr "NGC-7784"
 
 msgid "NGC-7786"
-msgstr ""
+msgstr "NGC-7786"
 
 msgid "NGC-8040"
-msgstr ""
+msgstr "NGC-8040"
 
 msgid "NGC-8338"
-msgstr ""
+msgstr "NGC-8338"
 
 msgid "NGC-8468"
-msgstr ""
+msgstr "NGC-8468"
 
 msgid "NGC-9017"
-msgstr ""
+msgstr "NGC-9017"
 
 msgid "NGC-902"
-msgstr ""
+msgstr "NGC-902"
 
 msgid "NGC-9415"
-msgstr ""
+msgstr "NGC-9415"
 
 msgid "NGC-9607"
-msgstr ""
+msgstr "NGC-9607"
 
 msgid "NGC-9654"
-msgstr ""
+msgstr "NGC-9654"
 
 msgid "NGC-9897"
-msgstr ""
+msgstr "NGC-9897"
 
 msgid "Niger"
-msgstr ""
+msgstr "Niger"
 
 msgid "Nirtos"
-msgstr ""
+msgstr "Nirtos"
 
 msgid "Nixon"
-msgstr ""
+msgstr "Nixon"
 
 msgid "Norn"
-msgstr ""
+msgstr "Norne"
 
 msgid "Norpin"
-msgstr ""
+msgstr "Norpine"
 
 msgid "Nougat"
-msgstr ""
+msgstr "Nougat"
 
 msgid "Nunavut"
-msgstr ""
+msgstr "Nunavut"
 
 msgid "Octantis"
-msgstr ""
+msgstr "Octantis"
 
 msgid "Octavian"
 msgstr ""
 
 msgid "Ogat"
-msgstr ""
+msgstr "Ogat"
 
 msgid "Olympus"
 msgstr ""
 
 msgid "Opal"
-msgstr ""
+msgstr "Opale"
 
 msgid "Ophiuchi"
-msgstr ""
+msgstr "Ophiuchi"
 
 msgid "Oriantis"
-msgstr ""
+msgstr "Oriantis"
 
 msgid "Orion"
-msgstr ""
+msgstr "Orion"
 
 msgid "Overture"
-msgstr ""
+msgstr "Ouverture"
 
 msgid "Oxuram"
-msgstr ""
+msgstr "Oxuram"
 
 msgid "Padonia"
-msgstr ""
+msgstr "Padonia"
 
 msgid "Palejos"
-msgstr ""
+msgstr "Palejos"
 
 msgid "Palin"
-msgstr ""
+msgstr "Palin"
 
 msgid "Palovi"
-msgstr ""
+msgstr "Palovi"
 
 msgid "Paradox"
-msgstr ""
+msgstr "Paradoxe"
 
 msgid "Pas"
-msgstr ""
+msgstr "Pas"
 
 msgid "Pastor"
-msgstr ""
+msgstr "Pastor"
 
 msgid "Pellmell"
 msgstr ""
 
 msgid "Penn"
-msgstr ""
+msgstr "Penn"
 
 msgid "Peogas"
-msgstr ""
+msgstr "Peogas"
 
 msgid "Percival"
-msgstr ""
+msgstr "Perceval"
 
 msgid "Perhelion"
-msgstr ""
+msgstr "Perhelion"
 
 msgid "Peter"
-msgstr ""
+msgstr "Peter"
 
 msgid "Pike"
-msgstr ""
+msgstr "Pike"
 
 msgid "Pilatis"
-msgstr ""
+msgstr "Pilatis"
 
 msgid "Pisces Prime"
-msgstr ""
+msgstr "Pisces Primus"
 
 msgid "Point Zero"
-msgstr ""
+msgstr "Point Zéro"
 
 msgid "Polack"
-msgstr ""
+msgstr "Polack"
 
 msgid "Polaris"
-msgstr ""
+msgstr "Polaris"
 
 msgid "Poller"
-msgstr ""
+msgstr "Poller"
 
 msgid "Poltergeist"
-msgstr ""
+msgstr "Poltergeist"
 
 msgid "Pontus"
-msgstr ""
+msgstr "Pontus"
 
 msgid "Porro"
-msgstr ""
+msgstr "Porro"
 
 msgid "Possum"
-msgstr ""
+msgstr "Possum"
 
 msgid "Procyon"
-msgstr ""
+msgstr "Procyon"
 
 msgid "Protera"
-msgstr ""
+msgstr "Protéra"
 
 msgid "Provectus Nova"
-msgstr ""
+msgstr "Provectus Nova"
 
 msgid "Proxima Centauri"
-msgstr ""
+msgstr "Proxima Centauri"
 
 msgid "PSO"
-msgstr ""
+msgstr "PSO"
 
 msgid "Pudas"
-msgstr ""
+msgstr "Pudas"
 
 msgid "Pultatis"
-msgstr ""
+msgstr "Pultatis"
 
 msgid "Qellan"
-msgstr ""
+msgstr "Qellan"
 
 msgid "Qex"
-msgstr ""
+msgstr "Qex"
 
 msgid "Qorel"
-msgstr ""
+msgstr "Qorel"
 
 msgid "Quai"
-msgstr ""
+msgstr "Quai"
 
 msgid "Qulam"
-msgstr ""
+msgstr "Qulam"
 
 msgid "Radix"
-msgstr ""
+msgstr "Radix"
 
 msgid "Raelid"
-msgstr ""
+msgstr "Raelid"
 
 msgid "Ram"
-msgstr ""
+msgstr "Ram"
 
 msgid "Rauthia"
-msgstr ""
+msgstr "Rauthia"
 
 msgid "Regas"
 msgstr ""
 
 msgid "Regulus"
-msgstr ""
+msgstr "Regulus"
 
 msgid "Rei"
-msgstr ""
+msgstr "Rei"
 
 msgid "Reptile"
-msgstr ""
+msgstr "Reptile"
 
 msgid "Rhu"
-msgstr ""
+msgstr "Rhu"
 
 msgid "Rockbed"
 msgstr ""
 
 msgid "Ross"
-msgstr ""
+msgstr "Ross"
 
 msgid "Rotide"
-msgstr ""
+msgstr "Rotide"
 
 msgid "Ruadan"
-msgstr ""
+msgstr "Ruadan"
 
 msgid "Ruttwi"
-msgstr ""
+msgstr "Ruttwi"
 
-#, fuzzy
 msgid "Sagittarius"
-msgstr "Sirius"
+msgstr "Sagittarius"
 
 msgid "Sagittarius Prime"
-msgstr ""
+msgstr "Sagittarius Primus"
 
 msgid "Salvador"
-msgstr ""
+msgstr "Salvador"
 
 msgid "Santoros"
-msgstr ""
+msgstr "Santoros"
 
 msgid "Sarcophagus"
 msgstr "Sarcophage"
 
 msgid "Sarrii"
-msgstr ""
+msgstr "Sarrii"
 
 msgid "Scarlet"
-msgstr ""
+msgstr "Écarlate"
 
 msgid "Scholz's Star"
-msgstr ""
+msgstr "Étoile de Scholz"
 
 msgid "Scorpius"
-msgstr ""
+msgstr "Scorpius"
 
 msgid "Seelie"
-msgstr ""
+msgstr "Seelie"
 
 msgid "Seiben"
-msgstr ""
+msgstr "Seiben"
 
 msgid "Seifer"
-msgstr ""
+msgstr "Seifer"
 
 msgid "Senara"
-msgstr ""
+msgstr "Sénara"
 
 msgid "Seport"
-msgstr ""
+msgstr "Seport"
 
 msgid "Seran"
-msgstr ""
+msgstr "Seran"
 
 msgid "Sergio Vix"
-msgstr ""
+msgstr "Sergio Vix"
 
 msgid "Severus"
-msgstr ""
+msgstr "Severus"
 
 msgid "Shakar"
-msgstr ""
+msgstr "Shakar"
 
 msgid "Sheffield"
-msgstr ""
+msgstr "Sheffield"
 
 msgid "Shickhaw"
-msgstr ""
+msgstr "Shickhaw"
 
 msgid "Shikima"
-msgstr ""
+msgstr "Shikima"
 
 msgid "Shinnok"
-msgstr ""
+msgstr "Shinnok"
 
 msgid "Sigur"
-msgstr ""
+msgstr "Sigur"
 
 msgid "Sikh"
-msgstr ""
+msgstr "Sikh"
 
 msgid "Sirou"
-msgstr ""
+msgstr "Sirou"
 
 msgid "Slaccid"
-msgstr ""
+msgstr "Slaccid"
 
 msgid "Sleuth"
-msgstr ""
+msgstr "Limier"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -36773,22 +36913,22 @@ msgstr ""
 #. -- Unique / Interesting systems
 #. --
 msgid "Sol"
-msgstr ""
+msgstr "Sol"
 
 msgid "Solene"
-msgstr ""
+msgstr "Solène"
 
 msgid "Sollav"
-msgstr ""
+msgstr "Sollav"
 
 msgid "Somard"
-msgstr ""
+msgstr "Somard"
 
 msgid "Sonas"
-msgstr ""
+msgstr "Sonas"
 
 msgid "Sorrow"
-msgstr ""
+msgstr "Désolation"
 
 msgid "South Bell"
 msgstr ""
@@ -36797,16 +36937,16 @@ msgid "Stained Soul"
 msgstr ""
 
 msgid "Starlight End"
-msgstr ""
+msgstr "Sombrétoile"
 
 msgid "Stelman"
-msgstr ""
+msgstr "Stelman"
 
 msgid "Sten"
-msgstr ""
+msgstr "Sten"
 
 msgid "Stint"
-msgstr ""
+msgstr "Stint"
 
 msgid "Stone Table"
 msgstr ""
@@ -36814,76 +36954,75 @@ msgstr ""
 msgid "Straight Row"
 msgstr "La Rangée"
 
-#, fuzzy
 msgid "Struve"
-msgstr "Structure"
+msgstr "Struve"
 
 msgid "Suk"
-msgstr ""
+msgstr "Suk"
 
 msgid "Sultan"
-msgstr ""
+msgstr "Sultan"
 
 msgid "Suna"
-msgstr ""
+msgstr "Suna"
 
 msgid "Surano"
-msgstr ""
+msgstr "Surano"
 
 msgid "Sylph"
-msgstr ""
+msgstr "Sylphe"
 
 msgid "Symm"
-msgstr ""
+msgstr "Symm"
 
 msgid "Syndania"
-msgstr ""
+msgstr "Syndania"
 
 #. Odin's raven
 msgid "Taiomi"
-msgstr ""
+msgstr "Taiomi"
 
 msgid "#pShip Graveyard#0"
-msgstr ""
+msgstr "#pCimetière de vaisseaux#0"
 
 msgid "Tandar"
-msgstr ""
+msgstr "Tandar"
 
 msgid "Tarmak"
-msgstr ""
+msgstr "Tarmak"
 
 msgid "Tarsus"
-msgstr ""
+msgstr "Tarsus"
 
 msgid "Tartan"
-msgstr ""
+msgstr "Tartan"
 
 msgid "Tasopa"
-msgstr ""
+msgstr "Tasopa"
 
 msgid "Tau Ceti"
-msgstr ""
+msgstr "Tau Ceti"
 
 msgid "Taxumi"
-msgstr ""
+msgstr "Taxumi"
 
 msgid "Teegarden"
-msgstr ""
+msgstr "Teegarden"
 
 msgid "Telika"
-msgstr ""
+msgstr "Télika"
 
 msgid "Teller"
-msgstr ""
+msgstr "Teller"
 
 msgid "Tempus"
-msgstr ""
+msgstr "Tempus"
 
 msgid "Tepdania"
-msgstr ""
+msgstr "Tepdania"
 
 msgid "Tepvin"
-msgstr ""
+msgstr "Tepvin"
 
 #. Ship to go back to
 #. Set up position
@@ -36928,129 +37067,128 @@ msgid "Thirty Stars"
 msgstr ""
 
 msgid "Thorndyke"
-msgstr ""
+msgstr "Thorndyke"
 
 msgid "Tide"
-msgstr ""
+msgstr "Marée"
 
 msgid "Titus"
-msgstr ""
+msgstr "Titus"
 
 msgid "Toaxis"
-msgstr ""
+msgstr "Toaxis"
 
 msgid "Tobanna"
-msgstr ""
+msgstr "Tobanna"
 
 msgid "Tomas"
-msgstr ""
+msgstr "Tomas"
 
 msgid "Torg"
-msgstr ""
+msgstr "Torg"
 
 msgid "Tormulex"
-msgstr ""
+msgstr "Tormulex"
 
 msgid "Toros"
-msgstr ""
+msgstr "Toros"
 
 msgid "Toxin"
-msgstr ""
+msgstr "Toxine"
 
 msgid "Trask"
-msgstr ""
+msgstr "Trask"
 
 msgid "Triap"
-msgstr ""
+msgstr "Triap"
 
 msgid "Trohem"
-msgstr ""
+msgstr "Trohem"
 
 msgid "Tuoladis"
-msgstr ""
+msgstr "Tuoladis"
 
 msgid "Uhriabi"
-msgstr ""
+msgstr "Uhriabi"
 
 msgid "Ulysses"
-msgstr ""
+msgstr "Ulysse"
 
 msgid "Undergate"
 msgstr "Averne"
 
 msgid "Unicorn"
-msgstr ""
+msgstr "Licorne"
 
 msgid "Urbanus"
-msgstr ""
+msgstr "Urbanus"
 
 msgid "Urdads"
-msgstr ""
+msgstr "Urdads"
 
 msgid "Uridhrion"
-msgstr ""
+msgstr "Uridhrion"
 
-#, fuzzy
 msgid "Urillian"
-msgstr "Civil"
+msgstr "Urillian"
 
 msgid "Ux"
-msgstr ""
+msgstr "Ux"
 
 msgid "Vadornla"
-msgstr ""
+msgstr "Vadornla"
 
 msgid "Valerie"
-msgstr ""
+msgstr "Valérie"
 
 msgid "Valur Gem"
-msgstr ""
+msgstr "Gemme de Valur"
 
 msgid "Van Maanen"
-msgstr ""
+msgstr "Van Maanen"
 
 msgid "Vandal"
-msgstr ""
+msgstr "Vandale"
 
 msgid "Vanir"
-msgstr ""
+msgstr "Vanir"
 
 msgid "Vauban"
-msgstr ""
+msgstr "Vauban"
 
 msgid "Vean"
-msgstr ""
+msgstr "Vean"
 
 msgid "Vedalus"
-msgstr ""
+msgstr "Vedalus"
 
 msgid "Vega"
-msgstr ""
+msgstr "Véga"
 
 msgid "Verex"
-msgstr ""
+msgstr "Verex"
 
 msgid "Veses"
-msgstr ""
+msgstr "Veses"
 
 msgid "Virgo"
-msgstr ""
+msgstr "Virgo"
 
 msgid "Vlexon"
-msgstr ""
+msgstr "Vlexon"
 
 msgid "Volus"
-msgstr ""
+msgstr "Volus"
 
 msgid "Voproid"
-msgstr ""
+msgstr "Voproid"
 
 msgid ""
 "#oRestricted#0, #pPlasma Storm (-50% energy and -50% stress dissipation)#0"
 msgstr ""
 
 msgid "Vost"
-msgstr ""
+msgstr "Vost"
 
 msgid "Westhaven"
 msgstr ""
@@ -37060,13 +37198,13 @@ msgid "Willow"
 msgstr ""
 
 msgid "Wochii"
-msgstr ""
+msgstr "Wochii"
 
 msgid "Wolf"
-msgstr ""
+msgstr "Loup"
 
 msgid "Woreck"
-msgstr ""
+msgstr "Woreck"
 
 msgid "Xeric"
 msgstr "Xéric"
@@ -37078,22 +37216,22 @@ msgid "Yetmer-O'rez Highspace"
 msgstr ""
 
 msgid "Zacron"
-msgstr ""
+msgstr "Zacron"
 
 msgid "Zemur"
-msgstr ""
+msgstr "Zemur"
 
 msgid "Zerantix"
-msgstr ""
+msgstr "Zérantix"
 
 msgid "Zied"
-msgstr ""
+msgstr "Zied"
 
 msgid "Zintar"
-msgstr ""
+msgstr "Zintar"
 
 msgid "Zylex"
-msgstr ""
+msgstr "Zylex"
 
 msgid ""
 "Alsafi II is a barren world that other than some indications of prospection "
@@ -44594,19 +44732,19 @@ msgid "Disgusting Za'lek scum!"
 msgstr "Sale racaille Za'lek !"
 
 msgid "Your head will make a fine trophy on my ships!"
-msgstr "Ta tête fera un magnifique trophée sur mon vaisseau !"
+msgstr "Votre tête fera un magnifique trophée sur mon vaisseau !"
 
 msgid "Za'lek trash!"
 msgstr "Ordure Za'lek !"
 
 msgid "My defence protocols will make short work of you!"
-msgstr "Mes protocoles défensifs auront vite fait de toi !"
+msgstr "Mes protocoles défensifs auront vite fait de vous !"
 
 msgid "I'll teach you physics Dvaered punk!"
-msgstr "Je vais t'apprendre la physique, espèce de brute Dvaered !"
+msgstr "Je vais vous apprendre la physique, espèce de brute Dvaered !"
 
 msgid "My ship's hull is less thick than your Dvaered skull!"
-msgstr "La coque de mon vaisseau est moins épaisse que ton crâne de Dvaered !"
+msgstr "La coque de mon vaisseau est moins épaisse que votre crâne de Dvaered !"
 
 msgid "You Dvaereds smell worse than my vials of thiol!"
 msgstr "Les dvaériens empestent plus que mes flacons de thiol !"
@@ -71264,16 +71402,18 @@ msgstr "Héhéhé !"
 #. Mission constants
 #. Non-persistent state
 msgid "Lt. Commander"
-msgstr ""
+msgstr "Lieutenant-Commandant"
 
 msgid ""
 "You see an Empire Lt. Commander who seems to be motioning you over to the "
 "counter."
 msgstr ""
+"Vous voyez un lieutenant-commandant de l'Empire qui vous fait signe de vous "
+"approcher du comptoir."
 
 #. Intro text
 msgid "Empire Officer"
-msgstr ""
+msgstr "Officier Impérial"
 
 msgid ""
 "You approach the Lt. Commander.\n"
@@ -71281,14 +71421,19 @@ msgid ""
 "interested in. Commander Soldner said you'd make a good candidate for the "
 "mission. You up for the challenge?\""
 msgstr ""
+"Vous vous approchez du lieutenant-commandant.\n"
+"\"Bonjour, {player}. Nous avons une mission de reconnaissance qui pourrait "
+"vous intéresser. Le commandant Soldner pense que vous êtes un bon candidat. "
+"Le défi vous tente ?\""
 
 #. Accept mission
 #. Mission details
 msgid "Collective Scout"
-msgstr ""
+msgstr "Éclaireur du Collectif"
 
 msgid "Find a scout last seen in the {sys} system"
-msgstr "Trouvez un éclaireur vu pour la dernière fois dans le système {sys}"
+msgstr ""
+"Localisez un éclaireur aperçu pour la dernière fois dans le système {sys}"
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -71302,9 +71447,21 @@ msgid ""
 "We managed to stop them here, in {sys}, and constructed this base. Since "
 "then it's been more or less a stalemate.\""
 msgstr ""
+"\"Je ne crois pas que nous ayons déjà eu l'occasion de nous rencontrer. Je "
+"suis le lieutenant-commandant Dimitri. Si tout se passe bien, c'est à moi "
+"que vous rendrez compte pour les prochaines missions.\"\n"
+"   \"Vous avez déjà entendu parler du Collectif, n'est-ce pas ?  D'après ce "
+"que nous savons, le Collectif semble être une sorte 'd'essaim' de robots. Il "
+"s'agit d'une menace relativement récente. Ils ont eu la chance d'apparaître "
+"plus ou moins au moment de l'Incident ; autrement, l'Armada Impériale les "
+"aurait balayés sans le moindre effort. Ils ont complètement exterminé toute "
+"forme de vie humaine sur Eiroik ainsi que sur les autres mondes qu'ils ont "
+"attaqués. Nous sommes parvenus à les stopper ici, dans le système {sys}, où "
+"nous avons établi cette base. Depuis, la situation est plus ou moins dans "
+"l'impasse.\""
 
 msgid "Briefing"
-msgstr ""
+msgstr "Briefing"
 
 msgid ""
 "\"Collective activity has increased heavily the last few decaperiods. We've "
@@ -71316,25 +71473,35 @@ msgid ""
 "   \"It is of vital importance that you do not engage the drone. Report back "
 "as soon as you locate it.\""
 msgstr ""
+"\"L'activité du Collectif s'est fortement intensifiée au cours des dernières "
+"décapériodes. Nous avons tenté de les contenir, mais un éclaireur est "
+"parvenu à franchir le point de saut. Une patrouille l'a repéré pour la "
+"dernière fois dans le système {misn_nearby}, avant de le voir effectuer un "
+"saut vers {misn_target}. Votre mission consiste à localiser cet éclaireur, "
+"puis à revenir faire votre rapport sur {pnt}, dans le système {sys}. Nous "
+"avons le sentiment que le Collectif prépare quelque chose, et nous "
+"souhaitons mieux comprendre ses intentions.\"\n"
+"   \"Il est impératif que vous n'engagiez pas le drone. Dès que vous l'aurez "
+"localisé, revenez immédiatement nous faire votre rapport.\""
 
 msgid "Locate the Collective drone, but do not engage."
-msgstr ""
+msgstr "Localisez le drone du Collectif, mais n'engagez pas le combat."
 
 msgid "Report back to {pnt} in the {sys} system"
-msgstr "Faites un rapport à {pnt} dans le système {sys}"
+msgstr "Faites votre rapport sur {pnt}, dans le système {sys}"
 
 #. Force Collective music (note: must clear these later on).
 #. TODO: Use heavier Collective ships here
 #. Jump in support
 msgid "Collective Drone"
-msgstr ""
+msgstr "Drone du Collectif"
 
 #. update mission
 msgid "Drone spotted!"
-msgstr ""
+msgstr "Drone repéré !"
 
 msgid "Travel back to {pnt} in {sys}"
-msgstr "Retour à {pnt} dans {sys}"
+msgstr "Retournez sur {pnt}, dans le système {sys}"
 
 #. You land on the planet, but you also immediately take off again.
 #. Initiate cutscene
@@ -71343,7 +71510,7 @@ msgstr "Retour à {pnt} dans {sys}"
 #. Successfully killed
 #. More flavour text
 msgid "Mission Accomplished"
-msgstr ""
+msgstr "Mission Accomplie"
 
 msgid ""
 "After landing, you head to the Empire military headquarters and find Lt. "
@@ -71353,20 +71520,32 @@ msgid ""
 "Report back to the bar in a bit and we'll see what we can do about the "
 "Collective.\""
 msgstr ""
+"Après avoir atterri, vous vous rendez au quartier général militaire de "
+"l'Empire, où le lieutenant-commandant Dimitri vous attend.\n"
+"   'Il semblerait que ce drone manifeste un intérêt particulier pour le "
+"système {sys}. Nous ignorons encore ce que cela signifie, mais nos services "
+"de renseignement sont déjà sur l'affaire. Retrouvez-moi au bar d'ici quelque "
+"temps ; nous verrons alors quelle sera la suite de nos opérations contre le "
+"Collectif.\""
 
 msgid ""
 "You scouted out a Collective drone on behalf of the Empire. Lt. Commander "
 "Dimitri told you to report back to the bar on Omega Enclave for your next "
 "mission."
 msgstr ""
+"Vous avez effectué une mission de reconnaissance sur un drone du Collectif "
+"pour le compte de l'Empire. Le lieutenant-commandant Dimitri vous a demandé "
+"de le retrouver au bar de l'Enclave Oméga pour votre prochaine mission."
 
 msgid "Mission Failed: You weren't supposed to kill the drone!"
-msgstr ""
+msgstr "Mission échouée : vous ne deviez pas détruire le drone !"
 
 msgid ""
 "You killed the Collective drone you were supposed to scout out and failed "
 "your mission for the Empire as a result."
 msgstr ""
+"Vous avez détruit le drone du Collectif que vous étiez sensé localiser. En "
+"conséquence, vous avez échoué votre mission pour l'Empire."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -71431,14 +71610,16 @@ msgstr ""
 #. Forward-declared functions
 #. Note: this mission does not make any system claims.
 msgid "Dimitri"
-msgstr ""
+msgstr "Dimitri"
 
 msgid "You notice Lt. Commander Dimitri motioning for you to come over to him."
 msgstr ""
+"Vous remarquez que le lieutenant-commandant Dimitri vous fait signe de venir "
+"le rejoindre."
 
 #. Intro text
 msgid "Lt. Commander Dimitri"
-msgstr ""
+msgstr "Lieutenant-Commandant Dimitri"
 
 msgid ""
 "You meet up with Lt. Commander Dimitri.\n"
@@ -71451,6 +71632,16 @@ msgid ""
 "to complete. I recommend a fast ship to outrun the drones. Are you "
 "interested in doing this now?\""
 msgstr ""
+"Vous rejoignez le lieutenant-commandant Dimitri.\n"
+"\"Nous sommes parvenus à capturer le drone après que vous l'avez localisé. "
+"Il semblait en mauvais état. Nos scientifiques l'étudient en ce moment même, "
+"et ils y ont découvert quelque chose d'étrange : une sorte de module de "
+"communication sans fil. Nous aimerions que vous effectuiez un balayage "
+"approfondi des systèmes voisins contrôlés par le Collectif afin de détecter "
+"d'éventuelles émissions inhabituelles. Cette mission sera dangereuse, car "
+"vous devrez rester suffisamment longtemps dans chaque système pour que les "
+"analyses soient complètes. Je vous recommande d'utiliser un vaisseau rapide "
+"afin de pouvoir distancer les drones. Êtes-vous prêt à partir ?\""
 
 #. Accept mission
 #. Number of Collective systems visited
@@ -71463,10 +71654,12 @@ msgstr ""
 #. Some text
 #. Intro text
 msgid "Collective Espionage"
-msgstr ""
+msgstr "Espionnage du Collectif"
 
 msgid "Scan the Collective systems for wireless communications"
 msgstr ""
+"Effectuez un balayage des systèmes du Collectif à la recherche de "
+"communications sans fil"
 
 msgid ""
 "\"You need to jump to each of the systems indicated on your map, and stay in "
@@ -71479,11 +71672,22 @@ msgid ""
 "   \"Like I said, it's best if you tried to avoid the drones, but if you "
 "think you can take them, go for it! Good luck.\""
 msgstr ""
+"\"Vous devrez effectuer un saut vers chacun des systèmes indiqués sur votre "
+"carte, puis y demeurer jusqu'à la fin de l'analyse. Si vous quittez un "
+"système avant la fin du balayage, vous devrez reprendre l'analyse depuis le "
+"début lorsque vous y reviendrez.\"\n"
+"   \"Bien entendu, nous ne vous envoyons pas là-bas sans préparation. J'ai "
+"mis à jour l'ordinateur de bord de votre vaisseau avec une carte des "
+"systèmes contrôlés par le Collectif, du moins ceux que nous connaissons. Je "
+"crains que nos renseignements soient incomplets, mais cela devrait "
+"suffire.\"\n"
+"   \"Comme je vous l'ai dit, le mieux est d'éviter les drones. Cela dit, si "
+"vous pensez pouvoir les affronter, libre à vous. Bonne chance.\""
 
 #. End any ongoing scans.
 #. seconds
 msgid "Scanning... {seconds}s remaining."
-msgstr ""
+msgstr "Analyse en cours... {seconds} s restantes."
 
 msgid ""
 "After landing, Lt. Commander Dimitri greets you on the land pad.\n"
@@ -71491,14 +71695,24 @@ msgid ""
 "have the researchers start looking at your logs right away. Meet me in the "
 "bar again in a while.\""
 msgstr ""
+"Après votre atterrissage, le lieutenant-commandant Dimitri vient vous "
+"accueillir sur l'aire d'atterrissage.\n"
+"\"J'imagine que tout s'est bien passé ? Ces drones savent se montrer "
+"coriaces. Nous allons immédiatement transmettre vos relevés à nos chercheurs "
+"pour analyse. Retrouvez-moi au bar d'ici quelque temps.\""
 
 msgid ""
 "You helped gather intel on the Collective by scanning Collective systems. "
 "Lt. Commander Dimitri told you to meet him in the bar again on Omega Enclave."
 msgstr ""
+"Vous avez contribué à la collecte de renseignements sur le Collectif en "
+"analysant plusieurs de ses systèmes. Le lieutenant-commandant Dimitri vous a "
+"demandé de le retrouver au bar de l'Enclave Oméga."
 
 msgid "You notice Lt. Commander Dimitri at one of the booths."
 msgstr ""
+"Vous remarquez le lieutenant-commandant Dimitri installé dans l'un des boxes "
+"du bar."
 
 msgid ""
 "You head over to Lt. Commander Dimitri to see what the results are.\n"
@@ -71507,17 +71721,24 @@ msgid ""
 "again, but this time we'll follow a different approach. Interested in giving "
 "it another shot?\""
 msgstr ""
+"Vous vous approchez du lieutenant-commandant Dimitri afin de connaître les "
+"résultats des analyses.\n"
+"\"Bonjour, {player}. J'ai malheureusement de mauvaises nouvelles concernant "
+"votre dernière mission. Vous n'avez enregistré que les habituels échanges "
+"robotiques du Collectif. Nous allons devoir vous renvoyer sur le terrain, "
+"mais cette fois selon une approche différente. Partant pour une nouvelle "
+"tentative ?\""
 
 msgid "Land on {pnt} in the {sys} system to monitor Collective communications"
 msgstr ""
-"Atterrir sur {pnt} dans le système {sys} pour surveiller les communications "
-"collectives"
+"Atterrissez sur {pnt}, dans le système {sys}, afin de surveiller les "
+"communications du Collectif"
 
 msgid "Fly to {sys} and land on {pnt}"
-msgstr "Voler vers {sys} et atterrir sur {pnt}"
+msgstr "Rendez-vous dans le système {sys} et posez-vous sur {pnt}"
 
 msgid "Return to {pnt} with your findings"
-msgstr "Retournez à {pnt} avec vos conclusions"
+msgstr "Retournez sur {pnt} avec les données recueillies"
 
 msgid ""
 "\"On your last run, you were monitoring while out in the open. While you do "
@@ -71531,6 +71752,18 @@ msgid ""
 "we could do. The turbulence and dense atmosphere there should be able to "
 "hide your ship.\""
 msgstr ""
+"\"Lors de votre précédente mission, vous effectuiez vos écoutes en restant à "
+"découvert. Le signal était de meilleure qualité, mais dès que les drones "
+"détectaient votre présence, ils passaient en mode combat et ne "
+"transmettaient plus que des communications tactiques. Cette fois, vous "
+"devrez rester dissimulé afin d'intercepter leurs communications lorsqu'ils "
+"seront moins sur leurs gardes.\"\n"
+"   \"Lorsque le Collectif a lancé son offensive, il s'est rapidement emparé "
+"de nombreux systèmes. L'une de nos plus lourdes pertes fut {pnt}, une géante "
+"gazeuse riche en méthane. Ils ont détruit les raffineries et massacré toute "
+"la population humaine. Nous n'avons rien pu faire. Les fortes turbulences et "
+"l'atmosphère extrêmement dense de cette planète devraient suffire à "
+"dissimuler votre vaisseau.\""
 
 msgid ""
 "\"The plan is to have you infiltrate Collective space alone to not arouse "
@@ -71540,6 +71773,14 @@ msgid ""
 "the four jumps of fuel to be able to get there and back in one piece.\n"
 "   \"Good luck, I'll be waiting for you on your return.\""
 msgstr ""
+"\"Le plan consiste à vous infiltrer seul dans l'espace contrôlé par le "
+"Collectif afin de ne pas attirer l'attention. Une fois sur place, rendez-"
+"vous sur {pnt}, dans le système {sys}. Restez dissimulé et surveillez "
+"l'ensemble des fréquences du système. S'il s'y passe quoi que ce soit "
+"d'inhabituel, nous finirons bien par le détecter. Assurez-vous également "
+"d'avoir suffisamment de carburant pour effectuer les quatre sauts "
+"nécessaires pour l'aller-retour.\n"
+"   \"Bonne chance, je serai là à votre retour.\""
 
 msgid ""
 "As your ship touches ground, you see Lt. Commander Dimitri come out to greet "
@@ -71550,6 +71791,14 @@ msgid ""
 "treat; you've earned it. We've made a 700K credit deposit into your bank "
 "account. Enjoy it.\""
 msgstr ""
+"À peine votre vaisseau posé, le lieutenant-commandant Dimitri vient à votre "
+"rencontre.\n"
+"\"Alors, comment était la météo ?\" demande-t-il en plaisantant. \"Heureux "
+"de voir que vous êtes revenu en un seul morceau. Nous allons immédiatement "
+"analyser les données que vous avez rapportées. Ces robots préparent "
+"forcément quelque chose. Retrouvez-moi au bar un peu plus tard. En "
+"attendant, faites-vous plaisir : vous l'avez bien mérité. Nous avons viré "
+"700 000 crédits sur votre compte. Profitez-en.\""
 
 #. Rewards
 msgid ""
@@ -71557,6 +71806,10 @@ msgid ""
 "while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the "
 "bar on Omega Enclave again later."
 msgstr ""
+"Vous avez une nouvelle fois surveillé les communications du Collectif pour "
+"le compte de l'Empire, cette fois en restant posé sur Eiroik. Le lieutenant-"
+"commandant Dimitri vous a demandé de le retrouver plus tard au bar de "
+"l'Enclave Oméga."
 
 msgid ""
 "You quickly land on {pnt} and hide in its deep, dense methane atmosphere. "
@@ -71564,12 +71817,17 @@ msgid ""
 "some use. With some luck, there won't be too many Collective drones when you "
 "take off."
 msgstr ""
+"Vous vous posez rapidement sur {pnt} et dissimulez votre vaisseau dans les "
+"profondeurs de son épaisse atmosphère de méthane. Votre équipement d'écoute "
+"entre immédiatement en fonction, avec un peu de chance il enregistrera enfin "
+"des informations exploitables. Espérons également que les drones du "
+"Collectif ne seront pas trop nombreux lorsque viendra le moment de décoller."
 
 msgid "Collective Heavy Drone"
-msgstr ""
+msgstr "Drone lourd du Collectif"
 
 msgid "That should be enough. Time to report your findings."
-msgstr ""
+msgstr "Cela devrait suffire. Il est temps de faire votre rapport."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -71606,8 +71864,8 @@ msgstr ""
 #, lua-format
 msgid "Destroy at least %d drone"
 msgid_plural "Destroy at least %d drones"
-msgstr[0] "Détruits au moins %d drone"
-msgstr[1] "Détruits au moins %d drones"
+msgstr[0] "Détruisez au moins %d drone"
+msgstr[1] "Détruisez au moins %d drones"
 
 #, lua-format
 msgid "%d remaining"
@@ -71617,6 +71875,8 @@ msgstr[1] "%d restants"
 
 msgid "You see Lt. Commander Dimitri at the bar, as usual."
 msgstr ""
+"Vous apercevez, comme à son habitude, le lieutenant-commandant Dimitri au "
+"bar."
 
 msgid ""
 "As you approach Lt. Commander Dimitri, you notice he seems somewhat "
@@ -71626,14 +71886,22 @@ msgid ""
 "transmissions. We've got another plan to try for a cleaner signal. It'll be "
 "uglier then the last one. You in?\""
 msgstr ""
+"En vous approchant, vous remarquez qu'il semble particulièrement "
+"enthousiaste.\n"
+"   \"On dirait que vous avez trouvé quelque chose la dernière fois ! Le "
+"signal n'est pas très net à cause des interférences provoquées par "
+"l'atmosphère de {pnt}, mais il présente certaines similitudes avec les "
+"transmissions Impériales. Nous avons un autre plan pour obtenir un signal de "
+"meilleure qualité. En revanche, cette mission sera un peu plus musclée que "
+"la précédente. Êtes-vous partant ?\""
 
 #. Mission details
 #. Handles jumping to target system
 msgid "Collective Distraction"
-msgstr ""
+msgstr "Diversion face au Collectif"
 
 msgid "Go to draw the Collective's attention in the {sys} system"
-msgstr "Aller attirer l'attention du collectif dans le système {sys}"
+msgstr "Attirez l'attention du Collectif dans le système {sys}"
 
 msgid ""
 "\"Here's the plan: we want to drop a commando team on {pnt} to set up more "
@@ -71645,6 +71913,16 @@ msgid ""
 "ugly. Meanwhile we'll send a fast convoy with the commandos to {pnt}, to "
 "start monitoring.\""
 msgstr ""
+"\"Voici le plan. Nous voulons déposer une équipe de commandos sur {pnt} afin "
+"qu'elle y installe un dispositif de surveillance plus sophistiqué. L'équipe "
+"est déjà prête. Votre rôle consistera à créer une diversion.\"\n"
+"   \"L'idée est que vous pénétriez profondément en territoire contrôlé par "
+"le Collectif afin d'y semer le chaos. Quelques drones détruits devraient "
+"suffire à attirer leur attention. Il ne s'agit pas d'une mission suicide ; "
+"dès que la situation deviendra trop dangereuse, vous devrez battre en "
+"retraite. Pendant ce temps, nous enverrons un convoi rapide transporter les "
+"commandos jusqu'à {pnt}, où ils commenceront leurs opérations de "
+"surveillance.\""
 
 msgid ""
 "\"If all goes well, the commandos will return here with the results after 10 "
@@ -71654,9 +71932,16 @@ msgid ""
 "   \"Good luck and be careful out there,\" he adds, before saluting you off "
 "onto your mission."
 msgstr ""
+"\"Si tout se passe comme prévu, les commandos reviendront ici dans dix "
+"périodes avec les résultats de leur mission. Nous disposerons alors d'une "
+"réponse définitive concernant ces mystérieuses communications. Nous ne "
+"prévoyons pas de difficultés pour leur extraction, mais quelques bâtiments "
+"seront prêts à intervenir au cas où ils seraient poursuivis.\"\n"
+"   \"Bonne chance, et faites attention.\" Il vous salue avant de vous "
+"laisser partir en mission."
 
 msgid "Return to {pnt}"
-msgstr "Retour à {pnt}"
+msgstr "Retournez sur {pnt}"
 
 msgid ""
 "Your ship touches ground and you once again see the face of Lt. Commander "
@@ -71668,6 +71953,17 @@ msgid ""
 "Take the free time as a vacation. I heard the weather on Caladan is pretty "
 "nice this time of year, maybe you should visit them. We'll keep in touch.\""
 msgstr ""
+"Votre vaisseau se pose et vous retrouvez une fois de plus le lieutenant-"
+"commandant Dimitri.\n"
+"   \"Alors, comment s'est passée la mission ? J'espère que vous n'avez pas "
+"eu trop de mal à semer le Collectif. Nous n'aurons aucune nouvelle des "
+"commandos avant leur retour, dans une dizaine de périodes, mais je pense que "
+"tout s'est déroulé comme prévu.\"\n"
+"   \"Restez toutefois disponible. Nous aurons probablement besoin de vous "
+"lorsqu'ils reviendront. En attendant, profitez-en pour prendre un peu de "
+"repos. J'ai entendu dire que le climat sur Caladan est particulièrement "
+"agréable à cette période de l'année. Vous devriez peut-être aller y faire un "
+"tour. Nous resterons en contact.\""
 
 #. Store time commando theoretically landed
 #. Rewards
@@ -71678,6 +71974,12 @@ msgid ""
 "that the Empire will probably need your assistance on Omega Enclave again at "
 "that time."
 msgstr ""
+"Vous avez servi de diversion pendant qu'une équipe de commandos était "
+"infiltrée sur Eiroik pour le compte de l'Empire afin d'y installer un "
+"dispositif de surveillance plus sophistiqué du Collectif. Le lieutenant-"
+"commandant Dimitri vous a indiqué que les commandos devraient être de retour "
+"dans une dizaine de périodes et que l'Empire aura probablement de nouveau "
+"besoin de vos services sur l'Enclave Oméga à ce moment-là."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -71714,7 +72016,7 @@ msgstr ""
 #. Intro text
 #. Mission details
 msgid "Collective Extraction"
-msgstr ""
+msgstr "Exfiltration du Collectif"
 
 msgid ""
 "As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting "
@@ -71723,18 +72025,29 @@ msgid ""
 "Collective, and now they're under heavy fire. We need you to go and get them "
 "out of there. Would you be willing to embark on another dangerous mission?\""
 msgstr ""
+"À peine avez-vous quitté l'aire d'atterrissage que vous apercevez le "
+"lieutenant-commandant Dimitri qui vous attend. Il paraît plus nerveux qu'à "
+"l'accoutumée.\n"
+"   \"L'équipe de commandos nous a envoyé un signal de détresse. Le Collectif "
+"les a découverts et ils sont maintenant sous un feu nourri. Nous avons "
+"besoin que vous alliez les évacuer. Accepteriez-vous de repartir pour une "
+"nouvelle mission particulièrement dangereuse ?\""
 
 msgid "Check for survivors on {pnt} in {sys}"
-msgstr "Recherche de survivants sur {pnt} dans {sys}"
+msgstr "Vérifiez s'il reste des survivants sur {pnt}, dans le système {sys}"
 
 msgid ""
 "\"We'll send extra forces to {sys} to try to give you a chance to break "
 "through the blockade. You'll have to land on {pnt} and extract our team. Be "
 "very careful. This is going to be no walk in the park.\""
 msgstr ""
+"\"Nous allons envoyer des renforts dans le système {sys} afin de vous ouvrir "
+"une brèche à travers le blocus. Votre objectif sera d'atterrir sur {pnt} et "
+"d'exfiltrer notre équipe. Faites très attention. Cette mission sera tout "
+"sauf une promenade de santé.\""
 
 msgid "Fly to {sys}"
-msgstr "Voler vers {sys}"
+msgstr "Rendez-vous dans le système {sys}"
 
 #. Handles the Collective encounters.
 #. This mission disables saving, which is dangerous. Should be turned back on ASAP.
@@ -71743,18 +72056,23 @@ msgid ""
 "Okay, {player}, we'll flank the Collective force around the planet and try "
 "to draw their fire. You punch right through and land on that planet!"
 msgstr ""
+"Très bien, {player} ! Nous allons contourner les forces du Collectif autour "
+"de la planète et tenter d'attirer leurs tirs. Pendant ce temps, vous foncez "
+"droit sur la planète et vous vous posez !"
 
-#, fuzzy
 msgid "Empire flanking manoeuvre"
-msgstr "Empire Rainmaker"
+msgstr "Manœuvre de diversion Impériale"
 
 #. Case taken off from the planet
 msgid "There's too many of them! Fall back! Everyone to the jump point!"
 msgstr ""
+"Ils sont beaucoup trop nombreux ! Repli immédiat ! Tout le monde vers le "
+"point de saut !"
 
 #. Let's be lazy.
 msgid "You can't land now! Get to the jump point!"
 msgstr ""
+"Impossible d'atterrir maintenant ! Rejoignez immédiatement le point de saut !"
 
 #. Case jumped back out without landing
 #. Case jumped out after landing
@@ -71776,6 +72094,13 @@ msgid ""
 "is already dead. You see if you can salvage the readings from their "
 "equipment, but it seems like it's completely toasted."
 msgstr ""
+"En pénétrant de nouveau dans l'atmosphère, vos boucliers sont une fois "
+"encore mis à rude épreuve. Vous volez quelques instants à basse altitude "
+"jusqu'à ce que vos capteurs détectent de possibles formes de vie. La "
+"silhouette du transport apparaît à peine dans la brume. À mesure que vous "
+"approchez, une terrible évidence s'impose. Vous êtes arrivé trop tard. Ils "
+"sont tous morts. Vous tentez de récupérer les enregistrements de leur "
+"matériel, mais celui-ci est complètement détruit."
 
 #. Add fuel if needed
 msgid ""
@@ -71783,6 +72108,11 @@ msgid ""
 "the wrecked transport ship. Stealing from the dead isn't pleasant business, "
 "but if it gets you out alive, you figure it's good enough."
 msgstr ""
+"Vous constatez ensuite que vous ne disposerez pas de suffisamment de "
+"carburant pour rentrer. Vous siphonnez donc ce qu'il reste des réservoirs du "
+"transport accidenté. Piller les morts n'a rien d'agréable, mais si cela vous "
+"permet de vous en sortir vivant, vous vous dites que vous n'avez guère le "
+"choix."
 
 msgid ""
 "You spend a while searching until you find a datapad on one of the corpses. "
@@ -71790,13 +72120,19 @@ msgid ""
 "go off in your ship. Enemy reinforcements! Time to hit the afterburner.\n"
 "   You've got one, right?"
 msgstr ""
+"Vous poursuivez vos recherches jusqu'à découvrir une tablette de données "
+"près de l'un des cadavres. En faisant abstraction de l'odeur insoutenable de "
+"chair brûlée, vous vous en emparez. Au même instant, les alarmes de votre "
+"vaisseau se déclenchent. Des renforts ennemis ! Il est temps d'enclencher la "
+"postcombustion.\n"
+"   Vous en avez bien une, n'est-ce pas ?"
 
 #. Add goods
 msgid "Datapad"
-msgstr "Datapad"
+msgstr "Tablette de données"
 
 msgid "A dead soldier's datapad."
-msgstr ""
+msgstr "La tablette de données d'un soldat tombé au combat."
 
 msgid ""
 "Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach "
@@ -71806,6 +72142,13 @@ msgid ""
 "me in the bar in a while. We're going to try to process this datapad. It'll "
 "hopefully have the final results.\""
 msgstr ""
+"Le visage du lieutenant-commandant Dimitri ne parvient pas à dissimuler sa "
+"tristesse lorsqu'il vous voit revenir seul.\n"
+"   \"Aucun survivant... n'est-ce pas ? J'avais un mauvais pressentiment. Au "
+"moins, avez-vous pu récupérer quelque chose ? Bien. Cela signifie qu'ils ne "
+"seront pas morts pour rien. Retrouvez-moi au bar d'ici quelque temps. Nous "
+"allons tenter d'exploiter les données contenues dans cette tablette. Avec un "
+"peu de chance, elle renfermera les informations que nous recherchions.\""
 
 #. Rewards
 msgid ""
@@ -71814,6 +72157,11 @@ msgid ""
 "managed to retrieve a datapad from the team's wrecked ship. Lt. Commander "
 "Dimitri has asked you to meet him in the bar again in a while."
 msgstr ""
+"Vous avez tenté de secourir l'équipe de commandos sur Eiroik, mais malgré "
+"tous vos efforts, ses membres étaient déjà morts lorsque vous êtes arrivé. "
+"Vous êtes toutefois parvenu à récupérer une tablette de données dans l'épave "
+"de leur transport. Le lieutenant-commandant Dimitri vous a demandé de le "
+"retrouver un peu plus tard au bar."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -71864,18 +72212,20 @@ msgstr ""
 #. Non-persistent state
 #. Forward-declared functions
 msgid "Dimitri?"
-msgstr ""
+msgstr "Dimitri ?"
 
 msgid ""
 "Dimitri should be around here, but you can't see him. You should probably "
 "look for him."
 msgstr ""
+"Dimitri devrait être dans les parages, mais vous ne le voyez nulle part. "
+"Vous feriez sans doute mieux de partir à sa recherche."
 
 #. Creates the mission
 #. Creates the mission
 #. Intro text
 msgid "Bar"
-msgstr ""
+msgstr "Bar"
 
 msgid ""
 "You enter the bar, but you can't seem to find Lt. Commander Dimitri. As you "
@@ -71889,10 +72239,21 @@ msgid ""
 "   Finally they toss you into what seems to be an interrogation room, simply "
 "telling you to wait."
 msgstr ""
+"Vous entrez dans le bar, mais le lieutenant-commandant Dimitri est "
+"introuvable. Alors que vous le cherchez du regard, une lourde main se pose "
+"sur votre épaule. Deux soldats armés sont venus vous escorter quelque part. "
+"À en juger par leur équipement, ils ne plaisantent pas. Vous n'avez d'autre "
+"choix que de les suivre.\n"
+"   Ils vous conduisent à travers un dédale de couloirs que vous n'avez "
+"jamais empruntés auparavant. Il faut dire que les nombreux panneaux "
+"'Personnel autorisé uniquement' et les gardes armés qui les surveillent "
+"n'incitaient guère à la curiosité.\n"
+"   Finalement, ils vous font entrer dans ce qui ressemble à une salle "
+"d'interrogatoire, et vous disent d'attendre ici."
 
 #. Intro text
 msgid "Interrogation Room"
-msgstr ""
+msgstr "Salle d'interrogatoire"
 
 msgid ""
 "After what seems to be a whole period, you hear the door open. You see a "
@@ -71904,21 +72265,31 @@ msgid ""
 "confidentiality for the interest of the Empire. You willing to go all the "
 "way with this?\""
 msgstr ""
+"Après ce qui vous semble être une période entière, la porte s'ouvre enfin. "
+"Une femme couverte de décorations militaires entre dans la pièce, tandis que "
+"deux soldats prennent position devant la porte. À en juger par les insignes "
+"de son uniforme, il s'agit d'une commodore.\n"
+"\"Bonjour. Je suis la commodore Keer. J'ai repris la direction des "
+"opérations concernant le Collectif. J'ai entendu parler de vos succès lors "
+"des missions précédentes et j'aimerais vous confier de nouvelles "
+"responsabilités. En revanche, tout ce qui suivra devra rester strictement "
+"confidentiel, dans l'intérêt de l'Empire. Êtes-vous prêt à aller jusqu'au "
+"bout ?\""
 
 #. Accept the mission
 #. Mission data
 #. Mission details
 msgid "Operation Black Trinity"
-msgstr ""
+msgstr "Opération Trinité Noire"
 
 msgid "Arrest the ESS Trinity in {sys}"
-msgstr ""
+msgstr "Interceptez l'ESS Trinité dans le système {sys}"
 
 msgid "Apprehend or kill Zakred"
-msgstr ""
+msgstr "Arrêtez ou éliminez Zakred"
 
 msgid "Report back to {pnt}"
-msgstr "Rapporter à {pnt}"
+msgstr "Faites votre rapport sur {pnt}"
 
 msgid ""
 "You accept and she dismisses both of the soldiers, who proceed to wait "
@@ -71929,6 +72300,14 @@ msgid ""
 "feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."
 "\""
 msgstr ""
+"Vous acceptez. La commodore congédie les deux soldats, qui prennent position "
+"à l'extérieur de la salle.\n"
+"   \"Nous suivons les travaux du lieutenant-commandant Dimitri depuis le "
+"début de son enquête à {pnt}. La tablette de données que vous avez rapportée "
+"a confirmé nos soupçons. Un agent du Collectif infiltré se trouve quelque "
+"part au sein de l'armée Impériale et transmet des informations à l'ancien "
+"commodore Welsh. Je vois à votre regard que cela ne vous dit rien. Laissez-"
+"moi vous expliquer.\""
 
 msgid ""
 "\"The Collective was actually a project for the Empire. They were supposed "
@@ -71944,6 +72323,20 @@ msgid ""
 "weakest. We always knew there must have been another traitor in our midst, "
 "but with the datapad information we now know who he is.\""
 msgstr ""
+"\"Le Collectif était, à l'origine, un projet Impérial. Il devait devenir "
+"notre arme ultime, alliant adaptabilité et puissance offensive. Le commodore "
+"Welsh dirigeait les installations scientifiques secrètes de {pnt}. Peu après "
+"l'Incident, toute communication avec la base a cessé. Nous avons envoyé une "
+"mission de reconnaissance. Elle est tombée sur des drones du Collectif "
+"devenus hostiles. Le projet avait donc bel et bien abouti. Mais Welsh a "
+"trahi l'Empire. En temps normal, nous aurions écrasé le Collectif sans "
+"difficulté. Mais depuis l'Incident, plus rien n'est normal.\"\n"
+"   Elle poursuit : \"La situation nous échappe depuis bien trop longtemps. À "
+"plusieurs reprises, nous avons été sur le point d'éliminer Welsh. À chaque "
+"fois, il nous a échappé avant de frapper là où nous étions les plus "
+"vulnérables. Nous savions depuis longtemps qu'un autre traître se cachait "
+"parmi nous. Grâce aux informations contenues dans cette tablette, nous "
+"savons désormais de qui il s'agit.\""
 
 msgid ""
 "Commodore Keer has taken over the Collective issue and explained more about "
@@ -71956,6 +72349,16 @@ msgid ""
 "we would have easily crushed the Collective, but after the Incident these "
 "are hardly normal circumstances.\""
 msgstr ""
+"Le commodore Keer a repris la direction des opérations contre le Collectif "
+"et vous a révélé ses origines. \"Le Collectif était, à l'origine, un projet "
+"Impérial. Il devait devenir notre arme ultime, alliant adaptabilité et "
+"puissance offensive. Le commodore Welsh dirigeait les installations "
+"scientifiques secrètes d'Eiroik. Peu après l'Incident, toute communication "
+"avec la base a cessé. Nous avons envoyé une mission de reconnaissance, qui "
+"est tombée sur des drones du Collectif devenus hostiles. Le projet avait "
+"donc réussi, mais le traître Welsh s'est retourné contre l'Empire. En temps "
+"normal, nous aurions facilement écrasé le Collectif, mais depuis l'Incident, "
+"les circonstances ne sont plus normales.\""
 
 msgid ""
 "She now clears her throat. \"This operation has been dubbed 'Operation Black "
@@ -71969,6 +72372,18 @@ msgid ""
 "on manoeuvre exercises in {sys}. You will have to find him there. The other "
 "ships will follow your lead to {sys}. Good luck.\""
 msgstr ""
+"Elle s'éclaircit la gorge. \"Cette opération porte le nom de code 'Opération "
+"Trinité Noire'. Nous avons de bonnes raisons de croire que l'ESS Trinité "
+"opère de concert avec le traître Welsh. L'ESS Trinité est commandé par le "
+"capitaine Zakred. Vous intégrerez le groupe d'assaut chargé de son "
+"interception. Votre objectif principal est de procéder à l'arrestation de "
+"Zakred. En dernier recours, vous êtes autorisé à l'abattre. Il ne doit pas "
+"s'échapper.\"\n"
+"   \"Nous vous fournirons une petite force d'intervention. Nous préférerions "
+"que vous restiez en retrait. En revanche, si la situation dégénère, "
+"détruisez l'ESS Trinité. Zakred participe actuellement à des manœuvres dans "
+"le système {sys}. Vous devrez l'y retrouver. Les autres bâtiments vous "
+"suivront jusqu'au système {sys}. Bonne chance.\""
 
 #. Escorts
 #. Handles jumping to target system
@@ -71979,46 +72394,46 @@ msgstr ""
 #. Disable spawning and clear pilots -> makes it more epic
 #. Position trinity on the other side of the player
 msgid "ESS Trinity"
-msgstr ""
+msgstr "ESS Trinité"
 
-#, fuzzy
 msgid "Trinity Escort"
-msgstr "Escorte Invalide"
+msgstr "Escorte du Trinité"
 
 #. Escorts should be in system by now
 #. Player ran away from combat - big disgrace.
 #. Got away
 msgid "Mission Failure: Return to base."
-msgstr ""
+msgstr "Mission échouée : retournez à la base."
 
 msgid "Return to base at {pnt} in {sys}"
-msgstr "Retour à la base à {pnt} dans {sys}"
+msgstr "Retournez à la base sur {pnt}, dans le système {sys}"
 
 #. Little talk when ESS Trinity is encountered.
 #. Empire talks about arresting
 msgid "ESS Trinity: Please turn off your engines and prepare to be boarded."
 msgstr ""
+"ESS Trinité, coupez immédiatement vos moteurs et préparez-vous à un abordage."
 
 msgid "You will never take me alive!"
-msgstr ""
+msgstr "Vous ne m'aurez jamais vivant !"
 
 #. Talk
 msgid "Very well then. All units engage ESS Trinity."
-msgstr ""
+msgstr "Très bien. Toutes les unités, engagez l'ESS Trinité !"
 
 #. ESS Trinity becomes collective now.
 msgid "It is too late! The plan is being put into motion!"
-msgstr ""
+msgstr "Il est trop tard ! Le plan est déjà en marche !"
 
 msgid "You have no idea who you're messing with!"
-msgstr ""
+msgstr "Vous n'avez aucune idée des forces auxquelles vous vous opposez !"
 
 #. Trinity runs away
 msgid "My drones will make mincemeat of you!"
-msgstr ""
+msgstr "Mes drones vont vous réduire en pièces !"
 
 msgid "Incoming drones from hyperspace detected!"
-msgstr ""
+msgstr "Des drones sortant de l'hyperespace détectés !"
 
 msgid ""
 "You see Commodore Keer with a dozen soldiers waiting for you outside the "
@@ -72028,6 +72443,13 @@ msgid ""
 "being able to continue. We'll notify you if we have something you can do for "
 "us, but for now we just wait.\""
 msgstr ""
+"À votre sortie de l'aire d'atterrissage, le commodore Keer vous attend, "
+"entourée d'une douzaine de soldats.\n"
+"   \"Vous ne deviez pas laisser le Trinité s'échapper ! Nous avons désormais "
+"perdu notre principal atout. Il ne nous reste plus qu'à attendre la réaction "
+"du Collectif ou de nouveaux renseignements avant de pouvoir reprendre "
+"l'initiative. Nous vous contacterons si une nouvelle mission se présente. En "
+"attendant, nous n'avons plus qu'à patienter.\""
 
 msgid ""
 "You failed to destroy the ESS Trinity, putting a hitch in the Empire's "
@@ -72035,6 +72457,10 @@ msgid ""
 "she said that they would notify you if they have something more that you can "
 "do."
 msgstr ""
+"Vous n'êtes pas parvenu à détruire l'ESS Trinité, ce qui compromet les plans "
+"de l'Empire. La commodore Keer vous a demandé de la retrouver au bar de "
+"l'Enclave Oméga. Elle vous fera prévenir dès qu'une nouvelle mission sera "
+"disponible."
 
 msgid ""
 "You see Commodore Keer with a dozen soldiers waiting for you outside the "
@@ -72044,18 +72470,28 @@ msgid ""
 "attack on Collective territory. Meet up in the bar when you're ready. We'll "
 "need all available pilots.\""
 msgstr ""
+"À votre sortie de l'aire d'atterrissage, le commodore Keer vous attend, "
+"entourée d'une douzaine de soldats.\n"
+"   \"Félicitations pour cette réussite, {player}. À vrai dire, nous ne nous "
+"attendions pas à capturer Zakred vivant. Le monde se portera mieux sans lui. "
+"La prochaine étape consistera à lancer une offensive générale contre le "
+"Collectif. Retrouvez-moi au bar lorsque vous serez prêt. Nous aurons besoin "
+"de tous les pilotes disponibles.\""
 
 msgid ""
 "You successfully killed Zakred (a Collective spy) and destroyed the ESS "
 "Trinity. Commodore Keer told you to meet her again at the bar on Omega "
 "Enclave for an all-out attack on Collective territory."
 msgstr ""
+"Vous avez éliminé Zakred, un agent du Collectif infiltré, et détruit l'ESS "
+"Trinité. La commodore Keer vous a demandé de la retrouver au bar de "
+"l'Enclave Oméga afin de préparer l'offensive générale contre le Collectif."
 
 #. Rewards
 #. Trinity hooks
 #. Got killed
 msgid "Mission Success: Return to base."
-msgstr ""
+msgstr "Mission réussie : retournez à la base."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72090,7 +72526,7 @@ msgstr ""
 #. Mission constants
 #. Non-persistent state
 msgid "Keer"
-msgstr ""
+msgstr "Keer"
 
 msgid ""
 "You see Commodore Keer at a table with a couple of other pilots. She motions "
@@ -72245,10 +72681,10 @@ msgstr ""
 #. target destination
 #. In case no suitable planets are in range.
 msgid "Lieutenant"
-msgstr ""
+msgstr "Lieutenant"
 
 msgid "You see an Empire Lieutenant who seems to be looking at you."
-msgstr ""
+msgstr "Vous voyez un lieutenant de l'Empire qui semble vous observer."
 
 msgid ""
 "You approach the Empire Lieutenant.\n"
@@ -72256,6 +72692,11 @@ msgid ""
 "We're having another recruitment operation and would be interested in having "
 "another pilot among us. Would you be interested in working for the Empire?\""
 msgstr ""
+"Vous vous approchez du lieutenant Impérial.\n"
+"\"Bonjour. Je suis le lieutenant Czesc, de la Division du Transport de "
+"l'Armada Impériale. Nous menons actuellement une nouvelle campagne de "
+"recrutement et nous serions ravis d'accueillir un pilote de plus dans nos "
+"rangs. Seriez-vous intéressé par une carrière au service de l'Empire ?\""
 
 msgid ""
 "\"Welcome aboard,\" says Czesc before giving you a firm handshake. \"At "
@@ -72264,6 +72705,12 @@ msgid ""
 "missions. Who knows? You could be the next Yao Pternov, the greatest pilot "
 "we ever had in the armada.\""
 msgstr ""
+"\"Bienvenue parmi nous\", dit Czesc en vous serrant fermement la main. "
+"\"Dans un premier temps, vous serez affecté à des missions de transport de "
+"marchandises pendant que nous évaluerons vos aptitudes de pilote. Plus tard, "
+"vous pourriez être appelé à remplir des missions plus importantes. Qui "
+"sait ? Vous serez peut-être le prochain Yao Pternov, le plus grand pilote "
+"que l'Armada ait jamais compté.\""
 
 msgid ""
 "He hits a couple buttons on his wrist computer, which springs into action. "
@@ -72272,22 +72719,27 @@ msgid ""
 "and ended up flying into combat against gigantic warships with the "
 "Interception Division.\""
 msgstr ""
+"Il tapote quelques commandes sur l'ordinateur à son poignet, qui s'anime "
+"aussitôt. \"Il semble que nous ayons déjà une mission simple pour vous. "
+"Livrez ces colis à {pnt}, dans le système {sys}. Les meilleurs pilotes ont "
+"tous commencé par transporter des documents avant de finir au combat contre "
+"d'immenses vaisseaux de guerre au sein de la Division d'Interception.\""
 
 #. Accept the mission
 #. Mission details
 #. Flavour text and mini-briefing
 msgid "Empire Recruitment"
-msgstr ""
+msgstr "Recrutement Impérial"
 
 msgid "Deliver some parcels for the Empire to {pnt} in {sys}."
-msgstr "Livrer des colis pour l'Empire à {pnt} dans {sys}."
+msgstr "Livrez des colis de l'Empire à {pnt}, dans le système {sys}."
 
 #. Set up the goal
 msgid "Parcels"
 msgstr "Colis"
 
 msgid "A bunch of boring Empire parcels."
-msgstr ""
+msgstr "Un lot de colis administratifs de l'Empire."
 
 msgid ""
 "You deliver the parcels to the Empire Shipping station at the {pnt} "
@@ -72297,12 +72749,23 @@ msgid ""
 "You aren't too sure of what to make of your encounter with the Empire. Only "
 "time will tell…"
 msgstr ""
+"Vous livrez les colis au centre logistique du Service de Transport Impérial "
+"du spatioport de {pnt}. On vous fait ensuite remplir quelques formalités "
+"administratives afin d'officialiser votre collaboration avec l'Empire. On "
+"vous conseille ensuite de surveiller les missions portant le label {label} "
+"sur l'ordinateur de missions.\n"
+"Vous ne savez pas vraiment quoi penser de cette rencontre avec l'Empire. "
+"Seul l'avenir le dira…"
 
 msgid ""
 "You were recruited into the Empire's shipping division and can now do "
 "missions labelled {label}, which stands for Empire Shipping. You aren't too "
 "sure of what to make of your encounter with the Empire. Only time will tell…"
 msgstr ""
+"Vous avez été recruté dans la Division du transport de l'Empire et pouvez "
+"désormais accepter les missions portant le label {label}, correspondant au "
+"Service de Transport Impérial. Vous ne savez pas vraiment quoi penser de "
+"cette rencontre avec l'Empire. Seul l'avenir le dira…"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72324,6 +72787,13 @@ msgid ""
 "void the paperwork. Note that this rehabilitation only affects the Empire "
 "itself, not any of the Houses."
 msgstr ""
+"L'Empire vous offre la possibilité de vous réinsérer dans la société en vous "
+"acquittant d'une amende et en remplissant les formalités administratives "
+"nécessaires. Vous pourrez ainsi commercer sur le territoire Impérial en tant "
+"que pilote neutre. Vous devrez toutefois regagner la confiance de l'Empire. "
+"En outre, TOUT acte d'hostilité envers l'Empire entraînera l'annulation "
+"immédiate de cette procédure. Notez que cette réhabilitation ne concerne que "
+"l'Empire lui-même, et non les différentes Maisons."
 
 msgid ""
 "Your paperwork and payment has been processed. Imperial Patrols will no "
@@ -72332,18 +72802,31 @@ msgid ""
 "with the Empire. Any violation of this treaty such as piracy will "
 "immediately void the agreement."
 msgstr ""
+"Vos formalités administratives ont été validées et votre paiement "
+"enregistré. Les patrouilles Impériales ne vous attaqueront désormais plus à "
+"vue et vous pourrez circuler librement dans l'espace Impérial. N'oubliez "
+"cependant pas que cela ne vous absout pas de vos actes passés envers "
+"l'Empire. Toute violation de cet accord, notamment un acte de piraterie, "
+"entraînera son annulation immédiate."
 
 msgid ""
 "Congratulations! You have completed the requisites for becoming a productive "
 "member of the Empire. With this final paperwork, your past offenses have "
 "been erased."
 msgstr ""
+"Félicitations ! Vous avez rempli toutes les conditions requises pour "
+"redevenir un membre productif de l'Empire. Grâce à cette dernière formalité "
+"administrative, vos infractions passées ont été effacées."
 
 msgid ""
 "You have violated your agreement with the Empire! Your rehabilitation "
 "procedure has been immediately revoked, and your reputation is once again "
 "tarnished! You may start another rehabilitation procedure at a later time."
 msgstr ""
+"Vous avez violé votre accord avec l'Empire ! Votre procédure de "
+"réhabilitation a été immédiatement annulée et votre réputation est de "
+"nouveau entachée ! Vous pourrez toutefois entamer une nouvelle procédure de "
+"réhabilitation ultérieurement."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72396,16 +72879,16 @@ msgstr ""
 #.
 #.
 msgid "#nPiracy Risk:#0 None"
-msgstr ""
+msgstr "#nRisque de piraterie :#0 Aucun"
 
 msgid "#nPiracy Risk:#0 Low"
-msgstr ""
+msgstr "#nRisque de piraterie :#0 Faible"
 
 msgid "#nPiracy Risk:#0 Medium"
-msgstr ""
+msgstr "#nRisque de piraterie :#0 Moyen"
 
 msgid "#nPiracy Risk:#0 High"
-msgstr ""
+msgstr "#nRisque de piraterie :#0 Élevé"
 
 #.
 #. --    Empire shipping missions are always timed, but quite lax on the schedules
@@ -72419,24 +72902,25 @@ msgstr ""
 #. Determine risk of piracy
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 msgid "Cargo transport to {pnt} in {sys} ({tonnes})"
-msgstr "Transport de marchandises vers {pnt} en {sys} ({tonnes})"
+msgstr "Transport de marchandises vers {pnt}, système {sys} ({tonnes})"
 
 msgid "Official Empire cargo transport to {pnt} in the {sys} system."
-msgstr ""
-"Transport officiel de marchandises de l'Empire vers {pnt} dans le système "
-"{sys}."
+msgstr "Transport Impérial de marchandises vers {pnt} dans le système {sys}."
 
 #. Mission is accepted
 #. Considered illegal
 #. Mission is accepted
 msgid "Too slow"
-msgstr ""
+msgstr "Trop lent"
 
 msgid ""
 "This shipment must arrive within {time_limit}, but it will take at least "
 "{time} for your ship to reach {pnt}, missing the deadline. Accept the "
 "mission anyway?"
 msgstr ""
+"Cette cargaison doit être livrée dans un délai de {time_limit}, mais votre "
+"vaisseau mettra au minimum {time} pour atteindre {pnt}. Vous dépasserez donc "
+"la date limite. Accepter la mission malgré tout ?"
 
 #. Mission is accepted
 #. Create the mission
@@ -72450,18 +72934,23 @@ msgstr ""
 #. 45 max (quicksilver)
 #. Mission is accepted
 msgid "No room in ship"
-msgstr ""
+msgstr "Pas assez de place à bord"
 
 msgid ""
 "You don't have enough cargo space to accept this mission. It requires "
 "{tonnes_free} of free space ({tonnes_short} more than you have)."
 msgstr ""
+"Vous ne disposez pas d'assez d'espace de soute pour accepter cette mission. "
+"Vous avez besoin de {tonnes_free} d'espace libre (il vous manque "
+"{tonnes_short})."
 
 msgid "Mission Accepted"
-msgstr ""
+msgstr "Mission Acceptée"
 
 msgid "The Empire workers load the {tonnes} of {cargo} onto your ship."
 msgstr ""
+"Les employés de l'Empire chargent les {tonnes} de {cargo} dans votre "
+"vaisseau."
 
 #. only hook after accepting
 #. 100STU per tick
@@ -72477,10 +72966,11 @@ msgstr ""
 #. set OSD
 #. Land hook
 msgid "Successful Delivery"
-msgstr ""
+msgstr "Livraison réussie"
 
 msgid "The Empire workers unload the {cargo} at the docks."
 msgstr ""
+"Les employés de l'Empire déchargent la cargaison de {cargo} sur les quais."
 
 #. increase faction
 #. Date hook
@@ -72489,16 +72979,16 @@ msgid ""
 "Fly to {pnt} in the {sys} system before {time_limit}\n"
 "({time} remaining)"
 msgstr ""
-"Vollez jusqu'à {pnt} dans le système {sys} avant {time_limit}\n"
-"({time} restant)"
+"Rendez-vous à {pnt}, dans le système {sys}, avant {time_limit}.\n"
+"({time} restants)"
 
 #. Repeatable Empire mission prefix
 msgid "Empire Shipping"
-msgstr ""
+msgstr "Transport Impérial"
 
 #. Case missed deadline
 msgid "You have failed to deliver the goods to the Empire on time!"
-msgstr ""
+msgstr "Vous n'avez pas livré la cargaison Impériale dans les délais !"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72541,6 +73031,12 @@ msgid ""
 "do a few Empire Shipping missions and get back to me. They should be "
 "labelled {label} on the mission computer.\""
 msgstr ""
+"Vous vous approchez du lieutenant Czesc, qui semble plutôt occupé. \"Ah, "
+"{player}. J'ai peut-être du travail pour vous. Cependant, le règlement de "
+"l'Empire exige un minimum d'expérience dans les missions de transport avant "
+"que je puisse vous confier ce genre d'affectation. Effectuez encore quelques "
+"missions du Service de Transport Impérial et revenez me voir. Elles sont "
+"identifiées par le label {label} sur l'ordinateur de missions.\""
 
 #. codespell:ignore
 #. Intro Text
@@ -72552,6 +73048,14 @@ msgid ""
 "enormous untapped potential. They need someone competent and trustworthy to "
 "help them out. That's where you come in. Interested?\""
 msgstr ""
+"Vous vous approchez du lieutenant Czesc. Son visage s'éclaire lorsqu'il vous "
+"aperçoit. \"Bonjour ! Justement, je vous cherchais. Vous avez fait de "
+"l'excellent travail sur ces missions du Service de Transport Impérial et "
+"nous avons une nouvelle opportunité, bien plus intéressante. Le quartier "
+"général souhaite développer nos activités commerciales avec les autres "
+"factions. C'est un marché au potentiel considérable, encore largement "
+"inexploité. Il lui faut quelqu'un de compétent et digne de confiance pour "
+"l'y aider. C'est là que vous intervenez. Cela vous intéresse ?\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -72561,6 +73065,12 @@ msgid ""
 "territory of other factions, where the Empire may not be able to protect "
 "you. In return, you will be nicely compensated.\""
 msgstr ""
+"\"Je savais que je pouvais compter sur vous !\" s'exclame le lieutenant "
+"Czesc. \"Ces missions vous conduiront sur de longues distances : il vous "
+"faudra généralement effectuer au moins trois sauts pour atteindre votre "
+"destination. De plus, vous vous retrouverez souvent en territoire étranger, "
+"où l'Empire ne sera pas toujours en mesure d'assurer votre protection. En "
+"contrepartie, vous serez rémunéré en conséquence.\""
 
 msgid ""
 "He hits a couple buttons on his wrist computer. \"First, we need to set up "
@@ -72572,33 +73082,52 @@ msgid ""
 "within Empire space handling minor trade disputes, so keep an eye out for me "
 "in the bar on Empire controlled planets.\""
 msgstr ""
+"Il tapote quelques commandes l'ordinateur à son poignet. \"Pour commencer, "
+"nous devons mettre en place nos activités auprès des autres factions. Il "
+"nous faut un fonctionnaire chargé de gérer les formalités administratives et "
+"de superviser les opérations. Nous allons commencer par les Soromides. Je "
+"sais que ces êtres génétiquement modifiés ont quelque chose de... "
+"dérangeant, mais les affaires restent les affaires. Veuillez transporter ce "
+"représentant administratif jusqu'à {pnt}, dans le système {sys}. Une fois sa "
+"mission accomplie, il me fera son rapport. Pour ma part, je me déplace "
+"régulièrement dans l'espace Impérial afin de régler de petits différends "
+"commerciaux. Gardez donc l'œil ouvert lorsque vous serez dans les bars des "
+"planètes contrôlées par l'Empire.\""
 
 #. Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 msgid "Soromid Long Distance Recruitment"
-msgstr ""
+msgstr "Recrutement longue distance – Soromides"
 
 msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
-msgstr "Livrer un diplomate de l'Empire à {pnt} dans le système {sys}"
+msgstr ""
+"Transportez un représentant commercial de l'Empire jusqu'à {pnt}, dans le "
+"système {sys}"
 
 #. Set up the goal
 msgid "Diplomat"
-msgstr "Diplomate"
+msgstr "Représentant commercial"
 
 msgid "An Imperial trade representative."
-msgstr ""
+msgstr "Un représentant commercial Impérial."
 
 msgid ""
 "You drop the bureaucrat off at {pnt}, and he hands you a credit chip. "
 "Lieutenant Czesc told you to keep an eye out for him in Empire space to "
 "continue the operation."
 msgstr ""
+"Vous déposez le fonctionnaire sur {pnt}. Avant de partir, il vous remet une "
+"puce de crédit. Le lieutenant Czesc vous a demandé de le rechercher dans "
+"l'espace Impérial afin de poursuivre l'opération."
 
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc told you to keep an eye out for him in Empire space to continue the "
 "operation."
 msgstr ""
+"Vous avez transporté un fonctionnaire du Service de Transport Impérial "
+"jusqu'à {pnt} pour le compte de l'Empire. Le lieutenant Czesc vous a demandé "
+"de le rechercher dans l'espace Impérial afin de poursuivre l'opération."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72638,6 +73167,11 @@ msgid ""
 "presses a button on his wrist computer. \"We're hoping to expand to Dvaered "
 "territory next. Can I count on your help?\""
 msgstr ""
+"\"Je savais que nous finirions par nous recroiser. Excellent travail pour ce "
+"qui est de ce fonctionnaire. Nos opérations dans l'espace Soromide devraient "
+"être opérationnelles d'ici peu !\" Il appuie sur une touche de l'ordinateur "
+"à son poignet. \"Nous espérons maintenant nous implanter en territoire "
+"Dvaérien. Puis-je de nouveau compter sur votre aide ?\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -72649,22 +73183,38 @@ msgid ""
 "Afterwards, keep an eye out for me in Empire space, and we can continue the "
 "operation.\""
 msgstr ""
+"\"Parfait !\" répond le lieutenant Czesc. \"Je vais envoyer un message au "
+"fonctionnaire afin qu'il vous rejoigne au hangar. Les Dvaériens sont, bien "
+"entendu, des alliés de l'Empire. Ils se vexent cependant assez facilement ; "
+"mieux vaut donc éviter de trop parler. Votre mission consiste à déposer ce "
+"fonctionnaire sur {pnt}, dans le système {sys}. Il prendra ensuite les "
+"choses en main et me fera son rapport une fois l'accord de transport conclu. "
+"Après cela, gardez l'œil ouvert lorsque vous serez dans l'espace Impérial, "
+"et nous pourrons poursuivre cette opération.\""
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 msgid "Dvaered Long Distance Recruitment"
-msgstr ""
+msgstr "Recrutement longue distance – Dvaériens"
 
 msgid ""
 "You drop the bureaucrat off on {pnt}, and he hands you a credit chip. You "
 "remember Lieutenant Czesc told you to look for him on Empire controlled "
 "planets after you finish."
 msgstr ""
+"Vous déposez le fonctionnaire sur {pnt}. Avant de partir, il vous remet une "
+"puce de crédit. Vous vous souvenez que le lieutenant Czesc vous a demandé de "
+"le retrouver sur une planète contrôlée par l'Empire une fois cette mission "
+"terminée."
 
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc told you to look for him on Empire controlled planets after you finish."
 msgstr ""
+"Vous avez transporté un fonctionnaire du Service de Transport Impérial "
+"jusqu'à {pnt} pour le compte de l'Empire. Le lieutenant Czesc vous a demandé "
+"de le retrouver sur une planète contrôlée par l'Empire afin de poursuivre "
+"l'opération."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72704,6 +73254,11 @@ msgid ""
 "next mission is to get House Za'lek on board. Interested in helping out "
 "again?\""
 msgstr ""
+"Le lieutenant Czesc est installé au bar. Il semble réellement parcourir tout "
+"l'Empire pour ses affaires. Vous prenez place à côté de lui. \"Grâce à votre "
+"aide, la Division du Transport de l'Armada Impériale sera bientôt présente "
+"aux quatre coins de la galaxie. Notre prochaine mission consiste à rallier "
+"la Maison Za'lek à notre projet. Partant pour une nouvelle mission ?\""
 
 #. Flavour text and mini-briefing
 #. Flavour text and mini-briefing
@@ -72715,23 +73270,37 @@ msgid ""
 "established. There is still more work to be done, so I expect to see you "
 "again soon.\""
 msgstr ""
+"\"Je m'en doutais !\" s'exclame le lieutenant Czesc. \"J'ai un nouveau "
+"fonctionnaire prêt à établir des relations commerciales. Les Za'leks sont "
+"plutôt énigmatiques, alors restez sur vos gardes. Notre représentant n'a "
+"qu'à se rendre sur {pnt}, dans le système {sys}. Il me fera savoir dès que "
+"les relations commerciales auront été établies. Il nous reste encore du "
+"travail. Je suis certain que nous nous reverrons bientôt.\""
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 msgid "Za'lek Long Distance Recruitment"
-msgstr ""
+msgstr "Recrutement longue distance – Za'leks"
 
 msgid ""
 "You drop the diplomat off on {pnt}, and she hands you a credit chip. "
 "Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
 "bar again soon."
 msgstr ""
+"Vous déposez la représentante sur {pnt}. Avant de partir, elle vous remet "
+"une puce de crédit. Le lieutenant Czesc vous a laissé entendre qu'il aurait "
+"bientôt une nouvelle mission à vous confier. Vous vous dites que vous ne "
+"tarderez pas à le recroiser dans un bar."
 
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc mentioned more work, so you figure you'll run into him at a bar again "
 "soon."
 msgstr ""
+"Vous avez transporté un fonctionnaire du Service de Transport Impérial "
+"jusqu'à {pnt} pour le compte de l'Empire. Le lieutenant Czesc vous a laissé "
+"entendre qu'il aurait bientôt une nouvelle mission à vous confier. Vous vous "
+"dites que vous ne tarderez pas à le recroiser dans un bar."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72771,6 +73340,13 @@ msgid ""
 "We're hoping to extend our relations to the Frontier Alliance. You know the "
 "drill by this point. Ready to help?\""
 msgstr ""
+"\"Il va falloir arrêter de se croiser comme ça.\" Le lieutenant Czesc éclate "
+"de rire devant sa propre plaisanterie. \"Je plaisante. Vous savez que je "
+"vous suis redevable pour l'aide que vous nous avez apportée dans la mise en "
+"place de tous ces accords. Jusqu'à présent, tout se déroule parfaitement de "
+"notre côté. Nous espérons maintenant étendre nos activités à l'Alliance de "
+"la Frontière. Vous connaissez désormais la procédure. Prêt à nous donner un "
+"nouveau coup de main ?\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -72780,14 +73356,20 @@ msgid ""
 "bureaucrat off at {pnt} in the {sys} system. After this, there should only "
 "be one more faction to bring into the fold. I expect to see you again soon.\""
 msgstr ""
+"\"J'admire votre engagement\", déclare le lieutenant Czesc. \"Je sais que "
+"ces missions ne sont pas les plus palpitantes, mais elles sont extrêmement "
+"utiles. La Frontière peut être un endroit dangereux ; assurez-vous d'être "
+"bien préparé. Vous devez déposer ce fonctionnaire sur {pnt}, dans le système "
+"{sys}. Après cela, il ne nous restera plus qu'une seule faction à rallier à "
+"notre réseau. Je suis certain que nous nous reverrons bientôt.\""
 
 #. Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 msgid "Frontier Long Distance Recruitment"
-msgstr ""
+msgstr "Recrutement longue distance – Frontière"
 
 msgid "Frontier Alliance Long Distance Recruitment"
-msgstr ""
+msgstr "Recrutement longue distance – Alliance de la Frontière"
 
 msgid ""
 "You deliver the diplomat to {pnt}, and she hands you a credit chip. "
@@ -72797,6 +73379,13 @@ msgid ""
 "bureaucracy. Only your loyalty to the Empire stopped you from sending her "
 "out into the vacuum of space."
 msgstr ""
+"Vous déposez la représentante sur {pnt}. Avant de partir, elle vous remet "
+"une puce de crédit. Heureusement, le lieutenant Czesc vous a assuré qu'il ne "
+"ferait plus appel à vous que pour une dernière mission. Cette dernière "
+"fonctionnaire a refusé de rester dans ses quartiers, préférant passer son "
+"temps sur la passerelle à vous expliquer dans les moindres détails les "
+"rouages de l'administration Impériale. Seule votre loyauté envers l'Empire "
+"vous a empêché de l'expédier dans le vide spatial."
 
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Thankfully, "
@@ -72806,6 +73395,13 @@ msgid ""
 "Only your loyalty to the Empire stopped you from sending her out into the "
 "vacuum of space."
 msgstr ""
+"Vous avez transporté une fonctionnaire du Service de Transport Impérial "
+"jusqu'à {pnt} pour le compte de l'Empire. Heureusement, le lieutenant Czesc "
+"vous a assuré qu'il ne ferait plus appel à vous que pour une dernière "
+"mission. Cette dernière fonctionnaire a refusé de rester dans ses quartiers, "
+"préférant passer son temps sur la passerelle à vous expliquer dans les "
+"moindres détails les rouages de l'administration Impériale. Seule votre "
+"loyauté envers l'Empire vous a empêché de l'expédier dans le vide spatial."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72843,6 +73439,10 @@ msgid ""
 "Empire Armada employee. We're on track to establish a deal with House "
 "Sirius. This should be the last contract to be negotiated. Ready to go?\""
 msgstr ""
+"Le lieutenant Czesc vient à votre rencontre dès votre entrée dans le bar. "
+"\"Tiens donc, mon employé préféré de l'Armada Impériale ! Nous sommes en "
+"bonne voie pour conclure un accord avec la Maison Sirius. Ce devrait être le "
+"dernier contrat à négocier. Prêt à repartir ?\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -72852,23 +73452,37 @@ msgid ""
 "time, and we'll finalize the paperwork to get you all set up for these "
 "missions.\""
 msgstr ""
+"\"Vous connaissez la procédure, maintenant\", dit le lieutenant Czesc. "
+"\"Déposez ce fonctionnaire sur {pnt}, dans le système {sys}. L'espace Sirius "
+"est assez éloigné ; attendez-vous à toute éventualité. Une fois cette "
+"mission accomplie, retrouvez-moi une dernière fois et nous réglerons les "
+"formalités administratives qui vous permettront d'accéder à ce type de "
+"missions.\""
 
 #. Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 msgid "Sirius Long Distance Recruitment"
-msgstr ""
+msgstr "Recrutement longue distance – Sirius"
 
 msgid ""
 "You drop the diplomat off on {pnt}, and she hands you a credit chip. "
 "Lieutenant Czesc said to look for him in an Empire bar for some paperwork. "
 "Bureaucracy at its finest."
 msgstr ""
+"Vous déposez la représentante sur {pnt}. Avant de partir, elle vous remet "
+"une puce de crédit. Le lieutenant Czesc vous a demandé de le retrouver dans "
+"un bar de l'Empire afin de remplir quelques formalités administratives. La "
+"bureaucratie dans toute sa splendeur."
 
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy "
 "at its finest."
 msgstr ""
+"Vous avez transporté une fonctionnaire du Service de Transport Impérial "
+"jusqu'à {pnt} pour le compte de l'Empire. Le lieutenant Czesc vous a demandé "
+"de le retrouver dans un bar de l'Empire afin de remplir quelques formalités "
+"administratives. La bureaucratie dans toute sa splendeur."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72914,6 +73528,13 @@ msgid ""
 "transport back to {pnt} in the {sys} system. Once there, I can authorize you "
 "to help out with the long-distance shipping missions. Can I count on you?\""
 msgstr ""
+"Le lieutenant Czesc vous donne une franche tape dans le dos tandis que vous "
+"vous asseyez à côté de lui au bar. \"Nous y sommes arrivés ! Nous avons "
+"implanté des antennes du Service de Transport de l'Armada Impériale dans une "
+"bonne partie de la galaxie. Je n'ai plus qu'une dernière faveur à vous "
+"demander. J'aurais besoin que vous me rameniez à {pnt}, dans le système {sys}"
+". Une fois sur place, je pourrai vous autoriser officiellement à effectuer "
+"nos missions de transport longue distance. Puis-je compter sur vous ?\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -72922,20 +73543,27 @@ msgid ""
 "Lieutenant Czesc excitedly gets up from the bar. \"Let's get going as soon "
 "as possible. There's no place like home!\""
 msgstr ""
+"Vous poussez intérieurement un soupir à l'idée de traverser une nouvelle "
+"fois la galaxie uniquement pour remplir encore davantage de formulaires. Au "
+"moins, cela vous donnera accès à de nouvelles missions. Le lieutenant Czesc "
+"se lève d'un bond. \"En route ! Plus vite nous partirons, mieux ce sera. "
+"Rien ne vaut le retour chez soi !\""
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 msgid "Empire Long Distance Recruitment"
-msgstr ""
+msgstr "Recrutement longue distance – Empire"
 
 msgid "Deliver Lieutenant Czesc to {pnt} in the {sys} system"
-msgstr "Remettre le Lieutenant Czesc à {pnt} dans le système {sys}"
+msgstr "Transportez le lieutenant Czesc jusqu'à {pnt}, dans le système {sys}"
 
 #. More flavour text
 msgid ""
 "Lieutenant Czesc exits your ship and takes a deep breath of air. \"I love "
 "the smell of bureaucracy in the morning.\""
 msgstr ""
+"Le lieutenant Czesc descend de votre vaisseau et inspire profondément. \"Ah… "
+"J'adore l'odeur de la bureaucratie au petit matin.\""
 
 msgid ""
 "He shakes your hand. \"Thanks for all your help, Captain! Follow me to "
@@ -72947,6 +73575,16 @@ msgid ""
 "to head out to other factions. Again, I can't thank you enough! The Empire "
 "does not quickly forget such dedication.\""
 msgstr ""
+"l vous serre la main. \"Merci pour toute votre aide, capitaine ! Suivez-moi "
+"jusqu'au quartier général ; nous allons régler les dernières formalités afin "
+"que tout soit en ordre. Vous pourrez ensuite accepter les missions de "
+"transport longue distance. Elles sont mieux rémunérées que nos missions de "
+"transport classiques, mais exigent souvent de parcourir de plus grandes "
+"distances et de pénétrer dans des territoires contrôlés par d'autres "
+"factions. Vous les trouverez probablement plus facilement aux confins de "
+"l'espace Impérial, là où les cargaisons sont préparées avant d'être "
+"expédiées vers les autres factions. Encore une fois, merci infiniment ! "
+"L'Empire n'oublie jamais ceux qui font preuve d'un tel dévouement.\""
 
 msgid ""
 "You transported Lieutenant Czesc to {pnt} for some paperwork. You can now do "
@@ -72956,6 +73594,14 @@ msgid ""
 "to see them on the edges of Empire space where cargo is ready to head out to "
 "other factions."
 msgstr ""
+"Vous avez transporté le lieutenant Czesc jusqu'à {pnt} afin qu'il "
+"accomplisse les dernières formalités administratives. Vous pouvez désormais "
+"accepter les missions de transport longue distance de l'Empire. Elles "
+"offrent une meilleure rémunération que les missions de transport classiques, "
+"mais demandent souvent de parcourir de plus grandes distances et de "
+"traverser des territoires contrôlés par d'autres factions. Vous aurez "
+"davantage de chances d'en trouver aux confins de l'espace Impérial, là où "
+"les cargaisons sont préparées pour être expédiées vers les autres factions."
 
 #.
 #. -- Empire shipping missions are always timed, but quite lax on the schedules
@@ -72969,16 +73615,16 @@ msgstr ""
 #. Determine risk of piracy
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 msgid "Long distance cargo transport ({tonnes} of {cargo})"
-msgstr ""
+msgstr "Transport longue distance de {tonnes} de {cargo}"
 
 msgid ""
 "Official Empire long distance cargo transport to {pnt} in the {sys} system."
 msgstr ""
-"Transport officiel de fret longue distance de l'Empire vers {pnt} dans le "
+"Transport Impérial de marchandises (longue distance) vers {pnt} dans le "
 "système {sys}."
 
 msgid "Long Distance Empire Shipping"
-msgstr ""
+msgstr "Transport Impérial - Longue distance"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -73015,10 +73661,10 @@ msgstr ""
 #. Must claim system
 #. Bar NPC
 msgid "Commander"
-msgstr ""
+msgstr "Commandant"
 
 msgid "You see an Empire Commander. He seems to have noticed you."
-msgstr ""
+msgstr "Vous voyez un commandant de l'Empire. Il semble vous avoir remarqué."
 
 #. Intro text
 msgid ""
@@ -73029,6 +73675,13 @@ msgid ""
 "these missions, unlike the ones you've recently completed for the division. "
 "Would you be up for the challenge?\""
 msgstr ""
+"Vous vous approchez du commandant Impérial.\n"
+"\"Bonjour. Vous devez être {player}. Le lieutenant Czesc m'a beaucoup parlé "
+"de vous. Je suis le commandant Soldner. Nous avons des missions un peu plus "
+"délicates à confier à quelqu'un de votre calibre au sein du Service de "
+"Transport Impérial. Contrairement à celles que vous venez d'effectuer pour "
+"la division, celles-ci comportent de véritables risques. Le défi vous "
+"tente ?\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -73042,29 +73695,40 @@ msgid ""
 "{ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."
 "\""
 msgstr ""
+"\"Nous avons organisé un échange de prisonniers avec le FLF sur {dest_pnt}, "
+"dans le système {dest_sys}. Ils ont exigé qu'un pilote plus 'neutre' soit "
+"chargé de l'opération. Vous devrez vous rendre sur {dest_pnt} avec plusieurs "
+"prisonniers du FLF à bord de votre vaisseau et les échanger contre certains "
+"des nôtres. Vous ne serez pas escorté de manière visible, mais nos vaisseaux "
+"surveilleront discrètement la situation depuis les systèmes voisins.\"\n"
+"\"Une fois nos hommes récupérés, ramenez-les sur {ret_pnt}, dans le système "
+"{ret_sys}, où ils seront débriefés. Vous serez rémunéré pour vos services. "
+"Bonne chance.\""
 
 msgid ""
 "The prisoners are loaded onto your ship along with a few marines to ensure "
 "nothing untoward happens."
 msgstr ""
+"Les prisonniers sont embarqués à bord de votre vaisseau, accompagnés de "
+"quelques soldats Impériaux chargés d'éviter tout incident."
 
 #. Accept mission
 #. target destination
 #. Mission details
 msgid "Prisoner Exchange"
-msgstr ""
+msgstr "Échange de prisonniers"
 
 msgid "Go to {pnt} in the {sys} system to exchange prisoners with the FLF"
 msgstr ""
-"Se rendre à {pnt} dans le système {sys} pour échanger des prisonniers avec "
-"le FLF"
+"Rendez-vous sur {pnt}, dans le système {sys}, afin de procéder à un échange "
+"de prisonniers avec le FLF"
 
 #. Set up the goal
 msgid "Prisoners"
 msgstr "Prisonniers"
 
 msgid "FLF prisoners."
-msgstr "Prisonniers FLF."
+msgstr "Des prisonniers du FLF."
 
 #. Set hooks
 #. Go on to next stage
@@ -73078,6 +73742,13 @@ msgid ""
 "with guns to their backs. You see figures step out of the shadows with "
 "weapons too; most likely the FLF."
 msgstr ""
+"À votre atterrissage, vous remarquez que le spatioport a été entièrement "
+"évacué. Vous apercevez également des explosifs fixés à plusieurs piliers. "
+"Quelque chose ne tourne pas rond. Les soldats Impériaux vous ordonnent de "
+"rester à bord pendant qu'ils sortent pour procéder à l'échange.\n"
+"Depuis votre cockpit, vous les voyez pousser les prisonniers devant eux, "
+"armes pointées dans leur dos. D'autres silhouettes émergent alors des "
+"ombres, elles aussi armées. Ce sont probablement les représentants du FLF."
 
 #. blaring alarm
 msgid ""
@@ -73087,20 +73758,30 @@ msgid ""
 "You remember the explosives just as loud explosions go off behind you. This "
 "doesn't look good at all."
 msgstr ""
+"Soudain, une sirène retentit. Des coups de feu éclatent de toutes parts. "
+"Vous mettez immédiatement les moteurs en route et vous préparez à décoller. "
+"Les tirs résonnent dans toute la baie d'atterrissage et vous distinguez "
+"plusieurs corps étendus au sol tandis que votre vaisseau quitte le "
+"spatioport. Vous repensez alors aux explosifs. De violentes détonations "
+"secouent le complexe derrière vous. La situation vient clairement de tourner "
+"au désastre."
 
 msgid ""
 "You start your climb out of the atmosphere and notice how you're picking up "
 "many FLF and Dvaered ships. Looks like you're going to have quite a run to "
 "get the hell out of here. This didn't go as you expected."
 msgstr ""
+"Vous entamez votre ascension hors de l'atmosphère lorsque vos capteurs "
+"détectent de nombreux appareils du FLF, ainsi que des vaisseaux Dvaériens. "
+"Il semblerait que votre fuite ne fasse que commencer. Les choses ne se sont "
+"absolument pas passées comme prévu."
 
-#, fuzzy
 msgid "Return to {pnt} in the {sys} system to report what happened."
-msgstr "Aller au système suivant"
+msgstr ""
+"Retournez sur {pnt}, dans le système {sys}, afin de faire votre rapport."
 
 msgid "Return to {pnt} in the {sys} system to report what happened"
-msgstr ""
-"Retourner à {pnt} dans le système {sys} pour rapporter ce qui s'est passé"
+msgstr "Retournez sur {pnt}, dans le système {sys}, afin de faire votre rapport"
 
 #. Prevent players from saving on the destination planet
 #. We'll take off right away again
@@ -73111,12 +73792,18 @@ msgid ""
 "Soldner. From the look on his face, it seems like he already knows what "
 "happened."
 msgstr ""
+"Après avoir quitté votre vaisseau au spatioport, vous retrouvez le "
+"commandant Soldner. À son expression, il est évident qu'il sait déjà ce qui "
+"s'est passé."
 
 msgid ""
 "\"It was all the Dvaered's fault. They just came in out of nowhere and "
 "started shooting. What a horrible mess. We're already working on sorting out "
 "the blame.\""
 msgstr ""
+"\"C'est entièrement la faute des Dvaériens. Ils sont arrivés de nulle part "
+"et ont ouvert le feu. Quel désastre... Nous sommes déjà en train de "
+"déterminer les responsabilités.\""
 
 msgid ""
 "He sighs. \"We had good people there. And we certainly didn't want you to "
@@ -73124,6 +73811,11 @@ msgid ""
 "me up in the bar in a while. We get no rest around here. The payment has "
 "already been transferred to your bank account.\""
 msgstr ""
+"Il pousse un profond soupir. \"Nous avons perdu de bons hommes. Et nous ne "
+"voulions certainement pas que votre première mission se termine de cette "
+"manière. Si vous souhaitez poursuivre votre collaboration avec nous, "
+"retrouvez-moi au bar d'ici quelque temps. Ici, personne n'a vraiment le "
+"temps de se reposer. Votre rémunération a déjà été virée sur votre compte.\""
 
 msgid ""
 "You took part in a prisoner exchange with the FLF on behalf of the Empire. "
@@ -73132,6 +73824,11 @@ msgid ""
 "Soldner has asked you to meet him in the bar on Halir if you're interested "
 "in more missions."
 msgstr ""
+"Vous avez participé à un échange de prisonniers avec le FLF pour le compte "
+"de l'Empire. Malheureusement, l'opération a échoué. \"C'est entièrement la "
+"faute des Dvaériens. Ils sont arrivés de nulle part et ont ouvert le feu.\" "
+"Le commandant Soldner vous a demandé de le retrouver au bar de Halir si vous "
+"souhaitez participer à d'autres missions."
 
 #. Force FLF combat music (note: must clear this later on).
 #. Get a random position near the player
@@ -73144,12 +73841,12 @@ msgstr ""
 #. Storing the system the player jumped from.
 #. More ships to pressure player from behind
 msgid "FLF Ambusher"
-msgstr ""
+msgstr "Embuscade du FLF"
 
 #. Now the Dvaered
 #. Player should not be able to reland
 msgid "The docking stabilizers have been damaged by weapons fire!"
-msgstr ""
+msgstr "Les stabilisateurs d'amarrage ont été endommagés par des tirs !"
 
 #. Storing the system the player jumped from.
 #.
@@ -73190,6 +73887,11 @@ msgid ""
 "\"Ready for your next mission? We need you to do a pickup and delivery, "
 "however, you are expected to encounter hostilities on the way. Interested?\""
 msgstr ""
+"Vous vous approchez du commandant Soldner, qui semble vous attendre.\n"
+"\"Prêt pour votre prochaine mission ? Nous avons besoin de vous pour "
+"récupérer une cargaison et l'acheminer à destination. En revanche, nous nous "
+"attendons à ce que vous rencontriez une certaine opposition en cours de "
+"route. Êtes-vous partant ?\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -73198,6 +73900,11 @@ msgid ""
 "{dropoff_sys} system. We have reason to believe that it is also wanted by "
 "external forces."
 msgstr ""
+"Le commandant Soldner poursuit : \"Nous devons faire parvenir une cargaison "
+"importante de {pickup_pnt}, dans le système {pickup_sys}, jusqu'à "
+"{dropoff_pnt}, dans le système {dropoff_sys}. Nous avons de bonnes raisons "
+"de penser que des forces extérieures cherchent elles aussi à mettre la main "
+"dessus.\""
 
 msgid ""
 "\"The plan is to send an advance convoy with guards to make the run in an "
@@ -73205,25 +73912,34 @@ msgid ""
 "delivery by yourself. This way we shouldn't arouse suspicion. You are to "
 "report here when you finish delivery, and you'll be paid {credits}.\""
 msgstr ""
+"\"Le plan consiste à envoyer un premier convoi escorté afin d'attirer "
+"l'attention d'éventuels adversaires. Pendant ce temps, vous effectuerez vous-"
+"même le véritable transport. De cette manière, nous ne devrions pas éveiller "
+"les soupçons. Une fois la livraison effectuée, revenez me faire votre "
+"rapport. Vous recevrez {credits} en récompense.\""
 
 msgid ""
 "\"Avoid hostilities at all costs. The package must arrive at its "
 "destination. Since you are undercover, Empire ships won't assist you if you "
 "come under fire, so stay sharp. Good luck.\""
 msgstr ""
+"\"Évitez tout affrontement. Cette cargaison doit impérativement parvenir à "
+"destination. Comme vous opérez sous couverture, les vaisseaux de l'Empire "
+"n'interviendront pas si vous êtes attaqué. Restez sur vos gardes. Bonne "
+"chance.\""
 
 #. target destination
 #. Mission details
 msgid "Empire Shipping Delivery"
-msgstr ""
+msgstr "Livraison Impériale"
 
 msgid "Pick up a package at {pnt} in the {sys} system"
-msgstr "Récupérer un colis à {pnt} dans le système {sys}"
+msgstr "Récupérez la cargaison sur {pnt}, dans le système {sys}"
 
 #. Set hooks
 #. Make sure player has room.
 msgid "Need More Space"
-msgstr ""
+msgstr "Espace insuffisant"
 
 #, lua-format
 msgid ""
@@ -73233,40 +73949,47 @@ msgid_plural ""
 "You do not have enough space to load the packages. You need to make room for "
 "%d more tonnes."
 msgstr[0] ""
-"Vous n'avez pas assez de place pour charger les colis. Vous devez faire de "
-"la place pour %d tonne supplémentaire."
+"Vous ne disposez pas de suffisamment d'espace pour charger la cargaison. "
+"Vous devez libérer encore %d tonne."
 msgstr[1] ""
-"Vous n'avez pas assez de place pour charger les colis. Vous devez faire de "
-"la place pour %d tonnes supplémentaire."
+"Vous ne disposez pas de suffisamment d'espace pour charger la cargaison. "
+"Vous devez libérer encore %d tonnes."
 
 #. Update mission
 msgid "Packages"
 msgstr "Paquets"
 
 msgid "Several packages of \"food\"."
-msgstr ""
+msgstr "Plusieurs paquets étiquetés \"Produits alimentaires\"."
 
 msgid "Deliver the package to {pnt} in the {sys} system"
-msgstr "Livrer le paquet à {pnt} dans le système {sys}"
+msgstr "Livrez la cargaison à {pnt}, dans le système {sys}"
 
 #. Load message
 msgid "Loading Cargo"
-msgstr ""
+msgstr "Chargement de la cargaison"
 
 msgid ""
 "The packages labelled \"Food\" are loaded discreetly onto your ship. Now to "
 "deliver them to {pnt} in the {sys} system."
 msgstr ""
+"Des paquets portant la mention \"Produits alimentaires\" sont discrètement "
+"chargés à bord de votre vaisseau. Vous devez maintenant les livrer à {pnt}, "
+"dans le système {sys}."
 
 #. Some text
 msgid "Cargo Delivery"
-msgstr ""
+msgstr "Livraison de la cargaison"
 
 msgid ""
 "Workers quickly unload the package as discreetly as it was loaded. You "
 "notice that one of them gives you a note. Looks like you'll have to go to "
 "{pnt} in the {sys} system to report to Commander Soldner."
 msgstr ""
+"Les manutentionnaires déchargent la cargaison avec la même discrétion que "
+"lors de son chargement. Vous remarquez que l'un d'eux vous glisse une note. "
+"On vous demande de vous rendre sur {pnt}, dans le système {sys}, afin de "
+"faire votre rapport au commandant Soldner."
 
 #. Rewards
 #. Flavour text
@@ -73277,17 +74000,30 @@ msgid ""
 "for a Heavy Weapon Licence. You'll still have to pay the fee for getting it, "
 "though."
 msgstr ""
+"Vous arrivez sur {pnt} et faites votre rapport au commandant Soldner. Il "
+"vous accueille avant de déclarer : \"J'ai appris que vous aviez rencontré de "
+"la résistance. L'essentiel est que vous soyez parvenu à livrer la cargaison. "
+"Excellent travail. J'ai obtenu pour vous l'autorisation de demander une "
+"Licence d'armes lourdes. Il vous faudra toutefois vous acquitter des frais "
+"nécessaires pour l'obtenir.\""
 
 msgid ""
 "You arrive at {pnt} and report to Commander Soldner. He greets you and "
 "starts talking. \"I heard you encountered resistance. At least you managed "
 "to deliver the package.\""
 msgstr ""
+"Vous arrivez sur {pnt} et faites votre rapport au commandant Soldner. Il "
+"vous accueille avant de déclarer : \"J'ai appris que vous aviez rencontré de "
+"la résistance. L'essentiel est que vous soyez parvenu à livrer la "
+"cargaison.\""
 
 msgid ""
 "\"If you're interested in more work, meet me in the bar in a bit. I've got "
 "some paperwork I need to finish first.\""
 msgstr ""
+"\"Si vous souhaitez poursuivre votre collaboration avec nous, retrouvez-moi "
+"au bar d'ici quelque temps. J'ai encore quelques formalités administratives "
+"à régler.\""
 
 #. The goods
 msgid ""
@@ -73296,12 +74032,20 @@ msgid ""
 "outfitter. Commander Soldner said that you can meet him in the bar at Halir "
 "if you're interested in more work."
 msgstr ""
+"Vous avez mené à bien une livraison spéciale pour le compte de l'Empire. En "
+"récompense, vous êtes désormais autorisé à obtenir une Licence d'armes "
+"lourdes, que vous pouvez acheter auprès d'un équipementier. Le commandant "
+"Soldner vous a indiqué que vous pourrez le retrouver au bar de Halir si vous "
+"souhaitez effectuer d'autres missions."
 
 msgid ""
 "You successfully completed a package delivery for the Empire. Commander "
 "Soldner said that you can meet him in the bar at Halir if you're interested "
 "in more work."
 msgstr ""
+"Vous avez mené à bien une livraison spéciale pour le compte de l'Empire. Le "
+"commandant Soldner vous a indiqué que vous pourrez le retrouver au bar de "
+"Halir si vous souhaitez effectuer d'autres missions."
 
 #. Mercenaries appear after a couple of jumps
 #. Get player position
@@ -73355,12 +74099,14 @@ msgid ""
 "You failed in your attempt to rescue a VIP for the Empire. Meet with "
 "Commander Soldner on Halir to try again."
 msgstr ""
+"Vous avez échoué dans votre tentative de sauvetage d'un VIP pour le compte "
+"de l'Empire. Retrouvez le commandant Soldner sur Halir pour réessayer."
 
 #. Planet targets
 #. Must claim system
 #. Bar NPC
 msgid "Commander Soldner is waiting for you."
-msgstr ""
+msgstr "Le commandant Soldner vous attend."
 
 #. Intro text
 msgid ""
@@ -73368,6 +74114,10 @@ msgid ""
 "\"Hello again, {player}. Still interested in doing another mission? We need "
 "someone to rescue a VIP. This mission will be more dangerous than the last.\""
 msgstr ""
+"Vous retrouvez une nouvelle fois le commandant Soldner au bar.\n"
+"\"Bonjour, {player}. Toujours prêt à repartir en mission ? Nous avons besoin "
+"de quelqu'un pour secourir un VIP. Cette mission sera plus dangereuse que la "
+"précédente.\""
 
 #. Flavour text and mini-briefing
 msgid ""
@@ -73378,6 +74128,14 @@ msgid ""
 "have been many FLF ships detected near the sector, but we've managed to "
 "organize a Dvaered escort for you."
 msgstr ""
+"Le commandant Soldner hoche la tête avant de poursuivre : \"Nous avons reçu "
+"un rapport indiquant qu'un vaisseau de transport contenant une personne de "
+"haute importance a été attaqué. L'équipage est parvenu à s'échapper, mais "
+"les moteurs ont finalement rendu l'âme dans le système {sys}. Le vaisseau "
+"est désormais immobilisé, et nous avons besoin de quelqu'un pour l'aborder "
+"et évacuer ce VIP. De nombreux appareils du FLF ont été repérés dans les "
+"environs, mais nous avons réussi à obtenir une escorte Dvaérienne pour vous "
+"accompagner.\""
 
 msgid ""
 "\"You're going to have to fly to the {sys} system, find and board the "
@@ -73387,21 +74145,32 @@ msgid ""
 "must not allow the transport ship to be destroyed before you rescue the VIP. "
 "His survival is vital.\""
 msgstr ""
+"\"Vous devrez vous rendre dans le système {sys}, localiser le vaisseau de "
+"transport, l'aborder afin de récupérer le VIP, puis revenir. Le secteur sera "
+"très probablement le théâtre de combats. C'est là que votre escorte "
+"Dvaérienne entrera en jeu. Sa mission sera de détourner l'attention des "
+"forces ennemies et de neutraliser toute menace. Vous ne devez en aucun cas "
+"laisser le transport être détruit avant d'avoir évacué le VIP. Sa survie est "
+"d'une importance capitale.\""
 
 msgid ""
 "\"Be careful with the Dvaered; they can be a bit blunt, and might "
 "accidentally destroy the transport ship. If all goes well, you'll be paid "
 "{credits} when you return with the VIP. Good luck, pilot.\""
 msgstr ""
+"\"Gardez toutefois un œil sur les Dvaériens. Ils ont parfois la gâchette un "
+"peu facile et pourraient détruire le transport par mégarde. Si tout se "
+"déroule comme prévu, vous recevrez {credits} à votre retour avec le VIP. "
+"Bonne chance, pilote.\""
 
 #. Accept the mission
 #. Set marker
 #. Mission details
 msgid "Empire VIP Rescue"
-msgstr ""
+msgstr "Sauvetage d'un VIP impérial"
 
 msgid "Rescue the VIP from a transport ship in the {sys} system"
-msgstr "Sauver le VIP d'un vaisseau de transport dans le système {sys}"
+msgstr "Secourez le VIP à bord d'un vaisseau de transport dans le système {sys}"
 
 #. Set hooks
 #. Initiate mission variables (A.)
@@ -73411,6 +74180,10 @@ msgid ""
 "thanks you profusely before heading off. You proceed to pay Commander "
 "Soldner a visit. He seems to be happy, for once."
 msgstr ""
+"Vous atterrissez au spatioport. Le VIP semble avoir déjà repris "
+"connaissance. Après vous avoir chaleureusement remercié, il prend congé. "
+"Vous allez ensuite rendre visite au commandant Soldner. Pour une fois, il "
+"paraît satisfait."
 
 msgid ""
 "\"It seems like you managed to pull it off. I had my doubts at first, but "
@@ -73418,20 +74191,34 @@ msgid ""
 "Heavy Combat Vessel Licence; congratulations! We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
+"\"Il semblerait que vous y soyez parvenu. Je dois reconnaître que j'avais "
+"quelques doutes au départ, mais vous avez prouvé que vous étiez un pilote de "
+"tout premier ordre. Au fait, je vous ai également autorisé à obtenir une "
+"Licence de vaisseau de combat lourd. Félicitations ! Nous n'avons plus rien "
+"à vous confier pour le moment, mais passez nous voir de temps en temps. Il "
+"est toujours possible qu'une nouvelle mission se présente.\""
 
 msgid ""
 "You successfully rescued a VIP for the Empire and have been cleared for a "
 "Heavy Combat Vessel Licence; you can now buy one at the outfitter."
 msgstr ""
+"Vous avez réussi à secourir un VIP pour le compte de l'Empire. Vous êtes "
+"désormais autorisé à obtenir une Licence de vaisseau de combat lourd, "
+"disponible auprès des équipementiers."
 
 msgid ""
 "\"It seems like you managed to pull it off. I had my doubts at first, but "
 "you've proven to be a very skilled pilot. We have nothing more for you now, "
 "but check in periodically in case something comes up for you.\""
 msgstr ""
+"\"Il semblerait que vous y soyez parvenu. Je dois reconnaître que j'avais "
+"quelques doutes au départ, mais vous avez prouvé que vous étiez un pilote de "
+"tout premier ordre. Nous n'avons plus rien à vous confier pour le moment, "
+"mais passez nous voir de temps en temps. Il est toujours possible qu'une "
+"nouvelle mission se présente.\""
 
 msgid "You successfully rescued a VIP for the Empire."
-msgstr ""
+msgstr "Vous avez réussi à secourir un VIP pour le compte de l'Empire."
 
 #. Force FLF combat music (note: must clear this later on).
 #. Put the VIP a ways off of the player but near the jump.
@@ -73450,22 +74237,25 @@ msgstr "VIP"
 #. Notify of mission failure
 #. If aborted you'll also leave the VIP to fate. (A.)
 msgid "You abandoned the VIP."
-msgstr ""
+msgstr "Vous avez abandonné le VIP."
 
 msgid "A Very Important Person."
-msgstr ""
+msgstr "Une personne de première importance."
 
 msgid "Disabled Ship"
-msgstr ""
+msgstr "Vaisseau immobilisé"
 
 msgid ""
 "The ship's hatch opens, and immediately an unconscious VIP is brought aboard "
 "by his bodyguard. Looks like there is no one else aboard."
 msgstr ""
+"L'écoutille du vaisseau s'ouvre et le VIP, inconscient, est immédiatement "
+"transféré à bord de votre vaisseau par son garde du corps. Il semble qu'il "
+"n'y ait plus personne d'autre à bord."
 
 #. Update mission details
 msgid "Return to {pnt} in the {sys} system with the VIP"
-msgstr "Retourner à {pnt} dans le système {sys} avec le VIP"
+msgstr "Ramenez le VIP sur {pnt}, dans le système {sys}"
 
 #. Force unboard
 #. Notify of death
@@ -86001,7 +86791,7 @@ msgid " for impersonating a member of the theocratic government"
 msgstr " pour avoir usurpé l'identité d'un membre du gouvernement théocratique"
 
 msgid " for disrupting the harmony of Crater City"
-msgstr ""
+msgstr " pour trouble à l'harmonie de la Cité du Cratère"
 
 msgid " for attempting to steal a relic from the Tower of the Sirichana"
 msgstr " pour tentative de vol d'une relique de la Tour de Sirichana"
@@ -86010,7 +86800,7 @@ msgid " for practising dark magic in a meditation chamber"
 msgstr " pour pratique de la magie noire dans une salle de méditation"
 
 msgid " for conspiring against an Arch-Canter"
-msgstr ""
+msgstr " pour conspiration contre un Haut-Chantre"
 
 msgid " for vandalizing a sacred text"
 msgstr " pour avoir vandalisé un texte sacré"
@@ -86124,25 +86914,25 @@ msgstr "#nRéputation gagnée :#0 {fct}"
 #. --
 #. Note: indexed from 0 to match mission tiers.
 msgid "Small shipment of {amount} of {cargo} to {pnt} in the {sys} system."
-msgstr "Petit envoi de {amount} de {cargo} à {pnt} dans le système {sys}."
+msgstr "Petit envoi de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 msgid "Medium shipment of {amount} of {cargo} to {pnt} in the {sys} system."
-msgstr "Envoi moyen de {amount} de {cargo} à {pnt} dans le système {sys}."
+msgstr "Envoi moyen de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 msgid ""
 "Sizable cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison importante de {amount} de {cargo} à {pnt} dans le système {sys}."
+"Livraison importante de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 msgid ""
 "Large cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison d'une grande quantité de {cargo} à {pnt} dans le système {sys}."
+"Livraison d'une grande quantité de {cargo} vers {pnt} dans le système {sys}."
 
 msgid ""
 "Bulk freight delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison en vrac de {amount} de {cargo} à {pnt} dans le système {sys}."
+"Livraison en vrac de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 #. =Landing=--
 msgid ""
@@ -86209,19 +86999,22 @@ msgstr "Livraison réussie !"
 #. --
 #. Note: indexed from 0, to match mission tiers.
 msgid "Courier transport to {pnt} in {sys} ({tonnes})"
-msgstr "Transport de marchandise vers {pnt} en {sys} ({tonnes})"
+msgstr "Transport de marchandise vers {pnt} dans le système {sys} ({tonnes})"
 
 msgid "Priority shipment to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Envoi prioritaire vers {pnt} dans le système {sys} ({tonnes})"
 
 msgid "Pressing cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr "Livraison pressante de la cargaison à {pnt} dans {sys} ({tonnes})"
+msgstr ""
+"Livraison pressante de la cargaison vers {pnt} dans le système {sys} ("
+"{tonnes})"
 
 msgid "Urgent cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr "Livraison urgente de marchandises à {pnt} dans {sys} ({tonnes})"
+msgstr ""
+"Livraison urgente de marchandises vers {pnt} dans le système {sys} ({tonnes})"
 
 msgid "Emergency cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr "Livraison de fret d'urgence à {pnt} dans {sys} ({tonnes})"
+msgstr "Livraison d'urgence vers {pnt} dans le système {sys} ({tonnes})"
 
 #. Note: indexed from 0, to match mission tiers.
 msgid "Courier transport of {amount} of {cargo} to {pnt} in the {sys} system."
@@ -86231,22 +87024,22 @@ msgstr ""
 
 msgid "Priority shipment of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Envoi prioritaire de {amount} de {cargo} à {pnt} dans le système {sys}."
+"Envoi prioritaire de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 msgid ""
 "Pressing cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison pressante de {amount} de {cargo} à {pnt} dans le système {sys}."
+"Livraison pressante de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 msgid ""
 "Urgent cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison urgente de {amount} de {cargo} à {pnt} dans le système {sys}."
+"Livraison urgente de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 msgid ""
 "Emergency cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison d'urgence de {amount} de {cargo} à {pnt} dans le système {sys}."
+"Livraison d'urgence de {amount} de {cargo} vers {pnt} dans le système {sys}."
 
 #. =Landing=--
 msgid ""
@@ -102970,7 +103763,7 @@ msgid "Kill the four pirates"
 msgstr "Éliminez les quatre pirates"
 
 msgid "Report back to {pnt} in {sys}"
-msgstr "Retournez sur {pnt}, dans le système {sys}"
+msgstr "Faites votre rapport sur {pnt} dans le système {sys}"
 
 #. Job is done
 msgid ""
@@ -119275,13 +120068,13 @@ msgid "Lord Richthofen"
 msgstr "Seigneur Richthofen"
 
 msgid "Lady Dewinter"
-msgstr ""
+msgstr "Dame Dewinter"
 
 msgid "Lord Easytrigger"
 msgstr ""
 
 msgid "Lord Louverture"
-msgstr ""
+msgstr "Seigneur Louverture"
 
 msgid "Lord Abdelkiller"
 msgstr ""
@@ -119305,18 +120098,20 @@ msgid "Empire Collective Campaign"
 msgstr ""
 
 msgid "Lieutenant Czesc"
-msgstr ""
+msgstr "Lieutenant Czesc"
 
 msgid ""
 "Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at "
 "the bar."
 msgstr ""
+"Le lieutenant Czesc, de la Division du Transport de l'Armada Impériale, est "
+"assis au bar."
 
 msgid "Commander Soldner"
-msgstr ""
+msgstr "Commandant Soldner"
 
 msgid "You see Commander Soldner. He is expecting you."
-msgstr ""
+msgstr "Vous apercevez le commandant Soldner. Il semble vous attendre."
 
 #.
 #.
@@ -119431,7 +120226,7 @@ msgstr "Dr. Strangelove"
 
 #. Purplish (close to nebula?)
 msgid "Minerva CEO"
-msgstr "PDG de Minerva"
+msgstr "PDG de Minerve"
 
 msgid "The CEO of Minerva Station."
 msgstr "Le PDG de la Station Minerva."
@@ -119440,13 +120235,13 @@ msgid "Mole"
 msgstr ""
 
 msgid "Scavenger A"
-msgstr ""
+msgstr "Charognard A"
 
 msgid "Scavenger B"
-msgstr ""
+msgstr "Charognard B"
 
 msgid "Scavengers"
-msgstr ""
+msgstr "Charognards"
 
 msgid ""
 "You see a pair of dirty looking fellows talking loudly among themselves."
@@ -119459,8 +120254,8 @@ msgstr ""
 #, lua-format
 msgid "%s Minerva Token"
 msgid_plural "%s Minerva Tokens"
-msgstr[0] "%s Jeton Minerva"
-msgstr[1] "%s Jetons Minerva"
+msgstr[0] "%s Jeton de Minerve"
+msgstr[1] "%s Jetons de Minerve"
 
 #.
 #. List of mission variables:
