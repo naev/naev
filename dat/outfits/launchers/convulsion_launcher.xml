@@ -15,8 +15,8 @@
   <delay>4</delay>
   <reload_time>160</reload_time>
   <amount>10</amount>
-  <lockon>2</lockon>
-  <iflockon>1</iflockon>
+  <lockon>1.5</lockon>
+  <iflockon>1.3</iflockon>
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
@@ -33,10 +33,12 @@
   <resist>45</resist>
   <damage>
    <type>ion</type>
-   <penetrate>45</penetrate>
+   <penetrate>64</penetrate>
    <physical>125</physical>
    <disable>12</disable>
   </damage>
+  <armour>10</armour>
+  <absorb>0</absorb>
   <ai>smart</ai>
  </specific>
 </outfit>
