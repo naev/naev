@@ -14,10 +14,10 @@
   <duration>4</duration>
   <range>450</range>
   <turn>90</turn>
-  <energy>30</energy>
+  <energy>33</energy>
   <damage>
    <type>energy</type>
-   <penetrate>54</penetrate>
+   <penetrate>85</penetrate>
    <physical>76</physical>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>

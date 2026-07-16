@@ -23,15 +23,14 @@
   <range>1200</range>
   <!-- 100 more than Laser Turret MK2 -->
   <falloff>1050</falloff>
-  <!-- 16.25% less energy efficient than Laser Turret MK2 -->
-  <energy>22</energy>
+  <energy>20</energy>
   <trackmin>1200</trackmin>
   <trackmax>4800</trackmax>
   <damage>
    <type>energy</type>
-   <!-- 20 more than Laser Turret MK2 -->
-   <penetrate>74</penetrate>
+   <penetrate>90</penetrate>
    <physical>20</physical>
+   <knockback>325</knockback>
   </damage>
  </specific>
  <tags>
