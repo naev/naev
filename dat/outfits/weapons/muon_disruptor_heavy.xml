@@ -28,9 +28,10 @@
   <resist>123</resist>
   <damage>
    <type>energy</type>
-   <penetrate>145</penetrate>
-   <physical>31</physical>
+   <penetrate>144</penetrate>
+   <physical>34</physical>
    <disable>16</disable>
+   <knockback>1700</knockback>
   </damage>
   <shots>3</shots>
   <dispersion>30</dispersion>

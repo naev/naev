@@ -29,9 +29,11 @@
   <swivel>28</swivel>
   <damage>
    <type>kinetic</type>
-   <penetrate>151</penetrate>
-   <physical>54</physical>
+   <penetrate>161</penetrate>
+   <physical>59.5</physical>
+   <knockback>7140</knockback>
   </damage>
+  <recoil>51400</recoil>
   <shots>6</shots>
   <dispersion>6</dispersion>
   <speed_dispersion>50</speed_dispersion>

@@ -29,8 +29,9 @@
   <damage>
    <type>energy</type>
    <penetrate>190</penetrate>
-   <physical>44</physical>
+   <physical>52</physical>
    <disable>20</disable>
+   <knockback>5400</knockback>
   </damage>
   <shots>3</shots>
   <dispersion>30</dispersion>
