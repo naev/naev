@@ -32,9 +32,9 @@
   <swivel>22</swivel>
   <damage>
    <type>energy</type>
-   <!-- 10 more than Laser Cannon MK1 -->
-   <penetrate>12</penetrate>
+   <penetrate>20</penetrate>
    <physical>11</physical>
+   <knockback>144</knockback>
   </damage>
  </specific>
  <tags>

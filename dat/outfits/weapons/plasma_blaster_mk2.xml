@@ -27,8 +27,10 @@
   <swivel>22</swivel>
   <damage>
    <type>plasma</type>
-   <penetrate>15</penetrate>
+   <penetrate>30</penetrate>
    <physical>27</physical>
+   <knockback>540</knockback>
   </damage>
+  <recoil>432</recoil>
  </specific>
 </outfit>

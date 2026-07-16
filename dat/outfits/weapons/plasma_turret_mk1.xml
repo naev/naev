@@ -25,8 +25,10 @@
   <trackmax>3000</trackmax>
   <damage>
    <type>plasma</type>
-   <penetrate>12</penetrate>
+   <penetrate>15</penetrate>
    <physical>23</physical>
+   <knockback>368</knockback>
   </damage>
+  <recoil>295</recoil>
  </specific>
 </outfit>

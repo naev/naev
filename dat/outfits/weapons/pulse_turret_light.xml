@@ -29,9 +29,9 @@
   <trackmax>3600</trackmax>
   <damage>
    <type>energy</type>
-   <!-- 15 more than Laser Turret MK1 -->
-   <penetrate>30</penetrate>
+   <penetrate>35</penetrate>
    <physical>13</physical>
+   <knockback>170</knockback>
   </damage>
  </specific>
  <tags>
