@@ -30,7 +30,7 @@
    <physical>17</physical>
    <knockback>425</knockback>
   </damage>
-  <recoil>340</recoil>
+  <recoil>1020</recoil>
   <shots>3</shots>
   <dispersion>3</dispersion>
   <speed_dispersion>30</speed_dispersion>
