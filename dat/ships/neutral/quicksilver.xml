@@ -1,5 +1,5 @@
 <ship name="Quicksilver">
- <points>8</points>
+ <points>7</points>
  <base_type>Quicksilver</base_type>
  <gfx sy="10" sx="10" size="70">quicksilver.gltf</gfx>
  <sound pitch="0.95">engine_melendez</sound>

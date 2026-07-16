@@ -1,6 +1,6 @@
 <ship name="Za'lek Sting">
  <lua>zalek.lua</lua>
- <points>14</points>
+ <points>13</points>
  <base_type>Sting</base_type>
  <gfx sx="10" sy="10" size="95">sting.gltf</gfx>
  <rarity>1</rarity>

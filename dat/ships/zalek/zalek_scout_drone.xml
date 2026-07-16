@@ -1,6 +1,6 @@
 <ship name="Za'lek Scout Drone">
  <lua>zalek.lua</lua>
- <points>5</points>
+ <points>3</points>
  <base_type path="Zalek_Scout_Drone">Za'lek Scout Drone</base_type>
  <gfx size="28">zalek_drone_scout.gltf</gfx>
  <sound>engine_zalek</sound>
@@ -20,9 +20,9 @@
  <health>
   <absorb>35</absorb>
   <armour>20</armour>
-  <shield>60</shield>
-  <shield_regen>6</shield_regen>
-  <energy>40</energy>
+  <shield>70</shield>
+  <shield_regen>4</shield_regen>
+  <energy>50</energy>
   <energy_regen>2</energy_regen>
  </health>
  <characteristics>
@@ -30,7 +30,7 @@
   <mass>50</mass>
   <fuel>300</fuel>
   <cargo>0</cargo>
-  <fuel_consumption>1</fuel_consumption>
+  <fuel_consumption>25</fuel_consumption>
   <cpu>10</cpu>
  </characteristics>
  <slots>

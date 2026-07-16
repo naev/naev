@@ -1,6 +1,6 @@
 <ship name="Nohinohi">
  <lua>soromid.lua</lua>
- <points>8</points>
+ <points>7</points>
  <base_type>Reaver</base_type>
  <gfx size="68">reaver_feral.gltf</gfx>
  <rarity>5</rarity>
