@@ -27,8 +27,8 @@
    <type>plasma</type>
    <penetrate>61</penetrate>
    <physical>35</physical>
-   <knockback>700</knockback>
+   <knockback>1050</knockback>
   </damage>
-  <recoil>560</recoil>
+  <recoil>840</recoil>
  </specific>
 </outfit>

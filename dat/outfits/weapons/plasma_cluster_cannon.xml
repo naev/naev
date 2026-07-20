@@ -29,9 +29,9 @@
    <type>plasma</type>
    <penetrate>95</penetrate>
    <physical>17</physical>
-   <knockback>532</knockback>
+   <knockback>680</knockback>
   </damage>
-  <recoil>1700</recoil>
+  <recoil>2176</recoil>
   <shots>4</shots>
   <dispersion>3</dispersion>
   <speed_dispersion>30</speed_dispersion>

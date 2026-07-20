@@ -31,6 +31,7 @@
    <penetrate>82</penetrate>
    <physical>27</physical>
    <disable>13</disable>
+   <knockback>1120</knockback>
   </damage>
   <shots>3</shots>
   <dispersion>30</dispersion>

@@ -28,5 +28,6 @@
    <physical>38</physical>
    <knockback>600</knockback>
   </damage>
+  <recoil>300</recoil>
  </specific>
 </outfit>

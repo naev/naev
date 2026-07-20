@@ -30,9 +30,9 @@
    <type>plasma</type>
    <penetrate>34</penetrate>
    <physical>2.9</physical>
-   <knockback>23</knockback>
+   <knockback>58</knockback>
   </damage>
-  <recoil>17</recoil>
+  <recoil>46.4</recoil>
  </specific>
  <tags>
   <tag>soromid</tag>

@@ -27,5 +27,6 @@
    <physical>17</physical>
    <knockback>170</knockback>
   </damage>
+  <recoil>85</recoil>
  </specific>
 </outfit>

@@ -27,5 +27,6 @@
    <physical>20</physical>
    <knockback>200</knockback>
   </damage>
+  <recoil>100</recoil>
  </specific>
 </outfit>

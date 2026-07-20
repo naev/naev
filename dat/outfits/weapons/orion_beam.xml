@@ -19,6 +19,7 @@
    <type>energy</type>
    <penetrate>85</penetrate>
    <physical>76</physical>
+   <knockback>1520</knockback>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>

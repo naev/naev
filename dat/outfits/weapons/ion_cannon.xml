@@ -27,6 +27,8 @@
    <penetrate>5</penetrate>
    <physical>2</physical>
    <disable>21</disable>
+   <knockback>230</knockback>
   </damage>
+  <recoil>115</recoil>
  </specific>
 </outfit>

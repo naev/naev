@@ -26,7 +26,8 @@
    <type>energy</type>
    <penetrate>136</penetrate>
    <physical>53</physical>
-   <knockback>1590</knockback>
+   <knockback>4240</knockback>
   </damage>
+  <recoil>2120</recoil>
  </specific>
 </outfit>

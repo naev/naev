@@ -31,7 +31,9 @@
    <penetrate>157</penetrate>
    <physical>28</physical>
    <disable>17</disable>
+   <knockback>3150</knockback>
   </damage>
+  <recoil>1575</recoil>
  </specific>
  <tags>
   <tag>sirius</tag>

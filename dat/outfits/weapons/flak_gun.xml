@@ -29,9 +29,9 @@
    <type>kinetic</type>
    <penetrate>84</penetrate>
    <physical>27</physical>
-   <knockback>1080</knockback>
+   <knockback>1350</knockback>
   </damage>
-  <recoil>7777</recoil>
+  <recoil>12150</recoil>
   <shots>9</shots>
   <dispersion>10</dispersion>
   <speed_dispersion>50</speed_dispersion>

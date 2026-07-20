@@ -31,8 +31,9 @@
    <type>energy</type>
    <penetrate>155</penetrate>
    <physical>33</physical>
-   <knockback>1287</knockback>
+   <knockback>3432</knockback>
   </damage>
+  <recoil>1716</recoil>
  </specific>
  <tags>
   <tag>proteron</tag>

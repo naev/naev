@@ -28,6 +28,8 @@
    <penetrate>130</penetrate>
    <physical>3.1</physical>
    <disable>66</disable>
+   <knockback>4146</knockback>
   </damage>
+  <recoil>2073</recoil>
  </specific>
 </outfit>

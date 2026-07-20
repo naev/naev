@@ -36,6 +36,7 @@
    <physical>11</physical>
    <knockback>144</knockback>
   </damage>
+  <recoil>72</recoil>
  </specific>
  <tags>
   <tag>proteron</tag>

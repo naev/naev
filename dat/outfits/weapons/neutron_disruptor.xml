@@ -30,5 +30,6 @@
    <physical>34</physical>
    <knockback>340</knockback>
   </damage>
+  <recoil>170</recoil>
  </specific>
 </outfit>
