@@ -1431,13 +1431,12 @@ impl AudioBuilder {
             audio.set_velocity(vel);
          }
          audio.set_air_absorption_factor(AUDIO.air_absorption.load(Ordering::Relaxed));
-      } else if stereo {
-         audio
-            .al_source()
-            .parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_REMIX_UNMATCHED_SOFT);
-         audio.set_relative(true);
       } else {
-         //if !stereo {
+         if stereo {
+            audio
+               .al_source()
+               .parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_REMIX_UNMATCHED_SOFT);
+         }
          audio.set_relative(true);
       }
       if self.ingame {
