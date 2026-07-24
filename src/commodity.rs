@@ -681,8 +681,16 @@ impl UserData for CommodityRef {
             // Handle parameters
             let gfx_space = if let Some(params) = params {
                params
-                  .get::<Option<UserDataRef<texture::Texture>>>("gfx_space")?
-                  .map(|t| t.try_clone())
+                  .get::<Option<Either<UserDataRef<texture::Texture>, String>>>("gfx_space")?
+                  .map(|t| match t {
+                     Either::Left(t) => t.try_clone(),
+                     Either::Right(n) => {
+                        let gfxname = format!("gfx/commodity/space/{n}");
+                        texture::TextureBuilder::new()
+                           .path(&gfxname)
+                           .build(&Context::get())
+                     }
+                  })
                   .transpose()?
             } else {
                None
