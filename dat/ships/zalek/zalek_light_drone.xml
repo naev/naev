@@ -1,6 +1,6 @@
 <ship name="Za'lek Light Drone">
  <lua>zalek.lua</lua>
- <points>5</points>
+ <points>3</points>
  <base_type path="Zalek_Light_Drone">Za'lek Light Drone</base_type>
  <gfx size="30">zalek_drone_light.gltf</gfx>
  <sound>engine_zalek</sound>
@@ -20,8 +20,8 @@
  <health>
   <absorb>35</absorb>
   <armour>30</armour>
-  <shield>80</shield>
-  <shield_regen>8</shield_regen>
+  <shield>70</shield>
+  <shield_regen>7</shield_regen>
   <energy>50</energy>
   <energy_regen>3</energy_regen>
  </health>
@@ -30,7 +30,7 @@
   <mass>80</mass>
   <fuel>100</fuel>
   <cargo>0</cargo>
-  <fuel_consumption>1</fuel_consumption>
+  <fuel_consumption>25</fuel_consumption>
   <cpu>10</cpu>
  </characteristics>
  <slots>

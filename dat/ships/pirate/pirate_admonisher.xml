@@ -1,6 +1,6 @@
 <ship name="Pirate Admonisher">
  <lua>pirate.lua</lua>
- <points>14</points>
+ <points>12</points>
  <base_type>Admonisher</base_type>
  <gfx size="68">admonisher_pirate.gltf</gfx>
  <rarity>1</rarity>
@@ -16,15 +16,15 @@
  <trail_generator x="-20" y="-5" h="-5" always_under="1">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Pirate</faction>
- <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space and slightly improved defences, at a cost of cargo capacity and shielding power.</description>
+ <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability and slightly thicker armour, at a cost of cargo capacity and shielding power.</description>
  <health>
-  <armour>200</armour>
+  <armour>250</armour>
  </health>
  <characteristics>
   <crew>13</crew>
   <mass>160</mass>
   <fuel_consumption>200</fuel_consumption>
-  <cargo>20</cargo>
+  <cargo>15</cargo>
  </characteristics>
  <slots>
   <weapon size="medium" x="15" y="0" h="2"/>
@@ -48,10 +48,8 @@
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
-  <turn_mod>10</turn_mod>
   <accel_mod>10</accel_mod>
-  <cargo_mod>15</cargo_mod>
-  <armour_mod>-10</armour_mod>
+  <turn_mod>15</turn_mod>
   <ew_hide>-10</ew_hide>
   <launch_range>20</launch_range>
   <ammo_capacity>25</ammo_capacity>
