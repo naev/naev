@@ -85,13 +85,6 @@ int comm_openPilot( unsigned int pilot )
       return 0;
    }
 
-   /* Must not be disabled, unless hailing. */
-   if ( !pilot_isFlag( p, PILOT_HAILING ) &&
-        pilot_isFlag( p, PILOT_DISABLED ) ) {
-      player_message( _( "#%c%s#r does not respond" ), c, p->name );
-      return 0;
-   }
-
    /* Set up for the comm_get* functions. */
    oldmem = ai_setPilot( p );
 

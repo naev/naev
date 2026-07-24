@@ -167,6 +167,14 @@ function comm( plt )
       return
    end
 
+   -- Can't talk to disabled pilots (unless hailing)
+   if plt:disabled() and not plt:flags("hailing") then
+      plt:comm(fmt.f(_( "{plt} does not respond." ), {
+         plt = "#"..plt:colourChar()..plt:name().."#r",
+      } ), true, true )
+   end
+
+   -- Carried fighters don't respond
    if mem.carried then
       plt:comm(_("The fighter does not respond."), true, true)
       return
