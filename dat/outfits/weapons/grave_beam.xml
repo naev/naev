@@ -15,11 +15,12 @@
   <duration>5</duration>
   <range>700</range>
   <turn>45</turn>
-  <energy>35</energy>
+  <energy>66</energy>
   <damage>
    <type>energy</type>
-   <penetrate>130</penetrate>
-   <physical>112</physical>
+   <penetrate>150</penetrate>
+   <physical>81</physical>
+   <knockback>2430</knockback>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>

@@ -19,14 +19,16 @@
   <delay>0.25</delay>
   <speed>500</speed>
   <range blowup="armour">1100</range>
-  <energy>8</energy>
+  <energy>7.2</energy>
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>
    <type>kinetic</type>
-   <penetrate>58</penetrate>
+   <penetrate>77</penetrate>
    <physical>8.5</physical>
+   <knockback>213</knockback>
   </damage>
+  <recoil>170</recoil>
  </specific>
  <tags>
   <tag>dvaered</tag>

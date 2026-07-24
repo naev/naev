@@ -20,16 +20,18 @@
   <speed>700</speed>
   <range>1300</range>
   <falloff>1150</falloff>
-  <energy>22</energy>
+  <energy>17.5</energy>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>26</swivel>
   <damage>
    <type>ion</type>
-   <penetrate>31</penetrate>
+   <penetrate>76</penetrate>
    <physical>12</physical>
    <disable>8</disable>
+   <knockback>250</knockback>
   </damage>
+  <recoil>125</recoil>
  </specific>
  <tags>
   <tag>sirius</tag>

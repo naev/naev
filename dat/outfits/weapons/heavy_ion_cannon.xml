@@ -19,15 +19,17 @@
   <range>1750</range>
   <falloff>1400</falloff>
   <gfx_end>ionL-end</gfx_end>
-  <energy>42</energy>
+  <energy>38</energy>
   <trackmin>1000</trackmin>
   <trackmax>6000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>ion</type>
-   <penetrate>88</penetrate>
+   <penetrate>104</penetrate>
    <physical>2.8</physical>
    <disable>40</disable>
+   <knockback>1070</knockback>
   </damage>
+  <recoil>535</recoil>
  </specific>
 </outfit>

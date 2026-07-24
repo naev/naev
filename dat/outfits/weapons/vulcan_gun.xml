@@ -24,9 +24,11 @@
   <swivel>22</swivel>
   <damage>
    <type>kinetic</type>
-   <penetrate>21</penetrate>
+   <penetrate>40</penetrate>
    <physical>7</physical>
+   <knockback>175</knockback>
   </damage>
+  <recoil>140</recoil>
  </specific>
  <tags>
   <tag>dvaered</tag>

@@ -29,10 +29,11 @@
   <trackmax>24000</trackmax>
   <damage>
    <type>energy</type>
-   <!-- 30 more than Turbolaser -->
-   <penetrate>206</penetrate>
-   <physical>45</physical>
+   <penetrate>205</penetrate>
+   <physical>54</physical>
+   <knockback>7020</knockback>
   </damage>
+  <recoil>3150</recoil>
  </specific>
  <tags>
   <tag>proteron</tag>

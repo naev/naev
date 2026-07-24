@@ -26,8 +26,10 @@
   <swivel>22</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>0</penetrate>
+   <penetrate>9</penetrate>
    <physical>34</physical>
+   <knockback>340</knockback>
   </damage>
+  <recoil>170</recoil>
  </specific>
 </outfit>

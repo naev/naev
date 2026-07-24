@@ -27,10 +27,12 @@
   <trackmax>20000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>165</penetrate>
-   <physical>31.5</physical>
+   <penetrate>180</penetrate>
+   <physical>38</physical>
    <disable>21</disable>
+   <knockback>4720</knockback>
   </damage>
+  <recoil>2360</recoil>
  </specific>
  <tags>
   <tag>sirius</tag>

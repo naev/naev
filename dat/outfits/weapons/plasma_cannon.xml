@@ -20,15 +20,17 @@
   <range>850</range>
   <falloff>700</falloff>
   <gfx_end>plasma2-end</gfx_end>
-  <energy>45</energy>
+  <energy>36</energy>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>plasma</type>
-   <penetrate>27</penetrate>
+   <penetrate>72</penetrate>
    <physical>17</physical>
+   <knockback>425</knockback>
   </damage>
+  <recoil>1020</recoil>
   <shots>3</shots>
   <dispersion>3</dispersion>
   <speed_dispersion>30</speed_dispersion>

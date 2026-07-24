@@ -23,8 +23,10 @@
   <trackmax>3600</trackmax>
   <damage>
    <type>energy</type>
-   <penetrate>15</penetrate>
+   <penetrate>23</penetrate>
    <physical>20</physical>
+   <knockback>200</knockback>
   </damage>
+  <recoil>100</recoil>
  </specific>
 </outfit>

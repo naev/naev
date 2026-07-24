@@ -25,9 +25,11 @@
   <trackmax>8000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>115</penetrate>
-   <physical>2.8</physical>
-   <disable>60</disable>
+   <penetrate>130</penetrate>
+   <physical>3.1</physical>
+   <disable>66</disable>
+   <knockback>4146</knockback>
   </damage>
+  <recoil>2073</recoil>
  </specific>
 </outfit>

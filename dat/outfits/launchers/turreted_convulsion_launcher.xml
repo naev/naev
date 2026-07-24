@@ -5,7 +5,7 @@
   <size>medium</size>
   <licence>Medium Weapon</licence>
   <rarity>2</rarity>
-  <mass>25</mass>
+  <mass>26</mass>
   <price>130000</price>
   <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.
 
@@ -34,7 +34,7 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
   <resist>45</resist>
   <damage>
    <type>ion</type>
-   <penetrate>32</penetrate>
+   <penetrate>64</penetrate>
    <physical>125</physical>
    <disable>12</disable>
   </damage>

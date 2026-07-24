@@ -21,6 +21,7 @@
    <penetrate>88</penetrate>
    <physical>23</physical>
    <disable>51</disable>
+   <knockback>1480</knockback>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>

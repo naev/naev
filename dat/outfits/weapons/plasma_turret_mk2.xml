@@ -20,13 +20,15 @@
   <speed>700</speed>
   <range>800</range>
   <falloff>650</falloff>
-  <energy>42</energy>
+  <energy>38</energy>
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>
    <type>plasma</type>
-   <penetrate>48</penetrate>
+   <penetrate>61</penetrate>
    <physical>35</physical>
+   <knockback>1050</knockback>
   </damage>
+  <recoil>840</recoil>
  </specific>
 </outfit>

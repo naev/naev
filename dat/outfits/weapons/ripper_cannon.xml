@@ -18,14 +18,16 @@
   <speed>1200</speed>
   <range>1100</range>
   <falloff>950</falloff>
-  <energy>30</energy>
+  <energy>24</energy>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
   <swivel>18</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>36</penetrate>
+   <penetrate>81</penetrate>
    <physical>38</physical>
+   <knockback>600</knockback>
   </damage>
+  <recoil>300</recoil>
  </specific>
 </outfit>

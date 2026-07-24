@@ -8,7 +8,7 @@
   <price>725000</price>
   <description>Built off the heavy ripper cannon, the ripper turret is the heaviest turret conventionally available to civilians. Its bulk, high energy requirements, and high damage make it unsuitable for non-capital ships.</description>
   <gfx_store>ripperturret</gfx_store>
-  <cpu>-350</cpu>
+  <cpu>-200</cpu>
  </general>
  <specific type="turret bolt">
   <gfx type="shader" size="10" col_size="8">particles/ripper_cyan.frag</gfx>
@@ -19,13 +19,15 @@
   <speed>1200</speed>
   <range>2200</range>
   <falloff>1600</falloff>
-  <energy>98</energy>
+  <energy>88</energy>
   <trackmin>3600</trackmin>
   <trackmax>12000</trackmax>
   <damage>
    <type>energy</type>
-   <penetrate>166</penetrate>
-   <physical>76</physical>
+   <penetrate>176</penetrate>
+   <physical>84</physical>
+   <knockback>7560</knockback>
   </damage>
+  <recoil>3780</recoil>
  </specific>
 </outfit>

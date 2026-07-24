@@ -29,10 +29,11 @@
   <trackmax>9600</trackmax>
   <damage>
    <type>energy</type>
-   <!-- 25 more than Heavy Laser Turret -->
    <penetrate>155</penetrate>
-   <physical>30</physical>
+   <physical>33</physical>
+   <knockback>3432</knockback>
   </damage>
+  <recoil>1716</recoil>
  </specific>
  <tags>
   <tag>proteron</tag>

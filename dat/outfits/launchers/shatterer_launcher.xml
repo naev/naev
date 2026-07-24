@@ -26,13 +26,13 @@
   <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="-7">missile</trail_generator>
   <duration blowup="armour">2</duration>
-  <accel>900</accel>
+  <accel>800</accel>
   <turn>5</turn>
-  <speed_max>1200</speed_max>
+  <speed_max>1000</speed_max>
   <resist>35</resist>
   <damage>
    <type>ion</type>
-   <penetrate>63</penetrate>
+   <penetrate>83</penetrate>
    <physical>40</physical>
    <disable>5</disable>
   </damage>

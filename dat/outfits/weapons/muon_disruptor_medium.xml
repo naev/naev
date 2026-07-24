@@ -22,15 +22,16 @@
   <speed>550</speed>
   <range>1000</range>
   <falloff>850</falloff>
-  <energy>65</energy>
+  <energy>58.5</energy>
   <trackmin>1200</trackmin>
   <trackmax>4800</trackmax>
   <resist>108</resist>
   <damage>
    <type>energy</type>
-   <penetrate>70</penetrate>
+   <penetrate>82</penetrate>
    <physical>27</physical>
    <disable>13</disable>
+   <knockback>1120</knockback>
   </damage>
   <shots>3</shots>
   <dispersion>30</dispersion>

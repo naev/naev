@@ -25,11 +25,11 @@
   <trackmax>20000</trackmax>
   <damage>
    <type>kinetic</type>
-   <penetrate>190</penetrate>
-   <physical>80</physical>
-   <knockback>10000</knockback>
+   <penetrate>195</penetrate>
+   <physical>96</physical>
+   <knockback>12760</knockback>
   </damage>
-  <recoil>8000</recoil>
+  <recoil>6000</recoil>
  </specific>
  <tags>
   <tag>dvaered</tag>

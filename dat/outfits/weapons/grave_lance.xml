@@ -18,8 +18,9 @@
   <swivel>22</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>88</penetrate>
+   <penetrate>115</penetrate>
    <physical>98</physical>
+   <knockback>2450</knockback>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
