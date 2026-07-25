@@ -239,21 +239,8 @@ static int mission_meetConditionals( const MissionData *misn )
 {
    /* If chapter, must match chapter. */
    if ( misn->avail.chapter_re != NULL ) {
-      pcre2_match_data *match_data =
-         pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
-      int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter,
-                            strlen( player.chapter ), 0, 0, match_data, NULL );
-      pcre2_match_data_free( match_data );
-      if ( rc < 0 ) {
-         switch ( rc ) {
-         case PCRE2_ERROR_NOMATCH:
-            return -1;
-         default:
-            WARN( _( "Matching error %d" ), rc );
-            break;
-         }
-      } else if ( rc == 0 )
-         return 1;
+      if ( cregex_is_match( misn->avail.chapter_re, player.chapter ) <= 0 )
+         return 0;
    }
 
    /* Must not be already done or running if unique. */
@@ -863,7 +850,7 @@ static void mission_freeData( MissionData *mission )
    free( mission->avail.spob );
    free( mission->avail.system );
    free( mission->avail.chapter );
-   pcre2_code_free( mission->avail.chapter_re );
+   cregex_free( mission->avail.chapter_re );
    array_free( mission->avail.factions );
    free( mission->avail.cond );
    free( mission->avail.done );
@@ -1117,17 +1104,10 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
    /* Compile regex for chapter matching. */
    if ( temp->avail.chapter != NULL ) {
-      int        errornumber;
-      PCRE2_SIZE erroroffset;
-      temp->avail.chapter_re =
-         pcre2_compile( (PCRE2_SPTR)temp->avail.chapter, PCRE2_ZERO_TERMINATED,
-                        0, &errornumber, &erroroffset, NULL );
+      temp->avail.chapter_re = cregex_new( temp->avail.chapter );
       if ( temp->avail.chapter_re == NULL ) {
-         PCRE2_UCHAR buffer[256];
-         pcre2_get_error_message( errornumber, buffer, sizeof( buffer ) );
-         WARN( _( "Mission '%s' chapter PCRE2 compilation failed at offset %d: "
-                  "%s" ),
-               temp->name, (int)erroroffset, buffer );
+         WARN( _( "Mission '%s' chapter regex compilation failed." ),
+               temp->name );
       }
    }
 

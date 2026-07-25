@@ -23,6 +23,7 @@
 #include "array.h"
 #include "cond.h"
 #include "conf.h"
+#include "cregex.h"
 #include "hook.h"
 #include "land.h"
 #include "log.h"
@@ -61,7 +62,7 @@ typedef struct EventData_ {
    char       *system;     /**< System name. */
    char       *chapter;    /**< Chapter name. */
    FactionRef *factions;   /**< Faction checks. */
-   pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
+   CRegex     *chapter_re; /**< Compiled regex chapter if applicable. */
 
    EventTrigger_t trigger;    /**< What triggers the event. */
    char          *cond;       /**< Conditional Lua code to execute. */
@@ -411,22 +412,7 @@ void events_trigger( EventTrigger_t trigger )
 
       /* If chapter, must match chapter regex. */
       if ( ed->chapter_re != NULL ) {
-         pcre2_match_data *match_data =
-            pcre2_match_data_create_from_pattern( ed->chapter_re, NULL );
-         int rc =
-            pcre2_match( ed->chapter_re, (PCRE2_SPTR)player.chapter,
-                         strlen( player.chapter ), 0, 0, match_data, NULL );
-         pcre2_match_data_free( match_data );
-         if ( rc < 0 ) {
-            switch ( rc ) {
-            case PCRE2_ERROR_NOMATCH:
-               continue;
-            default:
-               WARN( _( "Matching error %d" ), rc );
-               break;
-            }
-            continue;
-         } else if ( rc == 0 )
+         if ( cregex_is_match( ed->chapter_re, player.chapter ) <= 0 )
             continue;
       }
 
@@ -557,17 +543,10 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
    /* Compile regex for chapter matching. */
    if ( temp->chapter != NULL ) {
-      int        errornumber;
-      PCRE2_SIZE erroroffset;
-      temp->chapter_re =
-         pcre2_compile( (PCRE2_SPTR)temp->chapter, PCRE2_ZERO_TERMINATED, 0,
-                        &errornumber, &erroroffset, NULL );
+      temp->chapter_re = cregex_new( temp->chapter );
       if ( temp->chapter_re == NULL ) {
-         PCRE2_UCHAR buffer[256];
-         pcre2_get_error_message( errornumber, buffer, sizeof( buffer ) );
-         WARN( _( "Mission '%s' chapter PCRE2 compilation failed at offset %d: "
-                  "%s" ),
-               temp->name, (int)erroroffset, buffer );
+         WARN( _( "Mission '%s' chapter regex compilation failed." ),
+               temp->name );
       }
    }
 
@@ -746,7 +725,7 @@ static void event_freeData( EventData *event )
    free( event->spob );
    free( event->system );
    free( event->chapter );
-   pcre2_code_free( event->chapter_re );
+   cregex_free( event->chapter_re );
 
    array_free( event->factions );
 

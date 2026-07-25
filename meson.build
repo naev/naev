@@ -141,7 +141,6 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
-   pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
    sdl = dependency('sdl3', version: '>=3.2.0', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
@@ -168,7 +167,6 @@ if buildExec.disabled() == false
       dependency('freetype2', required: true),
       libunibreak,
       libxml2,
-      pcre2,
       sdl,
    ]
 

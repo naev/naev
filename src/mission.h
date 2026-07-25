@@ -3,11 +3,9 @@
  */
 #pragma once
 
-#define PCRE2_CODE_UNIT_WIDTH 8
-#include <pcre2.h>
-
 #include "claim.h"
 #include "commodity.h"
+#include "cregex.h"
 #include "mission_markers.h"
 #include "nlua.h"
 #include "space.h"
@@ -40,10 +38,10 @@ typedef struct MissionAvail_s {
                   once). */
 
    /* For specific cases */
-   char       *spob;       /**< Spob name. */
-   char       *system;     /**< System name. */
-   char       *chapter;    /**< Chapter name. */
-   pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
+   char   *spob;       /**< Spob name. */
+   char   *system;     /**< System name. */
+   char   *chapter;    /**< Chapter name. */
+   CRegex *chapter_re; /**< Compiled regex chapter if applicable. */
 
    /* For generic cases */
    FactionRef *factions; /**< Array (array.h): To certain factions. */

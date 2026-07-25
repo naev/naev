@@ -9,13 +9,12 @@
  */
 
 #include "naev.h"
-#define PCRE2_CODE_UNIT_WIDTH 8
 #include "physfs.h"
-#include <pcre2.h>
 
 #define BLACKLIST_FILENAME "naev.BLACKLIST"
 
 #include "array.h"
+#include "cregex.h"
 #include "log.h"
 #include "nstring.h"
 
@@ -27,15 +26,11 @@ typedef struct BlkFile_ {
    char *filename; /**< File name. */
 } BlkFile;
 
-static pcre2_code       *blk_re = NULL; /**< Stores the compiled regex. */
-static pcre2_match_data *blk_match =
-   NULL; /**< Stores the matching structure of the regex (for speed). */
-static char      **blk_blacklists_re = NULL; /**< Original regex strings. */
-static pcre2_code *wht_re            = NULL; /**< Stores the compiled regex. */
-static pcre2_match_data *wht_match =
-   NULL; /**< Stores the matching structure of the regex (for speed). */
-static char **wht_blacklists_re = NULL; /**< Original regex strings. */
-static char **blk_blacklists =
+static CRegex *blk_re            = NULL; /**< Stores the compiled regex. */
+static char  **blk_blacklists_re = NULL; /**< Original regex strings. */
+static CRegex *wht_re            = NULL; /**< Stores the compiled regex. */
+static char  **wht_blacklists_re = NULL; /**< Original regex strings. */
+static char  **blk_blacklists =
    NULL; /**< List of blacklisted files (for direct access). */
 static char **blk_dirnames = NULL; /**< List of blacklisted directories (for
                                       direct access, necessary to enumerate). */
@@ -161,35 +156,14 @@ static int blk_enumerateCallback( void *data, const char *origdir,
 
       /* First try whitelist. */
       if ( wht_re != NULL ) {
-         int rc = pcre2_match( wht_re, (PCRE2_SPTR)path, strlen( path ), 0, 0,
-                               wht_match, NULL );
-         if ( rc < 0 ) {
-            switch ( rc ) {
-            case PCRE2_ERROR_NOMATCH:
-               break;
-            default:
-               WARN( _( "Matching error %d" ), rc );
-               break;
-            }
-         } else if ( rc > 0 ) { /* Something matched. */
+         if ( cregex_is_match( wht_re, path ) > 0 ) {
             isgood = 1;
          }
       }
 
       /* Only run matches if not found in whitelist. */
       if ( !isgood ) {
-         int rc = pcre2_match( blk_re, (PCRE2_SPTR)path, strlen( path ), 0, 0,
-                               blk_match, NULL );
-         if ( rc < 0 ) {
-            isgood = 1;
-            switch ( rc ) {
-            case PCRE2_ERROR_NOMATCH:
-               break;
-            default:
-               WARN( _( "Matching error %d" ), rc );
-               break;
-            }
-         } else if ( rc <= 0 ) {
+         if ( cregex_is_match( blk_re, path ) <= 0 ) {
             isgood = 1;
          }
       }
@@ -237,13 +211,11 @@ static int blk_enumerateCallback( void *data, const char *origdir,
    return PHYSFS_ENUM_OK;
 }
 
-static pcre2_code *regex_make( char *const *lst )
+static CRegex *regex_make( char *const *lst )
 {
-   char        buf[STRMAX];
-   pcre2_code *re;
-   int         l = 0;
-   int         errornumber;
-   PCRE2_SIZE  erroroffset;
+   char    buf[STRMAX];
+   CRegex *re;
+   int     l = 0;
 
    if ( array_size( lst ) == 0 )
       return NULL;
@@ -254,13 +226,9 @@ static pcre2_code *regex_make( char *const *lst )
                       ( i == 0 ) ? "" : "|", lst[i] );
 
    /* Try to compile the regex. */
-   re = pcre2_compile( (PCRE2_SPTR)buf, PCRE2_ZERO_TERMINATED, 0, &errornumber,
-                       &erroroffset, NULL );
+   re = cregex_new( buf );
    if ( re == NULL ) {
-      PCRE2_UCHAR buffer[256];
-      pcre2_get_error_message( errornumber, buffer, sizeof( buffer ) );
-      WARN( _( "Blacklist  PCRE2 compilation failed at offset %d: %s" ),
-            (int)erroroffset, buffer );
+      WARN( _( "Blacklist regex compilation failed" ) );
       return NULL;
    }
    return re;
@@ -286,11 +254,6 @@ int blacklist_init( void )
    /* White list can be NULL. */
    wht_re = regex_make( wht_blacklists_re );
 
-   /* Prepare the match data. */
-   blk_match = pcre2_match_data_create_from_pattern( blk_re, NULL );
-   if ( wht_re != NULL )
-      wht_match = pcre2_match_data_create_from_pattern( wht_re, NULL );
-
    /* Find the files and match. */
    blk_blacklists = array_create( char * );
    blk_dirnames   = array_create( char * );
@@ -301,11 +264,9 @@ int blacklist_init( void )
    qsort( blk_dirnames, array_size( blk_dirnames ), sizeof( char * ), strsort );
 
    /* Free stuff up. */
-   pcre2_code_free( blk_re );
-   pcre2_match_data_free( blk_match );
+   cregex_free( blk_re );
    if ( wht_re != NULL ) {
-      pcre2_code_free( wht_re );
-      pcre2_match_data_free( wht_match );
+      cregex_free( wht_re );
    }
 
    /* Check to see we actually have stuff to blacklist. */
