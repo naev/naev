@@ -90,7 +90,7 @@ trie-rs = { version = "0.4" }
 softfloat = "1.0"
 semver = { version = "1.0", features = ["serde"] }
 chrono = { version = "0.4", features = ["serde","now"] }
-base64 = "0.22"
+base64 = "0.23"
 iced = { version = "0.14.0", default-features = false, features = ["wayland", "x11", "wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
