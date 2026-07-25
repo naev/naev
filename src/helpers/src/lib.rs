@@ -1,3 +1,4 @@
+pub mod cregex;
 pub mod mlarc;
 
 /// Useful to sort by a reference to a String, which you can't do with sort_by_key due to

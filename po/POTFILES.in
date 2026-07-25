@@ -4025,6 +4025,7 @@ src/core/src/lua.rs
 src/core/src/ntime.rs
 src/core/src/nxml.rs
 src/core/src/start.rs
+src/cregex.h
 src/damagetype.h
 src/damagetype.rs
 src/debris.c
@@ -4086,6 +4087,7 @@ src/gui_omsg.c
 src/gui_omsg.h
 src/gui_osd.c
 src/gui_osd.h
+src/helpers/src/cregex.rs
 src/helpers/src/lib.rs
 src/helpers/src/mlarc.rs
 src/hook.c

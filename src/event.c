@@ -34,7 +34,6 @@
 #include "nlua_hook.h"
 #include "nlua_munition.h"
 #include "nlua_music.h"
-#include "nlua_tex.h"
 #include "nlua_tk.h"
 #include "npc.h"
 #include "nxml.h"
