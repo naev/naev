@@ -667,6 +667,7 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Copy over weapon sets. */
    ws_copy( player.ps.p->weapon_sets, player.ps.weapon_sets );
+   pilot_weapSetUpdateOutfitState( player.ps.p );
 
    /* If the pilot is deployed, we must redeploy. */
    removed = 0;

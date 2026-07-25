@@ -710,6 +710,19 @@ int pilot_weapSetCheck( Pilot *p, int id, const PilotOutfitSlot *o )
  */
 void pilot_weapSetUpdateStats( Pilot *p )
 {
+   // Update slot references
+   for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+      PilotOutfitSlot *o = p->outfits[i];
+      o->weapset         = -1;
+      for ( int j = 0; j < PILOT_WEAPON_SETS; j++ ) {
+         if ( pilot_weapSetCheck( p, j, o ) != -1 ) {
+            o->weapset = j;
+            break;
+         }
+      }
+   }
+
+   // Update ranges
    for ( int i = 0; i < PILOT_WEAPON_SETS; i++ )
       pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
 }
