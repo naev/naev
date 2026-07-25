@@ -24,7 +24,7 @@ return function ()
          vn.music( der.sfx.ambient )
          vn.transition()
 
-         vn.na(_([[You board the derelict ship and begin a routine search to see if there's anything left. Unluckily, it seems like the ships has been picked clean in a surprisingly methodological way. Almost as if someone went room by room, taking apart the most valuable parts, before progressing to the next room. The precision of the disassembly is uncanny, and something you haven't seen before in your travels.]]))
+         vn.na(_([[You board the derelict ship and begin a routine search to see if there's anything left. Unluckily, it seems like the ship has been picked clean in a surprisingly methodological way. Almost as if someone went room by room, taking apart the most valuable parts, before progressing to the next room. The precision of the disassembly is uncanny, and something you haven't seen before in your travels.]]))
          vn.na(_([[You go about the ship, about to give up on finding anything useful, when you find a weird mass of different ship parts sort of mashed together. In fact, not only seemingly random ship parts, some of quite high value. Not wanting it to go to waste, you decide to take it with you and leave the ship.]]))
          vn.func( function ()
             player.outfitAdd(OUTFIT)
