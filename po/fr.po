@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2026-02-23 21:29+0900\n"
-"PO-Revision-Date: 2026-07-16 17:08+0000\n"
-"Last-Translator: raazqaer <raazqaer@noreply.codeberg.org>\n"
+"PO-Revision-Date: 2026-07-25 22:07+0000\n"
+"Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/>"
 "\n"
 "Language: fr\n"
@@ -99,10 +99,10 @@ msgid "Apollo's Gaze"
 msgstr "Le regard d'Apollon"
 
 msgid "Arc Blade"
-msgstr "Lame courbe"
+msgstr "Lame d’arc"
 
 msgid "Arc Machete"
-msgstr ""
+msgstr "Machette d’arc"
 
 msgid "Asteroid Scanner"
 msgstr "Scanneur d’astéroïdes"
@@ -234,7 +234,7 @@ msgid "Commemorative Stein"
 msgstr "Stein commémoratif"
 
 msgid "Compact Lightsail"
-msgstr ""
+msgstr "Voile solaire compacte"
 
 #. Stealth skill tree
 #. For up to cruiser
@@ -353,16 +353,16 @@ msgid "Enhanced Smell"
 msgstr "Odorat amélioré"
 
 msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
+msgstr "Lanceur de Chasse-Tête Enygma Systems"
 
 msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
+msgstr "Lanceur de Fer-de-Lance Enygma Systems"
 
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
+msgstr "Lanceur Furie sur tourelle Enygma Systems"
 
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
+msgstr "Lanceur Chasse-Tête sur tourelle Enygma Systems"
 
 msgid "Escape Pod"
 msgstr "Nacelle d’éjection"
@@ -371,7 +371,7 @@ msgid "Executor Shield Aura"
 msgstr ""
 
 msgid "Fake Licence"
-msgstr "Fausse Licence"
+msgstr "Licence contrefaite"
 
 msgid "Fake Transponder"
 msgstr "Transpondeur Factice"
@@ -380,7 +380,7 @@ msgid "Fancy Key Chain"
 msgstr "Porte-clés fantaisie"
 
 msgid "Faraday Tempest Coating"
-msgstr ""
+msgstr "Blindage faraday tempête"
 
 msgid "Feather Drive"
 msgstr ""
@@ -431,25 +431,25 @@ msgid "Gauntlet Supreme"
 msgstr "Optimisation Écarlate Suprême"
 
 msgid "Gauss Gun"
-msgstr ""
+msgstr "Canon Gaussien"
 
 msgid "Goatee Marker"
 msgstr "Marqueur de bouc"
 
 msgid "Grave Beam"
-msgstr ""
+msgstr "Faisceau Outre-Tombe"
 
 msgid "Grave Lance"
-msgstr ""
+msgstr "Lance Outre-Tombe"
 
 msgid "Greater Astral Cannon"
 msgstr ""
 
 msgid "Guardian Interception System"
-msgstr ""
+msgstr "Système d’Interception Gardien"
 
 msgid "Guardian Overseer System"
-msgstr ""
+msgstr "Système de Supervision Gardien"
 
 msgid "GUI - Brushed"
 msgstr ""
@@ -532,7 +532,7 @@ msgid "Hyperbolic Blink Engine"
 msgstr "Moteur de clignotement hyperbolique"
 
 msgid "Hyperdrive Retool"
-msgstr ""
+msgstr "Réaménagement de l’Hyperpropulseur"
 
 msgid "Improved Stabilizer"
 msgstr "Stabilisateur amélioré"
@@ -571,10 +571,10 @@ msgid "Krain Remige Engine"
 msgstr "Moteur Krain Remige"
 
 msgid "Kratos' Glove"
-msgstr ""
+msgstr "Gant de Kratos"
 
 msgid "Lancelot Bay"
-msgstr "La Baie de Lancelot"
+msgstr "Baie de lancement de Lancelot"
 
 msgid "Large Cargo Pod"
 msgstr "Grande capsule de fret"
@@ -7768,88 +7768,113 @@ msgid "Hailing"
 msgstr "Contacter"
 
 msgid "# Hailing"
-msgstr ""
+msgstr "# Contacter"
 
 msgid ""
 "Communicating with ships or spaceports can be a good way to request "
 "assistance, discourage them from attacking your ship through bribing, or "
 "even obtaining information."
 msgstr ""
+"Il est possible de communiquer avec d’autres vaisseaux ou spatioports pour "
+"demander de l’aide, des informations, ou obtenir qu’ils cessent leurs "
+"attaques en offrant un pot-de-vin."
 
 msgid ""
 "You can hail ships in space using the <%= \"#b\"..naev.keyGet(\"hail\").."
 "\"#0\" %> key."
 msgstr ""
+"En vol, vous pouvez contacter les vaisseaux en appuyant sur <%= "
+"\"#b\"..naev.keyGet(\"hail\")..\"#0\" %>."
 
 msgid "Additionally, some ships will hail your ship."
-msgstr ""
+msgstr "De plus, certains vaisseaux vous contacteront."
 
 msgid ""
 "You can respond to these ships by either targeting them and hailing them, or "
 "using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond "
 "directly."
 msgstr ""
+"Vous pouvez leur répondre soit en les contactant en retour, soit en appuyant "
+"sur <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %>."
 
 msgid "## Requesting Fuel"
-msgstr ""
+msgstr "## Demander du carburant"
 
 msgid ""
 "When you run out of [fuel](mechanics/hyperspace), some good Samaritans will "
 "offer to refuel you, usually in exchange for credits."
 msgstr ""
+"Si vous venez a manquer d’[essence](mechanics/hyperspace) en vol, certaines "
+"âmes charitables accepteront de remplir vos réservoirs, le plus souvent en "
+"échange de quelques crédits."
 
 msgid ""
 "If you hail a pilot when you are out of fuel, the option will appear, and "
 "you can negotiate to get your ship refueled."
 msgstr ""
+"Si vous contactez un pilote, vous aurez l’option de demander et acheter du "
+"carburant."
 
 msgid "## Bribing"
-msgstr ""
+msgstr "## Pots-de-vin"
 
 msgid ""
 "When dealing with hostile ships, you are sometimes able to bribe them and "
 "their companions."
 msgstr ""
+"En cas d’hostilités avec d’autres vaisseaux, vous pouvez parfois les "
+"convaincre de vous laisser tranquille, en échange d’un pot-de-vin."
 
 msgid ""
 "By hailing them, you will get an option to bribe them and also all their "
 "fleet members."
 msgstr ""
+"En contactant un vaisseau, vous aurez la possibilités de verser des crédits "
+"à son pilote et aux membres de sa flotte."
 
 msgid ""
 "After you make the payment, the hostile ships will turn neutral and leave "
 "you alone."
-msgstr ""
+msgstr "Après le paiement, les ennemis cessent leurs attaques."
 
 msgid ""
 "Do note that if you make them angry again, it is likely they will be not as "
 "kind as before."
 msgstr ""
+"Notez que si vous vous attirez à nouveau leurs foudres, ils ne seront "
+"sûrement pas aussi généreux."
 
-#, fuzzy
 msgid "Hyperspace and Jumping"
-msgstr "Hyperespace"
+msgstr "Hyperespace et Sauts"
 
 msgid "# Hyperspace and Jumping"
-msgstr ""
+msgstr "# Hyperespace et Sauts"
 
 msgid ""
 "Ships can travel from star system to star system through hyperspace by using "
 "their built-in hyperdrives."
 msgstr ""
+"Les vaisseaux peuvent sauter d’un système solaire à l’autre grâce à "
+"l’hyperespace, en utilisant leurs Hyperpropulseurs."
 
 msgid ""
 "Travelling through hyperspace is called **jumping** and requires fuel "
 "specified by the ship being used."
 msgstr ""
+"Voyager à travers l’hyperespace est appelé « **Sauter** », et nécessite plus "
+"ou moins de carburant selon le vaisseau."
 
 msgid ""
 "Jumping can only be done from systems connected to each other, and must be "
 "done near the vicinity of a jump point."
 msgstr ""
+"Les sauts ne peuvent être effectués que d’être les systèmes qui sont "
+"connectés, et doivent être menés à proximité de points de sauts connus."
 
 msgid "The [universe map](mechanics/map) depicts which systems are connected."
 msgstr ""
+"La [carte de l’univers](mechanics/map) montre les connections entre les "
+"systèmes."
 
 #. --
 #. Obligatory create function.
@@ -7930,24 +7955,27 @@ msgid "### Spaceport Bar"
 msgstr "Spatioport"
 
 msgid "The best place to meet other individuals."
-msgstr ""
+msgstr "L’endroit où se font les meilleures rencontres."
 
 msgid ""
 "Not only will you be able to chat with the locals, you will also meet other "
 "individuals who may offer you missions or other things."
 msgstr ""
+"Vous pouvez y parler avec des habitants du monde et rencontrer d’autres "
+"voyageurs qui ont peut-être des requêtes pour vous."
 
 msgid "Important individuals will be marked with an exclamation point."
-msgstr ""
+msgstr "Les plus importants de ceux-ci sont marqués d’un point d’exclamation."
 
 msgid ""
 "Furthermore, the tab will be marked with two exclamation points if an "
 "important individual is at the spaceport bar."
 msgstr ""
+"De plus, le spatioport lui-même en est marqué si un individu notable s’y "
+"trouve."
 
-#, fuzzy
 msgid "### Missions"
-msgstr "Missions"
+msgstr "### Missions"
 
 msgid ""
 "The Mission Bulletin Board System is where you can accept a variety of "
