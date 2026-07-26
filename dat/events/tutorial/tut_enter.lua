@@ -204,7 +204,7 @@ function tut_volatility ()
    vn.na(fmt.f(_([[As you jump the system you notice a small alarm lights up in the control panel:
 #rWARNING - Volatile nebula detected in {sys}! Taking {nebvol:.1f} {unit} damage!#0]]),{
       sys = sys,
-      nebvol = nebvol,
+      nebvol = math.floor(nebvol*10+0.5)*0.1,
       unit = naev.unit("power"),
    }))
    sai(fmt.f(_([[{ainame} materializes in front of you.

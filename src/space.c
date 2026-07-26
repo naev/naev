@@ -1627,9 +1627,9 @@ void space_init( const char *sysname, int do_simulate )
          snprintf( dmgstr, sizeof( dmgstr ),
                    p_( "nebula_volatility", "??? %s" ), UNIT_POWER );
       else
-         snprintf( dmgstr, sizeof( dmgstr ),
-                   p_( "nebula_volatility", "%.1f %s" ),
-                   cur_system->nebu_volatility, UNIT_POWER );
+         snprintf(
+            dmgstr, sizeof( dmgstr ), p_( "nebula_volatility", "%.1f %s" ),
+            0.1 * round( cur_system->nebu_volatility * 10.0 ), UNIT_POWER );
       player_message( _( "#oEntering System %s on %s." ),
                       system_name( cur_system ), nt );
       if ( cur_system->nebu_volatility > 0. )
