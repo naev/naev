@@ -85,7 +85,7 @@ function land()
       end
 
       local hit = rnd.rnd(5,10)
-      faction.hit("Dvaered", hit)
+      faction.hit("Dvaered",hit,nil,nil,true)
       pir.reputationNormalMission(hit)
       misn.finish(true)
    end
