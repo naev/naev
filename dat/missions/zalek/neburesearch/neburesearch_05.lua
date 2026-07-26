@@ -54,6 +54,14 @@ function create()
    misn.setNPC(_("Dr. Mensing"), mensing_portrait, _("She looks happy. Maybe the work on the shielding prototype has finished?"))
 end
 
+local function create_osd ()
+   local osd_msg   = {}
+   osd_msg[1] = fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=dest_planet, sys=dest_sys})
+   osd_msg[2] = fmt.f(_("Fly to the {sys} system and carry out the testing procedure"), {sys=testing_sys})
+   osd_msg[3] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys})
+   misn.osdCreate(osd_title, osd_msg)
+end
+
 function accept()
    local accepted = false
    local p = player.pilot()
@@ -102,11 +110,7 @@ function accept()
    mem.misn_marker = misn.markerAdd(dest_sys, "low")
 
    misn.accept()
-   local osd_msg   = {}
-   osd_msg[1] = fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=dest_planet, sys=dest_sys})
-   osd_msg[2] = fmt.f(_("Fly to the {sys} system and carry out the testing procedure"), {sys=testing_sys})
-   osd_msg[3] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys})
-   misn.osdCreate(osd_title, osd_msg)
+   create_osd()
 
    hook.land("land")
    hook.jumpin("jumpin")
@@ -179,6 +183,11 @@ end
 function jumpin()
    if mem.stage == 2 and system.cur() == testing_sys and hasShieldingPrototypeEquipped() then
       hook.timer(5.0, "arrive_at_testing_sys")
+   elseif mem.stage==3 and system.cur() ~= testing_sys then
+      -- Go back a stage
+      hook.timerClear()
+      create_osd()
+      mem.stage = 2
    end
 end
 
