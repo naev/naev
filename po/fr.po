@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2026-02-23 21:29+0900\n"
-"PO-Revision-Date: 2026-07-25 22:07+0000\n"
+"PO-Revision-Date: 2026-07-27 10:07+0000\n"
 "Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/>"
 "\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 2026.6.1\n"
 
 msgid "Active Plating"
-msgstr "Placage Actif"
+msgstr "Blindage Actif"
 
 msgid "<widget mainimg />"
 msgstr "<widget mainimg />"
@@ -30,35 +30,33 @@ msgstr "# <%=o:name() %>"
 
 #, fuzzy
 msgid "<widget wgtdescription />"
-msgstr "<widget wgtfct />"
+msgstr "<widget wgtdescription />"
 
 msgid "## Properties"
 msgstr "## Propriétés"
 
 #, fuzzy
 msgid "<widget wgtsummary />"
-msgstr "<widget wgtfct />"
+msgstr "<widget wgtsummary />"
 
 msgid "## Availability"
 msgstr "## Disponibilité"
 
-#, fuzzy
 msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
 msgstr ""
 "Les endroits où des <%=0:name() %> sont vendus sont figurés en ##ggreen#0."
 
 #, fuzzy
 msgid "<widget map />"
-msgstr "<widget wgtfct />"
+msgstr "<widget map />"
 
 msgid ""
 "You are not aware of anywhere where <%= o:name() %> are available for "
 "purchase."
 msgstr "Aucun endroit connu où <%=o:name() %> est en vente."
 
-#, fuzzy
 msgid "Adaptive Camouflage Plating"
-msgstr "Placage Furtif Adaptatif"
+msgstr "Blindage Furtif Adaptatif"
 
 msgid "Adaptive Jump"
 msgstr "Saut d'adaptation"
@@ -86,11 +84,11 @@ msgstr "Rafraîchisseur d'air"
 
 #, fuzzy
 msgid "Ambush Hunter I"
-msgstr "Chasseur d'embuscades"
+msgstr "Embuscade I"
 
 #, fuzzy
 msgid "Ambush Hunter II"
-msgstr "Chasseur d'embuscades"
+msgstr "Embuscade II"
 
 msgid "Antimatter Lance"
 msgstr "Lance à Antimatière"
@@ -107,9 +105,8 @@ msgstr "Machette d’arc"
 msgid "Asteroid Scanner"
 msgstr "Scanneur d’astéroïdes"
 
-#, fuzzy
 msgid "Astral Cannon"
-msgstr "Canon à Plasma"
+msgstr "Canon Astral"
 
 msgid "Astral Flow Amplifier"
 msgstr "Amplificateur d'influx astral"
@@ -313,14 +310,13 @@ msgid "Dummy Engine"
 msgstr "Moteur Factice"
 
 msgid "Dummy Plating"
-msgstr "Placage Factice"
+msgstr "Blindage Factice"
 
 msgid "Dummy Systems"
-msgstr "Système Factice"
+msgstr "Systèmes Factices"
 
-#, fuzzy
 msgid "Dvaered Flare Battery"
-msgstr "Batterie explosive Dvaer"
+msgstr "Batterie Feu-de-Fusée Dvaer"
 
 msgid "Efficiency Combat AI"
 msgstr "IA de combat d’efficacité"
@@ -636,13 +632,13 @@ msgid "Luxury Furnishings"
 msgstr "Produits de luxe"
 
 msgid "Machiavellian Fortune"
-msgstr ""
+msgstr "Chance Machiavélique"
 
 msgid "Machiavellian Necessity"
-msgstr ""
+msgstr "Nécessaire Machiavélique"
 
 msgid "Machiavellian Virtue"
-msgstr ""
+msgstr "Vertu Machiavélique"
 
 msgid "Map: Collective Space"
 msgstr "Carte : Espace du Collectif"
@@ -705,7 +701,7 @@ msgid "Mass Driver"
 msgstr "Canon cinétique"
 
 msgid "Medium Cargo Pod"
-msgstr ""
+msgstr "Capsule de fret"
 
 #, fuzzy
 msgid "Medium Combat Vessel Licence"
@@ -718,17 +714,16 @@ msgid "Medium Flow Resonator"
 msgstr "Résonateur d'influx moyen"
 
 msgid "Medium Fuel Pod"
-msgstr ""
+msgstr "Réservoir de carburant"
 
 msgid "Medium Meditation Chamber"
-msgstr ""
+msgstr "Salle de méditation"
 
 msgid "Medium Shield Booster"
-msgstr "Amplificateur de bouclier moyen"
+msgstr "Amplificateur de bouclier"
 
-#, fuzzy
 msgid "Medium Weapon Licence"
-msgstr "License d'Arme Moyenne"
+msgstr "Licence d'Arme Taille Moyenne"
 
 #, fuzzy
 msgid "Melendez Buffalo Engine"
@@ -742,9 +737,8 @@ msgstr "Moteur Melendez Mammouth XL"
 msgid "Melendez Ox Engine"
 msgstr "Moteur Melendez Ox XL"
 
-#, fuzzy
 msgid "Mercenary Licence"
-msgstr "License de Mercenaire"
+msgstr "Licence de Mercenaire"
 
 msgid "Microbond Plating"
 msgstr "Blindage en Microlite"
@@ -800,9 +794,8 @@ msgstr "Lance minière V1"
 msgid "Mining Lance MK2"
 msgstr "Lance minière V2"
 
-#, fuzzy
 msgid "Mystery Outfit"
-msgstr "Équipements"
+msgstr "Équipement mystère"
 
 msgid "Nanobond Plating"
 msgstr "Blindage en Nanolite"
@@ -874,13 +867,13 @@ msgid "PatchiGel Housing"
 msgstr "Réservoir de PatchiGel"
 
 msgid "Patchwork Heavy Plating"
-msgstr "Patchwork Placage Lourd"
+msgstr "Collage de débris de Blindages Lourd"
 
 msgid "Patchwork Light Plating"
-msgstr "Placage Léger Patchwork"
+msgstr "Collage de débris de Blindages Légers"
 
 msgid "Patchwork Medium Plating"
-msgstr "Placage Moyen Patchwork"
+msgstr "Collage de débris de Blindages"
 
 msgid "Pentagram of Valor"
 msgstr "Pentagramme de la vaillance"
@@ -1089,9 +1082,8 @@ msgstr "Sirius"
 msgid "Sirius Shaman Bay"
 msgstr "Sirius"
 
-#, fuzzy
 msgid "S&K Battle Plating"
-msgstr "Placage Lourd de Combat S&K"
+msgstr "Blindage de Combat S&K"
 
 msgid "S&K Heavy Plasma Drill"
 msgstr "Foreuse à plasma lourd S&K"
@@ -1105,19 +1097,17 @@ msgstr "Coque Moyenne de Cargo S&K"
 msgid "S&K Plasma Drill"
 msgstr "Foreuse à plasma S&K"
 
-#, fuzzy
 msgid "S&K Skirmish Plating"
-msgstr "Placage Léger de Combat S&K"
+msgstr "Blindage d’Escarmouche S&K"
 
 msgid "S&K Small Cargo Hull"
 msgstr "Petite Coque de Cargo S&K"
 
-#, fuzzy
 msgid "S&K War Plating"
-msgstr "Placage Lourd de Combat S&K"
+msgstr "Blindage de Guerre S&K"
 
 msgid "Small Cargo Pod"
-msgstr ""
+msgstr "Petite capsule de fret"
 
 msgid "Small Flow Amplifier"
 msgstr "Petit amplificateur d'influx"
@@ -1148,7 +1138,7 @@ msgid "Squadron Synchronizer Module"
 msgstr ""
 
 msgid "Star of Valor"
-msgstr "Étoile de la bravoure"
+msgstr "Étoile de la Bravoure"
 
 msgid "Stealth Burster"
 msgstr ""
@@ -1258,7 +1248,7 @@ msgid "Turreted Vulcan Gun"
 msgstr "Cannon à Tourelle Vulcain"
 
 msgid "Ugly Statue"
-msgstr "Statue moche"
+msgstr "Horrible Statue"
 
 msgid "Ultra Map"
 msgstr ""
@@ -1266,15 +1256,14 @@ msgstr ""
 msgid "Unicorp Caesar IV Launcher"
 msgstr ""
 
-#, fuzzy
 msgid "Unicorp D-23 Medium Plating"
-msgstr "Placage Moyen Unicorp D-24"
+msgstr "Blindage Moyen Unicorp D-23"
 
 msgid "Unicorp D-2 Light Plating"
-msgstr "Placage Léger Unicorp D-2"
+msgstr "Blindage Léger Unicorp D-2"
 
 msgid "Unicorp D-58 Heavy Plating"
-msgstr "Placage Lourd Unicorp D-58"
+msgstr "Blindage Lourd Unicorp D-58"
 
 #, fuzzy
 msgid "Unicorp Eagle 3000 Engine"
@@ -1563,9 +1552,8 @@ msgstr ""
 msgid "Koala"
 msgstr ""
 
-#, fuzzy
 msgid "Koala Armoured"
-msgstr "Armure :"
+msgstr "Koala Blndé"
 
 msgid "Lancelot"
 msgstr ""
@@ -1770,11 +1758,8 @@ msgstr ""
 msgid "Thurion Virtuosity"
 msgstr ""
 
-#, fuzzy
 msgid "Tristan"
-msgstr ""
-"\n"
-"Résistance aux blocages : %.0f%%"
+msgstr "Tristan"
 
 msgid "Vendetta"
 msgstr ""
@@ -6725,7 +6710,7 @@ msgid "Nobody ever came out of that nebula to tell what happened."
 msgstr ""
 
 msgid "The Empire was shaken to the core."
-msgstr "L'Empire a été secoué jusqu'à ses fondements. "
+msgstr "L'Empire a été secoué en profondeur."
 
 msgid ""
 "With Earth lost, along with most of the Imperial bureaucracy, the Imperial "
@@ -6879,9 +6864,8 @@ msgstr ""
 "stellaire](mechanics/map) en sélectionnant un système et en cliquant sur le "
 "bouton #bAutonav#0 pour vous y rendre."
 
-#, fuzzy
 msgid "## Settings"
-msgstr "Paramètres :"
+msgstr "## Paramètres"
 
 msgid ""
 "Autonav settings can be modified from the #binformation window#0 that you "
@@ -6943,9 +6927,8 @@ msgid ""
 "your rank."
 msgstr ""
 
-#, fuzzy
 msgid "Boarding Ships"
-msgstr "Chargement des vaisseaux…"
+msgstr "Abordage de vaisseaux"
 
 msgid "# Boarding"
 msgstr ""
@@ -7238,7 +7221,7 @@ msgid ""
 msgstr ""
 
 msgid "## Damage Types"
-msgstr "## Types de dommage…"
+msgstr "## Types de dommages"
 
 msgid ""
 "There are different damage types that differentiate how much damage is done "
@@ -9275,9 +9258,8 @@ msgid ""
 "configuration will be remembered."
 msgstr ""
 
-#, fuzzy
 msgid "## Activating"
-msgstr "Placage Actif"
+msgstr "## Utilisation d’armes et d’utilitaires"
 
 msgid ""
 "Primary weapons are fired by holding <%= \"#b\"..naev.keyGet(\"primary\").."
@@ -9694,7 +9676,7 @@ msgid "argv[0] is NULL"
 msgstr "argv[0] est NULL"
 
 msgid "unsupported"
-msgstr "Incompatible"
+msgstr "Non pris en charge"
 
 msgid "past end of file"
 msgstr "past end of file"
@@ -9715,7 +9697,7 @@ msgid "symlinks are forbidden"
 msgstr "symlinks are forbidden"
 
 msgid "write directory is not set"
-msgstr "write directory is not set"
+msgstr "le dossier d'écriture n'est pas indiqué"
 
 msgid "file open for reading"
 msgstr "file open for reading"
@@ -9742,19 +9724,19 @@ msgid "permission denied"
 msgstr "permission denied"
 
 msgid "no space available for writing"
-msgstr "no space available for writing"
+msgstr "pas d'espace disponible pour écrire"
 
 msgid "filename is illegal or insecure"
-msgstr "filename is illegal or insecure"
+msgstr "nom de fichier illégal ou dangereux"
 
 msgid "tried to modify a file the OS needs"
-msgstr "tried to modify a file the OS needs"
+msgstr "vous essayez de modifier un fichier dont le SE a besoin"
 
 msgid "directory isn't empty"
 msgstr "directory isn't empty"
 
 msgid "OS reported an error"
-msgstr "OS reported an error"
+msgstr "Le SE retourne une erreur"
 
 msgid "duplicate resource"
 msgstr "duplicate resource"
@@ -10152,9 +10134,8 @@ msgstr "Protéron"
 msgid "PhoenixRiver"
 msgstr "PhoenixRiver"
 
-#, fuzzy
 msgid "   * Content contributor"
-msgstr "   * Contributeur d'éventement"
+msgstr "   * Contributeur de contenu"
 
 msgid "   * Misc fixes and typos"
 msgstr "   * Divers corrections grammaticales"
@@ -10183,9 +10164,8 @@ msgstr "   * De nombreux correctifs"
 msgid "theElerd"
 msgstr "theElerd"
 
-#, fuzzy
 msgid "   * New character images"
-msgstr "   * Images de la planète"
+msgstr "   * Visuels des nouveaux personnages"
 
 msgid "Darien Rousseau \"not-pyroman\" (aka \"Pyroman\")"
 msgstr ""
@@ -11334,14 +11314,14 @@ msgid "Blood Lust"
 msgstr "Soif de sang"
 
 msgid "The ship has had a taste of blood and wants more!"
-msgstr "Le vaisseau a eu le goût du sang et en veut plus !"
+msgstr "Ce vaisseau a eu le goût du sang et en veux plus !"
 
 #, fuzzy
 msgid "Chakra Burn"
 msgstr "Brûlure plasma"
 
 msgid "Your ship is being burned by chakra!"
-msgstr "Votre vaisseau est en train d'être brûlé par le chakra ! "
+msgstr "Votre vaisseau est en train d'être brûlé par le chakra !"
 
 msgid "Chakra Corruption"
 msgstr ""
@@ -11544,13 +11524,13 @@ msgid "Derelict"
 msgstr "Épave"
 
 msgid "Dreamer Pirate Clan"
-msgstr "Le Clan Pirate Des Rêveurs"
+msgstr "Le Clan Pirate des Rêveurs"
 
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
-"Le clan pirate des Rêveurs se compose largement de pirates de la Frontière "
+"Le Clan Pirate des Rêveurs se compose largement de pirates de la Frontière "
 "lassés autant du terrorisme FLF et Dvaered que de la tyrannie de l'Empire."
 
 msgid "Dummy"
@@ -11804,8 +11784,8 @@ msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
 msgstr ""
-"Le Clan Pirate Des Corbeaux est une bande de pirates qui domine le vaste "
-"secteur de Qorel entre les systèmes de L'Empire et des Dvaereds."
+"Le Clan Pirate des Corbeaux est une bande de pirates qui se domine le "
+"secteur de Qorel entre les systèmes de l'Empire et des Dvaered."
 
 #. Script to help with faction standing requirements and edit them easily
 #. --
@@ -11843,9 +11823,8 @@ msgstr ""
 "La Maison Sirius est avant tout définie par sa religion d'État, vouée au "
 "culte d'une divinité nommée Sirichana."
 
-#, fuzzy
 msgid "Soromid Tribes"
-msgstr "Soromid"
+msgstr "Tribus Soromides"
 
 msgid ""
 "The Soromid consists of individuals who were forced to genetically modify "
@@ -12132,11 +12111,10 @@ msgstr ""
 "Vous pensez qu'elle est censée vous représenter, mais elle ne vous ressemble "
 "pas du tout. C'est l'intention qui compte."
 
-#, fuzzy
 msgid "The racing trophy you won with your piloting skills."
 msgstr ""
 "Trophée de course que vous avez gagné grâce à vos excellents talents de "
-"pilote. Très beau sur le mur !"
+"pilote."
 
 #, fuzzy
 msgid ""
@@ -12188,8 +12166,8 @@ msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
 "says \"not for rectal use\". Wait, what?"
 msgstr ""
-"Une médaille brillante pour votre contribution à la cause Dvaered. Au dos, "
-"il est écrit \"pas pour usage rectal\". Attendez, quoi ?"
+"Une médaille brillante pour votre contribution à la cause Dvaered. Au verso, "
+"il est écrit « ne pas utiliser par la voie rectale ». Qu’est-ce que… ?"
 
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
@@ -12203,9 +12181,9 @@ msgid ""
 "too well and it has a habit of bumping into the walls and beeping all the "
 "time, but it is rather cute."
 msgstr ""
-"Un petit drone jouet qui peut voler autour du vaisseau. L'IA ne semble pas "
-"fonctionner très bien et il a l'habitude de se cogner contre les murs et de "
-"biper sans arrêt, mais il est plutôt mignon."
+"Un petit jouet en forme de drone qui peut voler à l’intérieur du vaisseau. "
+"L'IA semble ne pas très bien fonctionner et a pour habitude de rebondir sur "
+"les murs et de biper tout le temps, mais il est plutôt mignon."
 
 msgid ""
 "A #oHyena#0 trading card game card of common rarity. It describes in detail "
@@ -12630,9 +12608,8 @@ msgstr ""
 "des combats prolongés. De nombreux capitaines et leurs équipages doivent "
 "leur vie à cette configuration d'armure."
 
-#, fuzzy
 msgid "U. D-58 Heavy Plating"
-msgstr "Placage Lourd Unicorp D-58"
+msgstr "Blindage Lourd U. D-58"
 
 msgid ""
 "Though a respectable design, the D-58 plating is outclassed by modern heavy "
@@ -12709,9 +12686,8 @@ msgstr ""
 "Les Industries Schafer & Kane ont mis au point une modification de la coque "
 "qui offre à la fois un grand espace de chargement et une protection."
 
-#, fuzzy
 msgid "U. D-23 Medium Plating"
-msgstr "Placage Moyen Unicorp D-24"
+msgstr "Blindage U. D-23"
 
 msgid ""
 "D-23 plating provides a serviceable layer of armour to medium ships, and "
@@ -12771,16 +12747,15 @@ msgstr ""
 "offre un espace de chargement impressionnant sans compromettre l'intégrité "
 "de la coque."
 
-#, fuzzy
 msgid "U. D-2 Light Plating"
-msgstr "Placage Léger Unicorp D-2"
+msgstr "Blindage Léger U. D-2"
 
 msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
-"Couramment utilisé sur les navires civils, le placage D-2 est populaire "
-"auprès des constructeurs navals en raison de son faible coût et de ses "
+"Couramment utilisé sur les navires civils, le blindage D-2 est populaire "
+"auprès des constructeurs de vaisseaux en raison de son faible coût et de ses "
 "performances adéquates, bien que peu inspirantes."
 
 msgid ""
@@ -14063,7 +14038,7 @@ msgid ""
 msgstr ""
 
 msgid "D. Flare B."
-msgstr ""
+msgstr "D. Feu-de-Fusée B."
 
 #, fuzzy
 msgid "Point Defence"
@@ -14080,6 +14055,15 @@ msgid ""
 "displays, it is not entirely uncommon for them to just use the normal "
 "flares, which has led to more than one major incident in the past."
 msgstr ""
+"Également connue sous le nom de « Feu d’artifice Dvaer », la Batterie Feu-de-"
+"Fusée projette de larges amas d’explosifs qui sont capables de dévaster "
+"aussi bien les intercepteurs un peu trop courageux, les missiles et les "
+"sommations. Les explosifs individuels sont plutôt faibles, mais leur densité "
+"dans chaque salve compense ce défaut plus qu’il n’est nécessaire. Les "
+"Seigneurs de guerre Dvaered leurs ont cepedant trouvé une utilisations moins "
+"destructive, pour des spectacles lumineux sub-orbitaux. Cependant, tous les "
+"commanditaires ne songent pas à utiliser des munitions non-explosives, ce "
+"qui à mené à plus d’un accident grave par le passé."
 
 msgid "Guardian I.S."
 msgstr ""
@@ -14310,6 +14294,9 @@ msgid ""
 "you to regenerate your shield faster and give you a small shield capacity "
 "boost, at the expense of draining some of the ship's energy."
 msgstr ""
+"Un générateur de bouclier fonctionnant sur la grille énergétique principale "
+"du vaisseau. Il aide à la régénération du bouclier et augmente légèrement sa "
+"capacité, au prix d’un drain permanent d’énergie."
 
 msgid ""
 "Further developed from Nanobond plating, Microbond plating is a less dense, "
@@ -14920,16 +14907,16 @@ msgid ""
 msgstr ""
 
 msgid "M. Impacto-Plastic Coating"
-msgstr "Blindage Impacto-Plastique M."
+msgstr "Surcouche Impacto-Plastique M."
 
 msgid ""
 "The Milspec Impacto-Plastic Coating is based on memory nano-alloys that "
 "resist both impact and damage, quickly restoring the protected surface to "
 "its original state."
 msgstr ""
-"Le blindage Impacto-Plastique Milspec repose sur des nano-alliages à mémoire "
-"de forme, résistants aux chocs et aux dommages, et capables de rétablir "
-"instantanément la surface protégée dans son état d’origine."
+"La surcouche Impacto-Plastique Milspec repose sur des nano-alliages à "
+"mémoire de forme, résistants aux chocs et aux dommages, et capables de "
+"rétablir instantanément la surface protégée dans son état d’origine."
 
 msgid ""
 "Protecting ships from nebula radiation is not an easy task given the "
@@ -14940,9 +14927,8 @@ msgid ""
 "recommended."
 msgstr ""
 
-#, fuzzy
 msgid "N. Concealment Coating"
-msgstr "Placage Léger Furtif Nexus"
+msgstr "Surcouche de furtivité N."
 
 msgid ""
 "Modern ship sensors rely on detecting gravitational anormalities to spot "
@@ -14951,6 +14937,12 @@ msgid ""
 "projections to confuse gravitational readings and obscure the ship's "
 "position."
 msgstr ""
+"Les détecteurs de vaisseaux modernes observent les anomalies "
+"gravitationnelles pour détecter les vaisseaux, solution fonctionnant le plus "
+"souvent à merveille. Nexus Shipyards ont développé une surcouche "
+"structurelle inédite, qui utilise des auto-projections quantiquement "
+"intriquées pour confondre les mesures gravitationnelles et donc rendre le "
+"vaisseau plus difficile à détecter."
 
 msgid ""
 "A coating of photo-voltaic nanobot paint covers the ship's entire hull and "
@@ -14958,6 +14950,11 @@ msgid ""
 "ship. The nanobots are self-regulating and self-repairing, requiring no "
 "maintenance once a colony has been established."
 msgstr ""
+"Une surcouche de peinture remplie de nano-robots photovoltaïques permet de "
+"récupérer l’énergie solaire et la dirige directement sur la grille "
+"électrique principale du vaisseau. Les nano-robots s’auto-régulent et s’auto-"
+"réparent, n’ayant besoin d’aucune maintenance une fois qu’une colonie est "
+"lancée."
 
 msgid ""
 "It is possible to establish a colony of repair nanobots directly on the hull "
@@ -14975,6 +14972,13 @@ msgid ""
 "time fold or \"blink\", it takes a while for the ship to be fully responsive "
 "again."
 msgstr ""
+"Le moteur de clignotement hyperbolique semble avoir été conçu pour répondre "
+"à la question « Quelle est la masse maximale qu’il est possible de faire "
+"traverser un pli spatio-temporel ? ». Les concepteurs n’ont que peu "
+"considéré la précision du pli spatio-temporel, cherchant plutôt à maximiser "
+"sa puissance. Les troubles causés, tant aux systèmes du vaisseaux qu’à son "
+"personnel, sont tels que chaque pli spatio-temporel ou « clignotement » "
+"cause détériore temporairement la réactivité du vaisseau."
 
 msgid ""
 "Warms up for 2 seconds then blinks you 2000 units in roughly the direction "
@@ -14982,6 +14986,10 @@ msgid ""
 "and turn penalty during cooldown. Performance degrades over 6000 tonnes of "
 "mass."
 msgstr ""
+"Après 2 secondes de pré-chauffage, clignote le vaisseau 2000 unités dans la "
+"direction de sa proue. A un temps de recharge de 8 secondes, durant lequel "
+"le vaisseau accélère et tourne 20% plus lentement. Performance dégradée au-"
+"dessus de 6 kilotonnes de masse."
 
 msgid ""
 "This device installs a secondary scanning array on the ship. The array is "
@@ -64076,6 +64084,9 @@ msgid ""
 "This must be the Dvaered liaison you heard about. Allegedly, he may have a "
 "job for you that involves fighting the Frontier Liberation Front."
 msgstr ""
+"Ce doit être le contact Dvaered dont vous avez entendu parler. Il a semble-t-"
+"il une mission pour vous impliquant de combattre le Front de Libération de "
+"la Frontière."
 
 msgid "House Dvaered needs YOU"
 msgstr ""
@@ -65456,7 +65467,7 @@ msgid "You made a very big mistake!"
 msgstr ""
 
 msgid "Boarding"
-msgstr ""
+msgstr "Embarquement"
 
 msgid ""
 "All the members of the commando unit have put on their battle suits. "
@@ -137481,126 +137492,116 @@ msgid "Turn"
 msgstr ""
 
 msgid "Cargo Space"
-msgstr ""
+msgstr "Espace de fret"
 
-#, fuzzy
 msgid "Fuel Capacity"
-msgstr "Capacité de Flotte"
+msgstr "Capacité en carburant"
 
-#, fuzzy
 msgid "Fuel Usage"
-msgstr "Carburant Nécéssaire :"
+msgstr "Utilisation de carburant"
 
 msgid "Armour Strength"
-msgstr ""
+msgstr "Résistance du blindage"
 
 msgid "Armour Regeneration"
-msgstr ""
+msgstr "Régénération du blindage"
 
 msgid "Shield Strength"
-msgstr ""
+msgstr "Puissance du bouclier"
 
 msgid "Shield Regeneration"
-msgstr ""
+msgstr "Régénération du bouclier"
 
 msgid "Energy Capacity"
-msgstr ""
+msgstr "Capacité en énergie"
 
 msgid "Energy Regeneration"
-msgstr ""
+msgstr "Génération d’énergie"
 
 msgid "CPU Capacity"
-msgstr ""
+msgstr "Capacité du processeur"
 
 msgid "Ability Cooldown"
-msgstr ""
+msgstr "Temps de recharge"
 
 #, fuzzy
 msgid "Shield Down Time"
 msgstr "Aura de bouclier"
 
 msgid "Damage Taken"
-msgstr ""
+msgstr "Dommages subis"
 
 msgid "Jump Time"
-msgstr ""
+msgstr "Temps de saut"
 
 msgid "Landing Time"
-msgstr ""
+msgstr "Temps de manœuvre"
 
 msgid "Cargo Inertia"
 msgstr ""
 
-#, fuzzy
 msgid "Ship Detectability"
-msgstr "Le vaisseau est éthéré."
+msgstr "Perceptibilité du vaisseau"
 
 msgid "Detected Range"
-msgstr ""
+msgstr "Distance de détection"
 
 msgid "Signature Range"
-msgstr ""
+msgstr "Distance de signature"
 
 msgid "Stealth Range"
-msgstr ""
+msgstr "Distance pour mode furtif"
 
-#, fuzzy
 msgid "Minimum Stealth Range"
-msgstr "Placage Moyen Furtif Nexus"
+msgstr "Distance minimale pour mode furtif"
 
 msgid "Detection"
-msgstr ""
+msgstr "Détection"
 
 msgid "Jump Detection"
-msgstr ""
+msgstr "Détection des points de saut"
 
 msgid "Stealth Discovered Rate"
-msgstr ""
+msgstr "Vitesse de détection en mode furtif"
 
-#, fuzzy
 msgid "Scanned Time"
-msgstr "Nombre d'Atterrissage :"
+msgstr "Temps de scan"
 
-#, fuzzy
 msgid "Weapon Range"
-msgstr "Faction :"
+msgstr "Portée des armes"
 
-#, fuzzy
 msgid "Weapon Damage"
-msgstr "Groupe d'armes"
+msgstr "Puissance des armes"
 
-#, fuzzy
 msgid "Weapon Fire Rate"
-msgstr "Raid pirate"
+msgstr "Cadence de tir des armes"
 
-#, fuzzy
 msgid "Weapon Energy Usage"
-msgstr "Énergie :"
+msgstr "Utilisation d’énergie des armes"
 
 msgid "Weapon Damage as Disable"
-msgstr ""
+msgstr "Puissance de désactivation des armes"
 
 msgid "Weapon Munition Speed"
-msgstr ""
+msgstr "Vitesse des projectiles"
 
 msgid "Fire Rate (Launcher)"
-msgstr ""
+msgstr "Cadence de tir (lanceur)"
 
 msgid "Launch Range"
-msgstr ""
+msgstr "Distance de lancement"
 
 msgid "Damage (Launcher)"
-msgstr ""
+msgstr "Puissance (lanceur)"
 
-#, fuzzy
 msgid "Energy Usage (Launcher)"
-msgstr "Énergie :"
+msgstr "Utilisation d’énergie (lanceur)"
 
 msgid "Damage as Disable (Launcher)"
-msgstr ""
+msgstr "Puissance de désactivation (lanceur)"
 
 msgid "Ammo Capacity"
-msgstr ""
+msgstr "Réserves de munitions"
 
 msgid "Launch Lock-on"
 msgstr ""
@@ -137611,15 +137612,11 @@ msgstr ""
 msgid "Ammo Reload Rate"
 msgstr ""
 
-#, fuzzy
 msgid "Ammo Accel"
-msgstr "Accélérer"
+msgstr "Accél. des munitions"
 
-#, fuzzy
 msgid "Ammo Speed"
-msgstr ""
-"\n"
-"Vitesse Maximale : %.0f%%"
+msgstr "Vitesse des munitions"
 
 msgid "Ammo Turn"
 msgstr ""
