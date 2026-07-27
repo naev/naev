@@ -337,6 +337,7 @@ local function compute_goodness( outfit_list, p, st, ss, params, limits )
                      - os.shield_regen_malus - st.shield_regen - ss.shield_regen_malus
       oo.energy_regen = os.energy_regen_mod * (ss.energy_regen_mod * os.energy_regen + st.energy_regen + ss.energy_regen_malus)
                      - os.energy_regen_malus - st.energy_regen - ss.energy_regen_malus
+      oo.energy_regen_mod = os.energy_regen_mod
       oo.nebu_absorb = os.nebu_absorb
       -- Misc
       oo.cargo = os.cargo_mod * (os.cargo + ss.cargo) - ss.cargo
@@ -588,7 +589,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    end
 
    -- We have to add additional constraints (spaceworthy, limits)
-   local sworthy = 3 -- Check CPU, energy regen, and mass
+   local sworthy = 4 -- Check CPU, energy regen, mass, negative energy regen
    -- Budget limit
    if params.budget then
       sworthy = sworthy + 1
@@ -628,7 +629,11 @@ function optimize.optimize( p, cores, outfit_list, params )
       massgoal = nil
    end
    lp:set_row( 3, "mass",      nil, massgoal )
-   local rows = 3
+   -- Negative energy modifiers are the most common cause of the script
+   -- failing, because we can only approximate the interaction between them. We
+   -- have to limit how many negative energy mods are allowed for it to work.
+   lp:set_row( 4, "neg_energy_regen_mod", nil, 2 )
+   local rows = sworthy
    local budget_row
    if params.budget then
       rows = rows+1
@@ -698,6 +703,12 @@ function optimize.optimize( p, cores, outfit_list, params )
          table.insert( ia, 3 )
          table.insert( ja, c )
          table.insert( ar, stats.mass )
+         -- Negative energy mod gets their own constraint
+         if stats.energy_regen_mod < 1 then
+            table.insert( ia, 4 )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
          -- Budget constraint if necessary
          if params.budget then
             table.insert( ia, budget_row )
@@ -858,10 +869,11 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- Due to the approximation, sometimes they end up with not enough
       -- energy, we'll try again with more relaxed energy constraints
       local stn = p:stats()
-      if not z or (try < 5 and (stn.energy_regen < math.min(emod*energygoal - st.energy_regen))) then
+      --if not z or (try < 5 and (stn.energy_regen < math.min(emod*energygoal - st.energy_regen))) then
+      if not z or (try < 5 and (stn.energy_regen < math.max( 0, energygoal - st.energy_regen ))) then
          p:outfitsEquip( outfits_base ) -- Should restore initial outfits
-         emod = emod * 0.5
-         if try >= 3 then
+         emod = emod * 1.5
+         if try >= 4 then
             print(fmt.f("Pilot '{name}' ('{ship}' ship): optimization attempt {try} of {trymax}: emod={emod}", {
                name = p:name(),
                ship = p:ship():name(),
