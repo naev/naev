@@ -633,7 +633,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- failing, because we can only approximate the interaction between them. We
    -- have to limit how many negative energy mods are allowed for it to work.
    lp:set_row( 4, "neg_energy_regen_mod", nil, 2 )
-   local rows = sworthy
+   local rows = 4
    local budget_row
    if params.budget then
       rows = rows+1
