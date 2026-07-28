@@ -10,7 +10,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local pir = require "common.pirate"
 
-local REWARD = 1000
+local REWARD = 2000
 
 function create ()
    local nc = naev.cache()
