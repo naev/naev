@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2026-02-23 21:29+0900\n"
-"PO-Revision-Date: 2026-07-27 10:07+0000\n"
+"PO-Revision-Date: 2026-07-29 17:07+0000\n"
 "Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2026.6.1\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 msgid "Active Plating"
 msgstr "Blindage Actif"
@@ -28,14 +28,12 @@ msgstr "<widget mainimg />"
 msgid "# <%= o:name() %>"
 msgstr "# <%=o:name() %>"
 
-#, fuzzy
 msgid "<widget wgtdescription />"
 msgstr "<widget wgtdescription />"
 
 msgid "## Properties"
 msgstr "## Propriétés"
 
-#, fuzzy
 msgid "<widget wgtsummary />"
 msgstr "<widget wgtsummary />"
 
@@ -46,7 +44,6 @@ msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
 msgstr ""
 "Les endroits où des <%=0:name() %> sont vendus sont figurés en ##ggreen#0."
 
-#, fuzzy
 msgid "<widget map />"
 msgstr "<widget map />"
 
@@ -459,8 +456,9 @@ msgstr ""
 msgid "GUI - Slimv2"
 msgstr ""
 
+#, fuzzy
 msgid "Hades Torch"
-msgstr ""
+msgstr "Torche Hadéenne"
 
 msgid "Handbook for Dvaered Good Manners"
 msgstr "Manuel sur les bonnes manières Dvaered"
@@ -930,13 +928,13 @@ msgid "Port & Polish"
 msgstr ""
 
 msgid "Previous Generation Large Systems"
-msgstr ""
+msgstr "Grands systèmes principaux obsolètes"
 
 msgid "Previous Generation Medium Systems"
-msgstr ""
+msgstr "Systèmes principaux obsolètes"
 
 msgid "Previous Generation Small Systems"
-msgstr ""
+msgstr "Petits systèmes principaux obsolètes"
 
 msgid "Proteron Dalton Bay"
 msgstr "Bay des Proteron Dalton"
@@ -948,7 +946,7 @@ msgid "Prototype Systems T-IVa 'Quickshell'"
 msgstr ""
 
 msgid "Pulse Scanner"
-msgstr ""
+msgstr "Scanner à impulsions"
 
 #, fuzzy
 msgid "Racing Trophy (Bronze)"
@@ -1012,7 +1010,7 @@ msgid "Reflective Shell"
 msgstr "Coque Réfléchissante"
 
 msgid "Repeating Banshee Launcher"
-msgstr ""
+msgstr "Lanceur rapide Banshie"
 
 msgid "Repeating Railgun"
 msgstr "Canon à Rail Automatique"
@@ -1157,7 +1155,7 @@ msgid "Targeting Conduit"
 msgstr ""
 
 msgid "TeraCom Banshee Launcher"
-msgstr ""
+msgstr "Lanceur Banshie TeraCom"
 
 msgid "TeraCom Fury Launcher"
 msgstr ""
@@ -13572,11 +13570,10 @@ msgid ""
 msgstr ""
 
 msgid "R. Banshee L."
-msgstr ""
+msgstr "L. R. Banshie"
 
-#, fuzzy
 msgid "You need at least 15% reputation with House Dvaered."
-msgstr "Nécessite au moins 50 de réputation avec l'Empire."
+msgstr "Nécessite au moins 15 de réputation avec la Maison Dvaered."
 
 msgid ""
 "Designed by House Dvaered for their Ancestors, this launcher features an "
@@ -13584,6 +13581,12 @@ msgid ""
 "fire rate. The ammo storage is short, but it can be anticipated that either "
 "the bomber or its target will have been destroyed before it is empty."
 msgstr ""
+"Conçue par la Maison Dvaered pour leur vaisseau « Ancêtre », ce lanceur "
+"propose un impressionnant système de chargement des explosifs qui permet "
+"d’atteindre des cadences de tir sans pareille. Celui-ci lui donne toutefois "
+"un poids important, et une réserve de munitions plutôt petite, mais on peut "
+"prédire que le bombardier ou sa cible soit détruit avant que cela ne "
+"devienne un problème."
 
 msgid "Shatterer L."
 msgstr ""
@@ -13620,9 +13623,8 @@ msgstr ""
 "essentiellement une gigantesque Roquette Fléau utilisée par les vaisseaux "
 "dvaériens pour frapper des ennemis distants."
 
-#, fuzzy
 msgid "T. Banshee L."
-msgstr "T. Banshee L."
+msgstr "L. Banshee T."
 
 msgid ""
 "TeraCom has equipped its Banshee launcher model with high grade reload and "
@@ -13630,10 +13632,13 @@ msgid ""
 "unguided rockets, while slow, can do respectable damage even to fairly large "
 "ships in the hands of a competent pilot."
 msgstr ""
+"TeraCom complémente son modèle du Lanceur Banshie avec un excellent système "
+"de chargement et de refroidissement pour améliorer la cadence de tir. Bien "
+"que lentes, ces roquettes permettent à un pilote aguerri d’infliger des "
+"dégâts honorables à des vaisseaux de grand calibre."
 
-#, fuzzy
 msgid "T. Fury L."
-msgstr "T. Fury L."
+msgstr "L. Fury T."
 
 msgid ""
 "TeraCom's Fury Launcher is a high-performance missile launcher equipped with "
@@ -13642,9 +13647,14 @@ msgid ""
 "power, the Fury missiles launched are nimble enough to easily strike even "
 "some of the fastest ships in the galaxy."
 msgstr ""
+"Le lanceur Fury par TeraCom est un standard d’efficacité en matière de lance-"
+"missiles. Ses technologies de suivi et d’armement brevetées lui une facilité "
+"d’utilisation déconcertante et, bien qu’ils ne soient pas des plus "
+"destructifs, les missiles Fury sont suffisamment agiles pour toucher même "
+"les vaisseaux les plus rapides de la galaxie."
 
 msgid "T. Headhunter L."
-msgstr ""
+msgstr "L. Chasse-Tête T."
 
 msgid ""
 "This is TeraCom's model Headhunter launcher. Though somewhat pricey and "
@@ -13653,9 +13663,14 @@ msgid ""
 "The Headhunter missiles can deal devastating damage to small and medium-"
 "sized distant enemies, while remaining reasonably fast and agile."
 msgstr ""
+"Le modèle de Chasse-Tête de TeraCom. Bien que coûtant à l’achat et en "
+"ressources du vaisseau, les technologies de suivi et d’armement brevetées "
+"permet aux pilotes de tirer les premiers. Le missile Chasse-Tête peut être "
+"dévastateur à tout vaisseau de petite et moyenne taille, tout en étant "
+"suffisamment agile et rapide."
 
 msgid "T. Imperator L."
-msgstr ""
+msgstr "L. Impérateur T."
 
 msgid ""
 "TeraCom decided not to develop a launcher for the Caesar IV, as it fell "
@@ -13665,6 +13680,12 @@ msgid ""
 "while for it to reach its target. Faster cruisers may be able to outrun it "
 "completely."
 msgstr ""
+"TeraCom décida de ne pas développer de lanceur pour le missile César IV, le "
+"jugeant trop médiocre pour les standards de l’entreprise. À la place, une "
+"nouvelle spécification de torpille a été publiée. Celle-ci a établi les "
+"torpilles lourdes de classe Impérateur, qui offrent une puissance "
+"destructrice accablante. Cependant, elles sont si lentes que les croiseurs "
+"rapides les battent simplement à la course."
 
 msgid "T. Mace L."
 msgstr "T. L. Fléau"
