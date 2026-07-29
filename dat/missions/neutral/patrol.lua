@@ -31,7 +31,8 @@ local lmisn = require "lmisn"
 
 -- luacheck: globals abandon_text msg pay_text (shared with derived mission pirate.patrol)
 
-local REWARD = 100
+-- Half as much as system bounty missions, maybe needs tweaking
+local REWARD = 1000
 
 pay_text    = {
    _("After going through some paperwork, an officer hands you your pay and sends you off."),
