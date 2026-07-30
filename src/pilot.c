@@ -2442,15 +2442,16 @@ void pilot_update( Pilot *pilot, double dt )
        * other timers. This helps to simplify code resetting the timer
        * elsewhere.)
        */
-      if ( outfit_isLauncher( pos->outfit ) ||
-           outfit_isFighterBay( pos->outfit ) ) {
+      int has_ammo = outfit_isMunition( pos->outfit ) &&
+                     ( outfit_amount( pos->outfit ) > 0 );
+      if ( has_ammo || outfit_isFighterBay( pos->outfit ) ) {
          double ammo_threshold, reload_time;
 
          /* Initial (raw) ammo threshold */
-         if ( outfit_isLauncher( pos->outfit ) ) {
-            ammo_threshold = outfit_amount( pos->outfit );
+         if ( outfit_isMunition( pos->outfit ) ) {
+            int amount = outfit_amount( pos->outfit );
             ammo_threshold =
-               round( (double)ammo_threshold * pilot->stats.ammo_capacity );
+               round( (double)amount * pilot->stats.ammo_capacity );
             reload_time =
                outfit_reloadTime( pos->outfit ) / pilot->stats.launch_reload;
          } else {
