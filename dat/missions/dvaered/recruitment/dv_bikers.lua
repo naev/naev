@@ -281,7 +281,7 @@ function land()
       vn.na(_([[They guide you to the urban transport station, and while a crowd of workers are waiting for the next train in a suffocating heat, you enter a small shuttle: "His Lordship announced the creation of the hypervelocity shuttles system last cycle. Since then, this system saves much time to first-class citizen who used to get stuck in traffic jams or in over-crowded heliports. His genius idea was to use the same tunnel net as the subway."]]))
       vn.na(_([["The shuttle system leads us directly under the presidential palace. I'm afraid you won't see its new pediment that His Lordship had built recently."]]))
       vn.na(_([[You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Gauss, the Pinnacle.
-      vn.appear( brn )
+      vn.appear( brn, "electric" )
       brn(fmt.f(_([[Suddenly, a huge holographic face appears in the centre of the room:
 "Hello, and welcome on the planet Ulios, {player1}! I am the Baron Dovai Sauterfeldt. I hope you had smooth travels to our very remote humble piece of land! I am truly delighted to meet you, {player2}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable of remembering most of the astonishingly inspiring people I tend to meet."]]),
          {player1=baron.mangle(player.name()), player2=baron.mangle(player.name())}))
@@ -299,6 +299,7 @@ The man on your right answers: "Certainly not, your Lordship."]]),
          {pnt=mem.convpnt,sys=mem.convsys}))
       brn(_([[You ask if it would not be preferable to steal the hubcap while the ship is at dock, but the baron answers:
 "Yes, maybe you are right, but when I offered her to sell it to me, she refused and said very unfriendly words to me, so I would prefer her to get humiliated in a duel. Besides, this humiliation will ensure that her gang will reject her and not try to avenge her."]]))
+      vn.disappear( brn, "electric" )
       vn.na(_([[After a final "good luck" wished to you by the Baron, the connection is cut and you are guided back to the spaceport and to your ship. It is time for you to buy a Hyena and go to that festival.]]))
       vn.done()
       vn.run()
