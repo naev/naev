@@ -444,7 +444,9 @@ function action_start ()
    hook.pilot( general, "attacked", "start_mayhem" )
    hook.pilot( warlord, "attacked", "start_mayhem" )
 
+   attack_started = true
    mem.state = 2
+   misn.osdActive(3)
 end
 
 local dv_spam, zl_spam, mayhem_setup
