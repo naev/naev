@@ -31,12 +31,13 @@ mem.killed = 0 -- number of ships killed
 
 local function osd ()
    local left = NUMBER_SHIPS - mem.killed
-   misn.osdCreate( title, {
-      fmt.f( n_("Destroy {left} ship in {sys}", "Destroy {left} ships in {sys}", left),
-         {sys=fightsys, left=left}),
-      fmt.f(_("Return to {base} ({basesys})"),{base=base, basesys=basesys}),
-   } )
-   if left <= 0 then
+   if left > 0 then
+      misn.osdCreate( title, {
+         fmt.f( n_("Destroy {left} ship in {sys}", "Destroy {left} ships in {sys}", left),
+            {sys=fightsys, left=left}),
+         fmt.f(_("Return to {base} ({basesys})"),{base=base, basesys=basesys}),
+      } )
+   else
       misn.osdActive(2)
    end
 end
