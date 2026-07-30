@@ -25,7 +25,10 @@ return function( COST )
       return true, 1 -- Can only buy one at a time
    end
 
+   -- Do need for this, as unique outfits are already unsellable
+   --[[
    function sell( _q )
       return false, _("You can not sell this outfit.")
    end
+   --]]
 end
