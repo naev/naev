@@ -575,7 +575,21 @@ static void think_beam( Weapon *w, double dt )
    /* Handle aiming at the target. */
    switch ( outfit_type( w->outfit ) ) {
    case OUTFIT_TYPE_BEAM:
-      if ( outfit_swivel( w->outfit ) > 0. )
+      if ( !weapon_isFlag( w, WEAPON_FLAG_AIM ) && pilot_isPlayer( p ) &&
+           input_mouseIsShown() ) {
+         vec2 tv;
+         gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+         double rdir   = vec2_angle( &w->solid.pos, &tv );
+         double off    = angle_diff( rdir, p->solid.dir );
+         double swivel = outfit_swivel( w->outfit );
+         if ( FABS( off ) > swivel ) {
+            if ( off > 0. )
+               rdir = p->solid.dir - swivel;
+            else
+               rdir = p->solid.dir + swivel;
+         }
+         w->solid.dir = rdir;
+      } else if ( outfit_swivel( w->outfit ) > 0. )
          w->solid.dir =
             weapon_aimTurret( w->outfit, p, &w->target, &w->solid.pos,
                               &p->solid.vel, p->solid.dir, 0. );
