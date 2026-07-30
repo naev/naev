@@ -59,6 +59,8 @@ return {
    end,
    cond = function ()
       return player.misnDone("Prince") and player.misnDone("Sharkman Is Back") --Must have completed Baron Sauterfeldt missions & 1st two Shark campaign missions.
+         -- TODO rewrite dv_bikers so we don't need it as a prereq
+         and player.misnDone("DVaered Negotiation 2")
          and bhelp.bounty_done() >= 10
    end,
    completefunc = function ()
