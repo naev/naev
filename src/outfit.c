@@ -2782,8 +2782,10 @@ static void outfit_parseSMunition( Outfit *temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, temp->u.mnt.dispersion * 180. / M_PI,
                   &dispersion_opts );
    if ( temp->u.mnt.amount > 0 ) {
-      SDESC_ADD( l, temp, _( "\n  Holds %d ammo" ), temp->u.mnt.amount );
-      l = os_printD( temp->summary_raw, l, temp->u.mnt.amount, &ammo_opts );
+      if ( outfit_isLauncher( temp ) )
+         SDESC_ADD( l, temp, _( "\n  Holds %d ammo" ), temp->u.mnt.amount );
+      else
+         l = os_printD( temp->summary_raw, l, temp->u.mnt.amount, &ammo_opts );
       l = os_printD( temp->summary_raw, l, temp->u.mnt.reload_time,
                      &reload_opts );
    }
