@@ -252,6 +252,13 @@ She rushes off into the depths of the ship.]]))
    mainship:setActiveBoard(false)
    mainship:control(false) -- Should fight back a bit
 
+   -- Update OSD
+   misn.osdCreate( _("Minerva Mole"), {
+      fmt.f(_("Defend the {ship}!"), {
+         ship = mainship,
+      }),
+   } )
+
    -- Dvaered jump in hooks
    spawned_dvaereds = {}
    spawned_pirates = {}
@@ -440,6 +447,7 @@ She gives you a tired grin.
    -- Pirates go away
    mainship:changeAI( "pirate" )
    mainship:control(false)
+   mainship:setHilight(false)
    for k,v in ipairs(spawned_pirates) do
       if v:exists() then
          v:changeAI( "pirate" ) -- Guard AI is bad for stuff other than guarding
