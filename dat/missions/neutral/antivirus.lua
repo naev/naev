@@ -50,12 +50,14 @@ local mission = {
    }
 }
 
+local MISN_SPOB, MISN_SYS = spob.getS("Thaddius Terminal")
+
 function create()
    mem.npc_image, mem.npc_portrait = vnimage.genericMale()
 
    mem.starting_system = system.cur()
    mem.starting_spob = spob.cur()
-   mem.fight_system = system.get("Straight Row")
+   mem.fight_system = MISN_SYS
    misn.setNPC(mission.npc.name, mem.npc_portrait, mission.npc.description)
 
    if not misn.claim( { mem.starting_system, mem.fight_system }, true ) then
@@ -224,7 +226,6 @@ function timer_ew_attack_end()
 end
 
 local minions_tb = {}
-local minions_spob = "Thaddius Terminal"
 function minions()
    local fct = faction.dynAdd("Dummy", "adspammer", _("???"), { clear_enemies = true, clear_allies = true, ai="baddie" })
    local puppets = {
@@ -233,7 +234,7 @@ function minions()
    }
    for i=1,5 do
       -- local loc = vec2.newP(rnd.rnd() * 0.4 * system.cur():radius(), rnd.angle()) + location
-      local e = pilot.add(puppets[rnd.rnd( #puppets )], fct, minions_spob, fmt.f(_("Advertiser {n}DK"), { n = tostring(167+(i*rnd.rnd(3, 5)) )}, {naked=true}))
+      local e = pilot.add(puppets[rnd.rnd( #puppets )], fct, MISN_SPOB, fmt.f(_("Advertiser {n}DK"), { n = tostring(167+(i*rnd.rnd(3, 5)) )}, {naked=true}))
       equipopt.generic( e, nil, "elite" )
       e:setLeader( boss )
       e:setHostile(true)
