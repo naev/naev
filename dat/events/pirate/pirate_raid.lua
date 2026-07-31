@@ -76,7 +76,13 @@ function create ()
    mem.finish= mem.start + RAID_LENGTH
 
    -- Inclusive claim, should be tested already
-   evt.claim( {mem.sys}, true )
+   if not evt.claim( {mem.sys}, true ) then
+      evt.finish(false)
+   end
+   -- Shouldn't happen, but don't allow duplicate events
+   if diff.isApplied( diff_name() ) then
+      evt.finish(false)
+   end
    initialize()
 
    news.add{ {
