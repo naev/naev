@@ -45,8 +45,7 @@ local function count_active( p )
    return found, lowest
 end
 
-local function desc()
-   local p = player.pilot()
+local function desc( p )
    local nactive = (p:exists() and #count_active( p )) or 0
    local d = fmt.f(_("Set {setname}:"), {setname=SETNAME})
    -- Assume a max of 5-piece sets, reasonable I think
@@ -59,8 +58,10 @@ local function desc()
          else
             d = d.."#n"
          end
-         d = d..fmt.f(n_([[({n}-piece) {desc}]], [[({n}-pieces) {desc}]], n ),
-            {n=n, desc=b.desc}).."#0"
+         d = d..fmt.f(n_([[({n}-piece) {desc}]], [[({n}-pieces) {desc}]], n ), {
+            n = n,
+            desc = b.desc,
+         }).."#0"
       end
    end
    return d
@@ -127,7 +128,7 @@ function lib.init( setname, outfits, bonuses, noset )
       if descextra_old then
          d = d..descextra_old( p, o, po ).."\n"
       end
-      d = d..desc()
+      d = d..desc(p)
       return d
    end
 
