@@ -99,7 +99,10 @@ end
 @brief Sets the stats of the set.
 --]]
 function lib.set( _p, po )
-   po:clear()
+   -- Only clear if we aren't manually setting
+   if not NOSET then
+      po:clear()
+   end
    if mem.active_stats then
       -- Apply the active stats
       for k,s in pairs(mem.active_stats) do
