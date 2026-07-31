@@ -223,12 +223,14 @@ function multicore.init( params, setfunc )
 
       if averaged and multicore_off ~= true and id then
          local totaleml = smid and smid['total'] or 0
-         local share = math.floor(0.5 + (100*smid['engine_limit'])/smid['total'])
-         desc = desc .. fmt.f(
-            _("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),
+         local smidlimit = smid and smid['engine_limit'] or 0
+         local share = smid and math.floor(0.5 + (100*smidlimit)/smid['total']) or 0
+         desc = desc.."\n\n#o"..fmt.f(_("Load Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)").."#0\n",
             {
-               eml = (smid and smid["engine_limit"]) or 0,
-               total = totaleml, share = share, t = _(multiengines.mobility_stats['engine_limit'].unit)
+               eml = smidlimit,
+               total = totaleml,
+               share = share,
+               t = _(multiengines.mobility_stats['engine_limit'].unit),
             }
          )
          for _k, s in ipairs(stats) do
