@@ -227,6 +227,8 @@ local function compute_lootables ( plt )
             lo.bg = special_col
             table.insert( lootables, lo )
          end
+      else
+         oloot = {}
       end
 
       local ocand = {}
@@ -234,7 +236,7 @@ local function compute_lootables ( plt )
          local _name, _size, _prop, req = o:slot()
          local ot = o:tags() --codespell:ignore ot
          -- Don't allow looting required outfits
-         if not req and not ot.noplayer and not ot.nosteal and o~=oloot then --codespell:ignore ot
+         if not req and not ot.noplayer and not ot.nosteal and not inlist(oloot,o) then --codespell:ignore ot
             table.insert( ocand, o )
          end
       end
