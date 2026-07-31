@@ -1,4 +1,3 @@
-
 --TODO: do it with messages instead of onoutfitchange
 
 --[[
@@ -46,7 +45,7 @@ local function count_active( p )
 end
 
 local function desc( p )
-   local nactive = (p:exists() and #count_active( p )) or 0
+   local nactive = (p and p:exists() and #count_active( p )) or 0
    local d = fmt.f(_("Set {setname}:"), {setname=SETNAME})
    -- Assume a max of 5-piece sets, reasonable I think
    for n=1,5 do
