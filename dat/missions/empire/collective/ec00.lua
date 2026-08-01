@@ -20,6 +20,7 @@
 
    Author: bobbens
       minor edits by Infiltrator
+      converted to VN framework by MageKing17
 
    Starts the collective mini campaign.
 
@@ -29,6 +30,8 @@
 require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
+
+local vn = require "vn"
 
 -- Mission constants
 local misn_nearby = system.get("Acheron")
@@ -41,19 +44,45 @@ local p -- Non-persistent state
 function create ()
    local missys = {misn_target}
    if not misn.claim(missys) then
-      abort()
+      misn.finish(false)
    end
 
-   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri", _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.") )
+   misn.setNPC( _("Lt. Commander"), emp.dimitri.portrait, _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.") )
 end
 
 
 function accept ()
-   -- Intro text
-   if not tk.yesno( _("Empire Officer"), fmt.f(_([[You approach the Lt. Commander.
-   "Hello {player}, we have a reconnaissance mission you might be interested in. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]]), {player=player.name()}) ) then
-      misn.finish()
-   end
+   local accepted = false
+
+   vn.reset()
+   vn.scene()
+   local dimitri = vn.newCharacter(emp.vn_dimitri())
+   dimitri:rename(_("Lt. Commander"))
+   vn.transition(emp.dimitri.transition)
+   dimitri(fmt.f(_([[You approach the Lt. Commander.
+"Hello, {player}; we have a reconnaissance mission you might be interested in. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]]), {player=player.name()}))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+   vn.label("decline")
+   vn.done(emp.dimitri.transition)
+
+   vn.label("accept")
+   vn.func(function () accepted = true end)
+   dimitri:rename(emp.dimitri.name)
+   dimitri(_([["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well, you'll be reporting to me for the next assignments."]]))
+   dimitri(_([["You've heard about the Collective, right? From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occurred, otherwise they would have been wiped out by the Emperor's Armada without a sweat."]]))
+   dimitri(fmt.f(_([["They completely wiped out all human life in Eiroik and the other worlds they hit. We managed to stop them here, in {sys}, and constructed this base. Since then it's been more or less a stalemate."]]), {sys=misn_base_sys}))
+   emp.addCollectiveLog(fmt.f(_([[Lt. Commander Dimitri informed you about the Collective, a "hive" of robotic drones that have been menacing the {sys} system.]]), {sys=misn_base_sys}))
+   dimitri(fmt.f(_([["Collective activity has increased heavily the last few decaperiods. We've been trying to contain them, but a scout broke through to the jump point. It was last detected by a patrol in {misn_nearby}, which saw it jumping out to {misn_target}."]]), {misn_nearby=misn_nearby, misn_target=misn_target}))
+   dimitri(fmt.f(_([["You are to locate the scout and report back to {pnt} in the {sys} system. It seems like the Collective is planning something and we want to follow their game a little closer."]]), {pnt=misn_base, sys=misn_base_sys}))
+   dimitri(_([["It is of vital importance that you do not engage the drone. Report back as soon as you locate it."]]))
+
+   vn.done(emp.dimitri.transition)
+   vn.run()
+
+   if not accepted then return end
 
    -- Accept mission
    misn.accept()
@@ -66,14 +95,6 @@ function accept ()
    misn.setTitle(_("Collective Scout"))
    misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("Find a scout last seen in the {sys} system"), {sys=misn_nearby}))
-
-   -- Flavour text and mini-briefing
-   local brief = fmt.f( _([["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well, you'll be reporting to me for the next assignments.
-   "You've heard about the Collective, right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occurred, otherwise they would have been wiped out by the Emperor's Armada without a sweat. They completely wiped out all human life in Eiroik and the other worlds they hit. We managed to stop them here, in {sys}, and constructed this base. Since then it's been more or less a stalemate."]]), {sys=misn_base_sys} )
-   tk.msg( _("Briefing"), brief )
-   emp.addCollectiveLog( brief )
-   tk.msg( _("Briefing"), fmt.f( _([["Collective activity has increased heavily the last few decaperiods. We've been trying to contain them, but a scout broke through to the jump point. It was last detected by a patrol in {misn_nearby}, which saw it jumping out to {misn_target}. You are to locate the scout and report back to {pnt} in the {sys} system. It seems like the Collective is planning something and we want to follow their game a little closer.
-   "It is of vital importance that you do not engage the drone. Report back as soon as you locate it."]]), {misn_nearby=misn_nearby, misn_target=misn_target, pnt=misn_base, sys=misn_base_sys} ))
 
    misn.osdCreate(_("Collective Scout"), {
       fmt.f(_("Fly to the {sys} system"), {sys=misn_target}),
@@ -136,11 +157,22 @@ function land()
    local pnt = spob.cur()
 
    if mem.misn_stage == 1 and  pnt == misn_base then
-      tk.msg( _("Mission Accomplished"), fmt.f(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
-   "Well it seems like the drone has some strange fixation on {sys}. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]), {sys=misn_target}) )
-      faction.hit("Empire",25)
-      player.pay(mem.credits)
-      emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Enclave for your next mission.]]) )
+      vn.reset()
+      vn.scene()
+      local dimitri = vn.newCharacter(emp.vn_dimitri())
+      vn.transition(emp.dimitri.transition)
+      vn.na(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.]]))
+      dimitri(fmt.f(_([["Well it seems like the drone has some strange fixation on {sys}. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]), {sys=misn_target}))
+      vn.func(function()
+         faction.hit("Empire",25)
+         player.pay(mem.credits)
+      end)
+      vn.sfxVictory()
+      vn.na(fmt.reward(mem.credits))
+      vn.done(emp.dimitri.transition)
+      vn.run()
+
+      emp.addCollectiveLog(fmt.f(_([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on {pnt} for your next mission.]]), {pnt=misn_base}))
       misn.finish(true)
    end
 end

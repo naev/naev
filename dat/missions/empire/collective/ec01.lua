@@ -19,6 +19,7 @@
 
    Author: bobbens
       minor edits by Infiltrator
+      converted to VN framework by MageKing17
 
    Second mission in the mini collective campaign.
 
@@ -28,6 +29,8 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
+local vn = require "vn"
+
 -- Mission constants
 local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 local targsys1 = system.get("C-43")
@@ -36,16 +39,37 @@ local targsys2 = system.get("C-59")
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri", _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
+   misn.setNPC( _("Dimitri"), emp.dimitri.portrait, _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
 end
 
 
 function accept ()
-   -- Intro text
-   if not tk.yesno( _("Lt. Commander Dimitri"), _([[You meet up with Lt. Commander Dimitri.
-   "We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to do a deep scan of the nearby Collective systems to see if you can pick up any strange wireless communications. This will be a dangerous mission, because you'll need to stay in the system long enough for the scan to complete. I recommend a fast ship to outrun the drones. Are you interested in doing this now?"]]) ) then
-      misn.finish()
-   end
+   local accepted = false
+
+   vn.reset()
+   vn.scene()
+   local dimitri = vn.newCharacter(emp.vn_dimitri())
+   vn.transition(emp.dimitri.transition)
+   dimitri(_([[You meet up with Lt. Commander Dimitri.
+"We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to do a deep scan of the nearby Collective systems to see if you can pick up any strange wireless communications."]]))
+   dimitri(_([[This will be a dangerous mission, because you'll need to stay in the system long enough for the scan to complete. I recommend a fast ship to outrun the drones. Are you interested in doing this now?"]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+
+   vn.label("decline")
+   vn.done(emp.dimitri.transition)
+
+   vn.label("accept")
+   vn.func(function () accepted = true end)
+   dimitri(_([["You need to jump to each of the systems indicated on your map, and stay in the system until the scan finishes. If you jump out prematurely, you'll have to restart the scan from scratch when you return."]]))
+   dimitri(_([["Of course, we're not sending you in unprepared. I have updated your ship's computer with a map of the Collective systems, at least the part we know about. I'm afraid it's not very complete intel, but it should be enough."]]))
+   dimitri(_([["Like I said, it's best if you tried to avoid the drones, but if you think you can take them, go for it! Good luck."]]))
+   vn.done(emp.dimitri.transition)
+   vn.run()
+
+   if not accepted then return end
 
    -- Accept mission
    misn.accept()
@@ -66,9 +90,6 @@ function accept ()
       fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys}),
    })
 
-   tk.msg( _("Collective Espionage"), _([["You need to jump to each of the systems indicated on your map, and stay in the system until the scan finishes. If you jump out prematurely, you'll have to restart the scan from scratch when you return.
-   "Of course, we're not sending you in unprepared. I have updated your ship's computer with a map of the Collective systems, at least the part we know about. I'm afraid it's not very complete intel, but it should be enough.
-   "Like I said, it's best if you tried to avoid the drones, but if you think you can take them, go for it! Good luck."]]) )
    player.outfitAdd("Map: Collective Space")
 
    hook.enter("enter")
@@ -118,11 +139,22 @@ end
 
 function land()
    if spob.cur() == misn_base and mem.sysdone1 and mem.sysdone2 then
-      tk.msg( _("Mission Accomplished"), _([[After landing, Lt. Commander Dimitri greets you on the land pad.
-   "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]) )
-      player.pay(mem.credits)
-      faction.hit("Empire",35)
-      emp.addCollectiveLog( _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Enclave.]]) )
+      vn.reset()
+      vn.scene()
+      local dimitri = vn.newCharacter(emp.vn_dimitri())
+      vn.transition(emp.dimitri.transition)
+      vn.na(_([[After landing, Lt. Commander Dimitri greets you on the land pad.]]))
+      dimitri(_([["I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]))
+      vn.func(function ()
+         faction.hit("Empire",35)
+         player.pay(mem.credits)
+      end)
+      vn.sfxVictory()
+      vn.na(fmt.reward(mem.credits))
+      vn.done(emp.dimitri.transition)
+      vn.run()
+
+      emp.addCollectiveLog(fmt.f(_([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on {pnt}.]]), {pnt=misn_base}))
       misn.finish(true)
    end
 end

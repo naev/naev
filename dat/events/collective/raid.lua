@@ -22,8 +22,8 @@ function create()
    hook.land("leave")
    hook.jumpout("leave")
    hook.timer( rnd.rnd(4, 20), "fun")
-   if rnd.rnd < 0.27 then hook.timer( rnd.rnd(40, 110), "fun") end -- Go again!! (small chance)
-   if rnd.rnd < 0.09 then hook.timer( rnd.rnd(90, 200), "fun") end -- Go again!!!! (smaller chance)
+   if rnd.rnd() < 0.27 then hook.timer( rnd.rnd(40, 110), "fun") end -- Go again!! (small chance)
+   if rnd.rnd() < 0.09 then hook.timer( rnd.rnd(90, 200), "fun") end -- Go again!!!! (smaller chance)
 end
 
 function fun()

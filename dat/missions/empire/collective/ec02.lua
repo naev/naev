@@ -19,6 +19,7 @@
 
    Author: bobbens
       minor edits by Infiltrator
+      converted to VN framework by MageKing17
 
    Third mission in the collective mini campaign.
 
@@ -29,6 +30,9 @@ local fleet = require "fleet"
 local emp = require "common.empire"
 local fmt = require "format"
 local cinema = require "cinema"
+
+local vn = require "vn"
+local lmusic = require "lmusic"
 
 -- Mission consstants
 local misn_base, misn_base_sys = spob.getS("Omega Enclave")
@@ -43,16 +47,36 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri", _("You notice Lt. Commander Dimitri at one of the booths.") )
+   misn.setNPC( _("Dimitri"), emp.dimitri.portrait, emp.dimitri.description )
 end
 
 
 function accept ()
-   -- Intro text
-   if not tk.yesno( _("Collective Espionage"), fmt.f(_([[You head over to Lt. Commander Dimitri to see what the results are.
-   "Hello there again, {player}. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]), {player=player.name()}) ) then
-      misn.finish()
-   end
+   local accepted = false
+
+   vn.reset()
+   vn.scene()
+   local dimitri = vn.newCharacter(emp.vn_dimitri())
+   vn.transition(emp.dimitri.transition)
+   dimitri(fmt.f(_([[You head over to Lt. Commander Dimitri to see what the results are.
+"Hello there again, {player}. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]), {player=player.name()}))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+   vn.label("decline")
+   vn.done(emp.dimitri.transition)
+
+   vn.label("accept")
+   vn.func(function () accepted = true end)
+   dimitri(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed."]]))
+   dimitri(fmt.f(_([["When the Collective struck, they quickly took many systems; one of the bigger losses was {pnt}, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), {pnt=misn_target}))
+   dimitri(fmt.f(_([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to {pnt} in the {sys} system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then."]]), {pnt=misn_target, sys=misn_target_sys}))
+   dimitri(_([["Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece. Good luck, I'll be waiting for you on your return."]]))
+   vn.done(emp.dimitri.transition)
+   vn.run()
+
+   if not accepted then return end
 
    -- Accept the mission
    misn.accept()
@@ -69,11 +93,6 @@ function accept ()
       fmt.f(_("Return to {pnt} with your findings"), {pnt=misn_base}),
    })
 
-   tk.msg( _("Collective Espionage"), fmt.f(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed.
-   "When the Collective struck, they quickly took many systems; one of the bigger losses was {pnt}, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), {pnt=misn_target}) )
-   tk.msg( _("Collective Espionage"), fmt.f(_([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to {pnt} in the {sys} system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece.
-   "Good luck, I'll be waiting for you on your return."]]), {pnt=misn_target, sys=misn_target_sys}) )
-
    hook.land("land")
 end
 
@@ -82,18 +101,29 @@ function land()
    if mem.misn_stage == 0 and spob.cur() == misn_target then
       -- Initiate cutscene
       mem.takeoffhook = hook.takeoff("takeoff")
+      -- Stop the default music change from taking off.
+      music.stop(true)
       player.takeoff()
 
    -- Return bit
    elseif mem.misn_stage == 1 and spob.cur() == misn_base then
-      tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
-   "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analysing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile, give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
+      vn.reset()
+      vn.scene()
+      local dimitri = vn.newCharacter(emp.vn_dimitri())
+      vn.transition(emp.dimitri.transition)
+      vn.na(_([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.]]))
+      dimitri(_([["How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analysing the data acquired. Those robots have to be up to something. Meet me in the bar later."]]))
+      dimitri(_([["Meanwhile, give yourself a treat; you've earned it. We've made a deposit into your bank account. Enjoy it."]]))
+      vn.func(function ()
+         faction.hit("Empire", 35)
+         player.pay(emp.rewards.ec02)
+      end)
+      vn.sfxVictory()
+      vn.na(fmt.reward(emp.rewards.ec02))
+      vn.done(emp.dimitri.transition)
+      vn.run()
 
-      -- Rewards
-      faction.hit("Empire",35)
-      player.pay( emp.rewards.ec02 )
-
-      emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Enclave again later.]]) )
+      emp.addCollectiveLog(fmt.f(_([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on {pnt} again later.]]), {pnt=misn_base}))
 
       misn.finish(true)
    end
@@ -105,10 +135,16 @@ function takeoff()
    cinema.on()
 
    -- Sinister music landing
-   music.play("landing_sinister")
+   -- Can't use vn.music() because we want it to keep playing until the cutscene is over.
+   lmusic.play("snd/music/landing_sinister")
 
-   -- Some text
-   tk.msg( _("Collective Espionage"), fmt.f(_([[You quickly land on {pnt} and hide in its deep, dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck, there won't be too many Collective drones when you take off.]]), {pnt=misn_target}) )
+   vn.reset()
+   vn.scene()
+   vn.transition()
+   vn.na(fmt.f(_([[You quickly land on {pnt} and hide in its deep, dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck, there won't be too many Collective drones when you take off.]]), {pnt=misn_target}))
+   vn.done()
+   vn.run()
+
    misn.setDesc( fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
 
    local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
@@ -167,11 +203,19 @@ function endCutscene()
    removeSwarm(swarm1)
    removeSwarm(swarm2)
    removeSwarm(swarm3)
-   tk.msg(_("Collective Espionage"), _([[That should be enough. Time to report your findings.]]))
+
+   vn.reset()
+   vn.scene()
+   vn.transition()
+   vn.na(_([[That should be enough. Time to report your findings.]]))
+   vn.done()
+   vn.run()
+
    mem.misn_stage = 1
    misn.markerMove( mem.misn_marker, misn_base )
    player.pilot():setHide(false)
    cinema.off()
    misn.osdActive(2)
    music.choose("ambient")
+   lmusic.clear()
 end
