@@ -19,6 +19,7 @@
 
    Author: bobbens
       minor edits by Infiltrator
+      converted to VN framework by MageKing17
 
    Fifth mission in the collective mini campaign.
 
@@ -31,6 +32,8 @@ local lmisn = require "lmisn"
 require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
+
+local vn = require "vn"
 
 -- Mission constants
 local misn_target, misn_target_sys = spob.getS("Eiroik")
@@ -46,28 +49,46 @@ function create ()
       misn.finish(false)
    end
 
-   -- Intro text
-   if tk.yesno( _("Collective Extraction"), _([[As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
-   "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]) ) then
-      misn.accept()
+   local accepted = false
 
-      mem.misn_stage = 0
-      mem.misn_marker = misn.markerAdd( misn_target, "low" )
+   vn.reset()
+   vn.scene()
+   local dimitri = vn.newCharacter(emp.vn_dimitri())
+   vn.transition(emp.dimitri.transition)
+   dimitri(_([[As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+"The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+   vn.label("decline")
+   vn.done(emp.dimitri.transition)
 
-      -- Mission details
-      misn.setTitle(_("Collective Extraction"))
-      misn.setReward( credits )
-      misn.setDesc( fmt.f(_("Check for survivors on {pnt} in {sys}"), {pnt=misn_target, sys=misn_target_sys} ))
-      tk.msg( _("Collective Extraction"), fmt.f(_([["We'll send extra forces to {sys} to try to give you a chance to break through the blockade. You'll have to land on {pnt} and extract our team. Be very careful. This is going to be no walk in the park."]]), {sys=misn_target_sys, pnt=misn_target}) )
-      misn.osdCreate(_("Collective Extraction"), {
-         fmt.f(_("Fly to {sys}"), {sys=misn_target_sys}),
-         fmt.f(_("Land on {pnt}"), {pnt=misn_target}),
-         fmt.f(_("Return to {pnt}"), {pnt=misn_base}),
-      })
+   vn.label("accept")
+   vn.func(function () accepted = true end)
+   dimitri(fmt.f(_([["We'll send extra forces to {sys} to try to give you a chance to break through the blockade. You'll have to land on {pnt} and extract our team. Be very careful. This is going to be no walk in the park."]]), {sys=misn_target_sys, pnt=misn_target}))
+   vn.done(emp.dimitri.transition)
+   vn.run()
 
-      hook.enter("enter")
-      hook.land("land")
-   end
+   if not accepted then return end
+
+   misn.accept()
+
+   mem.misn_stage = 0
+   mem.misn_marker = misn.markerAdd( misn_target, "low" )
+
+   -- Mission details
+   misn.setTitle(_("Collective Extraction"))
+   misn.setReward( credits )
+   misn.setDesc( fmt.f(_("Check for survivors on {pnt} in {sys}"), {pnt=misn_target, sys=misn_target_sys} ))
+   misn.osdCreate(_("Collective Extraction"), {
+      fmt.f(_("Fly to {sys}"), {sys=misn_target_sys}),
+      fmt.f(_("Land on {pnt}"), {pnt=misn_target}),
+      fmt.f(_("Return to {pnt}"), {pnt=misn_base}),
+   })
+
+   hook.enter("enter")
+   hook.land("land")
 end
 
 -- Handles the Collective encounters.
@@ -219,37 +240,51 @@ function land ()
       player.allowSave(false) -- This prevents the player from starting on Eiroik if he dies after taking off.
       player.takeoff()
 
-      -- Some flavour text
-      local title = fmt.f(_("Planet {pnt}"), {pnt=misn_target})
-      tk.msg( title, _([[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]) )
-
+      -- This seems like it might be an appropriate time for creepy music, maybe?
+      vn.reset()
+      vn.scene()
+      vn.transition()
+      vn.na(_([[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible.]]))
+      vn.na(_([[As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]))
       -- Add fuel if needed
-      if player.jumps() < 2 then
+      vn.func(function ()
+         if player.jumps() >= 2 then vn.jump("no_fuel") return end
          local _fuel, consumption = player.fuel()
          player.refuel(2 * consumption)
-         tk.msg( title, _([[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]) )
-      end
-
-      tk.msg( title, _([[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
-   You've got one, right?]]) )
+      end)
+      vn.na(_([[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]))
+      vn.label("no_fuel")
+      vn.na(_([[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship.]]))
+      vn.na(_([[Enemy reinforcements! Time to hit the afterburner. You've got one, right?]]))
+      vn.done()
+      vn.run()
 
       -- Add goods
       local c = commodity.new( N_("Datapad"), N_("A dead soldier's datapad.") )
       mem.misn_cargo = misn.cargoAdd( c, 0 )
       mem.misn_stage = 2
+      misn.markerMove( mem.misn_marker, misn_base )
 
    elseif mem.misn_stage == 3 and spob.cur() == misn_base then
 
-      tk.msg( _("Mission Accomplished"), _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
-   "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]) )
-      misn.cargoRm( mem.misn_cargo )
-      var.pop("emp_commando")
+      vn.reset()
+      vn.scene()
+      local dimitri = vn.newCharacter(emp.vn_dimitri())
+      vn.transition(emp.dimitri.transition)
+      vn.na(_([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.]]))
+      dimitri(_([["No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]))
+      vn.func(function ()
+         misn.cargoRm( mem.misn_cargo )
+         var.pop("emp_commando")
+         faction.hit("Empire",50)
+         player.pay(credits)
+      end)
+      vn.sfxVictory()
+      vn.na(fmt.reward(credits))
+      vn.done(emp.dimitri.transition)
+      vn.run()
 
-      -- Rewards
-      player.pay(credits)
-      faction.hit("Empire",50)
-
-      emp.addCollectiveLog( _([[You attempted to rescue the commando team on Eiroik, but despite your best efforts, they were already dead by the time you got there. However, you managed to retrieve a datapad from the team's wrecked ship. Lt. Commander Dimitri has asked you to meet him in the bar again in a while.]]) )
+      emp.addCollectiveLog(fmt.f(_([[You attempted to rescue the commando team on {pnt}, but despite your best efforts, they were already dead by the time you got there. However, you managed to retrieve a datapad from the team's wrecked ship. Lt. Commander Dimitri has asked you to meet him in the bar again in a while.]]), {pnt=misn_target}))
 
       misn.finish(true)
    end

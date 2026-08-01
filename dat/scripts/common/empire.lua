@@ -39,6 +39,22 @@ emp.soldner = {
    description = _("You see Commander Soldner. He is expecting you."),
 }
 emp.soldner.image = portrait.getFullPath(emp.soldner.portrait)
+emp.dimitri = {
+   portrait = "empire/unique/dimitri",
+   name = _("Lt. Commander Dimitri"),
+   colour = nil,
+   tranisition = "pixelize",
+   description = _("You notice Lt. Commander Dimitri at one of the booths."),
+}
+emp.dimitri.image = portrait.getFullPath(emp.dimitri.portrait)
+emp.keer = {
+   portrait = "empire/unique/keer",
+   name = _("Commodore Keer"),
+   colour = nil,
+   tranisition = "pixelize",
+   description = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them."),
+}
+emp.keer.image = portrait.getFullPath(emp.keer.portrait)
 
 function emp.vn_czesc( params )
    return vn.Character.new( emp.czesc.name,
@@ -53,6 +69,22 @@ function emp.vn_soldner( params )
       tmerge( {
          image=emp.soldner.image,
          colour=emp.soldner.colour,
+      }, params) )
+end
+
+function emp.vn_dimitri( params )
+   return vn.Character.new( emp.dimitri.name,
+      tmerge( {
+         image=emp.dimitri.image,
+         colour=emp.dimitri.colour,
+      }, params) )
+end
+
+function emp.vn_keer( params )
+   return vn.Character.new( emp.keer.name,
+      tmerge( {
+         image=emp.keer.image,
+         colour=emp.keer.colour,
       }, params) )
 end
 

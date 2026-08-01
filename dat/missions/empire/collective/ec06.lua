@@ -23,6 +23,7 @@
 
    Author: bobbens
       minor edits by Infiltrator
+      converted to VN framework by MageKing17
 
    Seventh and final mission in the Collective Campaign
 
@@ -32,6 +33,8 @@ local emp = require "common.empire"
 local fmt = require "format"
 local pilotai = require "pilotai"
 local equipopt = require "equipopt"
+
+local vn = require "vn"
 
 -- Mission constants
 local misn_base = spob.get("Omega Enclave")
@@ -48,18 +51,34 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( _("Keer"), "empire/unique/keer", _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.") )
+   misn.setNPC( emp.keer.name, emp.keer.portrait, emp.keer.description )
 end
 
 
 -- Creates the mission
 function accept ()
+   local accepted = false
 
-   -- Intro text
-   if not tk.yesno( _("Bar"), _([[You join Commodore Keer at her table.
-   She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in aiding in the destruction of the Collective?"]]) ) then
-      misn.finish()
-   end
+   vn.reset()
+   vn.scene()
+   local keer = vn.newCharacter(emp.vn_keer())
+   vn.transition(emp.keer.transition)
+   keer(_([[You join Commodore Keer at her table.
+She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in aiding in the destruction of the Collective?"]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+   vn.label("decline")
+   vn.done(emp.keer.transition)
+
+   vn.label("accept")
+   vn.func(function () accepted = true end)
+   keer(fmt.f(_([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in {target}. The systems up to {sys} are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]), {target=misn_final_sys, sys=misn_target_sys1}))
+   vn.done(emp.keer.transition)
+   vn.run()
+
+   if not accepted then return end
 
    -- Accept the mission
    misn.accept()
@@ -82,9 +101,6 @@ function accept ()
       osd_msg[2] = _("Defeat the Starfire and the Trinity")
    end
    misn.osdCreate(_("Operation Cold Metal"), osd_msg)
-
-   tk.msg( _("Operation Cold Metal"), fmt.f( _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to {sys} are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]),
-   {sys=misn_target_sys1} ) )
 
    hook.jumpout("jumpout")
    hook.enter("jumpin")
@@ -212,10 +228,16 @@ end
 
 
 function fail_timer ()
-   tk.msg( _("Cowardly Behaviour"), _([[You receive a message signed by Commodore Keer:
+   vn.reset()
+   vn.scene()
+   vn.transition()
+   vn.na(_([[You receive a message signed by Commodore Keer:
 "There is no room for cowards in the Empire's fleet."
-The signature does seem valid.]]) )
-   emp.addCollectiveLog( _([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]]) )
+The signature does seem valid.]]))
+   vn.done()
+   vn.run()
+
+   emp.addCollectiveLog(_([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]]))
    misn.finish( true )
 end
 
@@ -279,20 +301,34 @@ function land ()
    -- Final landing stage
    if mem.misn_stage == 4 and spob.cur() == misn_base then
 
-      tk.msg( _("Mission Success"), fmt.f(_([[As you approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honouring all the returning pilots.
-   You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective any more. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), {pnt=misn_base}) )
-
-      diff.apply("collective_dead")
-
-      -- Rewards
-      -- This was the last mission in the minor campaign, so bump the reputation cap.
-      faction.hit("Empire",300)
-      player.pay( emp.rewards.ec06 )
-
-      tk.msg( _("Mission Success"), _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
-   And so ends the Collective threat...
-   You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]]) )
-      player.outfitAdd("Left Boot")
+      vn.reset()
+      vn.scene()
+      local keer = emp.vn_keer()
+      vn.transition()
+      vn.na(fmt.f(_([[As you approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honouring all the returning pilots.]]), {pnt=misn_base}))
+      vn.appear(keer, emp.keer.transition)
+      keer(_([[You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective any more. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]))
+      keer(_([[She continues. "As a symbol of appreciation, you should find a substantial deposit in your account. There will be a celebration later today in the officer's room if you want to join in."]]))
+      vn.func(function ()
+         diff.apply("collective_dead")
+         -- This was the last mission in the minor campaign, so bump the reputation cap.
+         faction.hit("Empire",300)
+         player.pay(emp.rewards.ec06)
+      end)
+      vn.sfxVictory()
+      vn.na(fmt.reward(emp.rewards.ec06))
+      vn.scene()
+      vn.transition(emp.keer.transition)
+      vn.na(_([[And so ends the Collective threat...]]))
+      vn.na(_([[You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]]))
+      vn.func(function ()
+         player.outfitAdd("Left Boot")
+      end)
+      -- Display a separate reward message, for the comedy value.
+      vn.sfxVictory()
+      vn.na(fmt.reward(_("Left Boot")))
+      vn.done()
+      vn.run()
 
       emp.addCollectiveLog( _([[You helped the Empire to finally destroy the Collective once and for all. The Collective is now no more.]]) )
 
