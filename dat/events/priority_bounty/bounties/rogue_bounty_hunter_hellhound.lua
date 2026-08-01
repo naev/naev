@@ -4,7 +4,7 @@ local equipopt = require "equipopt"
 return {
    var            = "bounty_hellhound", -- To control whether or not the player did it
    title          = _("A Bark in the Dark"),
-   desc           = _("An ex-Astra Vigilis guild member known as Hellhound has gone rogue after betraying a high priority bounty target. They are flying the Hellhound and believed to be accompanied by other rogue members. The Astra Vigilis wants them captured alive."),
+   desc           = _("An ex-Astra Vigilis guild member known as Hellhound has gone rogue after collusion with a high priority bounty target. They are flying the Hellhound and believed to be accompanied by other rogue members. The Astra Vigilis wants them captured alive."),
    escorts        = _("with heavy escorts"),
    reward         = 1e6,
    system         = system.get("Alteris"),
