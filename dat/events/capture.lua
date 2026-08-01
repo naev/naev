@@ -336,7 +336,7 @@ end
 function enter ()
    local spawn = nil
    if outsys then
-      spawn = jump.get( system.cur(), outsys )
+      spawn = jump.exists( system.cur(), outsys )
    elseif mem.spb then
       spawn = mem.spb
    end
