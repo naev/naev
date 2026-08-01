@@ -101,7 +101,7 @@ function accept ()
    }
    vn.label("decline")
    vn.done(emp.keer.transition)
-   
+
    vn.label("accept")
    vn.func(function () accepted = true end)
    vn.disappear({emp1, emp2})

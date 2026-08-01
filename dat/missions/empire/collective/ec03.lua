@@ -66,7 +66,7 @@ function accept ()
 
    mem.commando_planet = spob.get("Eiroik")
    mem.credits = emp.rewards.ec03
-   
+
    vn.reset()
    vn.scene()
    local dimitri = vn.newCharacter(emp.vn_dimitri())
