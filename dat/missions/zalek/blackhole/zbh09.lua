@@ -165,7 +165,7 @@ The translation system struggles with what Icarus is saying.]]))
    z(_([["Wait, what? How did my name get picked up in the translation system?… Does this mean that…"
 He goes silent, lost in thought.]]))
    i(_([["Leave. Elders."
-Icarus slightly motions to the other feral bioships. Does this mean he won't be coming back?]]))
+Icarus slightly motions to the other feral bioships. Does this mean they won't be coming back?]]))
    vn.menu{
       {_("Try to convince Icarus to stay."),"stay"},
       {_("Wave goodbye to Icarus"),"wave"},
@@ -443,7 +443,7 @@ function heartbeat_ferals ()
       sfx_whale1()
       local pp = player.pilot()
 
-      zach_say(_("Wait, is that Icarus? Run to him!"))
+      zach_say(_("Wait, is that Icarus? Run to them!"))
 
       icarus = zbh.plt_icarus( outwormhole )
       icarus:setInvincible(true)

@@ -166,7 +166,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    vn.jump("menu")
 
    vn.label("drones")
-   icarus(_("The moment Icarus sees the drones he runs away to a safe distance from the station, eyeing you warily. It looks they will need to be calmed down first."))
+   icarus(_("The moment Icarus sees the drones they run away to a safe distance from the station, eyeing you warily. It looks they will need to be calmed down first."))
    vn.jump("menu")
 
    vn.label("completed")
@@ -184,7 +184,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
       music.stop()
    end )
    vn.transition()
-   vn.na(_([[Suddenly, you hear a high pitch drone of an energy capacitor draining. Icarus who hears that to and scrambles to get out of the docks, however, before he can, you are blinded by a flash and knocked off to the side.]]))
+   vn.na(_([[Suddenly, you hear a high pitch drone of an energy capacitor draining. Icarus who hears that to and scrambles to get out of the docks, however, before they can, you are blinded by a flash and knocked off to the side.]]))
    vn.na(_([[You struggle to stand groggily as your eyes start recovering and colour returns to the world. You find yourself amidst a flurry of drones led by Zach who have quickly started to perform the surgery. Given that you are still completely useless in your current state, you drag yourself out of the way and lean against a wall. Time seems to fly by without you noticing, and you close your eyes.]]))
    vn.na(_("…"))
    vn.music( "snd/sounds/beam_fuzzy" )
