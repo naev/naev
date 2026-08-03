@@ -174,9 +174,8 @@ static int load_load( nsave_t *save )
                if ( rem >= 0. ) {
                   const char *val = xml_get( node );
                   if ( val != NULL ) {
-                     ntime_t nt = atoll( val );
-                     ntime_set_remainder( nt, rem );
-                     save->date = nt;
+                     // Ignore remainder here
+                     save->date = atoll( val );
                   } else
                      WARN( _( "Malformed time in save game!" ) );
                } else {
@@ -193,7 +192,6 @@ static int load_load( nsave_t *save )
                   if ( ( cycles < 0 ) || ( periods < 0 ) || ( seconds < 0 ) ||
                        ( rem < 0. ) )
                      WARN( _( "Malformed time in save game!" ) );
-                  ntime_setR( cycles, periods, seconds, rem );
                   save->date = ntime_create( cycles, periods, seconds );
                }
                continue;
