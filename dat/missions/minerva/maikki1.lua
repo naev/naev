@@ -457,6 +457,9 @@ function enter ()
       end
       pscavA:face( pscavB )
       pscavB:face( pscavA )
+      -- Lower their detection
+      pscavA:intrinsicSet( "ew_detect", -25 )
+      pscavB:intrinsicSet( "ew_detect", -25 )
 
       hook.timer( 3.0, "stealthstart" )
    end
