@@ -37,8 +37,8 @@ function create ()
       var.push("arandon_station_intro",true)
 
       vn.na(_([[Your ship docks against the derelict station, and don your spacesuit in preparation for entering the unpressurised structure. The hull of the station groans and rings, almost as if it were alive and trying to communicate with you as you begin to explore the wreckage.]]))
-      vn.na(_([[You walk through the eerie station, surprised at how nebula crystals are growing into it, penetrating completely the walls, and make your way through the hallways. The station is picked clean, and you feel like you are wasting your time.]]))
-      vn.na(_([[Eventually, you find a narrow passage, hidden between some nebula crystals and you manage to barely squeeze through after a couple of intents. You find what seems to be a crusty old terminal, you brush some of the dust and debris off of it and are surprised to see that it seems to still work.]]))
+      vn.na(_([[You walk through the eerie station, surprised at how nebula crystals are growing into it, completely penetrating the walls, and make your way through the hallways. The station is picked clean, and you feel like you are wasting your time.]]))
+      vn.na(_([[Eventually, you find a narrow passage, hidden between some nebula crystals and you manage to barely squeeze through after a couple of attempts. You find what seems to be a crusty old terminal, you brush some of the dust and debris off of it and are surprised to see that it seems to still work.]]))
 
       vn.appear( sai, tut.shipai.transition )
       sai(_([[Your Ship AI materializes in front of you.
