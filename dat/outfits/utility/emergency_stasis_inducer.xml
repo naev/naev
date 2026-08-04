@@ -9,6 +9,7 @@
   <desc_extra>Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown.</desc_extra>
   <gfx_store>emergency_stasis_inducer</gfx_store>
   <limit>emergency_stasis_inducer</limit>
+  <rarity>2</rarity>
  </general>
  <specific type="modification">
   <energy_regen_mod>-50</energy_regen_mod>
