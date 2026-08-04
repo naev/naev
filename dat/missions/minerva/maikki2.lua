@@ -228,7 +228,7 @@ She winks at you.]]))
    }
    -- TODO more options as more researchers are found
    if mem.misn_state==6 then
-      table.insert( opts, 1, {_("Tell her want you found"), "news"} )
+      table.insert( opts, 1, {_("Tell her what you found"), "news"} )
    end
    vn.label( "menu" )
    vn.menu( opts )
@@ -362,14 +362,14 @@ function approach_hint1 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello, how can I help you?"]]))
-   vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
+   vn.na(_("You inquire about whether or not they are interested in artefacts from the nebula."))
    prof(_([["Very interesting, but I stopped working on that line of research several cycles ago. It was really a mess of a project. The project leader was pushing us very hard due to the other competition."]]))
    prof(_([["In the end, some papers' results were falsified and the project leader was barred from doing research. That was too much for them and they took their own life. How illogical!"]]))
    prof(_([["If you are interested in nebula research, you should go visit the museum of nebula artefacts. Although due to administrative changes, I don't think it'll open again for a few cycles."]]))
    prof(_([["Oh, you might have good luck talking to other members of the project. However, most of us have moved on from that traumatic experience and are now researching new topics."]]))
    prof(_([["Did I mention I have started working with infinitely meta-recursive hyper-tables? They are a fascinating type of data structure based on self-referencing Grassman manifold quasi-projections. They even implicitly handle non-convex elliptic reflections without any meta-heuristics!"
 They are getting excited.]]))
-   prof(_([["Although my grant has been rejected five times, the damn review board is still pushing the obsolete Riemann algebroid universal approximator theory and won't listen to anything else, they are definitely the future! I think they may even have a practical application!"
+   prof(_([["Although my grant has been rejected five times, the damn review board is still pushing the obsolete Riemann algebroid universal approximator theory and won't listen to anything else. They are definitely the future! I think they may even have a practical application!"
 Their excitement grows.]]))
    vn.na(_("They don't seem like they will stop talking anytime soon… You take your leave as they start rambling in a trance-like state."))
    lasthint( prof )
@@ -392,10 +392,10 @@ function approach_hint2 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["What can I do for you?"]]))
-   vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
+   vn.na(_("You inquire about whether or not they are interested in artefacts from the nebula."))
    prof(_([[They rub their temples.
 "Ah, the nebula artefacts… Not very good experiences with those, no, not really interested in them any more."]]))
-   prof(_([["I was part of a really ambitious project to try to track down the origin of the Incident, which just end up being a bureaucratic nightmare."]]))
+   prof(_([["I was part of a really ambitious project to try to track down the origin of the Incident, which just ended up being a bureaucratic nightmare."]]))
    prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
 They shudder when they say the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5-page report written by an intern for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
@@ -425,7 +425,7 @@ function approach_hint3 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello."]]))
-   vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
+   vn.na(_("You inquire about whether or not they are interested in artefacts from the nebula."))
    prof(_([["Ah, such fond memories. I have never been interested in the artefacts from the nebula themselves, but I was part of a large project dealing with them as part of the philosophical and ethical committee."]]))
    prof(_([["It is a very fascinating topic. Since there is no way to prove the existence of an absolute reality, from a practical point of view, there are infinite relative realities, where everyone has their own. Everything else is an illusion derived from us projecting our understanding and reality onto the reality of others, deforming them to a way we can interpret them with our imperfect minds."]]))
    prof(_([["Recently, due to the illogical imbalance between science and humanities, all large Za'lek projects are required to have at least a 10% of humanities members. This has given me lots of opportunities to work on many interesting projects."]]))
@@ -838,7 +838,7 @@ He sneers.]]))
    vn.na(_("You ask him if he knows anything about Kex's ship in the nebula."))
    dr(_([["Ah yes! I remember that wreck. A very, very curious one indeed. At that time I was exploring the nebula myself, and we came upon this most curious wreck that had clear signs of fighting. While it is not uncommon for scavengers to squabble among themselves, this one had most of the damage on the inside. The damage on the outside was clearly done later to confuse people who were investigating like us."
 He coughs.]]))
-   dr(_([["While it was not a pre-incident ship nor had any interesting characteristics, what was inside was surprising. There were two bodies still warm to the touch, it seems like time passes differently in such deep nebula. Normally I would ignore such things, however, they had been infused with so much nebula radiation that they seemed to have potential!"
+   dr(_([["While it was not a pre-incident ship nor had any interesting characteristics, what was inside was surprising. There were two bodies still warm to the touch, it seems like time passes differently in such deep nebula. Normally I would ignore such things. However, they had been infused with so much nebula radiation that they seemed to have potential!"
 He starts to get excited.]]))
    dr(_([["That's when I realized it, humankind and the nebula are one and the same. Our futures are intertwined! By absorbing the nebula into the body, one can transcend humanity and live forever among the stars! There is no limit to the potential infused in the nebula! Now I get it! All my research had led up to this!"]]))
    dr(_([["And that's when it hit me, by amalgamating nebula and flesh, we can transcend ourselves! I had to do it; it had to be done! And it worked, oh boy did it work. There were some difficulties with flesh incompatibility, but with suitable replacements I was able to solve it."
