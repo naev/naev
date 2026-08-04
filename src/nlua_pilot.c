@@ -4848,7 +4848,7 @@ static int pilotL_fillAmmo( lua_State *L )
  * @usage p:setNoBoard( true ) -- Pilot can not be boarded by anyone
  *
  *    @luatparam Pilot p Pilot to set disable boarding.
- *    @luatparam[opt=true] number noboard If true it disallows boarding of
+ *    @luatparam[opt=true] boolean noboard If true it disallows boarding of
  * the pilot, otherwise it allows boarding which is the default.
  * @luafunc setNoBoard
  */
