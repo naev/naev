@@ -27,7 +27,7 @@ local lmisn = require "lmisn"
 
 local reward_amount = minerva.rewards.pirate3
 
-local harper_image = vni.generic() -- TODO unique?
+local harper_image = vni.genericMale() -- TODO unique?
 local harper_bribe_big = 1e6
 local harper_bribe_sml = 1e5
 local harper_bribe_tkn = 1000
