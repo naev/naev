@@ -229,22 +229,26 @@ impl BufferData {
          .clone();
       let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
 
-      let stereo = match codec_params.channels {
+      let (stereo, channels) = match codec_params.channels {
          Some(Channels::Positioned(p)) => {
-            if !p.contains(Position::FRONT_LEFT) {
-               anyhow::bail!("no left channel");
+            let mono = if p.contains(Position::FRONT_LEFT) {
+               Position::FRONT_LEFT
+            } else if p.contains(Position::FRONT_CENTER) {
+               Position::FRONT_CENTER
+            } else {
+               anyhow::bail!("no left/center channel");
+            };
+            if p.contains(Position::FRONT_RIGHT) {
+               (true, Channels::Positioned(mono | Position::FRONT_RIGHT))
+            } else {
+               (false, Channels::Positioned(mono))
             }
-            p.contains(Position::FRONT_RIGHT)
          }
          _ => {
             anyhow::bail!("no usable channels");
          }
       };
-      codec_params.with_channels(if stereo {
-         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
-      } else {
-         Channels::Positioned(Position::FRONT_LEFT)
-      });
+      codec_params.with_channels(channels);
 
       let mut decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
       let mut samples: Vec<f32> = Default::default();
@@ -665,22 +669,26 @@ impl StreamData {
          .clone();
       let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
 
-      let stereo = match codec_params.channels {
+      let (stereo, channels) = match codec_params.channels {
          Some(Channels::Positioned(p)) => {
-            if !p.contains(Position::FRONT_LEFT) {
-               anyhow::bail!("no left channel");
+            let mono = if p.contains(Position::FRONT_LEFT) {
+               Position::FRONT_LEFT
+            } else if p.contains(Position::FRONT_CENTER) {
+               Position::FRONT_CENTER
+            } else {
+               anyhow::bail!("no left/center channel");
+            };
+            if p.contains(Position::FRONT_RIGHT) {
+               (true, Channels::Positioned(mono | Position::FRONT_RIGHT))
+            } else {
+               (false, Channels::Positioned(mono))
             }
-            p.contains(Position::FRONT_RIGHT)
          }
          _ => {
             anyhow::bail!("no usable channels");
          }
       };
-      codec_params.with_channels(if stereo {
-         Channels::Positioned(Position::FRONT_LEFT | Position::FRONT_RIGHT)
-      } else {
-         Channels::Positioned(Position::FRONT_LEFT)
-      });
+      codec_params.with_channels(channels);
 
       let decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
       Ok(Self {
