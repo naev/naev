@@ -2418,7 +2418,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( ( temp->u.bem.warmup > 0. ) &&
                 ( temp->u.bem.sound_warmup == NULL ),
              "sound_warmup" );
-   MELEMENT( !conf.nosound && temp->u.bem.sound == NULL, "sound" );
+   // MELEMENT( !conf.nosound && temp->u.bem.sound == NULL, "sound" );
    // MELEMENT( !conf.nosound && temp->u.bem.sound_off == NULL, "sound_off" );
    MELEMENT( temp->u.bem.delay == 0, "delay" );
    MELEMENT( temp->u.bem.duration == 0, "duration" );
