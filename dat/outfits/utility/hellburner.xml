@@ -8,6 +8,7 @@
   <gfx_store>hellburner</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
+  <rarity>2</rarity>
  </general>
  <specific type="afterburner">
   <rumble>0.9</rumble>
