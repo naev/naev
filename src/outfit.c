@@ -2820,9 +2820,9 @@ static void outfit_parseSMunition( Outfit *temp, const xmlNodePtr parent )
                 temp->u.mnt.spfx_armour == -1,
              "spfx_armour" );
    */
-   MELEMENT( !conf.nosound && temp->u.mnt.sound == NULL, "sound" );
-   /* MELEMENT(temp->u.mnt.accel==0,"accel"); */
-   /* Unguided missiles don't need everything */
+   // MELEMENT( !conf.nosound && temp->u.mnt.sound == NULL, "sound" );
+   // MELEMENT(temp->u.mnt.accel==0,"accel");
+   // Unguided missiles don't need everything
    if ( outfit_isSeeker( temp ) ) {
       MELEMENT( temp->u.mnt.turn == 0, "turn" );
       MELEMENT( temp->u.mnt.trackmin < 0, "trackmin" );
