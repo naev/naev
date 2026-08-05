@@ -34,6 +34,7 @@ typedef struct constants {
    double SELL_OUTFIT_MODIFIER;
    int    WARN_BUY_INTRINSICS;
    double RADAR_RES_DEFAULT;
+   double MAP_FACTION_DISK_SCALE;
    // Misc constants
    double PATROL_LANES_LAMBDA;
 } constants;

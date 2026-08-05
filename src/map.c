@@ -14,6 +14,7 @@
 #include "array.h"
 #include "colour.h"
 #include "conf.h"
+#include "constants.h"
 #include "dialogue.h"
 #include "faction.h"
 #include "gui.h"
@@ -1228,6 +1229,10 @@ void map_renderDecorators( double x, double y, double zoom, int editor,
 void map_renderFactionDisks( double x, double y, double zoom, double r,
                              int editor, double alpha )
 {
+   // Case disabled
+   if ( CTS.MAP_FACTION_DISK_SCALE <= 0.0 )
+      return;
+
    gl_debugGroupStart();
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       glColour          c;
@@ -1246,7 +1251,8 @@ void map_renderFactionDisks( double x, double y, double zoom, double r,
          double presence = sqrt( sys->ownerpresence / map_max_presence );
 
          /* draws the disk representing the faction */
-         double sr = ( 20.0 + 180. * presence ) * zoom * 0.5;
+         double sr = ( 20.0 + 180. * presence ) * zoom * 0.5 *
+                     CTS.MAP_FACTION_DISK_SCALE;
 
          col = faction_colour( sys->faction );
          c.r = col->r;

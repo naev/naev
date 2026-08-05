@@ -31,6 +31,7 @@ constants CTS = {
    .CAMERA_ANGLE                   = M_PI_4,
    .WARN_BUY_INTRINSICS            = 1,
    .RADAR_RES_DEFAULT              = 100.,
+   .MAP_FACTION_DISK_SCALE         = 1.,
    .PATROL_LANES_LAMBDA            = 2e10,
    // Meta constant calculated from CAMERA_ANGLE
    .CAMERA_VIEW     = 1.0,
