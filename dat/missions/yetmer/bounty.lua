@@ -30,7 +30,7 @@ local misn_title = {
 }
 local misn_desc = _([[An O'rez traitor known as {name} has gained notoriety through violent acts against House Yetmer in the {sys} system. Their elimination will help the war efforts to triumph over the traitors.
 
-#nTarget:#0 {name} ({shipclass}-class ship)
+#nTarget:#0 {pilotname} ({shipclass}-class ship{escorts})
 #nWanted:#0 Dead
 #nLast seen:#0 {sys} system
 #nTime limit:#0 {deadline}
@@ -43,36 +43,53 @@ local jumpa = jump.get( missys, system.get("K'tos") )
 local jumpb = jump.get( missys, system.get("Mayla") )
 local cpos  = (jumpa:pos() + jumpb:pos())*0.5 * 0.7
 
--- Set up the ship, credits, and reputation based on the level.
-local function bounty_setup ()
-   local pship, credits, reputation
    -- TODO update when they get their own ships
-   local r = rnd.rnd()
-   if r < 0.2 then
-      pship = "Lancelot"
-      credits = 100e3 + rnd.sigma() * 30e3
-      reputation = 1.5
-      mem.level = 1
-   elseif r < 0.6 then
-      pship = "Admonisher"
-      credits = 500e3 + rnd.sigma() * 80e3
-      reputation = 3
-      mem.level = 2
+local OREZ_SHIPS = {
+   ship.get("Lancelot"),
+   ship.get("Admonisher"),
+   ship.get("Hawking"),
+}
+
+-- Set up the ship, credits, and reputation based on the level.
+local function bounty_setup ( points )
+   local ships = bounty.choose_ships_from_points( OREZ_SHIPS, points )
+   points = bounty.fleet_points( ships ) -- Update points
+
+   local level
+   if points <= 10 then
+      level = 1
+   elseif points <= 20 then
+      level = 2
+   elseif points <= 40 then
+      level = 3
+   elseif points <= 60 then
+      level = 4
    else
-      pship = "Hawking"
-      credits = 1e6 + rnd.sigma() * 100e3
-      reputation = 4.5
-      mem.level = 3
+      level = 5
    end
-   return pship, credits, reputation
+
+   local calcpoints  = points / 40
+   if points > 40 then
+      calcpoints = 1 + (calcpoints - 1) * 0.5
+   end
+   local credits     = 1e6 * calcpoints * (0.9 + 0.2 * rnd.rnd())
+   local reputation  = 30  * calcpoints
+
+   return {
+      ships       = ships,
+      credits     = credits,
+      reputation  = reputation,
+      level       = level,
+   }
 end
 
 function create ()
    if not misn.claim( missys, true ) then misn.finish( false ) end
 
-   -- Pirate details
+   -- Enemy details
    local pname = pilotname.generic() -- TODO something better?
-   local pship, reward, reputation = bounty_setup()
+   local points = 100 + rnd.rnd() * 500
+   local target = bounty_setup( points )
    local title, desc = misn_title[rnd.rnd(1,#misn_title)], misn_desc
 
    -- Faction prefix
@@ -81,22 +98,36 @@ function create ()
       prefix = require("common.prefix").prefix(payingfaction)
    end
 
+   mem.level = target.level
    mem.missys = missys
    mem.deadline = time.cur() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    -- Set mission details
+   local escorts = ""
+   if #target.ships > 1 then
+      local num = #target.ships-1
+      escorts = fmt.f(n_(", with {num} escort", ", with {num} escorts", num), {
+         num = num
+      })
+   end
    misn.setTitle( prefix..fmt.f(title, {sys=missys}) )
-   local mdesc = fmt.f( desc,
-      {name=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), deadline=(mem.deadline-time.cur()) })
+   local mdesc = fmt.f( desc, {
+      pilotname   = pname,
+      sys         = missys,
+      fct         = payingfaction,
+      shipclass   = _(ship.get(target.ships[1]):classDisplay()),
+      deadline    = (mem.deadline-time.cur()),
+      escorts     = escorts,
+   })
    misn.setDesc( mdesc )
-   misn.setReward( reward )
+   misn.setReward( target.credits )
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )
 
-   bounty.init( missys, pname, pship, reward, {
+   bounty.init( missys, pname, target.ships, target.credits, {
       payingfaction     = payingfaction,
       targetfaction     = targetfaction,
       spawnfunc         = "spawn_target",
-      reputation        = reputation,
+      reputation        = target.reputation,
       deadline          = mem.deadline,
    } )
 end
@@ -106,45 +137,42 @@ function accept ()
 end
 
 -- luacheck: globals spawn_target
-function spawn_target( lib, _location )
+function spawn_target( b, _params )
    -- Fuzzes the position a bit
    local function fuzz( pos )
       return (pos+vec2.newP( rnd.rnd()*500, rnd.angle() )) * (1 - 0.2*rnd.rnd())
    end
 
-   -- dynamic faction
-   local fct = faction.dynAdd( targetfaction, "bounty_orez", targetfaction:name(), {clear_enemies=true, clear_allies=true} )
-
    local pos = fuzz( (jumpa:pos() + jumpb:pos())*0.5 )
-   local target = pilot.add( lib.targetship, fct, pos, lib.targetname )
-   local escorts = {}
-   if mem.level==1 then
-      for i=1,rnd.rnd(2,4) do
-         local p = pilot.add( "Lancelot", fct, fuzz(pos) )
-         table.insert( escorts, p )
+
+   local target_ship
+   local target = {}
+   local fct = bounty.get_faction()
+   for k,s in ipairs(b.targetship) do
+      local p = pilot.add( s, fct, pos )
+      p:setHostile(true)
+      local aimem = p:memory()
+      aimem.defensive   = true -- Always try to be defensive
+      aimem.loiter      = math.huge -- Should make them loiter forever
+      aimem.capturable  = true
+      if not target_ship then
+         target_ship = p
+         p:rename( b.targetname )
+         -- Make esaier to spot but not fight
+         p:intrinsicSet( "ew_detected", 50 )
+      else
+         p:setLeader( target_ship )
       end
-   elseif mem.level==2 then
-      for i=1,rnd.rnd(2,5) do
-         local p = pilot.add( ((rnd.rnd() < 0.7) and "Lancelot") or "Admonisher", fct, fuzz(pos) )
-         table.insert( escorts, p )
-      end
-   elseif mem.level==3 then
-      for i=1,rnd.rnd(4,6) do
-         local p = pilot.add( "Lancelot", fct, fuzz(pos) )
-         table.insert( escorts, p )
-      end
-   end
-   for k,p in ipairs(escorts) do
-      p:setHostile()
-      p:setLeader( target )
+      table.insert( target, p )
    end
 
-   pilotai.patrol( target, {
+   -- Patrol
+   pilotai.patrol( target_ship, {
       fuzz(jumpa:pos()),
       fuzz(jumpb:pos()),
       fuzz(cpos),
    } )
-   target:setNoDisable(true)
+   target_ship:setNoDisable(true)
 
-   return target
+   return target_ship
 end
