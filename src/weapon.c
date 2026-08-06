@@ -2504,44 +2504,55 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
    /* Beam weapons are treated together. */
    case OUTFIT_TYPE_BEAM:
    case OUTFIT_TYPE_TURRET_BEAM:
-      rdir = dir;
-      if ( outfit_type( outfit ) == OUTFIT_TYPE_TURRET_BEAM ) {
-         if ( aim ||
-              outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) ) {
-            AsteroidAnchor *field;
-            const Asteroid *ast;
-            Weapon         *wtarget;
-            weapon_setFlag( w, WEAPON_FLAG_AIM );
-            switch ( w->target.type ) {
-            case TARGET_NONE:
-               break;
+      if ( aim || outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) ) {
+         AsteroidAnchor *field;
+         const Asteroid *ast;
+         Weapon         *wtarget;
+         weapon_setFlag( w, WEAPON_FLAG_AIM );
+         rdir = dir;
+         switch ( w->target.type ) {
+         case TARGET_NONE:
+            break;
 
-            case TARGET_PILOT:
-               if ( w->parent != w->target.u.id ) {
-                  Pilot *pilot_target = pilot_get( w->target.u.id );
-                  rdir = vec2_angle( pos, &pilot_target->solid.pos );
-               }
-               break;
-
-            case TARGET_ASTEROID:
-               field = &cur_system->asteroids[w->target.u.ast.anchor];
-               ast   = ast_get( field, w->target.u.ast.asteroid );
-               rdir  = vec2_angle( pos, &ast_solid( ast )->pos );
-               break;
-
-            case TARGET_WEAPON:
-               wtarget = weapon_getID( w->target.u.id );
-               if ( wtarget != NULL )
-                  rdir = vec2_angle( pos, &wtarget->solid.pos );
-               break;
+         case TARGET_PILOT:
+            if ( w->parent != w->target.u.id ) {
+               Pilot *pilot_target = pilot_get( w->target.u.id );
+               rdir = vec2_angle( pos, &pilot_target->solid.pos );
             }
-         } else if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
-            vec2 tv;
-            gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
-            rdir = vec2_angle( pos, &tv );
+            break;
+
+         case TARGET_ASTEROID:
+            field = &cur_system->asteroids[w->target.u.ast.anchor];
+            ast   = ast_get( field, w->target.u.ast.asteroid );
+            rdir  = vec2_angle( pos, &ast_solid( ast )->pos );
+            break;
+
+         case TARGET_WEAPON:
+            wtarget = weapon_getID( w->target.u.id );
+            if ( wtarget != NULL )
+               rdir = vec2_angle( pos, &wtarget->solid.pos );
+            break;
          }
+      } else if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
+         vec2 tv;
+         gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+         rdir = vec2_angle( pos, &tv );
+      } else {
+         rdir = dir;
       }
-      rdir = angle_clean( rdir );
+
+      // Make sure in range
+      if ( outfit_type( w->outfit ) == OUTFIT_TYPE_BEAM ) {
+         double off    = angle_diff( rdir, parent->solid.dir );
+         double swivel = outfit_swivel( w->outfit );
+         if ( FABS( off ) > swivel ) {
+            if ( off > 0. )
+               rdir = parent->solid.dir - swivel;
+            else
+               rdir = parent->solid.dir + swivel;
+         }
+         rdir = angle_clean( rdir );
+      }
 
       mass = 1.; /**< Needs a mass. */
       solid_init( &w->solid, mass, rdir, pos, vel, SOLID_UPDATE_EULER );
