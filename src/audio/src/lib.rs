@@ -187,14 +187,20 @@ impl ReplayGain {
    }
 }
 
+/// A wrapper around the decoder with some stuff that is useful for us
 struct Decoder {
+   /// The decoder doing the brunt of the work.
    decoder: Box<dyn AudioDecoder>,
+   /// Optional replaygain if found
    replay_gain: Option<ReplayGain>,
+   /// Main track we are interested in
    track_id: u32,
+   /// Sampling rate of the track
    sample_rate: u32,
+   /// Whether it is stereo or not - we do not support more channels, but technically could with
+   /// openal extensions
    stereo: bool,
 }
-
 impl Decoder {
    fn new(mut format: &mut Box<dyn FormatReader>) -> Result<Decoder> {
       // Get replaygain information
@@ -212,6 +218,7 @@ impl Decoder {
          .clone();
       let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
 
+      // Fairly limited in how we handle channels, but should work for most files
       let (stereo, channels) = match codec_params.channels {
          Some(Channels::Positioned(p)) => {
             let mono = if p.contains(Position::FRONT_LEFT) {
