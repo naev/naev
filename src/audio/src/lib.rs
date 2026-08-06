@@ -187,33 +187,16 @@ impl ReplayGain {
    }
 }
 
-pub struct BufferData {
-   pub name: PathBuf,
-   pub stereo: bool,
-   pub replay_gain: Option<ReplayGain>,
-   pub sample_rate: u32,
-   pub data: Vec<f32>,
+struct Decoder {
+   decoder: Box<dyn AudioDecoder>,
+   replay_gain: Option<ReplayGain>,
+   track_id: u32,
+   sample_rate: u32,
+   stereo: bool,
 }
-impl BufferData {
-   pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
-      let path = path.as_ref();
-      // If no extension try to autodetect.
-      let ext = path.extension().and_then(|s| s.to_str());
-      let path = Buffer::get_valid_path(path)
-         .context(format!("No audio file matching '{}' found", path.display()))?;
-      let src = ndata::open(&path)?;
 
-      // Load it up
-      let codecs = &CODECS;
-      let probe = symphonia::default::get_probe();
-      let mss = MediaSourceStream::new(Box::new(src), Default::default());
-      let mut hint = symphonia::core::formats::probe::Hint::new();
-      if let Some(ext) = ext {
-         hint.with_extension(ext);
-      }
-      // Enable gapless so encoded padding (e.g. Opus pre-skip/end trim) is removed.
-      let mut format = probe.probe(&hint, mss, Default::default(), Default::default())?;
-
+impl Decoder {
+   fn new(mut format: &mut Box<dyn FormatReader>) -> Result<Decoder> {
       // Get replaygain information
       let replay_gain = ReplayGain::from_formatreader(&mut format)?;
 
@@ -250,17 +233,53 @@ impl BufferData {
       };
       codec_params.with_channels(channels);
 
-      let mut decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
+      Ok(Self {
+         decoder: CODECS.make_audio_decoder(&codec_params, &Default::default())?,
+         replay_gain,
+         track_id,
+         sample_rate,
+         stereo,
+      })
+   }
+}
+
+pub struct BufferData {
+   pub name: PathBuf,
+   pub stereo: bool,
+   pub replay_gain: Option<ReplayGain>,
+   pub sample_rate: u32,
+   pub data: Vec<f32>,
+}
+impl BufferData {
+   pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+      let path = path.as_ref();
+      // If no extension try to autodetect.
+      let ext = path.extension().and_then(|s| s.to_str());
+      let path = Buffer::get_valid_path(path)
+         .context(format!("No audio file matching '{}' found", path.display()))?;
+      let src = ndata::open(&path)?;
+
+      // Load it up
+      let probe = symphonia::default::get_probe();
+      let mss = MediaSourceStream::new(Box::new(src), Default::default());
+      let mut hint = symphonia::core::formats::probe::Hint::new();
+      if let Some(ext) = ext {
+         hint.with_extension(ext);
+      }
+      // Enable gapless so encoded padding (e.g. Opus pre-skip/end trim) is removed.
+      let mut format = probe.probe(&hint, mss, Default::default(), Default::default())?;
+      let mut decoder = Decoder::new(&mut format)?;
+
       let mut samples: Vec<f32> = Default::default();
       // Read and decode all packets from the format reader.
       while let Some(packet) = format.next_packet().unwrap() {
          // If the packet does not belong to the selected track, skip it.
-         if packet.track_id != track_id {
+         if packet.track_id != decoder.track_id {
             continue;
          }
 
          // Decode the packet into audio samples, ignoring any decode errors.
-         match decoder.decode(&packet) {
+         match decoder.decoder.decode(&packet) {
             Ok(audio_buf) => {
                // The decoded audio samples may now be accessed via the generic audio buffer
                // returned by the decoder. You may match on the buffer to access a sample-format
@@ -287,9 +306,9 @@ impl BufferData {
 
       Ok(Self {
          name: path,
-         stereo,
-         replay_gain,
-         sample_rate,
+         stereo: decoder.stereo,
+         replay_gain: decoder.replay_gain,
+         sample_rate: decoder.sample_rate,
          data: samples,
       })
    }
@@ -625,11 +644,7 @@ struct StreamData {
    source: ManuallyDrop<al::Source>,
    buffers: [al::Buffer; 2],
    format: Box<dyn FormatReader>,
-   track_id: u32,
-   decoder: Box<dyn AudioDecoder>,
-   replaygain: Option<ReplayGain>,
-   stereo: bool,
-   sample_rate: u32,
+   decoder: Decoder,
    active: usize,
    /// Number of samples consumed already
    consumed: usize,
@@ -641,7 +656,6 @@ impl Debug for StreamData {
 }
 impl StreamData {
    fn from_file(source: &al::Source, file: ndata::physfs::File) -> Result<Self> {
-      let codecs = &CODECS;
       let probe = symphonia::default::get_probe();
       let mss = MediaSourceStream::new(Box::new(file), Default::default());
       let mut format = probe.probe(
@@ -651,56 +665,16 @@ impl StreamData {
          Default::default(),
       )?;
 
-      // Replaygain
-      let replaygain = ReplayGain::from_formatreader(&mut format)?;
-
       // Set up buffers
       let buffers: [al::Buffer; 2] = [al::Buffer::new()?, al::Buffer::new()?];
 
-      let track = format
-         .default_track(symphonia::core::formats::TrackType::Audio)
-         .context("No default track")?;
-      let track_id = track.id;
-
-      let binding = track.codec_params.clone().context("No codec parameters")?;
-      let mut codec_params = binding
-         .audio()
-         .context("Not audio codec parameters")?
-         .clone();
-      let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
-
-      let (stereo, channels) = match codec_params.channels {
-         Some(Channels::Positioned(p)) => {
-            let mono = if p.contains(Position::FRONT_LEFT) {
-               Position::FRONT_LEFT
-            } else if p.contains(Position::FRONT_CENTER) {
-               Position::FRONT_CENTER
-            } else {
-               anyhow::bail!("no left/center channel");
-            };
-            if p.contains(Position::FRONT_RIGHT) {
-               (true, Channels::Positioned(mono | Position::FRONT_RIGHT))
-            } else {
-               (false, Channels::Positioned(mono))
-            }
-         }
-         _ => {
-            anyhow::bail!("no usable channels");
-         }
-      };
-      codec_params.with_channels(channels);
-
-      let decoder = codecs.make_audio_decoder(&codec_params, &Default::default())?;
+      let decoder = Decoder::new(&mut format)?;
       Ok(Self {
          // We use the raw value so it doesn't get dropped here and double free the source
          source: ManuallyDrop::new(al::Source(source.0)),
          buffers,
          format,
-         track_id,
          decoder,
-         replaygain,
-         stereo,
-         sample_rate,
          active: 0,
          consumed: 0,
       })
@@ -711,12 +685,12 @@ impl StreamData {
       let mut samples: Vec<f32> = Default::default();
       while let Some(packet) = self.format.next_packet().unwrap() {
          // If the packet does not belong to the selected track, skip it.
-         if packet.track_id != self.track_id {
+         if packet.track_id != self.decoder.track_id {
             continue;
          }
 
          // Decode the packet into audio samples, ignoring any decode errors.
-         match self.decoder.decode(&packet) {
+         match self.decoder.decoder.decode(&packet) {
             Ok(audio_buf) => {
                // The decoded audio samples may now be accessed via the generic audio buffer
                // returned by the decoder. You may match on the buffer to access a sample-format
@@ -749,7 +723,7 @@ impl StreamData {
                         SeekMode::Accurate,
                         SeekTo::Time {
                            time: Time::ZERO,
-                           track_id: Some(self.track_id),
+                           track_id: Some(self.decoder.track_id),
                         },
                      )?;
                      continue;
@@ -763,14 +737,18 @@ impl StreamData {
       }
 
       if !samples.is_empty() {
-         if let Some(replaygain) = self.replaygain {
-            replaygain.filter(&mut samples);
+         if let Some(replay_gain) = self.decoder.replay_gain {
+            replay_gain.filter(&mut samples);
          }
          elapsed.fetch_add(
             self.buffers[self.active].get_parameter_f32(AL_SEC_LENGTH_SOFT),
             Ordering::Relaxed,
          );
-         self.buffers[self.active].data_f32(&samples, self.stereo, self.sample_rate as ALsizei);
+         self.buffers[self.active].data_f32(
+            &samples,
+            self.decoder.stereo,
+            self.decoder.sample_rate as ALsizei,
+         );
          self.source.queue_buffer(&self.buffers[self.active]);
          self.active = 1 - self.active;
          self.consumed += samples.len();
@@ -854,8 +832,8 @@ impl AudioStream {
       source.g_pitch = None;
 
       let thdata = StreamData::from_file(&source.inner, src)?;
-      let stereo = thdata.stereo;
-      let sample_rate = thdata.sample_rate;
+      let stereo = thdata.decoder.stereo;
+      let sample_rate = thdata.decoder.sample_rate;
 
       Ok(AudioStream {
          path,
@@ -887,7 +865,7 @@ impl AudioStream {
                SeekMode::Accurate,
                SeekTo::Time {
                   time: seek,
-                  track_id: Some(data.track_id),
+                  track_id: Some(data.decoder.track_id),
                },
             )?;
          }
