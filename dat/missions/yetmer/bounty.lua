@@ -28,7 +28,7 @@ local bounty = require "common.bounty"
 local misn_title = {
    _("Eliminate O'rez Traitor in {sys}"),
 }
-local misn_desc = _([[An O'rez traitor known as {name} has gained notoriety through violent acts against House Yetmer in the {sys} system. Their elimination will help the war efforts to triumph over the traitors.
+local misn_desc = _([[An O'rez traitor known as {pilotname} has gained notoriety through violent acts against House Yetmer in the {sys} system. Their elimination will help the war efforts to triumph over the traitors.
 
 #nTarget:#0 {pilotname} ({shipclass}-class ship{escorts})
 #nWanted:#0 Dead
@@ -88,7 +88,7 @@ function create ()
 
    -- Enemy details
    local pname = pilotname.generic() -- TODO something better?
-   local points = 100 + rnd.rnd() * 500
+   local points = 20 + rnd.rnd() * 130
    local target = bounty_setup( points )
    local title, desc = misn_title[rnd.rnd(1,#misn_title)], misn_desc
 
