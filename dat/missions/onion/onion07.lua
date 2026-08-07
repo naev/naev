@@ -424,10 +424,20 @@ function scan( _pp, tgt )
       return
    end
 
+   -- Must exist
+   if not tgt or not tgt:exists() then
+      return
+   end
+
+   -- Can't scan own ships
+   if tgt:withPlayer() then return end
+
    if not inlist( ships_scanned, tgt ) then
       table.insert( ships_scanned, tgt )
-      player.msg(fmt.f(_("Ship '{name}' was scanned. {left} ships left to scan."),
-         {name=tgt:name(), left=SHIPS_TO_SCAN-#ships_scanned}))
+      player.msg(fmt.f(_("Ship '{name}' was scanned. {left} ships left to scan."), {
+         name  = tgt:name(),
+         left  = SHIPS_TO_SCAN-#ships_scanned,
+      }))
    end
    misn.markerRm()
    misn.osdCreate( title, {
