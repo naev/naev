@@ -82,7 +82,7 @@ return function ()
                   } )
                local m = p:memory()
                m.capturable = true
-               m.comm_greet = _([["I've always to try to eat some jellywhale."]])
+               m.comm_greet = _([["I've always wanted to try to eat some jellywhale."]])
                m.taunt = _("Your head shall make a good trophy.")
                m.bribe_no = _([["Credits will not get me a fluffier tail!"]])
                return p
