@@ -115,7 +115,7 @@ pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
             warn_err!(e);
          }
          Ok(()) => {
-            info!("Added datapath from conf.lua file: {}", &path);
+            info!("Added datapath from conf.lua file: {}", path);
          }
       }
    }
@@ -146,7 +146,7 @@ pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
                warn_err!(e);
             }
             Ok(()) => {
-               info!("Trying default datapath : {}", &path.to_string_lossy());
+               info!("Trying default datapath : {}", path.to_string_lossy());
             }
          }
       }
@@ -157,7 +157,7 @@ pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
             warn_err!(e);
          }
          Ok(()) => {
-            info!("Trying default datapath : {}", &path.to_string_lossy());
+            info!("Trying default datapath : {}", path.to_string_lossy());
          }
       }
    }
@@ -175,10 +175,10 @@ pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
       match physfs::mount(&path, true) {
          Err(_) => {
             //warn_err!(e);
-            debug!("Failed to mount path '{}'", &path.to_string_lossy());
+            debug!("Failed to mount path '{}'", path.to_string_lossy());
          }
          Ok(()) => {
-            info!("Trying default datapath: '{}'", &path.to_string_lossy());
+            info!("Trying default datapath: '{}'", path.to_string_lossy());
          }
       }
    }

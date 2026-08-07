@@ -688,7 +688,7 @@ impl UserData for CommodityRef {
                         let gfxname = format!("gfx/commodity/space/{n}");
                         texture::TextureBuilder::new()
                            .path(&gfxname)
-                           .build(&Context::get())
+                           .build(Context::get())
                      }
                   })
                   .transpose()?

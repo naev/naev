@@ -32,11 +32,7 @@ impl LuaFile {
    }
 
    pub fn iostream(&self) -> Option<MutexGuard<'_, IOStream<'static>>> {
-      if let Some(file) = &self.file {
-         Some(file.io.lock().unwrap())
-      } else {
-         None
-      }
+      self.file.as_ref().map(|file| file.io.lock().unwrap())
    }
    pub fn iostream_mut(&mut self) -> Option<MutexGuard<'_, IOStream<'static>>> {
       if let &mut Some(ref mut file) = &mut self.file {
