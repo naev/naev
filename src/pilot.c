@@ -1596,7 +1596,7 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
    int should_be_disabled =
       ( ( p->armour <= p->stress ) ||
         ( !pilot_isWithPlayer( p ) &&
-          ( p->armour < p->armour_disabled * p->armour_max ) ) );
+          ( p->armour <= p->armour_disabled * p->armour_max ) ) );
 
    /* Disable pilot if they should be disabled. */
    if ( ( !pilot_isFlag( p, PILOT_DISABLED ) ) &&
@@ -2529,9 +2529,6 @@ void pilot_update( Pilot *pilot, double dt )
          pilot_updateDisable( pilot, 0 );
       }
    }
-   /* Make sure to set it as the minimum so the check fails. */
-   pilot->armour_disabled =
-      MIN( pilot->armour / pilot->armour_max, CTS.PILOT_DISABLED_ARMOUR );
 
    /* Damage effect. */
    if ( ( pilot->stats.damage > 0. ) || ( pilot->stats.disable > 0. ) ) {
@@ -2551,6 +2548,10 @@ void pilot_update( Pilot *pilot, double dt )
       dmg.disable     = pilot->stats.disable * dt;
       pilot_hit( pilot, NULL, applicator, &dmg, NULL, LUA_NOREF, 0 );
    }
+
+   /* Make sure to set it as the minimum so the check fails. */
+   pilot->armour_disabled =
+      MIN( pilot->armour / pilot->armour_max, CTS.PILOT_DISABLED_ARMOUR );
 
    /* Handle takeoff/landing. */
    if ( pilot_isFlag( pilot, PILOT_TAKEOFF ) ) {
