@@ -1,14 +1,14 @@
-<spob name="Aldous' moon">
+<spob name="Aldous' Moon">
  <pos x="5648.751985" y="-3288.685811"/>
  <GFX>
   <space>moon-A00</space>
-  <exterior>snow</exterior>
+  <exterior>uninhabited-rocky-red-02</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
   <hide>3.000000</hide>
   <services/>
-  <description>It is covered in the same sea of toxins as Aldous itself. There, however, the high concentrations of iron oxygen react and give the moon it’s characteristic red shade. This also happens to make it particularly unsuitable for the production of positronic circuitry, leaving it without the one attractive quality of Aldous.</description>
+  <description>Similar to its primary Aldous, the moon is covered in a sea of toxins. However, one significant difference is high concentrations of iron and oxygen that react and give the moon its characteristic red shade. This also happens to make it particularly unsuitable for the production of positronic circuitry, leaving it without the one attractive quality of Aldous.</description>
  </general>
 </spob>
