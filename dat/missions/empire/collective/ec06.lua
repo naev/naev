@@ -74,7 +74,7 @@ She begins, "We're going to finally attack the Collective. We've gotten the Empe
 
    vn.label("accept")
    vn.func(function () accepted = true end)
-   keer(fmt.f(_([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in {target}. The systems up to {sys} are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]), {target=misn_final_sys, sys=misn_target_sys1}))
+   keer(fmt.f(_([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in {target}. The systems up to {sys} are already secure and under our control; all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage, our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]), {target=misn_final_sys, sys=misn_target_sys1}))
    vn.done(emp.keer.transition)
    vn.run()
 
@@ -244,7 +244,7 @@ end
 
 function refuelBroadcast ()
    if refship:exists() then
-      refship:broadcast(_("Tanker in system, contact if in need of fuel."))
+      refship:broadcast(_("Tanker in system; contact if in need of fuel."))
       hook.timer(30.0, "refuelBroadcast")
    end
 end
@@ -305,10 +305,10 @@ function land ()
       vn.scene()
       local keer = emp.vn_keer()
       vn.transition()
-      vn.na(fmt.f(_([[As you approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honouring all the returning pilots.]]), {pnt=misn_base}))
+      vn.na(fmt.f(_([[As you approach to land on {pnt}, you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honouring all the returning pilots.]]), {pnt=misn_base}))
       vn.appear(keer, emp.keer.transition)
       keer(_([[You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective any more. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]))
-      keer(_([[She continues. "As a symbol of appreciation, you should find a substantial deposit in your account. There will be a celebration later today in the officer's room if you want to join in."]]))
+      keer(_([[She continues. "As a symbol of appreciation, you should find a substantial deposit in your account. There will be a celebration later today in the officer's room, if you want to join in."]]))
       vn.func(function ()
          diff.apply("collective_dead")
          -- This was the last mission in the minor campaign, so bump the reputation cap.

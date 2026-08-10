@@ -39,7 +39,7 @@ local targsys2 = system.get("C-59")
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), emp.dimitri.portrait, _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
+   misn.setNPC( emp.dimitri.barname, emp.dimitri.portrait, _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
 end
 
 
@@ -143,7 +143,7 @@ function land()
       vn.scene()
       local dimitri = vn.newCharacter(emp.vn_dimitri())
       vn.transition(emp.dimitri.transition)
-      vn.na(_([[After landing, Lt. Commander Dimitri greets you on the land pad.]]))
+      vn.na(_([[After landing, Lt. Commander Dimitri greets you on the landing pad.]]))
       dimitri(_([["I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]))
       vn.func(function ()
          faction.hit("Empire",35)

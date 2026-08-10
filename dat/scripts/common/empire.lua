@@ -41,9 +41,10 @@ emp.soldner = {
 emp.soldner.image = portrait.getFullPath(emp.soldner.portrait)
 emp.dimitri = {
    portrait = "empire/unique/dimitri",
+   barname = _("Dimitri"),
    name = _("Lt. Commander Dimitri"),
    colour = nil,
-   tranisition = "pixelize",
+   transition = "pixelize",
    description = _("You notice Lt. Commander Dimitri at one of the booths."),
 }
 emp.dimitri.image = portrait.getFullPath(emp.dimitri.portrait)
@@ -51,7 +52,7 @@ emp.keer = {
    portrait = "empire/unique/keer",
    name = _("Commodore Keer"),
    colour = nil,
-   tranisition = "pixelize",
+   transition = "pixelize",
    description = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them."),
 }
 emp.keer.image = portrait.getFullPath(emp.keer.portrait)

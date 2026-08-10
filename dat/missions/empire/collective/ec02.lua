@@ -47,7 +47,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC( _("Dimitri"), emp.dimitri.portrait, emp.dimitri.description )
+   misn.setNPC( emp.dimitri.barname, emp.dimitri.portrait, emp.dimitri.description )
 end
 
 
@@ -59,7 +59,7 @@ function accept ()
    local dimitri = vn.newCharacter(emp.vn_dimitri())
    vn.transition(emp.dimitri.transition)
    dimitri(fmt.f(_([[You head over to Lt. Commander Dimitri to see what the results are.
-"Hello there again, {player}. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]), {player=player.name()}))
+"Hello there again, {player}. Bad news on your latest run: you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]), {player=player.name()}))
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Decline]]), "decline"},
@@ -72,7 +72,7 @@ function accept ()
    dimitri(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed."]]))
    dimitri(fmt.f(_([["When the Collective struck, they quickly took many systems; one of the bigger losses was {pnt}, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), {pnt=misn_target}))
    dimitri(fmt.f(_([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to {pnt} in the {sys} system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then."]]), {pnt=misn_target, sys=misn_target_sys}))
-   dimitri(_([["Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece. Good luck, I'll be waiting for you on your return."]]))
+   dimitri(_([["Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece. Good luck; I'll be waiting for you on your return."]]))
    vn.done(emp.dimitri.transition)
    vn.run()
 
@@ -123,7 +123,7 @@ function land()
       vn.done(emp.dimitri.transition)
       vn.run()
 
-      emp.addCollectiveLog(fmt.f(_([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on {pnt} again later.]]), {pnt=misn_base}))
+      emp.addCollectiveLog(fmt.f(_([[You monitored Collective communications for the Empire again, this time while landed on {target}. Lt. Commander Dimitri told you to meet him in the bar on {pnt} again later.]]), {target=misn_target, pnt=misn_base}))
 
       misn.finish(true)
    end
