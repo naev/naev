@@ -2,19 +2,19 @@ local luatk = require 'luatk.luatk'
 local le = require 'love.event'
 
 function love.keypressed( key )
-   luatk.keypressed( key )
+   return luatk.keypressed( key )
 end
 
 function love.mousepressed( mx, my, button )
-   luatk.mousepressed( mx, my, button )
+   return luatk.mousepressed( mx, my, button )
 end
 
 function love.mousereleased( mx, my, button )
-   luatk.mousereleased( mx, my, button )
+   return luatk.mousereleased( mx, my, button )
 end
 
 function love.mousemoved( mx, my, dx, dy )
-   luatk.mousemoved( mx, my, dx, dy )
+   return luatk.mousemoved( mx, my, dx, dy )
 end
 
 function love.textinput( str )
