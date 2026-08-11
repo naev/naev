@@ -73,7 +73,7 @@ function accept()
    local man = vn.newCharacter(mission.npc.name, { image = mem.npc_image } )
    vn.transition()
    man(fmt.f(_([["On behalf of the {spob} government, I have been investigating some of the advertiser ships in this sector of space. You see, sometimes they behave all too erratically, sending hundreds of advertisements a hectostu, and when we board one of them, the captain is none the wiser!"]]), { spob = spob.cur() }))
-   man(fmt.f(_([["Someone has beem planting malware on those ships to fulfil dozens of advertising contracts simultaneously and funnel all of the profits to themselves. Too bad for them - we have managed to track the head of the operation down to the {sys} system. Several of our own agent barely got out of there alive, so we need a more than capable pilot to take the bandit down. Pay is {creds}. Willing to give it a go?"]]), { sys = mem.fight_system, creds = fmt.credits(mission.reward) }))
+   man(fmt.f(_([["Someone has been planting malware on those ships to fulfil dozens of advertising contracts simultaneously and funnel all of the profits to themselves. Too bad for them - we have managed to track the head of the operation down to the {sys} system. Several of our own agent barely got out of there alive, so we need a more than capable pilot to take the bandit down. Pay is {creds}. Willing to give it a go?"]]), { sys = mem.fight_system, creds = fmt.credits(mission.reward) }))
    vn.menu {
       { _([[Accept]]), "accept" },
       { _([[Refuse]]), "refuse" },

@@ -219,7 +219,7 @@ typedef struct Spob_ {
                   rendering map. */
 #define SYSTEM_NEBULATRAIL ( 1 << 19 ) /**< System uses nebula trails. */
 #define SYSTEM_HIDENEBULADAMAGE                                                \
-   ( 1 << 20 )                           /**< HIdes amount of nebula damage. */
+   ( 1 << 20 )                           /**< Hides amount of nebula damage. */
 #define SYSTEM_HAS_DOMINATED ( 1 << 21 ) /**< System has a dominated spob. */
 #define sys_isFlag( s, f )                                                     \
    ( ( s )->flags & ( f ) ) /**< Checks system flag.                           \
