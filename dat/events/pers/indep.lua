@@ -119,7 +119,7 @@ return function ()
       }
    }
 
-   if player.outfitNum( "Junker Pack" ) >= 0 and jlib.good_sys() then
+   if player.outfitNum( "Junker Pack" ) > 0 and jlib.good_sys() then
       table.insert( pers, {
          spawn = function ()
             local p = jlib.spawn_pilot()
