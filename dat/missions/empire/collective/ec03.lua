@@ -57,7 +57,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), emp.dimitri.portrait, _("You see Lt. Commander Dimitri at the bar, as usual.") )
+   misn.setNPC( emp.dimitri.barname, emp.dimitri.portrait, _("You see Lt. Commander Dimitri at the bar, as usual.") )
 end
 
 
@@ -83,9 +83,9 @@ function accept ()
    vn.label("accept")
    vn.func(function () accepted = true end)
    dimitri(fmt.f(_([["Here's the plan: we want to drop a commando team on {pnt} to set up more sophisticated surveillance. We've already got a team assembled. Your job will be to provide a distraction."]]), {pnt=mem.commando_planet}))
-   dimitri(fmt.f(_([["The idea would be to have you fly deep into Collective territory and kick up some trouble. A few dead drones should draw their attention. This is no suicide mission, so you'll have to fly back when things start getting ugly. Meanwhile we'll send a fast convoy with the commandos to {pnt}, to start monitoring."]]), {pnt=mem.commando_planet}))
+   dimitri(fmt.f(_([["The idea would be to have you fly deep into Collective territory and kick up some trouble. A few dead drones should draw their attention. This is no suicide mission, so you'll have to fly back when things start getting ugly. Meanwhile, we'll send a fast convoy with the commandos to {pnt}, to start monitoring."]]), {pnt=mem.commando_planet}))
    dimitri(_([["If all goes well, the commandos will return here with the results after 10 periods. Then we'll have a definitive answer on the communications issues. We aren't anticipating problems on the return, but we'll have some ships ready just in case they're pursued."]]))
-   dimitri(_([["Good luck and be careful out there," he adds, before saluting you off onto your mission.]]))
+   dimitri(_([["Good luck, and be careful out there," he adds, before saluting you off onto your mission.]]))
    vn.done(emp.dimitri.transition)
    vn.run()
 
@@ -143,8 +143,8 @@ function land()
       local dimitri = vn.newCharacter(emp.vn_dimitri())
       vn.transition(emp.dimitri.transition)
       vn.na(_([[Your ship touches ground and you once again see the face of Lt. Commander Dimitri.]]))
-      dimitri(_([["How was the trip? I trust you didn't have too many issues evading the Collective. We won't hear from the commandos until 10 periods from now when they get back, but I believe everything went well."]]))
-      dimitri(_([["Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them. We'll keep in touch."]]))
+      dimitri(_([["How was the trip? I trust you didn't have too many issues evading the Collective. We won't hear from the commandos until 10 periods from now, when they get back, but I believe everything went well."]]))
+      dimitri(_([["Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year; maybe you should visit them. We'll keep in touch."]]))
       vn.func(function ()
          faction.hit("Empire",50)
          player.pay(mem.credits)

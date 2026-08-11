@@ -106,13 +106,13 @@ function accept ()
    vn.func(function () accepted = true end)
    vn.disappear({emp1, emp2})
    vn.na(_([[You accept and she dismisses both of the soldiers, who proceed to wait outside.]]))
-   keer(fmt.f(_([["We've been following Lt. Commander Dimitri's progress since he started at {pnt}. The datapad you brought back has confirmed what we have suspected. We have an undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]), {pnt=misn_base}))
+   keer(fmt.f(_([["We've been following Lt. Commander Dimitri's progress since he started at {pnt}. The datapad you brought back has confirmed what we have suspected: we have an undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]), {pnt=misn_base}))
    keer(fmt.f(_([["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on {pnt}. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones."]]), {pnt=_("Eiroik")}))
-   keer(_([["It seems like the project had been a success, but the traitor, Welsh, went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]]))
+   keer(_([["It seems like the project had been a success, but the traitor, Welsh, went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident, these are hardly normal circumstances."]]))
    keer(_([[She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we are weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]))
-   emp.addCollectiveLog( _([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on Eiroik. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]]))
+   emp.addCollectiveLog(fmt.f(_([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on {pnt}. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident, these are hardly normal circumstances."]]), {pnt=_("Eiroik")}))
    keer(_([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. As a last resort, you are authorized to kill Zakred. He must not escape."]]))
-   keer(fmt.f(_([["We'll be sending you with a small force. We expect you to hang back, but, if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in {sys}. You will have to find him there. The other ships will follow your lead to {sys}. Good luck."]]), {sys=misn_target_sys} ) )
+   keer(fmt.f(_([["We'll be sending you with a small force. We expect you to hang back, but, if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in {sys}. You will have to find him there. The other ships will follow your lead to {sys}. Good luck."]]), {sys=misn_target_sys}))
    vn.done(emp.keer.transition)
    vn.run()
 
@@ -202,7 +202,8 @@ function enter ( from_sys )
    elseif mem.misn_stage == 1 then
 
       mem.misn_stage = 3
-      player.msg( "#o".._("Mission Failure: Return to base.").."#0" )
+      misn.osdActive(3)
+      player.msg( "#o".._("Mission failure; return to base.").."#0" )
       misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"),
             {pnt=misn_base, sys=misn_base_sys} ))
       misn.markerMove( mem.misn_marker, misn_base )
@@ -216,7 +217,7 @@ function final_talk ()
    local talker
    if mem.final_fight == 0 then
       talker = paci
-      talker:broadcast( _("ESS Trinity: Please turn off your engines and prepare to be boarded.") )
+      talker:broadcast( _("ESS Trinity: please turn off your engines and prepare to be boarded.") )
 
       mem.final_fight = 1
       hook.timer(rnd.rnd( 3, 4 ), "final_talk")
@@ -229,7 +230,7 @@ function final_talk ()
    elseif mem.final_fight == 2 then
       -- Talk
       talker = paci
-      talker:broadcast( _("Very well then. All units engage ESS Trinity.") )
+      talker:broadcast( _("Very well, then. All units: engage ESS Trinity.") )
 
       -- ESS Trinity becomes collective now.
       local fct = faction.get("Collective")
@@ -379,7 +380,7 @@ end
 
 -- Trinity hooks
 function trinity_kill () -- Got killed
-   player.msg( "#g".._("Mission Success: Return to base.").."#0" )
+   player.msg( "#g".._("Mission success; return to base.").."#0" )
    mem.misn_stage = 2
    misn.osdActive(3)
    mem.trinity_alive = false
@@ -389,7 +390,7 @@ end
 
 
 function trinity_jump () -- Got away
-   player.msg( "#o".._("Mission Failure: Return to base.").."#0" )
+   player.msg( "#o".._("Mission failure; return to base.").."#0" )
    mem.misn_stage = 2
    misn.osdActive(3)
    mem.trinity_alive = true

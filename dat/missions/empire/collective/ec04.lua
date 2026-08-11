@@ -55,7 +55,7 @@ function create ()
    vn.scene()
    local dimitri = vn.newCharacter(emp.vn_dimitri())
    vn.transition(emp.dimitri.transition)
-   dimitri(_([[As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+   dimitri(_([[As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous than usual.
 "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]))
    vn.menu{
       {_([[Accept]]), "accept"},
@@ -254,7 +254,7 @@ function land ()
       end)
       vn.na(_([[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]))
       vn.label("no_fuel")
-      vn.na(_([[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship.]]))
+      vn.na(_([[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh, you grab it just as you hear the sirens go off in your ship.]]))
       vn.na(_([[Enemy reinforcements! Time to hit the afterburner. You've got one, right?]]))
       vn.done()
       vn.run()
