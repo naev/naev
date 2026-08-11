@@ -29,7 +29,7 @@ return function ()
          vn.transition()
 
          vn.na(_([[You board the derelict and suddenly feel a sense of déjà vu: the ship has been stripped clean in a meticulous way you've only seen once before. How strange...]]))
-         vn.na(_([[Wait, you get a signal that it seems like a ship is rapidly your location. A pirate trap?!?]]))
+         vn.na(_([[Wait, you get a signal that it seems like a ship is rapidly approaching your location. A pirate trap?!?]]))
          vn.na(_([[You rush back aboard your ship before you get blown up into smithereens.]]))
 
          vn.sfx( der.sfx.unboard )
