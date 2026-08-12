@@ -211,7 +211,7 @@ static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
 
 static int map_shouldRenderSys( const StarSystem *sys, int editor )
 {
-   if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+   if ( sys_isHidden( sys ) )
       return 0;
    if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) &&
         !sys_isKnown( sys ) && !editor )
@@ -1193,7 +1193,7 @@ void map_renderDecorators( double x, double y, double zoom, int editor,
                j++ ) {
             const StarSystem *sys = system_getIndex( j );
 
-            if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+            if ( sys_isHidden( sys ) )
                continue;
 
             if ( !sys_isKnown( sys ) )
@@ -1376,7 +1376,7 @@ void map_renderJumps( double x, double y, double zoom, double radius,
          double            x2, y2, rx, ry, r, rw, rh;
          const glColour   *col, *cole;
          const StarSystem *jsys = sys->jumps[j].target;
-         if ( sys_isFlag( jsys, SYSTEM_HIDDEN ) )
+         if ( sys_isHidden( jsys ) )
             continue;
          if ( !space_sysReachableFromSys( jsys, sys ) && !editor )
             continue;
@@ -1434,7 +1434,7 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
       double            tx, ty;
       const StarSystem *sys = system_getIndex( i );
 
-      if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+      if ( sys_isHidden( sys ) )
          continue;
 
       /* if system is not known, reachable, or marked. and we are not in the
@@ -1533,8 +1533,7 @@ static void map_renderPath( double x, double y, double zoom, double radius,
       glColour          col;
       double            x1, y1, x2, y2, rx, ry, rw, rh, r;
       const StarSystem *sys2 = map_path[j];
-      if ( sys_isFlag( sys1, SYSTEM_HIDDEN ) ||
-           sys_isFlag( sys2, SYSTEM_HIDDEN ) )
+      if ( sys_isHidden( sys1 ) || sys_isHidden( sys2 ) )
          continue;
       if ( jcur == jmax && jmax > 0 )
          col = cGreen;
@@ -1763,7 +1762,7 @@ static void map_renderSysBlack( double bx, double by, double x, double y,
       glColour    ccol;
       StarSystem *sys = system_getIndex( i );
 
-      if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+      if ( sys_isHidden( sys ) )
          continue;
 
       /* if system is not known, reachable, or marked. and we are not in the
@@ -1867,7 +1866,7 @@ void map_renderCommod( double bx, double by, double x, double y, double zoom,
          double tx, ty;
          sys = system_getIndex( i );
 
-         if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+         if ( sys_isHidden( sys ) )
             continue;
 
          /* if system is not known, reachable, or marked. and we are not in the
@@ -1950,7 +1949,7 @@ void map_renderCommod( double bx, double by, double x, double y, double zoom,
          double      tx, ty;
          StarSystem *sys = system_getIndex( i );
 
-         if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+         if ( sys_isHidden( sys ) )
             continue;
 
          /* if system is not known, reachable, or marked. and we are not in the
@@ -2188,7 +2187,7 @@ static int map_mouse( unsigned int wid, const SDL_Event *event, double mx,
          double      x, y;
          StarSystem *sys = system_getIndex( i );
 
-         if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+         if ( sys_isHidden( sys ) )
             continue;
 
          /* must be reachable */

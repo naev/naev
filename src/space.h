@@ -231,7 +231,9 @@ typedef struct Spob_ {
 #define sys_isKnown( s )                                                       \
    ( sys_isFlag( ( s ), SYSTEM_KNOWN ) ) /**< Checks if system is known. */
 #define sys_isMarked( s )                                                      \
-   sys_isFlag( ( s ), SYSTEM_MARKED ) /**< Checks if system is marked. */
+   ( sys_isFlag( ( s ), SYSTEM_MARKED ) ) /**< Checks if system is marked. */
+#define sys_isHidden( s )                                                      \
+   ( sys_isFlag( ( s ), SYSTEM_HIDDEN ) && ( ( s ) != cur_system ) )
 
 /**
  * @brief Represents presence in a system
@@ -263,7 +265,9 @@ typedef struct SystemPresence_ {
    ( ( j )->flags &= ~( f ) ) /**< Removes a jump flag. */
 #define jp_isKnown( j )                                                        \
    jp_isFlag( j, JP_KNOWN ) /**< Checks if jump is known. */
-#define jp_isUsable( j ) ( jp_isKnown( j ) && !jp_isFlag( j, JP_EXITONLY ) )
+#define jp_isUsable( j )                                                       \
+   ( jp_isKnown( j ) && !jp_isFlag( j, JP_EXITONLY ) &&                        \
+     !sys_isHidden( ( j )->from ) && !sys_isHidden( ( j )->target ) )
 
 /**
  * @brief Represents a jump lane.
