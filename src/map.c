@@ -1533,8 +1533,6 @@ static void map_renderPath( double x, double y, double zoom, double radius,
       glColour          col;
       double            x1, y1, x2, y2, rx, ry, rw, rh, r;
       const StarSystem *sys2 = map_path[j];
-      if ( sys_isHidden( sys1 ) || sys_isHidden( sys2 ) )
-         continue;
       if ( jcur == jmax && jmax > 0 )
          col = cGreen;
       else if ( jcur < 1 )
