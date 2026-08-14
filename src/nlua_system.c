@@ -630,13 +630,19 @@ static int systemL_jumps( lua_State *L )
    /* Push all jumps. */
    lua_newtable( L );
    for ( int i = 0; i < array_size( s->jumps ); i++ ) {
-      LuaJump lj;
-      /* Skip exit-only jumps if requested. */
-      if ( ( exitonly ) && ( jp_isFlag( &s->jumps[i], JP_EXITONLY ) ) )
+      JumpPoint *jp = &s->jumps[i];
+      LuaJump    lj;
+
+      // Ignore exit-only when applicable
+      if ( ( exitonly ) && ( jp_isFlag( jp, JP_EXITONLY ) ) )
+         continue;
+
+      // Ignore hiddens
+      if ( sys_isHidden( jp->from ) || sys_isHidden( jp->target ) )
          continue;
 
       lj.srcid  = s->id;
-      lj.destid = s->jumps[i].targetid;
+      lj.destid = jp->targetid;
       lua_pushjump( L, lj ); /* value. */
       lua_rawseti( L, -2, ++pushed );
    }
