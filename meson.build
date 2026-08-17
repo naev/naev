@@ -22,12 +22,6 @@ project('naev', ['c', 'rust'],
 # 1.93 vec::into_raw_parts
 rust_version = '1.89' # version for Cargo.toml's 'rust-version' field
 rustc_needed_version = '>=@0@.0'.format( rust_version )
-# windows apparently needs 0.72.1 or it gives a ton of overflow warnings
-if host_machine.system() == 'windows'
-   bindgen_needed_version = '>=0.72.1'
-else
-   bindgen_needed_version = '>=0.72.0'
-endif
 cargo_needed_version = '>=1.77.2'
 
 copyright_year = 2026
@@ -47,10 +41,6 @@ c_args = cc.get_supported_arguments([
 rustc = find_program('rustc', version: rustc_needed_version, required: false)
 if not rustc.found()
    error('Need at least rustc version @0@\nYou can get an up-to-date version by installing rustup and running "rustup default stable" and "rustup update"'.format(rustc_needed_version))
-endif
-bindgen = find_program('bindgen', version: bindgen_needed_version, required: false)
-if not bindgen.found()
-   error('Need at least bindgen version @0@\nYou can get an up-to-date version by running "cargo install bindgen-cli"'.format(bindgen_needed_version))
 endif
 clang = find_program('clang', required: false)
 if not clang.found()
@@ -349,73 +339,10 @@ if buildExec.disabled() == false
    )
    naev_source += colours_source
 
-   # Generate Rust headers from C
-   rust = import('rust')
-   merge_h = find_program(files('utils'/'build'/'merge_h.py'))
-   naevch = custom_target(
-      'merge headers',
-      input: headers,
-      command: [ merge_h, '@INPUT@' ],
-      capture: true,
-      output: 'naevc.h',
-   )
-
-   bindgen_args = [
-      '--wrap-unsafe-ops', # Needed to try to lower warnings with 2024 rust https://github.com/rust-lang/rust-bindgen/issues/3147
-      '--override-abi', 'nlua_package_.*=C-unwind',
-      '--override-abi', 'cli_print=C-unwind',
-      '--override-abi', 'cli_printRaw=C-unwind',
-      '--override-abi', 'cli_warn=C-unwind',
-      '--override-abi', 'luaopen_utf8=C-unwind',
-      '--override-abi', 'luaopen_cmark=C-unwind',
-      '--override-abi', 'luaopen_enet=C-unwind',
-      '--raw-line', '#![allow(clippy::all)]\n#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes, unnecessary_transmutes)]\npub mod config;',
-
-   ]
-# Handle issues with bindgen and the math.h header
-   bindgen_blocklist_items = [
-      '__mingw_ldbl_type_t',
-      'FP_INT_.*',
-      'FP_SUBNORMAL*',
-      'FP_NORMAL*',
-      'FP_NAN*',
-      'FP_INFINITE*',
-      'FP_ZERO*'
-   ]
-
-   foreach item : bindgen_blocklist_items
-      bindgen_args += ['--blocklist-item', item]
-   endforeach
-
 # Target we are cross-compiling for
    target_triplet = get_option('target_triplet')
 
-# meson doesn't automatically forward the C arguments to bindgen, so we have to do that ourselves...
-# Related issue https://github.com/mesonbuild/meson/issues/13591
-# We are setting this now in the github actions with BINDGEN_EXTRA_CLANG_ARGS.
-#bindgen_cargs = []
-#if target_triplet != ''
-#  bindgen_cargs += ['--target='+target_triplet]
-#endif
-
-# Invoke bindgen to generate Rust bindings
-   naevcrs = rust.bindgen(
-      input: naevch,
-      output: 'naevc.rs',
-      include_directories: [include_dirs, '.'],
-      dependencies: naev_deps,
-      language: 'c',
-      args: bindgen_args,
-      #c_args: bindgen_cargs,
-   )
-
    copydir = find_program(files('utils'/'build'/'copydir.py'))
-   naevc_crate = custom_target(
-      'naevc crate',
-      input: [ naevcrs, naevc_crate_cargo, configrs ],
-      output: 'naevc',
-      command: [ copydir, '@OUTPUT@', '@INPUT@' ],
-   )
 
    # Compiling Naev
    # 1. First, compile all the C code as a static library with meson.
@@ -453,7 +380,7 @@ if buildExec.disabled() == false
    cargo_data.set_quoted('NAME', meson.project_name())
    cargo_data.set_quoted('VERSION', meson.project_version())
    cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
-   cargo_data.set_quoted('NAEVC', naevc_crate.full_path() )
+   cargo_data.set_quoted('NAEVC', meson.project_source_root() / 'naevc' )
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
    cargo_data.set_quoted('RUSTCVERSION', rust_version )
@@ -465,6 +392,9 @@ if buildExec.disabled() == false
    buildrs = configure_file( input: 'build.rs.in', output: 'build.rs', configuration: cargo_data )
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
+   # naevc's build script bakes these into its config module.
+   cargo_env.set( 'NAEV_VERSION', meson.project_version() )
+   cargo_env.set( 'NAEV_PKGDATADIR', get_option('prefix') / ndata_path )
 
    # Decide whether to enable linker-plugin-LTO for Rust objects. When
    # b_lto is on, the final link is done with LTO, which means every object
@@ -519,7 +449,7 @@ if buildExec.disabled() == false
 
    # First let's compile Rust with cargo, but we can't control output
    naev_rlib_compile = custom_target( 'cargo-build',
-      depends: [naevcrs, naevc_crate, naev_clib],
+      depends: [naev_clib],
       depend_files: source_rust + cargo_toml + buildrs,
       output: 'src',
       console: true,
@@ -531,7 +461,7 @@ if buildExec.disabled() == false
       # Not sure why, but we have to keep the dependencies here or it won't
       # update the binary properly when changes are made
       #depends: [naev_rlib_compile],
-      depends: [naevcrs, naevc_crate, naev_clib, naev_rlib_compile],
+      depends: [naev_clib, naev_rlib_compile],
       depend_files: source_rust + cargo_toml + buildrs,
       output: 'libnaev.rlib',
       command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_artifact_dir / '@OUTPUT@', ] )

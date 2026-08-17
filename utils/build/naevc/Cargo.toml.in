@@ -1,9 +1,0 @@
-[package]
-name = "naevc"
-version = @PACKAGE_VERSION@
-edition = "2024"
-
-[lib]
-path = "naevc.rs"
-
-[dependencies]

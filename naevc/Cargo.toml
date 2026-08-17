@@ -1,0 +1,21 @@
+[package]
+name = "naevc"
+# Internal crate, never published. The engine version that actually matters is
+# passed in as NAEV_VERSION; see build.rs. This becomes version.workspace once
+# the workspace root lives in the source tree.
+version = "0.0.0"
+edition = "2024"
+publish = false
+build = "build.rs"
+
+[lib]
+path = "src/lib.rs"
+
+[features]
+# Mirrors the meson `paranoid` option; surfaces as config::DEBUG_PARANOID.
+paranoid = []
+
+[build-dependencies]
+# Windows needs 0.72.1 or it emits a flood of overflow warnings.
+bindgen = "0.72.1"
+pkg-config = "0.3"

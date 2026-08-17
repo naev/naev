@@ -1,5 +1,3 @@
-subdir('build')
-
 cargo_lock = find_program(files('build'/'cargo_lock.sh'))
 gen_version = find_program(files('build'/'gen_version.py'))
 

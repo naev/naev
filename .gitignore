@@ -69,6 +69,7 @@ utils/model-view-c/*.png
 utils/model-view-c/*.bin
 
 utils/docmaker/target/*
+naevc/target/*
 
 docs/manual/book
 
