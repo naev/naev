@@ -4,13 +4,16 @@ version = @VERSION@
 edition.workspace = true
 rust-version.workspace = true
 publish = false
-build = "@BUILD@/build.rs"
 
 [lints]
 workspace = true
 
 [lib]
 path = @PATH@
+
+[[bin]]
+name = "naev"
+path = @MAIN@
 
 [profile.release-with-debug]
 inherits = "release"

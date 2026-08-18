@@ -1,7 +1,14 @@
 //! Headers fed to bindgen, mirroring the `headers` list in the old
-//! `src/meson.build`. Deliberately not a glob: `attributes.h`,
-//! `pilot_flags.h` and `SDL_keynames.h` are excluded because bindgen
-//! cannot parse them standalone.
+//! `src/meson.build`. Deliberately not a glob.
+
+/// Headers the C sources use but bindgen is not given, because it cannot parse
+/// them standalone. They still have to be watched, or editing one would leave
+/// a stale build behind.
+pub const UNPARSED_HEADERS: &[&str] = &[
+   "src/attributes.h",
+   "src/pilot_flags.h",
+   "src/SDL_keynames.h",
+];
 
 pub const HEADERS: &[&str] = &[
    "src/ai.h",

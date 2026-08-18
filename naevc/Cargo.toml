@@ -12,10 +12,13 @@ build = "build.rs"
 path = "src/lib.rs"
 
 [features]
-# Mirrors the meson `paranoid` option; surfaces as config::DEBUG_PARANOID.
+# Mirror the meson options of the same names.
 paranoid = []
+debug_arrays = []
+tracy = []
 
 [build-dependencies]
 # Windows needs 0.72.1 or it emits a flood of overflow warnings.
 bindgen = "0.72.1"
+cc = "1.2"
 pkg-config = "0.3"

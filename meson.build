@@ -292,27 +292,12 @@ if buildExec.disabled() == false
 
    ### Generated sources
 
-   # Generated headers
-   configure_file(output: 'config.h', configuration: config_data)
-   configure_file(output: 'naev_build_version.h', configuration: {'VERSION': '"'+version+'"'})
-   add_project_arguments('-include', 'config.h', language: 'c')
-
-   include_dirs = [include_directories(
-      'src',
-      'src/tk',
-      'src/tk/widget'
-   )]
-
-   libsdf = static_library('sdf', sdf_source, include_directories: include_dirs, override_options: ['optimization=3'])
-   naev_deps += declare_dependency(link_with: libsdf)
-
+   # Objects that have to be linked into the executable but aren't part of the
+   # engine proper. The C sources themselves are built by naevc's build script.
    if host_machine.system() == 'darwin'
-      add_languages('objc', native: false)
       configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: app_metadata,
          install: true, install_dir: 'Contents')
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
-      naev_source += mac_source
-      naev_deps += dependency('Foundation', required: true )
 
    elif host_machine.system() == 'windows'
       windows = import('windows')
@@ -321,23 +306,10 @@ if buildExec.disabled() == false
       res_include = include_directories('extras/logos')
       win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
       win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
-      naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
+      # TODO Not linked into the binary yet. Cargo owns the executable now, so
+      # this needs rustc-link-arg-bins or the embed-resource crate.
+      windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
    endif
-
-   shaders_source = custom_target(
-      'generate_shaders',
-      command: [python, '@INPUT@'],
-      input: 'src/shaders_c_gen.py',
-      output: ['shaders.gen.c', 'shaders.gen.h']
-   )
-   naev_source += shaders_source
-   colours_source = custom_target(
-      'generate_colours',
-      command: [python, '@INPUT@'],
-      input: 'src/colours_c_gen.py',
-      output: ['colours.gen.c', 'colours.gen.h']
-   )
-   naev_source += colours_source
 
 # Target we are cross-compiling for
    target_triplet = get_option('target_triplet')
@@ -345,19 +317,10 @@ if buildExec.disabled() == false
    copydir = find_program(files('utils'/'build'/'copydir.py'))
 
    # Compiling Naev
-   # 1. First, compile all the C code as a static library with meson.
-   # 2. Next, compile all the main Rust code as a static library with Cargo.
-   # 3. Finally, use meson to link it all together in Rust.
+   # 1. Cargo compiles the C engine and all the Rust into a static library.
+   # 2. meson links the result into the executable.
 
-   # First create the static library with C using meson
-   naev_clib = static_library(
-      'naev', # Has to be called 'naev' or it won't link properly with the executable (why?)
-      naev_source,
-      include_directories: include_dirs,
-      dependencies: naev_deps,
-      install: false)
-
-   # Next handle setting up and passing stuff to Cargo
+   # Handle setting up and passing stuff to Cargo
    # Since Rust debug is significantly slower than release, we try to use our
    # custom release-with-debug profile that runs quite fast while still having
    # pretty good debugging properties. Use 'debug_rust' option to explicitly
@@ -380,6 +343,7 @@ if buildExec.disabled() == false
    cargo_data.set_quoted('NAME', meson.project_name())
    cargo_data.set_quoted('VERSION', meson.project_version())
    cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
+   cargo_data.set_quoted('MAIN', meson.project_source_root() / 'src' / 'main.rs')
    cargo_data.set_quoted('NAEVC', meson.project_source_root() / 'naevc' )
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
@@ -389,12 +353,13 @@ if buildExec.disabled() == false
    # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
    # https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo
    meson.add_dist_script( cargo_lock, cargo_toml.full_path() )
-   buildrs = configure_file( input: 'build.rs.in', output: 'build.rs', configuration: cargo_data )
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
-   # naevc's build script bakes these into its config module.
+   # naevc's build script bakes these into config.h and its config module.
    cargo_env.set( 'NAEV_VERSION', meson.project_version() )
+   cargo_env.set( 'NAEV_BUILD_VERSION', version )
    cargo_env.set( 'NAEV_PKGDATADIR', get_option('prefix') / ndata_path )
+   cargo_env.set( 'NAEV_BLAS', get_option('blas') )
 
    # Decide whether to enable linker-plugin-LTO for Rust objects. When
    # b_lto is on, the final link is done with LTO, which means every object
@@ -447,68 +412,30 @@ if buildExec.disabled() == false
       cargo_options += ['--target', target_triplet]
    endif
 
-   # First let's compile Rust with cargo, but we can't control output
-   naev_rlib_compile = custom_target( 'cargo-build',
-      depends: [naev_clib],
-      depend_files: source_rust + cargo_toml + buildrs,
+   # Cargo builds the C engine, all the Rust and the executable in one go.
+   cargo_build = custom_target( 'cargo-build',
+      depend_files: source_rust + cargo_toml,
       output: 'src',
       console: true,
       env: cargo_env,
       command: [ cargo, 'build', cargo_options, ] )
-   # Now we can copy the compile rlib to a location where meson can understand it
-   # TODO When the following gets merged we can simplify this https://github.com/rust-lang/cargo/issues/6790
-   naev_rlib = custom_target( 'naev_rlib',
-      # Not sure why, but we have to keep the dependencies here or it won't
-      # update the binary properly when changes are made
-      #depends: [naev_rlib_compile],
-      depends: [naev_clib, naev_rlib_compile],
-      depend_files: source_rust + cargo_toml + buildrs,
-      output: 'libnaev.rlib',
-      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_artifact_dir / '@OUTPUT@', ] )
-   # Also declare it as a library so meson can link with it
-   naev_rlib_lib = library(
-      'naev_rlib',
-      naev_rlib,
-      install : true )
-   # We create naev.rs with naev_rlib as a dependency to force rlib to be
-   # compiled first, otherwise meson tries to compile both naev.rs and
-   # naev_rlib in parallel and it fails.
-   naev_rs = custom_target( 'naevrs',
-      output: 'naev.rs',
-      input: meson.project_source_root() / 'utils' / 'build' / 'naev.rs',
-      depends: [naev_rlib],
-      command: [ copydir, meson.project_build_root(), '@INPUT@', ] )
 
-   # Lets make sure that we only enable export_dynamic if we aren't using macos or windows
-   if host_machine.system() in ['windows', 'darwin']
-      use_export_dynamic = false
-   else
-      use_export_dynamic = get_option('debug')
-   endif
-
-   # Add console subsystem linker flag on Windows to show console window
-   naev_bin_link_args = []
-   if get_option('debug') and host_machine.system() == 'windows'
-      naev_bin_link_args += ['-Wl,--subsystem,console']
-   endif
-
-   # Finally, build the executable with Rust again, but using meson to link it all together
-   naev_bin = executable(
-      'naev', # needed so the binary is named 'naev'
-      sources: naev_rs,
-      # Have to make sure Rust uses the dependencies from Cargo
-      rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / target_triplet / rust_target / 'deps', '-L', 'src' / rust_target / 'deps'],
-      # Also have to pull in the C dependencies
-      dependencies: naev_deps,
-      link_with: [naev_rlib_lib],
-      export_dynamic: use_export_dynamic,
-      link_args: naev_bin_link_args,
-      install: true)
+   # Cargo picks where its artifacts land, so lift the binary somewhere meson
+   # and the dev launcher can find it.
+   # TODO Drop the copy once --artifact-dir stabilises.
+   # https://github.com/rust-lang/cargo/issues/6790
+   naev_bin = custom_target( 'naev',
+      depends: [cargo_build],
+      depend_files: source_rust + cargo_toml,
+      output: 'naev',
+      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_artifact_dir / '@OUTPUT@', ],
+      install: true,
+      install_dir: get_option('bindir') )
 
    # Naev pluginmgr cli for managing plugins.
    # Inherits the cargo environment above, so should work in cross compilation environments.
    #pluginmgr_cli = custom_target('pluginmgr-cli',
-   #   depends: [naev_rlib_compile],
+   #   depends: [cargo_build],
    #   console: true,
    #   command: [
    #      'env', cargo_env, cargo,
@@ -521,7 +448,7 @@ if buildExec.disabled() == false
 
    # Simplifies clippy stuff
    clippy = run_target( 'clippy',
-      depends: [naev_rlib_compile],
+      depends: [cargo_build],
       env: cargo_env,
       command: [ cargo, 'clippy', cargo_options, ] )
 
@@ -533,7 +460,7 @@ if buildExec.disabled() == false
       args: ['test', '--workspace'] + cargo_options,
       workdir: meson.project_build_root(),
       is_parallel: false, # too slow
-      depends: [naev_rlib_compile],
+      depends: [cargo_build],
       priority: 1,
    )
 
