@@ -35,6 +35,7 @@ resolver = "3"
 exclude = [ "subprojects", "utils/docmaker" ]
 members = [
    "naevc",
+   "xtask",
    "src/audio",
    "src/core",
    "src/helpers",
