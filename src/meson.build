@@ -1,19 +1,6 @@
 ####
 # Rust Stuff
 ####
-subdir('audio')
-subdir('core')
-subdir('collide')
-subdir('ndata')
-subdir('gettext')
-subdir('nlog')
-subdir('renderer')
-subdir('toolkit')
-subdir('physics')
-subdir('pluginmgr')
-subdir('helpers')
-#subdir('pluginmgr-cli')
-subdir('pluginmgr-gui')
 source_rust = files(
    'audio/src/lib.rs',
    'audio/src/lua_audiodata.rs',

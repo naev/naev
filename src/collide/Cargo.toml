@@ -1,6 +1,5 @@
 [package]
 name = "collide"
-workspace = "@BUILD@"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,7 +8,7 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/collide/src/lib.rs"
+path = "src/lib.rs"
 
 [dependencies]
 anyhow = { workspace = true }

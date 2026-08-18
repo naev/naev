@@ -1,6 +1,5 @@
 [package]
 name = "pluginmgr-gui"
-workspace = "@BUILD@"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,10 +8,10 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/pluginmgr-gui/src/lib.rs"
+path = "src/lib.rs"
 
 [dependencies]
-pluginmgr = { path = "@BUILD@/src/pluginmgr" }
+pluginmgr = { workspace = true }
 anyhow = { workspace = true }
 nlog = { workspace = true }
 reqwest = { workspace = true }

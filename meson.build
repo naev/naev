@@ -339,20 +339,10 @@ if buildExec.disabled() == false
       rust_artifact_dir = 'release'
    endif
    cargo = find_program('cargo', version: cargo_needed_version)
-   cargo_data = configuration_data()
-   cargo_data.set_quoted('NAME', meson.project_name())
-   cargo_data.set_quoted('VERSION', meson.project_version())
-   cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
-   cargo_data.set_quoted('MAIN', meson.project_source_root() / 'src' / 'main.rs')
-   cargo_data.set_quoted('NAEVC', meson.project_source_root() / 'naevc' )
-   cargo_data.set('BUILD', meson.project_build_root() )
-   cargo_data.set('SOURCE', meson.project_source_root() )
-   cargo_data.set_quoted('RUSTCVERSION', rust_version )
-   cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
-   #meson.add_dist_script(add_to_package, cargo_toml.full_path(), cargo_toml )
+   cargo_toml = files('Cargo.toml')
    # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
    # https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo
-   meson.add_dist_script( cargo_lock, cargo_toml.full_path() )
+   meson.add_dist_script( cargo_lock, meson.project_source_root() / 'Cargo.toml' )
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
    # naevc's build script bakes these into config.h and its config module.

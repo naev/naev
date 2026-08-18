@@ -68,6 +68,7 @@ utils/model-view-c/*.gltf
 utils/model-view-c/*.png
 utils/model-view-c/*.bin
 
+/target/*
 utils/docmaker/target/*
 naevc/target/*
 

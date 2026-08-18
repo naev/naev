@@ -1,6 +1,5 @@
 [package]
-name = "gettext"
-workspace = "@BUILD@"
+name = "physics"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,9 +8,13 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/gettext/src/lib.rs"
+path = "src/lib.rs"
 
 [dependencies]
 naevc = { workspace = true }
 anyhow = { workspace = true }
 mlua = { workspace = true }
+nalgebra = { workspace = true }
+derive_more = { workspace = true }
+static_assertions = { workspace = true }
+encase = { workspace = true }

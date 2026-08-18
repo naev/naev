@@ -1,6 +1,6 @@
 [package]
-name = @NAME@
-version = @VERSION@
+name = "naev"
+version = "0.14.0-alpha.4"
 edition.workspace = true
 rust-version.workspace = true
 publish = false
@@ -9,11 +9,11 @@ publish = false
 workspace = true
 
 [lib]
-path = @PATH@
+path = "src/naev.rs"
 
 [[bin]]
 name = "naev"
-path = @MAIN@
+path = "src/main.rs"
 
 [profile.release-with-debug]
 inherits = "release"
@@ -23,26 +23,29 @@ overflow-checks = true
 
 [workspace]
 resolver = "3"
+# subprojects holds vendored crates for offline meson builds, and
+# docmaker is a standalone tool with its own lockfile.
+exclude = [ "subprojects", "utils/docmaker" ]
 members = [
-   "@BUILD@/src/audio",
-   "@BUILD@/src/core",
-   "@BUILD@/src/helpers",
-   "@BUILD@/src/nlog",
-   "@BUILD@/src/gettext",
-   "@BUILD@/src/ndata",
-   "@BUILD@/src/renderer",
-   "@BUILD@/src/physics",
-   "@BUILD@/src/collide",
-   #"@BUILD@/src/toolkit",
-   "@BUILD@/src/pluginmgr",
-   #"@BUILD@/src/pluginmgr-cli",
-   "@BUILD@/src/pluginmgr-gui",
+   "src/audio",
+   "src/core",
+   "src/helpers",
+   "src/nlog",
+   "src/gettext",
+   "src/ndata",
+   "src/renderer",
+   "src/physics",
+   "src/collide",
+   #"src/toolkit",
+   "src/pluginmgr",
+   #"src/pluginmgr-cli",
+   "src/pluginmgr-gui",
 ]
 
 [workspace.package]
-version = @VERSION@
+version = "0.14.0-alpha.4"
 edition = "2024"
-rust-version = @RUSTCVERSION@ # Note this has to be set in meson.build too!
+rust-version = "1.89" # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
@@ -51,22 +54,22 @@ not_unsafe_ptr_arg_deref = "allow"
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "50d65229477fe5f785c2c90df21eb59c93ea2261" }
 
 [workspace.dependencies]
-naevc = { path=@NAEVC@ }
+naevc = { path = "naevc" }
 # Needs SDL 3.4.0 or later for 0.17.1+
 sdl3 = "0.18"
 anyhow = "1.0"
-audio = { path="@BUILD@/src/audio" }
-naev_core = { path="@BUILD@/src/core" }
-helpers = { path="@BUILD@/src/helpers" }
-gettext = { path="@BUILD@/src/gettext" }
-nlog = { path="@BUILD@/src/nlog" }
-ndata = { path="@BUILD@/src/ndata" }
-renderer = { path="@BUILD@/src/renderer" }
-#toolkit = { path="@BUILD@/src/toolkit" }
-collide = { path="@BUILD@/src/collide" }
-physics = { path="@BUILD@/src/physics" }
-pluginmgr = { path="@BUILD@/src/pluginmgr" }
-pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
+audio = { path="src/audio" }
+naev_core = { path="src/core" }
+helpers = { path="src/helpers" }
+gettext = { path="src/gettext" }
+nlog = { path="src/nlog" }
+ndata = { path="src/ndata" }
+renderer = { path="src/renderer" }
+#toolkit = { path="src/toolkit" }
+collide = { path="src/collide" }
+physics = { path="src/physics" }
+pluginmgr = { path="src/pluginmgr" }
+pluginmgr-gui = { path="src/pluginmgr-gui" }
 formatx = "0.4"
 glow = "0.18"
 nalgebra = { version = "0.35", features = ["bytemuck", "encase", "serde-serialize"] }

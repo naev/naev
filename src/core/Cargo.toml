@@ -1,6 +1,5 @@
 [package]
 name = "naev_core"
-workspace = "@BUILD@"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,7 +8,7 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/core/src/lib.rs"
+path = "src/lib.rs"
 
 [dependencies]
 naevc = { workspace = true }
