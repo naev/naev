@@ -27,6 +27,7 @@ resolver = "3"
 # docmaker is a standalone tool with its own lockfile.
 exclude = [ "subprojects", "utils/docmaker" ]
 members = [
+   "naevc",
    "src/audio",
    "src/core",
    "src/helpers",

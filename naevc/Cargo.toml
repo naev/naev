@@ -1,9 +1,6 @@
 [package]
 name = "naevc"
-# Internal crate, never published. The engine version that actually matters is
-# passed in as NAEV_VERSION; see build.rs. This becomes version.workspace once
-# the workspace root lives in the source tree.
-version = "0.0.0"
+version.workspace = true
 edition = "2024"
 publish = false
 build = "build.rs"

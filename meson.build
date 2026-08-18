@@ -346,7 +346,6 @@ if buildExec.disabled() == false
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
    # naevc's build script bakes these into config.h and its config module.
-   cargo_env.set( 'NAEV_VERSION', meson.project_version() )
    cargo_env.set( 'NAEV_BUILD_VERSION', version )
    cargo_env.set( 'NAEV_PKGDATADIR', get_option('prefix') / ndata_path )
    cargo_env.set( 'NAEV_BLAS', get_option('blas') )
