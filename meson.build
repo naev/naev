@@ -104,23 +104,18 @@ if buildExec.disabled() == false
 
    ### Generated sources
 
-   # Objects that have to be linked into the executable but aren't part of the
-   # engine proper. The C sources themselves are built by naevc's build script.
    if host_machine.system() == 'darwin'
       configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: app_metadata,
          install: true, install_dir: 'Contents')
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
 
    elif host_machine.system() == 'windows'
-      windows = import('windows')
       icon = files('extras/logos/logo.ico')
       install_data(icon, install_dir: '.')
-      res_include = include_directories('extras/logos')
-      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
-      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
-      # TODO Not linked into the binary yet. Cargo owns the executable now, so
-      # this needs rustc-link-arg-bins or the embed-resource crate.
-      windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
+      configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
+      # TODO resource.rc is generated but never compiled or linked, since cargo
+      # owns the executable. Needs rustc-link-arg-bins or the embed-resource crate.
+      configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
    endif
 
 # Target we are cross-compiling for
@@ -128,9 +123,8 @@ if buildExec.disabled() == false
 
    copydir = find_program(files('utils'/'build'/'copydir.py'))
 
-   # Compiling Naev
-   # 1. Cargo compiles the C engine and all the Rust into a static library.
-   # 2. meson links the result into the executable.
+   # Cargo compiles the C engine, the Rust and the executable. meson arranges
+   # the inputs, then installs what comes out.
 
    # Handle setting up and passing stuff to Cargo
    # Since Rust debug is significantly slower than release, we try to use our
