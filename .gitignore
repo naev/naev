@@ -6,7 +6,6 @@
 *.swo
 *.bak
 .hgignore
-Cargo.lock
 appImageBuild/
 build/*
 bintray.json
@@ -70,6 +69,8 @@ utils/model-view-c/*.bin
 
 /target/*
 utils/docmaker/target/*
+# docmaker sits outside the workspace and keeps its own lockfile
+utils/docmaker/Cargo.lock
 naevc/target/*
 
 docs/manual/book
