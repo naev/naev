@@ -401,6 +401,24 @@ if buildExec.disabled() == false
       cargo_options += ['--target', target_triplet]
    endif
 
+   # Options that map onto cargo features rather than compiler flags.
+   cargo_features = []
+   if paranoid
+      cargo_features += 'paranoid'
+   endif
+   if debug_arrays
+      cargo_features += 'debug_arrays'
+   endif
+   if tracy
+      if not debug
+         error('tracy requires a debug build!')
+      endif
+      cargo_features += 'tracy'
+   endif
+   if cargo_features.length() > 0
+      cargo_options += [ '--features', ','.join(cargo_features) ]
+   endif
+
    # Cargo builds the C engine, all the Rust and the executable in one go.
    cargo_build = custom_target( 'cargo-build',
       depend_files: source_rust + cargo_toml,

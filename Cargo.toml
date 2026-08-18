@@ -15,6 +15,13 @@ path = "src/naev.rs"
 name = "naev"
 path = "src/main.rs"
 
+[features]
+# Mirror the meson options of the same names. tracy needs both the C side,
+# for TRACY_ENABLE in config.h, and the Rust side, for tracing-tracy.
+paranoid = ["naevc/paranoid"]
+debug_arrays = ["naevc/debug_arrays"]
+tracy = ["naevc/tracy", "nlog/tracy", "renderer/tracy"]
+
 [profile.release-with-debug]
 inherits = "release"
 debug = 1
