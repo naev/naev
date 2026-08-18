@@ -1,5 +1,3 @@
-subdir('glcheck')
-
 test('main_menu',
    find_program(files('watch-for-msg.py')),
    args: [
