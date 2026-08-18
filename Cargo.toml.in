@@ -98,7 +98,7 @@ iced = { version = "0.14.0", default-features = false, features = ["wayland", "x
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
 itertools = "0.15"
-tinyvec = "1"
+tinyvec = "1.12" # 1.12 or newer, for ArrayVec::is_full
 portable-atomic = { version = "1", default-features = false, features = ["float"] }
 
 # Plugin Manager dependencies
