@@ -25,18 +25,11 @@ rustc_needed_version = '>=@0@.0'.format( rust_version )
 cargo_needed_version = '>=1.77.2'
 
 copyright_year = 2026
-forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://codeberg.org/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
 # Tools
-cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments([
-   '-Wno-pedantic',
-   '-Wshadow',
-   '-fno-signed-zeros'
-])
 # TODO Is there a better way to get rust compiler version?
 rustc = find_program('rustc', version: rustc_needed_version, required: false)
 if not rustc.found()
@@ -46,18 +39,6 @@ clang = find_program('clang', required: false)
 if not clang.found()
    error('Clang is required for bindgen to find the standard library correctly. See issue: https://github.com/servo/gecko-media/issues/71')
 endif
-
-if host_machine.system() == 'linux'
-   c_args += ['-D_XOPEN_SOURCE=700']
-elif host_machine.system() == 'windows'
-   # We need SDL_DISABLE_ALLOCA because of
-   # https://github.com/libsdl-org/SDL/issues/13358
-   c_args += ['-D_USE_MATH_DEFINES', '-DSDL_DISABLE_ALLOCA']
-elif host_machine.system() == 'darwin'
-   c_args += ['-D_DARWIN_C_SOURCE', '-D_POSIX_C_SOURCE=200809L']
-endif
-
-add_project_arguments(c_args, language: 'c')
 
 # Filesystem module for copying files
 fs = import('fs')
@@ -93,20 +74,12 @@ subdir('docs')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-   config_data = configuration_data()
    app_metadata = configuration_data()  # For Info.plist, resource.rc, etc.
-   naev_deps = []
    debug = get_option('debug')
    debug_rust = get_option('debug_rust')
    debug_arrays = get_option('debug_arrays')
    tracy = get_option('tracy')
    paranoid = get_option('paranoid')
-   # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
-   config_data.set_quoted('PACKAGE', meson.project_name())
-   config_data.set_quoted('PACKAGE_NAME', meson.project_name())
-   config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
-   config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
-   config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
    app_metadata.set('VERSION', meson.project_version())
    app_metadata.set('VMAJOR', meson.project_version().split('.')[0])
@@ -114,130 +87,9 @@ if buildExec.disabled() == false
    app_metadata.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    app_metadata.set('YEAR', copyright_year)
    app_metadata.set('COPYRIGHT', copyright_holder)
-   config_data.set('DEBUG', debug ? 1 : false)
-   config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
-   config_data.set('DEBUGGING', debug ? 1 : false)
-   config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
    summary('Enabled' , debug       , section: 'Debug', bool_yn: true)
    summary('Paranoid', paranoid    , section: 'Debug', bool_yn: true)
    summary('Arrays'  , debug_arrays, section: 'Debug', bool_yn: true)
-
-   has_posix = cc.has_define('__unix__') or cc.has_define('__unix') or host_machine.system()=='darwin'
-   config_data.set10('HAS_POSIX', has_posix)
-   config_data.set10('HAS_UNIX', has_posix)
-
-   ### Hard deps (required: true)
-
-   naev_deps += cc.find_library('m', required : false)
-
-   enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
-   sdl = dependency('sdl3', version: '>=3.2.0', required: true)
-   libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
-   cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
-   opus = dependency( 'opus', required: true )
-
-   libxml2 = dependency('libxml-2.0', required: false)
-   if not libxml2.found()
-      libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
-   endif
-
-   use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-   if use_system_physfs
-      system_physfs = dependency('physfs', required: false, static: get_option('steamruntime'))
-      if not system_physfs.found()
-         system_physfs = cc.find_library('physfs', required: false, has_headers: ['physfs.h'])
-      endif
-      use_system_physfs = system_physfs.found()
-   endif
-   naev_deps += use_system_physfs ? system_physfs : subproject('physfs').get_variable('physfs_dep')
-
-   naev_deps += [
-      cmark,
-      enet,
-      dependency('freetype2', required: true),
-      libunibreak,
-      libxml2,
-      sdl,
-   ]
-
-   # Lua
-   useLuaJIT = get_option('luajit')
-   lua = dependency('', required: false)
-   if useLuaJIT.disabled() == false
-      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['c_std=gnu99', 'luajit=false'])
-   endif
-   config_data.set10('HAVE_LUAJIT', lua.found())
-   summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
-
-   if not lua.found()
-      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
-   endif
-
-   naev_deps += [lua]
-
-   # Linear Algebra
-   use_system_glpk = ('glpk' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-   use_system_suitesparse = ('SuiteSparse' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-
-   if use_system_glpk
-      system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
-      use_system_glpk = system_glpk.found()
-   endif
-   naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
-
-   if use_system_suitesparse
-      message('Note: Naev needs the following SuiteSparse libraries: amd, colamd, cholmod, and either csparse or cxsparse. ' +
-         'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
-      foreach csparse_name : ['cxsparse', 'csparse']
-         system_csparse = cc.find_library(csparse_name, required: false)
-         if system_csparse.found()
-            break
-         endif
-      endforeach
-      if system_csparse.found()
-         naev_deps += system_csparse
-         config_data.set10('HAVE_SUITESPARSE_CS_H', cc.has_header('suitesparse/cs.h'))
-      else
-         error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
-      endif
-
-      system_cholmod = cc.find_library('cholmod', required: false)
-      if system_cholmod.found()
-         naev_deps += system_cholmod
-         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', cc.has_header('suitesparse/cholmod.h'))
-      else
-         error('Failed to find an installation of cholmod. See above note about SuiteSparse.')
-      endif
-
-      naev_deps += cc.find_library('amd', required: true)
-      naev_deps += cc.find_library('ccolamd', required: false)
-      naev_deps += cc.find_library('colamd', required: true)
-      naev_deps += cc.find_library('lapack', required: false)
-      naev_deps += cc.find_library('metis', required: false)
-      naev_deps += cc.find_library('suitesparseconfig', required: true)
-   else
-      naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
-   endif
-
-   if get_option('steamruntime')
-      blas = cc.find_library('openblas', required: true, static: true)
-   elif get_option('blas') == 'Accelerate'
-      blas = dependency('Accelerate', required: true)
-   else
-      blas = cc.find_library(get_option('blas'), required: true)
-   endif
-
-   naev_deps += blas
-
-   # libdl can be used for debugging stack traces.
-   if host_machine.system()=='windows'
-      # On non-Windows platforms, GLAD relies on dlopen().
-      # Windows doesn't have dlopen, but we can use dlfcn-win32 instead.
-      libdl = dependency('dl', fallback: ['dlfcn-win32', 'dl_dep'], required: true)
-   else
-      libdl = dependency('dl', required: true)
-   endif
-   naev_deps += libdl
 
    ### Soft deps (required: false)
 
@@ -248,47 +100,7 @@ if buildExec.disabled() == false
    luacheck = find_program('luacheck', required: false)
    nluacheck = find_program(files('utils'/'nluacheck.py'))
 
-   # Audio
-   openal = dependency('openal', required: true)
-   vorbis = dependency('vorbis', required: true)
-   vorbisfile = dependency('vorbisfile', required: true)
-   ogg = dependency('ogg', required: true)  # Transitive dependency. At least some MSYS2 build envs may miss it.
-
-   naev_deps += [openal, ogg, vorbis, vorbisfile]
-
-   have_tracy = false
-   if tracy
-      if not debug
-         error('tracy requires a debug build!')
-      endif
-      use_system_tracy = ('tracy' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-      if use_system_tracy
-         system_tracy = cc.find_library('tracy', required: false, has_headers: ['tracy/TracyC.h'] )
-         use_system_tracy = system_tracy.found()
-      endif
-      naev_deps += use_system_tracy ? system_tracy : subproject('tracy').get_variable('tracy_dep')
-      config_data.set10('HAVE_TRACY', true)
-      config_data.set10('TRACY_ENABLE', true) # Needed for tracy to actually work
-      have_tracy = true
-   endif
-   summary('tracy', have_tracy, section: 'Debug', bool_yn: true )
-
-   # Standard library feature tests
-   config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
-   config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
-   config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
-   config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   config_data.set10('HAVE_SIGACTION', cc.has_function('sigaction'))
-   config_data.set10('HAVE_STRSIGNAL', cc.has_function('strsignal'))
-   # BLAS include tests
-   cblas_test = '\nint main (void) { double x = 0; return (int)cblas_ddot( 1, &x, 1, &x, 1 ); }'
-   config_data.set10('HAVE_ACCELERATE_ACCELERATE_H', cc.links('#include <Accelerate/Accelerate.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_CBLAS_H', cc.links('#include <cblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.links('#include <cblas_openblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.links('#include <cblas-openblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.links('#include <openblas/cblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
-   config_data.set10('HAVE_OPENBLAS_F77BLAS_H', cc.has_header('openblas/f77blas.h', dependencies: blas))
+   summary('tracy', tracy, section: 'Debug', bool_yn: true )
 
    ### Generated sources
 
