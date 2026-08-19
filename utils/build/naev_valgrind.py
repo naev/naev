@@ -45,7 +45,6 @@ build_root = "@build_root@"
 debug_paranoid = "@debug_paranoid@"
 debug = "@debug@"
 naev_bin = "@naev_bin@"
-zip_overlay = "@zip_overlay@"
 
 # Optional VG knobs
 VG_TRACE_CHILDREN = env_bool("VG_TRACE_CHILDREN", False)
@@ -150,10 +149,9 @@ if os.path.isdir(po_root):
 
 wrapper(
    naev_bin,
-   "-d", zip_overlay,
+   "-d", os.path.join(build_root, "dat"),
    "-d", os.path.join(source_root, "dat"),
    "-d", os.path.join(source_root, "assets"),
-   "-d", os.path.join(build_root, "dat"),
    "-d", source_root,
    *sys.argv[1:],
 )

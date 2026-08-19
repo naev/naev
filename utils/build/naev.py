@@ -55,7 +55,6 @@ build_root = "@build_root@"
 debug_paranoid = "@debug_paranoid@"
 debug = "@debug@"
 naev_bin = "@naev_bin@"
-zip_overlay = "@zip_overlay@"
 
 MESON = [sys.executable, os.path.join(source_root, "meson.py")]
 
@@ -150,10 +149,9 @@ def wrapper(*args: str) -> int:
 # Run target
 rc = wrapper(
    naev_bin,
-   "-d", zip_overlay,
+   "-d", os.path.join(build_root, "dat"),
    "-d", os.path.join(source_root, "dat"),
    "-d", os.path.join(source_root, "assets"),
-   "-d", os.path.join(build_root, "dat"),
    "-d", source_root,
    *sys.argv[1:],
 )

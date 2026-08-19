@@ -20,6 +20,8 @@ pub fn generate(root: &Path, out: &Path) -> Result<()> {
    println!("generated {pedia} naevpedia pages");
    generate_tech(root, out)?;
    generate_race_times(root, out)?;
+   generate_authors(root, out)?;
+   generate_gettext_stats(root, out)?;
 
    let langs = compile_translations(root, out)?;
    println!("compiled {langs} translations");
@@ -126,6 +128,33 @@ fn generate_tech(root: &Path, out: &Path) -> Result<()> {
       run(cmd, output)?;
    }
    Ok(())
+}
+
+/// The credits, merging the tracked preamble with everyone named in the asset
+/// licence manifests. It has to outrank the preamble it was built from, which
+/// is why the generated tree mounts ahead of dat/.
+fn generate_authors(root: &Path, out: &Path) -> Result<()> {
+   let mut cmd = Command::new("python3");
+   cmd.arg(root.join("utils/build/gen_authors.py"))
+      .arg("--output")
+      .arg(out.join("AUTHORS"))
+      .arg("--preamble")
+      .arg(root.join("dat/AUTHORS"))
+      .arg(root.join("assets/gfx/ARTWORK_LICENSE.yaml"))
+      .arg(root.join("assets/snd/SOUND_LICENSE.yaml"));
+   run(cmd, "AUTHORS")
+}
+
+/// The translatable string count the credits screen reports.
+fn generate_gettext_stats(root: &Path, out: &Path) -> Result<()> {
+   let dest = out.join("gettext_stats");
+   fs::create_dir_all(&dest).context("creating the gettext stats directory")?;
+   let mut cmd = Command::new("python3");
+   cmd.arg(root.join("utils/build/gen_gettext_stats.py"))
+      .arg("--output")
+      .arg(dest.join("naev.txt"))
+      .arg(root.join("po/naev.pot"));
+   run(cmd, "gettext_stats/naev.txt")
 }
 
 /// Race times, derived from the ships and outfits a race can use.
