@@ -9,9 +9,9 @@ elif [ -n "$MESON_SOURCE_ROOT" ]; then
    cd "$MESON_SOURCE_ROOT"
 fi
 if [ -n "$2" ]; then
-   BUILDDIR="$2"
+   DATADIR="$2"
 else
-   BUILDDIR="."
+   DATADIR="dat"
 fi
 
 if [[ ! -f naev.6 ]]; then
@@ -48,14 +48,14 @@ po/credits_pot.py po/credits.pot dat/AUTHORS "${ART[@]}"
 po/toml_pot.py po/toml.pot dat/damagetype/ dat/slots/ dat/start.toml
 
 # Only update naevpedia if not run from pre-commit.
-# This is because naevpedia generates files and we can only update them with
-# the build directory known, aka from inside meson.
+# This is because naevpedia generates files and we can only update them once
+# the generated data directory exists, aka from a build.
 if [ "$3" != "--pre-commit" ]; then
    readarray -t MD1 <<< "$(cd dat; find_files naevpedia md | sed 's|^|dat/|')"
-   readarray -t MD2 <<< "$(find "${BUILDDIR}/dat/naevpedia" -name "*.md")"
+   readarray -t MD2 <<< "$(find "${DATADIR}/naevpedia" -name "*.md")"
    po/naevpedia_pot.py po/naevpedia.pot "${MD1[@]}" "${MD2[@]}"
 
-   readarray -t MD3 <<< "$(find "${BUILDDIR}/dat/outfits" -name "*.xml")"
+   readarray -t MD3 <<< "$(find "${DATADIR}/outfits" -name "*.xml")"
    xgettext --its "$1/po/its/translation.its" "${MD3[@]}" -o "po/outfits_generated.pot"
    sed -i 's/CHARSET/UTF-8/' "po/outfits_generated.pot"
 fi
@@ -80,6 +80,4 @@ rm "$TMPFILE"
 if [ "$3" = "--pre-commit" ]; then
    git diff --exit-code po/POTFILES.in && exit 0
    echo "Fixing po/POTFILES.in"
-else
-   cp po/POTFILES.in "$BUILDDIR/$3"
 fi

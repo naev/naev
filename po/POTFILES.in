@@ -3970,7 +3970,6 @@ src/ai.c
 src/ai.h
 src/array.c
 src/array.h
-src/array.rs
 src/asteroid.c
 src/asteroid.h
 src/asteroid.rs
@@ -4122,6 +4121,7 @@ src/lutf8lib.c
 src/lutf8lib.h
 src/lvar.c
 src/lvar.h
+src/main.rs
 src/map.c
 src/map.h
 src/mapData.h

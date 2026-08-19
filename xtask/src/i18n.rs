@@ -18,18 +18,18 @@ const KEYWORDS: &[&str] = &["_", "N_", "n_:1,2", "p_:1c,2", "gettext.gettext_noo
 
 /// Refreshes `po/POTFILES.in` and regenerates `po/naev.pot`.
 ///
-/// `build_dir` has to hold the generated data, since some translatable strings
+/// `data_dir` has to hold the generated data, since some translatable strings
 /// only exist in the naevpedia pages and outfits that `data` produces.
-pub fn pot(root: &Path, build_dir: &Path) -> Result<()> {
-   update_potfiles(root, build_dir)?;
+pub fn pot(root: &Path, data_dir: &Path) -> Result<()> {
+   update_potfiles(root, data_dir)?;
    extract_pot(root)?;
    println!("regenerated po/naev.pot");
    Ok(())
 }
 
 /// Brings every catalogue up to date with the current template.
-pub fn update_po(root: &Path, build_dir: &Path) -> Result<()> {
-   pot(root, build_dir)?;
+pub fn update_po(root: &Path, data_dir: &Path) -> Result<()> {
+   pot(root, data_dir)?;
 
    let langs = languages(root)?;
    langs.par_iter().try_for_each(|lang| {
@@ -60,12 +60,11 @@ pub fn languages(root: &Path) -> Result<Vec<String>> {
 
 /// Rebuilds the list of files holding translatable text, along with the
 /// intermediate catalogues for the formats xgettext cannot read directly.
-fn update_potfiles(root: &Path, build_dir: &Path) -> Result<()> {
+fn update_potfiles(root: &Path, data_dir: &Path) -> Result<()> {
    let mut cmd = Command::new("bash");
    cmd.arg(root.join("utils/update-po.sh"))
       .arg(root)
-      .arg(build_dir)
-      .arg("POTFILES.in");
+      .arg(data_dir);
    run(cmd, "POTFILES.in")
 }
 

@@ -256,7 +256,7 @@ if buildExec.disabled() == false
       command: [
          cargo, 'run', '--quiet', '--release',
          '--manifest-path', cargo_toml, '--package', 'xtask', '--',
-         'data', '--output', meson.project_build_root() / 'dat',
+         'data', '--data-dir', meson.project_build_root() / 'dat',
       ] )
 
    # Catalogue maintenance. These rewrite tracked files in po/, so they are
@@ -267,7 +267,7 @@ if buildExec.disabled() == false
          command: [
             cargo, 'run', '--quiet', '--release',
             '--manifest-path', cargo_toml, '--package', 'xtask', '--',
-            task, '--build-dir', meson.project_build_root(),
+            task, '--data-dir', meson.project_build_root() / 'dat',
          ] )
    endforeach
 
