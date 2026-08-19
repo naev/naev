@@ -20,7 +20,35 @@ pub fn generate(root: &Path, out: &Path) -> Result<()> {
    println!("generated {pedia} naevpedia pages");
    generate_tech(root, out)?;
    generate_race_times(root, out)?;
+
+   let langs = compile_translations(root, out)?;
+   println!("compiled {langs} translations");
    Ok(())
+}
+
+/// Compiles each translation the game ships. The catalogues themselves are
+/// maintained separately; this only turns the checked-in .po files into the
+/// binary form the runtime loads.
+fn compile_translations(root: &Path, out: &Path) -> Result<usize> {
+   let linguas = fs::read_to_string(root.join("po/LINGUAS")).context("reading po/LINGUAS")?;
+   let langs: Vec<&str> = linguas
+      .lines()
+      .map(str::trim)
+      .filter(|line| !line.is_empty() && !line.starts_with('#'))
+      .collect();
+
+   langs.par_iter().try_for_each(|lang| {
+      let dest = out.join("gettext").join(lang).join("LC_MESSAGES");
+      fs::create_dir_all(&dest)
+         .with_context(|| format!("creating the message directory for {lang}"))?;
+      let mut cmd = Command::new("msgfmt");
+      cmd.arg(root.join("po").join(format!("{lang}.po")))
+         .arg("-o")
+         .arg(dest.join("naev.mo"));
+      run(cmd, lang)
+   })?;
+
+   Ok(langs.len())
 }
 
 /// Markdown for every ship and outfit, including the generated outfits.
