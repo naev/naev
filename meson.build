@@ -245,6 +245,20 @@ if buildExec.disabled() == false
       install: true,
       install_dir: get_option('bindir') )
 
+   # Outfits, naevpedia pages, tech lists and translations. The dev launcher
+   # mounts this directory on top of the tracked data.
+   # TODO Nothing installs these any more; xtask needs to grow that.
+   generated_data = custom_target( 'generated-data',
+      output: 'dat',
+      console: true,
+      build_by_default: true,
+      env: cargo_env,
+      command: [
+         cargo, 'run', '--quiet', '--release',
+         '--manifest-path', cargo_toml, '--package', 'xtask', '--',
+         'data', '--output', meson.project_build_root() / 'dat',
+      ] )
+
    # Naev pluginmgr cli for managing plugins.
    # Inherits the cargo environment above, so should work in cross compilation environments.
    #pluginmgr_cli = custom_target('pluginmgr-cli',
@@ -404,7 +418,6 @@ if buildExec.disabled() == false
    subdir ('extras')
 endif
 
-subdir('po')
 
 ####
 # Soundtrack

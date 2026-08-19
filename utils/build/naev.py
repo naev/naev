@@ -147,19 +147,6 @@ def wrapper(*args: str) -> int:
       if sys.platform != "win32":
          os.system("stty sane 2>/dev/null")
 
-# Meson >= 0.60
-if not WITHVALGRIND:
-   subprocess.run(MESON + ["compile", "-C", build_root, "naev-gmo"], check=False)
-   os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
-   po_root = os.path.join(build_root, "po")
-   if os.path.isdir(po_root):
-      for mo_name in os.listdir(po_root):
-         mo_path = os.path.join(po_root, mo_name)
-         if os.path.isdir(mo_path):
-            dest_dir = os.path.join(build_root, "dat/gettext", mo_name)
-            shutil.copytree(mo_path, dest_dir, dirs_exist_ok=True)
-            logger.info("Copied directory %s -> %s", mo_path, dest_dir)
-
 # Run target
 rc = wrapper(
    naev_bin,

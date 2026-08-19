@@ -8,7 +8,8 @@ test('main_menu',
    env: ['WITHGDB=NO'],
    workdir: meson.project_source_root(),
    protocol: 'exitcode',
-   timeout: 90
+   timeout: 90,
+   depends: [naev_bin, generated_data],
    )
 
 if (ascli_exe.found())
