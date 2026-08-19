@@ -12,8 +12,8 @@
   <range>8</range>
  </presence>
  <general>
-  <class>900</class>
-  <population>0</population>
+  <class>0</class>
+  <population>900</population>
   <hide>0.200000</hide>
   <services>
    <land/>
