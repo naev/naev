@@ -259,6 +259,18 @@ if buildExec.disabled() == false
          'data', '--output', meson.project_build_root() / 'dat',
       ] )
 
+   # Catalogue maintenance. These rewrite tracked files in po/, so they are
+   # run deliberately rather than as part of a build.
+   foreach task : ['pot', 'update-po']
+      run_target( task,
+         env: cargo_env,
+         command: [
+            cargo, 'run', '--quiet', '--release',
+            '--manifest-path', cargo_toml, '--package', 'xtask', '--',
+            task, '--build-dir', meson.project_build_root(),
+         ] )
+   endforeach
+
    # Naev pluginmgr cli for managing plugins.
    # Inherits the cargo environment above, so should work in cross compilation environments.
    #pluginmgr_cli = custom_target('pluginmgr-cli',

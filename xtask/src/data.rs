@@ -30,12 +30,7 @@ pub fn generate(root: &Path, out: &Path) -> Result<()> {
 /// maintained separately; this only turns the checked-in .po files into the
 /// binary form the runtime loads.
 fn compile_translations(root: &Path, out: &Path) -> Result<usize> {
-   let linguas = fs::read_to_string(root.join("po/LINGUAS")).context("reading po/LINGUAS")?;
-   let langs: Vec<&str> = linguas
-      .lines()
-      .map(str::trim)
-      .filter(|line| !line.is_empty() && !line.starts_with('#'))
-      .collect();
+   let langs = crate::i18n::languages(root)?;
 
    langs.par_iter().try_for_each(|lang| {
       let dest = out.join("gettext").join(lang).join("LC_MESSAGES");

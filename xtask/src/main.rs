@@ -12,6 +12,7 @@ use clap::{Parser, Subcommand};
 mod bioship;
 mod data;
 mod generated;
+mod i18n;
 
 #[derive(Parser)]
 #[command(about, long_about = None)]
@@ -28,6 +29,19 @@ enum Command {
       #[arg(long)]
       output: PathBuf,
    },
+   /// Refresh POTFILES.in and the translation template.
+   Pot {
+      /// A build directory holding the generated data, some of which carries
+      /// translatable text.
+      #[arg(long)]
+      build_dir: PathBuf,
+   },
+   /// Bring every translation catalogue up to date with the template.
+   UpdatePo {
+      /// A build directory holding the generated data.
+      #[arg(long)]
+      build_dir: PathBuf,
+   },
 }
 
 fn main() -> Result<()> {
@@ -36,6 +50,8 @@ fn main() -> Result<()> {
 
    match cli.command {
       Command::Data { output } => data::generate(&root, &output),
+      Command::Pot { build_dir } => i18n::pot(&root, &build_dir),
+      Command::UpdatePo { build_dir } => i18n::update_po(&root, &build_dir),
    }
 }
 
