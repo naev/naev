@@ -18,11 +18,11 @@
  <jumps>
   <jump target="Mida">
    <hide>1</hide>
-   <pos x="20721.100011" y="3411.160256" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Telika">
    <hide>1</hide>
-   <pos x="-9351.917239" y="18802.703102" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

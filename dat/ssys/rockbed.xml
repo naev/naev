@@ -9,25 +9,25 @@
  <jumps>
   <jump target="Capricorn">
    <hide>1</hide>
-   <pos x="-9993.257093" y="7508.982132" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Coriolis">
    <hide>1</hide>
-   <pos x="11324.700541" y="-5291.612009" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Haven">
    <hidden/>
    <hide>1</hide>
-   <pos x="9725.315152" y="7852.913165" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pontus">
    <hide>1</hide>
-   <pos x="-10925.796675" y="-6072.64086" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sikh">
    <hidden/>
    <hide>1</hide>
-   <pos x="2741.852136" y="-12195.583088" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

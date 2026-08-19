@@ -12,19 +12,19 @@
  <jumps>
   <jump target="Eiger">
    <hide>1</hide>
-   <pos x="17367.408711" y="-13504.559032" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-1001">
    <hide>1</hide>
-   <pos x="-9269.02954" y="19952.069851" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Orion">
    <hide>1</hide>
-   <pos x="6612.207778" y="20982.819359" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Urdads">
    <hide>1</hide>
-   <pos x="2482.627075" y="-21859.473067" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

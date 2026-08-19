@@ -13,7 +13,7 @@
  <jumps>
   <jump target="Beeklo">
    <hide>1</hide>
-   <pos x="8347.831243" y="15380.627865" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -12,7 +12,7 @@
  <jumps>
   <jump target="NGC-3371">
    <hide>1</hide>
-   <pos x="14915.969064" y="-1585.517853" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

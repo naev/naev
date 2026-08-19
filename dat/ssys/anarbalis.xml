@@ -16,16 +16,16 @@
  <jumps>
   <jump target="Humdrum">
    <hide>1</hide>
-   <pos x="14016.040382" y="10478.578719" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Lapis">
    <hidden/>
    <hide>1</hide>
-   <pos x="-15501.703532" y="-8120.787374" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Niger">
    <hide>1</hide>
-   <pos x="-3547.701647" y="17136.621983" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

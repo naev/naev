@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Stone Table">
    <hide>1</hide>
-   <pos x="9988.658548" y="476.130662" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Za'lek">
    <hide>1</hide>
-   <pos x="-8921.59535" y="-4517.204489" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

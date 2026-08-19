@@ -12,19 +12,19 @@
  <jumps>
   <jump target="Apik">
    <hide>1</hide>
-   <pos x="9451.089789" y="-11648.04283" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Haered">
    <hide>1</hide>
-   <pos x="-12810.298752" y="7803.604671" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hystera">
    <hide>1</hide>
-   <pos x="14730.582848" y="2830.181784" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Telika">
    <hide>1</hide>
-   <pos x="-7494.761812" y="-12993.403917" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -17,11 +17,11 @@
  <jumps>
   <jump target="Cerberus">
    <hide>0</hide>
-   <pos x="-22046.005419" y="-13783.092724" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pisces Prime">
    <hide>0</hide>
-   <pos x="678.682176" y="25991.140615" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Uridhrion">
    <pos x="14777.057252" y="14343.933675"/>

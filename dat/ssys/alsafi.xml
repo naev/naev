@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Eisenhorn">
    <hide>1</hide>
-   <pos x="5612.60327" y="-13910.380459" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Lalande">
    <hide>1</hide>
-   <pos x="-12342.213349" y="8524.65657" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Daravon">
    <hide>1</hide>
-   <pos x="12117.362783" y="7012.098058" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

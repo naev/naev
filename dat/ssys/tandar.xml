@@ -18,15 +18,15 @@
  <jumps>
   <jump target="Ariadus">
    <hide>1</hide>
-   <pos x="-17747.193346" y="13830.658997" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Corvus">
    <hide>1</hide>
-   <pos x="-16005.610319" y="-15813.615599" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Symm">
    <hide>1</hide>
-   <pos x="21909.724113" y="-5119.959891" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

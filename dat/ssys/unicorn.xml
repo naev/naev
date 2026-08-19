@@ -15,20 +15,20 @@
  <jumps>
   <jump target="Kretogg">
    <hide>1</hide>
-   <pos x="-283.633873" y="-17497.701329" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Marat">
    <hide>1</hide>
-   <pos x="17499.997804" y="-8.765728" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Nunavut">
    <hidden/>
    <hide>1</hide>
-   <pos x="-16205.785709" y="-6604.733872" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Volus">
    <hide>1</hide>
-   <pos x="-4983.494007" y="16775.422125" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

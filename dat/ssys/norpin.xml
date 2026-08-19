@@ -20,7 +20,7 @@
   </jump>
   <jump target="Nougat">
    <hide>1</hide>
-   <pos x="15830.82453" y="23095.129241" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

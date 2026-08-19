@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Awowa">
    <hide>1</hide>
-   <pos x="-21155.716695" y="-13692.174812" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Verex">
    <hide>1</hide>
-   <pos x="-8793.474997" y="23615.986057" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

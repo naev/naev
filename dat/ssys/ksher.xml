@@ -21,15 +21,15 @@
   </jump>
   <jump target="Mayla">
    <hide>1</hide>
-   <pos x="-14472.846845" y="-5262.765829" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Oxuram">
    <hide>1</hide>
-   <pos x="10681.71705" y="-11093.28269" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Radix">
    <hide>1</hide>
-   <pos x="4721.175513" y="14658.46178" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

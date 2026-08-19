@@ -9,11 +9,11 @@
  <jumps>
   <jump target="An'ku">
    <hide>1</hide>
-   <pos x="-7240.281267" y="13136.907062" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-13747">
    <hide>1</hide>
-   <pos x="-2782.934428" y="-14739.581946" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -11,12 +11,12 @@
  <jumps>
   <jump target="Straight Row">
    <hide>1</hide>
-   <pos x="-9625.252253" y="-2711.921654" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Unicorn">
    <hidden/>
    <hide>1</hide>
-   <pos x="7835.518328" y="-6213.26424" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -18,11 +18,11 @@
  <jumps>
   <jump target="Niger">
    <hide>1</hide>
-   <pos x="25757.538019" y="10979.49157" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ruttwi">
    <hide>1</hide>
-   <pos x="-26076.36074" y="10199.186758" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

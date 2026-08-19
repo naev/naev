@@ -20,11 +20,11 @@
  <jumps>
   <jump target="Bonanza">
    <hide>0</hide>
-   <pos x="-4685.421932" y="-22517.700178" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Klunzar">
    <hide>1</hide>
-   <pos x="-4334.206088" y="22587.931679" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

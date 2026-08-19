@@ -21,19 +21,19 @@
  <jumps>
   <jump target="Beeklo">
    <hide>0</hide>
-   <pos x="33869.687571" y="-8822.939636" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gremlin">
    <hide>0</hide>
-   <pos x="-31156.135197" y="15946.637248" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Radix">
    <hide>1</hide>
-   <pos x="10687.896265" y="-33328.199372" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Urbanus">
    <hide>1</hide>
-   <pos x="-34993.948108" y="-650.842355" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

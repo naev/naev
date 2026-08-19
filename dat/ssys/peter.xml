@@ -9,7 +9,7 @@
  <jumps>
   <jump target="Baf">
    <hide>1</hide>
-   <pos x="-9920.537949" y="-1258.144188" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Druid">
    <pos x="9687.455858" y="-6916.10877"/>
@@ -19,7 +19,7 @@
   <jump target="Felzen">
    <hidden/>
    <hide>1</hide>
-   <pos x="-8767.572599" y="-4809.331629" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

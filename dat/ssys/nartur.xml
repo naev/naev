@@ -20,11 +20,11 @@
  <jumps>
   <jump target="Overture">
    <hide>0</hide>
-   <pos x="14363.29338" y="-19848.067998" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shinnok">
    <hide>0</hide>
-   <pos x="-10882.501325" y="21950.425164" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

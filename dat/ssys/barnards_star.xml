@@ -16,11 +16,11 @@
   <jump target="Carrza">
    <hidden/>
    <hide>1</hide>
-   <pos x="14220.110346" y="-4773.72619" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tau Ceti">
    <hide>1</hide>
-   <pos x="-4560.015155" y="-14290.075639" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

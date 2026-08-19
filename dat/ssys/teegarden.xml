@@ -9,11 +9,11 @@
  <jumps>
   <jump target="Eneguoz">
    <hide>1</hide>
-   <pos x="-12667.519652" y="8033.302301" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wunomi">
    <hide>1</hide>
-   <pos x="-2823.911634" y="-14731.786146" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

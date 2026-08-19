@@ -15,11 +15,11 @@
   <jump target="Gilligan's Light">
    <hidden/>
    <hide>1</hide>
-   <pos x="20515.108075" y="4486.684817" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Toaxis">
    <hide>1</hide>
-   <pos x="-5419.666229" y="20288.598225" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

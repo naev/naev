@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Poltergeist">
    <hide>1</hide>
-   <pos x="-5849.066605" y="-13812.618138" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tepdania">
    <hide>1</hide>
-   <pos x="12738.86752" y="-7919.675138" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wunomi">
    <hide>1</hide>
-   <pos x="-9942.634919" y="11231.385082" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

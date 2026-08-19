@@ -9,12 +9,12 @@
  <jumps>
   <jump target="Knave">
    <hide>1</hide>
-   <pos x="7239.031684" y="-13137.59568" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-7786">
    <hidden/>
    <hide>1</hide>
-   <pos x="-13692.851995" y="-6124.198251" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

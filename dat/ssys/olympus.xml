@@ -9,11 +9,11 @@
  <jumps>
   <jump target="Ganth">
    <hide>1</hide>
-   <pos x="9919.312618" y="1267.768581" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vost">
    <hide>1</hide>
-   <pos x="-7225.91358" y="-6912.754366" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="SW-13">
    <exitonly/>

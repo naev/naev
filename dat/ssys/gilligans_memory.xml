@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Muirat">
    <hide>1</hide>
-   <pos x="7862.53907" y="26873.415848" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tarmak">
    <hide>1</hide>
-   <pos x="-27057.688851" y="-7202.879564" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

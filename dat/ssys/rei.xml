@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Penn">
    <hide>1</hide>
-   <pos x="7115.399864" y="7026.45606" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pike">
    <hide>0.5</hide>
-   <pos x="-514.078196" y="-9986.777438" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

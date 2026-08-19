@@ -20,7 +20,7 @@
   </jump>
   <jump target="Gilligan's Tomb">
    <hide>0</hide>
-   <pos x="13914.206545" y="10613.428107" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Herakin">
    <pos x="14002.314796" y="-18128.385098"/>
@@ -28,11 +28,11 @@
   </jump>
   <jump target="Margarita">
    <hide>1</hide>
-   <pos x="15430.040552" y="-8256.14005" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Palovi">
    <hide>0</hide>
-   <pos x="-17254.648088" y="-2920.123171" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

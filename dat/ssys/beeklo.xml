@@ -17,19 +17,19 @@
  <jumps>
   <jump target="Awowa">
    <hide>0</hide>
-   <pos x="20465.409389" y="-10713.403684" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Darkstone">
    <hide>0</hide>
-   <pos x="20310.00395" y="11005.168765" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dvaer">
    <hide>0</hide>
-   <pos x="-17555.278108" y="15014.067087" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vandal">
    <hide>1</hide>
-   <pos x="11928.597602" y="-19781.773409" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

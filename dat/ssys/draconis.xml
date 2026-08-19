@@ -19,15 +19,15 @@
   <jump target="Eridani">
    <hidden/>
    <hide>1</hide>
-   <pos x="-28216.567835" y="14002.689013" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pilatis">
    <hide>0</hide>
-   <pos x="6651.866074" y="30789.65212" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tau Prime">
    <hide>0</hide>
-   <pos x="-59.960225" y="-31499.942932" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

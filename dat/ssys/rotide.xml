@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Antares">
    <hide>1</hide>
-   <pos x="-5267.374909" y="10782.150136" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tobanna">
    <hide>1</hide>
-   <pos x="11174.731535" y="-4373.256808" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Dendria">
    <hide>1</hide>
-   <pos x="-7164.022786" y="-21012.300624" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Valerie">
    <hide>1</hide>
-   <pos x="9881.913034" y="19879.330843" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

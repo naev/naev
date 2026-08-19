@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Allous">
    <hide>1</hide>
-   <pos x="-14053.390569" y="-14230.327244" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Baf">
    <hide>1</hide>
-   <pos x="13345.67774" y="-14896.069469" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gruz">
    <hide>1</hide>
-   <pos x="16732.587515" y="10955.387489" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sarrii">
    <hide>1</hide>
-   <pos x="-18569.409436" y="7428.124473" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

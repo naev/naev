@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Anrique">
    <hide>1</hide>
-   <pos x="13858.89993" y="14419.809038" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Eiderdown">
    <hide>1</hide>
-   <pos x="-2204.898385" y="-19878.08902" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Suna">
    <hide>1</hide>
-   <pos x="-4792.255383" y="19417.370788" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

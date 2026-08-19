@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Diadem">
    <hide>1</hide>
-   <pos x="-10425.316135" y="-4854.151158" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hatter">
    <hide>1</hide>
-   <pos x="9820.803937" y="5983.461374" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

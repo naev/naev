@@ -12,7 +12,7 @@
  <jumps>
   <jump target="Point Zero">
    <hide>1</hide>
-   <pos x="-14994.296954" y="413.592618" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -13,15 +13,15 @@
  <jumps>
   <jump target="NGC-13322">
    <hide>1</hide>
-   <pos x="8931.806601" y="12050.843573" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-14479">
    <hide>1</hide>
-   <pos x="-14995.941398" y="-348.914829" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-1931">
    <hide>0.5</hide>
-   <pos x="10405.720008" y="-10803.748937" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

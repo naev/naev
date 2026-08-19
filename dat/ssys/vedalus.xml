@@ -13,16 +13,16 @@
   <jump target="Defa">
    <hidden/>
    <hide>1</hide>
-   <pos x="3333.969713" y="-9427.865397" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Solene">
    <hide>1</hide>
-   <pos x="-2457.49989" y="9693.332465" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Titus">
    <hidden/>
    <hide>1</hide>
-   <pos x="-9403.249197" y="3402.778943" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

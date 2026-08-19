@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Paradox">
    <hide>1</hide>
-   <pos x="11143.995953" y="-10040.485754" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

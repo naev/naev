@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Kruger">
    <hide>1</hide>
-   <pos x="8963.251629" y="12027.473559" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Scorpius">
    <hide>1</hide>
-   <pos x="-5336.704494" y="14018.54433" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

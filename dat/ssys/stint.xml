@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Jommel">
    <hide>1</hide>
-   <pos x="3009.857657" y="-15714.348757" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Moor">
    <hide>1</hide>
-   <pos x="-8856.166871" y="13325.475914" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

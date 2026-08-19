@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Anarbalis">
    <hide>1</hide>
-   <pos x="14297.045004" y="10091.80381" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Lazuli">
    <hide>1</hide>
-   <pos x="11094.121882" y="-13534.048162" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Quai">
    <hide>1</hide>
-   <pos x="-15596.611944" y="7936.982793" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

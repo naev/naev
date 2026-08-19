@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Antlejos">
    <hide>1</hide>
-   <pos x="-19398.375585" y="-4868.575216" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Jade">
    <hide>1</hide>
-   <pos x="-5936.686949" y="-19098.579739" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Knave">
    <hide>1</hide>
-   <pos x="-17443.456684" y="9783.95722" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zemur">
    <hide>1</hide>
-   <pos x="19167.882109" y="5708.966233" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="SW-7">
    <exitonly/>

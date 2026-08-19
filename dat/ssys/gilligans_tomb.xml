@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Adraia">
    <hide>0</hide>
-   <pos x="8070.058019" y="15528.17322" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Brendon">
    <hide>1</hide>
-   <pos x="12920.804757" y="-11802.660904" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Eiderdown">
    <hide>0</hide>
-   <pos x="-15309.656256" y="-8477.288795" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

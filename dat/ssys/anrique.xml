@@ -12,7 +12,7 @@
  <jumps>
   <jump target="Herakin">
    <hide>1</hide>
-   <pos x="-14866.457332" y="-9232.466972" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -17,7 +17,7 @@
  <jumps>
   <jump target="Gewirn">
    <hide>1</hide>
-   <pos x="-20817.193138" y="-9176.435572" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

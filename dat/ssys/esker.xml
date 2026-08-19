@@ -17,15 +17,15 @@
  <jumps>
   <jump target="Gutter">
    <hide>1</hide>
-   <pos x="22695.315281" y="-1576.440384" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Nougat">
    <hide>1</hide>
-   <pos x="-15787.174912" y="16380.708417" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Scarlet">
    <hide>1</hide>
-   <pos x="-15218.844164" y="-16910.034958" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

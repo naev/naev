@@ -21,15 +21,15 @@
   </jump>
   <jump target="Gamma Polaris">
    <hide>1</hide>
-   <pos x="-21.695287" y="17499.986551" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Koralis">
    <hide>1</hide>
-   <pos x="-9852.042962" y="14463.307002" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Uhriabi">
    <hide>1</hide>
-   <pos x="-2409.901064" y="-17333.273691" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

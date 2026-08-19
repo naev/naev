@@ -15,7 +15,7 @@
  <jumps>
   <jump target="Allous">
    <hide>1</hide>
-   <pos x="16714.979728" y="-3099.911718" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

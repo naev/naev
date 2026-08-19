@@ -12,19 +12,19 @@
  <jumps>
   <jump target="Majesteka">
    <hide>1</hide>
-   <pos x="-14284.294882" y="-7208.253581" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pas">
    <hide>1</hide>
-   <pos x="-15583.802624" y="3625.616602" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tepdania">
    <hide>1</hide>
-   <pos x="15411.466273" y="4299.617109" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Virgo">
    <hide>1</hide>
-   <pos x="5397.59829" y="15062.069336" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

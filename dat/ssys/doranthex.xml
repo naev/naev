@@ -17,19 +17,19 @@
  <jumps>
   <jump target="Dakron">
    <hide>1</hide>
-   <pos x="17718.866482" y="-19839.39945" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Raelid">
    <hide>0</hide>
-   <pos x="-4549.84771" y="26207.992784" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tarsus">
    <hide>0</hide>
-   <pos x="-159.234821" y="-26599.523384" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Torg">
    <hide>1</hide>
-   <pos x="-22513.448184" y="-14167.026888" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

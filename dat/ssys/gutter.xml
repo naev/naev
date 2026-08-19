@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Esker">
    <hide>1</hide>
-   <pos x="-17765.398344" y="2896.656977" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tartan">
    <hide>1</hide>
-   <pos x="8465.576152" y="-15885.025036" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -10,11 +10,11 @@
  <jumps>
   <jump target="Basel">
    <hide>1</hide>
-   <pos x="-4.45527" y="-13999.999291" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Thirty Stars">
    <hide>1</hide>
-   <pos x="-13999.85299" y="64.157904" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

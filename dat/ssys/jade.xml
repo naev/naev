@@ -17,15 +17,15 @@
  <jumps>
   <jump target="Blackwell">
    <hide>1</hide>
-   <pos x="13281.772562" y="-16266.361535" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Delta Polaris">
    <hide>1</hide>
-   <pos x="15604.887463" y="14053.024131" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kobopos">
    <hide>1</hide>
-   <pos x="-14547.831524" y="-15144.655755" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

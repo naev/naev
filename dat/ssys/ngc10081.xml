@@ -12,15 +12,15 @@
  <jumps>
   <jump target="NGC-10653">
    <hide>1</hide>
-   <pos x="997.22818" y="14966.814489" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-11050">
    <hide>1</hide>
-   <pos x="10075.42567" y="-11112.416368" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Peogas">
    <hide>1</hide>
-   <pos x="-14765.376816" y="-2642.659165" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

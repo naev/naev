@@ -10,15 +10,15 @@
  <jumps>
   <jump target="Brumerebus">
    <hide>1</hide>
-   <pos x="9872.14736" y="-1593.959374" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-4087">
    <hide>1</hide>
-   <pos x="2000.953263" y="-9797.764338" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-902">
    <hide>1</hide>
-   <pos x="-8419.058475" y="-5396.24447" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

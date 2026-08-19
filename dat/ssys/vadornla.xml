@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Hubfar">
    <hide>1</hide>
-   <pos x="-12583.048743" y="-8164.979137" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wochii">
    <hide>1</hide>
-   <pos x="11825.977541" y="-9227.472849" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

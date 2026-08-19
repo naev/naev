@@ -13,20 +13,20 @@
   <jump target="Daan">
    <hidden/>
    <hide>1</hide>
-   <pos x="-132.094494" y="-24499.643896" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Frolina">
    <hide>1</hide>
-   <pos x="-15153.911937" y="19251.206533" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pas">
    <hidden/>
    <hide>1</hide>
-   <pos x="-1728.088946" y="24438.979287" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Trohem">
    <hide>1</hide>
-   <pos x="21254.497876" y="-12185.906615" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

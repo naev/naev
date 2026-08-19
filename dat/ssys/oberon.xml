@@ -20,11 +20,11 @@
   </jump>
   <jump target="Shikima">
    <hide>0</hide>
-   <pos x="3128.03469" y="12926.925348" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Struve">
    <hide>1</hide>
-   <pos x="13116.305022" y="2202.848737" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

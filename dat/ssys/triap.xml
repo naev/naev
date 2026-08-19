@@ -13,19 +13,19 @@
  <jumps>
   <jump target="Brimstone">
    <hide>1</hide>
-   <pos x="13637.158522" y="20353.818006" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Chraan">
    <hide>1</hide>
-   <pos x="23768.878377" y="5940.574102" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Haleb">
    <hide>1</hide>
-   <pos x="-24092.638662" y="-4449.130506" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Koit">
    <hide>1</hide>
-   <pos x="949.226767" y="-24481.604697" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

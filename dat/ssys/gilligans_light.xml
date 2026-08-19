@@ -16,21 +16,21 @@
  <jumps>
   <jump target="Brimstone">
    <hide>1</hide>
-   <pos x="24059.490691" y="4625.030559" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ingot">
    <hidden/>
    <hide>1</hide>
-   <pos x="-23226.354823" y="7796.566014" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Myad">
    <hidden/>
    <hide>1</hide>
-   <pos x="-4621.313139" y="24060.205004" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Theras">
    <hide>1</hide>
-   <pos x="-23425.595125" y="-7175.757311" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

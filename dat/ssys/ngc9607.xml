@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Fern">
    <hide>1</hide>
-   <pos x="-12737.792536" y="7921.403997" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-14676">
    <hide>1</hide>
-   <pos x="13846.313568" y="-5768.84742" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-15670">
    <pos x="-4674.763811" y="14072.157257"/>
@@ -25,7 +25,7 @@
   </jump>
   <jump target="NGC-6901">
    <hide>1</hide>
-   <pos x="10188.901584" y="11008.464221" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

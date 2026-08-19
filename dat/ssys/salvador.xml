@@ -21,11 +21,11 @@
   </jump>
   <jump target="Mural">
    <hide>1</hide>
-   <pos x="-9042.407852" y="14982.818834" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tepvin">
    <hide>1</hide>
-   <pos x="16208.721007" y="6597.52706" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -11,11 +11,11 @@
  <jumps>
   <jump target="Lynx">
    <hide>1</hide>
-   <pos x="-6215.614924" y="-13651.598115" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Triap">
    <hide>1</hide>
-   <pos x="-2449.097738" y="14798.713466" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

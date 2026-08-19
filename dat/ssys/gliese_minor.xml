@@ -13,7 +13,7 @@
  <jumps>
   <jump target="Gliese">
    <hide>1</hide>
-   <pos x="-3117.392958" y="-3245.282906" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

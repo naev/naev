@@ -15,20 +15,20 @@
  <jumps>
   <jump target="Duros">
    <hide>1</hide>
-   <pos x="-13184.419944" y="-15038.98503" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fulcrum">
    <hide>1</hide>
-   <pos x="-19942.466836" y="-1515.920993" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pellmell">
    <hide>1</hide>
-   <pos x="-4396.175267" y="19510.859617" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Suna">
    <hidden/>
    <hide>1</hide>
-   <pos x="16736.490635" y="10949.423784" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

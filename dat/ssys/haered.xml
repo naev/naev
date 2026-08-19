@@ -11,11 +11,11 @@
  <jumps>
   <jump target="Cleai">
    <hide>1</hide>
-   <pos x="-18470.193458" y="-9992.594938" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Leporis">
    <hide>1</hide>
-   <pos x="20757.08208" y="3184.893011" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Scholz's Star">
    <pos x="-14549.803803" y="10378.3346"/>

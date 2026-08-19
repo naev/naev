@@ -9,7 +9,7 @@
  <jumps>
   <jump target="Shikima">
    <hide>1</hide>
-   <pos x="-11414.310039" y="-6116.864091" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

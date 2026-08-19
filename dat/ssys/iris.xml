@@ -18,11 +18,11 @@
   <jump target="Behar">
    <hidden/>
    <hide>1</hide>
-   <pos x="-5189.706902" y="-13002.574447" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ophiuchi">
    <hide>1</hide>
-   <pos x="-13834.957133" y="2143.352772" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Oriantis">
    <pos x="11528.98057" y="7159.101214"/>

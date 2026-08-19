@@ -12,7 +12,7 @@
  <jumps>
   <jump target="Torg">
    <hide>1</hide>
-   <pos x="-3104.308709" y="24302.536234" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -15,21 +15,21 @@
  <jumps>
   <jump target="Daled">
    <hide>1</hide>
-   <pos x="-9932.04152" y="9866.840995" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gamel">
    <hide>1</hide>
-   <pos x="12986.542027" y="-5229.696566" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="New Haven">
    <exitonly/>
    <hide>1</hide>
-   <pos x="37.883047" y="13999.948745" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Rockbed">
    <hidden/>
    <hide>1</hide>
-   <pos x="-8105.878094" y="-11414.672151" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

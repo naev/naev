@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Eye of Night">
    <hide>0</hide>
-   <pos x="19049.409746" y="-8838.551256" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Lynx">
    <hide>1</hide>
-   <pos x="8766.96978" y="19082.458983" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Millstone">
    <hide>0</hide>
-   <pos x="-19975.696286" y="6478.545968" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Valur Gem">
    <hide>1</hide>
-   <pos x="-19168.171672" y="-8577.948166" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

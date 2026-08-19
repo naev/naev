@@ -18,7 +18,7 @@
  <jumps>
   <jump target="Vean">
    <hide>1</hide>
-   <pos x="12999.234013" y="141.120726" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

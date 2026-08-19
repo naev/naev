@@ -14,20 +14,20 @@
  <jumps>
   <jump target="Eiger">
    <hide>1</hide>
-   <pos x="-7524.320531" y="12976.309203" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gorman">
    <hidden/>
    <hide>1</hide>
-   <pos x="-13970.997529" y="5459.965937" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hideyoshi's Star">
    <hide>1</hide>
-   <pos x="14752.695106" y="2712.560982" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Reptile">
    <hide>1</hide>
-   <pos x="-12747.541657" y="-7905.705641" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Brumeria">
    <hide>1</hide>
-   <pos x="7990.164722" y="19420.537266" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fern">
    <hide>1</hide>
-   <pos x="20969.556311" y="-1130.357505" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Penn">
    <hide>1</hide>
-   <pos x="15775.426161" y="-13861.310523" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seifer">
    <hide>1</hide>
-   <pos x="-12793.683761" y="-16652.977385" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

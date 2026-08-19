@@ -14,16 +14,16 @@
  <jumps>
   <jump target="Oberon">
    <hide>0</hide>
-   <pos x="6130.669227" y="10605.536045" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pilatis">
    <hide>0</hide>
-   <pos x="-5029.671585" y="-11169.821114" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vedalus">
    <hidden/>
    <hide>1</hide>
-   <pos x="-6929.022562" y="10102.036741" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Cerberus">
    <hide>0</hide>
-   <pos x="-437.535659" y="13993.161277" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Elza">
    <hide>1</hide>
-   <pos x="-12511.412539" y="6282.08216" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hatter">
    <pos x="21758.150881" y="-10495.596179"/>

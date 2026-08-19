@@ -20,7 +20,7 @@
   </jump>
   <jump target="NGC-13674">
    <hide>0.5</hide>
-   <pos x="14479.647451" y="-3916.606909" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-23">
    <pos x="-8916.502543" y="-12023.423897"/>
@@ -28,7 +28,7 @@
   </jump>
   <jump target="NGC-2601">
    <hide>1</hide>
-   <pos x="-10493.937265" y="10718.081949" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

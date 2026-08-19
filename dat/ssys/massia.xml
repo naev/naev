@@ -18,7 +18,7 @@
  <jumps>
   <jump target="Klantar">
    <hide>1</hide>
-   <pos x="-6172.511723" y="22985.649849" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

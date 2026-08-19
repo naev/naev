@@ -17,16 +17,16 @@
  <jumps>
   <jump target="Marat">
    <hide>1</hide>
-   <pos x="-13312.178499" y="8417.149374" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-14549">
    <exitonly/>
    <hide>1</hide>
-   <pos x="-13116.500646" y="-8718.939774" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="PSO">
    <hide>1</hide>
-   <pos x="-5206.774826" y="14864.454107" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -9,15 +9,15 @@
  <jumps>
   <jump target="C-43">
    <hide>1</hide>
-   <pos x="-11994.401391" y="8498.490175" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="C-59">
    <hide>1</hide>
-   <pos x="-2183.408186" y="14536.943581" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fortitude">
    <hide>1</hide>
-   <pos x="9279.801697" y="-11400.670175" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

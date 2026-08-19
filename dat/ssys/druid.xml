@@ -24,7 +24,7 @@
   </jump>
   <jump target="Valur Gem">
    <hide>1</hide>
-   <pos x="-7606.024581" y="6492.179146" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -11,19 +11,19 @@
  <jumps>
   <jump target="Armorhead">
    <hide>1</hide>
-   <pos x="4447.475217" y="-14848.231012" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Bedimann">
    <hide>1</hide>
-   <pos x="-12247.636404" y="9499.758023" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gorman">
    <hide>1</hide>
-   <pos x="-7772.756702" y="-13410.229425" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qulam">
    <hide>1</hide>
-   <pos x="15442.136521" y="-1338.065636" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -12,19 +12,19 @@
   <jump target="Armorhead">
    <hidden/>
    <hide>1</hide>
-   <pos x="9273.614458" y="-3741.667393" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Eiger">
    <hide>1</hide>
-   <pos x="2972.289387" y="9548.06241" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Stained Soul">
    <hide>1</hide>
-   <pos x="-9208.550619" y="-3899.050588" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Urdads">
    <hide>1</hide>
-   <pos x="-8208.414789" y="5711.560788" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

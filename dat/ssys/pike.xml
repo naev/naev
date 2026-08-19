@@ -13,16 +13,16 @@
  <jumps>
   <jump target="Atlantis">
    <hide>1</hide>
-   <pos x="-13435.695605" y="10415.473277" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Neon">
    <hide>1</hide>
-   <pos x="15267.642301" y="-7476.569972" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Rei">
    <hidden/>
    <hide>1</hide>
-   <pos x="4561.799089" y="16376.50723" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -13,15 +13,15 @@
   <jump target="Arcanis">
    <hidden/>
    <hide>1</hide>
-   <pos x="4473.539873" y="18722.978956" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tuoladis">
    <hide>1</hide>
-   <pos x="11738.57637" y="-15256.746861" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Van Maanen">
    <hide>1</hide>
-   <pos x="-17873.106616" y="7149.444725" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

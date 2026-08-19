@@ -9,11 +9,11 @@
  <jumps>
   <jump target="NGC-9897">
    <hide>0.5</hide>
-   <pos x="-14998.512592" y="-211.234502" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Poller">
    <hide>1</hide>
-   <pos x="12926.277324" y="-7609.951019" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

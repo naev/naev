@@ -17,19 +17,19 @@
  <jumps>
   <jump target="Amatiri">
    <hide>1</hide>
-   <pos x="-13960.946153" y="-7816.136034" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-8468">
    <hide>1</hide>
-   <pos x="-8193.566597" y="13742.833274" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Neexi">
    <hide>1</hide>
-   <pos x="15826.180914" y="2352.019914" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Opal">
    <hide>1</hide>
-   <pos x="723.772272" y="-15983.621419" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

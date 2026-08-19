@@ -9,19 +9,19 @@
  <jumps>
   <jump target="Antlejos">
    <hide>1</hide>
-   <pos x="8986.34703" y="12010.227602" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kobopos">
    <hide>1</hide>
-   <pos x="12215.241434" y="-8705.623279" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-3219">
    <hide>0.5</hide>
-   <pos x="-8896.756192" y="12076.743321" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Senara">
    <hide>1</hide>
-   <pos x="375.12342" y="-14995.30868" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

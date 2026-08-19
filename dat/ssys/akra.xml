@@ -16,7 +16,7 @@
  <jumps>
   <jump target="Mida">
    <hide>1</hide>
-   <pos x="-12673.871898" y="21549.314863" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

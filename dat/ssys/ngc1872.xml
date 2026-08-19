@@ -9,7 +9,7 @@
  <jumps>
   <jump target="Senara">
    <hide>1</hide>
-   <pos x="14695.158943" y="-3008.704642" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

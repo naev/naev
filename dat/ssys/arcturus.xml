@@ -18,15 +18,15 @@
  <jumps>
   <jump target="Borla">
    <hide>1</hide>
-   <pos x="-14193.601316" y="10236.780825" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Holly">
    <hide>0</hide>
-   <pos x="17212.224183" y="3160.591506" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mural">
    <hide>0</hide>
-   <pos x="-11283.368884" y="-13376.680702" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Struve">
    <hide>1</hide>
-   <pos x="-14994.015684" y="-9958.890181" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Thirty Stars">
    <hide>1</hide>
-   <pos x="-536.781262" y="17991.994494" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Hideyoshi's Star">
    <hide>1</hide>
-   <pos x="-6845.462961" y="11286.258761" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Newmarch">
    <hide>1</hide>
-   <pos x="-12639.340124" y="-3806.189854" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

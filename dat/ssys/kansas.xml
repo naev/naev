@@ -22,7 +22,7 @@
  <jumps>
   <jump target="Sylph">
    <hide>1</hide>
-   <pos x="-5162.254065" y="-29552.514833" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

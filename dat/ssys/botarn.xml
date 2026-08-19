@@ -15,15 +15,15 @@
  <jumps>
   <jump target="Monogram">
    <hide>0</hide>
-   <pos x="-10756.008146" y="5966.43015" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vanir">
    <hide>0</hide>
-   <pos x="5896.766763" y="-10794.356939" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Voproid">
    <hide>1</hide>
-   <pos x="6722.507912" y="10300.382874" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

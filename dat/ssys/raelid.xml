@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Doranthex">
    <hide>1</hide>
-   <pos x="8336.740684" y="-15386.642088" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zacron">
    <hide>1</hide>
-   <pos x="-4447.504067" y="16925.416023" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

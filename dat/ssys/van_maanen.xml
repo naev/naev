@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Kruger">
    <hide>1</hide>
-   <pos x="4749.889368" y="14228.090208" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Surano">
    <hide>1</hide>
-   <pos x="11967.864554" y="-9042.688649" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tepdania">
    <hide>1</hide>
-   <pos x="-2915.019838" y="-14714.029337" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

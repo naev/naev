@@ -9,12 +9,12 @@
  <jumps>
   <jump target="Faust">
    <hide>1</hide>
-   <pos x="-8097.130362" y="5868.26038" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Felzen">
    <hidden/>
    <hide>1</hide>
-   <pos x="9383.676621" y="3456.387285" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

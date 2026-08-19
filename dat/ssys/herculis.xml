@@ -10,7 +10,7 @@
  <jumps>
   <jump target="Longbow">
    <hide>1</hide>
-   <pos x="-14109.21902" y="5092.144797" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

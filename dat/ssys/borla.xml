@@ -11,20 +11,20 @@
  <jumps>
   <jump target="Arcturus">
    <hide>1</hide>
-   <pos x="11122.114717" y="-8502.856238" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Merisi">
    <hidden/>
    <hide>1</hide>
-   <pos x="-7078.70851" y="12078.571348" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mural">
    <hide>1</hide>
-   <pos x="6871.466529" y="-12197.661568" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shakar">
    <hide>1</hide>
-   <pos x="-9903.448998" y="-9895.539294" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

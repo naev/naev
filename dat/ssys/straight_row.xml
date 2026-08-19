@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Nunavut">
    <hide>1</hide>
-   <pos x="16702.918653" y="-11000.568551" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Somard">
    <hide>1</hide>
-   <pos x="-15314.297714" y="-12863.60313" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tomas">
    <hide>1</hide>
-   <pos x="-17049.019889" y="10456.142731" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Westhaven">
    <hide>1</hide>
-   <pos x="130.734987" y="-19999.572704" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

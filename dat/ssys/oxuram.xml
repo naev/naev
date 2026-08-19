@@ -9,11 +9,11 @@
  <jumps>
   <jump target="Ksher">
    <hide>1</hide>
-   <pos x="-4027.876974" y="14449.090181" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="PSO">
    <hide>1</hide>
-   <pos x="742.821643" y="-14981.595909" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

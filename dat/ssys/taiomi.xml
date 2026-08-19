@@ -16,7 +16,7 @@
   <jump target="Bastion">
    <hidden/>
    <hide>1</hide>
-   <pos x="-5962.664454" y="668.30577" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

@@ -15,15 +15,15 @@
   <jump target="Guntesh">
    <exitonly/>
    <hide>1</hide>
-   <pos x="12462.829072" y="-8347.328406" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kruger's Pocket">
    <hide>0.1</hide>
-   <pos x="12761.763996" y="7882.726667" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wunomi">
    <hide>1</hide>
-   <pos x="-14986.990778" y="-624.585789" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -11,7 +11,7 @@
  <jumps>
   <jump target="Pilatis">
    <hide>1</hide>
-   <pos x="-8162.028908" y="6605.398102" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

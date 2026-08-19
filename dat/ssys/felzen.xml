@@ -12,17 +12,17 @@
  <jumps>
   <jump target="Baf">
    <hide>1</hide>
-   <pos x="1167.287375" y="9931.638343" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Peter">
    <hidden/>
    <hide>1</hide>
-   <pos x="6001.379511" y="7998.96518" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sagittarius Prime">
    <hidden/>
    <hide>1</hide>
-   <pos x="-7637.28975" y="-6455.370266" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Auger">
    <hide>1</hide>
-   <pos x="13145.033042" y="-15073.423842" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Severus">
    <hide>1</hide>
-   <pos x="-13324.053048" y="-14915.415192" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Stone Table">
    <hide>1</hide>
-   <pos x="-19669.471956" y="3621.032029" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

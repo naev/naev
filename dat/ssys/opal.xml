@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Hadosh">
    <hide>1</hide>
-   <pos x="12476.561887" y="-6351.01594" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sleuth">
    <hide>1</hide>
-   <pos x="-1166.706604" y="13951.30086" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

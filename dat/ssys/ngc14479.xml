@@ -20,11 +20,11 @@
   </jump>
   <jump target="NGC-4131">
    <hide>1</hide>
-   <pos x="-11214.678833" y="-4269.775012" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-4771">
    <hide>1</hide>
-   <pos x="11552.920456" y="-3245.000606" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

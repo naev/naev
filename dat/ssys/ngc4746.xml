@@ -12,7 +12,7 @@
  <jumps>
   <jump target="NGC-7078">
    <hide>1</hide>
-   <pos x="-10898.497979" y="-5022.224784" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="SW-9">
    <exitonly/>

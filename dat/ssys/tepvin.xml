@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Salvador">
    <hide>1</hide>
-   <pos x="-13646.938512" y="-6225.838838" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Santoros">
    <hide>1</hide>
-   <pos x="6695.461902" y="13422.77132" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tau Ceti">
    <hide>1</hide>
-   <pos x="10481.774469" y="-10729.976886" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

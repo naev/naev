@@ -16,7 +16,7 @@
  <jumps>
   <jump target="Brimstone">
    <hide>1</hide>
-   <pos x="-17267.349682" y="17380.697194" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

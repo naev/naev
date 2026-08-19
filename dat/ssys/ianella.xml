@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Tepdania">
    <hide>1</hide>
-   <pos x="2037.046907" y="14861.037645" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wochii">
    <hide>1</hide>
-   <pos x="4649.422207" y="-14261.236732" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

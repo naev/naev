@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Attaria">
    <hide>1</hide>
-   <pos x="15308.558578" y="10387.397857" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hargen">
    <hide>1</hide>
-   <pos x="-2139.112871" y="-18375.913477" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Olympus">
    <hide>1</hide>
-   <pos x="-14306.712875" y="-11728.937151" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

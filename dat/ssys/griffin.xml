@@ -15,7 +15,7 @@
  <jumps>
   <jump target="Yarn">
    <hide>1</hide>
-   <pos x="-13050.912885" y="16452.163166" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

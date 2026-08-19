@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Palejos">
    <hide>1</hide>
-   <pos x="-22263.326805" y="6160.704469" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shinnok">
    <hide>1</hide>
-   <pos x="21046.912513" y="9520.371508" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ux">
    <hide>1</hide>
-   <pos x="-18839.468021" y="-13367.290102" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

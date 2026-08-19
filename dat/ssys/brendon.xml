@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Gilligan's Tomb">
    <hide>1</hide>
-   <pos x="-11414.295873" y="9885.537401" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Toxin">
    <hide>1</hide>
-   <pos x="15093.205821" y="452.92166" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

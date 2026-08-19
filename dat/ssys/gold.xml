@@ -14,16 +14,16 @@
  <jumps>
   <jump target="Amlet">
    <hide>1</hide>
-   <pos x="18195.377904" y="-8302.302265" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fried">
    <hide>1</hide>
-   <pos x="-12040.42889" y="15969.59837" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Perhelion">
    <hidden/>
    <hide>1</hide>
-   <pos x="19127.184201" y="5843.870679" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

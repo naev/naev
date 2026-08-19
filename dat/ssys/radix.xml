@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Dvaer">
    <hide>1</hide>
-   <pos x="-11852.063801" y="21442.448173" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Farizel">
    <hide>1</hide>
-   <pos x="24008.922037" y="-4880.74406" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="K'tos">
    <hide>1</hide>
-   <pos x="-24395.463402" y="2260.832897" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ksher">
    <hide>1</hide>
-   <pos x="-10442.118051" y="-22163.306851" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

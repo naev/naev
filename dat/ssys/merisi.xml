@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Acheron">
    <hide>1</hide>
-   <pos x="-14079.301318" y="20050.518057" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Borla">
    <pos x="34089.587232" y="3110.700798"/>

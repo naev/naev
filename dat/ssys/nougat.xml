@@ -17,15 +17,15 @@
   </jump>
   <jump target="Esker">
    <hide>1</hide>
-   <pos x="19537.219113" y="-7700.459033" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Karman">
    <hide>1</hide>
-   <pos x="13700.057782" y="15915.665765" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Norpin">
    <hide>1</hide>
-   <pos x="-19461.97648" y="-7888.692634" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

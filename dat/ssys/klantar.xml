@@ -15,16 +15,16 @@
  <jumps>
   <jump target="Massia">
    <hide>1</hide>
-   <pos x="291.640756" y="-18897.749751" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tarsus">
    <hide>1</hide>
-   <pos x="-14170.671514" y="12506.081274" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Theras">
    <hidden/>
    <hide>1</hide>
-   <pos x="11277.496084" y="15166.676697" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

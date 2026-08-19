@@ -13,15 +13,15 @@
  <jumps>
   <jump target="K'tos">
    <hide>1</hide>
-   <pos x="-1971.942214" y="10313.16847" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ksher">
    <hide>1</hide>
-   <pos x="10077.921422" y="2947.117201" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Yetmer-O'rez Highspace">
    <hide>1</hide>
-   <pos x="-9306.101492" y="4862.764133" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

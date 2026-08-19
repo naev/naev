@@ -12,19 +12,19 @@
   <jump target="Blacin">
    <hidden/>
    <hide>1</hide>
-   <pos x="-5673.6202" y="12798.829392" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Daravon">
    <hide>0</hide>
-   <pos x="-12513.245863" y="6278.429576" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dvaer">
    <hide>0</hide>
-   <pos x="12256.995463" y="-6765.061878" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vlexon">
    <hide>1</hide>
-   <pos x="12722.138398" y="5843.560093" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

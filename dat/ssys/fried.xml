@@ -19,15 +19,15 @@
  <jumps>
   <jump target="Gold">
    <hide>1</hide>
-   <pos x="2477.241622" y="-17323.777704" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Limbo">
    <hide>1</hide>
-   <pos x="-14111.8921" y="10349.130463" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sollav">
    <hide>1</hide>
-   <pos x="-17330.383237" y="2430.600096" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

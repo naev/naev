@@ -9,15 +9,15 @@
  <jumps>
   <jump target="NGC-12056">
    <hide>1</hide>
-   <pos x="-11143.139599" y="-10041.436145" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-9897">
    <hide>0.5</hide>
-   <pos x="2237.033646" y="-14832.251361" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Stained Soul">
    <hide>1</hide>
-   <pos x="6106.121711" y="13700.92251" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

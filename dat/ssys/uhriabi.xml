@@ -14,20 +14,20 @@
  <jumps>
   <jump target="Groombridge">
    <hide>1</hide>
-   <pos x="10434.208741" y="-9334.199909" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Overture">
    <hide>1</hide>
-   <pos x="-3814.611813" y="-13470.290891" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qex">
    <hide>1</hide>
-   <pos x="-5431.966737" y="12903.245226" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qorel">
    <hidden/>
    <hide>1</hide>
-   <pos x="9221.528464" y="10533.917257" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

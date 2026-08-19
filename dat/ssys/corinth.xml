@@ -22,7 +22,7 @@
   </jump>
   <jump target="Procyon">
    <hide>1</hide>
-   <pos x="11251.900068" y="16534.652849" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

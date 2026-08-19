@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Daan">
    <hide>1</hide>
-   <pos x="9089.778204" y="14128.550251" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Limbo">
    <hide>1</hide>
-   <pos x="-16721.937138" y="-1617.658284" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

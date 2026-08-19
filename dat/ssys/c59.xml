@@ -18,15 +18,15 @@
  <jumps>
   <jump target="C-28">
    <hide>1</hide>
-   <pos x="3042.231433" y="17233.537881" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="C-43">
    <hide>1</hide>
-   <pos x="-16441.815494" y="-5993.054584" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hades">
    <hide>1</hide>
-   <pos x="1662.679588" y="-17420.835128" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mason">
    <hide>1</hide>

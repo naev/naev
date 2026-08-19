@@ -9,19 +9,19 @@
  <jumps>
   <jump target="Bastion">
    <hide>1</hide>
-   <pos x="10355.860721" y="9421.048175" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Coriolis">
    <hide>1</hide>
-   <pos x="-9081.978667" y="-10654.466832" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dune">
    <hide>1</hide>
-   <pos x="8735.393735" y="-10940.424867" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Haven">
    <hide>1</hide>
-   <pos x="-11499.194381" y="7985.519931" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

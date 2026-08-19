@@ -18,28 +18,28 @@
  <jumps>
   <jump target="Defa">
    <hide>0</hide>
-   <pos x="9889.056104" y="11805.36189" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Draconis">
    <hide>0</hide>
-   <pos x="-574.0891" y="-15389.295685" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dune">
    <hidden/>
    <hide>1</hide>
-   <pos x="-15324.628366" y="-1521.763921" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Halo">
    <hide>1</hide>
-   <pos x="-11422.356136" y="10329.074513" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Lalande">
    <hide>1</hide>
-   <pos x="15219.112973" y="2353.423104" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Levo">
    <hide>1</hide>
-   <pos x="10975.861447" y="-10802.336112" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

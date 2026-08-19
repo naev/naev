@@ -9,15 +9,15 @@
  <jumps>
   <jump target="Amaroq">
    <hide>1</hide>
-   <pos x="13614.846479" y="-3261.281243" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-8338">
    <hide>1</hide>
-   <pos x="7024.68939" y="-12110.067669" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Unicorn">
    <hide>1</hide>
-   <pos x="-12072.941317" y="-7088.306422" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

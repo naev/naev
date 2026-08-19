@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Attaria">
    <hide>1</hide>
-   <pos x="17326.666596" y="-2456.954345" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ux">
    <hide>1</hide>
-   <pos x="8850.505447" y="15096.97166" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

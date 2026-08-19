@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Eneguoz">
    <hide>1</hide>
-   <pos x="-23522.276978" y="-15188.893499" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ross">
    <hide>1</hide>
-   <pos x="25586.955594" y="-11371.35451" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Salvador">
    <pos x="8452.800945" y="3674.90663"/>

@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Adran">
    <hide>1</hide>
-   <pos x="10139.424614" y="-8135.850815" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Booster">
    <hide>1</hide>
-   <pos x="-3917.836271" y="12395.586269" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Midoros">
    <hide>1</hide>
-   <pos x="-2564.107476" y="-12744.620545" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seran">
    <hide>1</hide>
-   <pos x="9512.206173" y="8861.034573" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

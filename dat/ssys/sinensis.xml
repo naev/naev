@@ -13,11 +13,11 @@
  <jumps>
   <jump target="NGC-10180">
    <hide>1</hide>
-   <pos x="11619.859191" y="10999.03961" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-10907">
    <hide>1</hide>
-   <pos x="-8914.525578" y="13286.505699" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zurai">
    <pos x="9806.86954" y="-11659.677576"/>

@@ -12,11 +12,11 @@
  <jumps>
   <jump target="NGC-12261">
    <hide>1</hide>
-   <pos x="-4270.449378" y="-14379.265005" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-14676">
    <hide>1</hide>
-   <pos x="-14991.348559" y="509.380368" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

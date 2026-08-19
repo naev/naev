@@ -10,11 +10,11 @@
  <jumps>
   <jump target="NGC-1001">
    <hide>1</hide>
-   <pos x="13741.324392" y="-6014.649112" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-1562">
    <hide>1</hide>
-   <pos x="-2914.361293" y="14714.159787" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

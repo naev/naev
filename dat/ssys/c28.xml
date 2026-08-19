@@ -18,16 +18,16 @@
  <jumps>
   <jump target="C-00">
    <hide>1</hide>
-   <pos x="-24230.826642" y="-3621.745462" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="C-59">
    <hide>1</hide>
-   <pos x="-14161.371975" y="-19992.637238" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mason">
    <exitonly/>
    <hide>1</hide>
-   <pos x="22714.435706" y="-9181.743327" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

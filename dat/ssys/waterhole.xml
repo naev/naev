@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Goddard">
    <hide>0</hide>
-   <pos x="-2378.407649" y="-19102.50447" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Majesteka">
    <hide>1</hide>
-   <pos x="18775.035889" y="-4249.767918" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Overture">
    <hide>0</hide>
-   <pos x="-7307.66083" y="17809.003149" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Regulus">
    <hide>1</hide>
-   <pos x="-18370.594867" y="-5751.847026" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

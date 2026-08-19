@@ -16,11 +16,11 @@
   <jump target="Malebolge">
    <hidden/>
    <hide>1</hide>
-   <pos x="-8866.049128" y="-12099.304643" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-4771">
    <hide>1</hide>
-   <pos x="-10420.017818" y="10789.959622" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

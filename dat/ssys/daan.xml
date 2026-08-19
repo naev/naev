@@ -11,20 +11,20 @@
  <jumps>
   <jump target="Daravon">
    <hide>0</hide>
-   <pos x="13263.636056" y="-7005.423511" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Effetey">
    <hidden/>
    <hide>1</hide>
-   <pos x="6364.272481" y="13582.931781" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gammacron">
    <hide>1</hide>
-   <pos x="-7908.514683" y="-12745.799131" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Goddard">
    <hide>0</hide>
-   <pos x="-8205.401696" y="12556.726603" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

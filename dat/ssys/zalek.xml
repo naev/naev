@@ -21,23 +21,23 @@
  <jumps>
   <jump target="Damien">
    <hide>0</hide>
-   <pos x="21615.450965" y="-24135.70549" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hideyoshi's Star">
    <hide>1</hide>
-   <pos x="-32383.529252" y="-1032.972953" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qulam">
    <hide>1</hide>
-   <pos x="-22108.423059" y="23684.966325" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seelie">
    <hide>1</hide>
-   <pos x="26936.886972" y="18004.558318" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seiben">
    <hide>0</hide>
-   <pos x="-3062.053571" y="32254.981443" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

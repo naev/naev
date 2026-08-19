@@ -13,17 +13,17 @@
  <jumps>
   <jump target="Kraft">
    <hide>1</hide>
-   <pos x="-820.095925" y="-9966.315401" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-15670">
    <hidden/>
    <hide>1</hide>
-   <pos x="9835.321407" y="-1807.333066" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Penn">
    <hidden/>
    <hide>1</hide>
-   <pos x="-5576.983982" y="8300.436714" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

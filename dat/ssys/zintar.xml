@@ -21,7 +21,7 @@
  <jumps>
   <jump target="Malebolge">
    <hide>1</hide>
-   <pos x="11268.383142" y="-20050.524715" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

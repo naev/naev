@@ -12,19 +12,19 @@
  <jumps>
   <jump target="NGC-2175">
    <hide>1</hide>
-   <pos x="-13165.769289" y="-7187.664363" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-4131">
    <hide>1</hide>
-   <pos x="14154.795371" y="4964.047541" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-5240">
    <hide>1</hide>
-   <pos x="-7231.352145" y="13141.824307" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sleuth">
    <hide>1</hide>
-   <pos x="10462.203052" y="-10749.060762" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

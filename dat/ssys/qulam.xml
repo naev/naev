@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Eiger">
    <hide>1</hide>
-   <pos x="-14992.16182" y="-484.854577" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kohler">
    <hide>1</hide>
-   <pos x="-4750.490393" y="14227.889548" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Za'lek">
    <hide>1</hide>
-   <pos x="12880.960717" y="-7686.406897" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

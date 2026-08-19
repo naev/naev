@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Arcanis">
    <hide>1</hide>
-   <pos x="-4389.256715" y="8985.233747" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zacron">
    <hide>1</hide>
-   <pos x="-8161.861483" y="-5777.89037" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zylex">
    <hide>1</hide>
-   <pos x="5480.605652" y="8364.386509" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

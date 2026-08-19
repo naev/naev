@@ -9,11 +9,11 @@
  <jumps>
   <jump target="Chloe">
    <hide>1</hide>
-   <pos x="-13536.133786" y="3573.944893" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fortitude">
    <hide>1</hide>
-   <pos x="10660.444005" y="9074.961907" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

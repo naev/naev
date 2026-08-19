@@ -17,11 +17,11 @@
  <jumps>
   <jump target="Hatter">
    <hide>0</hide>
-   <pos x="-15805.466607" y="7512.471319" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Point Zero">
    <hide>0</hide>
-   <pos x="17195.694955" y="-3249.319158" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shikima">
    <pos x="-7665.131013" y="-16438.219268"/>

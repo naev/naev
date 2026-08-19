@@ -14,27 +14,27 @@
  <jumps>
   <jump target="Dohriabi">
    <hide>1</hide>
-   <pos x="-18760.733902" y="-9435.828709" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Groombridge">
    <hide>1</hide>
-   <pos x="20346.79839" y="5196.902465" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Nartur">
    <hide>0</hide>
-   <pos x="-9491.873412" y="18732.44082" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pas">
    <hide>1</hide>
-   <pos x="20594.733522" y="-4105.721754" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Uhriabi">
    <hide>1</hide>
-   <pos x="8470.952953" y="19215.695565" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Waterhole">
    <hide>0</hide>
-   <pos x="10976.158877" y="-17903.182295" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

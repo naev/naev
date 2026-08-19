@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Amlet">
    <hide>1</hide>
-   <pos x="-1711.94364" y="13894.93609" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Volus">
    <hide>1</hide>
-   <pos x="1611.099069" y="-13906.989601" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Xavier">
    <hide>1</hide>
-   <pos x="-13905.158985" y="1626.823155" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

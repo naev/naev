@@ -11,15 +11,15 @@
  <jumps>
   <jump target="Ganth">
    <hide>1</hide>
-   <pos x="7491.247578" y="12995.430339" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pultatis">
    <hide>0</hide>
-   <pos x="13173.559437" y="7173.376593" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Regas">
    <hide>0</hide>
-   <pos x="-11617.366562" y="-9488.772004" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

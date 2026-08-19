@@ -17,11 +17,11 @@
  <jumps>
   <jump target="Moor">
    <hide>1</hide>
-   <pos x="1984.385995" y="-14868.161023" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Starlight End">
    <hide>1</hide>
-   <pos x="-10746.599692" y="10464.731007" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

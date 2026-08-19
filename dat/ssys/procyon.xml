@@ -15,19 +15,19 @@
  <jumps>
   <jump target="Copernicus">
    <hide>1</hide>
-   <pos x="-14230.625592" y="14053.088459" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Corinth">
    <hide>1</hide>
-   <pos x="-5708.710605" y="-19167.958243" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Octavian">
    <hide>1</hide>
-   <pos x="-1553.762091" y="19939.554241" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vost">
    <hide>1</hide>
-   <pos x="19879.51278" y="-2192.024548" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

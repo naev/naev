@@ -17,15 +17,15 @@
  <jumps>
   <jump target="C-14">
    <hide>1</hide>
-   <pos x="-13030.901624" y="16468.017575" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="C-59">
    <hide>1</hide>
-   <pos x="20054.182348" y="6231.353812" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hades">
    <hide>1</hide>
-   <pos x="15806.893344" y="-13825.415827" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

@@ -23,16 +23,16 @@
   </jump>
   <jump target="Capricorn">
    <hide>1</hide>
-   <pos x="14992.635445" y="-13237.102492" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Daled">
    <hidden/>
    <hide>1</hide>
-   <pos x="15711.706396" y="12375.066953" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Andres">
    <hide>1</hide>
-   <pos x="-327.481469" y="19997.318717" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="C-59">
    <hide>1</hide>

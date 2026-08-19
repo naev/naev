@@ -12,19 +12,19 @@
  <jumps>
   <jump target="NGC-12261">
    <hide>1</hide>
-   <pos x="11041.249036" y="-10153.364944" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-14676">
    <hide>0.5</hide>
-   <pos x="-2579.528146" y="14776.536622" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-20489">
    <hide>1</hide>
-   <pos x="-14177.358849" y="4899.234232" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Voproid">
    <hide>1</hide>
-   <pos x="-13095.670155" y="-7314.603419" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

@@ -16,15 +16,15 @@
   <jump target="NGC-13674">
    <hidden/>
    <hide>1</hide>
-   <pos x="-8112.757996" y="-8842.124048" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Octavian">
    <hide>1</hide>
-   <pos x="1273.454982" y="11932.238365" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Procyon">
    <hide>1</hide>
-   <pos x="9793.494587" y="-6934.512511" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

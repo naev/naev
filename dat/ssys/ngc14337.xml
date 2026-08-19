@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Euler">
    <hide>1</hide>
-   <pos x="-10523.454197" y="-10689.102476" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-11050">
    <hide>1</hide>
-   <pos x="-960.835599" y="14969.194866" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

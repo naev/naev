@@ -14,23 +14,23 @@
  <jumps>
   <jump target="Babylon">
    <hide>1</hide>
-   <pos x="9309.69579" y="9001.781173" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Khaas">
    <hide>1</hide>
-   <pos x="12898.020261" y="1159.126108" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Muran">
    <hide>1</hide>
-   <pos x="-12468.432182" y="-3498.671019" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Solene">
    <hide>1</hide>
-   <pos x="11698.881605" y="-5553.257529" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wahri">
    <hide>1</hide>
-   <pos x="-12369.059065" y="3835.215487" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

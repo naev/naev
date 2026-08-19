@@ -9,20 +9,20 @@
  <jumps>
   <jump target="Fortitude">
    <hide>1</hide>
-   <pos x="15303.164556" y="8489.001976" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Merisi">
    <hide>1</hide>
-   <pos x="11331.923826" y="-13335.572818" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sikh">
    <hide>1</hide>
-   <pos x="5093.046095" y="16742.487314" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Terminus">
    <hidden/>
    <hide>1</hide>
-   <pos x="-12396.95071" y="-12351.745345" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

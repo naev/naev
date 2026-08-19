@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Alsafi">
    <hide>1</hide>
-   <pos x="-5391.791623" y="8421.910893" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qellan">
    <hide>1</hide>
-   <pos x="-9713.606686" y="-2376.098724" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

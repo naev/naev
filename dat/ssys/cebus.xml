@@ -12,16 +12,16 @@
  <jumps>
   <jump target="Carnis Minor">
    <hide>0.3</hide>
-   <pos x="5674.542911" y="13885.228221" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kruger's Pocket">
    <hidden/>
    <hide>0.3</hide>
-   <pos x="-13060.654984" y="-7376.943226" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ross">
    <hide>1</hide>
-   <pos x="-13206.512732" y="7112.525672" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

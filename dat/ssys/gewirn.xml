@@ -13,19 +13,19 @@
  <jumps>
   <jump target="Jommel">
    <hide>1</hide>
-   <pos x="12981.673234" y="-5241.770695" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Point Zero">
    <hide>1</hide>
-   <pos x="-689.889484" y="-13982.991543" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sarcophagus">
    <hide>1</hide>
-   <pos x="11774.028614" y="7574.447186" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Uridhrion">
    <hide>1</hide>
-   <pos x="3200.689407" y="13629.218147" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

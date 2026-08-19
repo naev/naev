@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Akodu">
    <hide>0</hide>
-   <pos x="19701.945835" y="3439.960798" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Holly">
    <hide>0</hide>
-   <pos x="-15709.7267" y="12377.580013" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tepvin">
    <hide>1</hide>
-   <pos x="-6077.79244" y="-19054.14493" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

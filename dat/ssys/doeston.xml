@@ -14,23 +14,23 @@
  <jumps>
   <jump target="Arandon">
    <hide>1</hide>
-   <pos x="3552.392908" y="13283.185033" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Behar">
    <hide>1</hide>
-   <pos x="-8174.975388" y="11055.870721" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Myad">
    <hide>1</hide>
-   <pos x="5932.73239" y="-12404.240661" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Toros">
    <hide>1</hide>
-   <pos x="12117.764929" y="-6497.866812" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zylex">
    <hide>1</hide>
-   <pos x="-13720.346952" y="902.540589" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

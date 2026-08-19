@@ -15,19 +15,19 @@
  <jumps>
   <jump target="Jade">
    <hide>1</hide>
-   <pos x="13751.52993" y="14522.238965" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Klintus">
    <hide>1</hide>
-   <pos x="-11065.12613" y="16660.221598" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Logania">
    <hide>1</hide>
-   <pos x="13041.977883" y="-15162.678288" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Senara">
    <hide>0.5</hide>
-   <pos x="-18981.880008" y="6299.859629" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

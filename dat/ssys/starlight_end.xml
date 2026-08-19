@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Taxumi">
    <hide>1</hide>
-   <pos x="16771.715195" y="-10895.392117" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Treacle">
    <hide>1</hide>
-   <pos x="-19703.44175" y="-3431.382108" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

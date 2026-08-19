@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Doranthex">
    <hide>1</hide>
-   <pos x="-17392.394664" y="-1937.681041" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Theras">
    <hide>1</hide>
-   <pos x="8739.446181" y="-15161.532918" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

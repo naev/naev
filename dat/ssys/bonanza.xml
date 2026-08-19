@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Hasselt">
    <hide>0</hide>
-   <pos x="6743.24816" y="15278.043207" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Norn">
    <hide>0</hide>
-   <pos x="3121.85423" y="-16405.609594" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sylph">
    <hide>1</hide>
-   <pos x="14153.611412" y="8863.705996" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

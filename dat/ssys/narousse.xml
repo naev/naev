@@ -19,15 +19,15 @@
  <jumps>
   <jump target="Euler">
    <hide>1</hide>
-   <pos x="14498.907173" y="178.019044" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Korma">
    <hide>1</hide>
-   <pos x="-7076.22598" y="-12656.106267" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Toxin">
    <hide>1</hide>
-   <pos x="8191.127609" y="11964.757769" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

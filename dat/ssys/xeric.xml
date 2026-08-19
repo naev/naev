@@ -15,7 +15,7 @@
  <jumps>
   <jump target="Poller">
    <hide>1</hide>
-   <pos x="3713.67126" y="9284.861106" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

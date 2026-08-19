@@ -11,15 +11,15 @@
  <jumps>
   <jump target="Pisces Prime">
    <hide>1</hide>
-   <pos x="-11730.523374" y="-9348.519741" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Possum">
    <hide>1</hide>
-   <pos x="5973.676195" y="-13759.185757" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Starlight End">
    <hide>1</hide>
-   <pos x="14996.951126" y="302.418414" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

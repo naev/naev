@@ -13,15 +13,15 @@
   <jump target="Effetey">
    <hidden/>
    <hide>1</hide>
-   <pos x="1011.305862" y="-14464.690126" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Overture">
    <hide>1</hide>
-   <pos x="-14452.78354" y="-1169.208249" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Poltergeist">
    <hide>1</hide>
-   <pos x="13939.545954" y="3992.375055" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

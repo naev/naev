@@ -19,11 +19,11 @@
  <jumps>
   <jump target="Bonanza">
    <hide>1</hide>
-   <pos x="-22182.91521" y="-9160.691717" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kansas">
    <hide>1</hide>
-   <pos x="3546.056972" y="23736.585262" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

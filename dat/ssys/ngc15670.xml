@@ -14,21 +14,21 @@
   <jump target="Monogram">
    <hidden/>
    <hide>1</hide>
-   <pos x="-413.082299" y="-14994.311021" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-9607">
    <hide>0.4</hide>
-   <pos x="4467.783283" y="14319.179883" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sorrow">
    <hidden/>
    <hide>1</hide>
-   <pos x="-14906.787277" y="1669.638599" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Capella">
    <exitonly/>
    <hide>1</hide>
-   <pos x="-8782.969342" y="12159.747099" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

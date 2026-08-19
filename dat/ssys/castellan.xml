@@ -16,16 +16,16 @@
  <jumps>
   <jump target="Farizel">
    <hide>1</hide>
-   <pos x="-21078.591729" y="-4434.475245" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Maus">
    <hidden/>
    <hide>1</hide>
-   <pos x="17993.136927" y="11841.394491" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sarrii">
    <hide>1</hide>
-   <pos x="-4136.961523" y="-21138.995939" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

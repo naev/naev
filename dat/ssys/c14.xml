@@ -14,11 +14,11 @@
  <jumps>
   <jump target="C-00">
    <hide>1</hide>
-   <pos x="17736.18361" y="7482.666031" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="C-43">
    <hide>1</hide>
-   <pos x="16902.211117" y="-9212.912641" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

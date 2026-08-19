@@ -20,15 +20,15 @@
   </jump>
   <jump target="Khaas">
    <hide>1</hide>
-   <pos x="-15388.89053" y="-584.848897" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mizar">
    <hide>1</hide>
-   <pos x="3375.143643" y="15025.591681" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sergio Vix">
    <hide>0</hide>
-   <pos x="-12023.511726" y="9622.638191" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

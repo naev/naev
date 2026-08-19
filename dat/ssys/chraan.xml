@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Karman">
    <hide>1</hide>
-   <pos x="11872.313692" y="-7419.445234" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Nougat">
    <hide>1</hide>
-   <pos x="4634.200699" y="-13210.760155" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Triap">
    <hide>1</hide>
-   <pos x="-13981.623508" y="-717.080231" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

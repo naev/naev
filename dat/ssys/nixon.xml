@@ -16,7 +16,7 @@
  <jumps>
   <jump target="Neon">
    <hide>1</hide>
-   <pos x="21016.637014" y="6503.91948" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

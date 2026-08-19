@@ -18,11 +18,11 @@
  <jumps>
   <jump target="Ariadus">
    <hide>1</hide>
-   <pos x="1834.417528" y="-14887.407844" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sleuth">
    <hide>1</hide>
-   <pos x="11791.816976" y="9271.086904" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

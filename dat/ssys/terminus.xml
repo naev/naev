@@ -13,11 +13,11 @@
   <jump target="Acheron">
    <hidden/>
    <hide>1</hide>
-   <pos x="22093.198768" y="10589.644383" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Flok">
    <hide>1</hide>
-   <pos x="4003.705009" y="-24170.650512" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -17,7 +17,7 @@
  <jumps>
   <jump target="Hystera">
    <hide>1</hide>
-   <pos x="-14808.079868" y="17598.885492" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -9,15 +9,15 @@
  <jumps>
   <jump target="Capricorn">
    <hide>1</hide>
-   <pos x="8156.161634" y="13473.660504" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fortitude">
    <hide>1</hide>
-   <pos x="-3782.501823" y="-15289.054253" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Rockbed">
    <hide>1</hide>
-   <pos x="15703.738094" y="-1206.279351" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

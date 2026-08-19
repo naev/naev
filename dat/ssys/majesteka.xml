@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Hubfar">
    <hide>1</hide>
-   <pos x="8817.12546" y="-12135.003033" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Poltergeist">
    <hide>1</hide>
-   <pos x="11746.076153" y="9328.970735" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Waterhole">
    <hide>1</hide>
-   <pos x="-14941.743793" y="1320.716627" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -12,7 +12,7 @@
  <jumps>
   <jump target="NGC-5362">
    <hide>1</hide>
-   <pos x="13504.90054" y="6528.220384" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Cebus">
    <hide>1</hide>
-   <pos x="14712.148725" y="-2924.496516" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hakoi">
    <hide>1</hide>
-   <pos x="-7544.345606" y="12964.676986" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

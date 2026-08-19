@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Eye of Night">
    <hide>1</hide>
-   <pos x="-2344.282408" y="-14815.678856" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fidelis">
    <hide>1</hide>
-   <pos x="-12725.085317" y="-7941.801034" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Koit">
    <hide>1</hide>
-   <pos x="-2508.347073" y="14788.786121" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Norpin">
    <pos x="12654.983703" y="7712.116083"/>

@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Arandon">
    <hide>1</hide>
-   <pos x="-2424.029139" y="-11752.620249" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Polaris">
    <hide>1</hide>
-   <pos x="8314.113149" y="8653.064344" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

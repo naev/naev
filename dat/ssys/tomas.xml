@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Garten">
    <hide>1</hide>
-   <pos x="-13864.205121" y="1945.203424" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ruadan">
    <hide>1</hide>
-   <pos x="-8988.695846" y="10733.282208" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Severus">
    <hide>1</hide>
-   <pos x="284.326496" y="13997.112503" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Straight Row">
    <hide>1</hide>
-   <pos x="4550.313847" y="-13239.888363" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

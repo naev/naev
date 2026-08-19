@@ -19,7 +19,7 @@
  <jumps>
   <jump target="Rotide">
    <hide>1</hide>
-   <pos x="-10981.977721" y="-629.416652" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

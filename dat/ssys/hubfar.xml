@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Daravon">
    <hide>1</hide>
-   <pos x="1046.085915" y="-14963.479015" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Majesteka">
    <hide>1</hide>
-   <pos x="-7927.634374" y="12733.915863" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vadornla">
    <hide>1</hide>
-   <pos x="10949.392635" y="10252.35587" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Fidelis">
    <hide>0</hide>
-   <pos x="9433.91959" y="-3316.799835" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Infinity">
    <hide>1</hide>
-   <pos x="-9617.100236" y="-2740.690247" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Maus">
    <hide>0</hide>
-   <pos x="-9307.648282" y="3656.184275" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Slaccid">
    <hide>1</hide>
-   <pos x="4675.158553" y="8839.846859" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Lazuli">
    <hide>1</hide>
-   <pos x="10278.822876" y="10924.550346" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

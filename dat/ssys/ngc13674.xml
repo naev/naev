@@ -14,11 +14,11 @@
   <jump target="Copernicus">
    <hidden/>
    <hide>1</hide>
-   <pos x="13568.983674" y="6393.95668" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-1562">
    <hide>1</hide>
-   <pos x="-14700.553852" y="2982.233461" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

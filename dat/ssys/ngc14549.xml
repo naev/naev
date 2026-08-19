@@ -13,12 +13,12 @@
  <jumps>
   <jump target="Amaroq">
    <hide>1</hide>
-   <pos x="3429.521151" y="14602.684159" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kretogg">
    <hidden/>
    <hide>1</hide>
-   <pos x="-13638.946975" y="-6243.326469" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

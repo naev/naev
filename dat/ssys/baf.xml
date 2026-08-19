@@ -17,15 +17,15 @@
  <jumps>
   <jump target="Felzen">
    <hide>1</hide>
-   <pos x="-8201.882129" y="-18240.864276" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Palin">
    <hide>1</hide>
-   <pos x="-14627.743737" y="13639.248995" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Peter">
    <hide>1</hide>
-   <pos x="19397.929604" y="4870.35184" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

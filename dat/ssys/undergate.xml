@@ -19,7 +19,7 @@
  <jumps>
   <jump target="Toxin">
    <hide>1</hide>
-   <pos x="-2053.100848" y="-21401.747052" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -9,15 +9,15 @@
  <jumps>
   <jump target="NGC-10789">
    <hide>1</hide>
-   <pos x="-3489.364566" y="-9371.463862" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Poller">
    <hide>1</hide>
-   <pos x="-8828.579806" y="4696.4006" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Stelman">
    <hide>1</hide>
-   <pos x="9977.165401" y="675.403992" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

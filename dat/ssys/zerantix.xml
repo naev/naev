@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Arandon">
    <hide>1</hide>
-   <pos x="-14827.884744" y="-9294.290397" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

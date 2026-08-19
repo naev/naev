@@ -20,15 +20,15 @@
  <jumps>
   <jump target="Opal">
    <hide>1</hide>
-   <pos x="-21427.395947" y="20996.826019" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ram">
    <hide>1</hide>
-   <pos x="29430.024208" y="-5820.109543" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Symm">
    <hide>1</hide>
-   <pos x="2193.793054" y="-29919.680346" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

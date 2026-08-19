@@ -10,25 +10,25 @@
  <jumps>
   <jump target="Elixir">
    <hide>1</hide>
-   <pos x="5468.479206" y="16623.649875" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Fury">
    <hide>1</hide>
-   <pos x="-7340.968845" y="15885.848306" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gamel">
    <hide>1</hide>
-   <pos x="-13050.498373" y="-11659.094827" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Halo">
    <hidden/>
    <hide>1</hide>
-   <pos x="14309.413589" y="-10074.25842" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Taiomi">
    <hidden/>
    <hide>1</hide>
-   <pos x="17088.216523" y="3773.970858" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

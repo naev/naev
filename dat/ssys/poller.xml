@@ -14,19 +14,19 @@
  <jumps>
   <jump target="NGC-11231">
    <hide>1</hide>
-   <pos x="-16169.637216" y="7908.402638" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Newmarch">
    <hide>1</hide>
-   <pos x="-9502.955023" y="15287.048302" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Woreck">
    <hide>1</hide>
-   <pos x="16694.269903" y="-6730.627933" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Xeric">
    <hide>1</hide>
-   <pos x="-13271.225012" y="-12160.369511" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

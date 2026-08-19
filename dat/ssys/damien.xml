@@ -15,15 +15,15 @@
  <jumps>
   <jump target="Garten">
    <hide>1</hide>
-   <pos x="-8992.181915" y="-23326.822852" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ruadan">
    <hide>0</hide>
-   <pos x="16549.811975" y="-18737.761968" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Za'lek">
    <hide>0</hide>
-   <pos x="-9378.431809" y="23174.231741" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

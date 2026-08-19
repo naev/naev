@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Seport">
    <hide>1</hide>
-   <pos x="7448.588121" y="-6672.221143" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="South Bell">
    <hide>1</hide>
-   <pos x="-8586.610648" y="5125.438281" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

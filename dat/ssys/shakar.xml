@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Borla">
    <hide>1</hide>
-   <pos x="11944.410685" y="7302.811333" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gamma Polaris">
    <hide>1</hide>
-   <pos x="-8979.605715" y="-10740.888287" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

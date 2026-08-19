@@ -17,11 +17,11 @@
  <jumps>
   <jump target="Adran">
    <hide>1</hide>
-   <pos x="-10282.772402" y="-7953.90418" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Antares">
    <hide>1</hide>
-   <pos x="6686.362356" y="-11148.657247" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

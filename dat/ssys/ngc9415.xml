@@ -9,7 +9,7 @@
  <jumps>
   <jump target="Westhaven">
    <hide>1</hide>
-   <pos x="-2725.573532" y="14750.29657" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

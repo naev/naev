@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Aesria">
    <hide>1</hide>
-   <pos x="12958.766528" y="-1034.586903" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vean">
    <hide>1</hide>
-   <pos x="4693.12863" y="12123.305805" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

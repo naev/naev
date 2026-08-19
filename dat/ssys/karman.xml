@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Chraan">
    <hide>1</hide>
-   <pos x="-22743.772707" y="532.26216" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gyrios">
    <pos x="22915.235409" y="19770.997771"/>
@@ -22,7 +22,7 @@
   </jump>
   <jump target="Nougat">
    <hide>1</hide>
-   <pos x="-14690.009843" y="-17371.416487" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

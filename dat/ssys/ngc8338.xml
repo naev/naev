@@ -9,7 +9,7 @@
  <jumps>
   <jump target="Marat">
    <hide>1</hide>
-   <pos x="-1689.72028" y="14904.524325" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

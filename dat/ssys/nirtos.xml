@@ -14,12 +14,12 @@
  <jumps>
   <jump target="Sagittarius">
    <hide>1</hide>
-   <pos x="-714.716174" y="-14982.963017" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Syndania">
    <hidden/>
    <hide>1</hide>
-   <pos x="-9411.049274" y="11680.417439" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

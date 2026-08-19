@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Santoros">
    <hide>1</hide>
-   <pos x="-18412.020916" y="16163.152099" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vega">
    <hide>1</hide>
-   <pos x="24386.564106" y="2354.886638" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

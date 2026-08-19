@@ -10,11 +10,11 @@
  <jumps>
   <jump target="Aneel Azi">
    <hide>1</hide>
-   <pos x="-5046.633688" y="-8633.162132" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ryder">
    <hide>1</hide>
-   <pos x="9894.68168" y="1447.506283" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

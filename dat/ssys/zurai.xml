@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Sinensis">
    <hide>1</hide>
-   <pos x="1388.484742" y="-11919.400577" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Westhaven">
    <hide>1</hide>
-   <pos x="5996.576416" y="10394.2807" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

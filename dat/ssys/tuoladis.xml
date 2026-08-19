@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Ogat">
    <hide>1</hide>
-   <pos x="-7045.840754" y="-12097.773681" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Surano">
    <hide>1</hide>
-   <pos x="-3698.103296" y="13502.741647" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zacron">
    <hide>1</hide>
-   <pos x="12556.28956" y="6191.897324" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

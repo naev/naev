@@ -9,15 +9,15 @@
  <jumps>
   <jump target="Akra">
    <hide>1</hide>
-   <pos x="2196.58746" y="-7692.529072" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Apik">
    <hide>1</hide>
-   <pos x="-2306.922977" y="7660.163599" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ekta">
    <hide>1</hide>
-   <pos x="-6863.479848" y="-4110.066224" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

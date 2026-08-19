@@ -14,20 +14,20 @@
  <jumps>
   <jump target="Kruger">
    <hide>1</hide>
-   <pos x="-7049.79794" y="12095.468118" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sigur">
    <hidden/>
    <hide>1</hide>
-   <pos x="728.883272" y="13981.013166" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sonas">
    <hide>1</hide>
-   <pos x="12736.460447" y="-5812.277976" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Surano">
    <hide>1</hide>
-   <pos x="-9696.48323" y="-10098.426261" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -14,12 +14,12 @@
  <jumps>
   <jump target="Daravon">
    <hide>1</hide>
-   <pos x="-3155.37596" y="16144.537854" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gold">
    <hidden/>
    <hide>1</hide>
-   <pos x="-16417.122164" y="1039.519047" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Urbanus">
    <pos x="20697.957654" y="8419.727294"/>

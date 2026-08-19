@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Humdrum">
    <hide>1</hide>
-   <pos x="-1435.52117" y="-20950.877761" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tarmak">
    <hide>1</hide>
-   <pos x="19195.663924" y="-8516.248381" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tartan">
    <pos x="10989.715938" y="18520.505154"/>
@@ -25,7 +25,7 @@
   </jump>
   <jump target="Willow">
    <hide>1</hide>
-   <pos x="6654.145173" y="19917.89025" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

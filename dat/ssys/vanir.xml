@@ -17,15 +17,15 @@
  <jumps>
   <jump target="Adraia">
    <hide>0</hide>
-   <pos x="3247.422102" y="-20463.935342" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Aesir">
    <hide>0</hide>
-   <pos x="18731.054935" y="8858.102562" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Botarn">
    <hide>0</hide>
-   <pos x="-9630.465439" y="18345.913316" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Su'nir">
    <exitonly/>

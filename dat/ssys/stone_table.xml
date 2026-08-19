@@ -9,15 +9,15 @@
  <jumps>
   <jump target="Astana">
    <hide>1</hide>
-   <pos x="2917.147578" y="-9565.05358" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seelie">
    <hide>1</hide>
-   <pos x="-9683.966202" y="2494.152878" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sollav">
    <hide>1</hide>
-   <pos x="2650.637898" y="9642.308786" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

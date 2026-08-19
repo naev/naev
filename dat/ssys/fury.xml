@@ -12,12 +12,12 @@
  <jumps>
   <jump target="Bastion">
    <hide>1</hide>
-   <pos x="13414.357964" y="-11238.549746" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="New Haven">
    <hidden/>
    <hide>1</hide>
-   <pos x="-12213.299654" y="12533.367925" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

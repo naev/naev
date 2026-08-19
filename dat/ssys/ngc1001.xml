@@ -9,15 +9,15 @@
  <jumps>
   <jump target="Bedimann">
    <hide>1</hide>
-   <pos x="11323.347872" y="-9837.77378" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-23">
    <hide>1</hide>
-   <pos x="-7122.636073" y="13201.06266" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-2954">
    <hide>1</hide>
-   <pos x="-7092.020519" y="-13217.535509" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

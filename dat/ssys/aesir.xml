@@ -18,7 +18,7 @@
  <jumps>
   <jump target="Vanir">
    <hide>0</hide>
-   <pos x="-18961.107208" y="-17643.310727" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

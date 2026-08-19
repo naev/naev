@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Humdrum">
    <hide>1</hide>
-   <pos x="-23770.584791" y="5933.742384" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-10284">
    <hide>1</hide>
-   <pos x="8817.918135" y="-22858.134651" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tarmak">
    <hide>1</hide>
-   <pos x="10455.196389" y="22157.140349" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

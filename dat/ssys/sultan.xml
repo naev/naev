@@ -17,11 +17,11 @@
  <jumps>
   <jump target="Faust">
    <hide>1</hide>
-   <pos x="16387.952604" y="11980.192378" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="PSO">
    <hide>1</hide>
-   <pos x="-11940.246394" y="16417.080009" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -16,12 +16,12 @@
  <jumps>
   <jump target="Herakin">
    <hide>1</hide>
-   <pos x="3146.995269" y="-9491.913441" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Jackson">
    <hidden/>
    <hide>1</hide>
-   <pos x="-9373.105023" y="-3484.953688" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Su'nir">
    <exitonly/>

@@ -10,11 +10,11 @@
  <jumps>
   <jump target="Firk">
    <hide>1</hide>
-   <pos x="17594.690964" y="-17049.24778" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Terminus">
    <hide>1</hide>
-   <pos x="695.59509" y="24490.123467" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="SW-5">
    <exitonly/>

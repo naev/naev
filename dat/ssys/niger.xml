@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Anarbalis">
    <hide>1</hide>
-   <pos x="13115.686111" y="-16400.572485" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Rhu">
    <hide>1</hide>
-   <pos x="-20642.721324" y="3857.208359" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

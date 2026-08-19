@@ -13,20 +13,20 @@
  <jumps>
   <jump target="Akodu">
    <hide>1</hide>
-   <pos x="-9852.494304" y="1711.243988" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Altair">
    <hide>1</hide>
-   <pos x="3757.01102" y="9267.408925" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Carrza">
    <hide>1</hide>
-   <pos x="9149.781468" y="-4035.033962" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Deneb">
    <hidden/>
    <hide>1</hide>
-   <pos x="8422.233529" y="5391.287635" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

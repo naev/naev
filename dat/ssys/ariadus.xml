@@ -22,11 +22,11 @@
  <jumps>
   <jump target="Amatiri">
    <hide>1</hide>
-   <pos x="4024.972849" y="19590.8038" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tandar">
    <hide>1</hide>
-   <pos x="14325.020774" y="-13956.854223" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

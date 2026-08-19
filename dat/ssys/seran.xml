@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Metsys">
    <hide>1</hide>
-   <pos x="-9315.493095" y="-9067.612055" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="South Bell">
    <hide>1</hide>
-   <pos x="12987.446916" y="571.158981" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -14,12 +14,12 @@
  <jumps>
   <jump target="Booster">
    <hide>1</hide>
-   <pos x="206.926556" y="-10998.053527" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tempus">
    <hidden/>
    <hide>1</hide>
-   <pos x="4109.939287" y="10203.352343" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

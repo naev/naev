@@ -9,11 +9,11 @@
  <jumps>
   <jump target="NGC-2954">
    <hide>1</hide>
-   <pos x="-3746.199646" y="14524.668264" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Urdads">
    <hide>1</hide>
-   <pos x="14755.900048" y="-2695.072124" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -10,15 +10,15 @@
  <jumps>
   <jump target="Altair">
    <hide>1</hide>
-   <pos x="8811.207479" y="-4728.913484" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Eisenhorn">
    <hide>1</hide>
-   <pos x="8348.770019" y="5504.365463" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kenvis">
    <hide>1</hide>
-   <pos x="-8605.922193" y="5092.946416" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

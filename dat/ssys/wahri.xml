@@ -15,15 +15,15 @@
  <jumps>
   <jump target="Diadem">
    <hide>1</hide>
-   <pos x="18788.248104" y="-2828.73349" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Moordra">
    <hide>1</hide>
-   <pos x="-636.667371" y="18989.330021" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Muran">
    <hide>1</hide>
-   <pos x="-10305.623756" y="-15962.271736" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

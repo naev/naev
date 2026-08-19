@@ -17,15 +17,15 @@
   </jump>
   <jump target="Poltergeist">
    <hide>1</hide>
-   <pos x="-14949.917108" y="1224.73607" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Van Maanen">
    <hide>1</hide>
-   <pos x="7243.024701" y="13135.394671" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Virgo">
    <hide>1</hide>
-   <pos x="-9859.510817" y="11304.425966" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

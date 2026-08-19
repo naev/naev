@@ -16,15 +16,15 @@
   </jump>
   <jump target="Draygar">
    <hide>1</hide>
-   <pos x="7243.501647" y="8607.797853" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ianella">
    <hide>1</hide>
-   <pos x="-3812.316169" y="10584.36325" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vadornla">
    <hide>1</hide>
-   <pos x="-10770.889558" y="3248.143795" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

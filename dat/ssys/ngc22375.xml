@@ -12,7 +12,7 @@
  <jumps>
   <jump target="Toxin">
    <hide>1</hide>
-   <pos x="-14988.550531" y="-585.96328" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

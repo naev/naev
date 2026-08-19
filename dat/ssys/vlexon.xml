@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Gremlin">
    <hide>1</hide>
-   <pos x="-23562.755102" y="-15126.023005" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ogat">
    <hide>1</hide>
-   <pos x="17209.828739" y="22086.68818" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -18,16 +18,16 @@
   </jump>
   <jump target="Qex">
    <hide>1</hide>
-   <pos x="-13870.621539" y="-1898.909712" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qorel">
    <hidden/>
    <hide>1</hide>
-   <pos x="-4740.631708" y="-13172.942382" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Teegarden">
    <hide>1</hide>
-   <pos x="8179.070008" y="-11362.341915" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

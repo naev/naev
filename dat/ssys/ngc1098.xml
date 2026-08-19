@@ -10,11 +10,11 @@
  <jumps>
   <jump target="Kretogg">
    <hide>1</hide>
-   <pos x="14999.083403" y="165.822328" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-9017">
    <hide>0.5</hide>
-   <pos x="-375.793949" y="-14995.291891" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

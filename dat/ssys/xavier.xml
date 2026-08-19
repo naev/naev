@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Auger">
    <hide>1</hide>
-   <pos x="-23202.937815" y="9307.184147" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sheffield">
    <hide>1</hide>
-   <pos x="23664.991186" y="8060.284866" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Deneb">
    <hide>1</hide>
-   <pos x="9884.089548" y="-11282.941717" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qellan">
    <hide>1</hide>
-   <pos x="-14999.52297" y="119.62711" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vega">
    <hide>1</hide>
-   <pos x="-7327.663459" y="-13088.366904" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

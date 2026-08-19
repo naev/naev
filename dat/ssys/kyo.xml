@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Druss">
    <hide>0</hide>
-   <pos x="-19999.08" y="-191.830964" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tartan">
    <hide>0</hide>
-   <pos x="16422.150089" y="11415.471363" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

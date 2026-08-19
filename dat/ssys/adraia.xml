@@ -11,15 +11,15 @@
  <jumps>
   <jump target="Gilligan's Tomb">
    <hide>0</hide>
-   <pos x="-10499.653469" y="-14000.259891" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ulysses">
    <hide>1</hide>
-   <pos x="16557.493853" y="5665.632999" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vanir">
    <hide>0</hide>
-   <pos x="-1619.489876" y="17424.903229" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

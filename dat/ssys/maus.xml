@@ -16,20 +16,20 @@
  <jumps>
   <jump target="Awowa">
    <hide>0</hide>
-   <pos x="-19665.116627" y="3048.473066" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Castellan">
    <hidden/>
    <hide>1</hide>
-   <pos x="-18589.145269" y="-7103.075259" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Infinity">
    <hide>1</hide>
-   <pos x="4359.684133" y="-19416.569065" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Millstone">
    <hide>0</hide>
-   <pos x="19834.07465" y="-1618.481619" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -9,11 +9,11 @@
  <jumps>
   <jump target="Armorhead">
    <hide>1</hide>
-   <pos x="5827.87114" y="8126.248702" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Newmarch">
    <hide>1</hide>
-   <pos x="8211.080739" y="-5707.727488" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

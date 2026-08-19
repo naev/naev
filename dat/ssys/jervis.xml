@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Cerberus">
    <hide>1</hide>
-   <pos x="13651.461456" y="-6094.267806" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Symm">
    <pos x="-8117.719796" y="-15496.006601"/>

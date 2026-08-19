@@ -17,15 +17,15 @@
  <jumps>
   <jump target="Aesria">
    <hide>1</hide>
-   <pos x="7210.340561" y="-10817.16178" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Flow">
    <hide>1</hide>
-   <pos x="-5863.897412" y="-11602.357826" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Nava">
    <hide>1</hide>
-   <pos x="-12877.830712" y="1778.054029" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

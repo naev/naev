@@ -9,11 +9,11 @@
  <jumps>
   <jump target="Stelman">
    <hide>1</hide>
-   <pos x="-9950.789135" y="-990.855985" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Straight Row">
    <hide>1</hide>
-   <pos x="9769.450892" y="2134.907317" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

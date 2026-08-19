@@ -20,19 +20,19 @@
  <jumps>
   <jump target="Coriolis">
    <hide>1</hide>
-   <pos x="-1747.486814" y="21428.865808" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Delta Pavonis">
    <hide>1</hide>
-   <pos x="16542.570838" y="-13732.929405" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Eridani">
    <hide>1</hide>
-   <pos x="20276.266021" y="-7150.037499" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sikh">
    <hide>1</hide>
-   <pos x="-21499.103688" y="-196.317568" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

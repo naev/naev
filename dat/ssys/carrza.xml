@@ -15,16 +15,16 @@
   <jump target="Barnard's Star">
    <hidden/>
    <hide>1</hide>
-   <pos x="-4326.113233" y="-14362.616206" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Midoros">
    <hidden/>
    <hide>1</hide>
-   <pos x="14678.381807" y="-3089.515739" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vega">
    <hide>1</hide>
-   <pos x="-7407.08573" y="13043.5839" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

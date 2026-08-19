@@ -15,7 +15,7 @@
  <jumps>
   <jump target="Arcturus">
    <hide>0</hide>
-   <pos x="-18185.963768" y="-8322.903448" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Delta Pavonis">
    <pos x="-15048.5961" y="18165.854336"/>
@@ -23,11 +23,11 @@
   </jump>
   <jump target="Santoros">
    <hide>0</hide>
-   <pos x="13357.532185" y="-14885.440333" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tau Prime">
    <hide>0</hide>
-   <pos x="5833.657204" y="19130.301712" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

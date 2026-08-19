@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Knave">
    <hide>1</hide>
-   <pos x="-16851.956116" y="-10770.866958" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-11718">
    <hide>1</hide>
-   <pos x="-7964.057469" y="18345.947471" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zemur">
    <hide>1</hide>
-   <pos x="19712.681465" y="-3377.897194" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

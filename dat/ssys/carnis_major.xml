@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Carnis Minor">
    <hide>0.3</hide>
-   <pos x="4236.771055" y="-14389.224128" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tau Ceti">
    <hide>1</hide>
-   <pos x="14943.003368" y="-1306.388274" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -13,16 +13,16 @@
  <jumps>
   <jump target="Brimstone">
    <hide>1</hide>
-   <pos x="-4525.126902" y="-11652.1769" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hephaestus">
    <hide>1</hide>
-   <pos x="11114.08548" y="5720.760782" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tormulex">
    <exitonly/>
    <hide>1</hide>
-   <pos x="-6447.276932" y="10708.997159" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

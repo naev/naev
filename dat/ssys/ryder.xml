@@ -13,23 +13,23 @@
  <jumps>
   <jump target="Anger">
    <hide>1</hide>
-   <pos x="-9012.586672" y="-4332.814497" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Arietis">
    <hide>0.5</hide>
-   <pos x="8075.354083" y="5898.190945" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Atlantis">
    <hide>1</hide>
-   <pos x="3038.967898" y="-9527.049601" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hephaestus">
    <hide>1</hide>
-   <pos x="-4047.648076" y="-9144.208278" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seifer">
    <hide>1</hide>
-   <pos x="9636.00354" y="-2673.468865" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

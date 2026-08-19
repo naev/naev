@@ -10,15 +10,15 @@
   <jump target="Alsafi">
    <hidden/>
    <hide>1</hide>
-   <pos x="11442.565032" y="-9698.850729" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Cygni">
    <hide>1</hide>
-   <pos x="12449.166023" y="8367.691756" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pilatis">
    <hide>1</hide>
-   <pos x="-13361.031301" y="-6817.832687" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

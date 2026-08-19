@@ -30,7 +30,7 @@
   </jump>
   <jump target="Oxuram">
    <hide>1</hide>
-   <pos x="-2186.891206" y="14334.137813" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sultan">
    <pos x="17759.666556" y="12174.497603"/>

@@ -12,23 +12,23 @@
  <jumps>
   <jump target="Bedimann">
    <hide>1</hide>
-   <pos x="-5139.77267" y="20361.304891" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gorman">
    <hide>1</hide>
-   <pos x="16082.576602" y="-13503.730218" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-7402">
    <hide>1</hide>
-   <pos x="-18530.205445" y="-9880.864645" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-7784">
    <hide>1</hide>
-   <pos x="-20779.080009" y="3038.064178" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Stained Soul">
    <hide>1</hide>
-   <pos x="-6288.277418" y="-20036.406042" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

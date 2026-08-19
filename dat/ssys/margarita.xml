@@ -15,7 +15,7 @@
  <jumps>
   <jump target="Eiderdown">
    <hide>1</hide>
-   <pos x="-19384.31533" y="10404.245247" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

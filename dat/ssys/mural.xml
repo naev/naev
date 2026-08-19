@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Apez">
    <hide>0</hide>
-   <pos x="-14375.195334" y="-1898.356943" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Arcturus">
    <hide>0</hide>
-   <pos x="7370.291404" y="12487.145574" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Borla">
    <hide>1</hide>
-   <pos x="-9434.273838" y="11011.10699" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Salvador">
    <hide>1</hide>
-   <pos x="6774.838203" y="-12819.967523" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

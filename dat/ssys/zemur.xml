@@ -16,23 +16,23 @@
  <jumps>
   <jump target="Delta Polaris">
    <hide>1</hide>
-   <pos x="-16555.091828" y="-5021.84573" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Paradox">
    <hide>1</hide>
-   <pos x="-15081.899572" y="8475.040135" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sirou">
    <hide>1</hide>
-   <pos x="16824.279595" y="-4029.096188" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wolf">
    <hide>1</hide>
-   <pos x="1620.030246" y="17223.980434" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Yarn">
    <hide>1</hide>
-   <pos x="212.131762" y="-17298.699376" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

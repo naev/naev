@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Slaccid">
    <hide>1</hide>
-   <pos x="11654.902711" y="-18304.459642" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Theras">
    <hide>1</hide>
-   <pos x="4223.488171" y="21285.021673" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Triap">
    <hide>1</hide>
-   <pos x="21553.094171" y="-2520.740293" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

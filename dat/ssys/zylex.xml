@@ -10,11 +10,11 @@
  <jumps>
   <jump target="Doeston">
    <hide>1</hide>
-   <pos x="11470.13576" y="8027.202852" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sonas">
    <hide>1</hide>
-   <pos x="-5273.458464" y="12968.833248" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

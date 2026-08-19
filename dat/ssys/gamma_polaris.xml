@@ -23,23 +23,23 @@
  <jumps>
   <jump target="Apez">
    <hide>0</hide>
-   <pos x="27028.295609" y="13018.11186" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Koralis">
    <hide>0</hide>
-   <pos x="-24362.538736" y="-17506.190513" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Qex">
    <hide>1</hide>
-   <pos x="-7707.505728" y="-28993.005284" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shakar">
    <hide>1</hide>
-   <pos x="7924.511524" y="28934.445166" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sirou">
    <hide>1</hide>
-   <pos x="-26846.268079" y="13389.469377" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

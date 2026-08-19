@@ -15,19 +15,19 @@
  <jumps>
   <jump target="Daan">
    <hide>0</hide>
-   <pos x="-14206.402568" y="10219.008076" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gremlin">
    <hide>0</hide>
-   <pos x="15414.111955" y="-8285.840489" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hubfar">
    <hide>1</hide>
-   <pos x="2176.221806" y="17364.160176" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Perhelion">
    <hide>1</hide>
-   <pos x="3267.098858" y="-17192.32576" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pudas">
    <pos x="-4982.17962" y="-22029.905426"/>

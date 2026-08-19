@@ -15,24 +15,24 @@
   <jump target="Corvus">
    <hidden/>
    <hide>1</hide>
-   <pos x="-17576.855184" y="-3879.969305" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dust">
    <hidden/>
    <hide>1</hide>
-   <pos x="-13921.142826" y="-11410.599564" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Elza">
    <hide>1</hide>
-   <pos x="17359.969798" y="4757.252211" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Symm">
    <hide>1</hide>
-   <pos x="9119.703101" y="15518.731112" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wahri">
    <hide>1</hide>
-   <pos x="-687.729478" y="-17986.857095" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

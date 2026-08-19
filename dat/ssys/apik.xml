@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Leporis">
    <hide>1</hide>
-   <pos x="-17777.580045" y="12959.847518" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mida">
    <hide>1</hide>
-   <pos x="1083.884334" y="-21973.283658" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

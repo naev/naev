@@ -9,20 +9,20 @@
  <jumps>
   <jump target="Alteris">
    <hide>1</hide>
-   <pos x="2835.859422" y="-13709.773934" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dune">
    <hidden/>
    <hide>1</hide>
-   <pos x="13870.116833" y="-1902.592707" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gamel">
    <hide>1</hide>
-   <pos x="8048.311832" y="11455.333982" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Rockbed">
    <hide>1</hide>
-   <pos x="-13400.067214" y="4054.404846" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

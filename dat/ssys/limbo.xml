@@ -20,7 +20,7 @@
   </jump>
   <jump target="Gammacron">
    <hide>1</hide>
-   <pos x="16344.774772" y="6252.866354" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Provectus Nova">
    <pos x="-17492.311376" y="-137.995328"/>

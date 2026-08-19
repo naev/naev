@@ -13,11 +13,11 @@
   <jump target="Antlejos">
    <hidden/>
    <hide>1</hide>
-   <pos x="11706.245206" y="-9378.903089" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-7786">
    <hide>1</hide>
-   <pos x="-9323.48162" y="11750.433629" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

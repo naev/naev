@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Gutter">
    <hide>1</hide>
-   <pos x="-5023.714765" y="9220.210949" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kyo">
    <hide>0</hide>
-   <pos x="-8597.245861" y="-6028.048074" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Modus Manis">
    <pos x="-2205.481924" y="-22789.753623"/>
@@ -25,7 +25,7 @@
   </jump>
   <jump target="Palovi">
    <hide>0</hide>
-   <pos x="9797.992007" y="3774.831468" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

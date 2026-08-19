@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Churchill">
    <hide>1</hide>
-   <pos x="2022.932343" y="15871.601832" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

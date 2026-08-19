@@ -10,20 +10,20 @@
  <jumps>
   <jump target="Rei">
    <hide>1</hide>
-   <pos x="-6855.008509" y="-7280.718256" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seifer">
    <hide>0.8</hide>
-   <pos x="-9859.475917" y="-1670.5492" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sorrow">
    <hide>1</hide>
-   <pos x="6926.869086" y="-7212.384117" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Capella">
    <hidden/>
    <hide>1</hide>
-   <pos x="9999.826039" y="58.984534" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Teller">
    <pos x="2285.001422" y="9594.053625"/>

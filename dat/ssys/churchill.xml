@@ -17,19 +17,19 @@
  <jumps>
   <jump target="Eiderdown">
    <hide>1</hide>
-   <pos x="-8689.714478" y="22907.179273" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Muirat">
    <hide>1</hide>
-   <pos x="23700.694606" y="-6207.018218" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Porro">
    <hide>1</hide>
-   <pos x="-24488.963293" y="-735.307277" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Willow">
    <hide>1</hide>
-   <pos x="-17268.23594" y="-17379.81667" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

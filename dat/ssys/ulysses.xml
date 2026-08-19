@@ -19,15 +19,15 @@
  <jumps>
   <jump target="Adraia">
    <hide>1</hide>
-   <pos x="-14194.163871" y="-11069.133299" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mirror">
    <hide>1</hide>
-   <pos x="7984.443072" y="16132.224546" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Peogas">
    <hide>1</hide>
-   <pos x="16572.465584" y="-7025.1964" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

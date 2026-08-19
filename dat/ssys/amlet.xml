@@ -19,15 +19,15 @@
  <jumps>
   <jump target="Gold">
    <hide>1</hide>
-   <pos x="-6933.375108" y="13301.440132" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sheffield">
    <hide>1</hide>
-   <pos x="4985.444764" y="-14147.273253" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Yetmer-O'rez Highspace">
    <hide>1</hide>
-   <pos x="12754.949524" y="-7893.748325" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Dvaer">
    <hide>1</hide>
-   <pos x="17338.80401" y="4833.826173" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Perhelion">
    <hide>1</hide>
-   <pos x="-17982.980956" y="-782.557285" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

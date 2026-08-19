@@ -12,11 +12,11 @@
  <jumps>
   <jump target="Hadosh">
    <hide>1</hide>
-   <pos x="-14969.552" y="955.25541" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Norn">
    <hide>1</hide>
-   <pos x="13448.901627" y="6642.819055" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

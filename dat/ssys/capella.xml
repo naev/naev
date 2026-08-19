@@ -13,12 +13,12 @@
  <jumps>
   <jump target="NGC-15670">
    <hide>1</hide>
-   <pos x="6161.807897" y="-7098.740975" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Penn">
    <hidden/>
    <hide>1</hide>
-   <pos x="-9399.685284" y="76.919121" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

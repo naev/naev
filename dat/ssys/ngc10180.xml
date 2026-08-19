@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Sinensis">
    <hide>1</hide>
-   <pos x="-12393.517965" y="8449.894226" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-2948">
    <hide>1</hide>
-   <pos x="14779.519623" y="-2562.381643" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-9017">
    <hide>1</hide>
-   <pos x="1862.455987" y="14883.926151" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

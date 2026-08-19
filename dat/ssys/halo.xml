@@ -12,15 +12,15 @@
   <jump target="Bastion">
    <hidden/>
    <hide>1</hide>
-   <pos x="-12679.732388" y="12061.276324" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dune">
    <hide>1</hide>
-   <pos x="-13257.270974" y="-11423.430584" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pilatis">
    <hide>1</hide>
-   <pos x="6836.704406" y="-16109.297714" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

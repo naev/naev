@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Nasona">
    <hide>1</hide>
-   <pos x="-5898.893397" y="-11020.574244" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Proxima Centauri">
    <hide>1</hide>
-   <pos x="10358.730573" y="-6996.191886" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sol">
    <hide>1</hide>
-   <pos x="-4403.760528" y="11698.585094" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

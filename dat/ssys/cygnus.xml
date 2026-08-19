@@ -17,7 +17,7 @@
  <jumps>
   <jump target="Delta Pavonis">
    <hide>1</hide>
-   <pos x="23938.853661" y="5213.567431" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

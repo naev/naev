@@ -19,19 +19,19 @@
  <jumps>
   <jump target="Hadosh">
    <hide>1</hide>
-   <pos x="-3469.818555" y="17866.179199" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Jervis">
    <hide>1</hide>
-   <pos x="18005.925518" y="2650.782192" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Moordra">
    <hide>1</hide>
-   <pos x="-15780.225932" y="-9067.770923" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tandar">
    <hide>1</hide>
-   <pos x="-17286.326909" y="5694.111165" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

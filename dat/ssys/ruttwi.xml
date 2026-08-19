@@ -19,11 +19,11 @@
   </jump>
   <jump target="Quai">
    <hide>1</hide>
-   <pos x="-210.679268" y="-17498.731789" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Rhu">
    <hide>1</hide>
-   <pos x="17363.483703" y="2181.612633" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

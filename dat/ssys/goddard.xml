@@ -18,15 +18,15 @@
  <jumps>
   <jump target="Daan">
    <hide>0</hide>
-   <pos x="17582.863951" y="-11482.286151" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Provectus Nova">
    <hide>0</hide>
-   <pos x="-17401.565396" y="-11755.233802" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Waterhole">
    <hide>0</hide>
-   <pos x="-6120.032402" y="20088.434567" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

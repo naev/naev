@@ -16,19 +16,19 @@
   <jump target="Carrza">
    <hidden/>
    <hide>1</hide>
-   <pos x="-12906.52401" y="-1556.161288" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Metsys">
    <hide>1</hide>
-   <pos x="1574.073337" y="12904.351712" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Oriantis">
    <hide>1</hide>
-   <pos x="-686.171377" y="-12981.878478" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sol">
    <hide>1</hide>
-   <pos x="11302.449745" y="-6422.976704" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

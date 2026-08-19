@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Father's Pride">
    <hide>0</hide>
-   <pos x="-11361.598485" y="1778.786061" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gewirn">
    <hide>1</hide>
-   <pos x="-3893.684063" y="10820.77744" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ivella">
    <hide>1</hide>
-   <pos x="11497.178474" y="254.729523" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Thirty Stars">
    <hide>0</hide>
-   <pos x="3530.168272" y="-10944.766419" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

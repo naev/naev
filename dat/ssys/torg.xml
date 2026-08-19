@@ -16,15 +16,15 @@
  <jumps>
   <jump target="Doranthex">
    <hide>1</hide>
-   <pos x="18378.945678" y="10159.446626" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ekkodu">
    <hide>1</hide>
-   <pos x="647.382789" y="-20990.01895" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ogat">
    <hide>1</hide>
-   <pos x="-20863.708563" y="2388.653379" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

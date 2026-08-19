@@ -9,15 +9,15 @@
  <jumps>
   <jump target="Muirat">
    <hide>1</hide>
-   <pos x="-9652.032934" y="2615.006735" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-12108">
    <hide>1</hide>
-   <pos x="-2325.221648" y="-9725.910974" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Narousse">
    <hide>1</hide>
-   <pos x="9470.481535" y="3210.915678" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -16,16 +16,16 @@
  <jumps>
   <jump target="Copernicus">
    <hide>1</hide>
-   <pos x="-2673.21368" y="-12210.811955" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-7533">
    <hidden/>
    <hide>1</hide>
-   <pos x="-5377.739186" y="11284.056063" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Procyon">
    <hide>1</hide>
-   <pos x="1639.805493" y="-12391.974739" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="SW-11">
    <exitonly/>

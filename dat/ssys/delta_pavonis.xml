@@ -18,11 +18,11 @@
  <jumps>
   <jump target="Alteris">
    <hide>1</hide>
-   <pos x="-14416.07664" y="12756.928873" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Cygnus">
    <hide>1</hide>
-   <pos x="-18392.477366" y="-5681.485397" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Holly">
    <pos x="-19769.799504" y="-17426.266415"/>

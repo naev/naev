@@ -9,19 +9,19 @@
  <jumps>
   <jump target="Dendria">
    <hide>1</hide>
-   <pos x="-14712.707265" y="2921.685288" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Dohriabi">
    <hide>1</hide>
-   <pos x="7281.912626" y="13113.876181" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ganth">
    <hide>1</hide>
-   <pos x="-12310.573521" y="-8570.284684" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Regulus">
    <hide>1</hide>
-   <pos x="14614.561242" y="-3378.549938" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

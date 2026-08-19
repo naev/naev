@@ -21,11 +21,11 @@
   </jump>
   <jump target="Karman">
    <hide>1</hide>
-   <pos x="-5086.487229" y="-20632.259877" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shickhaw">
    <hide>1</hide>
-   <pos x="-15891.733989" y="14107.277937" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

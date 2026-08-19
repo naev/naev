@@ -13,21 +13,21 @@
  <jumps>
   <jump target="Doowa">
    <hide>1</hide>
-   <pos x="-10449.743942" y="22159.712352" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Eneguoz">
    <hidden/>
    <hide>1</hide>
-   <pos x="-2624.826324" y="24358.987802" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Trask">
    <hide>1</hide>
-   <pos x="-7020.790466" y="-23472.505218" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Uhriabi">
    <hidden/>
    <hide>1</hide>
-   <pos x="-17034.1666" y="-17609.292098" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

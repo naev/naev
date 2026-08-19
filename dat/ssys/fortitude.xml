@@ -15,19 +15,19 @@
  <jumps>
   <jump target="Acheron">
    <hide>1</hide>
-   <pos x="10784.540009" y="-20031.380301" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Hades">
    <hide>1</hide>
-   <pos x="-9858.261636" y="20503.101655" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Polack">
    <hide>1</hide>
-   <pos x="-19608.861606" y="-11534.948915" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pontus">
    <hide>1</hide>
-   <pos x="5004.075332" y="22192.8306" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

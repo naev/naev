@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Armorhead">
    <hide>1</hide>
-   <pos x="-15485.585676" y="668.308513" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vauban">
    <hide>1</hide>
-   <pos x="3338.823266" y="-15136.124312" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Za'lek">
    <hide>1</hide>
-   <pos x="15177.316213" y="3146.279159" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

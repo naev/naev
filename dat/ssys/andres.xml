@@ -9,11 +9,11 @@
  <jumps>
   <jump target="Forlat">
    <hide>1</hide>
-   <pos x="22484.367872" y="838.571038" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kelvos">
    <hide>1</hide>
-   <pos x="-22181.509398" y="3772.352158" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Mason">
    <hide>1</hide>

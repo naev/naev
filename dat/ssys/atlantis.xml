@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Pike">
    <hide>1</hide>
-   <pos x="12231.633631" y="-7786.985212" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ryder">
    <hide>1</hide>
-   <pos x="-5128.55451" y="13562.740454" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shickhaw">
    <hide>1</hide>
-   <pos x="-8836.279818" y="-11496.528126" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

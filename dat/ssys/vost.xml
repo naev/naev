@@ -15,15 +15,15 @@
  <jumps>
   <jump target="Olympus">
    <hide>1</hide>
-   <pos x="7446.199337" y="16266.721102" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Procyon">
    <hide>1</hide>
-   <pos x="-13069.348099" y="12216.555989" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Regas">
    <hide>1</hide>
-   <pos x="6249.547351" y="-16762.913168" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -20,15 +20,15 @@
   <jump target="Moordra">
    <hidden/>
    <hide>1</hide>
-   <pos x="21356.559695" y="-5281.794956" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-3371">
    <hide>1</hide>
-   <pos x="-19383.937469" y="10404.949216" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tandar">
    <hide>1</hide>
-   <pos x="16112.737264" y="14979.30899" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <stats>

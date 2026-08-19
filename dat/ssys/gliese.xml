@@ -21,11 +21,11 @@
   <jump target="Behar">
    <exitonly/>
    <hide>1</hide>
-   <pos x="-9545.570593" y="-5466.450589" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gliese Minor">
    <hide>0.3</hide>
-   <pos x="8192.159899" y="7340.879796" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

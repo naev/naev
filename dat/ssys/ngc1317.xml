@@ -11,15 +11,15 @@
  <jumps>
   <jump target="NGC-10907">
    <hide>0.5</hide>
-   <pos x="5438.174545" y="-13979.494182" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-12654">
    <hide>1</hide>
-   <pos x="-14998.394835" y="-219.436422" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Stelman">
    <hide>1</hide>
-   <pos x="-1322.97586" y="14941.543925" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

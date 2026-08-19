@@ -11,19 +11,19 @@
  <jumps>
   <jump target="Antlejos">
    <hide>1</hide>
-   <pos x="-1601.595452" y="-9870.911407" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Brumerebus">
    <hide>1</hide>
-   <pos x="-2620.763771" y="9650.471348" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Delta Polaris">
    <hide>1</hide>
-   <pos x="9244.720699" y="-3812.497761" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Paradox">
    <hide>1</hide>
-   <pos x="9422.759593" y="3348.372983" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

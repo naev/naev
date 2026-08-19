@@ -15,7 +15,7 @@
  <jumps>
   <jump target="Percival">
    <hide>1</hide>
-   <pos x="59.088401" y="9999.825426" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

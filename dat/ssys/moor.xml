@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Longbow">
    <hide>1</hide>
-   <pos x="18244.95308" y="8192.782622" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Possum">
    <hide>1</hide>
-   <pos x="-19974.444732" y="1010.721339" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Stint">
    <hide>1</hide>
-   <pos x="1083.432184" y="-19970.632806" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Taxumi">
    <hide>1</hide>
-   <pos x="-9275.248489" y="17719.192009" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

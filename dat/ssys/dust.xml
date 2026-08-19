@@ -11,12 +11,12 @@
  <jumps>
   <jump target="Forlat">
    <hide>1</hide>
-   <pos x="-4332.981481" y="-24113.798362" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Moordra">
    <hidden/>
    <hide>1</hide>
-   <pos x="12120.517566" y="21291.854168" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

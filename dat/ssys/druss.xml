@@ -17,19 +17,19 @@
  <jumps>
   <jump target="Eye of Night">
    <hide>0</hide>
-   <pos x="-17012.54547" y="4101.621216" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kyo">
    <hide>0</hide>
-   <pos x="17498.996427" y="-187.414097" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ruttwi">
    <hide>1</hide>
-   <pos x="-9097.6733" y="-14949.325754" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Scarlet">
    <hide>1</hide>
-   <pos x="-948.064833" y="17474.300359" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <waypoints>

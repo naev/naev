@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Malebolge">
    <hide>1</hide>
-   <pos x="15754.9867" y="-2789.335775" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sleuth">
    <hide>1</hide>
-   <pos x="-13097.253989" y="9190.317618" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

@@ -13,7 +13,7 @@
  <jumps>
   <jump target="Lapis">
    <hide>1</hide>
-   <pos x="-9236.069507" y="18859.87858" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-127">
    <pos x="-8536.493386" y="-18858.743263"/>
@@ -21,7 +21,7 @@
   </jump>
   <jump target="NGC-13564">
    <hide>1</hide>
-   <pos x="18015.691699" y="-10790.498254" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Diadem">
    <hide>1</hide>
-   <pos x="-4300.575459" y="-20554.92765" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Elza">
    <pos x="-12538.005014" y="12538.051507"/>

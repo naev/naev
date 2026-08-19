@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Herculis">
    <hide>1</hide>
-   <pos x="15625.039452" y="-10810.094453" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Moor">
    <hide>1</hide>
-   <pos x="-16201.515204" y="-9925.265995" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

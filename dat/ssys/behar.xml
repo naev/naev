@@ -14,20 +14,20 @@
  <jumps>
   <jump target="Doeston">
    <hide>1</hide>
-   <pos x="6442.03215" y="-12429.811815" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gliese">
    <hidden/>
    <hide>1</hide>
-   <pos x="13420.611955" y="3985.871891" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Iris">
    <hide>1</hide>
-   <pos x="2712.411125" y="13734.730644" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sigur">
    <hide>1</hide>
-   <pos x="-13684.853588" y="2953.774239" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

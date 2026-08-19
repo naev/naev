@@ -9,16 +9,16 @@
  <jumps>
   <jump target="Acheron">
    <hide>1</hide>
-   <pos x="-6288.785605" y="-14440.002618" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Alteris">
    <hide>1</hide>
-   <pos x="11940.505525" y="-10270.678058" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Rockbed">
    <hidden/>
    <hide>1</hide>
-   <pos x="7240.058056" y="13987.282056" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

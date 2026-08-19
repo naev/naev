@@ -16,20 +16,20 @@
  <jumps>
   <jump target="Barnard's Star">
    <hide>1</hide>
-   <pos x="14874.298633" y="1937.844201" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Carnis Major">
    <hidden/>
    <hide>1</hide>
-   <pos x="-12530.703825" y="-8245.08712" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ophiuchi">
    <hide>1</hide>
-   <pos x="8174.973787" y="-12576.557699" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Tepvin">
    <hide>1</hide>
-   <pos x="-13967.618747" y="5468.603708" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

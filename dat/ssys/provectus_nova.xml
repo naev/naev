@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Goddard">
    <hide>0</hide>
-   <pos x="13439.39598" y="3922.07033" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Limbo">
    <hide>1</hide>
-   <pos x="101.483524" y="-13999.632177" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pultatis">
    <hide>0</hide>
-   <pos x="-11527.634067" y="-7944.410161" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

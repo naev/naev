@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Ogat">
    <hide>1</hide>
-   <pos x="6114.546499" y="34461.751567" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Verex">
    <hide>1</hide>
-   <pos x="34871.686618" y="-2994.23987" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

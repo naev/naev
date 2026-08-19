@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Doeston">
    <hide>1</hide>
-   <pos x="4279.66226" y="-13329.834617" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Nasona">
    <hide>1</hide>
-   <pos x="8470.679296" y="11146.640401" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Zerantix">
    <hide>1</hide>
-   <pos x="13999.350668" y="-134.83643" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

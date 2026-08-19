@@ -15,7 +15,7 @@
  <jumps>
   <jump target="Castellan">
    <hide>1</hide>
-   <pos x="19851.136061" y="865.619478" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Ksher">
    <pos x="-25620.297507" y="-11619.89495"/>
@@ -24,11 +24,11 @@
   </jump>
   <jump target="Radix">
    <hide>1</hide>
-   <pos x="-16063.37637" y="11695.505102" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sarrii">
    <hide>1</hide>
-   <pos x="17727.226775" y="-8975.652112" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

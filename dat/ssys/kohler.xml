@@ -16,7 +16,7 @@
   </jump>
   <jump target="Qulam">
    <hide>1</hide>
-   <pos x="7482.352893" y="-18547.625054" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

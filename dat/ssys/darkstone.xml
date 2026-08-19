@@ -17,11 +17,11 @@
  <jumps>
   <jump target="Beeklo">
    <hide>0</hide>
-   <pos x="-16565.019151" y="-18051.319633" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Verex">
    <hide>0</hide>
-   <pos x="19417.823802" y="14939.816557" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

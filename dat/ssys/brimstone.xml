@@ -23,19 +23,19 @@
   </jump>
   <jump target="Aneel Azi">
    <hide>1</hide>
-   <pos x="6407.2547" y="16284.872956" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gilligan's Light">
    <hide>1</hide>
-   <pos x="-17499.943415" y="-44.50248" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Shickhaw">
    <hide>1</hide>
-   <pos x="16828.860171" y="4799.944306" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Triap">
    <hide>1</hide>
-   <pos x="-9462.664609" y="-14721.004669" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

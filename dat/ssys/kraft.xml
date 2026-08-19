@@ -18,15 +18,15 @@
  <jumps>
   <jump target="Monogram">
    <hide>0</hide>
-   <pos x="21767.316954" y="-3191.224311" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Neon">
    <hide>1</hide>
-   <pos x="-20147.102736" y="-8837.095186" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sorrow">
    <hide>0</hide>
-   <pos x="-3944.988093" y="21643.407054" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

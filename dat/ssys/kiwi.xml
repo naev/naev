@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Monogram">
    <hide>1</hide>
-   <pos x="7066.996785" y="12085.427441" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Neon">
    <hide>1</hide>
-   <pos x="-13676.761882" y="2991.017287" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Pellmell">
    <hide>1</hide>
-   <pos x="-10432.525454" y="-9336.081225" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

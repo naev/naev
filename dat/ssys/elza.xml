@@ -19,11 +19,11 @@
   </jump>
   <jump target="Moordra">
    <hide>1</hide>
-   <pos x="-14803.768321" y="-2418.355534" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Sergio Vix">
    <hide>1</hide>
-   <pos x="14302.640102" y="-4520.451978" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

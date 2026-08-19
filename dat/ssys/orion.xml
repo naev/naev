@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Bedimann">
    <hide>1</hide>
-   <pos x="9058.528658" y="-17830.957869" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Corinth">
    <hide>1</hide>
-   <pos x="19925.112571" y="-1729.129555" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

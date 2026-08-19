@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Altair">
    <hide>1</hide>
-   <pos x="-11997.544797" y="9003.272672" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vega">
    <hide>1</hide>
-   <pos x="-11925.007961" y="-9099.131009" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

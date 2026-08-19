@@ -12,16 +12,16 @@
  <jumps>
   <jump target="Duros">
    <hide>1</hide>
-   <pos x="9246.512063" y="-17734.204652" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gyrios">
    <exitonly/>
    <hide>1</hide>
-   <pos x="-15786.639071" y="12279.333321" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Jackson">
    <hide>1</hide>
-   <pos x="19935.239947" y="-1608.169222" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

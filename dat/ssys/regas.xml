@@ -14,15 +14,15 @@
  <jumps>
   <jump target="Hargen">
    <hide>0</hide>
-   <pos x="11540.154407" y="14306.851409" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Seiben">
    <hide>0</hide>
-   <pos x="-1072.388278" y="-18349.690579" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Vost">
    <hide>1</hide>
-   <pos x="-6100.365335" y="17339.166755" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <tags>

@@ -13,19 +13,19 @@
  <jumps>
   <jump target="Klintus">
    <hide>1</hide>
-   <pos x="6595.47771" y="13472.181477" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Kobopos">
    <hide>0.5</hide>
-   <pos x="13600.62251" y="-6326.37869" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-1292">
    <hide>1</hide>
-   <pos x="6644.298721" y="-13448.170674" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="NGC-1872">
    <hide>1</hide>
-   <pos x="-14329.944771" y="4433.134653" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

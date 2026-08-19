@@ -13,15 +13,15 @@
  <jumps>
   <jump target="An'ku">
    <hide>1</hide>
-   <pos x="18968.91719" y="-9010.004473" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Anarbalis">
    <hide>1</hide>
-   <pos x="-17316.577825" y="-11880.072912" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Modus Manis">
    <hide>1</hide>
-   <pos x="8895.295223" y="19022.978812" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
  <asteroids>

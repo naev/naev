@@ -11,15 +11,15 @@
  <jumps>
   <jump target="An'ku">
    <hide>1</hide>
-   <pos x="-4263.900232" y="-13334.884881" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Gilligan's Memory">
    <hide>1</hide>
-   <pos x="12986.685276" y="5229.34083" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Modus Manis">
    <hide>1</hide>
-   <pos x="-12567.437613" y="6169.239162" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>

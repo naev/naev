@@ -9,15 +9,15 @@
  <jumps>
   <jump target="Overture">
    <hide>1</hide>
-   <pos x="-14513.787683" y="-3788.13504" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Uhriabi">
    <hide>1</hide>
-   <pos x="-9743.085648" y="11404.923588" was_auto="true"/>
+   <autopos/>
   </jump>
   <jump target="Wunomi">
    <hide>1</hide>
-   <pos x="8711.586411" y="12210.989402" was_auto="true"/>
+   <autopos/>
   </jump>
  </jumps>
 </ssys>
