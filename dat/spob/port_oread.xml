@@ -1,0 +1,33 @@
+<spob name="Port Oread">
+ <lua>lawless.lua</lua>
+ <pos x="-3522.579074" y="-10877.478022"/>
+ <GFX>
+  <space>001.avif</space>
+  <exterior>station01.avif</exterior>
+ </GFX>
+ <presence>
+  <faction>Free Trader</faction>
+  <base>12.000000</base>
+  <bonus>6.000000</bonus>
+  <range>8</range>
+ </presence>
+ <general>
+  <class>900</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <blackmarket/>
+   <nolanes/>
+  </services>
+  <description>Port Oread is a stopover point for scoundrels, free traders, and game hunters travelling around Soromid space. The station is very small and compact, barely accommodating the number of visitors in peak hunting season.</description>
+  <bar>The Jayock Tavern is decorated with holo-painting of strange, mythical creatures from many different planets. Some seem to exist in the holo-archives, such as the Vadornia Jellywhale, however, the ferocious Cunjo does not seem to appear in any public database.</bar>
+ </general>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
+</spob>
