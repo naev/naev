@@ -13,6 +13,7 @@ mod bioship;
 mod data;
 mod generated;
 mod i18n;
+mod run;
 
 #[derive(Parser)]
 #[command(about, long_about = None)]
@@ -34,20 +35,24 @@ enum Command {
    Pot,
    /// Bring every translation catalogue up to date with the template.
    UpdatePo,
+   /// Build and run the game out of the source tree.
+   Run(run::RunArgs),
+   /// Build and run the game under valgrind.
+   Valgrind(run::ValgrindArgs),
 }
 
 fn main() -> Result<()> {
    let cli = Cli::parse();
    let root = repo_root()?;
-   let data_dir = match cli.data_dir {
-      Some(dir) => dir,
-      None => target_dir(&root)?.join("dat"),
-   };
+   let target = target_dir(&root)?;
+   let data_dir = cli.data_dir.unwrap_or_else(|| target.join("dat"));
 
    match cli.command {
       Command::Data => data::generate(&root, &data_dir),
       Command::Pot => i18n::pot(&root, &data_dir),
       Command::UpdatePo => i18n::update_po(&root, &data_dir),
+      Command::Run(args) => run::run(&root, &target, &data_dir, &args),
+      Command::Valgrind(args) => run::valgrind(&root, &target, &data_dir, &args),
    }
 }
 

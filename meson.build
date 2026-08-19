@@ -303,26 +303,6 @@ if buildExec.disabled() == false
       priority: 1,
    )
 
-   naevpy_config = {
-      'build_root': meson.current_build_dir(),
-      'source_root': meson.project_source_root(),
-      'naev_bin' : naev_bin.full_path(),
-      'debug' : debug.to_string(),
-      'debug_paranoid' : paranoid.to_string(),
-   }
-
-   naev_py = configure_file(
-      input: join_paths('utils','build','naev.py'),
-      output: 'naev.py',
-      configuration: naevpy_config,
-   )
-
-   naev_valgrind_py = configure_file(
-      input: join_paths('utils','build','naev_valgrind.py'),
-      output: 'naev_valgrind.py',
-      configuration: naevpy_config,
-   )
-
    #pluginmgr_cli_py = configure_file(
    #   input: join_paths('utils','build','pluginmgr-cli.py'),
    #   output: 'pluginmgr-cli.py',
@@ -330,23 +310,6 @@ if buildExec.disabled() == false
    #      'pluginmgr_cli_bin' : meson.project_build_root() / 'src' / target_triplet / rust_artifact_dir / 'pluginmgr-cli',
    #   }
    #)
-
-   gdbinit = configure_file(
-      input: join_paths('utils','build','gdbinit.in'),
-      output: '.gdbinit',
-      configuration: {
-         'source_root': meson.project_source_root(),
-         'build_root': meson.current_build_dir(),
-      }
-   )
-
-   lldbinit = configure_file(
-      input: join_paths('utils','build','lldbinit.py.in'),
-      output: 'lldbinit.py',
-      configuration: {
-         'source_root': meson.project_source_root(),
-      }
-   )
 
    if host_machine.system() not in ['windows', 'darwin']
       install_data(

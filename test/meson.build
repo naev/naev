@@ -1,11 +1,14 @@
 test('main_menu',
    find_program(files('watch-for-msg.py')),
    args: [
-      naev_py,
+      naev_bin,
+      '-d', meson.project_build_root() / 'dat',
+      '-d', meson.project_source_root() / 'dat',
+      '-d', meson.project_source_root() / 'assets',
+      '-d', meson.project_source_root(),
       '--exitmainmenu',
       'Reached main menu'
    ],
-   env: ['WITHGDB=NO'],
    workdir: meson.project_source_root(),
    protocol: 'exitcode',
    timeout: 90,

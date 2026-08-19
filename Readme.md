@@ -135,9 +135,8 @@ Run:
 
 ``` bash
 meson setup builddir .
-cd builddir
-meson compile
-./naev.py
+meson compile -C builddir
+cargo xtask run
 ```
 
 If you need special settings you can run `meson configure` in your build
@@ -173,11 +172,12 @@ Check out the compilation page in our
 
 ### 4.3  Running Naev
 
-You can run Naev directly from the git repository using the `naev.py`
-script which will be generated in the build directory. This script will
-automatically set up all the data paths for running Naev. Make sure the
-art assets are checked out and up to date as mentioned in the Updating Art
-Assets section below.
+You can run Naev directly from the git repository with `cargo xtask run`,
+which builds the game and sets up all the data paths. It runs the game
+under gdb or lldb if either is installed; pass `--debugger none` for
+neither. The derived data has to exist first, so run `cargo xtask data` if
+you have not built through meson. Make sure the art assets are checked out
+and up to date as mentioned in the Updating Art Assets section below.
 
 ### 4.4  Installation
 
