@@ -2,25 +2,22 @@
  <general>
   <radius>6666.666666</radius>
   <spacedust>300</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
  </general>
  <pos x="480.502799" y="-522.186201"/>
  <spobs/>
  <jumps>
   <jump target="Monogram">
    <autopos/>
-   <hide>1</hide>
-   <tags/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Suna">
    <autopos/>
-   <hide>1</hide>
-   <tags/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Vanir">
    <autopos/>
-   <hide>1</hide>
-   <tags/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

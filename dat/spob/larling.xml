@@ -1,19 +1,19 @@
 <spob name="Larling">
- <pos x="-8635.180208" y="-738.6899"/>
+ <pos x="-8635.180208" y="-738.689900"/>
  <GFX>
   <space>K00</space>
   <exterior>desertic3</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>K</class>
   <population>2e+07</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

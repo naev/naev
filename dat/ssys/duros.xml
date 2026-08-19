@@ -1,8 +1,8 @@
 <ssys name="Duros">
  <general>
-  <radius>18000</radius>
+  <radius>18000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
  </general>
  <pos x="310.418815" y="-699.189732"/>
  <spobs>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Fulcrum">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Jackson">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Palovi">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

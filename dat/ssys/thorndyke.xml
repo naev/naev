@@ -1,15 +1,15 @@
 <ssys name="Thorndyke">
  <general>
-  <radius>12950</radius>
+  <radius>12950.000000</radius>
   <spacedust>400</spacedust>
-  <interference>6.81818</interference>
+  <interference>6.818180</interference>
  </general>
  <pos x="-210.739279" y="667.972107"/>
  <spobs/>
  <jumps>
   <jump target="Shikima">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

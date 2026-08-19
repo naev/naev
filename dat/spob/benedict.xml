@@ -1,19 +1,19 @@
 <spob name="Benedict">
- <pos x="-5103.999494" y="5064.66371"/>
+ <pos x="-5103.999494" y="5064.663710"/>
  <GFX>
   <space>J07</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>25</base>
-  <bonus>10</bonus>
+  <base>25.000000</base>
+  <bonus>10.000000</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>J</class>
   <population>215000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

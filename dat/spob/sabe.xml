@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <base>110</base>
-  <bonus>10</bonus>
+  <base>110.000000</base>
+  <bonus>10.000000</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+07</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

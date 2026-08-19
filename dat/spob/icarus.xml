@@ -1,19 +1,19 @@
 <spob name="Icarus">
- <pos x="-3924.48349" y="-823.244876"/>
+ <pos x="-3924.483490" y="-823.244876"/>
  <GFX>
   <space>A04</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>1.3333334</base>
-  <bonus>0.6666666</bonus>
+  <base>1.333333</base>
+  <bonus>0.666667</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>A</class>
   <population>1000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

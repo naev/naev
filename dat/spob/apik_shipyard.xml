@@ -1,19 +1,19 @@
 <spob name="Apik Shipyard">
- <pos x="2696.615995" y="8147.91381"/>
+ <pos x="2696.615995" y="8147.913810"/>
  <GFX>
   <space>station-shipyard</space>
   <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>30</base>
-  <bonus>10</bonus>
+  <base>30.000000</base>
+  <bonus>10.000000</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>3000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

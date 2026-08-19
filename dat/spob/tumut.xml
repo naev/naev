@@ -1,19 +1,19 @@
 <spob name="Tumut">
- <pos x="1040.50209" y="3994.316659"/>
+ <pos x="1040.502090" y="3994.316659"/>
  <GFX>
   <space>A04</space>
   <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>10</base>
-  <bonus>5</bonus>
+  <base>10.000000</base>
+  <bonus>5.000000</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>A</class>
   <population>50000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

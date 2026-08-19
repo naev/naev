@@ -1,19 +1,19 @@
 <spob name="Omar">
- <pos x="-1300.39917" y="1523.616212"/>
+ <pos x="-1300.399170" y="1523.616212"/>
  <GFX>
   <space>Y00</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>K</class>
   <population>2.14554e+06</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

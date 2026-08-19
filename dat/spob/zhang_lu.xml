@@ -1,19 +1,19 @@
 <spob name="Zhang Lu">
- <pos x="2249.22636" y="15583.911695"/>
+ <pos x="2249.226360" y="15583.911695"/>
  <GFX>
   <space>Y00</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>Y</class>
   <population>500000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

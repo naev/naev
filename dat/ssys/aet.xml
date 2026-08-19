@@ -1,9 +1,9 @@
 <ssys name="Aet">
  <general>
-  <radius>10000</radius>
+  <radius>10000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>25</interference>
-  <nebula volatility="4.8" hue="270">500</nebula>
+  <interference>25.000000</interference>
+  <nebula volatility="4.800000" hue="270.000000">500.000000</nebula>
   <nolanes/>
  </general>
  <pos x="198.130026" y="144.016375"/>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Seport">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="South Bell">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

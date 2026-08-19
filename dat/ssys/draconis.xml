@@ -1,8 +1,8 @@
 <ssys name="Draconis">
  <general>
-  <radius>31500</radius>
+  <radius>31500.000000</radius>
   <spacedust>600</spacedust>
-  <interference>10</interference>
+  <interference>10.000000</interference>
  </general>
  <pos x="-399.149303" y="285.082783"/>
  <spobs>
@@ -17,17 +17,17 @@
  </spobs>
  <jumps>
   <jump target="Eridani">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Pilatis">
-   <hide>0</hide>
    <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Tau Prime">
-   <hide>0</hide>
    <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
  <tags>

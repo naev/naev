@@ -1,22 +1,22 @@
 <ssys name="Elixir">
  <general>
-  <radius>15750</radius>
+  <radius>15750.000000</radius>
   <spacedust>120</spacedust>
-  <interference>13.2353</interference>
+  <interference>13.235300</interference>
   <nolanes/>
  </general>
- <pos x="-510.838801" y="547.58464"/>
+ <pos x="-510.838801" y="547.584640"/>
  <spobs>
   <spob>Elixir I</spob>
  </spobs>
  <jumps>
   <jump target="Bastion">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Titus">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

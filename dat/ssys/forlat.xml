@@ -1,28 +1,28 @@
 <ssys name="Forlat">
  <general>
-  <radius>12000</radius>
+  <radius>12000.000000</radius>
   <spacedust>400</spacedust>
   <interference>24.999975</interference>
  </general>
- <pos x="-722.51271" y="710.796117"/>
+ <pos x="-722.512710" y="710.796117"/>
  <spobs/>
  <jumps>
   <jump target="Andres">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Dust">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Muran">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="New Haven">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

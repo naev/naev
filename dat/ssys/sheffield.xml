@@ -3,9 +3,9 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>14000</radius>
+  <radius>14000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>30</interference>
+  <interference>30.000000</interference>
  </general>
  <pos x="-726.534609" y="-940.605102"/>
  <spobs>
@@ -13,20 +13,20 @@
  </spobs>
  <jumps>
   <jump target="Amlet">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Volus">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Xavier">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
  <tags>
   <tag>southstellarwind</tag>

@@ -1,6 +1,6 @@
 <ssys name="Tau Prime">
  <general>
-  <radius>24500</radius>
+  <radius>24500.000000</radius>
   <spacedust>600</spacedust>
   <interference>6.818175</interference>
  </general>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Draconis">
-   <hide>0</hide>
    <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Holly">
-   <hide>0</hide>
    <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Kenvis">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

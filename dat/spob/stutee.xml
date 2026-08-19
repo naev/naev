@@ -1,20 +1,20 @@
 <spob name="Stutee">
  <lua>lowclass.lua</lua>
- <pos x="-7602.93488" y="-12491.448322"/>
+ <pos x="-7602.934880" y="-12491.448322"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>7e+06</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

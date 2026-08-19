@@ -1,8 +1,8 @@
 <ssys name="NGC-10180">
  <general>
-  <radius>15000</radius>
+  <radius>15000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
   <nolanes/>
  </general>
  <pos x="-885.581326" y="-1477.506701"/>
@@ -12,17 +12,17 @@
   <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Sinensis">
-   <hide>1</hide>
-   <autopos/>
-  </jump>
   <jump target="NGC-2948">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="NGC-9017">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Sinensis">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

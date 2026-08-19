@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Wild Ones</faction>
-  <base>4</base>
-  <bonus>2</bonus>
+  <base>4.000000</base>
+  <bonus>2.000000</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>Construct</class>
   <population>0</population>
-  <hide>0.6</hide>
+  <hide>0.600000</hide>
   <services/>
  </general>
  <tags>

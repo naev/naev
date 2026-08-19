@@ -1,6 +1,6 @@
 <ssys name="Muran">
  <general>
-  <radius>12000</radius>
+  <radius>12000.000000</radius>
   <spacedust>400</spacedust>
   <interference>24.999975</interference>
  </general>
@@ -8,21 +8,21 @@
  <spobs/>
  <jumps>
   <jump target="Diadem">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Forlat">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="New Haven">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Wahri">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

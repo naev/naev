@@ -1,8 +1,8 @@
 <ssys name="Waterhole">
  <general>
-  <radius>19250</radius>
+  <radius>19250.000000</radius>
   <spacedust>400</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
  </general>
  <pos x="-822.357715" y="-420.084676"/>
  <spobs>
@@ -13,20 +13,20 @@
  </spobs>
  <jumps>
   <jump target="Goddard">
-   <hide>0</hide>
    <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Majesteka">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Overture">
-   <hide>0</hide>
    <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Regulus">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

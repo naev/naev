@@ -1,9 +1,9 @@
 <ssys name="Seport">
  <general>
-  <radius>13000</radius>
+  <radius>13000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>45</interference>
-  <nebula volatility="16.2" hue="280">600</nebula>
+  <interference>45.000000</interference>
+  <nebula volatility="16.200000" hue="280.000000">600.000000</nebula>
   <nolanes/>
  </general>
  <pos x="253.315098" y="76.699126"/>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Aet">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Antares">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

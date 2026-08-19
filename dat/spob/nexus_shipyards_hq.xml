@@ -6,14 +6,14 @@
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>14</base>
-  <bonus>8</bonus>
+  <base>14.000000</base>
+  <bonus>8.000000</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>19500</population>
-  <hide>1.3</hide>
+  <hide>1.300000</hide>
   <services>
    <land/>
    <refuel/>

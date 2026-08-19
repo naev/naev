@@ -1,36 +1,36 @@
 <ssys name="Rockbed">
  <general>
-  <radius>12500</radius>
+  <radius>12500.000000</radius>
   <spacedust>200</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
  </general>
  <pos x="-682.106084" y="436.170872"/>
  <spobs/>
  <jumps>
   <jump target="Capricorn">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Coriolis">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Haven">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Pontus">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Sikh">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-4602.89281" y="2462.392693">ec05_trinity</waypoint>
+  <waypoint x="-4602.892810" y="2462.392693">ec05_trinity</waypoint>
  </waypoints>
 </ssys>

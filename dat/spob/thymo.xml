@@ -1,19 +1,19 @@
 <spob name="Thymo">
- <pos x="15858.370399" y="-25742.61525"/>
+ <pos x="15858.370399" y="-25742.615250"/>
  <GFX>
   <space>D02</space>
   <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>D</class>
   <population>1e+08</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

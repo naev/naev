@@ -1,20 +1,20 @@
 <spob name="Phosarrus">
  <lua>highclass.lua</lua>
- <pos x="-6519.685708" y="-3302.17388"/>
+ <pos x="-6519.685708" y="-3302.173880"/>
  <GFX>
   <space>M02</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+09</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

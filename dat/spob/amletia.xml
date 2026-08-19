@@ -1,19 +1,19 @@
 <spob name="Amletia">
- <pos x="-5169.9428" y="-3235.823642"/>
+ <pos x="-5169.942800" y="-3235.823642"/>
  <GFX>
   <space>M09</space>
   <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Yetmer</faction>
-  <base>40</base>
-  <bonus>20</bonus>
+  <base>40.000000</base>
+  <bonus>20.000000</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>M</class>
   <population>5.3e+06</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

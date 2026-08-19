@@ -1,20 +1,20 @@
 <spob name="Marauder Citadel">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="5658.374626" y="1465.92567"/>
+ <pos x="5658.374626" y="1465.925670"/>
  <GFX>
   <space>station-dvaered1</space>
   <exterior>station02</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>20</base>
-  <bonus>10</bonus>
+  <base>20.000000</base>
+  <bonus>10.000000</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>1</class>
   <population>15000</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

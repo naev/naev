@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Free Trader</faction>
-  <base>12</base>
-  <bonus>4</bonus>
+  <base>12.000000</base>
+  <bonus>4.000000</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>35700</population>
-  <hide>0.2</hide>
+  <hide>0.200000</hide>
   <services>
    <land/>
    <refuel/>

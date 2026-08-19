@@ -1,20 +1,20 @@
 <spob name="Erebus Enclave">
  <lua>empire_mil_restricted.lua</lua>
- <pos x="-8123.065039" y="2852.75862"/>
+ <pos x="-8123.065039" y="2852.758620"/>
  <GFX>
   <space>003</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>10</base>
-  <bonus>5</bonus>
+  <base>10.000000</base>
+  <bonus>5.000000</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>7800</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

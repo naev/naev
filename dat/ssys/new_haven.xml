@@ -3,9 +3,9 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>28000</radius>
+  <radius>28000.000000</radius>
   <spacedust>100</spacedust>
-  <interference>50</interference>
+  <interference>50.000000</interference>
   <nolanes/>
  </general>
  <pos x="-637.249781" y="621.811891"/>
@@ -18,37 +18,37 @@
  </spobs>
  <jumps>
   <jump target="Daled">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Forlat">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Fury">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Haven">
    <pos x="-23271.428462" y="-32750.345331"/>
    <hidden/>
-   <hide>1</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Muran">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Titus">
-   <hide>1</hide>
    <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
  <tags>
   <tag>northstellarwind</tag>

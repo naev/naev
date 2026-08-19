@@ -2,9 +2,9 @@
  <general>
   <background>taiomi</background>
   <features>#pShip Graveyard#0</features>
-  <radius>6000</radius>
+  <radius>6000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
   <nolanes/>
  </general>
  <pos x="-462.506863" y="495.825577"/>
@@ -14,9 +14,9 @@
  </spobs>
  <jumps>
   <jump target="Bastion">
-   <hidden/>
-   <hide>1</hide>
    <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <waypoints>
