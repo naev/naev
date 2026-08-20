@@ -4,14 +4,111 @@
 //! the same arguments, so the output is unchanged. Order matters: the outfit
 //! generators have to finish before anything that reads their results.
 
-use std::{fs, path::Path, process::Command};
+use std::{
+   fs,
+   path::{Path, PathBuf},
+   process::Command,
+   time::{Duration, SystemTime, UNIX_EPOCH},
+};
 
 use anyhow::{Context, Result, bail};
 use rayon::prelude::*;
 
 use crate::{bioship, generated};
 
+/// Everything the generators read, including the scripts themselves and the
+/// xtask modules holding the tables they are driven from. Editing any of it
+/// makes the tree stale.
+const INPUTS: &[&str] = &[
+   "assets/gfx/ARTWORK_LICENSE.yaml",
+   "assets/snd/SOUND_LICENSE.yaml",
+   "dat/AUTHORS",
+   "dat/missions/neutral/race",
+   "dat/naevpedia",
+   "dat/outfits",
+   "dat/ships",
+   "dat/tech",
+   "po",
+   "utils/build/gen_authors.py",
+   "utils/build/gen_gettext_stats.py",
+   "utils/find_xml.sh",
+   "xtask/src/bioship.rs",
+   "xtask/src/data.rs",
+   "xtask/src/generated.rs",
+];
+
+/// Regenerates the tree if anything it is built from has changed since it was
+/// last written, so the dev launchers pick up edits without a separate command.
+pub fn refresh(root: &Path, out: &Path) -> Result<()> {
+   if stamp_of(out)? == Some(newest_input(root)?) {
+      return Ok(());
+   }
+   generate(root, out)
+}
+
+/// Records which input state the tree was built from. Kept beside the tree
+/// rather than inside it, since everything inside gets shipped.
+fn stamp(out: &Path) -> PathBuf {
+   let mut path = out.to_path_buf();
+   path.as_mut_os_string().push(".stamp");
+   path
+}
+
+fn stamp_of(out: &Path) -> Result<Option<SystemTime>> {
+   let Ok(recorded) = fs::read_to_string(stamp(out)) else {
+      return Ok(None);
+   };
+   let Ok(nanos) = recorded.trim().parse::<u64>() else {
+      return Ok(None);
+   };
+   Ok(Some(UNIX_EPOCH + Duration::from_nanos(nanos)))
+}
+
+fn stamped(at: SystemTime) -> Result<u128> {
+   Ok(at
+      .duration_since(UNIX_EPOCH)
+      .context("the newest input predates the unix epoch")?
+      .as_nanos())
+}
+
+/// The most recent modification across everything the generators read.
+fn newest_input(root: &Path) -> Result<SystemTime> {
+   let mut seen = Vec::new();
+   for path in INPUTS {
+      mtimes(&root.join(path), &mut seen)?;
+   }
+   seen
+      .into_iter()
+      .max()
+      .context("the generators read at least one file")
+}
+
+/// Collects the modification time of every file below a path.
+fn mtimes(path: &Path, into: &mut Vec<SystemTime>) -> Result<()> {
+   let meta = fs::metadata(path).with_context(|| format!("reading {}", path.display()))?;
+   if meta.is_file() {
+      into.push(
+         meta
+            .modified()
+            .with_context(|| format!("reading the timestamp of {}", path.display()))?,
+      );
+      return Ok(());
+   }
+
+   for entry in fs::read_dir(path).with_context(|| format!("reading {}", path.display()))? {
+      let entry = entry
+         .with_context(|| format!("walking {}", path.display()))?
+         .path();
+      mtimes(&entry, into)?;
+   }
+   Ok(())
+}
+
 pub fn generate(root: &Path, out: &Path) -> Result<()> {
+   // Read before the work, so an edit landing mid-run is not recorded as
+   // captured by it.
+   let state = newest_input(root)?;
+
    let outfits = generate_outfits(root, out)?;
    println!("generated {outfits} outfit files");
 
@@ -25,6 +122,10 @@ pub fn generate(root: &Path, out: &Path) -> Result<()> {
 
    let langs = compile_translations(root, out)?;
    println!("compiled {langs} translations");
+
+   // Last, so a failure leaves the tree looking stale rather than finished.
+   fs::write(stamp(out), format!("{}", stamped(state)?))
+      .with_context(|| format!("writing {}", stamp(out).display()))?;
    Ok(())
 }
 
