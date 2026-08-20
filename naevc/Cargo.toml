@@ -8,11 +8,17 @@ build = "build.rs"
 [lib]
 path = "src/lib.rs"
 
+[lints]
+workspace = true
+
 [features]
 # Mirror the meson options of the same names.
 paranoid = []
 debug_arrays = []
 tracy = []
+
+[dev-dependencies]
+rand = "0.10"
 
 [build-dependencies]
 # Windows needs 0.72.1 or it emits a flood of overflow warnings.

@@ -58,7 +58,7 @@ source_rust = files(
    'pluginmgr/src/git.rs',
    'pluginmgr-gui/src/lib.rs',
    'pluginmgr-gui/src/catalog.rs',
-   'array.rs',
+   '../naevc/src/array.rs',
    'asteroid.rs',
    'commodity.rs',
    'damagetype.rs',

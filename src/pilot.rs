@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-use crate::array;
+use naevc::array;
 use nalgebra::Vector2;
 use std::ptr::NonNull;
 

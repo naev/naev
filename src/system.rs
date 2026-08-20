@@ -1,4 +1,4 @@
-use crate::array;
+use naevc::array;
 
 #[repr(transparent)]
 pub struct SystemWrapper(naevc::StarSystem);

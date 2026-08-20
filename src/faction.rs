@@ -1,5 +1,4 @@
 #![allow(dead_code)]
-use crate::array::{Array, ArrayCString};
 use crate::hook::{HookParam, run_param_deferred};
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLUA, NLua};
@@ -13,6 +12,7 @@ use mlua::{
    BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
 };
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use naevc::array::{Array, ArrayCString};
 use nlog::{debugx, warn, warn_err, warnx};
 use renderer::colour::Colour;
 use renderer::{Context, ContextWrapper, colour, texture};
