@@ -285,7 +285,7 @@ fn require_data(data_dir: &Path) -> Result<()> {
 }
 
 /// Whether a program can be found on PATH.
-fn on_path(program: &str) -> bool {
+pub fn on_path(program: &str) -> bool {
    std::env::var_os("PATH")
       .is_some_and(|paths| std::env::split_paths(&paths).any(|dir| dir.join(program).is_file()))
 }

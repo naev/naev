@@ -179,7 +179,7 @@ fn find_xml(root: &Path, dir: &Path) -> Result<Vec<std::path::PathBuf>> {
 }
 
 /// Runs a helper script and hands back its stdout.
-fn sh(script: std::path::PathBuf, args: &[std::path::PathBuf], what: &str) -> Result<String> {
+pub fn sh(script: std::path::PathBuf, args: &[std::path::PathBuf], what: &str) -> Result<String> {
    let output = Command::new("bash")
       .arg(script)
       .args(args)

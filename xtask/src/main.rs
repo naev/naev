@@ -11,6 +11,7 @@ use clap::{Parser, Subcommand};
 
 mod bioship;
 mod data;
+mod docs;
 mod generated;
 mod i18n;
 mod run;
@@ -39,6 +40,17 @@ enum Command {
    Run(run::RunArgs),
    /// Build and run the game under valgrind.
    Valgrind(run::ValgrindArgs),
+   /// Build the documentation.
+   #[command(after_help = docs::defaults_help())]
+   Docs {
+      /// Which sets to build, defaulting to those whose tools are present.
+      #[arg(value_enum)]
+      kinds: Vec<docs::Kind>,
+
+      /// Where the built documentation is written.
+      #[arg(long)]
+      output: Option<PathBuf>,
+   },
 }
 
 fn main() -> Result<()> {
@@ -53,6 +65,7 @@ fn main() -> Result<()> {
       Command::UpdatePo => i18n::update_po(&root, &data_dir),
       Command::Run(args) => run::run(&root, &target, &data_dir, &args),
       Command::Valgrind(args) => run::valgrind(&root, &target, &data_dir, &args),
+      Command::Docs { kinds, output } => docs::build(&root, &target, &kinds, output),
    }
 }
 
