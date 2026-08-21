@@ -25,6 +25,7 @@ pub struct CrossUniform {
    pub transform: Transform2,
    pub colour: Colour,
    pub radius: f32,
+   pub border: f32,
 }
 
 #[repr(C)]
@@ -170,7 +171,15 @@ impl SdfRenderer {
       buffer_rect_hollow
    );
 
-   pub fn draw_cross(&self, ctx: &Context, x: f32, y: f32, r: f32, colour: Colour) -> Result<()> {
+   pub fn draw_cross(
+      &self,
+      ctx: &Context,
+      x: f32,
+      y: f32,
+      r: f32,
+      b: f32,
+      colour: Colour,
+   ) -> Result<()> {
       let dims = ctx.dimensions.read().unwrap();
       #[rustfmt::skip]
       let transform: Matrix3<f32> = dims.projection * Matrix3::new(
@@ -182,6 +191,7 @@ impl SdfRenderer {
          transform: transform.into(),
          colour,
          radius: r,
+         border: b,
       };
       self.draw_cross_ex(ctx, &uniform)
    }
@@ -312,7 +322,7 @@ pub extern "C" fn gl_renderCross(x: c_double, y: c_double, r: c_double, c: *cons
    let colour = get_col(c);
    if let Err(e) = ctx
       .sdf
-      .draw_cross(ctx, x as f32, y as f32, r as f32, colour)
+      .draw_cross(ctx, x as f32, y as f32, r as f32, 1.0, colour)
    {
       warn_err!(e);
    }
