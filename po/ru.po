@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2026-01-07 00:21+0000\n"
-"Last-Translator: madpilot28 <madpilot28@noreply.codeberg.org>\n"
+"PO-Revision-Date: 2026-08-22 17:25+0000\n"
+"Last-Translator: Unterart <unterart@noreply.codeberg.org>\n"
 "Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev-0-"
 "13-x/ru/>\n"
 "Language: ru\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 msgid "Active Plating"
 msgstr "Активное покрытие"
@@ -87,25 +87,23 @@ msgstr "Маневренный боевой искусственный инте�
 msgid "Air Freshener"
 msgstr "Освежитель воздуха"
 
-#, fuzzy
 msgid "Ambush Hunter I"
-msgstr "Охотник из засады"
+msgstr "Охотник из засады I"
 
-#, fuzzy
 msgid "Ambush Hunter II"
-msgstr "Охотник из засады"
+msgstr "Охотник из засады II"
 
 msgid "Antimatter Lance"
-msgstr ""
+msgstr "Копьё антиматерии"
 
 msgid "Apollo's Gaze"
-msgstr ""
+msgstr "Взгляд Аполлона"
 
 msgid "Arc Blade"
 msgstr "Дуговой клинок"
 
 msgid "Arc Machete"
-msgstr ""
+msgstr "Дуговое мачете"
 
 msgid "Asteroid Scanner"
 msgstr "Сканер астероидов"
@@ -146,7 +144,7 @@ msgid "Bad Shape"
 msgstr "Твёрдый панцирь"
 
 msgid "Base Ripper MK2"
-msgstr ""
+msgstr "Базовый потрошитель MK2"
 
 msgid "Battery I"
 msgstr "Батарея I"
@@ -167,7 +165,7 @@ msgid "Beat Up Medium Engine"
 msgstr "Потрёпанный средний двигатель"
 
 msgid "Beat Up Small Engine"
-msgstr "Потрёпанный малый  двигатель"
+msgstr "Потрёпанный малый двигатель"
 
 msgid "Berserk Chip"
 msgstr "Чип Берсерка"
@@ -208,9 +206,8 @@ msgstr "Сломанный прототип туманного экраниро�
 msgid "Bulky Abdomen"
 msgstr "Объёмный живот"
 
-#, fuzzy
 msgid "Cargo Damper"
-msgstr "Грузовые мешки"
+msgstr "Грузовой амортизатор"
 
 #. Misc tree
 #. For everyone!
