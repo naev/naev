@@ -1,0 +1,34 @@
+<spob name="Fidelis Mining Station">
+ <lua>lawless.lua</lua>
+ <pos x="-8038.487882" y="12196.070175"/>
+ <GFX>
+  <space>002.avif</space>
+  <exterior>station04.avif</exterior>
+ </GFX>
+ <presence>
+  <faction>Free Trader</faction>
+  <base>13.333340</base>
+  <bonus>6.666660</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>270</population>
+  <hide>0.150000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+   <nolanes/>
+  </services>
+  <description>An old station, originally designed to exploit the asteroids in Fidelis, it was quickly retired and abandoned during the Dvaered Revolts as the company in charge of it dissolved. Although stability was partially compromised by asteroid impact, it quickly became a home to scavengers, scoundrels, ruffians, and the likes, who now maintain the facilities in a fairly surprising spartan style.</description>
+  <bar>Most of the locals tend to spend their free time lounging around the Smash, which, as the name may indicate, is a bar operating in what is clearly the result of a large asteroid impact. The bar has a dominantly spherical shape, with the servers anchored in the centre. The house speciality is the Asteroid Smasher, which is served in crude carved out asteroid mugs, and is served strong enough so you don't notice the rocky sediment that remains in the mug, and after a few drinks, you probably won't even remember it in the case you had noticed.</bar>
+ </general>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
+</spob>
