@@ -195,7 +195,7 @@ impl Plugin {
       let disabled = Self::is_disabled(path);
       Self {
          identifier: Identifier(if let Some(filename) = path.file_name() {
-            format!("{}-{}", &strerr, filename.to_string_lossy())
+            format!("{}-{}", strerr, filename.to_string_lossy())
          } else {
             strerr.clone()
          }),
@@ -207,7 +207,7 @@ impl Plugin {
          author: (*path.to_string_lossy()).to_string(),
          version: semver::Version::new(0, 0, 0),
          r#abstract: strerr.clone(),
-         description: Some(format!("Error:\n{}", &err.to_string())),
+         description: Some(format!("Error:\n{}", err)),
          license: None,
          release_status: ReleaseStatus::Development,
          tags: Vec::new(),
@@ -281,7 +281,7 @@ impl Plugin {
       if plugin.r#abstract.len() > 200 {
          anyhow::bail!(format!(
             "plugin '{}' abstract exceeds 200 characters",
-            &plugin.name
+            plugin.name
          ));
       }
       plugin.compatible = plugin

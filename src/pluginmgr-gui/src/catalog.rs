@@ -277,7 +277,7 @@ impl Catalog {
    }
 
    pub fn save_to_cache(&self) -> Result<()> {
-      for (_, plugin) in self.data.lock().unwrap().iter() {
+      for plugin in self.data.lock().unwrap().values() {
          let data = match toml::to_string(&plugin) {
             Ok(data) => data,
             Err(e) => {
