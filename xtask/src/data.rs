@@ -19,24 +19,19 @@ use crate::{
 };
 
 pub fn generate(root: &Path, out: &Path) -> Result<()> {
-   let floor = rule::floor()?;
-
-   let outfits = rule::run(outfit_rules(root, out)?, floor)?;
-   if outfits > 0 {
-      println!("generated {outfits} outfit file{}", plural(outfits));
-   }
-
-   // Everything below reads the outfits above, so it cannot start earlier.
-   let mut rules = naevpedia_rules(root, out)?;
+   let mut rules = outfit_rules(root, out)?;
+   rules.extend(naevpedia_rules(root, out)?);
    rules.extend(tech_rules(root, out)?);
    rules.extend(translation_rules(root, out)?);
    rules.push(race_times_rule(root, out)?);
    rules.push(authors_rule(root, out));
    rules.push(gettext_stats_rule(root, out)?);
 
-   let rest = rule::run(rules, floor)?;
-   if rest > 0 {
-      println!("generated {rest} data file{}", plural(rest));
+   // The order falls out of what each rule reads and writes: the naevpedia
+   // pages and tech lists cover the generated outfits, so they wait for them.
+   let written = rule::run(rules, rule::floor()?)?;
+   if written > 0 {
+      println!("generated {written} file{}", plural(written));
    }
    Ok(())
 }
@@ -45,8 +40,8 @@ fn plural(count: usize) -> &'static str {
    if count == 1 { "" } else { "s" }
 }
 
-/// Bioship families and derived outfits. Everything downstream reads these, so
-/// they come first.
+/// Bioship families and derived outfits. The naevpedia pages and tech lists
+/// cover these alongside the tracked outfits.
 fn outfit_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
    let bio_dir = out.join("outfits/bioship");
    let derived_dir = out.join("outfits/generated");

@@ -1,11 +1,13 @@
 //! Incremental execution of the data generators.
 //!
-//! Each generator states what it reads and what it writes, which is enough to
-//! skip the ones whose inputs have not moved. Nothing here discovers
-//! dependencies while it runs, so a rule is stale exactly when an output is
-//! missing or older than an input.
+//! Each generator states what it reads and what it writes. That is enough to
+//! work out which ones feed which, giving both the order to run them in and
+//! which an edit has made stale. Nothing here discovers dependencies while it
+//! runs, so a rule is stale exactly when an output is missing or older than
+//! an input.
 
 use std::{
+   collections::HashMap,
    path::{Path, PathBuf},
    process::Command,
    time::SystemTime,
@@ -82,21 +84,93 @@ impl Rule {
 }
 
 /// Runs the rules that are out of date and reports how many files they wrote.
+///
+/// Staleness is judged one wave at a time rather than up front, because a rule
+/// that runs moves the timestamps its dependents are compared against.
 pub fn run(rules: Vec<Rule>, floor: SystemTime) -> Result<usize> {
-   let stale = rules
-      .par_iter()
-      .map(|rule| rule.stale(floor))
-      .collect::<Result<Vec<_>>>()?;
+   let waves = schedule(&rules)?;
+   let mut rules: Vec<Option<Rule>> = rules.into_iter().map(Some).collect();
+   let mut written = 0;
 
-   let due: Vec<Rule> = rules
-      .into_iter()
-      .zip(stale)
-      .filter_map(|(rule, stale)| stale.then_some(rule))
-      .collect();
+   for wave in waves {
+      let ready: Vec<Rule> = wave
+         .into_iter()
+         .map(|index| {
+            rules[index]
+               .take()
+               .context("every rule is scheduled exactly once")
+         })
+         .collect::<Result<_>>()?;
 
-   let written = due.iter().map(|rule| rule.outputs.len()).sum();
-   due.into_par_iter().try_for_each(Rule::execute)?;
+      let stale = ready
+         .par_iter()
+         .map(|rule| rule.stale(floor))
+         .collect::<Result<Vec<_>>>()?;
+
+      let due: Vec<Rule> = ready
+         .into_iter()
+         .zip(stale)
+         .filter_map(|(rule, stale)| stale.then_some(rule))
+         .collect();
+
+      written += due.iter().map(|rule| rule.outputs.len()).sum::<usize>();
+      due.into_par_iter().try_for_each(Rule::execute)?;
+   }
    Ok(written)
+}
+
+/// Groups the rules into waves, each of which can run in parallel, ordered so
+/// that nothing runs before whatever writes the files it reads.
+fn schedule(rules: &[Rule]) -> Result<Vec<Vec<usize>>> {
+   let mut producer: HashMap<&Path, usize> = HashMap::new();
+   for (index, rule) in rules.iter().enumerate() {
+      for output in &rule.outputs {
+         if let Some(first) = producer.insert(output, index) {
+            bail!(
+               "{} is written by both {} and {}",
+               output.display(),
+               rules[first].what,
+               rule.what
+            );
+         }
+      }
+   }
+
+   let mut blocking = vec![0usize; rules.len()];
+   let mut dependents = vec![Vec::new(); rules.len()];
+   for (index, rule) in rules.iter().enumerate() {
+      for input in &rule.inputs {
+         // Inputs nothing generates are tracked files, already on disk.
+         if let Some(&from) = producer.get(input.as_path())
+            && from != index
+         {
+            dependents[from].push(index);
+            blocking[index] += 1;
+         }
+      }
+   }
+
+   let mut waves = Vec::new();
+   let mut ready: Vec<usize> = (0..rules.len()).filter(|&i| blocking[i] == 0).collect();
+   let mut scheduled = 0;
+   while !ready.is_empty() {
+      scheduled += ready.len();
+      let mut next = Vec::new();
+      for &index in &ready {
+         for &dependent in &dependents[index] {
+            blocking[dependent] -= 1;
+            if blocking[dependent] == 0 {
+               next.push(dependent);
+            }
+         }
+      }
+      waves.push(std::mem::replace(&mut ready, next));
+   }
+
+   if scheduled != rules.len() {
+      bail!("the generators depend on each other in a cycle");
+   }
+   Ok(waves)
 }
 
 /// The point every rule counts as an input. The tables driving the generators
