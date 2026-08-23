@@ -252,6 +252,9 @@ if buildExec.disabled() == false
       output: 'dat',
       console: true,
       build_by_default: true,
+      # xtask works out what is stale itself, so ninja hands off every time
+      # rather than tracking the inputs a second time.
+      build_always_stale: true,
       env: cargo_env,
       command: [
          cargo, 'run', '--quiet', '--release',
