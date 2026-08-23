@@ -14,6 +14,7 @@ mod data;
 mod docs;
 mod generated;
 mod i18n;
+mod rule;
 mod run;
 
 #[derive(Parser)]

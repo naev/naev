@@ -1,157 +1,95 @@
 //! Generation of the derived data files.
 //!
 //! Each step shells out to the same python and shell scripts meson drove, with
-//! the same arguments, so the output is unchanged. Order matters: the outfit
-//! generators have to finish before anything that reads their results.
+//! the same arguments, so the output is unchanged. They are expressed as rules
+//! naming their inputs and outputs, which is what lets an edit rebuild only
+//! what it affects.
 
 use std::{
    fs,
    path::{Path, PathBuf},
    process::Command,
-   time::{Duration, SystemTime, UNIX_EPOCH},
 };
 
 use anyhow::{Context, Result, bail};
-use rayon::prelude::*;
 
-use crate::{bioship, generated};
-
-/// Everything the generators read, including the scripts themselves and the
-/// xtask modules holding the tables they are driven from. Editing any of it
-/// makes the tree stale.
-const INPUTS: &[&str] = &[
-   "assets/gfx/ARTWORK_LICENSE.yaml",
-   "assets/snd/SOUND_LICENSE.yaml",
-   "dat/AUTHORS",
-   "dat/missions/neutral/race",
-   "dat/naevpedia",
-   "dat/outfits",
-   "dat/ships",
-   "dat/tech",
-   "po",
-   "utils/build/gen_authors.py",
-   "utils/build/gen_gettext_stats.py",
-   "utils/find_xml.sh",
-   "xtask/src/bioship.rs",
-   "xtask/src/data.rs",
-   "xtask/src/generated.rs",
-];
-
-/// Regenerates the tree if anything it is built from has changed since it was
-/// last written, so the dev launchers pick up edits without a separate command.
-pub fn refresh(root: &Path, out: &Path) -> Result<()> {
-   if stamp_of(out)? == Some(newest_input(root)?) {
-      return Ok(());
-   }
-   generate(root, out)
-}
-
-/// Records which input state the tree was built from. Kept beside the tree
-/// rather than inside it, since everything inside gets shipped.
-fn stamp(out: &Path) -> PathBuf {
-   let mut path = out.to_path_buf();
-   path.as_mut_os_string().push(".stamp");
-   path
-}
-
-fn stamp_of(out: &Path) -> Result<Option<SystemTime>> {
-   let Ok(recorded) = fs::read_to_string(stamp(out)) else {
-      return Ok(None);
-   };
-   let Ok(nanos) = recorded.trim().parse::<u64>() else {
-      return Ok(None);
-   };
-   Ok(Some(UNIX_EPOCH + Duration::from_nanos(nanos)))
-}
-
-fn stamped(at: SystemTime) -> Result<u128> {
-   Ok(at
-      .duration_since(UNIX_EPOCH)
-      .context("the newest input predates the unix epoch")?
-      .as_nanos())
-}
-
-/// The most recent modification across everything the generators read.
-fn newest_input(root: &Path) -> Result<SystemTime> {
-   let mut seen = Vec::new();
-   for path in INPUTS {
-      mtimes(&root.join(path), &mut seen)?;
-   }
-   seen
-      .into_iter()
-      .max()
-      .context("the generators read at least one file")
-}
-
-/// Collects the modification time of every file below a path.
-fn mtimes(path: &Path, into: &mut Vec<SystemTime>) -> Result<()> {
-   let meta = fs::metadata(path).with_context(|| format!("reading {}", path.display()))?;
-   if meta.is_file() {
-      into.push(
-         meta
-            .modified()
-            .with_context(|| format!("reading the timestamp of {}", path.display()))?,
-      );
-      return Ok(());
-   }
-
-   for entry in fs::read_dir(path).with_context(|| format!("reading {}", path.display()))? {
-      let entry = entry
-         .with_context(|| format!("walking {}", path.display()))?
-         .path();
-      mtimes(&entry, into)?;
-   }
-   Ok(())
-}
+use crate::{
+   bioship, generated,
+   rule::{self, Rule},
+};
 
 pub fn generate(root: &Path, out: &Path) -> Result<()> {
-   // Read before the work, so an edit landing mid-run is not recorded as
-   // captured by it.
-   let state = newest_input(root)?;
+   let floor = rule::floor()?;
 
-   let outfits = generate_outfits(root, out)?;
-   println!("generated {outfits} outfit files");
+   let outfits = rule::run(outfit_rules(root, out)?, floor)?;
+   if outfits > 0 {
+      println!("generated {outfits} outfit file{}", plural(outfits));
+   }
 
    // Everything below reads the outfits above, so it cannot start earlier.
-   let pedia = generate_naevpedia(root, out)?;
-   println!("generated {pedia} naevpedia pages");
-   generate_tech(root, out)?;
-   generate_race_times(root, out)?;
-   generate_authors(root, out)?;
-   generate_gettext_stats(root, out)?;
+   let mut rules = naevpedia_rules(root, out)?;
+   rules.extend(tech_rules(root, out)?);
+   rules.extend(translation_rules(root, out)?);
+   rules.push(race_times_rule(root, out)?);
+   rules.push(authors_rule(root, out));
+   rules.push(gettext_stats_rule(root, out)?);
 
-   let langs = compile_translations(root, out)?;
-   println!("compiled {langs} translations");
-
-   // Last, so a failure leaves the tree looking stale rather than finished.
-   fs::write(stamp(out), format!("{}", stamped(state)?))
-      .with_context(|| format!("writing {}", stamp(out).display()))?;
+   let rest = rule::run(rules, floor)?;
+   if rest > 0 {
+      println!("generated {rest} data file{}", plural(rest));
+   }
    Ok(())
 }
 
-/// Compiles each translation the game ships. The catalogues themselves are
-/// maintained separately; this only turns the checked-in .po files into the
-/// binary form the runtime loads.
-fn compile_translations(root: &Path, out: &Path) -> Result<usize> {
-   let langs = crate::i18n::languages(root)?;
+fn plural(count: usize) -> &'static str {
+   if count == 1 { "" } else { "s" }
+}
 
-   langs.par_iter().try_for_each(|lang| {
-      let dest = out.join("gettext").join(lang).join("LC_MESSAGES");
-      fs::create_dir_all(&dest)
-         .with_context(|| format!("creating the message directory for {lang}"))?;
-      let mut cmd = Command::new("msgfmt");
-      cmd.arg(root.join("po").join(format!("{lang}.po")))
-         .arg("-o")
-         .arg(dest.join("naev.mo"));
-      run(cmd, lang)
-   })?;
+/// Bioship families and derived outfits. Everything downstream reads these, so
+/// they come first.
+fn outfit_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
+   let bio_dir = out.join("outfits/bioship");
+   let derived_dir = out.join("outfits/generated");
+   fs::create_dir_all(&bio_dir).context("creating the bioship output directory")?;
+   fs::create_dir_all(&derived_dir).context("creating the derived outfit directory")?;
 
-   Ok(langs.len())
+   let script = root.join("dat/outfits/bioship/generate.py");
+   let templates = root.join("dat/outfits/bioship/templates");
+
+   let mut rules: Vec<Rule> = bioship::FAMILIES
+      .iter()
+      .map(|family| {
+         let template = templates.join(format!("{}.xml.template", family.template));
+         let outputs: Vec<PathBuf> = family.outputs.iter().map(|o| bio_dir.join(o)).collect();
+         // generate.py switches to its per-family mode when it sees -o, which
+         // is how meson drove it.
+         let mut cmd = Command::new("python3");
+         cmd.arg(&script).arg(&template).arg("-o").args(&outputs);
+         Rule::new(format!("bioship family {}", family.template), cmd)
+            .reads([script.clone(), template])
+            .writes(outputs)
+      })
+      .collect();
+
+   let derived_scripts = root.join("dat/outfits/generated");
+   let outfit_src = root.join("dat/outfits");
+   rules.extend(generated::DERIVED.iter().map(|derived| {
+      let script = derived_scripts.join(derived.script);
+      let input = outfit_src.join(derived.input);
+      let output = derived_dir.join(derived.output);
+      let mut cmd = Command::new("python3");
+      cmd.arg(&script).arg(&input).arg(&output);
+      Rule::new(derived.output, cmd)
+         .reads([script, input])
+         .writes([output])
+   }));
+
+   Ok(rules)
 }
 
 /// Markdown for every ship and outfit, including the generated outfits.
-fn generate_naevpedia(root: &Path, out: &Path) -> Result<usize> {
-   let mut jobs = Vec::new();
+fn naevpedia_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
+   let mut rules = Vec::new();
 
    for (kind, src_dir) in [("ships", "dat/ships"), ("outfits", "dat/outfits")] {
       let script = root.join(format!("dat/naevpedia/{kind}/{kind}.py"));
@@ -159,41 +97,42 @@ fn generate_naevpedia(root: &Path, out: &Path) -> Result<usize> {
       fs::create_dir_all(&dest)
          .with_context(|| format!("creating the naevpedia {kind} directory"))?;
       for xml in find_xml(root, &root.join(src_dir))? {
-         jobs.push((script.clone(), xml, dest.clone()));
+         rules.push(page_rule(&script, &xml, &dest)?);
       }
    }
 
    // The derived outfits only exist in the output tree, so they are picked up
    // from there rather than from the source.
-   let outfit_script = root.join("dat/naevpedia/outfits/outfits.py");
-   let outfit_dest = out.join("naevpedia/outfits");
+   let script = root.join("dat/naevpedia/outfits/outfits.py");
+   let dest = out.join("naevpedia/outfits");
    for derived in generated::DERIVED {
-      jobs.push((
-         outfit_script.clone(),
-         out.join("outfits/generated").join(derived.output),
-         outfit_dest.clone(),
-      ));
+      let xml = out.join("outfits/generated").join(derived.output);
+      rules.push(page_rule(&script, &xml, &dest)?);
    }
 
-   jobs.par_iter().try_for_each(|(script, xml, dest)| {
-      let stem = xml
-         .file_stem()
-         .context("every input should have a file name")?;
-      let mut md = dest.join(stem);
-      md.set_extension("md");
-      let mut cmd = Command::new("python3");
-      cmd.arg(script).arg(xml).arg("-o").arg(&md);
-      run(cmd, &xml.display().to_string())
-   })?;
+   Ok(rules)
+}
 
-   Ok(jobs.len())
+fn page_rule(script: &Path, xml: &Path, dest: &Path) -> Result<Rule> {
+   let stem = xml
+      .file_stem()
+      .context("every input should have a file name")?;
+   let mut md = dest.join(stem);
+   md.set_extension("md");
+
+   let mut cmd = Command::new("python3");
+   cmd.arg(script).arg(xml).arg("-o").arg(&md);
+   Ok(Rule::new(xml.display().to_string(), cmd)
+      .reads([script.to_path_buf(), xml.to_path_buf()])
+      .writes([md]))
 }
 
 /// The two tech lists, which are concatenations of everything not excluded.
-fn generate_tech(root: &Path, out: &Path) -> Result<()> {
+fn tech_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
    let dest = out.join("tech");
    fs::create_dir_all(&dest).context("creating the tech directory")?;
 
+   let mut rules = Vec::new();
    for (discover, generate, output, dir) in [
       (
          "dat/tech/all_ships_dep.sh",
@@ -209,68 +148,104 @@ fn generate_tech(root: &Path, out: &Path) -> Result<()> {
       ),
    ] {
       let listed = sh(root.join(discover), &[root.join(dir)], discover)?;
-      let mut inputs: Vec<_> = listed.lines().map(Into::into).collect::<Vec<String>>();
+      let mut inputs: Vec<PathBuf> = listed.lines().map(PathBuf::from).collect();
       // The tech lists cover the derived outfits too.
       if output == "all_outfits.xml" {
-         for derived in generated::DERIVED {
-            inputs.push(
-               out.join("outfits/generated")
-                  .join(derived.output)
-                  .display()
-                  .to_string(),
-            );
-         }
+         inputs.extend(
+            generated::DERIVED
+               .iter()
+               .map(|derived| out.join("outfits/generated").join(derived.output)),
+         );
       }
 
+      let script = root.join(generate);
+      let target = dest.join(output);
       let mut cmd = Command::new("bash");
-      cmd.arg(root.join(generate))
-         .arg(dest.join(output))
-         .args(inputs);
-      run(cmd, output)?;
+      cmd.arg(&script).arg(&target).args(&inputs);
+      rules.push(
+         Rule::new(output, cmd)
+            .reads(inputs)
+            .reads([script])
+            .writes([target]),
+      );
    }
-   Ok(())
+   Ok(rules)
+}
+
+/// Compiles each translation the game ships. The catalogues themselves are
+/// maintained separately; this only turns the checked-in .po files into the
+/// binary form the runtime loads.
+fn translation_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
+   crate::i18n::languages(root)?
+      .into_iter()
+      .map(|lang| {
+         let dest = out.join("gettext").join(&lang).join("LC_MESSAGES");
+         fs::create_dir_all(&dest)
+            .with_context(|| format!("creating the message directory for {lang}"))?;
+
+         let po = root.join("po").join(format!("{lang}.po"));
+         let mo = dest.join("naev.mo");
+         let mut cmd = Command::new("msgfmt");
+         cmd.arg(&po).arg("-o").arg(&mo);
+         Ok(Rule::new(lang, cmd).reads([po]).writes([mo]))
+      })
+      .collect()
+}
+
+/// Race times, derived from the ships and outfits a race can use.
+fn race_times_rule(root: &Path, out: &Path) -> Result<Rule> {
+   let dest = out.join("missions/neutral/race");
+   fs::create_dir_all(&dest).context("creating the race mission directory")?;
+
+   let script = root.join("dat/missions/neutral/race/gen_times.py");
+   let target = dest.join("times_qex.lua");
+   let mut cmd = Command::new("python3");
+   cmd.arg(&script).arg("-q").arg(&target);
+   Ok(Rule::new("times_qex.lua", cmd)
+      .reads([script])
+      .writes([target]))
 }
 
 /// The credits, merging the tracked preamble with everyone named in the asset
 /// licence manifests. It has to outrank the preamble it was built from, which
 /// is why the generated tree mounts ahead of dat/.
-fn generate_authors(root: &Path, out: &Path) -> Result<()> {
+fn authors_rule(root: &Path, out: &Path) -> Rule {
+   let script = root.join("utils/build/gen_authors.py");
+   let preamble = root.join("dat/AUTHORS");
+   let artwork = root.join("assets/gfx/ARTWORK_LICENSE.yaml");
+   let sound = root.join("assets/snd/SOUND_LICENSE.yaml");
+   let target = out.join("AUTHORS");
+
    let mut cmd = Command::new("python3");
-   cmd.arg(root.join("utils/build/gen_authors.py"))
+   cmd.arg(&script)
       .arg("--output")
-      .arg(out.join("AUTHORS"))
+      .arg(&target)
       .arg("--preamble")
-      .arg(root.join("dat/AUTHORS"))
-      .arg(root.join("assets/gfx/ARTWORK_LICENSE.yaml"))
-      .arg(root.join("assets/snd/SOUND_LICENSE.yaml"));
-   run(cmd, "AUTHORS")
+      .arg(&preamble)
+      .arg(&artwork)
+      .arg(&sound);
+   Rule::new("AUTHORS", cmd)
+      .reads([script, preamble, artwork, sound])
+      .writes([target])
 }
 
 /// The translatable string count the credits screen reports.
-fn generate_gettext_stats(root: &Path, out: &Path) -> Result<()> {
+fn gettext_stats_rule(root: &Path, out: &Path) -> Result<Rule> {
    let dest = out.join("gettext_stats");
    fs::create_dir_all(&dest).context("creating the gettext stats directory")?;
-   let mut cmd = Command::new("python3");
-   cmd.arg(root.join("utils/build/gen_gettext_stats.py"))
-      .arg("--output")
-      .arg(dest.join("naev.txt"))
-      .arg(root.join("po/naev.pot"));
-   run(cmd, "gettext_stats/naev.txt")
-}
 
-/// Race times, derived from the ships and outfits a race can use.
-fn generate_race_times(root: &Path, out: &Path) -> Result<()> {
-   let dest = out.join("missions/neutral/race");
-   fs::create_dir_all(&dest).context("creating the race mission directory")?;
+   let script = root.join("utils/build/gen_gettext_stats.py");
+   let template = root.join("po/naev.pot");
+   let target = dest.join("naev.txt");
    let mut cmd = Command::new("python3");
-   cmd.arg(root.join("dat/missions/neutral/race/gen_times.py"))
-      .arg("-q")
-      .arg(dest.join("times_qex.lua"));
-   run(cmd, "times_qex.lua")
+   cmd.arg(&script).arg("--output").arg(&target).arg(&template);
+   Ok(Rule::new("gettext_stats/naev.txt", cmd)
+      .reads([script, template])
+      .writes([target]))
 }
 
 /// The tracked XML under a directory, as the old find_xml.sh reported it.
-fn find_xml(root: &Path, dir: &Path) -> Result<Vec<std::path::PathBuf>> {
+fn find_xml(root: &Path, dir: &Path) -> Result<Vec<PathBuf>> {
    let listed = sh(
       root.join("utils/find_xml.sh"),
       &[dir.to_path_buf()],
@@ -280,7 +255,7 @@ fn find_xml(root: &Path, dir: &Path) -> Result<Vec<std::path::PathBuf>> {
 }
 
 /// Runs a helper script and hands back its stdout.
-pub fn sh(script: std::path::PathBuf, args: &[std::path::PathBuf], what: &str) -> Result<String> {
+pub fn sh(script: PathBuf, args: &[PathBuf], what: &str) -> Result<String> {
    let output = Command::new("bash")
       .arg(script)
       .args(args)
@@ -294,59 +269,4 @@ pub fn sh(script: std::path::PathBuf, args: &[std::path::PathBuf], what: &str) -
       );
    }
    String::from_utf8(output.stdout).with_context(|| format!("{what} produced invalid UTF-8"))
-}
-
-/// Bioship families and derived outfits. Everything downstream reads these, so
-/// they come first.
-fn generate_outfits(root: &Path, out: &Path) -> Result<usize> {
-   let bio_dir = out.join("outfits/bioship");
-   let derived_dir = out.join("outfits/generated");
-   fs::create_dir_all(&bio_dir).context("creating the bioship output directory")?;
-   fs::create_dir_all(&derived_dir).context("creating the derived outfit directory")?;
-
-   let script = root.join("dat/outfits/bioship/generate.py");
-   let templates = root.join("dat/outfits/bioship/templates");
-
-   let bio: usize = bioship::FAMILIES
-      .par_iter()
-      .map(|family| {
-         let template = templates.join(format!("{}.xml.template", family.template));
-         let outputs: Vec<_> = family.outputs.iter().map(|o| bio_dir.join(o)).collect();
-         // generate.py switches to its per-family mode when it sees -o, which
-         // is how meson drove it.
-         let mut cmd = Command::new("python3");
-         cmd.arg(&script).arg(&template).arg("-o").args(&outputs);
-         run(cmd, &format!("bioship family {}", family.template))?;
-         Ok(family.outputs.len())
-      })
-      .collect::<Result<Vec<_>>>()?
-      .iter()
-      .sum();
-
-   let derived_scripts = root.join("dat/outfits/generated");
-   let outfit_src = root.join("dat/outfits");
-   generated::DERIVED.par_iter().try_for_each(|derived| {
-      let mut cmd = Command::new("python3");
-      cmd.arg(derived_scripts.join(derived.script))
-         .arg(outfit_src.join(derived.input))
-         .arg(derived_dir.join(derived.output));
-      run(cmd, derived.output)
-   })?;
-
-   Ok(bio + generated::DERIVED.len())
-}
-
-/// Runs a generator, turning a non-zero exit into an error that names it.
-fn run(mut cmd: Command, what: &str) -> Result<()> {
-   let output = cmd
-      .output()
-      .with_context(|| format!("failed to run the generator for {what}"))?;
-   if !output.status.success() {
-      bail!(
-         "generating {what} failed with {}\n{}",
-         output.status,
-         String::from_utf8_lossy(&output.stderr)
-      );
-   }
-   Ok(())
 }

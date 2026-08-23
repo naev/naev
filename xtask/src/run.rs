@@ -98,7 +98,7 @@ pub struct ValgrindArgs {
 
 /// Builds the game and runs it, optionally under a debugger.
 pub fn run(root: &Path, target: &Path, data_dir: &Path, args: &RunArgs) -> Result<()> {
-   crate::data::refresh(root, data_dir)?;
+   crate::data::generate(root, data_dir)?;
    let tool = resolve(args.debugger)?;
    if args.valgrind && tool != Some(Tool::Gdb) {
       bail!("--valgrind attaches through vgdb, which only gdb speaks");
@@ -149,7 +149,7 @@ pub fn run(root: &Path, target: &Path, data_dir: &Path, args: &RunArgs) -> Resul
 /// Builds the game and runs it under valgrind, either straight through or
 /// waiting for `xtask run --valgrind` to attach.
 pub fn valgrind(root: &Path, target: &Path, data_dir: &Path, args: &ValgrindArgs) -> Result<()> {
-   crate::data::refresh(root, data_dir)?;
+   crate::data::generate(root, data_dir)?;
    if !on_path("valgrind") {
       bail!("valgrind is not on PATH");
    }
