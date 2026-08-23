@@ -113,7 +113,7 @@ function idle ()
                mem.route = lanes.getRouteP( p, target )
             else
                -- Old school anywhere in the system
-               local target = vec2.newP( math.sqrt(rnd.rnd()) * system.cur():radius(), rnd.angle() )
+               local target = rnd.sample_circle( system.cur():radius() )
                mem.route = { target }
             end
          end

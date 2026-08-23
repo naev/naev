@@ -214,7 +214,7 @@ function jumpin ()
    local fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
    fpir:setReputationGlobal(0)
 
-   local pos = vec2.newP( 0.8*system.cur():radius()*math.sqrt(rnd.rnd()), rnd.angle() )
+   local pos = rnd.sample_circle( 0.8*system.cur():radius() )
    owner = pilot.add( "Pirate Shark", fpir, pos )
    owner:control(true)
    owner:follow( player.pilot() )

@@ -333,7 +333,7 @@ function enter ()
       pilot.clear()
 
       local function add_fleet( pos, local_fct )
-         pos = pos or vec2.newP( scur:radius()*math.sqrt(rnd.rnd()), rnd.angle() )
+         pos = pos or rnd.sample_circle( scur:radius() )
          local_fct = local_fct or fct
          local p = fleet.add( 1, flt, local_fct, pos )
          for k,v in ipairs(p) do

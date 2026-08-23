@@ -91,7 +91,7 @@ end
 local hk_exploded
 function enter()
    if system.cur() == mem.cursys and mem.targetlive then
-      local location = vec2.newP(math.sqrt(rnd.rnd()) * system.cur():radius(), rnd.angle())
+      local location = rnd.sample_circle( system.cur():radius() )
       local fct = faction.dynAdd( "Independent", "teenager", _("Independent"), {clear_enemies=true, clear_allies=true} )
       target = pilot.add( "Gawain", fct, location, _("Credence") )
       target:control()

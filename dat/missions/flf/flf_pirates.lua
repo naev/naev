@@ -235,7 +235,7 @@ function patrol_spawnPirates( n, boss )
 
    --fleetPirate = {}
    for i = 1, n do
-      local pos = vec2.newP( 0.8*system.cur():radius()*math.sqrt(rnd.rnd()), rnd.angle() )
+      local pos = rnd.sample_circle( 0.8*system.cur():radius() )
       local shipname
       if i == 1 and boss ~= nil then
          shipname = boss

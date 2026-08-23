@@ -237,7 +237,7 @@ function energy_surge_hook( pos )
       "Za'lek Heavy Drone",
       "Za'lek Heavy Drone",
    } do
-      local p = pos + vec2.newP( 300*math.sqrt(rnd.rnd()), rnd.angle() )
+      local p = pos + rnd.sample_circle( 300 )
       local d = pilot.add( s, fct, p )
       d:effectAdd("Blink")
       d:setHostile(true)
@@ -272,7 +272,7 @@ local function energy_surge_at_player ()
    if pp:flags("stealth") then
       range = 500
    end
-   energy_surge( pos + vec2.newP( math.sqrt(rnd.rnd())*range, rnd.angle() ) )
+   energy_surge( pos + rnd.sample_circle( range ) )
 end
 
 --[[
