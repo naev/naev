@@ -512,7 +512,7 @@ function cutscene10 ()
    pp:setHealth( 1+rnd.rnd()*5, 100 )
    pp:setEnergy( 100 )
    pp:control(true)
-   pp:setPos( vec2.newP( system.cur():radius() * 0.6 * rnd.rnd(), rnd.angle() ) )
+   pp:setPos( vec2.newP( system.cur():radius() * 0.6 * math.sqrt(rnd.rnd()), rnd.angle() ) )
    pp:setDir( rnd.angle() )
    pp:setVel( vec2.new() )
    camera.set( pp, true ) -- Hard set camera

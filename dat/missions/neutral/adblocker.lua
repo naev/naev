@@ -95,7 +95,7 @@ end
 local spammer
 function enter()
    if system.cur() == mem.current_system then
-      local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
+      local location = vec2.newP(math.sqrt(rnd.rnd()) * system.cur():radius(), rnd.angle())
       local fct = faction.dynAdd("Independent", "adspammer", _("Independent"), { clear_enemies = true,
          clear_allies = true })
       spammer = pilot.add("Gawain", fct, location, _("Advertiser 108CK"))

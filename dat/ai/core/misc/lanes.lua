@@ -410,7 +410,7 @@ function lanes.getPointInterest( L, pos )
    -- Case nothing of interest we just return a random position like in the old days
    -- TODO do something smarter here
    if #lv == 0 then
-      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.angle() )
+      return vec2.newP( math.sqrt(rnd.rnd()) * system.cur():radius(), rnd.angle() )
    end
 
    -- Get the connected components
@@ -425,7 +425,7 @@ function lanes.getPointInterest( L, pos )
 
    -- No far points, this shouldn't happen, but return random point in this case
    if #Sfar == 0 then
-      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.angle() )
+      return vec2.newP( math.sqrt(rnd.rnd()) * system.cur():radius(), rnd.angle() )
    end
 
    -- Random far away point

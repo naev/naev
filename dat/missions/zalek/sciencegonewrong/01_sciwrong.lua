@@ -93,7 +93,7 @@ end
 
 function sys_enter ()
    if system.cur()==mem.t_sys[2] and mem.targetalive and not mem.boarded then
-      local dist = rnd.rnd() * system.cur():radius() *1/2
+      local dist = math.sqrt(rnd.rnd()) * system.cur():radius() *1/2
       local location = vec2.newP(dist, rnd.angle())
       target = pilot.add( "Soromid Odium", "Soromid", location, shpnm )
       target:control()

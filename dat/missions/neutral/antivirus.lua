@@ -109,7 +109,7 @@ local boss
 local location
 function enter()
    if system.cur() == mem.fight_system and not mem.stopped then
-      location = vec2.newP(rnd.rnd() * 0.5 * system.cur():radius(), rnd.angle())
+      location = vec2.newP(math.sqrt(rnd.rnd()) * 0.5 * system.cur():radius(), rnd.angle())
       local fct = faction.dynAdd("Dummy", "adspammer", _("???"), { clear_enemies = true, clear_allies = true, ai="baddie" })
       boss = pilot.add("Dealbreaker", fct, location, _("4DV3RT1Z3R >:)"))
       pilotai.guard( boss, location )
