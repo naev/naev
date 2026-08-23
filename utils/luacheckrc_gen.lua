@@ -1360,6 +1360,7 @@ stds.rnd = {
             twosigma = {},
             threesigma = {},
             angle = {},
+            sample_circle = {},
             permutation = {},
          }
       }

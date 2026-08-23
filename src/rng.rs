@@ -311,6 +311,20 @@ impl UserData for Rnd {
          Ok(range(0. ..std::f64::consts::TAU))
       });
       /*@
+       * @brief Samples a random point from a unitary circle uniformly.
+       *
+       *   @luatreturn Vec2 A random vector on the unitary circle.
+       * @luafunc sample_circle
+       */
+      methods.add_function(
+         "sample_circle",
+         |_, ()| -> mlua::Result<physics::vec2::Vec2> {
+            let m = range(0.0f64..=1.).sqrt();
+            let a = range(0.0f64..std::f64::consts::TAU);
+            Ok(physics::vec2::Vec2::new(m * a.cos(), m * a.sin()))
+         },
+      );
+      /*@
        * @brief Creates a random permutation
        *
        * This creates a list from 1 to input and then randomly permutes it,
