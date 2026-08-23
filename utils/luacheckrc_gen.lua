@@ -1361,6 +1361,7 @@ stds.rnd = {
             threesigma = {},
             angle = {},
             sample_circle = {},
+            sample_annular = {},
             permutation = {},
          }
       }

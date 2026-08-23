@@ -325,6 +325,26 @@ impl UserData for Rnd {
          },
       );
       /*@
+       * @brief Samples a random point from an annular area uniformly.
+       *
+       * @usage d = rnd.sample_annular( 100, 500 ) -- Samples from donut between 100 and 500
+       * distance.
+       *
+       *   @luatparam number close Distance to start sampling at.
+       *   @luatparam number far Distance to end sampling at.
+       *   @luatreturn Vec2 A random vector on the unitary area between close and far.
+       * @luafunc sample_annular
+       */
+      methods.add_function(
+         "sample_annular",
+         |_, (close, far): (f64, f64)| -> mlua::Result<physics::vec2::Vec2> {
+            let close2 = close * close;
+            let m = range(0.0f64..=1.).sqrt() * (far * far - close2) + close2;
+            let a = range(0.0f64..std::f64::consts::TAU);
+            Ok(physics::vec2::Vec2::new(m * a.cos(), m * a.sin()))
+         },
+      );
+      /*@
        * @brief Creates a random permutation
        *
        * This creates a list from 1 to input and then randomly permutes it,
