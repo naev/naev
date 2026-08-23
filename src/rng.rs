@@ -341,7 +341,7 @@ impl UserData for Rnd {
          "sample_annular",
          |_, (close, far): (f64, f64)| -> mlua::Result<physics::vec2::Vec2> {
             let close2 = close * close;
-            let m = range(0.0f64..=1.).sqrt() * (far * far - close2) + close2;
+            let m = (range(0.0f64..=1.) * (far * far - close2) + close2).sqrt();
             let a = range(0.0f64..std::f64::consts::TAU);
             Ok(physics::vec2::Vec2::new(m * a.cos(), m * a.sin()))
          },
