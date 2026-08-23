@@ -311,15 +311,17 @@ impl UserData for Rnd {
          Ok(range(0. ..std::f64::consts::TAU))
       });
       /*@
-       * @brief Samples a random point from a unitary circle uniformly.
+       * @brief Samples a random point from a circle uniformly.
        *
-       *   @luatreturn Vec2 A random vector on the unitary circle.
+       *   @luatparam[opt=1] number range Radius of the circle.
+       *   @luatreturn Vec2 A random vector on the circle.
        * @luafunc sample_circle
        */
       methods.add_function(
          "sample_circle",
-         |_, ()| -> mlua::Result<physics::vec2::Vec2> {
-            let m = range(0.0f64..=1.).sqrt();
+         |_, r: Option<f64>| -> mlua::Result<physics::vec2::Vec2> {
+            let r = r.unwrap_or(1.0);
+            let m = range(0.0f64..=1.).sqrt() * r;
             let a = range(0.0f64..std::f64::consts::TAU);
             Ok(physics::vec2::Vec2::new(m * a.cos(), m * a.sin()))
          },
