@@ -980,6 +980,7 @@ dat/spob/dono.xml
 dat/spob/doormat.xml
 dat/spob/doranthex_prime.xml
 dat/spob/doranthex_secundus.xml
+dat/spob/doranthex_stop.xml
 dat/spob/doro.xml
 dat/spob/dowue.xml
 dat/spob/draconis_alpha.xml
@@ -1469,6 +1470,7 @@ dat/spob/new_europe.xml
 dat/spob/new_haven.xml
 dat/spob/new_konnor.xml
 dat/spob/new_mars.xml
+dat/spob/new_palovi.xml
 dat/spob/new_phobos.xml
 dat/spob/new_pluto.xml
 dat/spob/new_space_trade_hub.xml

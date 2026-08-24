@@ -6,9 +6,9 @@
  </general>
  <pos x="-58.929004" y="-833.412351"/>
  <spobs>
-  <spob>Fidelis Mining Station</spob>
   <spob>Fidelis III</spob>
   <spob>Fidelis IV</spob>
+  <spob>Fidelis Mining Station</spob>
   <spob>Mannannan</spob>
   <spob>Petaat</spob>
   <spob_virtual>Miner Local</spob_virtual>

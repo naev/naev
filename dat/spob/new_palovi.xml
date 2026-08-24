@@ -1,0 +1,32 @@
+<spob name="New Palovi">
+ <lua>lawless.lua</lua>
+ <pos x="1859.026361" y="11416.769262"/>
+ <GFX>
+  <space>moon-K00.avif</space>
+  <exterior>desertic4.avif</exterior>
+ </GFX>
+ <presence>
+  <faction>Free Trader</faction>
+  <base>13.333340</base>
+  <bonus>6.666660</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>5700</population>
+  <hide>0.25</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <nolanes/>
+  </services>
+  <description>Tucked on the dark side of Palovi IV, New Palovi is a small settlement established by Free Traders to facilitate the flow of contraband around House Sirius controlled space. Thanks to a particular orbital and low density, New Palovi is particularly hard to pick up on sensor scans, which facilitate its role as a smuggling hub in the area.</description>
+  <bar>The spaceport bar has been completely shielded against psychic powers to ensure the safety of conversations and dealings of dubious legality going on. It also makes it easy to tell when a psychic enters due to clear signs of discomfort.</bar>
+ </general>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
+</spob>
