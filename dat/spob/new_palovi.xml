@@ -2,8 +2,8 @@
  <lua>lawless.lua</lua>
  <pos x="1859.026361" y="11416.769262"/>
  <GFX>
-  <space>moon-K00.avif</space>
-  <exterior>desertic4.avif</exterior>
+  <space>moon-K00</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>Free Trader</faction>

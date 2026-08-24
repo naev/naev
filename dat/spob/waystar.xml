@@ -2,8 +2,8 @@
  <lua>lawless.lua</lua>
  <pos x="-6624.737267" y="-10665.827000"/>
  <GFX>
-  <space>moon-P02.avif</space>
-  <exterior>mining_shaft.avif</exterior>
+  <space>moon-P02</space>
+  <exterior>mining_shaft</exterior>
  </GFX>
  <presence>
   <faction>Free Trader</faction>

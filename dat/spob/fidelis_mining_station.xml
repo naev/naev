@@ -2,8 +2,8 @@
  <lua>lawless.lua</lua>
  <pos x="-8038.487882" y="12196.070175"/>
  <GFX>
-  <space>002.avif</space>
-  <exterior>station04.avif</exterior>
+  <space>002</space>
+  <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Free Trader</faction>
