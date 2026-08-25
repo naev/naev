@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2026-02-23 21:29+0900\n"
-"PO-Revision-Date: 2026-08-22 07:26+0000\n"
+"PO-Revision-Date: 2026-08-25 20:26+0000\n"
 "Last-Translator: Unterart <unterart@noreply.codeberg.org>\n"
 "Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/"
 "ru/>\n"
@@ -28,7 +28,7 @@ msgid "<widget mainimg />"
 msgstr "<widget wgtfct />"
 
 msgid "# <%= o:name() %>"
-msgstr ""
+msgstr "# <%= o:name() %>"
 
 #, fuzzy
 msgid "<widget wgtdescription />"
@@ -258,18 +258,16 @@ msgid "Corsair Engine"
 msgstr "Пиратский двигатель"
 
 msgid "Corsair Hull Plating"
-msgstr ""
+msgstr "Пиратское покрытие корпуса"
 
 msgid "Corsair Systems"
-msgstr ""
+msgstr "Пиратские системы"
 
-#, fuzzy
 msgid "Counterfeit Heavy Combat Vessel Licence"
-msgstr "Лицензия на тяжёлые боевые корабли"
+msgstr "Контрафактная лицензия на тяжёлые боевые корабли"
 
-#, fuzzy
 msgid "Counterfeit Heavy Weapon Licence"
-msgstr "Лицензия на тяжёлое оружие"
+msgstr "Контрафактная лицензия на тяжёлое оружие"
 
 msgid "Crippling Plasma"
 msgstr "Разрушающая плазма"
@@ -281,14 +279,13 @@ msgid "Cyborg Feather"
 msgstr "Кибер-перо"
 
 msgid "Cyclic Combat AI"
-msgstr ""
+msgstr "Циклический боевой ИИ"
 
 msgid "Daphne's Leap"
-msgstr ""
+msgstr "Прыжок Дафны"
 
-#, fuzzy
 msgid "Defective"
-msgstr "Отражающая оболочка"
+msgstr "Дефектный"
 
 msgid "Disruptor Artillery S1"
 msgstr "Disruptor Artillery S1"
@@ -303,7 +300,7 @@ msgid "Droid Repair Crew"
 msgstr "Бригада ремонтных дроидов"
 
 msgid "Droid Repair Crew MK2"
-msgstr ""
+msgstr "Бригада ремонтных дроидов МК2"
 
 msgid "Drone Bay"
 msgstr "Отсек для дронов"
@@ -321,7 +318,7 @@ msgid "Dvaered Flare Battery"
 msgstr "Дваредская сигнальная батарея"
 
 msgid "Efficiency Combat AI"
-msgstr ""
+msgstr "Эффективный боевой ИИ"
 
 msgid "Electron Burst Cannon"
 msgstr "Электронная пушка"
