@@ -195,7 +195,7 @@ function rogue_spawnRogue( n )
 
    --fleetRogue = {}
    for i = 1, n do
-      local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.angle() )
+      local pos = rnd.sample_circle( 0.8*system.cur():radius() )
       local pstk = fleet.add( 1, shipnames, frogue, pos, pilotnames, {ai="flf_rogue_norun"} )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_rogue" )

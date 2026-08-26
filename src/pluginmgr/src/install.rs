@@ -111,9 +111,9 @@ impl Installer {
       sipper(async move |mut _sender| {
          info!("Installing plugin from zip download '{}'", url.as_str());
          let info = &self.plugin;
-         let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
+         let dest_zip = self.root.join(format!("{}.zip", info.identifier));
 
-         info!("Downloading plugin '{}' from {}", &info.name, url.as_str());
+         info!("Downloading plugin '{}' from {}", info.name, url.as_str());
 
          // Download zip into memory
          let bytes = {
@@ -126,7 +126,7 @@ impl Installer {
 
          // Save as a single zip file in plugins dir
          fs::write(&dest_zip, &bytes)?;
-         info!("Installed '{}' to {}", &info.name, dest_zip.display());
+         info!("Installed '{}' to {}", info.name, dest_zip.display());
          Ok(())
       })
    }
@@ -135,7 +135,7 @@ impl Installer {
    pub fn update_zip_plugin<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
       sipper(async move |mut _sender| {
          let info = &self.plugin;
-         let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
+         let dest_zip = self.root.join(format!("{}.zip", info.identifier));
 
          // Check version difference (same as before)
          let local = Plugin::from_path(&dest_zip)?;
@@ -143,12 +143,12 @@ impl Installer {
          if info.version <= local.version {
             info!(
                "{} is already up to date (local v{} >= repo v{})",
-               &info.name, info.version, local.version
+               info.name, info.version, local.version
             );
             return Ok(());
          }
 
-         info!("Updating zip plugin '{}' from {}", &info.name, url.as_str());
+         info!("Updating zip plugin '{}' from {}", info.name, url.as_str());
 
          // Download new archive
          let bytes = {

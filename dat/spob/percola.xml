@@ -1,19 +1,19 @@
 <spob name="Percola">
- <pos x="-7709.43377" y="-7831.235723"/>
+ <pos x="-7709.433770" y="-7831.235723"/>
  <GFX>
   <space>moon-M05</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>300000</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

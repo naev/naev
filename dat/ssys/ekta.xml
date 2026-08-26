@@ -1,8 +1,8 @@
 <ssys name="Ekta">
  <general>
-  <radius>21000</radius>
+  <radius>21000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
  </general>
  <pos x="390.020551" y="99.073207"/>
  <spobs>
@@ -17,12 +17,12 @@
  </spobs>
  <jumps>
   <jump target="Mida">
-   <hide>1</hide>
-   <pos x="20721.100011" y="3411.160256" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Telika">
-   <hide>1</hide>
-   <pos x="-9351.917239" y="18802.703102" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

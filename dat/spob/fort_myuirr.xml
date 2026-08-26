@@ -14,7 +14,7 @@
  <general>
   <class>1</class>
   <population>500</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

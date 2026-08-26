@@ -1,19 +1,19 @@
 <spob name="Ianella IV">
- <pos x="9958.36484" y="1095.343015"/>
+ <pos x="9958.364840" y="1095.343015"/>
  <GFX>
   <space>M14</space>
   <exterior>agricultural</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>6</base>
-  <bonus>3</bonus>
+  <base>6.000000</base>
+  <bonus>3.000000</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>8.7e+06</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

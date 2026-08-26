@@ -980,6 +980,7 @@ dat/spob/dono.xml
 dat/spob/doormat.xml
 dat/spob/doranthex_prime.xml
 dat/spob/doranthex_secundus.xml
+dat/spob/doranthex_stop.xml
 dat/spob/doro.xml
 dat/spob/dowue.xml
 dat/spob/draconis_alpha.xml
@@ -1077,6 +1078,7 @@ dat/spob/feye_i.xml
 dat/spob/feye_iv.xml
 dat/spob/fidelis_iii.xml
 dat/spob/fidelis_iv.xml
+dat/spob/fidelis_mining_station.xml
 dat/spob/finn.xml
 dat/spob/flach.xml
 dat/spob/folevo.xml
@@ -1468,6 +1470,7 @@ dat/spob/new_europe.xml
 dat/spob/new_haven.xml
 dat/spob/new_konnor.xml
 dat/spob/new_mars.xml
+dat/spob/new_palovi.xml
 dat/spob/new_phobos.xml
 dat/spob/new_pluto.xml
 dat/spob/new_space_trade_hub.xml
@@ -1604,6 +1607,7 @@ dat/spob/poltergeist_alpha.xml
 dat/spob/porro_farming_station.xml
 dat/spob/porro_ii.xml
 dat/spob/porro_iii.xml
+dat/spob/port_oread.xml
 dat/spob/possum_ii.xml
 dat/spob/praxis.xml
 dat/spob/priscus.xml
@@ -2007,6 +2011,7 @@ dat/spob/waterholes_moon.xml
 dat/spob/wayline.xml
 dat/spob/wayline_m1.xml
 dat/spob/wayline_m2.xml
+dat/spob/waystar.xml
 dat/spob/wellen.xml
 dat/spob/werlen.xml
 dat/spob/westeros_nest.xml

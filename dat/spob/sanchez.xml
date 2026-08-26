@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Dreamer Clan</faction>
-  <base>80</base>
-  <bonus>10</bonus>
+  <base>80.000000</base>
+  <bonus>10.000000</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>G</class>
   <population>12500</population>
-  <hide>0.3</hide>
+  <hide>0.300000</hide>
   <services>
    <land/>
    <refuel/>

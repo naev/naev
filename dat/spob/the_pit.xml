@@ -2,13 +2,13 @@
  <lua>lawless.lua</lua>
  <pos x="-17371.027610" y="-2648.965101"/>
  <GFX>
-  <space>moon-Y00.avif</space>
-  <exterior>gas.avif</exterior>
+  <space>moon-Y00</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Free Trader</faction>
-  <base>12</base>
-  <bonus>6</bonus>
+  <base>12.000000</base>
+  <bonus>6.000000</bonus>
   <range>8</range>
  </presence>
  <general>

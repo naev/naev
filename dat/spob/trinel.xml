@@ -13,7 +13,7 @@
  <general>
   <class>D</class>
   <population>12500</population>
-  <hide>1.5</hide>
+  <hide>1.500000</hide>
   <services>
    <land/>
    <refuel/>

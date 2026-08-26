@@ -202,9 +202,9 @@ struct Decoder {
    stereo: bool,
 }
 impl Decoder {
-   fn new(mut format: &mut Box<dyn FormatReader>) -> Result<Decoder> {
+   fn new(format: &mut Box<dyn FormatReader>) -> Result<Decoder> {
       // Get replaygain information
-      let replay_gain = ReplayGain::from_formatreader(&mut format)?;
+      let replay_gain = ReplayGain::from_formatreader(format)?;
 
       let track = format
          .default_track(symphonia::core::formats::TrackType::Audio)
@@ -624,7 +624,7 @@ impl AudioStatic {
       debug::object_label(
          debug::consts::AL_SOURCE_EXT,
          source.inner.raw(),
-         &format!("{}", &buffer.name.display()),
+         &format!("{}", buffer.name.display()),
       );
       Ok(AudioStatic {
          source,

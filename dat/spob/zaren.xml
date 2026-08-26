@@ -1,19 +1,19 @@
 <spob name="Zaren">
- <pos x="-4796.355075" y="-6207.29527"/>
+ <pos x="-4796.355075" y="-6207.295270"/>
  <GFX>
   <space>Y00</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>6.6666666</base>
-  <bonus>3.3333334</bonus>
+  <base>6.666667</base>
+  <bonus>3.333333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>Y</class>
   <population>10112</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

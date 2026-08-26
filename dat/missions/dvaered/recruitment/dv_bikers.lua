@@ -523,9 +523,9 @@ end
 
 -- Spawn the gangs for a fun scene
 function spawnGang( name )
-   local dist = rnd.rnd() * system.cur():radius() * 0.5
+   local dist = math.sqrt(rnd.rnd()) * system.cur():radius() * 0.5
    local pos1  = vec2.newP( dist, rnd.angle() )
-   dist = rnd.rnd() * system.cur():radius() * 0.5
+   dist = math.sqrt(rnd.rnd()) * system.cur():radius() * 0.5
    local pos2  = vec2.newP( dist, rnd.angle() )
 
    local fct  = faction.dynAdd( "Independent", "bikers", _("Bikers"), {clear_enemies=true, clear_allies=true} )

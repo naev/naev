@@ -1,30 +1,30 @@
 <ssys name="Zacron">
  <general>
-  <radius>17500</radius>
+  <radius>17500.000000</radius>
   <spacedust>500</spacedust>
-  <interference>18</interference>
-  <nebula hue="240">100</nebula>
+  <interference>18.000000</interference>
+  <nebula hue="240.000000">100.000000</nebula>
  </general>
- <pos x="-245.85661" y="-320.711695"/>
+ <pos x="-245.856610" y="-320.711695"/>
  <spobs>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Raelid">
-   <hide>1</hide>
-   <pos x="-1895.188969" y="-17397.076155" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Sonas">
-   <hide>1</hide>
-   <pos x="-112.272601" y="17499.639849" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Toaxis">
-   <hide>1</hide>
-   <pos x="17002.193115" y="-4144.324946" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Tuoladis">
-   <hide>1</hide>
-   <pos x="-14551.373688" y="-9721.498021" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

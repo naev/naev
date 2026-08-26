@@ -90,9 +90,9 @@ function takeoff()
    pilot.toggleSpawn(false)
    pilot.clear()
    local srad = system.cur():radius()
-   local location1 = vec2.newP( srad * rnd.rnd(), rnd.angle() )
-   local location2 = vec2.newP( srad * rnd.rnd(), rnd.angle() )
-   local location3 = vec2.newP( srad * rnd.rnd(), rnd.angle() )
+   local location1 = rnd.sample_circle( srad )
+   local location2 = rnd.sample_circle( srad )
+   local location3 = rnd.sample_circle( srad )
    if mem.choice == 1 then
       mem.shiptype = "Goddard"
    else

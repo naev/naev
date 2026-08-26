@@ -6,14 +6,14 @@
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>26</base>
-  <bonus>4</bonus>
+  <base>26.000000</base>
+  <bonus>4.000000</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>M</class>
   <population>8000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

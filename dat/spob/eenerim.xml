@@ -1,19 +1,19 @@
 <spob name="Eenerim">
- <pos x="14796.30322" y="-2833.916292"/>
+ <pos x="14796.303220" y="-2833.916292"/>
  <GFX>
   <space>O01</space>
   <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>1.5e+07</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

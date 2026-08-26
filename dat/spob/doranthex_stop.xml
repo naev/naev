@@ -1,0 +1,32 @@
+<spob name="Doranthex Stop">
+ <lua>lawless.lua</lua>
+ <pos x="3444.863379" y="4703.563460"/>
+ <GFX>
+  <space>001</space>
+  <exterior>station04</exterior>
+ </GFX>
+ <presence>
+  <faction>Free Trader</faction>
+  <base>13.333340</base>
+  <bonus>6.666660</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>525</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <nolanes/>
+  </services>
+  <description>Originally a minor refuelling stop, it has since a large uptick in activity since the Incident thanks to increased smuggling in the area. So much, that it was pushed by a dozen stolen plowshares into an asteroid field to lower visibility in an extreme feat of reckless engineering. Surprisingly enough, damage from impacts has been minimal and the station has never ceased operating during the entire time.</description>
+  <bar>The bar hasn't seen many changes nor improvements since the station was a tiny refuelling depot. What was originally a fairly spacious area has become significantly more crowded, however, the poor quality of the food and drinks helps to keep it from being packed. Looking at the amount of grime on the walls, it would also seem that the bar may have not been cleaned since then either.</bar>
+ </general>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
+</spob>

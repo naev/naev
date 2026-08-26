@@ -380,7 +380,7 @@ impl App {
             .await;
          let images = {
             let mut data = c.data.lock().unwrap();
-            for (_, wrap) in data.iter_mut() {
+            for wrap in data.values_mut() {
                wrap.local = None;
                wrap.state = PluginState::Available;
             }
@@ -427,7 +427,7 @@ impl App {
             })
             .await;
 
-         for (_, wrap) in c.data.lock().unwrap().iter_mut() {
+         for wrap in c.data.lock().unwrap().values_mut() {
             if let Err(e) = wrap.load_image(&c.conf.catalog_cache) {
                warn_err!(e);
             }

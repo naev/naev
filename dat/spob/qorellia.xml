@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Raven Clan</faction>
-  <base>60</base>
-  <bonus>10</bonus>
+  <base>60.000000</base>
+  <bonus>10.000000</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>G</class>
   <population>750000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

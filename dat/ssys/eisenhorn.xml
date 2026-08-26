@@ -1,30 +1,30 @@
 <ssys name="Eisenhorn">
  <general>
-  <radius>10000</radius>
+  <radius>10000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>35.55</interference>
-  <nebula volatility="2.3" hue="270">300</nebula>
+  <interference>35.550000</interference>
+  <nebula volatility="2.300000" hue="270.000000">300.000000</nebula>
   <nolanes/>
  </general>
- <pos x="-187.730337" y="242.14087"/>
+ <pos x="-187.730337" y="242.140870"/>
  <spobs>
   <spob_virtual>Traders Society Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Alsafi">
-   <hide>1</hide>
-   <pos x="-5391.791623" y="8421.910893" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Qellan">
-   <hide>1</hide>
-   <pos x="-9713.606686" y="-2376.098724" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>4000</radius>
-   <pos x="0" y="0"/>
+   <radius>4000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
   </asteroid>
  </asteroids>
  <tags>

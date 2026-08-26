@@ -219,12 +219,12 @@ function bounty.choose_spawn_pos()
    end
    if not pos then
       local r = system.cur():radius() * 0.8
-      local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
+      local p = rnd.sample_circle( r )
       pos = lanes.getNonPoint( L, p, r, m )
    end
    if not pos then
       local r = system.cur():radius() * 0.8
-      pos = vec2.newP( rnd.rnd() * r, rnd.angle() )
+      pos = rnd.sample_circle( r )
    end
    return pos
 end

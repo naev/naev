@@ -1,35 +1,30 @@
 <ssys name="SW-11">
  <general>
-  <radius>6666.666666</radius>
-  <spacedust>300</spacedust>
-  <interference>0</interference>
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
+  <radius>6666.666666</radius>
+  <spacedust>300</spacedust>
+  <interference>0.000000</interference>
  </general>
  <pos x="-1244.201301" y="-403.247966"/>
  <spobs/>
  <jumps>
+  <jump target="Octavian">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="SW-10">
    <autopos/>
-   <hide>1</hide>
-   <tags/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="SW-12">
    <autopos/>
-   <hide>1</hide>
-   <tags>
-    <tag>hidden</tag>
-   </tags>
-  </jump>
-  <jump target="Octavian">
-   <autopos/>
-   <hide>1</hide>
-   <tags/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
  <tags>
   <tag>stellarwind</tag>

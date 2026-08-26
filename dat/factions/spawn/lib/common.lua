@@ -321,7 +321,7 @@ function scom.spawn( pilots )
       -- guerrilla should avoid enemies nearby
       if guerrilla then
          local r = system.cur():radius() * 0.8
-         local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
+         local p = rnd.sample_circle( r )
          local m = 3000 -- margin
          local L = lanes.get(fct, "non-friendly")
          for i = 1,20 do -- Just brute force sampling

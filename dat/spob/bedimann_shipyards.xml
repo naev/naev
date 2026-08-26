@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>12</base>
-  <bonus>8</bonus>
+  <base>12.000000</base>
+  <bonus>8.000000</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>12500</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

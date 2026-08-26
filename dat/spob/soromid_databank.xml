@@ -1,20 +1,20 @@
 <spob name="Soromid Databank">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="6010.33073" y="15176.980536"/>
+ <pos x="6010.330730" y="15176.980536"/>
  <GFX>
   <space>station-sphere</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>100</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

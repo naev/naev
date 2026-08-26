@@ -1,19 +1,19 @@
 <spob name="Tulla">
- <pos x="-67.26284" y="-4397.934565"/>
+ <pos x="-67.262840" y="-4397.934565"/>
  <GFX>
   <space>M01</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>M</class>
   <population>7.805e+06</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

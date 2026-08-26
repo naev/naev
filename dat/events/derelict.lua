@@ -134,7 +134,7 @@ function create ()
    end
 
    -- Create the derelict.
-   local dist  = rnd.rnd() * cursys:radius() * 0.8
+   local dist  = math.sqrt(rnd.rnd()) * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.angle() )
    derelict    = pilot.add(dship, "Derelict", pos, p_("ship", "Derelict"), {ai="dummy", naked=true})
    derelict:outfitRm( "cores" ) -- Must be not-space worthy

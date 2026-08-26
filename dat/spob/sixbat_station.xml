@@ -1,19 +1,19 @@
 <spob name="Sixbat Station">
- <pos x="717.5685" y="1277.514367"/>
+ <pos x="717.568500" y="1277.514367"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>M</class>
   <population>40000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

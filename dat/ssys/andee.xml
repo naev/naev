@@ -1,8 +1,8 @@
 <ssys name="Andee">
  <general>
-  <radius>24500</radius>
+  <radius>24500.000000</radius>
   <spacedust>400</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
  </general>
  <pos x="96.463493" y="-552.456015"/>
  <spobs>
@@ -15,8 +15,8 @@
  </spobs>
  <jumps>
   <jump target="Brimstone">
-   <hide>1</hide>
-   <pos x="-17267.349682" y="17380.697194" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

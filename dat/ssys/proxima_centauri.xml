@@ -1,9 +1,9 @@
 <ssys name="Proxima Centauri">
  <general>
-  <radius>15000</radius>
+  <radius>15000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>123.3</interference>
-  <nebula volatility="47.2" hue="295">700</nebula>
+  <interference>123.300000</interference>
+  <nebula volatility="47.200000" hue="295.000000">700.000000</nebula>
   <nolanes/>
  </general>
  <pos x="114.012798" y="-114.297339"/>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Polaris">
-   <hide>1</hide>
-   <pos x="-12091.907191" y="8876.135446" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Sten">
-   <hide>1</hide>
-   <pos x="499.674972" y="-14991.675187" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

@@ -1,9 +1,9 @@
 <ssys name="Toros">
  <general>
-  <radius>21000</radius>
+  <radius>21000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>53.5714</interference>
-  <nebula volatility="1">400</nebula>
+  <interference>53.571400</interference>
+  <nebula volatility="1.000000">400.000000</nebula>
   <nolanes/>
  </general>
  <pos x="-30.031716" y="-299.578732"/>
@@ -11,7 +11,7 @@
  <jumps>
   <jump target="Doeston">
    <autopos/>
-   <hide>1</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>

@@ -1,19 +1,19 @@
 <spob name="August">
- <pos x="6473.518135" y="10793.46468"/>
+ <pos x="6473.518135" y="10793.464680"/>
  <GFX>
   <space>P01</space>
   <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>6.6666666</base>
-  <bonus>3.3333334</bonus>
+  <base>6.666667</base>
+  <bonus>3.333333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>P</class>
   <population>750000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

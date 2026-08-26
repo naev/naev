@@ -1,19 +1,19 @@
 <spob name="INSS-1">
- <pos x="19309.62647" y="-4352.741665"/>
+ <pos x="19309.626470" y="-4352.741665"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>1.3333334</base>
-  <bonus>0.6666666</bonus>
+  <base>1.333333</base>
+  <bonus>0.666667</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>800</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

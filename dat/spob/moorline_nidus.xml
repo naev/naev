@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.33334</base>
-  <bonus>6.66666</bonus>
+  <base>13.333340</base>
+  <bonus>6.666660</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>1000</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

@@ -514,7 +514,7 @@ end
 function strafer_choosePoint()
    escort[1]:control()
    escort[1]:taskClear()
-   local sysrad = rnd.rnd() * system.cur():radius()
+   local sysrad = math.sqrt(rnd.rnd()) * system.cur():radius()
    escort[1]:moveto( vec2.newP(sysrad, rnd.angle()), false, false )
 end
 

@@ -1,19 +1,19 @@
 <spob name="Oort Farming Station">
- <pos x="1073.63139" y="-2473.352627"/>
+ <pos x="1073.631390" y="-2473.352627"/>
  <GFX>
   <space>station-agriculture</space>
   <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>6.6666666</base>
-  <bonus>3.3333334</bonus>
+  <base>6.666667</base>
+  <bonus>3.333333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>15000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

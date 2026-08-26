@@ -1,20 +1,20 @@
 <spob name="Morgan Citadel">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="2356.904292" y="2279.77025"/>
+ <pos x="2356.904292" y="2279.770250"/>
  <GFX>
   <space>station-dvaered1</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>15.33334</base>
-  <bonus>7.66666</bonus>
+  <base>15.333340</base>
+  <bonus>7.666660</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>75000</population>
-  <hide>2</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

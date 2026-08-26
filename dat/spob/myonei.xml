@@ -1,19 +1,19 @@
 <spob name="Myonei">
- <pos x="-10688.32321" y="-22277.222412"/>
+ <pos x="-10688.323210" y="-22277.222412"/>
  <GFX>
   <space>K03</space>
   <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>Y</class>
   <population>50000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

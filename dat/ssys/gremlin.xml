@@ -1,8 +1,8 @@
 <ssys name="Gremlin">
  <general>
-  <radius>14000</radius>
+  <radius>14000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>0</interference>
+  <interference>0.000000</interference>
  </general>
  <pos x="-538.994196" y="-639.404698"/>
  <spobs>
@@ -10,29 +10,29 @@
  </spobs>
  <jumps>
   <jump target="Blacin">
+   <autopos/>
    <hidden/>
-   <hide>1</hide>
-   <pos x="-5673.6202" y="12798.829392" was_auto="true"/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Daravon">
-   <hide>0</hide>
-   <pos x="-12513.245863" y="6278.429576" was_auto="true"/>
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Dvaer">
-   <hide>0</hide>
-   <pos x="12256.995463" y="-6765.061878" was_auto="true"/>
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Vlexon">
-   <hide>1</hide>
-   <pos x="12722.138398" y="5843.560093" was_auto="true"/>
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>10000</radius>
-   <pos x="0" y="0"/>
-   <density>0.1</density>
+   <radius>10000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+   <density>0.100000</density>
   </asteroid>
  </asteroids>
  <tags>

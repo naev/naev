@@ -18,7 +18,7 @@ function create ()
    pilot.toggleSpawn(false)
    player.pilot():setInvincible(true)
    local function add_pilot( ship, faction )
-      local pos = vec2.newP( system.cur():radius()*0.9*math.sqrt(rnd.rnd()), rnd.angle() )
+      local pos = rnd.sample_circle( system.cur():radius() )
       local p = pilot.add( ship, faction, pos )
       p:setVisplayer(true)
    end

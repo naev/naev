@@ -1,19 +1,19 @@
 <spob name="Castellum Telika">
- <pos x="-7784.417429" y="3126.45659"/>
+ <pos x="-7784.417429" y="3126.456590"/>
  <GFX>
   <space>station-sphere</space>
   <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>30</base>
-  <bonus>10</bonus>
+  <base>30.000000</base>
+  <bonus>10.000000</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>10000</population>
-  <hide>1</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

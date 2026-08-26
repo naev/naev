@@ -1,19 +1,19 @@
 <spob name="Suoer">
- <pos x="21731.696671" y="-9474.38572"/>
+ <pos x="21731.696671" y="-9474.385720"/>
  <GFX>
   <space>moon-M04</space>
   <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>13.3333334</base>
-  <bonus>6.6666666</bonus>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1e+08</population>
-  <hide>0.6</hide>
+  <hide>0.600000</hide>
   <services>
    <land/>
    <refuel/>

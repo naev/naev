@@ -37,7 +37,7 @@ function idle ()
       ai.pushtask("drift")
    elseif r < 0.9 then
       -- Choose random point and choose a position between there and current position
-      local pos = vec2.newP( rnd.rnd()*system.cur():radius(), rnd.angle() )
+      local pos = rnd.sample_circle( system.cur():radius() )
       local m = rnd.rnd()
       pos = pos * m + ai.pilot():pos() * (1-m)
       ai.pushtask("moveto_nobrake_raw", pos)
