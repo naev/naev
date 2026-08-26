@@ -3229,6 +3229,7 @@ dat/factions/equip/sirius.lua
 dat/factions/equip/soromid.lua
 dat/factions/equip/thurion.lua
 dat/factions/equip/trader.lua
+dat/factions/equip/traders_society.lua
 dat/factions/equip/zalek.lua
 dat/factions/spawn/collective.lua
 dat/factions/spawn/collective/default.lua
