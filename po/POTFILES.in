@@ -3302,7 +3302,7 @@ dat/factions/standing/sirius.lua
 dat/factions/standing/soromid.lua
 dat/factions/standing/static.lua
 dat/factions/standing/thurion.lua
-dat/factions/standing/trader_society.lua
+dat/factions/standing/traders_society.lua
 dat/factions/standing/yetmer.lua
 dat/factions/standing/zalek.lua
 dat/gui/brushed.lua
