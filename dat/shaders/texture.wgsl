@@ -4,7 +4,6 @@ struct TextureData {
    colour: vec4f,
 }
 @group(0) @binding(0) var<uniform> texturedata: TextureData;
-
 @group(0) @binding(1) var texsampler: sampler;
 @group(0) @binding(2) var texture: texture_2d<f32>;
 
