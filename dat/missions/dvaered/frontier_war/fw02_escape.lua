@@ -41,6 +41,7 @@ local fmt = require "format"
 local pir = require "common.pirate"
 local cinema = require "cinema"
 local ai_setup = require "ai.core.setup"
+local equipopt = require "equipopt"
 
 local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots -- Non-persistent state
 local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-declared functions
@@ -368,18 +369,20 @@ function enter()
       strafer:setVisplayer()
 
       -- give him top equipment
-      -- TODO switch to equipopt
-      strafer:outfitAdd("S&K Skirmish Plating",2)
-      strafer:outfitAdd("Tricon Zephyr Engine",2)
-      strafer:outfitAdd("Photo-Voltaic Nanobot Coating")
-      strafer:outfitAdd("Milspec Orion 2301 Core System",2)
-      strafer:outfitAdd("Gauss Gun", 3)
-      strafer:outfitAdd("Vulcan Gun", 3)
-
-      strafer:setHealth(100,100)
-      strafer:setEnergy(100)
+      equipopt.dvaered( strafer, {
+         cores = {
+            hull = "S&K Skirmish Plating",
+            hull_secondary = "S&K Skirmish Plating",
+            systems = "Milspec Orion 2301 Core System",
+            systems_secondary = "Milspec Orion 2301 Core System",
+            engines = "Tricon Zephyr Engine",
+            engines_secondary = "Tricon Zephyr Engine",
+         },
+         move = 0,
+         max_same_weap = 10,
+         rnd = 0, -- Consistent
+      } )
       strafer:setFuel(true)
-      ai_setup.setup(strafer)
 
       -- Behaviour
       strafer:control(true)

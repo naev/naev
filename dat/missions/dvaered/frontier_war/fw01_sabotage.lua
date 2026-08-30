@@ -417,7 +417,9 @@ end
 -- Disables the ships
 function disableDuel()
    klank:setDisable()
+   klank:setNoBoard()
    battleaddict:setDisable()
+   battleaddict:setNoBoard()
 
    -- Explosion and such
    sfx( true, nil, audiodata.new("snd/sounds/empexplode") )
