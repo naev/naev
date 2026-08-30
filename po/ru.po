@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2026-08-25 20:25+0000\n"
-"Last-Translator: Unterart <unterart@noreply.codeberg.org>\n"
+"PO-Revision-Date: 2026-08-30 10:30+0000\n"
+"Last-Translator: piezoelement <piezoelement@noreply.codeberg.org>\n"
 "Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev-0-"
 "13-x/ru/>\n"
 "Language: ru\n"
@@ -34,9 +34,8 @@ msgstr "# <%= o:name() %>"
 msgid "<widget wgtdescription />"
 msgstr "<widget wgtfct />"
 
-#, fuzzy
 msgid "## Properties"
-msgstr "## Пираты"
+msgstr "## Параметры"
 
 #, fuzzy
 msgid "<widget wgtsummary />"
