@@ -301,7 +301,7 @@ pub extern "C" fn gatherable_getClosest(pos: *const Vector2<f64>, rad: f64) -> i
       .min_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
 
    if let Some(g) = gclosest
-      && g.1 < rad*rad
+      && g.1 < rad * rad
    {
       g.0.as_ffi()
    } else {

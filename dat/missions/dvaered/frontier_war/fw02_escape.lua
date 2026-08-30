@@ -40,7 +40,6 @@ local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
 local cinema = require "cinema"
-local ai_setup = require "ai.core.setup"
 local equipopt = require "equipopt"
 
 local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots -- Non-persistent state
