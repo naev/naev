@@ -7,7 +7,7 @@
  <location>Bar</location>
  <faction>Dvaered</faction>
  <done>Destroy the FLF base!</done>
- <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
+ <cond>system.get("Tarsus"):jumpDist() &lt; 4</cond>
  <notes>
   <campaign>Frontier Invasion</campaign>
   <requires name="The FLF is dead"/>
@@ -173,7 +173,7 @@ function meeting_msg3()
 end
 
 function spawnTam( origin )
-   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam"), {naked=true} )
+   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam") )
    majorTam:setHilight()
    majorTam:setVisplayer()
    majorTam:setFaction( fw.fct_dhc() )
@@ -275,7 +275,9 @@ function land() -- The player is only allowed to land on special occasions
 end
 
 function loading()
-   misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
+   if mem.stage ~= 0 then -- Tam has nothing to say at stage 0
+      misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
+   end
 end
 
 function meeting_timer() -- Delay the triggering of the meeting
@@ -375,7 +377,7 @@ function hamelsenAmbush()
    hamelsen = pilot.add( "Shark", fwarlords, pos, _("Colonel Hamelsen"), {ai="baddie_norun", naked=true} )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-   equipopt.dvaered( majorTam, {
+   equipopt.dvaered( hamelsen, {
       cores = {
          hull = "S&K Skirmish Plating",
          systems = "Milspec Orion 2301 Core System",
