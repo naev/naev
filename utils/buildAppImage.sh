@@ -112,22 +112,18 @@ get_tools() {
 }
 
 build_appdir() {
-   # Honours the MESON variable set by the environment before setting it manually
-   if [ -z "$MESON" ]; then
-      MESON="$SOURCEPATH/meson.py"
+   PROFILE=()
+   if [ "$BUILDTYPE" = "release" ]; then
+      PROFILE=(--release)
    fi
-   "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \
-      --native-file "$SOURCEPATH/utils/build/linux_steamruntime.ini" \
-      --buildtype "$BUILDTYPE" \
-      --force-fallback-for=glpk,SuiteSparse \
-      -Dsteamruntime=true \
-      -Dprefix="/usr" \
-      -Db_lto=false \
-      -Dauto_features=enabled \
-      -Ddocs_c=disabled \
-      -Ddocs_lua=disabled
-   # Compile and Install Naev to DISTDIR
-   DESTDIR=$APPDIRPATH "$MESON" install -C "$BUILDPATH"
+   # Keep cargo's artifacts under the build path the caller asked for.
+   export CARGO_TARGET_DIR="$BUILDPATH"
+   CARGO_ARGS=(--manifest-path "$SOURCEPATH/Cargo.toml")
+
+   cargo build "${CARGO_ARGS[@]}" --package naev "${PROFILE[@]}"
+   # Install Naev to DISTDIR
+   DESTDIR="$APPDIRPATH" cargo run --quiet "${CARGO_ARGS[@]}" --package xtask --release -- \
+      install --prefix /usr "${PROFILE[@]}"
    # Rename metainfo file
    mv "$APPDIRPATH/usr/share/metainfo/org.naev.Naev.metainfo.xml" "$APPDIRPATH/usr/share/metainfo/org.naev.Naev.appdata.xml"
    pushd "$WORKPATH"
