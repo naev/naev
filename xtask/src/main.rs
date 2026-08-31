@@ -14,6 +14,7 @@ mod data;
 mod docs;
 mod generated;
 mod i18n;
+mod install;
 mod rule;
 mod run;
 
@@ -41,6 +42,9 @@ enum Command {
    Run(run::RunArgs),
    /// Build and run the game under valgrind.
    Valgrind(run::ValgrindArgs),
+   /// Install the game.
+   #[command(after_help = install::defaults_help())]
+   Install(install::InstallArgs),
    /// Build the documentation.
    #[command(after_help = docs::defaults_help())]
    Docs {
@@ -66,6 +70,7 @@ fn main() -> Result<()> {
       Command::UpdatePo => i18n::update_po(&root, &data_dir),
       Command::Run(args) => run::run(&root, &target, &data_dir, &args),
       Command::Valgrind(args) => run::valgrind(&root, &target, &data_dir, &args),
+      Command::Install(args) => install::install(&root, &target, &data_dir, &args),
       Command::Docs { kinds, output } => docs::build(&root, &target, &kinds, output),
    }
 }
