@@ -40,12 +40,19 @@ fn plural(count: usize) -> &'static str {
    if count == 1 { "" } else { "s" }
 }
 
+/// Where the derived outfits land. The rule that writes one and the rules that
+/// read it have to name the same path, or the dependency between them is never
+/// found.
+fn derived_outfits(out: &Path) -> PathBuf {
+   out.join("outfits/generated")
+}
+
 /// Bioship families and derived outfits. The naevpedia pages and tech lists
 /// cover these alongside the tracked outfits.
 fn outfit_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
    let bio_dir = out.join("outfits/bioship");
-   let derived_dir = out.join("outfits/generated");
    fs::create_dir_all(&bio_dir).context("creating the bioship output directory")?;
+   let derived_dir = derived_outfits(out);
    fs::create_dir_all(&derived_dir).context("creating the derived outfit directory")?;
 
    let script = root.join("dat/outfits/bioship/generate.py");
@@ -101,7 +108,7 @@ fn naevpedia_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
    let script = root.join("dat/naevpedia/outfits/outfits.py");
    let dest = out.join("naevpedia/outfits");
    for derived in generated::DERIVED {
-      let xml = out.join("outfits/generated").join(derived.output);
+      let xml = derived_outfits(out).join(derived.output);
       rules.push(page_rule(&script, &xml, &dest)?);
    }
 
@@ -149,7 +156,7 @@ fn tech_rules(root: &Path, out: &Path) -> Result<Vec<Rule>> {
          inputs.extend(
             generated::DERIVED
                .iter()
-               .map(|derived| out.join("outfits/generated").join(derived.output)),
+               .map(|derived| derived_outfits(out).join(derived.output)),
          );
       }
 
