@@ -188,3 +188,7 @@ portable-atomic = { workspace = true }
 
 #[dev-dependencies]
 #approx = "0.5"
+
+[build-dependencies]
+# Compiles and links the windows resource; does nothing for other targets.
+embed-resource = "3.0"
