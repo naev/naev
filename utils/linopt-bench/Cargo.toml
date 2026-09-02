@@ -1,0 +1,16 @@
+[package]
+name = "linopt-bench"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+good_lp = { version = "1.15", default-features = false, features = ["highs", "microlp"] }
+
+[build-dependencies]
+bindgen = "0.72"
+
+# microlp is pure Rust, so an unoptimised build makes it an order of magnitude
+# slower than it needs to be. Optimise it even in debug builds.
+[profile.dev.package.microlp]
+opt-level = 3

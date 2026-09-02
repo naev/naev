@@ -69,6 +69,7 @@ utils/model-view-c/*.png
 utils/model-view-c/*.bin
 
 utils/docmaker/target/*
+utils/linopt-bench/target/*
 
 docs/manual/book
 
