@@ -1,6 +1,7 @@
 #![allow(clippy::not_unsafe_ptr_arg_deref)]
 pub use anyhow;
 use anyhow::{Error, Result};
+use formatx::formatx;
 use fs_err as fs;
 use ndata::env;
 use nlog::{debug, debugx, info, infox, warn, warn_err};
@@ -45,6 +46,9 @@ use gettext::gettext;
 
 use std::sync::atomic::AtomicBool;
 static _QUIT: AtomicBool = AtomicBool::new(false);
+
+/// File we create on startup to see if startup process crashed
+const STARTUP_CRASH_FILE: &str = ".startup_crash";
 
 /// Restarts the process, *should* be cross-platform
 pub fn restart() -> Result<()> {
@@ -175,7 +179,8 @@ fn setup_conf_and_ndata() -> Result<(PathBuf, Option<nlog::WorkerGuard>)> {
 
    // Load the data and plugins.
    let guard = ndata::setup()?;
-   // Create some useful cache stuf once
+
+   // Create some useful cache stuff once
    if let Err(e) = fs::create_dir_all(ndata::cache_dir().join("collisions/")) {
       warn_err!(e);
    }
@@ -231,6 +236,66 @@ fn naevmain() -> Result<()> {
          false => debug!("AppImage not detected."),
       }
    }
+
+   if ndata::physfs::exists(STARTUP_CRASH_FILE) {
+      let plugins = match pluginmgr::local_plugins_dir() {
+         Ok(path) => match pluginmgr::discover_local_plugins(path) {
+            Ok(mut local) => {
+               local.retain(|p| !p.disabled);
+               local
+            }
+            Err(e) => {
+               warn_err!(e);
+               Vec::new()
+            }
+         },
+         Err(e) => {
+            warn_err!(e);
+            Vec::new()
+         }
+      };
+      if !plugins.is_empty() {
+         use sdl::messagebox::{ButtonData, ClickedButton, MessageBoxButtonFlag};
+         let mut pluginlist = String::new();
+         for p in &plugins {
+            pluginlist.push_str(&format!("\n * {} [v{}]", p.name, p.version));
+         }
+         match sdl::messagebox::show_message_box(
+            sdl::messagebox::MessageBoxFlag::WARNING,
+            &[
+               ButtonData{
+                  flags: MessageBoxButtonFlag::RETURNKEY_DEFAULT,
+                  button_id: 0,
+                  text: gettext("Disable all plugins"),
+               },
+               ButtonData{
+                  flags: MessageBoxButtonFlag::ESCAPEKEY_DEFAULT,
+                  button_id: 1,
+                  text: gettext("Load normally"),
+               },
+            ],
+            gettext("Naev Failed to Load"),
+            &formatx!( "{}{}", gettext("Naev failed to load last launch most likely due to a plugin incompatibility. Do you wish to disable all plugins?\nCurrent plugins are listed below:"), pluginlist ).unwrap_or("Naev failed to load last launch most likely due to a plugin incompatibility. Do you wish to disable all plugins?".to_string()),
+            None,
+            None,
+         ) {
+            Ok( ClickedButton::CustomButton(b) ) => {
+               if b.button_id==0 {
+                  for p in &plugins {
+                     if let Err(e) = p.disable(true) {
+                        warn_err!(e);
+                     }
+                  }
+               }
+            },
+            Ok( _ ) => (),
+            Err(e) => {
+               warn_err!(e)
+            },
+         }
+      }
+   }
+   let _ = ndata::physfs::File::open(STARTUP_CRASH_FILE, ndata::physfs::Mode::Write);
 
    // Plugin initialization before checking the data for consistency
    plugin::mount()?;
@@ -428,6 +493,7 @@ fn naevmain() -> Result<()> {
    }
 
    // Main loop
+   let mut did_loop = false;
    while unsafe { naevc::naev_isQuit() } == 0 {
       unsafe {
          naevc::naev_main_events();
@@ -436,6 +502,15 @@ fn naevmain() -> Result<()> {
 
       // Process clean up messages
       context.execute_messages();
+
+      // Clear startup crash detector file after a single loop to guarantee everything is worknig
+      // fine
+      if !did_loop {
+         if let Err(e) = ndata::physfs::remove_file(STARTUP_CRASH_FILE) {
+            warn_err!(e);
+         }
+         did_loop = true;
+      }
    }
 
    unsafe {
