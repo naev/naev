@@ -64,7 +64,7 @@ collide = { path="@BUILD@/src/collide" }
 physics = { path="@BUILD@/src/physics" }
 pluginmgr = { path="@BUILD@/src/pluginmgr" }
 pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
-formatx = "0.4"
+formatx = "~0.4.2"
 glow = "0.18"
 nalgebra = { version = "0.35", features = ["bytemuck", "encase", "serde-serialize"] }
 encase = { version = "0.12" } # Needed for shader voodoo
