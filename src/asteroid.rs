@@ -836,12 +836,17 @@ pub extern "C" fn _ast_test_collide(
    let ap = unsafe { *ap };
    let crash: &mut [Vector2<f64>] = unsafe { std::slice::from_raw_parts_mut(crash, 2) };
    let bp = ast.pos();
-   let bt = match &*ast.gfx {
-      // TODO have to handle polygon rotation
-      GfxType::Single(gfx) => gfx.poly.view(ast.ang),
-      GfxType::Sprite(gfx) => gfx.poly.view(ast.ang),
+   let hit = match &*ast.gfx {
+      GfxType::Single(gfx) => {
+         let bt = gfx.poly.view(ast.ang);
+         let t = nalgebra::Isometry2::new(ap - bp, ast.ang);
+         bt.intersect_polygon_transform(at, &t)
+      }
+      GfxType::Sprite(gfx) => {
+         let bt = gfx.poly.view(ast.ang);
+         bt.intersect_polygon(at, ap - bp)
+      }
    };
-   let hit = bt.intersect_polygon(at, ap - bp);
    for (k, h) in hit.iter().enumerate() {
       crash[k] = *h + bp;
    }
@@ -860,13 +865,13 @@ pub extern "C" fn _ast_set_scanned(ast: *mut Asteroid, set: c_int) {
    ast.scanned = set != 0;
 }
 
+/// Returns a copy
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_poly(ast: *const Asteroid) -> *const Polygon {
+pub extern "C" fn _ast_poly(ast: *const Asteroid) -> *mut Polygon {
    let ast = unsafe { &*ast };
    match &*ast.gfx {
-      // TODO have to handle polygon rotation
-      GfxType::Single(gfx) => gfx.poly.view(ast.ang),
-      GfxType::Sprite(gfx) => gfx.poly.view(ast.ang),
+      GfxType::Single(gfx) => collide::polygon::poly_rotate(&gfx.poly, ast.ang),
+      GfxType::Sprite(gfx) => Box::into_raw(Box::new(gfx.poly.view(ast.ang).clone())),
    }
 }
 
