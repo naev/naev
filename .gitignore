@@ -72,6 +72,8 @@ utils/docmaker/target/*
 # docmaker sits outside the workspace and keeps its own lockfile
 utils/docmaker/Cargo.lock
 naevc/target/*
+utils/linopt-bench/target/*
+utils/safelanes-bench/target/*
 
 docs/manual/book
 

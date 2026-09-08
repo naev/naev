@@ -33,7 +33,7 @@ int naevpedia_open( const char *path )
       nlua_loadBackground( naevpedia_env );
       nlua_loadMusic( naevpedia_env );
       nlua_loadTk( naevpedia_env );
-      nlua_loadLinOpt( naevpedia_env );
+      // nlua_loadLinOpt( naevpedia_env );
    }
 
    snprintf( buf, sizeof( buf ), "require('naevpedia').open('%s')", path );

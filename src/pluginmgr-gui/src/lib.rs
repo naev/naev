@@ -768,9 +768,12 @@ impl App {
                   title: pgettext("plugins", "Exit with Plugin Conflicts?").to_string(),
                   message: msg,
                   buttons: vec![
-                     (pgettext("plugins", "Exit").to_string(), Message::Exit(true)),
                      (
-                        pgettext("plugins", "Cancel").to_string(),
+                        pgettext("plugins", "Yes, exit as is").to_string(),
+                        Message::Exit(true),
+                     ),
+                     (
+                        pgettext("plugins", "No, let me fix it").to_string(),
                         Message::ModalClose,
                      ),
                   ],

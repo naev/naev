@@ -40,7 +40,6 @@ extern const nlua_env *__NLUA_CURENV;
 void      lua_init( void );
 void      lua_exit( void );
 int       nlua_warn( lua_State *L, int idx );
-void      lua_clearCache( void );
 nlua_env *nlua_newEnv( const char *name );
 nlua_env *nlua_dupEnv( const nlua_env *env );
 void      nlua_freeEnv( nlua_env *env );

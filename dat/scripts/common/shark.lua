@@ -18,6 +18,8 @@ function shark.addLog( text )
    shiplog.append( "shark", text )
 end
 
+shark.HQspob, shark.HQsys = spob.getS("Waterhole's Moon") -- Most missions start or finish there
+
 shark.arnold = {
    name = _("Arnold Smith"),
    portrait = "neutral/unique/arnoldsmith",

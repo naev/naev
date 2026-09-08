@@ -965,6 +965,10 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       ARRAYDUP_( temp->outfit_utility, base->outfit_utility );
       temp->outfit_weapon = array_create( ShipOutfitSlot );
       ARRAYDUP_( temp->outfit_weapon, base->outfit_weapon );
+      temp->outfit_intrinsic = (Outfit const **)array_create( Outfit * );
+      for ( int i = 0; i < array_size( base->outfit_intrinsic ); i++ ) {
+         array_push_back( &temp->outfit_intrinsic, base->outfit_intrinsic[i] );
+      }
       temp->desc_stats = STRDUP_( base->desc_stats );
       temp->stats      = NULL;
       temp->stats      = ss_dupList( base->stats );

@@ -6,7 +6,7 @@
  <done>Unfair Competition</done>
  <chance>50</chance>
  <location>Bar</location>
- <spob>Darkshed</spob>
+ <cond>spob.cur() == require("common.shark").HQspob</cond>
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>
@@ -15,10 +15,10 @@
 --[[
    This is the fourth mission of the Shark's teeth campaign. The player has to hail a frontier ship.
    There should not be any ambush in this mission but the player must fear it from the beginning to the end
-
+   
    Stages :
    0) Way to Frontier system
-   1) Way back to Darkshed
+   1) Way back to HQ
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
@@ -29,7 +29,6 @@ local ccomm = require "common.comm"
 local hawking -- Non-persistent state
 
 -- Mission constants
-local paypla, paysys = spob.getS("Darkshed")
 local nextpla, nextsys = spob.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
 function create ()
@@ -81,7 +80,7 @@ function accept()
    misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
    misn.osdCreate(_("Invitation"), {
       fmt.f(_("Go to {sys}, find and hail the Air Force One"), {sys=mem.missys}),
-      fmt.f(_("Report back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
+      fmt.f(_("Report back to {pnt} in the {sys} system"), {pnt=shark.HQspob, sys=shark.HQsys}),
    })
    misn.osdActive(1)
 
@@ -93,7 +92,7 @@ end
 
 function land()
    --Job is done
-   if mem.stage == 1 and spob.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == shark.HQspob then
       vn.clear()
       vn.scene()
       local arnold = vn.newCharacter( shark.vn_arnold() )
@@ -107,7 +106,8 @@ function land()
       vn.sfxVictory()
       vn.na(fmt.reward(shark.rewards.sh03))
       vn.run()
-      shark.addLog( _([[You helped Nexus Shipyards initiate a secret meeting with a member of the Frontier Council. Arnold Smith said that he has another mission for you and to meet him in the bar on Darkshed when you are ready to transport him to Curie.]]) )
+      shark.addLog(fmt.f(_([[You helped Nexus Shipyards initiate a secret meeting with a member of the Frontier Council. Arnold Smith said that he has another mission for you and to meet him in the bar on {pnt} when you are ready to transport him to Curie.]]),
+         {pnt=shark.HQspob}))
       misn.finish(true)
    end
 end
@@ -133,12 +133,12 @@ function hail()
    local p = ccomm.newCharacter( vn, hawking )
    vn.transition()
    p(fmt.f(_([[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers who takes the message. Now, back to {pnt}.]]),
-      {pnt=paypla}))
+      {pnt=shark.HQspob}))
    vn.run()
 
    mem.stage = 1
    misn.osdActive(2)
    misn.markerRm(mem.marker)
-   mem.marker2 = misn.markerAdd(paypla, "low")
+   mem.marker2 = misn.markerAdd(shark.HQspob, "low")
    player.commClose()
 end

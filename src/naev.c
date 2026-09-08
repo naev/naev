@@ -319,7 +319,8 @@ nlua_env *loadscreen_load( void )
             LOADSCREEN_DATA_PATH, luaL_tolstring( naevL, -1, NULL ) );
       lua_pop( naevL, 2 );
       free( buf );
-      return NULL;
+      // Should raise an error in the future, returning NULL makes rust panic.
+      return load_env;
    }
    free( buf );
    return load_env;

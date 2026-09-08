@@ -26,7 +26,7 @@
 
    Stages :
    0) Way to Eiger/Surano
-   1) Way back to Darkshed
+   1) Way back to HQ
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
@@ -34,9 +34,6 @@ local shark = require "common.shark"
 local vn = require "vn"
 local vntk = require "vntk"
 local ccomm = require "common.comm"
-
--- Mission constants
-local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
    --Change here to change the planets and the systems
@@ -83,7 +80,7 @@ function accept()
    misn.setDesc(_("Nexus Shipyards is looking to strike a better deal with the FLF."))
    misn.osdCreate(_("The FLF Contact"), {
       _("Hail any FLF ship, or disable and board one if necessary"),
-      fmt.f(_("Go back to {pnt} in {sys}"), {pnt=paypla, sys=paysys}),
+      fmt.f(_("Go back to {pnt} in {sys}"), {pnt=shark.HQspob, sys=shark.HQsys}),
    })
    misn.osdActive(1)
 
@@ -94,7 +91,7 @@ end
 
 function land()
    --Job is done
-   if mem.stage == 1 and spob.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == shark.HQspob then
       vn.clear()
       vn.scene()
       local arnold = vn.newCharacter( shark.vn_arnold() )
@@ -126,7 +123,7 @@ function hail( p )
 
       mem.stage = 1
       misn.osdActive(2)
-      mem.marker2 = misn.markerAdd(paypla, "low")
+      mem.marker2 = misn.markerAdd(shark.HQspob, "low")
       player.commClose()
    end
 end
@@ -137,6 +134,6 @@ function board( p )
       vntk.msg(_("Some Resistance Encountered"), _([[The FLF officers are clearly ready for battle, but after subduing them, you assure them that you're just here to talk. Eventually, you are able to give them a copy of the proposal and leave peacefully, for lack of a better word.]]))
       mem.stage = 1
       misn.osdActive(2)
-      mem.marker2 = misn.markerAdd(paypla, "low")
+      mem.marker2 = misn.markerAdd(shark.HQspob, "low")
    end
 end

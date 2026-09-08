@@ -24,7 +24,7 @@
 
    Stages :
    0) Way to Sirius world
-   1) Way to Darkshed
+   1) Way to HQ
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
@@ -34,9 +34,6 @@ local vn = require "vn"
 
 local badguys -- Non-persistent state
 local add_llama, bombers, choose, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
-
--- Mission constants
-local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
    mem.mispla, mem.missys = spob.getLandable(faction.get("Sirius"))
@@ -62,7 +59,7 @@ function accept()
    arnold(_([["Listen, I need to give some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough."]]))
    arnold(_([["But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism."]]))
    arnold(fmt.f(_([["So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.]]),
-      {pnt=paypla, sys=paysys}))
+      {pnt=shark.HQspob, sys=shark.HQsys}))
    arnold(_([["It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]))
    vn.menu{
       {_([[Accept]]), "accept"},
@@ -90,7 +87,7 @@ function accept()
    misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
    misn.osdCreate(_("Unfair Competition"), {
       fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mem.mispla, sys=mem.missys}),
-      fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
+      fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=shark.HQspob, sys=shark.HQsys}),
    })
    misn.osdActive(1)
 
@@ -107,7 +104,7 @@ function land()
    end
 
    --Job is done
-   if mem.stage == 1 and spob.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == shark.HQspob then
       vn.clear()
       vn.scene()
       local arnold = vn.newCharacter( shark.vn_arnold() )
@@ -151,7 +148,7 @@ function beginrun()
    mem.stage = 1
    misn.osdActive(2)
    misn.markerRm(mem.marker)
-   mem.marker2 = misn.markerAdd(paypla, "low")
+   mem.marker2 = misn.markerAdd(shark.HQspob, "low")
 
    --remove the spy
    misn.npcRm(mem.agent)

@@ -47,19 +47,16 @@ impl Constants {
       let globals = lua.globals();
       globals.set("file", ndata::luafile::open_file(&lua)?)?;
 
-      // TODO fix up this loader stuff
       let package: mlua::Table = globals.get("package")?;
-      let loaders: mlua::Table = package.get("loaders")?;
-      // TODO reimplement in rust...
-      type CFunctionNaev = unsafe extern "C-unwind" fn(*mut naevc::lua_State) -> i32;
-      type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
-      unsafe {
-         loaders.push(
-            lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-               naevc::nlua_package_loader_lua,
-            ))?,
-         )?;
-      }
+      let pt = lua.create_table()?;
+      package.set("loaded", pt)?;
+      package.set("preload", lua.create_table()?)?;
+      package.set("path", concat!("?.lua;", "scripts/", "?.lua"))?;
+      package.set("cpath", "")?;
+      let loaders: mlua::Table = lua.create_table()?;
+      loaders.push(lua.create_function(ndata::loader_ndata)?)?;
+      //loaders.push(lua.create_function(loader_rust_libs)?)?;
+      package.set("loaders", loaders)?;
       const LUA_COMMON_PATH: &str = "common.lua"; // Common Lua functions.
       let common_data = ndata::read(LUA_COMMON_PATH)?;
       lua.load(std::str::from_utf8(&common_data)?).exec()?;

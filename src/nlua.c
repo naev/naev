@@ -7,12 +7,6 @@
  * @brief Handles creating and setting up basic Lua environments.
  */
 
-/** @cond */
-#include "physfs.h"
-
-#include "naev.h"
-/** @endcond */
-
 #include "nlua.h"
 
 #include "array.h"
@@ -20,8 +14,6 @@
 #include "console.h"
 #include "debug.h"
 #include "log.h"
-#include "ndata.h"
-#include "nstring.h"
 
 typedef struct nlua_env nlua_env;
 
@@ -32,22 +24,12 @@ const nlua_env *__NLUA_CURENV = NULL; /**< Current environment. */
 //  static size_t common_sz; /**< Common script size. */
 // static int nlua_envs = LUA_NOREF;
 
-/**
- * @brief Cache structure for loading chunks.
- */
-typedef struct LuaCache_ {
-   char *path; /**< Path of the file. */
-   int   idx;  /**< Index of the loaded cache. */
-} LuaCache_t;
-static LuaCache_t *lua_cache = NULL;
-
 /*
  * prototypes
  */
 // static int        nlua_require( lua_State *L );
 static lua_State *nlua_newState( void ); /* creates a new state */
 // static int        nlua_loadBasic( lua_State *L );
-static int lua_cache_cmp( const void *p1, const void *p2 );
 static int nlua_errTraceInternal( lua_State *L, int idx );
 
 /*
@@ -64,9 +46,6 @@ void lua_init( void )
 
    /* Better clean up. */
    // lua_atpanic( naevL, nlua_panic );
-
-   /* Initialize the caches. */
-   lua_cache = array_create( LuaCache_t );
 }
 
 /*
@@ -74,10 +53,6 @@ void lua_init( void )
  */
 void lua_exit( void )
 {
-   lua_clearCache();
-   array_free( lua_cache );
-   lua_cache = NULL;
-
    // free( common_script );
    lua_close( naevL );
    naevL = NULL;
@@ -97,20 +72,6 @@ int nlua_warn( lua_State *L, int idx )
    /* Add to console. */
    cli_printCoreString( msg, 1 );
    return 0;
-}
-
-/**
- * @brief Clears the cached stuff.
- */
-void lua_clearCache( void )
-{
-   for ( int i = 0; i < array_size( lua_cache ); i++ ) {
-      LuaCache_t *lc = &lua_cache[i];
-      free( lc->path );
-      luaL_unref( naevL, LUA_REGISTRYINDEX,
-                  lc->idx ); /* lua_close should have taken care of this. */
-   }
-   array_erase( &lua_cache, array_begin( lua_cache ), array_end( lua_cache ) );
 }
 
 /*
@@ -274,125 +235,6 @@ static lua_State *nlua_newState( void )
       return NULL;
    }
    return L;
-}
-
-/**
- * @brief Compares two Lua caches.
- */
-static int lua_cache_cmp( const void *p1, const void *p2 )
-{
-   const LuaCache_t *lc1 = p1;
-   const LuaCache_t *lc2 = p2;
-   return strcmp( lc1->path, lc2->path );
-}
-
-/**
- * @brief load( string module ) -- searcher function to replace
- * package.loaders[2] (Lua 5.1), i.e., for Lua modules.
- *
- *    @param L Lua Environment.
- *    @return Stack depth (1), and on the stack: a loader function, a string
- * explaining there is none, or nil (no explanation).
- */
-int nlua_package_loader_lua( lua_State *L )
-{
-   LuaCache_t *lc;
-   size_t      bufsize, l = 0;
-   char       *buf = NULL;
-   char        path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
-   const char *packagepath, *start, *end;
-   const char *name = luaL_checkstring( L, 1 );
-   int         done = 0;
-
-   /* Get paths to check. */
-   lua_getglobal( L, "package" );
-   if ( !lua_istable( L, -1 ) ) {
-      lua_pop( L, 1 );
-      lua_pushstring( L, _( " package not found." ) );
-      return 1;
-   }
-   lua_getfield( L, -1, "path" );
-   if ( !lua_isstring( L, -1 ) ) {
-      lua_pop( L, 2 );
-      lua_pushstring( L, _( " package.path not found." ) );
-      return 1;
-   }
-   packagepath = lua_tostring( L, -1 );
-   lua_pop( L, 2 );
-
-   /* Parse path. */
-   start = packagepath;
-   while ( !done ) {
-      char *q;
-      end = strchr( start, ';' );
-      if ( end == NULL ) {
-         done = 1;
-         end  = &start[strlen( start )];
-      }
-      strncpy( tmpname, start, end - start );
-      tmpname[end - start] = '\0';
-      q                    = strchr( tmpname, '?' );
-      if ( q == NULL ) {
-         snprintf( path_filename, sizeof( path_filename ), "%s%s", tmpname,
-                   name );
-      } else {
-         *q = '\0';
-         snprintf( path_filename, sizeof( path_filename ), "%s%s%s", tmpname,
-                   name, q + 1 );
-      }
-      start = end + 1;
-
-      /* Replace all '.' before the last '.' with '/' as they are a security
-       * risk. */
-      q = strrchr( path_filename, '.' );
-      for ( int i = 0; i < q - path_filename; i++ )
-         if ( path_filename[i] == '.' )
-            path_filename[i] = '/';
-
-      /* See if cached. */
-      if ( L == naevL ) {
-         const LuaCache_t lcq = { .path = path_filename };
-         lc = bsearch( &lcq, lua_cache, array_size( lua_cache ),
-                       sizeof( LuaCache_t ), lua_cache_cmp );
-         if ( lc != NULL ) {
-            lua_rawgeti( naevL, LUA_REGISTRYINDEX, lc->idx );
-            return 1;
-         }
-      }
-
-      /* Try to load the file. */
-      if ( PHYSFS_exists( path_filename ) ) {
-         buf = ndata_read( path_filename, &bufsize );
-         if ( buf != NULL )
-            break;
-      }
-
-      /* Didn't get to load it. */
-      l += scnprintf( &tried_paths[l], sizeof( tried_paths ) - l,
-                      _( "\n   no ndata path '%s'" ), path_filename );
-   }
-
-   /* Must have buf by now. */
-   if ( buf == NULL ) {
-      lua_pushstring( L, tried_paths );
-      return 1;
-   }
-
-   /* Try to process the Lua. It will leave a function or message on the stack,
-    * as required. */
-   luaL_loadbuffer( L, buf, bufsize, path_filename );
-   free( buf );
-
-   /* Cache the result. */
-   if ( L == naevL ) {
-      lc       = &array_grow( &lua_cache );
-      lc->path = strdup( path_filename );
-      lua_pushvalue( L, -1 );
-      lc->idx = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* pops 1 */
-      qsort( lua_cache, array_size( lua_cache ), sizeof( LuaCache_t ),
-             lua_cache_cmp );
-   }
-   return 1;
 }
 
 /**

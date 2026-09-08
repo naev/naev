@@ -6,7 +6,7 @@
  <done>Invitation</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Darkshed</spob>
+ <cond>spob.cur() == require("common.shark").HQspob</cond>
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>
@@ -17,7 +17,7 @@
 
    Stages :
    0) Way to Za'lek system
-   1) Way back to Darkshed
+   1) Way back to HQ
 
    TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
 --]]
@@ -34,7 +34,6 @@ local ambush -- Forward-declared functions
 
 --Change here to change the planets and the systems
 local mispla, missys = spob.getS("Curie")
-local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
    if not misn.claim(missys) then
@@ -82,7 +81,7 @@ function accept()
    misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
    misn.osdCreate(_("The Meeting"), {
       fmt.f(_("Go to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
-      fmt.f(_("Bring Smith back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
+      fmt.f(_("Bring Smith back to {pnt} in the {sys} system"), {pnt=shark.HQspob, sys=shark.HQsys}),
    })
    misn.osdActive(1)
 
@@ -109,10 +108,10 @@ function land()
       mem.stage = 1
       misn.osdActive(2)
       misn.markerRm(mem.marker)
-      mem.marker2 = misn.markerAdd(paypla, "low")
+      mem.marker2 = misn.markerAdd(shark.HQspob, "low")
 
    --Job is done
-   elseif mem.stage == 1 and spob.cur() == paypla then
+   elseif mem.stage == 1 and spob.cur() == shark.HQspob then
       vn.clear()
       vn.scene()
       local arnold = vn.newCharacter( shark.vn_arnold() )

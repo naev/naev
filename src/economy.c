@@ -524,7 +524,7 @@ int economy_refresh( void )
  *
  *    @param dt Delta time in NTIME.
  */
-int economy_update( unsigned int dt )
+int economy_update( ntime_t dt )
 {
    (void)dt;
 #if 0

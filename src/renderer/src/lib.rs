@@ -747,9 +747,9 @@ impl Context {
          .build(&gl)?;
       // Downscaling texture shader
       let program_texture_scale = ProgramBuilder::new(Some("Scaling Texture Shader"))
-         .uniform_buffer("TextureData", 0)
-         .vert_frag_file_single("rust_magic.glsl")
-         .sampler("sampler", 0)
+         .uniform_buffer("data", 0)
+         .wgsl_file("rust_magic.wgsl")
+         .sampler("texsampler", 0)
          .build(&gl)?;
       let buffer_texture_scale = BufferBuilder::new(Some("Scaling Texture Buffer"))
          .target(BufferTarget::Uniform)

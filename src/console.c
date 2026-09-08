@@ -29,10 +29,8 @@
 #include "nlua.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
-#include "nlua_cli.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
-#include "nlua_tex.h"
 #include "nlua_tk.h"
 #include "nluadef.h"
 #include "toolkit.h"
@@ -136,9 +134,6 @@ static int cli_script( lua_State *L )
    /* Handle parameters. */
    fname = luaL_checkstring( L, 1 );
    n     = lua_gettop( L );
-
-   /* Clear cache. */
-   lua_clearCache();
 
    /* Reset loaded buffer. */
    if ( cli_env != NULL ) {
@@ -391,7 +386,7 @@ static int cli_initLua( void )
    nlua_loadCamera( cli_env );
    nlua_loadMusic( cli_env );
    nlua_loadTk( cli_env );
-   nlua_loadLinOpt( cli_env );
+   // nlua_loadLinOpt( cli_env );
 
    nlua_pushenv( naevL, cli_env );
    luaL_register( naevL, NULL, cli_methods );

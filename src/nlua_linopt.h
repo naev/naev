@@ -5,6 +5,9 @@
 
 #include "nlua.h"
 
+// Here so that cbindgen picks it up for now.
+#include <glpk.h>
+
 #define LINOPT_METATABLE "linopt" /**< Optim metatable identifier. */
 
 struct LuaLinOpt_s;

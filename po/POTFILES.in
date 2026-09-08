@@ -3229,6 +3229,7 @@ dat/factions/equip/sirius.lua
 dat/factions/equip/soromid.lua
 dat/factions/equip/thurion.lua
 dat/factions/equip/trader.lua
+dat/factions/equip/traders_society.lua
 dat/factions/equip/zalek.lua
 dat/factions/spawn/collective.lua
 dat/factions/spawn/collective/default.lua
@@ -3301,7 +3302,7 @@ dat/factions/standing/sirius.lua
 dat/factions/standing/soromid.lua
 dat/factions/standing/static.lua
 dat/factions/standing/thurion.lua
-dat/factions/standing/trader_society.lua
+dat/factions/standing/traders_society.lua
 dat/factions/standing/yetmer.lua
 dat/factions/standing/zalek.lua
 dat/gui/brushed.lua
@@ -4116,6 +4117,7 @@ src/land_shipyard.h
 src/land_trade.c
 src/land_trade.h
 src/linebreak.rs
+src/linopt.rs
 src/load.c
 src/load.h
 src/log.h

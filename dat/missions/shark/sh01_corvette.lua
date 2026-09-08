@@ -26,7 +26,7 @@
    Stages :
    0) Way to Toaxis
    1) Battle
-   2) Going to Darkshed
+   2) Going to HQ
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
@@ -39,7 +39,7 @@ local sharkboy -- Non-persistent state
 
 --Change here to change the planet and the system
 local battlesys = system.get("Toaxis")
-local paypla, paysys = spob.getS("Darkshed")
+
 --System neighbouring Toaxis with zero pirate presence due to a "Virtual Pirate Unpresence" asset
 local escapesys = system.get("Ingot")
 
@@ -75,7 +75,7 @@ function accept()
    vn.label("accept")
    vn.func( function () accepted = true end )
    arnold(fmt.f(_([["Great! Go and meet our pilot in {battlesys}. After the job is done, meet me on {pnt} in the {sys} system."]]),
-      {battlesys=battlesys, pnt=paypla, sys=paysys}))
+      {battlesys=battlesys, pnt=shark.HQspob, sys=shark.HQsys}))
 
    vn.done( shark.arnold.transition )
    vn.run()
@@ -89,7 +89,7 @@ function accept()
    misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer-class ship."))
    misn.osdCreate(_("Sharkman Is Back"), {
       fmt.f(_("Jump in {sys} with a Destroyer-class ship and let the Lancelot disable you"), {sys=battlesys}),
-      fmt.f(_("Go to {pnt} in {sys} to collect your pay"), {pnt=paypla, sys=paysys}),
+      fmt.f(_("Go to {pnt} in {sys} to collect your pay"), {pnt=shark.HQspob, sys=shark.HQsys}),
    })
    misn.osdActive(1)
 
@@ -112,7 +112,7 @@ function land()
    if mem.stage == 1 then --player trying to escape
       lmisn.fail( _("You ran away.") )
    end
-   if mem.stage == 2 and spob.cur() == paypla then
+   if mem.stage == 2 and spob.cur() == shark.HQspob then
       vn.clear()
       vn.scene()
       local arnold = vn.newCharacter( shark.vn_arnold() )
@@ -180,7 +180,7 @@ function disabled(pilot, attacker)
       mem.stage = 2
       misn.osdActive(2)
       misn.markerRm(mem.marker)
-      mem.marker2 = misn.markerAdd(paypla, "low")
+      mem.marker2 = misn.markerAdd(shark.HQspob, "low")
       pilot.toggleSpawn( true )
    end
    sharkboy:control(true)

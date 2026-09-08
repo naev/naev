@@ -573,7 +573,7 @@ function startPankration()
    local dynFact = {}
    -- Make people attack each other.
    for i = 1, 9 do
-      dynFact[i] = faction.dynAdd( "Warlords", mem.competitors_names[i], mem.competitors_names[i], {ai="dvaered"} )
+      dynFact[i] = faction.dynAdd( fw.fct_warlords(), mem.competitors_names[i], mem.competitors_names[i], {ai="dvaered"} )
       competitors[i]:setFaction(dynFact[i])
       competitors[i]:taskClear()
       compHitHook[i] = hook.pilot( competitors[i], "attacked", "compHit" )

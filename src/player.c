@@ -233,7 +233,8 @@ static void player_newSetup()
    player.last_played     = time( NULL );
    player.date_created    = player.last_played;
    player.time_since_save = player.last_played;
-   player.chapter         = strdup( start_chapter() );
+   const char *chapter    = start_chapter();
+   player.chapter = chapter == NULL ? strdup( "INVALID" ) : strdup( chapter );
 
    /* For pretty background. */
    pilots_cleanAll();

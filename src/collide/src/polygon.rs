@@ -3,7 +3,7 @@ use anyhow::Result;
 use fs_err as fs;
 use image::GenericImageView;
 use itertools::Itertools;
-use nalgebra::Vector2;
+use nalgebra::{Isometry2, Point2, Vector2};
 use nlog::{warn, warn_err};
 use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
@@ -317,6 +317,64 @@ impl Polygon {
       }
       let p_self = self.points[0];
       if other.contains_point(p_self - rel) {
+         hit.push(p_self);
+      }
+      hit
+   }
+
+   pub fn intersect_polygon_transform(
+      &self,
+      other: &Polygon,
+      transform: &Isometry2<f64>,
+   ) -> ArrayVec<[Vector2<f64>; 2]> {
+      let apply = |p: Vector2<f64>| -> Vector2<f64> { (transform * Point2::from(p)).coords };
+
+      // Transform the AABB and test
+      let (oxmin, oxmax, oymin, oymax) = other.points.iter().fold(
+         (
+            f64::INFINITY,
+            f64::NEG_INFINITY,
+            f64::INFINITY,
+            f64::NEG_INFINITY,
+         ),
+         |(xmin, xmax, ymin, ymax), p| {
+            let tp = apply(*p);
+            (
+               xmin.min(tp.x),
+               xmax.max(tp.x),
+               ymin.min(tp.y),
+               ymax.max(tp.y),
+            )
+         },
+      );
+      if self.xmax < oxmin || self.xmin > oxmax || self.ymax < oymin || self.ymin > oymax {
+         return ArrayVec::new();
+      }
+
+      // Test edge vs edge
+      let mut hit = ArrayVec::new();
+      for (s1, e1) in self.points.iter().circular_tuple_windows() {
+         for (s2, e2) in other.points.iter().circular_tuple_windows() {
+            let h = line_line(*s1, *e1, apply(*s2), apply(*e2));
+            if let Some(h) = h.first() {
+               hit.push(*h);
+               if hit.is_full() {
+                  return hit;
+               }
+            }
+         }
+      }
+
+      // Test to see if one is inside the other
+      let p_other = apply(other.points[0]);
+      if self.contains_point(p_other) {
+         hit.push(p_other);
+         return hit;
+      }
+      let p_self = self.points[0];
+      // Bring self point into local frame
+      let p_self_local = (transform.inverse() * Point2::from(p_self)).coords;
+      if other.contains_point(p_self_local) {
          hit.push(p_self);
       }
       hit

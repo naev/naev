@@ -58,6 +58,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/ad_usb.md:2
+msgid "AD-USB"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/ad_usb.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ad_usb.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/adaptive_camouflage_plating.md:2
 msgid "Adaptive Camouflage Plating"
 msgstr ""
@@ -304,6 +345,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/agamemnon_launcher.md:2
+msgid "Agamemnon Launcher"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/agamemnon_launcher.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/agility_combat_ai.md:2
 msgid "Agility Combat AI"
 msgstr ""
@@ -465,6 +547,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/ambush_hunter_ii.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:2
+msgid "Ancestor Bomber Bay"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/ancestor_bay.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/ancestor_bay.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -793,6 +916,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/astral_projection.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:2
+msgid "Auto-Modulating Scrambler"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/auto_modulating_scrambler.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -1654,6 +1818,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/black_cat_doll.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:2
+msgid "Black Diamond Bay"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/black_diamond_bay.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -2966,6 +3171,129 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/disruptor_battery_s2.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:2
+msgid "Dragon Scale Plating"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scale_plating.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:2
+msgid "Dragon Scales"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/dragon_scales.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragon_scales.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:2
+msgid "Dragonflame Cannon"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/dragonflame_cannon.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -4691,6 +5019,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:2
+msgid "Gorgon Lancelot Bay"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/gorgon_lancelot_bay.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/grave_beam.md:2
 msgid "Grave Beam"
 msgstr ""
@@ -5183,6 +5552,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/heavily_damaged.md:2
+msgid "Heavily Damaged"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/heavily_damaged.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavily_damaged.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/heavy_combat_vessel_licence.md:2
 msgid "Heavy Combat Vessel Licence"
 msgstr ""
@@ -5221,6 +5631,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/heavy_combat_vessel_licence.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:2
+msgid "Heavy Drone Bay"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/heavy_drone_bay.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -5590,6 +6041,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/hidden_jump_scanner.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:2
+msgid "High Combat Readiness"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/high_combat_readiness.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -6041,6 +6533,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/internal_flow_amplifier.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:2
+msgid "Internal Groove Synthesizer"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/internal_groove_synthesizer.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -7435,6 +7968,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/machiavellian_virtue.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:2
+msgid "Magnaplasmoid Amoeba Hive"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/magnaplasmoid_amoeba_hive.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -9488,6 +10062,211 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/modular_ramscoop.md:2
+msgid "Modular Ramscoop"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/modular_ramscoop.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:2
+msgid "Heavy Muon Disruptor"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_heavy.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:2
+msgid "Light Muon Disruptor"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_light.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:2
+msgid "Muon Disruptor"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_medium.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:2
+msgid "Supercharged Muon Disruptor"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/muon_disruptor_supercharged.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/mystery_outfit.md:2
 msgid "Mystery Outfit"
 msgstr ""
@@ -10308,6 +11087,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:2
+msgid "Overwatch Pulse CIWS"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/overwatch_pulse_ciws.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/paralyzing_plasma.md:2
 msgid "Paralyzing Plasma"
 msgstr ""
@@ -10841,6 +11661,88 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:2
+msgid "Pirate Ancestor Dock"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_ancestor_dock.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:2
+msgid "Pirate Branding"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/pirate_branding.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pirate_branding.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/pirate_hyena_bay.md:2
 msgid "Pirate Hyena Bay"
 msgstr ""
@@ -11251,6 +12153,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:2
+msgid "Plasmoid Amoeba Colony"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/plasmoid_amoeba_colony.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/plasteel_plating.md:2
 msgid "Plasteel Plating"
 msgstr ""
@@ -11579,6 +12522,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/pulse_cannon_light.md:2
+msgid "Light Pulse Cannon"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_cannon_light.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/pulse_scanner.md:2
 msgid "Pulse Scanner"
 msgstr ""
@@ -11617,6 +12601,170 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/pulse_scanner.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:2
+msgid "Heavy Pulse Turret"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_heavy.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:2
+msgid "Hyperpulse Turret"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_hyper.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:2
+msgid "Light Pulse Turret"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_light.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:2
+msgid "Medium Pulse Turret"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/pulse_turret_medium.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -11822,6 +12970,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/ragnarok_beam.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:2
+msgid "Railcannon"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/railcannon.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/railcannon.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -17276,6 +18465,87 @@ msgstr ""
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
+#: dat/naevpedia/ships/alpaca.md:2
+msgid "Alpaca"
+msgstr ""
+
+
+#: dat/naevpedia/ships/alpaca.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/alpaca.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
 #: dat/naevpedia/ships/ancestor.md:2
 msgid "Ancestor"
 msgstr ""
@@ -17759,6 +19029,654 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/ships/bedivere.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:2
+msgid "Black Diamond"
+msgstr ""
+
+
+#: dat/naevpedia/ships/black_diamond.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/black_diamond.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:2
+msgid "Cloud Admonisher"
+msgstr ""
+
+
+#: dat/naevpedia/ships/cloud_admonisher.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_admonisher.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:2
+msgid "Cloud Clydesdale"
+msgstr ""
+
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_clydesdale.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:2
+msgid "Cloud Hyena"
+msgstr ""
+
+
+#: dat/naevpedia/ships/cloud_hyena.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_hyena.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:2
+msgid "Cloud Mule"
+msgstr ""
+
+
+#: dat/naevpedia/ships/cloud_mule.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_mule.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:2
+msgid "Cloud Pacifier"
+msgstr ""
+
+
+#: dat/naevpedia/ships/cloud_pacifier.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/cloud_pacifier.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:2
+msgid "Clydesdale"
+msgstr ""
+
+
+#: dat/naevpedia/ships/clydesdale.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:2
+msgid "Clydesdale Blockade Buster"
+msgstr ""
+
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/clydesdale_blockade_buster.md:41
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
@@ -18731,6 +20649,87 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/ships/dvaered_vigilance.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:2
+msgid "Emerald Sword"
+msgstr ""
+
+
+#: dat/naevpedia/ships/emerald_sword.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/emerald_sword.md:41
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
@@ -21974,6 +23973,87 @@ msgstr ""
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:2
+msgid "Pirate Kestrel Galaxy Soul"
+msgstr ""
+
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/pirate_kestrel_dreamer.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
 #: dat/naevpedia/ships/pirate_kestrel_yuris_kiss.md:2
 msgid "Pirate Kestrel Yuri's Kiss"
 msgstr ""
@@ -24404,87 +26484,6 @@ msgstr ""
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
-#: dat/naevpedia/ships/sirius_starbridge.md:2
-msgid "Sirius Starbridge"
-msgstr ""
-
-
-#: dat/naevpedia/ships/sirius_starbridge.md:8
-msgid "<widget mainimg />"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:10
-msgid "<widget rightstats />"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:12
-msgid "# <%= s:name() %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:14
-msgid "<widget wgtdescription />"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:16
-msgid "## Properties"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:18
-msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:19
-msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:20
-msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:22
-msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:24
-msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:25
-msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:26
-msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:27
-msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:28
-msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:30
-msgid "* **License**:   <%= _(s:license()) %>"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:33
-msgid "## Availability"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:37
-msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:39
-msgid "<widget map />"
-msgstr ""
-
-#: dat/naevpedia/ships/sirius_starbridge.md:41
-msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
-msgstr ""
-
 #: dat/naevpedia/ships/soromid_arx.md:2
 msgid "Soromid Arx"
 msgstr ""
@@ -25373,6 +27372,168 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/ships/starbridge.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:2
+msgid "Starbridge Herald"
+msgstr ""
+
+
+#: dat/naevpedia/ships/starbridge_herald.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_herald.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:2
+msgid "Starbridge Omega"
+msgstr ""
+
+
+#: dat/naevpedia/ships/starbridge_omega.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/starbridge_omega.md:41
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
@@ -26834,6 +28995,87 @@ msgstr ""
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
+#: dat/naevpedia/ships/zalek_diablo_rat.md:2
+msgid "Za'lek Diablo RAT"
+msgstr ""
+
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/zalek_diablo_rat.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
 #: dat/naevpedia/ships/zalek_heavy_drone.md:2
 msgid "Za'lek Heavy Drone"
 msgstr ""
@@ -27946,7 +30188,7 @@ msgid "* **Thurion Shipyards**: Produce ships with advanced interfaces for digit
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:35
-msgid "* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to the point they are extremely competitive with other ships."
+msgid "* **Proteron**: Although they use antiquated fabrication methods, they have refined them to the point they are extremely competitive with other ships."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:38
@@ -31394,7 +33636,7 @@ msgid "The amount of loot available is determined by your **Boarding Bonus** mod
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:22
-msgid "Higher values will allow you to obtain more loot from the ships you board."
+msgid "Higher values will allow you to obtain more loot from the ships you board, such as more credits, fuel, cargo, and outfits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:24
@@ -31410,7 +33652,7 @@ msgid "Higher modifier values will let you steal more outfits from a ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:28
-msgid "The cost of repairing a stolen outfit is the base cost multiplied by `(10 + their crew) / (10 + your crew) * 0.85`."
+msgid "The cost of repairing a stolen outfit is the base cost multiplied by `(10 + their crew) / (12 + your crew)`."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:31
@@ -31434,7 +33676,7 @@ msgid "1. Pay to repair the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:39
-msgid "The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (10 + your crew) * 0.85`."
+msgid "The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (12 + your crew)`."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:40
@@ -31609,70 +33851,74 @@ msgid "Note that penetration can not increase the damage past 100%."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:20
-msgid "## Disable Damage and Stress"
+msgid "Note that a ship that is performing active cooldown will have its absorption reduced by 50%."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:22
-msgid "Disable damage is the only way to disable ships, by applying stress."
-msgstr ""
-
-#: dat/naevpedia/mechanics/damage.md:23
-msgid "When a ship's stress is larger than the available armour, it becomes disabled, and [can be boarded](mechanics/boarding)."
+msgid "## Disable Damage and Stress"
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:24
-msgid "Unlike regular damage, disable damage can penetrate shields, however, it suffers a large penalty when shields are up."
+msgid "Disable damage is the only way to disable ships, by applying stress."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:25
-msgid "In particular, it will deal 50% stress when the target has 100% shields, and 100% stress when the target has 0% shields."
+msgid "When a ship's stress is larger than the available armour, it becomes disabled, and [can be boarded](mechanics/boarding)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:26
-msgid "Disable damage is also affected by absorption and penetration."
+msgid "Unlike regular damage, disable damage can penetrate shields, however, it suffers a large penalty when shields are up."
+msgstr ""
+
+#: dat/naevpedia/mechanics/damage.md:27
+msgid "In particular, it will deal 50% stress when the target has 100% shields, and 100% stress when the target has 0% shields."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:28
+msgid "Disable damage is also affected by absorption and penetration."
+msgstr ""
+
+#: dat/naevpedia/mechanics/damage.md:30
 msgid "Finally, ships will also be disabled when their armour goes under <%= fmt.number(constant_raw( \"PILOT_DISABLED_ARMOUR\" )*100) %>%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:29
+#: dat/naevpedia/mechanics/damage.md:31
 msgid "However, this is much less reliable than using weapons that cause disabling damage."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:31
+#: dat/naevpedia/mechanics/damage.md:33
 msgid "## Damage Types"
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:33
+#: dat/naevpedia/mechanics/damage.md:35
 msgid "There are different damage types that differentiate how much damage is done to shields versus armour, and the amount of knockback."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:34
+#: dat/naevpedia/mechanics/damage.md:36
 msgid "For example, kinetic damage does 80% damage to shields, 115% damage to armour, and 100% knockback."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:35
+#: dat/naevpedia/mechanics/damage.md:37
 msgid "On the other hand, ion damage does 130% damage to shields, 80% damage to armour, and has 10% knockback."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:36
+#: dat/naevpedia/mechanics/damage.md:38
 msgid "Using the best damage type can play a critical role in winning fights."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:38
+#: dat/naevpedia/mechanics/damage.md:40
 msgid "## Shields Down and Regeneration"
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:40
+#: dat/naevpedia/mechanics/damage.md:42
 msgid "When a ship's shields get knocked offline, it takes <%= constant( \"PILOT_SHIELD_DOWN_TIME\" ) %> seconds for the shields to start regenerating again, and can be reduced with lower **Shield Down Time**."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:41
+#: dat/naevpedia/mechanics/damage.md:43
 msgid "Any damage during this window will restart the time it takes to regenerate shields."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:42
+#: dat/naevpedia/mechanics/damage.md:44
 msgid "When shields get back up there they will regenerate faster during the first 3 seconds."
 msgstr ""
 
@@ -33607,7 +35853,7 @@ msgid "### Large Ships"
 msgstr ""
 
 #: dat/naevpedia/ships/classes.md:44
-msgid "* **[Bulk Freighter](ships/classes/bulk_freighter)**: Designed to haul large amounts of goods across space, they usually sport fighter bays as a for of defense."
+msgid "* **[Bulk Freighter](ships/classes/bulk_freighter)**: Designed to haul large amounts of goods across space, they usually sport fighter bays for defence."
 msgstr ""
 
 #: dat/naevpedia/ships/classes.md:46

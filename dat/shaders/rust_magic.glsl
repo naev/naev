@@ -1,4 +1,3 @@
-
 /*
  * Magic Kernel Sharp for Image Resizing
  * https://johncostella.com/magic/

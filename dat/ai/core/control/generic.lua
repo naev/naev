@@ -516,20 +516,22 @@ function control_funcs.generic_attack( si, noretarget )
       return false
    end
 
-   local target_parmour, target_pshield = target:health()
-   local parmour, pshield = ai.pilot():health()
+   local target_armour, target_shield, target_stress  = target:health()
+   local target_armeff = (target_shield+target_armour)*(100-target_stress)/100 -- Effective armour+shield left
+   local parmour, pshield, pstress = ai.pilot():health()
+   local parmeff = (pshield+parmour)*(100-pstress)/100
 
    -- Use some outfits in some non-combat situations
    atklib.think_control()
 
    -- Runaway if needed
-   if not mem.norun and (pshield < mem.shield_run
-            and pshield < target_pshield ) or
-         (parmour < mem.armour_run
-            and parmour < target_parmour ) then
+   if not mem.norun and ((pshield < mem.shield_run
+            and pshield < target_shield ) or
+         (parmeff < mem.armour_run
+            and parmeff < target_armeff )) then
       ai.pushtask("runaway", target)
    -- Carried fighters are a bit more jumpy
-   elseif mem.carried and parmour < mem.armour_run then
+   elseif mem.carried and parmeff < mem.armour_run then
       ai.pilot():taskClear()
       ai.pushtask( "flyback", true )
       return false
@@ -627,9 +629,10 @@ function control_funcs.runaway ()
    local dist = ai.dist( target )
 
    -- Should return to combat?
-   local parmour, pshield = p:health()
+   local parmour, pshield, pstress = p:health()
+   local parmeff = (pshield+parmour)*(100-pstress)/100
    if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
-         (mem.armour_return > 0 and parmour >= mem.armour_return)) then
+         (mem.armour_return > 0 and parmeff >= mem.armour_return)) then
       ai.poptask() -- "attack" should be above "runaway"
       return true
 
@@ -899,7 +902,9 @@ function control( dt )
 
    -- See if we have to fly back due to low health
    if mem.carried then
-      if p:armour() < mem.armour_run then
+      local parmour, pshield, pstress = p:health()
+      local parmeff = (pshield+parmour)*(100-pstress)/100
+      if parmeff < mem.armour_run then
          p:taskClear()
          ai.pushtask( "flyback", true )
          return

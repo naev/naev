@@ -1,0 +1,23 @@
+[package]
+name = "safelanes-bench"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+faer = "0.24"
+nalgebra = "0.34"
+nalgebra-sparse = "0.11"
+
+[build-dependencies]
+bindgen = "0.72"
+
+# faer and nalgebra are generic, so their work is compiled into this crate
+# rather than their own, and an unoptimised build makes them look hundreds of
+# times slower than they are. Optimising only the dependencies does not reach
+# it, so optimise everything. CHOLMOD is a system library and unaffected either
+# way.
+[profile.dev]
+opt-level = 3
+debug-assertions = false
+overflow-checks = false

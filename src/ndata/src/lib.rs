@@ -386,6 +386,30 @@ pub fn image_path<P: AsRef<Path>>(path: &P) -> anyhow::Result<Cow<'_, Path>> {
    }
 }
 
+pub fn loader_ndata(lua: &mlua::Lua, filename: mlua::BorrowedStr) -> mlua::Result<mlua::Value> {
+   let globals = lua.globals();
+   let package_val: mlua::Value = globals.get("package")?;
+   let package: mlua::Table = match package_val {
+      mlua::Value::Table(t) => t,
+      _ => {
+         return Ok(mlua::Value::String(
+            lua.create_string(gettext(" package not found."))?,
+         ));
+      }
+   };
+   let filename = filename.replace('.', "/");
+   let path: mlua::BorrowedStr = package.get("path")?;
+   for p in path.split(';') {
+      let p = p.replace('?', &filename);
+      if is_file(&p) {
+         let d = read_to_string(&p)?;
+         let c = lua.load(d).set_name(&p);
+         return c.into_function().map(mlua::Value::Function);
+      }
+   }
+   Ok(mlua::Value::Nil)
+}
+
 /*
 /// Like fs::canonicalize but doesn't require the path to exist.
 /// For String use simplify_path.
