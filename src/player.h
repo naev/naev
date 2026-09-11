@@ -151,7 +151,9 @@ typedef struct Player_s {
 /*
  * Local player.
  */
-extern Player_t player; /**< Local player. */
+extern Player_t player;       /**< Local player. */
+extern double   player_left;  /**< player.c */
+extern double   player_right; /**< player.c */
 
 /*
  * Common player sounds.

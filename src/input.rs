@@ -214,14 +214,24 @@ impl Keybind {
       let nodead = || unsafe {
          !naevc::player.p.is_null() && (*naevc::player.p).flags[naevc::PILOT_DEAD as usize] == 0
       };
+      let player_set_flag = |f, v| unsafe {
+         naevc::player.flags[f as usize] = v;
+      };
+      let player_restore_movement = || unsafe {
+         naevc::player_restoreControl(naevc::PINPUT_MOVEMENT as i32, std::ptr::null());
+      };
 
-      use Keybind::*;
       let doubletap = false;
+      let repeat = false;
+      use Keybind::*;
       match self {
          Accel => {
+            if repeat {
+               return;
+            }
             if let Value::Absolute(v) = value {
+               player_restore_movement();
                unsafe {
-                  naevc::player_restoreControl(naevc::PINPUT_MOVEMENT as i32, std::ptr::null());
                   naevc::player_accel(v as f64);
                }
             } else {
@@ -252,7 +262,55 @@ impl Keybind {
                               !naevc::PILOTOUTFIT_ISON_TOGGLE as i32;
                            naevc::pilot_weapSetUpdateOutfitState(naevc::player.p);
                         }
+                        player_set_flag(naevc::PLAYER_ACCEL, 0);
+                        if naevc::player.flags[naevc::PLAYER_REVERSE as usize] == 0 {
+                           naevc::player_accelOver();
+                        }
                      }
+                  }
+               }
+               // Fallthrough for double tap
+               if value.is_press() {
+                  player_restore_movement();
+                  player_set_flag(naevc::PLAYER_ACCEL, 1);
+                  unsafe {
+                     naevc::player_accel(1.);
+                  }
+               }
+            }
+         }
+         Left => {
+            if repeat {
+               return;
+            }
+            if let Value::Absolute(v) = value {
+               player_restore_movement();
+               player_set_flag(naevc::PLAYER_TURN_LEFT, 1);
+               unsafe {
+                  naevc::player_left = v as f64;
+               }
+            } else {
+               if doubletap {
+                  if nohyp() && nodead() {
+                     unsafe {
+                        naevc::pilot_outfitLOnkeydoubletap(
+                           naevc::player.p,
+                           naevc::OutfitKey__OUTFIT_KEY_LEFT,
+                        );
+                     }
+                  }
+               } else if value.is_release() {
+                  player_set_flag(naevc::PLAYER_TURN_LEFT, 0);
+                  unsafe {
+                     naevc::player_left = 0.;
+                  }
+               }
+               // Fallthrough for double tap
+               if value.is_press() {
+                  player_restore_movement();
+                  player_set_flag(naevc::PLAYER_TURN_LEFT, 1);
+                  unsafe {
+                     naevc::player_left = 1.;
                   }
                }
             }
