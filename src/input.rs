@@ -1,9 +1,10 @@
+#![allow(dead_code)]
 use anyhow::Result;
 use gettext::N_;
 use nlog::{warn, warn_err};
 use sdl3 as sdl;
+use std::hash::{Hash, Hasher};
 
-#[allow(dead_code)]
 pub enum Keybind {
    // Movement
    Accel,
@@ -73,7 +74,6 @@ pub enum Keybind {
    Screenshot,
    Paste,
 }
-#[allow(dead_code)]
 impl Keybind {
    pub fn name(&self) -> &'static str {
       use Keybind::*;
@@ -166,7 +166,6 @@ impl Keybind {
          TargetHostileNext => N_("Cycles through hostile ship targets."),
          TargetHostilePrev => N_("Cycles backwards through hostile ship targets."),
          TargetHostileNear => N_("Targets the nearest hostile ship."),
-
          TargetClear => N_("Clears the currently-targeted ship, spob or jump point."),
          FirePrimary => N_("Fires primary weapons."),
          FireSecondary => N_("Fires secondary weapons."),
@@ -203,6 +202,237 @@ impl Keybind {
          Screenshot => N_("Takes a screenshot."),
          Paste => N_("Paste from the operating system's clipboard."),
       }
+   }
+
+   pub fn handle(&self, value: Value) {
+      let nohyp = || unsafe {
+         !naevc::player.p.is_null()
+            && (*naevc::player.p).flags[naevc::PILOT_HYP_PREP as usize] == 0
+            && (*naevc::player.p).flags[naevc::PILOT_HYP_BEGIN as usize] == 0
+            && (*naevc::player.p).flags[naevc::PILOT_HYPERSPACE as usize] == 0
+      };
+      let nodead = || unsafe {
+         !naevc::player.p.is_null() && (*naevc::player.p).flags[naevc::PILOT_DEAD as usize] == 0
+      };
+
+      use Keybind::*;
+      let doubletap = false;
+      match self {
+         Accel => {
+            if let Value::Absolute(v) = value {
+               unsafe {
+                  naevc::player_restoreControl(naevc::PINPUT_MOVEMENT as i32, std::ptr::null());
+                  naevc::player_accel(v as f64);
+               }
+            } else {
+               if doubletap {
+                  if nohyp() && nodead() {
+                     unsafe {
+                        naevc::pilot_outfitLOnkeydoubletap(
+                           naevc::player.p,
+                           naevc::OutfitKey__OUTFIT_KEY_ACCEL,
+                        );
+                        naevc::pilot_afterburn(naevc::player.p);
+                        if !(*naevc::player.p).afterburner.is_null() {
+                           (*(*naevc::player.p).afterburner).flags |=
+                              naevc::PILOTOUTFIT_ISON_TOGGLE as i32;
+                           naevc::pilot_weapSetUpdateOutfitState(naevc::player.p);
+                        }
+                     }
+                  }
+               } else if value.is_release() {
+                  if nohyp() && nodead() {
+                     unsafe {
+                        naevc::pilot_outfitLOnkeyrelease(
+                           naevc::player.p,
+                           naevc::OutfitKey__OUTFIT_KEY_ACCEL,
+                        );
+                        if !(*naevc::player.p).afterburner.is_null() {
+                           (*(*naevc::player.p).afterburner).flags &=
+                              !naevc::PILOTOUTFIT_ISON_TOGGLE as i32;
+                           naevc::pilot_weapSetUpdateOutfitState(naevc::player.p);
+                        }
+                     }
+                  }
+               }
+            }
+         }
+         _ => (),
+      }
+   }
+}
+
+pub enum Value {
+   Press,
+   Release,
+   Absolute(f32),
+}
+impl Value {
+   fn float(&self) -> f32 {
+      match self {
+         Value::Press => 1.0,
+         Value::Release => 0.0,
+         Value::Absolute(v) => *v,
+      }
+   }
+}
+impl Value {
+   pub fn is_press(&self) -> bool {
+      match self {
+         Value::Release => true,
+         _ => false,
+      }
+   }
+
+   pub fn is_release(&self) -> bool {
+      match self {
+         Value::Release => true,
+         _ => false,
+      }
+   }
+}
+
+pub struct Keypress {
+   scancode: sdl::keyboard::Scancode,
+   keymod: sdl::keyboard::Mod,
+   press: bool,
+}
+impl PartialEq for Keypress {
+   fn eq(&self, other: &Self) -> bool {
+      if self.scancode != other.scancode {
+         return false;
+      }
+      // TODO collapse left/right shift and friends?
+      return self.keymod == other.keymod;
+   }
+}
+impl Eq for Keypress {}
+impl Hash for Keypress {
+   fn hash<H: Hasher>(&self, state: &mut H) {
+      self.scancode.hash(state);
+      self.keymod.bits().hash(state);
+   }
+}
+
+pub struct GamepadButton {
+   button: sdl::gamepad::Button,
+   press: bool,
+}
+impl PartialEq for GamepadButton {
+   fn eq(&self, other: &Self) -> bool {
+      self.button == other.button
+   }
+}
+impl Eq for GamepadButton {}
+impl Hash for GamepadButton {
+   fn hash<H: Hasher>(&self, state: &mut H) {
+      self.button.hash(state);
+   }
+}
+
+pub struct GamepadAxis {
+   axis: sdl::gamepad::Axis,
+   value: i16,
+}
+impl PartialEq for GamepadAxis {
+   fn eq(&self, other: &Self) -> bool {
+      self.axis == other.axis
+   }
+}
+impl Eq for GamepadAxis {}
+impl Hash for GamepadAxis {
+   fn hash<H: Hasher>(&self, state: &mut H) {
+      self.axis.hash(state);
+   }
+}
+
+#[derive(Eq, PartialEq, Hash)]
+pub enum Input {
+   Keypress(Keypress),
+   GamepadButton(GamepadButton),
+   GamepadAxis(GamepadAxis),
+}
+impl Input {
+   fn value(&self) -> Value {
+      match self {
+         Input::Keypress(k) => {
+            if k.press {
+               Value::Press
+            } else {
+               Value::Release
+            }
+         }
+         Input::GamepadButton(b) => {
+            if b.press {
+               Value::Press
+            } else {
+               Value::Release
+            }
+         }
+         Input::GamepadAxis(a) => {
+            if a.value > 0 {
+               Value::Absolute(a.value as f32 / i16::MAX as f32)
+            } else {
+               Value::Absolute(a.value as f32 / i16::MIN as f32)
+            }
+         }
+      }
+   }
+
+   fn press(&self) -> bool {
+      match self {
+         Input::Keypress(k) => k.press,
+         Input::GamepadButton(b) => b.press,
+         Input::GamepadAxis(_a) => true,
+      }
+   }
+
+   fn from_event(event: &sdl::event::Event) -> Option<Self> {
+      match event {
+         sdl::event::Event::GamepadAxisMotion { axis, value, .. } => {
+            Some(Input::GamepadAxis(GamepadAxis {
+               axis: *axis,
+               value: *value,
+            }))
+         }
+         sdl::event::Event::GamepadButtonDown { button, .. } => {
+            Some(Input::GamepadButton(GamepadButton {
+               button: *button,
+               press: true,
+            }))
+         }
+         sdl::event::Event::GamepadButtonUp { button, .. } => {
+            Some(Input::GamepadButton(GamepadButton {
+               button: *button,
+               press: false,
+            }))
+         }
+         sdl::event::Event::KeyDown {
+            scancode, keymod, ..
+         } => {
+            if let Some(scancode) = scancode {
+               Some(Input::Keypress(Keypress {
+                  scancode: *scancode,
+                  keymod: *keymod,
+                  press: false,
+               }))
+            } else {
+               None
+            }
+         }
+         _ => None,
+      }
+   }
+}
+
+static BINDINGS: LazyLock<Mutex<HashMap<Input, Keybind>>> =
+   LazyLock::new(|| Mutex::new(HashMap::new()));
+
+pub fn handle(event: &sdl::event::Event) {
+   if let Some(inp) = Input::from_event(event)
+      && let Some(b) = BINDINGS.lock().unwrap().get(&inp)
+   {
+      b.handle(inp.value());
    }
 }
 
