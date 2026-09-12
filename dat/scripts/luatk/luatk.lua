@@ -1365,12 +1365,12 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    wgt.whitelist = params.whitelist
    wgt.blacklist = params.blacklist
    wgt.str     = ""
-   if params.str then
-      wgt:set( params.str )
-   end
    wgt.cursor = 0
    wgt.timer = 0
    wgt.blink = true
+   if params.str then
+      wgt:set( params.str )
+   end
    return wgt
 end
 function luatk.Input:focus ()
