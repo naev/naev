@@ -92,17 +92,6 @@ impl<T> Array<T> {
       arr
    }
 
-   /*
-   pub fn as_slice( &self ) -> &[T] {
-      unsafe {
-         std::slice::from_raw_parts(
-            self.data as *const T,
-            self.len,
-         )
-      }
-   }
-   */
-
    pub fn as_ptr(&self) -> *mut T {
       unsafe { self.data.add(PREFIX) as *mut T }
    }
@@ -126,6 +115,95 @@ impl<T> Array<T> {
       unsafe {
          ptr::copy_nonoverlapping(self as *mut Self as *mut u8, self.data, PREFIX);
       }
+   }
+
+   pub unsafe fn from_ptr<'a>(ptr: *mut T) -> Option<&'a Array<T>> {
+      if ptr.is_null() {
+         None
+      } else {
+         unsafe {
+            let base = (ptr as *mut u8).sub(PREFIX);
+            Some(&*(base as *const Array<T>))
+         }
+      }
+   }
+
+   pub unsafe fn from_ptr_mut<'a>(ptr: *mut T) -> Option<&'a mut Array<T>> {
+      if ptr.is_null() {
+         None
+      } else {
+         unsafe {
+            let base = (ptr as *mut u8).sub(PREFIX);
+            Some(&mut *(base as *mut Array<T>))
+         }
+      }
+   }
+
+   pub fn len(&self) -> usize {
+      (self.len - PREFIX) / self.element_size
+   }
+
+   pub fn capacity(&self) -> usize {
+      (self.capacity - PREFIX) / self.element_size
+   }
+
+   pub fn is_empty(&self) -> bool {
+      self.len() == 0
+   }
+
+   fn as_slice(&self) -> &[T] {
+      unsafe { std::slice::from_raw_parts(self.as_ptr() as *const T, self.len()) }
+   }
+
+   fn as_mut_slice(&mut self) -> &mut [T] {
+      unsafe { std::slice::from_raw_parts_mut(self.as_ptr(), self.len()) }
+   }
+
+   pub fn iter(&self) -> std::slice::Iter<'_, T> {
+      self.as_slice().iter()
+   }
+
+   pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> {
+      self.as_mut_slice().iter_mut()
+   }
+
+   pub fn push(&mut self, value: T) {
+      let mut vec = unsafe { self.rebuild_vec() };
+      let old_len = vec.len();
+      vec.resize(old_len + self.element_size, 0);
+      unsafe {
+         let slot = vec.as_mut_ptr().add(old_len) as *mut T;
+         ptr::write(slot, value);
+      }
+      self.store_vec(vec);
+      unsafe { self.write_header() };
+   }
+
+   pub fn pop(&mut self) -> Option<T> {
+      if self.is_empty() {
+         return None;
+      }
+      let mut vec = unsafe { self.rebuild_vec() };
+      let new_len_bytes = vec.len() - self.element_size;
+      let value = unsafe {
+         let slot = vec.as_ptr().add(new_len_bytes) as *const T;
+         ptr::read(slot)
+      };
+      vec.truncate(new_len_bytes);
+      self.store_vec(vec);
+      unsafe { self.write_header() };
+      Some(value)
+   }
+
+   pub fn clear(&mut self) {
+      // When clearing from Rust, make sure to run each element destructor
+      for elem in self.as_mut_slice() {
+         unsafe { ptr::drop_in_place(elem as *mut T) };
+      }
+      let mut vec = unsafe { self.rebuild_vec() };
+      vec.truncate(PREFIX);
+      self.store_vec(vec);
+      unsafe { self.write_header() };
    }
 }
 
@@ -231,7 +309,7 @@ pub extern "C" fn _array_size_helper(array: *mut c_void) -> i32 {
       return 0;
    }
    let header = unsafe { header_from_data(array as *mut u8) };
-   ((header.len - PREFIX) / header.element_size) as i32
+   header.len() as i32
 }
 
 #[unsafe(no_mangle)]
@@ -240,7 +318,7 @@ pub extern "C" fn _array_reserved_helper(array: *mut c_void) -> i32 {
       return 0;
    }
    let header = unsafe { header_from_data(array as *mut u8) };
-   ((header.capacity - PREFIX) / header.element_size) as i32
+   header.capacity() as i32
 }
 
 #[unsafe(no_mangle)]
@@ -327,10 +405,7 @@ pub unsafe fn array_as_slice<T>(array: *mut T) -> &'static [T] {
    }
    unsafe {
       let header = header_from_data(array as *mut u8);
-      std::slice::from_raw_parts(
-         array as *const T,
-         (header.len - PREFIX) / header.element_size,
-      )
+      std::slice::from_raw_parts(array as *const T, header.len())
    }
 }
 
@@ -340,7 +415,7 @@ pub unsafe fn array_as_slice_mut<T>(array: *mut T) -> &'static mut [T] {
    }
    unsafe {
       let header = header_from_data_mut(array as *mut u8);
-      std::slice::from_raw_parts_mut(array, (header.len - PREFIX) / header.element_size)
+      std::slice::from_raw_parts_mut(array, header.len())
    }
 }
 
@@ -561,6 +636,99 @@ mod tests {
       assert!(orig[1] != duped[1]);
       array_free(arr);
       array_free(copy);
+   }
+
+   #[test]
+   fn c_interopt_grow_helper() {
+      // Sanity check that Array::push and the C-facing grow_slot path
+      // produce a header/pointer that the existing C helpers still agree with.
+      let mut arr = Array::new(Vec::<i32>::new());
+      arr.push(1);
+      arr.push(2);
+      assert_eq!(arr.len(), 2);
+      let ptr = arr.as_ptr();
+      assert_eq!(_array_size_helper(ptr as *mut c_void), 2);
+      assert_eq!(unsafe { array_as_slice(ptr) }, &[1, 2]);
+   }
+
+   #[test]
+   fn C_interopt_back_and_forth() {
+      let mut arr = Array::new(Vec::<i32>::new());
+      for i in 0..5 {
+         arr.push(i);
+      }
+      let mut ptr = arr.into_ptr();
+      assert_eq!(array_size(ptr), 5);
+      assert_eq!(unsafe { array_as_slice(ptr) }, &[0, 1, 2, 3, 4]);
+
+      array_push_back(&mut ptr, 5);
+      array_push_back(&mut ptr, 6);
+      assert_eq!(array_size(ptr), 7);
+      assert_eq!(unsafe { array_as_slice(ptr) }, &[0, 1, 2, 3, 4, 5, 6]);
+
+      let begin = unsafe { ptr.add(1) };
+      let end = unsafe { ptr.add(3) };
+      array_erase(&mut ptr, begin, end); // removes indices 1..3 -> [0,3,4,5,6]
+      assert_eq!(unsafe { array_as_slice(ptr) }, &[0, 3, 4, 5, 6]);
+
+      array_free(ptr);
+   }
+
+   #[test]
+   fn c_consistency_test() {
+      let mut ptr: *mut i32 = Array::new(Vec::new()).into_ptr();
+      let mut expected = Vec::new();
+
+      for i in 0..100 {
+         if i % 2 == 0 {
+            array_push_back(&mut ptr, i);
+         } else {
+            // ptr is now "C-owned", so mutate via the clone pattern.
+            let mut header = unsafe { Array::from_ptr_mut(ptr) }.unwrap().clone();
+            header.push(i);
+            unsafe { header.write_header() };
+            ptr = header.as_ptr();
+         }
+         expected.push(i);
+      }
+
+      assert_eq!(array_size(ptr), 100);
+      assert_eq!(unsafe { array_as_slice(ptr) }, expected.as_slice());
+      array_free(ptr);
+   }
+
+   #[test]
+   fn c_created_array_mutated_via_clone_pattern() {
+      let mut ptr = array_create::<i32>();
+      for i in 0..3 {
+         array_push_back(&mut ptr, i);
+      }
+
+      // push
+      let mut header = unsafe { Array::from_ptr_mut(ptr) }.unwrap().clone();
+      header.push(99);
+      unsafe { header.write_header() };
+      ptr = header.as_ptr();
+      assert_eq!(array_size(ptr), 4);
+      assert_eq!(unsafe { array_as_slice(ptr) }, &[0, 1, 2, 99]);
+
+      // pop
+      let mut header = unsafe { Array::from_ptr_mut(ptr) }.unwrap().clone();
+      let popped = header.pop();
+      unsafe { header.write_header() };
+      ptr = header.as_ptr();
+      assert_eq!(popped, Some(99));
+      assert_eq!(array_size(ptr), 3);
+
+      // clear
+      let mut header = unsafe { Array::from_ptr_mut(ptr) }.unwrap().clone();
+      header.clear();
+      unsafe { header.write_header() };
+      ptr = header.as_ptr();
+      assert_eq!(array_size(ptr), 0);
+      assert!(array_reserved(ptr) > 0);
+
+      array_free(ptr);
    }
 
    #[test]
