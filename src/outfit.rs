@@ -6,19 +6,19 @@ use renderer::texture::TextureBuilder;
 use std::ffi::CStr;
 use tracing::instrument;
 
+#[repr(transparent)]
 struct OutfitWrapper(naevc::Outfit);
-//unsafe impl Sync for OutfitWrapper {}
 unsafe impl Send for OutfitWrapper {}
 
 #[allow(dead_code)]
-fn get() -> &'static [OutfitWrapper] {
+fn get_all() -> &'static [OutfitWrapper] {
    unsafe {
       let outfits = naevc::outfit_getAll_rust();
       array::array_as_slice(outfits as *mut OutfitWrapper)
    }
 }
 
-fn get_mut() -> &'static mut [OutfitWrapper] {
+fn get_all_mut() -> &'static mut [OutfitWrapper] {
    unsafe {
       let outfits = naevc::outfit_getAll_rust();
       array::array_as_slice_mut(outfits as *mut OutfitWrapper)
@@ -29,7 +29,7 @@ fn get_mut() -> &'static mut [OutfitWrapper] {
 #[unsafe(no_mangle)]
 pub extern "C" fn outfit_gfxStoreLoadNeeded() {
    // Try to avoid messing with the context and just find what we have to update first
-   let mut needsgfx: Vec<&mut OutfitWrapper> = get_mut()
+   let mut needsgfx: Vec<&mut OutfitWrapper> = get_all_mut()
       .iter_mut()
       .filter_map(|ptr| {
          let o = &mut ptr.0;

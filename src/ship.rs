@@ -12,7 +12,6 @@ use tracing::instrument;
 
 #[repr(transparent)]
 struct ShipWrapper(naevc::Ship);
-//unsafe impl Sync for ShipWrapper {}
 unsafe impl Send for ShipWrapper {}
 
 impl ShipWrapper {
@@ -56,14 +55,14 @@ impl ShipWrapper {
 }
 
 #[allow(dead_code)]
-fn get() -> &'static [ShipWrapper] {
+fn get_all() -> &'static [ShipWrapper] {
    unsafe {
       let ships = naevc::ship_getAll();
       array::array_as_slice(ships as *mut ShipWrapper)
    }
 }
 
-fn get_mut() -> &'static mut [ShipWrapper] {
+fn get_all_mut() -> &'static mut [ShipWrapper] {
    unsafe {
       let ships = naevc::ship_getAll();
       array::array_as_slice_mut(ships as *mut ShipWrapper)
@@ -74,7 +73,7 @@ fn get_mut() -> &'static mut [ShipWrapper] {
 #[unsafe(no_mangle)]
 pub extern "C" fn ship_gfxLoadNeeded() {
    // Try to avoid messing with the context and just find what we have to update first
-   let mut needsgfx: Vec<&mut ShipWrapper> = get_mut()
+   let mut needsgfx: Vec<&mut ShipWrapper> = get_all_mut()
       .iter_mut()
       .filter_map(|ptr| {
          let s = &mut ptr.0;
