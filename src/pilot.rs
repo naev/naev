@@ -1,12 +1,15 @@
 #![allow(dead_code)]
 use crate::array;
 use nalgebra::Vector2;
+use std::ffi::c_uint;
 use std::ptr::NonNull;
 
 #[repr(transparent)]
 #[derive(Debug)]
 pub struct PilotWrapper(pub NonNull<naevc::Pilot>);
 unsafe impl Send for PilotWrapper {}
+
+pub struct PilotID(c_uint);
 
 impl PilotWrapper {
    pub unsafe fn as_mut(&mut self) -> &mut naevc::Pilot {
@@ -31,11 +34,12 @@ impl PilotWrapper {
 
 pub fn player() -> Option<PilotWrapper> {
    let p = unsafe { naevc::player.p };
-   if p.is_null() {
-      None
-   } else {
-      Some(PilotWrapper(NonNull::new(p).unwrap()))
-   }
+   NonNull::new(p).map(|ptr| PilotWrapper(ptr))
+}
+
+pub fn get(id: PilotID) -> Option<PilotWrapper> {
+   let p = unsafe { naevc::pilot_get(id.0) };
+   NonNull::new(p).map(|ptr| PilotWrapper(ptr))
 }
 
 pub fn get_all() -> &'static [PilotWrapper] {
