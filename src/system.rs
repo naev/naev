@@ -14,7 +14,7 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.presence) }
    }
 
-   pub fn presence_mut(&mut self) -> &mut [naevc::SystemPresence] {
+   pub fn presence_mut(&self) -> &mut [naevc::SystemPresence] {
       unsafe { array::array_as_slice_mut(self.0.presence) }
    }
 
@@ -26,11 +26,15 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.astexclude) }
    }
 
+   pub fn astexclude_mut(&self) -> &[naevc::AsteroidExclusion] {
+      unsafe { array::array_as_slice_mut(self.0.astexclude) }
+   }
+
    pub fn asteroids(&self) -> &[naevc::AsteroidAnchor] {
       unsafe { array::array_as_slice(self.0.asteroids) }
    }
 
-   pub fn asteroids_mut(&mut self) -> &mut [naevc::AsteroidAnchor] {
+   pub fn asteroids_mut(&self) -> &mut [naevc::AsteroidAnchor] {
       unsafe { array::array_as_slice_mut(self.0.asteroids) }
    }
 }
