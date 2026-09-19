@@ -59,7 +59,7 @@ pub fn cur_mut() -> Option<&'static mut SystemWrapper> {
 }
 
 /// Gets all the systems
-pub fn get() -> &'static [SystemWrapper] {
+pub fn get_all() -> &'static [SystemWrapper] {
    unsafe {
       let systems = naevc::system_getAll();
       array::array_as_slice(systems as *mut SystemWrapper)
@@ -67,7 +67,7 @@ pub fn get() -> &'static [SystemWrapper] {
 }
 
 /// Gets all the systems mutably
-pub fn get_mut() -> &'static mut [SystemWrapper] {
+pub fn get_all_mut() -> &'static mut [SystemWrapper] {
    unsafe {
       let systems = naevc::system_getAll();
       array::array_as_slice_mut(systems as *mut SystemWrapper)
