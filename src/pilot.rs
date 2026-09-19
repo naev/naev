@@ -38,14 +38,14 @@ pub fn player() -> Option<PilotWrapper> {
    }
 }
 
-pub fn get() -> &'static [PilotWrapper] {
+pub fn get_all() -> &'static [PilotWrapper] {
    unsafe {
       let pilots = naevc::pilot_getAll();
       array::array_as_slice(pilots as *mut PilotWrapper)
    }
 }
 
-pub fn get_mut() -> &'static mut [PilotWrapper] {
+pub fn get_all_mut() -> &'static mut [PilotWrapper] {
    unsafe {
       let pilots = naevc::pilot_getAll();
       array::array_as_slice_mut(pilots as *mut PilotWrapper)

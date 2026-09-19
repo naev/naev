@@ -1009,7 +1009,7 @@ pub extern "C" fn _asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonu
    unsafe {
       naevc::lua_pushasteroid(naevc::naevL, la);
    }
-   for p in pilot::get() {
+   for p in pilot::get_all() {
       if (a.pos() - p.pos()).norm_squared() <= rad2 {
          unsafe {
             naevc::pilot_msg(std::ptr::null(), p.0.as_ptr(), c"asteroid".as_ptr(), -1);
