@@ -27,7 +27,7 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.astexclude) }
    }
 
-   pub fn astexclude_mut(&self) -> &[naevc::AsteroidExclusion] {
+   pub fn astexclude_mut(&self) -> &mut [naevc::AsteroidExclusion] {
       unsafe { array::array_as_slice_mut(self.0.astexclude) }
    }
 

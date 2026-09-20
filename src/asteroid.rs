@@ -2,6 +2,7 @@
 use crate::array;
 use crate::commodity::CommodityRef;
 use crate::pilot;
+use crate::rng;
 use crate::rng::{range, rng};
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
@@ -24,6 +25,19 @@ use std::mem::MaybeUninit;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock};
 use tracing::instrument;
+
+/// Buffer for appearance of debris
+const DEBRIS_BUFFER: f64 = 1000.0;
+/// How long it takes to fade in and out the scanning text
+const SCAN_FADE: f64 = 10.0;
+
+fn get_inner(field: &naevc::AsteroidAnchor) -> &AnchorInner {
+   unsafe { &*(field.inner as *const AnchorInner) }
+}
+
+fn get_inner_mut(field: &naevc::AsteroidAnchor) -> &mut AnchorInner {
+   unsafe { &mut *(field.inner as *mut AnchorInner) }
+}
 
 #[derive(Debug)]
 struct Material {
@@ -236,7 +250,7 @@ impl TypeGroup {
    }
 }
 
-#[derive(Debug, Default, PartialEq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
 enum State {
    #[default]
    Xx,
@@ -274,6 +288,20 @@ impl State {
          State::FgToBg => naevc::AsteroidState_ASTEROID_XX,
          State::Bx => naevc::AsteroidState_ASTEROID_XX,
          State::BgToXx => naevc::AsteroidState_ASTEROID_XX,
+      }
+   }
+
+   fn next(s: Self) -> Self {
+      use State::*;
+      match s {
+         Xx => XxToBg,
+         XxToBg => Xb,
+         Xb => BgToFg,
+         BgToFg => Fg,
+         Fg => FgToBg,
+         FgToBg => Bx,
+         Bx => BgToXx,
+         BgToXx => Xx,
       }
    }
 }
@@ -406,6 +434,114 @@ impl Asteroid {
    fn vel(&self) -> Vector2<f64> {
       Vector2::new(self.solid.vel.x, self.solid.vel.y)
    }
+
+   fn update(
+      &mut self,
+      dt: f64,
+      anchor: &naevc::AsteroidAnchor,
+      astex: Option<&[naevc::AsteroidExclusion]>,
+   ) {
+      let inner = get_inner(anchor);
+      let off = Vector2::new(anchor.pos.x, anchor.pos.y) - self.pos();
+      let d2 = off.norm_squared();
+      let setvel = if d2 >= anchor.radius * anchor.radius {
+         let d = d2.sqrt();
+         self.solid.vel.x += anchor.accel * dt * off.x / d;
+         self.solid.vel.y += anchor.accel * dt * off.y / d;
+         true
+      } else if let Some(astex) = astex {
+         let mut setvel = false;
+         for ex in astex {
+            if ex.affects == 0 {
+               continue;
+            }
+
+            let eoff = self.pos() - Vector2::new(anchor.pos.x, anchor.pos.y);
+            let ed2 = eoff.norm_squared();
+            if ed2 <= ex.radius * ex.radius {
+               let ed = ed2.sqrt();
+               self.solid.vel.x += anchor.accel * dt * eoff.x / ed;
+               self.solid.vel.y += anchor.accel * dt * eoff.y / ed;
+               setvel = true;
+            }
+         }
+         setvel
+      } else {
+         false
+      };
+
+      if setvel {
+         // Enforce max speed
+         let speed = self.vel().norm();
+         if speed > anchor.maxspeed {
+            self.solid.vel.x *= anchor.maxspeed / speed;
+            self.solid.vel.y *= anchor.maxspeed / speed;
+         }
+      }
+
+      // TODO use physics stuff
+      self.solid.pre = self.solid.pos;
+      self.solid.pos.x += self.solid.vel.x * dt;
+      self.solid.pos.y += self.solid.vel.y * dt;
+
+      // Update angle
+      self.ang += self.spin * dt;
+
+      // Figure out if state change is applicable
+      let forced = self.timer < 0.; // Forced by Lua or whatever
+      self.timer -= dt;
+      if self.timer < 0. {
+         match self.state {
+            State::Fg => {
+               /*
+                * TODO handle when player is nearby to stop despawning
+               let player_nearby = if !forced {
+               };
+               if !player_nearby {
+               }
+               */
+               self.timer_max = 1.0 + 3.0 * rng::rng::<f64>();
+               self.timer = self.timer_max;
+            }
+            State::Xb | State::Bx | State::XxToBg => {
+               self.timer_max = 1.0 + 3.0 * rng::rng::<f64>();
+               self.timer = self.timer_max;
+            }
+            State::FgToBg => {
+               self.timer_max = 10.0 + 20.0 * rng::rng::<f64>();
+               self.timer = self.timer_max;
+            }
+            State::BgToFg => {
+               if let Some(a) = Asteroid::try_new(anchor, false) {
+                  *self = a;
+                  self.timer_max = 90.0 + 30.0 * rng::rng::<f64>();
+                  self.timer = self.timer_max;
+               } else {
+                  warn!("failed to respawn asteroid");
+               }
+            }
+            // Respawn
+            State::BgToXx => {
+               self.timer_max = 10.0 + 20.0 * rng::rng::<f64>();
+               self.timer = self.timer_max;
+            }
+            State::Xx => (),
+         }
+         self.state = State::next(self.state);
+      }
+
+      if self.scanned {
+         if self.state == State::Fg {
+            self.scan_alpha += SCAN_FADE * dt;
+            self.scan_alpha.min(1.0);
+         } else {
+            self.scan_alpha -= SCAN_FADE * dt;
+            self.scan_alpha.max(0.0);
+         }
+      }
+
+      todo!()
+   }
 }
 
 slotmap::new_key_type! {
@@ -497,7 +633,44 @@ pub fn load() -> Result<()> {
 
 #[instrument]
 pub fn update(dt: f64) {
-   if let Some(cur_system) = crate::system::cur() {}
+   if let Some(cur_system) = crate::system::cur() {
+      for ast in cur_system.asteroids_mut() {
+         let inner = get_inner_mut(ast);
+         let mut has_exclusion = false;
+         for ex in cur_system.astexclude_mut() {
+            if Vector2::new(ast.pos.x - ex.pos.x, ast.pos.y - ex.pos.y).norm_squared()
+               <= ast.radius * ast.radius
+            {
+               ex.affects = 1;
+               has_exclusion = true;
+            } else {
+               ex.affects = 0;
+            }
+         }
+
+         let astex = match has_exclusion {
+            true => Some(cur_system.astexclude()),
+            false => None,
+         };
+         for a in inner.asteroids.values_mut() {
+            // Skip inexistent asteroids
+            if a.state == State::Xx {
+               a.timer -= dt;
+               if a.timer < 0. {
+                  a.state = State::XxToBg;
+                  a.timer_max = 1.0 + 3.0 * rng::rng::<f64>();
+                  a.timer = a.timer_max;
+               }
+               continue;
+            }
+            a.update(dt, ast, astex);
+         }
+
+         // Quadtree stuff
+      }
+
+      // Update debris
+   }
 }
 
 #[derive(Debug, PartialEq, Copy, Clone)]
@@ -514,7 +687,7 @@ impl LuaAsteroid {
       if let Some(cur_system) = crate::system::cur()
          && let Some(field) = cur_system.asteroids().get(self.parent)
       {
-         let inner = unsafe { &*(field.inner as *const AnchorInner) };
+         let inner = get_inner(field);
          if let Some(ast) = inner.asteroids.get(self.id) {
             Ok(f(ast))
          } else {
@@ -585,7 +758,7 @@ impl UserData for LuaAsteroid {
          let mut asteroids = Vec::new();
          if let Some(cur_system) = crate::system::cur() {
             for (parent, ast) in cur_system.asteroids().iter().enumerate() {
-               let inner = unsafe { &*(ast.inner as *const AnchorInner) };
+               let inner = get_inner(ast);
                for (id, asteroid) in inner.asteroids.iter() {
                   asteroids.push(LuaAsteroid { parent, id })
                }
@@ -612,8 +785,8 @@ impl UserData for LuaAsteroid {
                if let Some(cur_system) = crate::system::cur() {
                   let fields = cur_system.asteroids();
                   let parent = range(0..fields.len());
-                  let field = fields[parent];
-                  let inner = unsafe { &*(field.inner as *const AnchorInner) };
+                  let field = &fields[parent];
+                  let inner = get_inner(field);
                   let ast: Vec<_> = inner
                      .asteroids
                      .iter()
@@ -629,8 +802,8 @@ impl UserData for LuaAsteroid {
                if let Some(cur_system) = crate::system::cur() {
                   let fields = cur_system.asteroids();
                   let parent = range(0..fields.len());
-                  let field = fields[parent];
-                  let inner = unsafe { &*(field.inner as *const AnchorInner) };
+                  let field = &fields[parent];
+                  let inner = get_inner(field);
                   let id = inner
                      .asteroids
                      .iter()
@@ -717,7 +890,7 @@ pub extern "C" fn _asteroids_init() {
                has_exclusion: false,
             })) as *mut naevc::AsteroidInner;
          }
-         let inner = unsafe { &mut *(ast.inner as *mut AnchorInner) };
+         let inner = get_inner_mut(ast);
 
          // TODO add graphics to debris
 
@@ -784,7 +957,7 @@ pub extern "C" fn _astgroup_name(at: *const TypeGroup) -> *const c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn _ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const Asteroid {
    let ast = unsafe { &*ast };
-   let inner = unsafe { &*(ast.inner as *const AnchorInner) };
+   let inner = get_inner(ast);
    match inner.asteroids.get(AsteroidRef::from_ffi(id)) {
       Some(ast) => ast,
       None => std::ptr::null(),
@@ -883,7 +1056,7 @@ pub extern "C" fn _asteroid_closestPilot(
    d: *mut f64,
 ) -> i64 {
    let ast = unsafe { &*ast };
-   let inner = unsafe { &*(ast.inner as *const AnchorInner) };
+   let inner = get_inner(ast);
    let pos = Vector2::new(x, y);
    match inner
       .asteroids
