@@ -8,7 +8,9 @@
   <class>J</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
-  <description>All attempts at establishing a colony and exploiting the planet's resources concluded with a rescue mission from Omega Enclave. It’s not uncommon for the station to hail ships that get a bit too close, because it is sure to only create more work.</description>
+  <services>
+    <land/>
+  </services>
+  <description>All attempts at establishing a colony and exploiting the planet's resources concluded with a rescue mission from Omega Enclave. This has led to talks of declaring Fortitude II a protected military zone just to drive them away, but nothing involving the bureaucracy goes fast.</description>
  </general>
 </spob>
