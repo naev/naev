@@ -2,13 +2,15 @@
  <pos x="-6375.161157" y="2211.932463"/>
  <GFX>
   <space>H00</space>
-  <exterior>oceanic2</exterior>
+  <exterior>uninhabited-rocky-green-02</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+    <land/>
+  </services>
   <description>Though it has seen colonies in the past, this world had always been far too hostile and insignificant to get a more proper name. When the world was evacuated in response to the Collective's attacks, few of it's inhabitants regretted having to leave it behind, in part because wherever the empire relocated them was likely to be better.</description>
  </general>
 </spob>

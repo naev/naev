@@ -2,13 +2,15 @@
  <pos x="14021.001327" y="31334.669645"/>
  <GFX>
   <space>moon-I01</space>
-  <exterior>station03</exterior>
+  <exterior>uninhabited-rocky-magenta-03</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
   <hide>2.000000</hide>
-  <services/>
-  <description>Thought to be little more than a cold gaseous body after basic scans conducted long before the Incident and left alone, it was observed the Collective seemed to have some level activity on it for an unkown reason. Perhaps it actually has noteworthy resources buried deep?</description>
+  <services>
+    <land/>
+  </services>
+  <description>Thought to be little more than a cold gaseous body after basic scans conducted long before the Incident and left alone since then, it was observed the Collective seemed to have some level activity on it for an unkown reason. Perhaps it actually has noteworthy resources buried deep?</description>
  </general>
 </spob>

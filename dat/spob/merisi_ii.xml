@@ -2,13 +2,15 @@
  <pos x="23299.191301" y="-295.439837"/>
  <GFX>
   <space>O03</space>
-  <exterior>oceanic2</exterior>
+  <exterior>uninhabited-jungle</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+    <land/>
+  </services>
   <description>While similar to Merisi I, Merisi II never saw life develop. It would be hospitable world though, if anyone cared to build a colony.</description>
  </general>
 </spob>
