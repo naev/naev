@@ -304,6 +304,20 @@ impl State {
          BgToXx => Xx,
       }
    }
+
+   fn prev(s: Self) -> Self {
+      use State::*;
+      match s {
+         XxToBg => Xx,
+         Xb => XxToBg,
+         BgToFg => Xb,
+         Fg => BgToFg,
+         FgToBg => Fg,
+         Bx => FgToBg,
+         BgToXx => Bx,
+         Xx => BgToXx,
+      }
+   }
 }
 
 #[derive(Debug)]
@@ -493,13 +507,21 @@ impl Asteroid {
       if self.timer < 0. {
          match self.state {
             State::Fg => {
-               /*
-                * TODO handle when player is nearby to stop despawning
-               let player_nearby = if !forced {
-               };
-               if !player_nearby {
+               if !forced
+                  && let Some(player) = pilot::player()
+                  && ((player.pos() - self.pos()).norm_squared() < 1500.0 * 1500.0
+                     || unsafe {
+                        (player.0.as_ref().nav_anchor == self.parent
+                           && player.0.as_ref().nav_asteroid == self.id.as_ffi())
+                     })
+               {
+                  // Lower state so it gets incremented
+                  self.state = State::prev(self.state);
+               } else {
+                  unsafe {
+                     naevc::pilot_untargetAsteroid(self.parent, self.id.as_ffi());
+                  }
                }
-               */
                self.timer_max = 1.0 + 3.0 * rng::rng::<f64>();
                self.timer = self.timer_max;
             }
