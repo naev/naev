@@ -3,6 +3,7 @@
 <event name="Ship Capture">
  <location>none</location>
  <chance>0</chance>
+ <priority>99</priority>
  <tags>
   <tag>fleetcap_10</tag>
  </tags>
