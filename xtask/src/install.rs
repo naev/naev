@@ -7,6 +7,7 @@
 use std::{
    fs,
    path::{Path, PathBuf},
+   process::Command,
 };
 
 use anyhow::{Context, Result, bail};
@@ -85,6 +86,30 @@ pub struct InstallArgs {
    /// Install the release binary rather than the debug one.
    #[arg(long)]
    release: bool,
+
+   /// Cargo features to build the engine with.
+   #[arg(long, value_delimiter = ',')]
+   features: Vec<String>,
+}
+
+impl InstallArgs {
+   /// Where ndata ends up once installed, relative to the prefix.
+   ///
+   /// meson defaulted its ndata_path option to `<datadir>/naev`, and the same
+   /// value drove both the install and the compiled-in path.
+   fn ndata(&self) -> PathBuf {
+      self.ndata_path
+         .clone()
+         .unwrap_or_else(|| self.datadir.join("naev"))
+   }
+
+   /// The absolute path the engine looks in for its data.
+   ///
+   /// DESTDIR is deliberately not part of this. Staging moves where files are
+   /// written, not where the installed game will later read them from.
+   fn pkgdatadir(&self) -> PathBuf {
+      self.prefix.join(self.ndata())
+   }
 }
 
 /// The components an empty request installs, named for the help output.
@@ -136,6 +161,32 @@ pub fn install(root: &Path, target: &Path, data_dir: &Path, args: &InstallArgs) 
    Ok(())
 }
 
+/// Builds the engine with the data path this install is going to use.
+fn build_engine(root: &Path, args: &InstallArgs) -> Result<()> {
+   // Reuse the cargo that invoked us. Under a toolchain override it is not
+   // the one on PATH.
+   let cargo = std::env::var_os("CARGO").unwrap_or_else(|| "cargo".into());
+   let mut cmd = Command::new(cargo);
+   cmd.arg("build")
+      .arg("--manifest-path")
+      .arg(root.join("Cargo.toml"))
+      .arg("--package")
+      .arg("naev")
+      .env("NAEV_PKGDATADIR", args.pkgdatadir());
+   if args.release {
+      cmd.arg("--release");
+   }
+   if !args.features.is_empty() {
+      cmd.arg("--features").arg(args.features.join(","));
+   }
+
+   let status = cmd.status().context("failed to run cargo build")?;
+   if !status.success() {
+      bail!("cargo build failed with {status}");
+   }
+   Ok(())
+}
+
 /// The binary, everything it loads, and the entries a desktop needs to show it.
 fn game(
    root: &Path,
@@ -144,21 +195,20 @@ fn game(
    args: &InstallArgs,
    dest: &impl Fn(&Path) -> PathBuf,
 ) -> Result<usize> {
+   // The engine has to be compiled knowing where its data will live, so the
+   // build happens here rather than being left to the caller. Doing it any
+   // other way lets the two disagree, and the result only fails once someone
+   // runs the game.
+   build_engine(root, args)?;
+
    let profile = if args.release { "release" } else { "debug" };
    let binary = target.join(profile).join("naev");
    if !binary.is_file() {
-      bail!(
-         "no binary at {}; build it first with cargo build{}",
-         binary.display(),
-         if args.release { " --release" } else { "" }
-      );
+      bail!("no binary at {} after building it", binary.display());
    }
 
    let datadir = &args.datadir;
-   let ndata = args
-      .ndata_path
-      .clone()
-      .unwrap_or_else(|| datadir.join("naev"));
+   let ndata = args.ndata();
 
    copy(&binary, &dest(&args.bindir.join("naev")), 0o755)?;
    let mut files = 1;
