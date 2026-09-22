@@ -15,6 +15,7 @@ workspace = true
 # Mirror the meson options of the same names.
 paranoid = []
 debug_arrays = []
+steamruntime = []
 tracy = []
 
 [dev-dependencies]

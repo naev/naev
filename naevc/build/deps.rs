@@ -8,11 +8,19 @@
 use std::path::PathBuf;
 
 /// Libraries with no pkg-config file, found by linking against them directly.
-/// Their headers live in the compiler's default search path.
+/// Their headers live in the compiler's default search path. The order is the
+/// link order: a static archive only resolves against what follows it.
 const LINK_ONLY: &[&str] = &["glpk", "cholmod", "amd", "camd", "colamd", "suitesparseconfig"];
 
 /// Same, but the build carries on without them if they are absent.
 const LINK_ONLY_OPTIONAL: &[&str] = &["ccolamd", "lapack", "metis"];
+
+/// Pulled in only when the numeric libraries are archives. A distribution
+/// builds glpk with libtool-dl and compressed file support, CHOLMOD against
+/// OpenMP, and OpenBLAS against a Fortran runtime. The shared builds resolve
+/// all of that themselves. Clang's libomp has no static half, so the OpenMP
+/// symbols come from GCC's libgomp.
+const STATIC_SUPPORT: &[&str] = &["ltdl", "z", "gomp", "gfortran"];
 
 /// Everything the C sources need in order to compile and link.
 ///
@@ -65,18 +73,25 @@ pub fn probe() -> Deps {
       include_paths.extend(optional(name).unwrap_or_default());
    }
 
+   let numeric_static = steamruntime();
    for name in LINK_ONLY {
-      println!("cargo:rustc-link-lib={name}");
+      link_lib(name, numeric_static);
    }
    for name in LINK_ONLY_OPTIONAL {
       // Emitting these unconditionally would fail the link where they do not
       // exist, and meson treated them as optional too.
       if has_library(name) {
-         println!("cargo:rustc-link-lib={name}");
+         link_lib(name, numeric_static);
       }
    }
-   link_csparse();
-   link_blas();
+   link_csparse(numeric_static);
+   link_blas(numeric_static);
+   if numeric_static {
+      add_static_search_paths();
+      for name in STATIC_SUPPORT {
+         link_lib(name, true);
+      }
+   }
    link_platform();
 
    let have_tracy = probe_tracy(&mut include_paths);
@@ -89,10 +104,10 @@ pub fn probe() -> Deps {
 }
 
 /// c[x]sparse is packaged under either name depending on the distribution.
-fn link_csparse() {
+fn link_csparse(static_link: bool) {
    for name in ["cxsparse", "csparse"] {
       if has_library(name) {
-         println!("cargo:rustc-link-lib={name}");
+         link_lib(name, static_link);
          return;
       }
    }
@@ -104,7 +119,7 @@ fn link_csparse() {
 
 /// BLAS implementation. meson exposes this as -Dblas; keep it configurable
 /// since Accelerate, blis and plain cblas are all viable.
-fn link_blas() {
+fn link_blas(static_link: bool) {
    let blas = std::env::var("NAEV_BLAS").unwrap_or_else(|_| "openblas".to_string());
    println!("cargo:rerun-if-env-changed=NAEV_BLAS");
 
@@ -114,7 +129,50 @@ fn link_blas() {
       if !has_library(&blas) {
          missing(&blas, "a BLAS implementation, or set NAEV_BLAS");
       }
-      println!("cargo:rustc-link-lib={blas}");
+      link_lib(&blas, static_link);
+   }
+}
+
+/// Steam's runtime carries none of the numeric libraries. A build for it links
+/// them in rather than shipping copies beside the binary, where they would
+/// shadow whatever the runtime does provide.
+fn steamruntime() -> bool {
+   std::env::var_os("CARGO_FEATURE_STEAMRUNTIME").is_some()
+}
+
+/// GCC keeps libgomp and libgfortran under its own versioned directory. The C
+/// compiler searches it, the linker rustc drives does not, so ask the compiler
+/// where each archive is instead of hardcoding a path that moves with the GCC
+/// release.
+fn add_static_search_paths() {
+   let compiler = cc::Build::new().get_compiler();
+   let mut seen: Vec<PathBuf> = Vec::new();
+   for name in STATIC_SUPPORT {
+      let Ok(out) = std::process::Command::new(compiler.path())
+         .arg(format!("--print-file-name=lib{name}.a"))
+         .output()
+      else {
+         continue;
+      };
+      // The flag echoes its argument back when the archive is not found.
+      let path = PathBuf::from(String::from_utf8_lossy(&out.stdout).trim());
+      if !path.is_absolute() {
+         continue;
+      }
+      let Some(dir) = path.parent() else { continue };
+      let dir = dir.canonicalize().unwrap_or_else(|_| dir.to_path_buf());
+      if !seen.contains(&dir) {
+         println!("cargo:rustc-link-search=native={}", dir.display());
+         seen.push(dir);
+      }
+   }
+}
+
+fn link_lib(name: &str, static_link: bool) {
+   if static_link {
+      println!("cargo:rustc-link-lib=static={name}");
+   } else {
+      println!("cargo:rustc-link-lib={name}");
    }
 }
 

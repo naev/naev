@@ -20,6 +20,7 @@ path = "src/main.rs"
 # for TRACY_ENABLE in config.h, and the Rust side, for tracing-tracy.
 paranoid = ["naevc/paranoid"]
 debug_arrays = ["naevc/debug_arrays"]
+steamruntime = ["naevc/steamruntime"]
 tracy = ["naevc/tracy", "nlog/tracy", "renderer/tracy"]
 
 [profile.release-with-debug]
