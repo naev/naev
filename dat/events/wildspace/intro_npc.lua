@@ -11,7 +11,7 @@
       return false
    end
    local st = s:tags()
-   if st.restricted then
+   if st.restricted or st.nonpc then
       return false
    end
    local sf = s:faction()

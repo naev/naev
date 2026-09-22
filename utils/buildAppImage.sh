@@ -3,7 +3,7 @@
 # AppDir BUILD SCRIPT FOR NAEV
 #
 # For more information, see http://appimage.org/
-# Pass in [-d] (set this for debug builds) [-n] (set this for nightly builds) [-i] (set this to build an appimage from source) [-p] (set this to package an appimage from an AppDir) -a <APPDIRPATH> Sets location of AppDir for packaging -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory) [-c] (set this to skip slow compression)
+# Pass in [-d] (set this for debug builds) [-n] (set this for nightly builds) [-i] (set this to build an appimage from source) [-p] (set this to package an appimage from an AppDir) [-e] (set this when the AppDir already holds a meson install, skipping the build) -a <APPDIRPATH> Sets location of AppDir for packaging -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory) [-c] (set this to skip slow compression)
 
 # Output destination is ${WORKPATH}/dist
 
@@ -16,9 +16,10 @@ BUILDTYPE="debug"
 MAKEAPPIMAGE="false"
 PACKAGE="false"
 NIGHTLY="false"
+PREBUILT="false"
 
 # Parse arguments
-while getopts dnipa:s:b:c OPTION "$@"; do
+while getopts dnipea:s:b:c OPTION "$@"; do
    case $OPTION in
    d)
       set -x
@@ -33,6 +34,9 @@ while getopts dnipa:s:b:c OPTION "$@"; do
       ;;
    p)
       PACKAGE="true"
+      ;;
+   e)
+      PREBUILT="true"
       ;;
    a)
       APPDIRPATH="${OPTARG}"
@@ -112,18 +116,20 @@ get_tools() {
 }
 
 build_appdir() {
-   PROFILE=()
-   if [ "$BUILDTYPE" = "release" ]; then
-      PROFILE=(--release)
-   fi
-   # Keep cargo's artifacts under the build path the caller asked for.
-   export CARGO_TARGET_DIR="$BUILDPATH"
-   CARGO_ARGS=(--manifest-path "$SOURCEPATH/Cargo.toml")
+   if [[ "$PREBUILT" != "true" ]]; then
+      PROFILE=()
+      if [ "$BUILDTYPE" = "release" ]; then
+         PROFILE=(--release)
+      fi
+      # Keep cargo's artifacts under the build path the caller asked for.
+      export CARGO_TARGET_DIR="$BUILDPATH"
+      CARGO_ARGS=(--manifest-path "$SOURCEPATH/Cargo.toml")
 
-   cargo build "${CARGO_ARGS[@]}" --package naev "${PROFILE[@]}"
-   # Install Naev to DISTDIR
-   DESTDIR="$APPDIRPATH" cargo run --quiet "${CARGO_ARGS[@]}" --package xtask --release -- \
-      install --prefix /usr "${PROFILE[@]}"
+      cargo build "${CARGO_ARGS[@]}" --package naev "${PROFILE[@]}"
+      # Install Naev to DISTDIR
+      DESTDIR="$APPDIRPATH" cargo run --quiet "${CARGO_ARGS[@]}" --package xtask --release -- \
+         install --prefix /usr "${PROFILE[@]}"
+   fi
    # Rename metainfo file
    mv "$APPDIRPATH/usr/share/metainfo/org.naev.Naev.metainfo.xml" "$APPDIRPATH/usr/share/metainfo/org.naev.Naev.appdata.xml"
    pushd "$WORKPATH"

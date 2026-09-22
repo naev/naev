@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use naevc::array;
 
 #[repr(transparent)]
@@ -14,7 +15,7 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.presence) }
    }
 
-   pub fn presence_mut(&mut self) -> &mut [naevc::SystemPresence] {
+   pub fn presence_mut(&self) -> &mut [naevc::SystemPresence] {
       unsafe { array::array_as_slice_mut(self.0.presence) }
    }
 
@@ -26,11 +27,15 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.astexclude) }
    }
 
+   pub fn astexclude_mut(&self) -> &mut [naevc::AsteroidExclusion] {
+      unsafe { array::array_as_slice_mut(self.0.astexclude) }
+   }
+
    pub fn asteroids(&self) -> &[naevc::AsteroidAnchor] {
       unsafe { array::array_as_slice(self.0.asteroids) }
    }
 
-   pub fn asteroids_mut(&mut self) -> &mut [naevc::AsteroidAnchor] {
+   pub fn asteroids_mut(&self) -> &mut [naevc::AsteroidAnchor] {
       unsafe { array::array_as_slice_mut(self.0.asteroids) }
    }
 }
@@ -54,7 +59,7 @@ pub fn cur_mut() -> Option<&'static mut SystemWrapper> {
 }
 
 /// Gets all the systems
-pub fn get() -> &'static [SystemWrapper] {
+pub fn get_all() -> &'static [SystemWrapper] {
    unsafe {
       let systems = naevc::system_getAll();
       array::array_as_slice(systems as *mut SystemWrapper)
@@ -62,7 +67,7 @@ pub fn get() -> &'static [SystemWrapper] {
 }
 
 /// Gets all the systems mutably
-pub fn get_mut() -> &'static mut [SystemWrapper] {
+pub fn get_all_mut() -> &'static mut [SystemWrapper] {
    unsafe {
       let systems = naevc::system_getAll();
       array::array_as_slice_mut(systems as *mut SystemWrapper)

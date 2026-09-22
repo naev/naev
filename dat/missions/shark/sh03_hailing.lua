@@ -15,7 +15,7 @@
 --[[
    This is the fourth mission of the Shark's teeth campaign. The player has to hail a frontier ship.
    There should not be any ambush in this mission but the player must fear it from the beginning to the end
-   
+
    Stages :
    0) Way to Frontier system
    1) Way back to HQ

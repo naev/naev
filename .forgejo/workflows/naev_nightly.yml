@@ -5,7 +5,6 @@ on:
 
 name: Nightly Release
 
-permissions: {}
 jobs:
   "Nightly_Skip_Check":
     runs-on: naev-release
@@ -19,7 +18,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: false
-          fetch-depth: 0
           submodules: false
           ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
@@ -28,7 +26,9 @@ jobs:
       - name: Check for new commits since last nightly
         id: check
         run: |
-          git fetch --tags
+          # 'nightly' is a lightweight tag, so its target is the commit the
+          # last build ran on. Fetching every tag would drag in the history.
+          git fetch --depth=1 origin +refs/tags/nightly:refs/tags/nightly || true
           current_sha="$(git rev-parse HEAD)"
           nightly_sha="$(git rev-parse nightly 2>/dev/null || true)"
 
@@ -57,22 +57,6 @@ jobs:
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: true
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ runner.os }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ runner.os }}-
-
-      - name: Fetch Meson subprojects
-        run: |
-          mkdir -p source/subprojects/packagecache
-          if find source/subprojects/packagecache -mindepth 1 -maxdepth 1 | read || find source/subprojects/packagefiles -mindepth 1 -maxdepth 1 | read; then
-            echo "Using cached Meson subprojects/packagefiles; skip download"
-          else
-            meson subprojects download --sourcedir source
-          fi
-
       - name: Capture assets submodule revision
         id: assets_rev
         run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
@@ -83,12 +67,12 @@ jobs:
           path: |
             source/.git/lfs/objects
             source/.git/modules/assets/lfs/objects
-          key: lfs-${{ runner.os }}-${{ steps.assets_rev.outputs.rev }}
-          restore-keys: lfs-${{ runner.os }}-
+          key: lfs-${{ steps.assets_rev.outputs.rev }}
+          restore-keys: lfs-
 
       - name: Fetch and checkout LFS
         run: |
-          git -C source/assets lfs fetch --all
+          git -C source/assets lfs fetch
           git -C source/assets lfs checkout
 
       - name: Package Dist
@@ -100,7 +84,6 @@ jobs:
         run: |
           mkdir -p build/dist
           cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/berg build/dist/
-          cp source/utils/buildAppImage.sh build/dist
           cp source/utils/buildUniversalBundle.sh build/dist
           cp -r source/extras/macos/dmg_assets build/dist
           cp source/extras/macos/entitlements.plist build/dist
@@ -126,7 +109,6 @@ jobs:
         with:
           name: naev-packaging-assets
           path: |
-            ${{ github.workspace }}/build/dist/buildAppImage.sh
             ${{ github.workspace }}/build/dist/buildUniversalBundle.sh
             ${{ github.workspace }}/build/dist/dmg_assets
             ${{ github.workspace }}/build/dist/entitlements.plist
@@ -168,20 +150,13 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
@@ -194,7 +169,6 @@ jobs:
               --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=debug \
               --wrap-mode=${{ matrix.wrap_mode }} \
-              --force-fallback-for=sdl2_image,glpk,SuiteSparse \
               -Dsteamruntime=true \
               -Dprefix="/usr" \
               -Dinstaller=true \
@@ -220,33 +194,22 @@ jobs:
         env:
           DESTDIR: ${{ github.workspace }}/staging
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
-        with:
-          path: |
-            build/builddir/cargo-home
-            build/builddir/src
-          key: cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
-          restore-keys: |
-            cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-appimage-${{ matrix.image }}-
-            cargo-appimage-${{ matrix.image }}-
-
-      - name: Compile AppImage
+      - name: Build AppImage
         run: |
-              ./source/utils/buildAppImage.sh -d -n -s source -b build
+          DESTDIR="${{ github.workspace }}/AppDir" meson install -C build
+          ./source/utils/buildAppImage.sh -d -n -e -i -a "${{ github.workspace }}/AppDir" -s source -b appimage
 
       - name: Collect Steam Linux64 Artifacts
         run: |
-          mkdir -p build/dist/
+          mkdir -p build/dist/ build/libs/
 
           mv staging/usr/bin/naev build/dist/naev.x64
           chmod +x build/dist/naev.x64
 
-          tar -cJvf build/dist/naev-appdir.tar.xz -C  build/dist/ AppDir
+          # Steam's runtime supplies the rest of what linuxdeploy bundled.
+          cp AppDir/usr/lib/libopenal.so.1 AppDir/usr/lib/libluajit-5.1.so.2 build/libs/
 
-          tar -cJvf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
+          tar -cJf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v3
@@ -260,43 +223,18 @@ jobs:
           name: naev-ndata
           path: ${{ github.workspace }}/build/dist/naev-ndata.tar.xz
 
-      - name: Upload Artifact
+      - name: Upload Steam Runtime Libraries Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: naev-linux-appdir-x86-64
-          path: "${{ github.workspace }}/build/dist/naev-appdir.tar.xz"
-
-  "Linux_Package_Release":
-    needs:
-      [
-        Package_Source,
-        Linux_Naev_Release
-      ]
-    runs-on: naev-release
-    steps:
-      - name: Get Packaging Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: naev-packaging-assets
-          path: packaging
-
-      - name: Get AppDir
-        uses: actions/download-artifact@v3
-        with:
-          name: naev-linux-appdir-x86-64
-          path: appdir
-
-      - name: Package AppImage
-        run: |
-              chmod +x packaging/buildAppImage.sh
-              tar -Jxf appdir/naev-appdir.tar.xz
-              ./packaging/buildAppImage.sh -d -n -p -a "./AppDir" -b build
+          name: naev-linux-libs
+          path: ${{ github.workspace }}/build/libs/
+          if-no-files-found: error
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: naev-linux-x86-64
-          path: "${{ github.workspace }}/build/dist/*"
+          path: "${{ github.workspace }}/appimage/dist/*"
 
   "Windows_Naev_Release":
     needs: "Package_Source"
@@ -325,20 +263,13 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
@@ -395,9 +326,11 @@ jobs:
           - image: naev-macos
             arch: x86_64
             config: macos_cross_osxcross.ini
+            binaries_only: "1"
           - image: naev-macos
             arch: aarch64
             config: macos_aarch64_cross_osxcross.ini
+            binaries_only: "0"
 
     runs-on: ${{ matrix.image }}
     env:
@@ -417,20 +350,13 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-
             cargo-${{ matrix.image }}-${{ matrix.arch }}-
@@ -461,6 +387,8 @@ jobs:
       - name: Meson Install
         run: |
           meson install -C build
+        env:
+          NAEV_BUNDLE_BINARIES_ONLY: ${{ matrix.binaries_only }}
 
       - name: Fix zip name
         run: |
@@ -525,7 +453,7 @@ jobs:
     needs:
       [
         Package_Source,
-        Linux_Package_Release,
+        Linux_Naev_Release,
         Windows_Naev_Release,
         Darwin_Package_Release,
       ]
@@ -592,12 +520,12 @@ jobs:
           name: naev-steamruntime
           path: ${{ github.workspace }}/build/staging/naev-steamruntime
 
-      - name: Download Linux AppDir (steam)
+      - name: Download Steam Runtime Libraries (steam)
         if: ${{ matrix.releasetype == 'steam' }}
         uses: actions/download-artifact@v3
         with:
-          name: naev-linux-appdir-x86-64
-          path: ${{ github.workspace }}/build/staging/naev-linux-appdir-x86-64
+          name: naev-linux-libs
+          path: ${{ github.workspace }}/build/staging/naev-linux-libs
 
       - name: Force Codeberg over SSH
         run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
@@ -611,6 +539,7 @@ jobs:
           submodules: false
           path: build/staging/repo
           fetch-depth: 0
+          filter: blob:none
           ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: true

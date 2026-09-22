@@ -13,22 +13,6 @@ jobs:
           path: source
           submodules: true
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
-      - name: Fetch Meson subprojects
-        run: |
-          mkdir -p source/subprojects/packagecache
-          if find source/subprojects/packagecache -mindepth 1 -maxdepth 1 | read || find source/subprojects/packagefiles -mindepth 1 -maxdepth 1 | read; then
-            echo "Using cached Meson subprojects/packagefiles; skip download"
-          else
-            meson subprojects download --sourcedir source
-          fi
-
       - name: Capture assets submodule revision
         id: assets_rev
         run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
@@ -39,8 +23,8 @@ jobs:
           path: |
             source/.git/lfs/objects
             source/.git/modules/assets/lfs/objects
-          key: lfs-${{ matrix.image }}-${{ steps.assets_rev.outputs.rev }}
-          restore-keys: lfs-${{ matrix.image }}-
+          key: lfs-${{ steps.assets_rev.outputs.rev }}
+          restore-keys: lfs-
 
       - name: Fetch and checkout LFS
         run: |
@@ -49,7 +33,7 @@ jobs:
           # fork-PR runners send an invalid token and Codeberg rejects it.
           git -C source/assets config --unset-all "http.https://codeberg.org/.extraheader" || true
           git -C source config --unset-all "http.https://codeberg.org/.extraheader" || true
-          git -C source/assets lfs fetch --all
+          git -C source/assets lfs fetch
           git -C source/assets lfs checkout
 
       - name: Package Dist
@@ -87,20 +71,13 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
@@ -114,7 +91,6 @@ jobs:
               --native-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               --wrap-mode=${{ matrix.wrap_mode }} \
-              --force-fallback-for=sdl2_image,glpk,SuiteSparse \
               -Dsteamruntime=false \
               -Dprefix="/usr" \
               -Dinstaller=false \
@@ -135,12 +111,24 @@ jobs:
         run: |
           meson compile -C build
 
+      - name: Meson Test (luacheck)
+        id: luacheck
+        run: |
+          meson test luacheck -C build
+
       - name: Upload Compile Log
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Upload Luacheck Log
+        uses: actions/upload-artifact@v3
+        if: ${{ success() || steps.luacheck.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-luacheck-log
+          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
 
       - name: Test Install
         id: install
@@ -162,7 +150,7 @@ jobs:
           path: |
             appImageBuild/builddir/cargo-home
             appImageBuild/builddir/src
-          key: cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-
             cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-
@@ -208,20 +196,13 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
@@ -310,20 +291,13 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-
             cargo-${{ matrix.image }}-${{ matrix.arch }}-
@@ -380,8 +354,8 @@ jobs:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-  "Luacheck":
-    runs-on: naev-steamruntime
+  "Documentation":
+    runs-on: naev-docs
     needs:
       [
         Package_Source,
@@ -389,70 +363,6 @@ jobs:
         Windows_Compile_Naev,
         Darwin_Compile_Naev,
       ]
-
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v3
-        with:
-          name: naev-dist-${{ github.sha }}
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v5
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ matrix.image }}-
-
-      - name: Cache Cargo home
-        uses: actions/cache@v5
-        with:
-          path: |
-            build/cargo-home
-            build/src
-          key: cargo-v2-${{ matrix.image }}-luacheck-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
-          restore-keys: |
-            cargo-v2-${{ matrix.image }}-luacheck-
-            cargo-${{ matrix.image }}-luacheck-
-            cargo-v2-${{ matrix.image }}-
-            cargo-${{ matrix.image }}-
-
-      - name: Meson Setup
-        id: setup
-        run: |
-          meson setup build source \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
-              -Dinstaller=false \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
-      - name: Meson Test
-        id: test
-        run: |
-          meson test luacheck -C build
-
-      - name: Upload Test Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.test.outcome == 'failure' }}
-        with:
-          name: ${{ github.sha }}-lualint-testlog
-          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-
-  "Documentation":
-    runs-on: naev-docs
-    needs: Luacheck
 
     steps:
       - name: Get Source

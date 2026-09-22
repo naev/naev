@@ -516,7 +516,7 @@ impl Faction {
       if standing.p_override.is_none() {
          let delta = std - standing.player;
          standing.player = std;
-         for sys in crate::system::get_mut() {
+         for sys in crate::system::get_all_mut() {
             for sp in sys.presence_mut() {
                if FactionRef::from_ffi(sp.faction) != self.data.id {
                   continue;
@@ -1546,7 +1546,7 @@ impl UserData for FactionRef {
       methods.add_method(
          "applyLocalThreshold",
          |lua, this, sys: mlua::Value| -> mlua::Result<()> {
-            let systems = crate::system::get_mut();
+            let systems = crate::system::get_all_mut();
             let sysid = crate::system::from_lua_index(lua, &sys)? as usize;
             let sys = unsafe { naevc::system_getIndex(sysid as i32) };
             let (th, usehidden) =
@@ -2672,7 +2672,7 @@ pub extern "C-unwind" fn factions_clearDynamic() {
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn faction_updateSingle(id: i64) {
    let mut v = (0.0, 0.0);
-   for sys in crate::system::get() {
+   for sys in crate::system::get_all() {
       let p = sys.presence();
       v = p.iter().fold(v, |val, sp| {
          if sp.value > 0.0 && sp.faction == id {
@@ -2700,7 +2700,7 @@ pub extern "C-unwind" fn faction_updateGlobal() {
 
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn factions_resetLocal() {
-   for sys in crate::system::get_mut() {
+   for sys in crate::system::get_all_mut() {
       for sp in sys.presence_mut() {
          sp.local = faction_reputation(sp.faction);
       }

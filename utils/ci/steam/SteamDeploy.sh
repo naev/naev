@@ -80,9 +80,12 @@ cp -v -r "$SCRIPTROOT"/scripts "$STEAMPATH"
 # Move Linux binary and set as executable
 cp -v "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
 
-# Temporary? Workaround for dynamic libraries: extract them from appdir and move to deployment location
-tar -Jxf "$TEMPPATH"/naev-linux-appdir-x86-64/naev-appdir.tar.xz --strip-components=3 -C "$STEAMPATH"/content/lin64 "AppDir/usr/lib/libopenal.so.1"
-tar -Jxf "$TEMPPATH"/naev-linux-appdir-x86-64/naev-appdir.tar.xz --strip-components=3 -C "$STEAMPATH"/content/lin64 "AppDir/usr/lib/libluajit-5.1.so.2"
+# Only what the Steam runtime does not already carry gets transplanted.
+# Everything else naev links against comes from the runtime itself, and a
+# second copy here would shadow it.
+cp -v "$TEMPPATH"/naev-linux-libs/libopenal.so.1 \
+      "$TEMPPATH"/naev-linux-libs/libluajit-5.1.so.2 \
+      "$STEAMPATH"/content/lin64
 # Rename original binary for wrapper usage
 mv "$STEAMPATH"/content/lin64/naev.x64 "$STEAMPATH"/content/lin64/naev
 # Create wrapper script to preload OpenAL

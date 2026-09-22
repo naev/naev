@@ -126,7 +126,8 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
       p = buf.find('--]]')
       if p < 0:
          continue
-      xml = buf[5:p]
+      q = buf.find('--[[')
+      xml = buf[q+5:p]
 
       tree = ET.ElementTree(ET.fromstring(xml))
       misn = tree.getroot()
@@ -170,7 +171,8 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
    p = buf.find('--]]')
    if p < 0:
       continue
-   xml = buf[5:p]
+   q = buf.find('--[[')
+   xml = buf[q+5:p]
 
    tree = ET.ElementTree(ET.fromstring(xml))
    evt = tree.getroot()

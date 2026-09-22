@@ -40,6 +40,12 @@ if [ -f "$debugbundle" ] ; then
    rm -rf "$debugbundle"
 fi
 
+# A universal bundle takes its data from one architecture and only the
+# binaries from the other, so the second one need not carry a copy.
+if [ "${NAEV_BUNDLE_BINARIES_ONLY:-0}" = "1" ]; then
+   rm -rf "${MESON_INSTALL_DESTDIR_PREFIX}/Contents/Resources"
+fi
+
 # Create dist dir in build root
 mkdir -p "${MESON_BUILD_ROOT}"/dist
 

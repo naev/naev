@@ -4936,9 +4936,9 @@ dependencies = [
 
 [[package]]
 name = "sdl3"
-version = "0.18.4"
+version = "0.20.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "25bd22eb1bbc9137e914022b4994ed35591eea0884e9e3e98e6d9895cad6e1d2"
+checksum = "f90c470b564b34e7f9ff0719ed7dc05ec71bc73fa4b28e0750a17b8987cf45f8"
 dependencies = [
  "bitflags 2.13.1",
  "libc",
@@ -4947,9 +4947,9 @@ dependencies = [
 
 [[package]]
 name = "sdl3-sys"
-version = "0.6.8+SDL-3.4.14"
+version = "0.7.1+SDL-3.4.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b97e3d18c4994224aec3fb2d3d189f5fc88af0958fb8ed7b569272fde558f033"
+checksum = "6c10781cd13b03f18f26af765c9909ac64d362fd645c4fa92db51685c834cf8b"
 dependencies = [
  "pkg-config",
  "vcpkg",

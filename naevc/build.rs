@@ -32,6 +32,9 @@ const BLOCKLIST: &[&str] = &[
    "FP_NAN*",
    "FP_INFINITE*",
    "FP_ZERO*",
+   // clang 22's amxintrin.h marks the AMX tile registers as both packed and
+   // 64-byte aligned, which bindgen has no way to express together.
+   ".*tile1024i.*",
 ];
 
 /// Functions that can longjmp out through Lua and so must not be `extern "C"`.

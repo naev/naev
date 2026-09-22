@@ -39,6 +39,7 @@ pub struct Camera {
    /// Whether or not the zoom is overriden
    zoom_override: bool,
    /// Pilot the camera is following
+   /// TODO use pilot stuff, but we get a dependency cycle :/
    follow_pilot: Option<c_uint>,
 }
 

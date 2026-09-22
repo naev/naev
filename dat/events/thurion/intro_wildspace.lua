@@ -189,7 +189,7 @@ function land ()
       vn.jump("questions")
 
       vn.label("q_nebula")
-      alice(_([["The Uploaded were almost exterminated when the Empire decided to shut down the Great Project Thurion, as we were deemed a threat. Those that managed to survive, laid low for many cycles. When what you call the Incident happened, we saw it as a chance to grow. Since we survived largely unscathed thanks to our biological nature. Many survivors also joined our ranks."]]))
+      alice(_([["The Uploaded were almost exterminated when the Empire decided to shut down the Great Project Thurion, as we were deemed a threat. Those that managed to survive, laid low for many cycles. When what you call the Incident happened, we saw it as a chance to grow. Since we survived largely unscathed thanks to our technological nature. Many survivors also joined our ranks."]]))
       alice(_([["Our time of hiding is now likely coming to an end. We wish to show the universe the benefits of our ways and spread our peace and harmony. It is much easier to get along when you are digital."]]))
       vn.jump("questions")
 

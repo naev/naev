@@ -207,7 +207,7 @@ pub fn update(dt: f64) {
    let val = NOSCOOP_TIMER.load(Ordering::SeqCst);
    NOSCOOP_TIMER.store(val + dt, Ordering::SeqCst);
 
-   let pilot_stack = pilot::get_mut();
+   let pilot_stack = pilot::get_all_mut();
 
    let mut manager = GATHERABLES.lock().unwrap();
    let (data, query) = manager.split_borrow_mut();

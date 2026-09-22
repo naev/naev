@@ -229,6 +229,12 @@ impl Colour {
    pub fn into_vector3(&self) -> Vector3<f32> {
       Vector3::new(self.c.x, self.c.y, self.c.z)
    }
+
+   pub fn blend(&self, other: &Colour, alpha: f32) -> Colour {
+      Colour {
+         c: self.c * alpha + other.c * (1.0 - alpha),
+      }
+   }
 }
 
 impl FromLua for Colour {

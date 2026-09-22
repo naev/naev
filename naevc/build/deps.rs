@@ -9,7 +9,7 @@ use std::path::PathBuf;
 
 /// Libraries with no pkg-config file, found by linking against them directly.
 /// Their headers live in the compiler's default search path.
-const LINK_ONLY: &[&str] = &["glpk", "cholmod", "amd", "colamd", "suitesparseconfig"];
+const LINK_ONLY: &[&str] = &["glpk", "cholmod", "amd", "camd", "colamd", "suitesparseconfig"];
 
 /// Same, but the build carries on without them if they are absent.
 const LINK_ONLY_OPTIONAL: &[&str] = &["ccolamd", "lapack", "metis"];
@@ -34,11 +34,13 @@ pub fn probe() -> Deps {
    for (name, version) in [
       ("sdl3", "3.2.0"),
       ("libenet", "1.3"),
-      ("libunibreak", "4.0"),
       ("libcmark", "0.31.0"),
    ] {
       include_paths.extend(required(name, Some(version)));
    }
+   // libunibreak removed the incremental API we use in 0.8.0
+   // https://github.com/adah1972/libunibreak/issues/46
+   include_paths.extend(required_range("libunibreak", "4.0", "8.0"));
    for name in ["opus", "freetype2", "openal", "vorbis", "vorbisfile", "ogg"] {
       include_paths.extend(required(name, None));
    }
@@ -163,6 +165,17 @@ fn required(name: &str, version: Option<&str>) -> Vec<PathBuf> {
          };
          missing(name, &what)
       }
+   }
+}
+
+/// Same as `required`, but with an upper bound as well. pkg-config has no
+/// range syntax, so the two bounds go in as separate constraints.
+fn required_range(name: &str, min: &str, below: &str) -> Vec<PathBuf> {
+   let mut cfg = pkg_config::Config::new();
+   cfg.range_version(min..below);
+   match cfg.probe(name) {
+      Ok(lib) => lib.include_paths,
+      Err(_) => missing(name, &format!("{name} >= {min}, < {below}")),
    }
 }
 

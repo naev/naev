@@ -11,7 +11,7 @@ use image::ImageFormat;
 use mlua::{
    BorrowedStr, Either, MetaMethod, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value,
 };
-use nalgebra::{Matrix3, Vector4};
+use nalgebra::{Matrix3, Vector2, Vector4};
 use ndata::data::Data;
 use ndata::luafile::LuaFile;
 use nlog::{warn, warn_err};
@@ -21,7 +21,7 @@ use std::boxed::Box;
 use std::ffi::{CStr, CString, c_char, c_double, c_float, c_int, c_uint};
 use std::io::{Read, Seek};
 use std::num::NonZero;
-use std::sync::{Arc, LazyLock, Weak, atomic::AtomicU32};
+use std::sync::{Arc, LazyLock, Weak, atomic::AtomicU32, atomic::Ordering};
 #[cfg(not(debug_assertions))]
 use std::sync::{Mutex, MutexGuard};
 #[cfg(debug_assertions)]
@@ -538,6 +538,48 @@ impl Texture {
       let uniform = TextureUniform {
          transform: transform.into(),
          ..Default::default()
+      };
+      self.draw_ex(ctx, &uniform)
+   }
+
+   pub fn draw_sprite(
+      &self,
+      ctx: &Context,
+      x: f32,
+      y: f32,
+      sx: i32,
+      sy: i32,
+      col: Colour,
+   ) -> Result<()> {
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
+      let cam = crate::camera::CAMERA.read().unwrap();
+      let screen = cam.game_to_screen_coords(Vector2::new(x as f64, y as f64));
+      let w = self.sw * cam.zoom;
+      let h = self.sh * cam.zoom;
+      if screen.x < -w || screen.y < -h || screen.x > view_width + w || screen.y > view_height + h {
+         return Ok(());
+      }
+
+      let dims = ctx.dimensions.read().unwrap();
+      #[rustfmt::skip]
+      let transform: Matrix3<f32> = dims.projection * Matrix3::new(
+            w as f32, 0.0, (screen.x - w * 0.5) as f32,
+            0.0, h as f32, (screen.y - h * 0.5) as f32,
+            0.0, 0.0, 1.0,
+         );
+      let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
+      let ty = self.sh as f32 * (self.sy - sy as usize - 1) as f32 / self.texture.h as f32;
+      #[rustfmt::skip]
+      let texture: Matrix3<f32> = Matrix3::new(
+         self.srw as f32, 0.0, tx,
+         0.0, self.srh as f32, ty,
+         0.0, 0.0, 1.0,
+      );
+      let uniform = TextureUniform {
+         transform: transform.into(),
+         texture: texture.into(),
+         colour: col,
       };
       self.draw_ex(ctx, &uniform)
    }
@@ -1703,6 +1745,31 @@ pub extern "C-unwind" fn gl_renderTexture(
 
    let tex = unsafe { &*ctex };
    if let Err(e) = tex.draw_ex(ctx, &data) {
+      warn_err!(e);
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn gl_renderSprite(
+   ctex: *mut Texture,
+   bx: c_double,
+   by: c_double,
+   sx: c_int,
+   sy: c_int,
+   c: *const Vector4<f32>,
+) {
+   if ctex.is_null() {
+      return;
+   }
+
+   let ctx = Context::get();
+   let colour = match c.is_null() {
+      true => Colour::default(),
+      false => unsafe { *c }.into(),
+   };
+
+   let tex = unsafe { &*ctex };
+   if let Err(e) = tex.draw_sprite(ctx, bx as f32, by as f32, sx, sy, colour) {
       warn_err!(e);
    }
 }

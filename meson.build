@@ -198,6 +198,14 @@ if buildExec.disabled() == false
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    if target_triplet != ''
       cargo_options += ['--target', target_triplet]
+      # A cargo build script reads the environment rather than meson's cross
+      # file, so crates that probe with pkg-config have to be pointed at the
+      # cross one by hand. Without this dav1d-sys refuses to look at all.
+      cargo_pkgconf = find_program('pkg-config', required: false)
+      if cargo_pkgconf.found()
+         cargo_env.set('PKG_CONFIG_' + target_triplet.replace('-', '_'),
+            cargo_pkgconf.full_path())
+      endif
    endif
 
    # Options that map onto cargo features rather than compiler flags.
