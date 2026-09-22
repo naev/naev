@@ -636,6 +636,7 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
                                            inter, &projection, &tex_mat, c );
 }
 
+#if 0
 /**
  * @brief Blits a sprite, position is relative to the player.
  *
@@ -679,6 +680,7 @@ void gl_renderSprite( const glTexture *sprite, double bx, double by, int sx,
    gl_renderTexture( sprite, x, y, w, h, tx, ty, tex_srw( sprite ),
                      tex_srh( sprite ), c, 0. );
 }
+#endif
 
 /**
  * @brief Blits a sprite, position is relative to the player.

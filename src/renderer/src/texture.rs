@@ -562,30 +562,19 @@ impl Texture {
       }
 
       let dims = ctx.dimensions.read().unwrap();
-      let transform: Matrix3<f32> = dims.projection
-         * Matrix3::new(
-            w as f32,
-            0.0,
-            x - (w * 0.5) as f32,
-            0.0,
-            h as f32,
-            y - (h * 0.5) as f32,
-            0.0,
-            0.0,
-            1.0,
+      #[rustfmt::skip]
+      let transform: Matrix3<f32> = dims.projection * Matrix3::new(
+            w as f32, 0.0, (screen.x - w * 0.5) as f32,
+            0.0, h as f32, (screen.y - h * 0.5) as f32,
+            0.0, 0.0, 1.0,
          );
       let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
       let ty = self.sh as f32 * (self.sy - sy as usize - 1) as f32 / self.texture.h as f32;
+      #[rustfmt::skip]
       let texture: Matrix3<f32> = Matrix3::new(
-         self.srw as f32,
-         0.0,
-         tx,
-         0.0,
-         self.srh as f32,
-         ty,
-         0.0,
-         0.0,
-         1.0,
+         self.srw as f32, 0.0, tx,
+         0.0, self.srh as f32, ty,
+         0.0, 0.0, 1.0,
       );
       let uniform = TextureUniform {
          transform: transform.into(),
@@ -1756,6 +1745,31 @@ pub extern "C-unwind" fn gl_renderTexture(
 
    let tex = unsafe { &*ctex };
    if let Err(e) = tex.draw_ex(ctx, &data) {
+      warn_err!(e);
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn gl_renderSprite(
+   ctex: *mut Texture,
+   bx: c_double,
+   by: c_double,
+   sx: c_int,
+   sy: c_int,
+   c: *const Vector4<f32>,
+) {
+   if ctex.is_null() {
+      return;
+   }
+
+   let ctx = Context::get();
+   let colour = match c.is_null() {
+      true => Colour::default(),
+      false => unsafe { *c }.into(),
+   };
+
+   let tex = unsafe { &*ctex };
+   if let Err(e) = tex.draw_sprite(ctx, bx as f32, by as f32, sx, sy, colour) {
       warn_err!(e);
    }
 }
