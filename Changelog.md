@@ -1,3 +1,8 @@
+## v0.13.6 (unreleased)
+
+   * Fallback for libunibreak 8.0 or later which is unsupported.
+
+
 ## v0.13.5
 
    * Fixed obelisks not being able to be completed
