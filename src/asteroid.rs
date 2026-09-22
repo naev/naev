@@ -17,7 +17,7 @@ use nlog::{debugx, warn, warn_err};
 use physics::vec2::Vec2;
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
-use renderer::{Context, ContextWrapper};
+use renderer::{Context, ContextWrapper, colour};
 use slotmap::{Key, KeyData, SlotMap};
 use std::collections::HashMap;
 use std::ffi::{CStr, CString, OsStr, c_char, c_int};
@@ -449,6 +449,7 @@ impl Asteroid {
       Vector2::new(self.solid.vel.x, self.solid.vel.y)
    }
 
+   /// Updates a single asteroid taking into account keeping it in the anchor
    fn update(
       &mut self,
       dt: f64,
@@ -561,8 +562,26 @@ impl Asteroid {
             self.scan_alpha.max(0.0);
          }
       }
+   }
 
-      todo!()
+   /// Renders a single asteroid onscreen
+   fn render(&self) {
+      if self.state == State::Xx {
+         return;
+      }
+
+      let progress = (self.timer / self.timer_max) as f32;
+      let col = match self.state {
+         State::XxToBg => colour::Colour::new_alpha(0.2, 0.2, 0.2, 1.0 - progress),
+         State::Xb | State::Bx => colour::GREY20,
+         State::BgToFg => colour::GREY20.blend(&colour::WHITE, progress),
+         State::Fg => colour::WHITE,
+         State::FgToBg => colour::WHITE.blend(&colour::GREY20, progress),
+         State::BgToXx => colour::Colour::new_alpha(0.2, 0.2, 0.2, progress),
+         State::Xx => unreachable!(),
+      };
+
+      if self.scanned {}
    }
 }
 
@@ -689,10 +708,46 @@ pub fn update(dt: f64) {
          }
 
          // Quadtree stuff
+         // TODO
       }
 
       // Update debris
+      // TODO
    }
+}
+
+#[instrument]
+pub fn render() {
+   if let Some(cur_system) = crate::system::cur() {
+      let cam = renderer::camera::CAMERA.read().unwrap();
+      for ast in cur_system.asteroids() {
+         // Test to see if field is in range, or skip if not
+         let centre = match renderer::Context::get()
+            .game_to_screen_coords_inrange(Vector2::new(ast.pos.x, ast.pos.y), ast.radius)
+         {
+            Some(c) => c,
+            None => {
+               continue;
+            }
+         };
+
+         // Render all asteroids
+         let inner = get_inner(ast);
+         for a in inner.asteroids.values() {
+            a.render();
+         }
+      }
+
+      // Render the debris
+      // TODO
+   }
+   todo!()
+}
+
+#[instrument]
+pub fn render_overlay() {
+   if let Some(cur_system) = crate::system::cur() {}
+   todo!()
 }
 
 #[derive(Debug, PartialEq, Copy, Clone)]
@@ -950,10 +1005,14 @@ pub extern "C" fn _asteroids_update(dt: f64) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_render() {}
+pub extern "C" fn _asteroids_render() {
+   render();
+}
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_renderOverlay() {}
+pub extern "C" fn _asteroids_renderOverlay() {
+   render_overlay();
+}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _astgroup_getAll() -> *const *const TypeGroup {
