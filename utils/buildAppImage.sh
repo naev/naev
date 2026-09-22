@@ -125,7 +125,9 @@ build_appdir() {
       export CARGO_TARGET_DIR="$BUILDPATH"
       CARGO_ARGS=(--manifest-path "$SOURCEPATH/Cargo.toml")
 
-      cargo build "${CARGO_ARGS[@]}" --package naev "${PROFILE[@]}"
+      # Steam's runtime lacks the numeric libraries, so link them in rather
+      # than let linuxdeploy bundle them beside the binary.
+      cargo build "${CARGO_ARGS[@]}" --package naev --features steamruntime "${PROFILE[@]}"
       # Install Naev to DISTDIR
       DESTDIR="$APPDIRPATH" cargo run --quiet "${CARGO_ARGS[@]}" --package xtask --release -- \
          install --prefix /usr "${PROFILE[@]}"
