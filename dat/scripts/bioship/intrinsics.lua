@@ -47,6 +47,53 @@ intrinsics["Soromid Brigand"] = {
    },
 }
 
+-- Copy of Brigand Intrinsics, used for the variant handled by the Bioship Carrier Skills.
+intrinsics["Bulwark Brigand"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Perleve Cerebrum I",
+         "Perlevis Cortex I",
+         "Perlevis Gene Drive I",
+         "Stinger Organ I",
+         "Stinger Organ I",
+      },
+      slot = {
+         "brain",
+         "shell",
+         "genedrive",
+         "rightweap",
+         "leftweap",
+      },
+   },
+   {
+      name = _("Cortex Growth"),
+      outfit = "Perlevis Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth"),
+      outfit = "Perlevis Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth"),
+      outfit = {
+         "Stinger Organ II",
+         "Stinger Organ II",
+      },
+      slot = {
+         "rightweap",
+         "leftweap",
+      },
+   },
+   {
+      name = _("Cerebrum Growth"),
+      outfit = "Perleve Cerebrum II",
+      slot = "brain",
+   },
+}
+
 -- Marauder (Bomber) intrinsics
 intrinsics["Soromid Marauder"] = {
    {

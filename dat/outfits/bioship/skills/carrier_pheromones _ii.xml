@@ -1,0 +1,15 @@
+<outfit name="Carrier Pheromones II">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A secondary dosage of chemical and mechanical enhancements, pushing fighters to their effective limits.</description>
+  <gfx_store>/gfx/misc/icons/galaxy</gfx_store>
+ </general>
+ <specific type="modification">
+  <fbay_health>15</fbay_health>
+  <fbay_damage>15</fbay_damage>
+ </specific>
+</outfit>

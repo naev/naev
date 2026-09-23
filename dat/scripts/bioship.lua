@@ -74,6 +74,11 @@ local function _getskills( p )
    if pss <= 4 or ps:tags().bioship_skills_stealth then
       table.insert( skilllist, "stealth" )
    end
+
+   -- TODO: Change this to require a fighter bay prop, or potentially a tag. This was just the easiest way to do this for rapid testing.
+   if pss > 5 then
+      table.insert( skilllist, "carrier" )
+   end
    local skills = bioskills.get( skilllist )
    local intrinsics = ship_intrinsics( ps )
 

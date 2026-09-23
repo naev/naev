@@ -1,0 +1,18 @@
+<outfit name="Naviumnal Brigand Bay">
+ <general>
+  <shortname>N. Brigand Bay</shortname>
+  <typename>Bioship Fighter Organ</typename>
+  <slot prop="bio_organ">weapon</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A severe distension of the ship's regular fighter bays. While it only carries two Soromid Brigands, it has no adverse effects on the ship's fighter capacity, giving an extra edge to any interceptor wing.</description>
+  <gfx_store>/gfx/misc/icons/galaxy</gfx_store>
+ </general>
+ <specific type="fighter bay">
+  <delay>5</delay>
+  <reload_time>240</reload_time>
+  <amount>2</amount>
+  <ship>Bulwark Brigand</ship>
+ </specific>
+</outfit>

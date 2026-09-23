@@ -1,0 +1,15 @@
+<outfit name="Gestational Hypermetabolism">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A careful adjustment of the ship's metabolism, driving it to replace lost fighters much faster. Fighters produced at this higher speed of existence experience some trickle-down effects, significantly enhancing their movement speed.</description>
+  <gfx_store>/gfx/misc/icons/galaxy</gfx_store>
+ </general>
+ <specific type="modification">
+  <fbay_movement>20</fbay_movement>
+  <fbay_reload>30</fbay_reload>
+ </specific>
+</outfit>
