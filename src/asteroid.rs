@@ -330,7 +330,7 @@ pub struct Asteroid {
    armour: f64,
 
    solid: naevc::Solid,
-   ang: f64,
+   angle: f64,
    spin: f64,
 
    timer: f64,
@@ -429,7 +429,7 @@ impl Asteroid {
 
             solid,
 
-            ang: std::f64::consts::TAU * rng::<f64>(),
+            angle: std::f64::consts::TAU * rng::<f64>(),
             spin,
             timer: -1.0,
             timer_max: -1.0,
@@ -500,7 +500,7 @@ impl Asteroid {
       self.solid.pos.y += self.solid.vel.y * dt;
 
       // Update angle
-      self.ang += self.spin * dt;
+      self.angle += self.spin * dt;
 
       // Figure out if state change is applicable
       let forced = self.timer < 0.; // Forced by Lua or whatever
@@ -565,7 +565,7 @@ impl Asteroid {
    }
 
    /// Renders a single asteroid onscreen
-   fn render(&self) {
+   fn render(&self, ctx: &Context) {
       if self.state == State::Xx {
          return;
       }
@@ -581,7 +581,30 @@ impl Asteroid {
          State::Xx => unreachable!(),
       };
 
-      if self.scanned {}
+      let (x, y) = (self.solid.pos.x as f32, self.solid.pos.y as f32);
+      match &*self.gfx {
+         GfxType::Single(gfx) => {
+            gfx.texture
+               .draw_sprite_scale_rotate(ctx, x, y, 1.0, self.angle as f32, 0, 0, col);
+         }
+         GfxType::Sprite(gfx) => {
+            let tex = &gfx.texture;
+            let (sx, sy) = tex.sprite_from_dir(self.angle);
+            tex.draw_sprite(ctx, x, y, sx, sy, col);
+         }
+      }
+
+      if self.scanned {
+         /*
+         col   = cFontWhite;
+         col.a = a->scan_alpha;
+         gl_gameToScreenCoords( &nx, &ny, a->sol.pos.x, a->sol.pos.y );
+         at = a->type;
+         gl_printRaw( &gl_smallFont, nx + tex_sw( a->gfx ) / 2,
+                     ny - (double)gl_smallFont.h / 2, &col, -1.,
+                     _( at->scanned_msg ) );
+         */
+      }
    }
 }
 
@@ -719,10 +742,11 @@ pub fn update(dt: f64) {
 #[instrument]
 pub fn render() {
    if let Some(cur_system) = crate::system::cur() {
+      let ctx = renderer::Context::get();
       let cam = renderer::camera::CAMERA.read().unwrap();
       for ast in cur_system.asteroids() {
          // Test to see if field is in range, or skip if not
-         let centre = match renderer::Context::get()
+         let centre = match ctx
             .game_to_screen_coords_inrange(Vector2::new(ast.pos.x, ast.pos.y), ast.radius)
          {
             Some(c) => c,
@@ -734,7 +758,7 @@ pub fn render() {
          // Render all asteroids
          let inner = get_inner(ast);
          for a in inner.asteroids.values() {
-            a.render();
+            a.render(ctx);
          }
       }
 
@@ -1092,12 +1116,12 @@ pub extern "C" fn _ast_test_collide(
    let bp = ast.pos();
    let hit = match &*ast.gfx {
       GfxType::Single(gfx) => {
-         let bt = gfx.poly.view(ast.ang);
-         let t = nalgebra::Isometry2::new(ap - bp, ast.ang);
+         let bt = gfx.poly.view(ast.angle);
+         let t = nalgebra::Isometry2::new(ap - bp, ast.angle);
          bt.intersect_polygon_transform(at, &t)
       }
       GfxType::Sprite(gfx) => {
-         let bt = gfx.poly.view(ast.ang);
+         let bt = gfx.poly.view(ast.angle);
          bt.intersect_polygon(at, ap - bp)
       }
    };
@@ -1124,8 +1148,8 @@ pub extern "C" fn _ast_set_scanned(ast: *mut Asteroid, set: c_int) {
 pub extern "C" fn _ast_poly(ast: *const Asteroid) -> *mut Polygon {
    let ast = unsafe { &*ast };
    match &*ast.gfx {
-      GfxType::Single(gfx) => collide::polygon::poly_rotate(&gfx.poly, ast.ang),
-      GfxType::Sprite(gfx) => Box::into_raw(Box::new(gfx.poly.view(ast.ang).clone())),
+      GfxType::Single(gfx) => collide::polygon::poly_rotate(&gfx.poly, ast.angle),
+      GfxType::Sprite(gfx) => Box::into_raw(Box::new(gfx.poly.view(ast.angle).clone())),
    }
 }
 

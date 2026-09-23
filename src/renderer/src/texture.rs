@@ -542,13 +542,14 @@ impl Texture {
       self.draw_ex(ctx, &uniform)
    }
 
+   /// Drawsa texture at a specific location
    pub fn draw_sprite(
       &self,
       ctx: &Context,
       x: f32,
       y: f32,
-      sx: i32,
-      sy: i32,
+      sx: usize,
+      sy: usize,
       col: Colour,
    ) -> Result<()> {
       let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
@@ -568,6 +569,73 @@ impl Texture {
             0.0, h as f32, (screen.y - h * 0.5) as f32,
             0.0, 0.0, 1.0,
          );
+      let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
+      let ty = self.sh as f32 * (self.sy - sy as usize - 1) as f32 / self.texture.h as f32;
+      #[rustfmt::skip]
+      let texture: Matrix3<f32> = Matrix3::new(
+         self.srw as f32, 0.0, tx,
+         0.0, self.srh as f32, ty,
+         0.0, 0.0, 1.0,
+      );
+      let uniform = TextureUniform {
+         transform: transform.into(),
+         texture: texture.into(),
+         colour: col,
+      };
+      self.draw_ex(ctx, &uniform)
+   }
+
+   /// Drawsa texture at a specific in-game location with a rotation
+   pub fn draw_sprite_scale_rotate(
+      &self,
+      ctx: &Context,
+      x: f32,
+      y: f32,
+      scale: f32,
+      angle: f32,
+      sx: usize,
+      sy: usize,
+      col: Colour,
+   ) -> Result<()> {
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
+      let cam = crate::camera::CAMERA.read().unwrap();
+      let screen = cam.game_to_screen_coords(Vector2::new(x as f64, y as f64));
+      let w = self.sw * cam.zoom * scale as f64;
+      let h = self.sh * cam.zoom * scale as f64;
+      if screen.x < -w || screen.y < -h || screen.x > view_width + w || screen.y > view_height + h {
+         return Ok(());
+      }
+
+      let dims = ctx.dimensions.read().unwrap();
+      #[rustfmt::skip]
+      let transform: Matrix3<f32> = dims.projection * {
+         if angle.abs() > 1e-5 {
+            let hw = 0.5 * w as f32;
+            let hh = 0.5 * h as f32;
+            let c = angle.cos() as f32;
+            let s = angle.sin() as f32;
+            Matrix3::new(
+               1.0, 0.0, screen.x as f32,
+               0.0, 1.0, screen.y as f32,
+               0.0, 0.0, 1.0,
+            ) * Matrix3::new(
+               c,  -s,  0.0,
+               s,   c,  0.0,
+               0.0, 0.0, 1.0,
+            ) * Matrix3::new(
+               w as f32, 0.0,      -hw,
+               0.0,      h as f32, -hh,
+               0.0,      0.0,      1.0,
+            )
+         } else {
+            Matrix3::new(
+               w as f32, 0.0, (screen.x - w * 0.5) as f32,
+               0.0, h as f32, (screen.y - h * 0.5) as f32,
+               0.0, 0.0, 1.0,
+            )
+         }
+      };
       let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
       let ty = self.sh as f32 * (self.sy - sy as usize - 1) as f32 / self.texture.h as f32;
       #[rustfmt::skip]
@@ -1769,7 +1837,7 @@ pub extern "C-unwind" fn gl_renderSprite(
    };
 
    let tex = unsafe { &*ctex };
-   if let Err(e) = tex.draw_sprite(ctx, bx as f32, by as f32, sx, sy, colour) {
+   if let Err(e) = tex.draw_sprite(ctx, bx as f32, by as f32, sx as usize, sy as usize, colour) {
       warn_err!(e);
    }
 }

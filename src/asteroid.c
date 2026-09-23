@@ -944,7 +944,6 @@ static void asteroid_renderSingle( const Asteroid *a )
       break;
    }
 
-   at = a->type;
    gl_renderSpriteRotate( a->gfx, a->sol.pos.x, a->sol.pos.y, a->ang, 0, 0,
                           &col );
 
@@ -954,6 +953,7 @@ static void asteroid_renderSingle( const Asteroid *a )
    col   = cFontWhite;
    col.a = a->scan_alpha;
    gl_gameToScreenCoords( &nx, &ny, a->sol.pos.x, a->sol.pos.y );
+   at = a->type;
    gl_printRaw( &gl_smallFont, nx + tex_sw( a->gfx ) / 2,
                 ny - (double)gl_smallFont.h / 2, &col, -1.,
                 _( at->scanned_msg ) );
