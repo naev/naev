@@ -14,6 +14,7 @@
   <ew_stealth>-45</ew_stealth>
   <ew_stealth_min>-45</ew_stealth_min>
   <speed_mod>30</speed_mod>
+  <accel_mod>45</accel_mod>
   <lua>outfits/utility/stealth_burster.lua</lua>
  </specific>
 </outfit>
