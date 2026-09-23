@@ -122,8 +122,8 @@
    * Collision polygon generated baked into the engine
    * Time system is completely customizable by plugins now
    * You can define scaling for map decorators
-   * Merged launchers and bolt weapons in the backend, which now allows to
-     share their properties and create things like seeking bolt weapons
+   * Merged launchers and bolt weapons in the backend, which now allows sharing
+     their properties and create things like seeking bolt weapons
    * Added support for sounds to spfx
    * Added some support for spob domination
 
