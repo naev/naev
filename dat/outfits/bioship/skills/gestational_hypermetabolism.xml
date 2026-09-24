@@ -11,5 +11,7 @@
  <specific type="modification">
   <fbay_movement>20</fbay_movement>
   <fbay_reload>30</fbay_reload>
+  <cpu_mod>5</cpu_mod>
+  <energy_regen_mod>-5</energy_regen_mod>
  </specific>
 </outfit>

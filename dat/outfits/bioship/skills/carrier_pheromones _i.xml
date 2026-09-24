@@ -11,5 +11,7 @@
  <specific type="modification">
   <fbay_health>10</fbay_health>
   <fbay_damage>10</fbay_damage>
+  <fwd_damage>-8</fwd_damage>
+  <tur_damage>-8</tur_damage>
  </specific>
 </outfit>
