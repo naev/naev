@@ -14,6 +14,23 @@ import sys
 
 LOCAL_LIB_ROOTS = ('/opt/local', '/usr/lib/osxcross', '/usr/local')
 
+# The macports tree this build installed into. Unset on a native build.
+MACPORTS_ROOT = os.environ.get('MACPORTS_ROOT', '')
+
+
+def local_lib_path(dylib):
+   """ Map an install name like /opt/local/lib/x.dylib onto the copy on this host.
+
+   MACPORTS_ROOT wins even when the install name resolves: on a cross host /opt is
+   a symlink into whichever tree was selected last, which can be the wrong
+   architecture. Unresolved names come back unchanged and fail later at the copy. """
+
+   if MACPORTS_ROOT:
+      relocated = os.path.join(MACPORTS_ROOT, dylib.lstrip('/'))
+      if os.path.exists(relocated):
+         return relocated
+   return dylib
+
 
 def main():
    app_path = os.environ['MESON_INSTALL_DESTDIR_PREFIX']
@@ -108,11 +125,12 @@ def find_dylib_dependency(dylib, rpaths, loader_path):
    build_root = os.environ.get('MESON_BUILD_ROOT', '')
 
    if dylib.startswith(LOCAL_LIB_ROOTS):
-      lib_dir = os.path.realpath(os.path.dirname(dylib))
+      resolved = local_lib_path(dylib)
+      lib_dir = os.path.realpath(os.path.dirname(resolved))
       for rpath in list(rpaths):
          if os.path.realpath(rpath) == lib_dir:
-            return dylib, rpath
-      return dylib, None
+            return resolved, rpath
+      return resolved, None
    elif dylib.startswith('@rpath/'):
       lib_base = dylib.replace('@rpath/', '', 1)
       # Try rpaths
