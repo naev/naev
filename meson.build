@@ -573,10 +573,13 @@ if buildExec.disabled() == false
       depend_files: source_rust + cargo_toml + buildrs,
       output: 'libnaev.rlib',
       command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_artifact_dir / '@OUTPUT@', ] )
-   # Also declare it as a library so meson can link with it
+   # Also declare it as a library so meson can link with it. The placeholder
+   # gives that link an object file; with none the library has no sections and
+   # cannot be signed on macOS.
    naev_rlib_lib = library(
       'naev_rlib',
       naev_rlib,
+      files( 'utils' / 'build' / 'naev_rlib_placeholder.c' ),
       install : true )
    # We create naev.rs with naev_rlib as a dependency to force rlib to be
    # compiled first, otherwise meson tries to compile both naev.rs and
