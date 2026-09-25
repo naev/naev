@@ -7,7 +7,7 @@
  <done>Assault on Raelid</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>spob.cur():reputation("FLF") &gt;= 70</cond>
+ <cond>math.floor(spob.cur():reputation("FLF")+0.5) &gt;= 70</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>

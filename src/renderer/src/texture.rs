@@ -570,7 +570,7 @@ impl Texture {
             0.0, 0.0, 1.0,
          );
       let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
-      let ty = self.sh as f32 * (self.sy - sy as usize - 1) as f32 / self.texture.h as f32;
+      let ty = self.sh as f32 * (self.sy as i32 - sy as i32 - 1) as f32 / self.texture.h as f32;
       #[rustfmt::skip]
       let texture: Matrix3<f32> = Matrix3::new(
          self.srw as f32, 0.0, tx,
@@ -637,7 +637,7 @@ impl Texture {
          }
       };
       let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
-      let ty = self.sh as f32 * (self.sy - sy as usize - 1) as f32 / self.texture.h as f32;
+      let ty = self.sh as f32 * (self.sy as i32 - sy as i32 - 1) as f32 / self.texture.h as f32;
       #[rustfmt::skip]
       let texture: Matrix3<f32> = Matrix3::new(
          self.srw as f32, 0.0, tx,
@@ -1394,8 +1394,8 @@ pub extern "C-unwind" fn gl_texExistsOrCreate(
    let path = unsafe { CStr::from_ptr(cpath) };
    let flags = Flags::from(cflags);
    let mut builder = TextureBuilder::new()
-      .sx(sx as usize)
-      .sy(sy as usize)
+      .sx(sx.try_into().unwrap_or(1))
+      .sy(sy.try_into().unwrap_or(1))
       .srgb(!flags.notsrgb)
       .mipmaps(flags.mipmaps);
 
@@ -1449,8 +1449,8 @@ pub extern "C-unwind" fn gl_loadImageData(
 
    let mut builder = TextureBuilder::new()
       .name(Some(&name.to_string_lossy()))
-      .sx(sx as usize)
-      .sy(sy as usize)
+      .sx(sx.try_into().unwrap_or(1))
+      .sy(sy.try_into().unwrap_or(1))
       .width(Some(w as usize))
       .height(Some(h as usize));
 
@@ -1538,8 +1538,8 @@ pub extern "C-unwind" fn gl_newSprite(
 
    let mut builder = TextureBuilder::new()
       .path(&path.to_string_lossy())
-      .sx(sx as usize)
-      .sy(sy as usize)
+      .sx(sx.try_into().unwrap_or(1))
+      .sy(sy.try_into().unwrap_or(1))
       .srgb(!flags.notsrgb)
       .mipmaps(flags.mipmaps);
 
@@ -1579,8 +1579,8 @@ pub extern "C-unwind" fn gl_newSpriteRWops(
    }
 
    let mut builder = TextureBuilder::new()
-      .sx(sx as usize)
-      .sy(sy as usize)
+      .sx(sx.try_into().unwrap_or(1))
+      .sy(sy.try_into().unwrap_or(1))
       .srgb(!flags.notsrgb)
       .mipmaps(flags.mipmaps);
 
