@@ -275,6 +275,53 @@ skills.set.attack = {
    },
 }
 
+-- Carrier tree
+-- For carriers (please contain your surprise). More specifically, Soromid ships that have fighter bays.
+-- Requires carrier slot for tiers 3+.
+skills.set.carrier = {
+   ["carrier1"] = {
+      name = _("Carrier Pheromones I"),
+      tier = 1,
+      desc = _("Improves fighter damage and durability by 10% at the cost of 8% forward and turret weapon damage."),
+      outfit = "Carrier Pheromones I",
+      icon = "chemical-bolt",
+   },
+   ["carrier2"] = {
+      name = _("Gestational Hypermetabolism"),
+      tier = 2,
+      requires = { "carrier1" },
+      desc = _("Improves fighter movement by 20% and fighter bay reload speed by 30%. Also reduces energy generation by 5% in exchange for 5% more CPU."),
+      outfit = "Gestational Hypermetabolism",
+      icon = "lightning-electron",
+   },
+   ["carrier3"] = {
+      name = _("Naviumnal Distention I"),
+      tier = 3,
+      requires = { "carrier2" },
+      desc = _("Outfits the ship with a bay containing two Soromid Brigands designed for absorbing damage and supporting other ships."),
+      outfit = "Naviumnal Brigand Bay",
+      slot = "bioship_bay",
+      icon = "tumor",
+   },
+   ["carrier4"] = {
+      name = _("Carrier Pheromones II"),
+      tier = 4,
+      requires = { "carrier3" },
+      desc = _("Improves fighter damage and durability by a further 15% (25% in total) at the cost of 12% (20% in total) forward and turret weapon damage."),
+      outfit = "Carrier Pheromones II",
+      icon = "chemical-bolt",
+   },
+   ["carrier5"] = {
+      name = _("Naviumnal Distention II"),
+      tier = 5,
+      requires = { "carrier4" },
+      desc = _("Replaces the two Soromid Brigands with much larger, more powerful Soromid Reavers."),
+      outfit = "Naviumnal Reaver Bay",
+      slot = "bioship_bay",
+      icon = "tumor",
+   },
+}
+
 -- Plasma tree
 -- For everyone!
 -- Requires plasma slot for tier 5

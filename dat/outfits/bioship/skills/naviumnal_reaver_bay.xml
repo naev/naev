@@ -1,0 +1,18 @@
+<outfit name="Naviumnal Reaver Bay">
+ <general>
+  <shortname>N. Reaver Bay</shortname>
+  <typename>Bioship Fighter Organ</typename>
+  <slot prop="bio_organ">weapon</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A heady mix of nanobots and chemicals that increases the capabilities of fightercraft.</description>
+  <gfx_store>/gfx/misc/icons/galaxy</gfx_store>
+ </general>
+ <specific type="fighter bay">
+  <delay>5</delay>
+  <reload_time>240</reload_time>
+  <amount>2</amount>
+  <ship>Soromid Reaver</ship>
+ </specific>
+</outfit>

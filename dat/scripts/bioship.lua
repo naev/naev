@@ -57,7 +57,7 @@ function bioship.curstage( exp, maxstage )
 end
 
 local function _getskills( p )
-   local skilllist = { "bite", "health", "attack", "misc", "plasma" }
+   local skilllist = { "bite", "health", "attack", "misc", "plasma", "carrier" }
    local maxtier = 3
    local ps = p:ship()
    local pss = ps:size()
@@ -73,6 +73,10 @@ local function _getskills( p )
 
    if pss <= 4 or ps:tags().bioship_skills_stealth then
       table.insert( skilllist, "stealth" )
+   end
+
+   if ps:tags().bioship_skills_carrier then
+      table.insert( skilllist, "carrier" )
    end
    local skills = bioskills.get( skilllist )
    local intrinsics = ship_intrinsics( ps )

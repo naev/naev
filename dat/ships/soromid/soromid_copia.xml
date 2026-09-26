@@ -34,6 +34,7 @@
  <slots>
   <weapon size="large" prop="bio_weapon" name="weap1" x="24" y="15" h="4">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap2" x="24" y="-15" h="4">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_organ" x="0" y="0" h="0" name="bioship_bay"/>
   <weapon size="medium" x="36" y="16" h="-4"/>
   <weapon size="medium" x="36" y="-16" h="-4"/>
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
@@ -58,5 +59,6 @@
   <tag>soromid</tag>
   <tag>bioship</tag>
   <tag>transport</tag>
+  <tag>bioship_skills_carrier</tag>
  </tags>
 </ship>

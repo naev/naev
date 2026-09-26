@@ -21,7 +21,7 @@
  <licence>Heavy Combat Vessel</licence>
  <cond>require("buyrep")("Soromid", 70)</cond>
  <condstr>You need at least 70% reputation with the Soromid.</condstr>
- <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it amply the strength of its carried ships, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
+ <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it amplify the strength of its carried ships, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
  <health>
   <armour>1300</armour>
  </health>
@@ -34,6 +34,7 @@
  <slots>
   <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="leftweap">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" name="rightweap">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_organ" x="0" y="0" h="0" name="bioship_bay"/>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="0"/>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0"/>
   <weapon size="large" prop="fighter_bay" x="20" y="0" h="0"/>
@@ -54,12 +55,13 @@
  <stats>
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
-  <fbay_health>50</fbay_health>
-  <fbay_damage>50</fbay_damage>
+  <fbay_health>35</fbay_health>
+  <fbay_damage>35</fbay_damage>
   <fbay_reload>-10</fbay_reload>
  </stats>
  <tags>
   <tag>soromid</tag>
   <tag>bioship</tag>
+  <tag>bioship_skills_carrier</tag>
  </tags>
 </ship>
