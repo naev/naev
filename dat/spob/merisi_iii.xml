@@ -5,12 +5,12 @@
   <exterior>uninhabited-rocky-airless-01</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>D</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services>
-    <land/>
+   <land/>
   </services>
-  <description>The incredibly brittle surface of this planet quite litterally explodes when subjected to too much force, rendering mining operations unviable. Some tried repurposing Imperator-class missiles, to little economic success.</description>
+  <description>The incredibly brittle surface of this planet quite literally explodes when subjected to too much force, rendering mining operations unviable. Some tried repurposing Imperator-class missiles, to little economic success.</description>
  </general>
 </spob>
