@@ -2,12 +2,15 @@
  <pos x="1416.044435" y="824.385273"/>
  <GFX>
   <space>D01</space>
-  <exterior>traderoom</exterior>
+  <exterior>uninhabited-rocky-airless-02</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+    <land/>
+  </services>
+  <description>This rock is only notable for being the most barren and desolate known object in the most barren and desolate region of known space.</description>
  </general>
 </spob>

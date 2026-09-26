@@ -2,12 +2,15 @@
  <pos x="-1659.856338" y="2185.446621"/>
  <GFX>
   <space>moon-C00</space>
-  <exterior>station03</exterior>
+  <exterior>uninhabited-rocky-airless-04</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
   <hide>2.000000</hide>
-  <services/>
+  <services>
+    <land/>
+  </services>
+  <description>C-28 is such a cold star that even being so close to it doesn't save P2022 from being a frozen rock.</description>
  </general>
 </spob>

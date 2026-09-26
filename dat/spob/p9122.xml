@@ -2,12 +2,15 @@
  <pos x="-3865.550868" y="-148.384068"/>
  <GFX>
   <space>P03</space>
-  <exterior>forest</exterior>
+  <exterior>uninhabited-rocky-cyan-03</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+    <land/>
+  </services>
+  <description>Although it is unclear how such a celestial body formed in a star-less system, this doesn't exaclty make P9122 "interesting", and is just another cold body lost in space.</description>
  </general>
 </spob>
