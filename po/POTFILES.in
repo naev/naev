@@ -176,6 +176,8 @@ dat/outfits/bioship/skills/ambush_hunter_i.xml
 dat/outfits/bioship/skills/ambush_hunter_ii.xml
 dat/outfits/bioship/skills/bulky_abdomen.xml
 dat/outfits/bioship/skills/cargo_sacs.xml
+dat/outfits/bioship/skills/carrier_pheromones _i.xml
+dat/outfits/bioship/skills/carrier_pheromones _ii.xml
 dat/outfits/bioship/skills/compound_eyes.xml
 dat/outfits/bioship/skills/corrosion_i.xml
 dat/outfits/bioship/skills/corrosion_ii.xml
@@ -185,10 +187,13 @@ dat/outfits/bioship/skills/feral_rage_i.xml
 dat/outfits/bioship/skills/feral_rage_ii.xml
 dat/outfits/bioship/skills/feral_rage_iii.xml
 dat/outfits/bioship/skills/fuel_bladder.xml
+dat/outfits/bioship/skills/gestational_hypermetabolism.xml
 dat/outfits/bioship/skills/hard_shell.xml
 dat/outfits/bioship/skills/hunters_instinct.xml
 dat/outfits/bioship/skills/natural_healing_i.xml
 dat/outfits/bioship/skills/natural_healing_ii.xml
+dat/outfits/bioship/skills/naviumnal_brigand_bay.xml
+dat/outfits/bioship/skills/naviumnal_reaver_bay.xml
 dat/outfits/bioship/skills/paralyzing_plasma.xml
 dat/outfits/bioship/skills/plasma_burst.xml
 dat/outfits/bioship/skills/reflective_shell.xml
@@ -3735,6 +3740,7 @@ dat/scripts/equipopt/fighterbays/proteron_dalton.lua
 dat/scripts/equipopt/fighterbays/sirius_fidelity.lua
 dat/scripts/equipopt/fighterbays/sirius_shaman.lua
 dat/scripts/equipopt/fighterbays/soromid_brigand.lua
+dat/scripts/equipopt/fighterbays/soromid_reaver.lua
 dat/scripts/equipopt/fighterbays/thurion_perspicacity.lua
 dat/scripts/equipopt/fighterbays/thurion_scintillation.lua
 dat/scripts/equipopt/optimize.lua
