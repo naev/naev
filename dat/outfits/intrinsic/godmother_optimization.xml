@@ -1,0 +1,15 @@
+<outfit name="Godmother Optimization">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>This fighter has been retooled by a Godmother ship, greatly increasing its launchers' effectiveness.</description>
+  <gfx_store>placeholder</gfx_store>
+  <rarity>1</rarity>
+ </general>
+ <specific type="modification">
+  <launch_rate>10</launch_rate>
+  <launch_damage>10</launch_damage>
+  <ammo_capacity>50</ammo_capacity>
+ </specific>
+</outfit>

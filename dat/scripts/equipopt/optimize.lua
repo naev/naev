@@ -177,6 +177,9 @@ special_ships["Heavy Drone"] = function( p )
    } do
       p:outfitAdd( o, 1, true )
    end
+   if p:mothership():ship() == ship.get("Godmother") and p:ship():tags().bay_bomber then
+      p:outfitAddIntrinsic("Godmother Optimization")
+   end
 end
 
 
@@ -422,6 +425,9 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Special case fighters, we want consistent equipment when possible
    if p:flags("carried") then
       local fb = fighterbays[ ps:nameRaw() ]
+      if p:mothership():ship() == ship.get("Godmother") and p:ship():tags().bay_bomber then
+         p:outfitAddIntrinsic("Godmother Optimization")
+      end
       if fb ~= nil then
          if fb.equip( p ) then
             ai_setup.setup(p)
