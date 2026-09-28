@@ -73,6 +73,7 @@ pub struct Type {
    penetration: f64,
    exp_radius: f64,
    alert_range: f64,
+   scanned_msg_c: CString,
 }
 
 impl Type {
@@ -157,6 +158,7 @@ impl Type {
             tag => nxml_warn_node_unknown!("Asteroid Type", &at.name, tag),
          }
       }
+      at.scanned_msg_c = CString::new(at.scanned_msg.clone())?;
       Ok(at)
    }
 
@@ -582,28 +584,36 @@ impl Asteroid {
       };
 
       let (x, y) = (self.solid.pos.x as f32, self.solid.pos.y as f32);
-      match &*self.gfx {
+      let sw = match &*self.gfx {
          GfxType::Single(gfx) => {
-            gfx.texture
-               .draw_sprite_scale_rotate(ctx, x, y, 1.0, self.angle as f32, 0, 0, col);
+            let tex = &gfx.texture;
+            tex.draw_sprite_scale_rotate(ctx, x, y, 1.0, self.angle as f32, 0, 0, col);
+            tex.sw
          }
          GfxType::Sprite(gfx) => {
             let tex = &gfx.texture;
             let (sx, sy) = tex.sprite_from_dir(self.angle);
             tex.draw_sprite(ctx, x, y, sx, sy, col);
+            tex.sw
          }
-      }
+      };
 
       if self.scanned {
-         /*
-         col   = cFontWhite;
-         col.a = a->scan_alpha;
-         gl_gameToScreenCoords( &nx, &ny, a->sol.pos.x, a->sol.pos.y );
-         at = a->type;
-         gl_printRaw( &gl_smallFont, nx + tex_sw( a->gfx ) / 2,
-                     ny - (double)gl_smallFont.h / 2, &col, -1.,
-                     _( at->scanned_msg ) );
-         */
+         let uv = ctx.game_to_screen_coords(Vector2::new(self.solid.pos.x, self.solid.pos.y));
+         let x = uv.x + sw * 0.5;
+         let y = uv.y - unsafe { naevc::gl_smallFont.h as f64 } * 0.5;
+         let mut col = unsafe { naevc::cFontWhite };
+         col.a = self.scan_alpha as f32;
+         unsafe {
+            naevc::gl_printRaw(
+               &raw const naevc::gl_smallFont,
+               x,
+               y,
+               &col,
+               -1.,
+               naevc::gettext_rust(self.atype.scanned_msg_c.as_ptr()),
+            );
+         }
       }
    }
 }
