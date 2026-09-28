@@ -17225,7 +17225,7 @@ msgstr ""
 "Alguns até insistem em usar máscaras de respiração, mesmo no bar do "
 "espaçoporto, só para garantir."
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "Lua de Aldous"
 
 msgid "Aleph"

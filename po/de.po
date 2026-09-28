@@ -18567,7 +18567,7 @@ msgstr ""
 "Atemschutzmasken zu tragen, sogar in der Kneipe des Raumhafens, nur um auf "
 "der sicheren Seite zu sein."
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "Aldus’ Mond"
 
 msgid "Aleph"

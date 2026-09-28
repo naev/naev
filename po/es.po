@@ -18101,7 +18101,7 @@ msgstr ""
 "produce alguna fuga. Algunos espaciales insisten en llevar máscaras "
 "respiratorias, incluso en el bar del puerto espacial, para estar seguros."
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "Luna de Aldous"
 
 msgid "Aleph"
