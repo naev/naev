@@ -598,6 +598,7 @@ impl Asteroid {
          }
       };
 
+      // Display scanned message text
       if self.scanned {
          let uv = ctx.game_to_screen_coords(Vector2::new(self.solid.pos.x, self.solid.pos.y));
          let x = uv.x + sw * 0.5;
