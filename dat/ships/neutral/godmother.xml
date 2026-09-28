@@ -1,22 +1,9 @@
-<ship name="Godmother">
-<lua>godmother.lua</lua>
- <points>40</points>
- <base_type>Goddard</base_type>
- <gfx sy="12" sx="12" size="125">goddard.gltf</gfx>
+<ship name="Godmother" inherits="Goddard">
+ <lua>godmother.lua</lua>
  <rarity>2</rarity>
- <sound pitch="0.5">engine_melendez</sound>
  <class>Carrier</class>
  <price>8100000</price>
  <time_mod>1.5</time_mod>
- <trail_generator y="20" h="0" x="-17">fire</trail_generator>
- <trail_generator y="39" h="0" x="-20">fire</trail_generator>
- <trail_generator y="-20" h="0" x="-17">fire</trail_generator>
- <trail_generator y="-39" h="0" x="-20">fire</trail_generator>
- <trail_generator y="-60" h="0" x="-14">nebula</trail_generator>
- <trail_generator y="60" h="0" x="-14">nebula</trail_generator>
- <fabricator>House Goddard</fabricator>
- <faction>Goddard</faction>
- <licence>Heavy Combat Vessel</licence>
  <description>While carriers have never been popular in the Dvaered fleet, that hasn't stopped House Goddard from attempting to introduce more and more carrier elements into their premiere ships. With this latest attempt, they have taken a decisive step forward, appealing to House Dvaered's preference for kinetic and ballistic weaponry. The newly dubbed "Godmother" focuses on enhancing the effectiveness of fielded bombers, retrofitting every deployed ship with massively increased ammunition reserves and enhanced firing logistics. The result of these enhancements is an anti-capital ship that can ravage all but the most hardened of foes, at the cost of struggling against the more diverse, well-rounded fleets run by other carriers.</description>
  <health>
   <armour>1800</armour>
