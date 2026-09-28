@@ -1402,7 +1402,7 @@ static void weapon_update( Weapon *w, double dt )
             w->sprite = 0;
 
          w->sx = w->sprite % (int)tex_sx( tex );
-         w->sy = w->sprite / (int)tex_sy( tex );
+         w->sy = w->sprite / (int)tex_sx( tex );
       }
    } else if ( fabs( odir - w->solid.dir ) > DOUBLE_TOL ) {
       const OutfitGFX *gfx = outfit_gfx( w->outfit );
