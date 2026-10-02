@@ -1,5 +1,6 @@
 #![allow(dead_code, unused)]
 use crate::array;
+use crate::array::Array;
 use crate::commodity::CommodityRef;
 use crate::pilot;
 use crate::rng;
@@ -7,6 +8,7 @@ use crate::rng::{range, rng};
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use audio::{AudioBuilder, AudioType};
+use bvh_arena::{Bvh, volumes::Aabb};
 use collide::polygon::Polygon;
 use collide::polygon::SpinPolygon;
 use helpers::ReferenceC;
@@ -23,7 +25,7 @@ use std::collections::HashMap;
 use std::ffi::{CStr, CString, OsStr, c_char, c_int};
 use std::mem::MaybeUninit;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, LazyLock};
+use std::sync::{Arc, LazyLock, Mutex};
 use tracing::instrument;
 
 /// Buffer for appearance of debris
@@ -56,6 +58,15 @@ struct Gfx2d {
 enum GfxType {
    Single(Gfx2d),
    Sprite(Gfx2d),
+}
+
+impl GfxType {
+   pub fn radius(&self) -> f64 {
+      match self {
+         GfxType::Single(gfx) => gfx.texture.sw,
+         GfxType::Sprite(gfx) => gfx.texture.sw,
+      }
+   }
 }
 
 #[derive(Default, Debug)]
@@ -451,6 +462,12 @@ impl Asteroid {
       Vector2::new(self.solid.vel.x, self.solid.vel.y)
    }
 
+   fn aabb(&self) -> Aabb<2> {
+      let (x, y) = (self.solid.pos.x as f32, self.solid.pos.y as f32);
+      let r = self.gfx.radius() as f32;
+      Aabb::from_min_max(Vector2::new(x - r, y - r), Vector2::new(x + r, y + r))
+   }
+
    /// Updates a single asteroid taking into account keeping it in the anchor
    fn update(
       &mut self,
@@ -742,7 +759,7 @@ pub fn update(dt: f64) {
          }
 
          // Quadtree stuff
-         // TODO
+         inner.update_bvh();
       }
 
       // Update debris
@@ -988,6 +1005,16 @@ impl UserData for LuaAsteroid {
 struct AnchorInner {
    asteroids: SlotMap<AsteroidRef, Asteroid>,
    has_exclusion: bool,
+   bvh: Bvh<AsteroidRef, Aabb<2>>,
+}
+
+impl AnchorInner {
+   fn update_bvh(&mut self) {
+      self.bvh.clear();
+      for (k, a) in &self.asteroids {
+         self.bvh.insert(k, a.aabb());
+      }
+   }
 }
 
 #[instrument]
@@ -1000,9 +1027,10 @@ pub extern "C" fn _asteroids_init() {
             ast.inner = Box::into_raw(Box::new(AnchorInner {
                asteroids: SlotMap::with_key(),
                has_exclusion: false,
+               bvh: Bvh::default(),
             })) as *mut naevc::AsteroidInner;
          }
-         let inner = get_inner_mut(ast);
+         let mut inner = get_inner_mut(ast);
 
          // TODO add graphics to debris
 
@@ -1030,6 +1058,7 @@ pub extern "C" fn _asteroids_init() {
          }
 
          density_max = ast.density.max(density_max);
+         inner.update_bvh();
       }
    }
 }
@@ -1365,10 +1394,16 @@ pub extern "C" fn _asteroid_collideQueryIL(
    x2: c_int,
    y2: c_int,
 ) -> *const AsteroidRef {
-   // TODO
    let anc = unsafe { &mut *anc };
-   unsafe {
-      //naevc::qt_query(&mut anc.qt, il, x1, y1, x2, y2);
-   }
-   std::ptr::null()
+   let inner = get_inner(anc);
+   let query = Aabb::from_min_max(
+      Vector2::new(x1 as f32, y1 as f32),
+      Vector2::new(x2 as f32, y2 as f32),
+   );
+   // TODO probably something better here, but we need to move to Rust and just pass iterators
+   // around..
+   static HITS: LazyLock<Mutex<Array<AsteroidRef>>> = LazyLock::new(|| Default::default());
+   let mut hits = HITS.lock().unwrap();
+   inner.bvh.for_each_overlaps(&query, |id| hits.push(*id));
+   hits.as_ptr()
 }

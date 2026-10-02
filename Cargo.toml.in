@@ -97,6 +97,7 @@ webbrowser = { version = "1" }
 itertools = "0.15"
 tinyvec = "1"
 portable-atomic = { version = "1", default-features = false, features = ["float"] }
+bvh-arena = "1"
 
 # Plugin Manager dependencies
 # Serialization / XML
@@ -165,7 +166,7 @@ tracing-mutex = { workspace = true }
 static_assertions = { workspace = true }
 itertools = { workspace = true }
 portable-atomic = { workspace = true }
-
+bvh-arena = { workspace = true }
 
 # Probably useful
 #etagere = "0" # Texture Atlas generation
