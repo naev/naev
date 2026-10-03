@@ -634,6 +634,111 @@ impl Asteroid {
          }
       }
    }
+
+   pub fn explode(&mut self, max_rarity: i32, mine_bonus: f64) {
+      let at = &self.atype;
+
+      static DTYPE_SPLASH: LazyLock<c_int> =
+         LazyLock::new(|| crate::damagetype::dtype_get(c"explosion_splash".as_ptr()));
+      let dmg = naevc::Damage {
+         type_: *DTYPE_SPLASH,
+         damage: at.damage,
+         penetration: at.penetration,
+         disable: at.disable,
+         knockback: at.knockback,
+      };
+      unsafe {
+         naevc::expl_explode(
+            self.solid.pos.x,
+            self.solid.pos.y,
+            self.solid.vel.x,
+            self.solid.vel.y,
+            at.exp_radius,
+            &dmg,
+            std::ptr::null(),
+            naevc::EXPL_MODE_SHIP as i32,
+         );
+      }
+
+      // Explosion sound. TODO not hardcode
+      match audio::Buffer::get_or_try_load(format!("snd/sounds/explosion{}", range(0..=2))) {
+         Ok(sound) => {
+            AudioBuilder::new(AudioType::Static)
+               .buffer(sound.clone())
+               .position(Some(self.pos().cast()))
+               .velocity(Some(self.pos().cast()))
+               .play(true)
+               .build();
+         }
+         Err(e) => warn_err!(e),
+      }
+
+      let rad2 = at.alert_range * at.alert_range;
+      let la = naevc::LuaAsteroid_t {
+         parent: self.parent,
+         id: self.id.as_ffi(),
+      };
+      unsafe {
+         naevc::lua_pushasteroid(naevc::naevL, la);
+      }
+      for p in pilot::get_all() {
+         if (self.pos() - p.pos()).norm_squared() <= rad2 {
+            unsafe {
+               naevc::pilot_msg(std::ptr::null(), p.0.as_ptr(), c"asteroid".as_ptr(), -1);
+            }
+         }
+      }
+      //unsafe{ naevc::lua_pop(naevc::naevL, 1 ); }
+      unsafe {
+         naevc::lua_settop(naevc::naevL, -(1) - 1);
+      } // #define of lua_pop
+
+      // Do the drop
+      if max_rarity >= 0 {
+         let mut ndrops = 0;
+         for m in at.material.iter() {
+            if m.rarity <= max_rarity {
+               ndrops += 1;
+            }
+         }
+         if ndrops > 0 {
+            let r = rng::<f32>();
+            let prob = 1.0 / ndrops as f32;
+            let mut accum = 0.0;
+            for m in at.material.iter() {
+               if m.rarity > max_rarity {
+                  continue;
+               }
+               accum += prob;
+               if r > accum {
+                  continue;
+               }
+
+               let nb = range(0..(m.quantity as f64 * mine_bonus).round() as usize) / 3;
+               for i in 0..nb {
+                  let pos = self.pos()
+                     + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
+                  let vel = self.vel()
+                     + Vector2::new(20.0 * rng::<f64>() - 10.0, 20.0 * rng::<f64>() - 10.0);
+                  let ttl = 50.0 + rng::<f64>() * 10.0;
+                  let quantity = range(1..=4);
+                  crate::gatherable::Gatherable::add(m.material, pos, vel, ttl, quantity, false);
+               }
+               break;
+            }
+         }
+      }
+
+      // Remove target
+      unsafe {
+         naevc::pilot_untargetAsteroid(self.parent, self.id.as_ffi());
+      }
+
+      // Make it respawns
+      self.state = State::BgToXx;
+      self.timer = 0.0;
+      self.timer_max = 0.0;
+   }
 }
 
 slotmap::new_key_type! {
@@ -1277,113 +1382,14 @@ pub extern "C" fn _asteroid_hit(
    );
    a.armour -= darmour;
    if a.armour <= 0.0 {
-      _asteroid_explode(a, max_rarity, mine_bonus);
+      a.explode(max_rarity, mine_bonus);
    }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonus: f64) {
    let a = unsafe { &mut *a };
-   let at = &a.atype;
-
-   let dmg = naevc::Damage {
-      type_: crate::damagetype::dtype_get(c"explosion_splash".as_ptr()),
-      damage: at.damage,
-      penetration: at.penetration,
-      disable: at.disable,
-      knockback: at.knockback,
-   };
-   unsafe {
-      naevc::expl_explode(
-         a.solid.pos.x,
-         a.solid.pos.y,
-         a.solid.vel.x,
-         a.solid.vel.y,
-         at.exp_radius,
-         &dmg,
-         std::ptr::null(),
-         naevc::EXPL_MODE_SHIP as i32,
-      );
-   }
-
-   // Explosion sound. TODO not hardcode
-   match audio::Buffer::get_or_try_load(format!("snd/sounds/explosion{}", range(0..=2))) {
-      Ok(sound) => {
-         AudioBuilder::new(AudioType::Static)
-            .buffer(sound.clone())
-            .position(Some(a.pos().cast()))
-            .velocity(Some(a.pos().cast()))
-            .play(true)
-            .build();
-      }
-      Err(e) => warn_err!(e),
-   }
-
-   let rad2 = at.alert_range * at.alert_range;
-   let la = naevc::LuaAsteroid_t {
-      parent: a.parent,
-      id: 0, // TODO a.id,
-   };
-   unsafe {
-      naevc::lua_pushasteroid(naevc::naevL, la);
-   }
-   for p in pilot::get_all() {
-      if (a.pos() - p.pos()).norm_squared() <= rad2 {
-         unsafe {
-            naevc::pilot_msg(std::ptr::null(), p.0.as_ptr(), c"asteroid".as_ptr(), -1);
-         }
-      }
-   }
-   //unsafe{ naevc::lua_pop(naevc::naevL, 1 ); }
-   unsafe {
-      naevc::lua_settop(naevc::naevL, -(1) - 1);
-   } // #define of lua_pop
-
-   // Do the drop
-   if max_rarity >= 0 {
-      let mut ndrops = 0;
-      for m in at.material.iter() {
-         if m.rarity <= max_rarity {
-            ndrops += 1;
-         }
-      }
-      if ndrops > 0 {
-         let r = rng::<f32>();
-         let prob = 1.0 / ndrops as f32;
-         let mut accum = 0.0;
-         for m in at.material.iter() {
-            if m.rarity > max_rarity {
-               continue;
-            }
-            accum += prob;
-            if r > accum {
-               continue;
-            }
-
-            let nb = range(0..(m.quantity as f64 * mine_bonus).round() as usize) / 3;
-            for i in 0..nb {
-               let pos =
-                  a.pos() + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
-               let vel =
-                  a.vel() + Vector2::new(20.0 * rng::<f64>() - 10.0, 20.0 * rng::<f64>() - 10.0);
-               let ttl = 50.0 + rng::<f64>() * 10.0;
-               let quantity = range(1..=4);
-               crate::gatherable::Gatherable::add(m.material, pos, vel, ttl, quantity, false);
-            }
-            break;
-         }
-      }
-   }
-
-   // Remove target
-   unsafe {
-      naevc::pilot_untargetAsteroid(a.parent, a.id.as_ffi());
-   }
-
-   // Make it respawns
-   a.state = State::BgToXx;
-   a.timer = 0.0;
-   a.timer_max = 0.0;
+   a.explode(max_rarity, mine_bonus);
 }
 
 #[unsafe(no_mangle)]
