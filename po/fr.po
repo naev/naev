@@ -17819,7 +17819,7 @@ msgstr ""
 "jusqu'à porter un masque respiratoire jusque dans le bar du spatioport, par "
 "simple précaution."
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "La lune d’Aldous"
 
 msgid "Aleph"

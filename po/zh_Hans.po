@@ -17474,8 +17474,8 @@ msgstr ""
 "星球表面，与外部环境完全隔绝。此外，建筑内部采用高度分隔设计，以防突发泄漏事"
 "故。有些太空人甚至坚持在太空港酒吧内也佩戴呼吸面罩，只为万无一失。"
 
-msgid "Aldous' moon"
-msgstr "Aldous' moon"
+msgid "Aldous' Moon"
+msgstr "Aldous' Moon"
 
 msgid "Aleph"
 msgstr "Aleph"

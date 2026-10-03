@@ -16694,7 +16694,7 @@ msgstr ""
 "indossare maschere respiratorie, anche nel bar dello spazioporto, per essere "
 "al sicuro in caso di problemi."
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "Luna di Aldous"
 
 msgid "Aleph"

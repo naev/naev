@@ -18533,7 +18533,7 @@ msgstr ""
 "우주인들은 안전을 위해 우주항 주점 안에서도 호흡 마스크를 착용해야 한다고 주"
 "장합니다."
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "알더스의 위성"
 
 msgid "Aleph"

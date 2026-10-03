@@ -18573,7 +18573,7 @@ msgstr ""
 "trvají na tom, aby nosili dýchací masky, a to i v baru na kosmodromu, jen "
 "pro jistotu."
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "Měsíc Aldousu"
 
 msgid "Aleph"

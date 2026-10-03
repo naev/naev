@@ -18922,7 +18922,7 @@ msgstr ""
 "取ろうとして、呼吸マスクをつけるといいはる者さえいる。それも宇宙港のバーの中"
 "でもだ。"
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr "オルダスの月"
 
 msgid "Aleph"

@@ -15493,7 +15493,7 @@ msgid ""
 "spaceport bar, just to be on the safe side."
 msgstr ""
 
-msgid "Aldous' moon"
+msgid "Aldous' Moon"
 msgstr ""
 
 msgid "Aleph"
