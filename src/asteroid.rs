@@ -1161,10 +1161,12 @@ pub extern "C" fn _asteroids_init() {
                });
             }
          }
+         inner.update_bvh();
 
          density_max = ast.density.max(density_max);
-         inner.update_bvh();
       }
+
+      // TODO set debris based density_max
    }
 }
 
