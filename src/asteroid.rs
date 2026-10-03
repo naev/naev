@@ -291,7 +291,7 @@ impl State {
       }
    }
 
-   fn to_ffi(&self) -> naevc::AsteroidState {
+   fn to_ffi(self) -> naevc::AsteroidState {
       match self {
          State::Xx => naevc::AsteroidState_ASTEROID_XX,
          State::XxToBg => naevc::AsteroidState_ASTEROID_XX,
@@ -1402,7 +1402,7 @@ pub extern "C" fn _asteroid_collideQueryIL(
    );
    // TODO probably something better here, but we need to move to Rust and just pass iterators
    // around..
-   static HITS: LazyLock<Mutex<Array<AsteroidRef>>> = LazyLock::new(|| Default::default());
+   static HITS: LazyLock<Mutex<Array<AsteroidRef>>> = LazyLock::new(Default::default);
    let mut hits = HITS.lock().unwrap();
    inner.bvh.for_each_overlaps(&query, |id| hits.push(*id));
    hits.as_ptr()

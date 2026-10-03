@@ -39,7 +39,7 @@ pub fn player() -> Option<PilotWrapper> {
 
 pub fn get(id: PilotID) -> Option<PilotWrapper> {
    let p = unsafe { naevc::pilot_get(id.0) };
-   NonNull::new(p).map(|ptr| PilotWrapper(ptr))
+   NonNull::new(p).map(PilotWrapper)
 }
 
 pub fn get_all() -> &'static [PilotWrapper] {

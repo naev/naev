@@ -613,8 +613,8 @@ impl Texture {
          if angle.abs() > 1e-5 {
             let hw = 0.5 * w as f32;
             let hh = 0.5 * h as f32;
-            let c = angle.cos() as f32;
-            let s = angle.sin() as f32;
+            let c = angle.cos();
+            let s = angle.sin();
             Matrix3::new(
                1.0, 0.0, screen.x as f32,
                0.0, 1.0, screen.y as f32,

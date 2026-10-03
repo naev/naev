@@ -361,7 +361,7 @@ impl PartialEq for Keypress {
          return false;
       }
       // TODO collapse left/right shift and friends?
-      return self.keymod == other.keymod;
+      self.keymod == other.keymod
    }
 }
 impl Eq for Keypress {}
