@@ -19,7 +19,7 @@ use nlog::{debugx, warn, warn_err};
 use physics::vec2::Vec2;
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
-use renderer::{Context, ContextWrapper, colour};
+use renderer::{Context, ContextWrapper, camera, colour};
 use slotmap::{Key, KeyData, SlotMap};
 use std::collections::HashMap;
 use std::ffi::{CStr, CString, OsStr, c_char, c_int};
@@ -29,9 +29,12 @@ use std::sync::{Arc, LazyLock, Mutex};
 use tracing::instrument;
 
 /// Buffer for appearance of debris
-const DEBRIS_BUFFER: f64 = 1000.0;
+const DEBRIS_BUFFER: f32 = 1000.0;
 /// How long it takes to fade in and out the scanning text
 const SCAN_FADE: f64 = 10.0;
+
+static DEBRIS_GFX: LazyLock<Mutex<Vec<Arc<GfxType>>>> = LazyLock::new(Default::default);
+static DEBRIS: LazyLock<Mutex<Vec<Debris>>> = LazyLock::new(Default::default);
 
 fn get_inner(field: &naevc::AsteroidAnchor) -> &AnchorInner {
    unsafe { &*(field.inner as *const AnchorInner) }
@@ -66,6 +69,110 @@ impl GfxType {
          GfxType::Single(gfx) => gfx.texture.sw,
          GfxType::Sprite(gfx) => gfx.texture.sw,
       }
+   }
+
+   pub fn draw(&self, ctx: &Context, x: f32, y: f32, angle: f32, col: colour::Colour) {
+      match self {
+         GfxType::Single(gfx) => {
+            let tex = &gfx.texture;
+            tex.draw_sprite_scale_rotate(ctx, x, y, 1.0, angle, 0, 0, col);
+         }
+         GfxType::Sprite(gfx) => {
+            let tex = &gfx.texture;
+            let (sx, sy) = tex.sprite_from_dir(angle as f64);
+            tex.draw_sprite(ctx, x, y, sx, sy, col);
+         }
+      };
+   }
+
+   pub fn draw_screen(&self, ctx: &Context, x: f32, y: f32, angle: f32, col: colour::Colour) {
+      match self {
+         GfxType::Single(gfx) => {
+            let tex = &gfx.texture;
+            let r = tex.sw * 0.5;
+            tex.draw(ctx, x - r, y - r, 1.0, angle, 0, 0, col);
+         }
+         GfxType::Sprite(gfx) => {
+            let tex = &gfx.texture;
+            let r = tex.sw * 0.5;
+            let (sx, sy) = tex.sprite_from_dir(angle as f64);
+            tex.draw_sprite(ctx, x - r, y - r, sx, sy, col);
+         }
+      };
+   }
+}
+
+struct Debris {
+   gfx: Arc<GfxType>,
+   pos: Vector2<f32>,
+   vel: Vector2<f32>,
+   angle: f32,
+   /// Height with respect to the player
+   height: f32,
+   alpha: f32,
+}
+
+impl Debris {
+   pub fn new() -> Self {
+      let debris_gfx = &DEBRIS_GFX.lock().unwrap();
+      let gfx = debris_gfx[rng::range(0..debris_gfx.len())].clone();
+      let (screen_w, screen_h) = {
+         let dims = renderer::Context::get().dimensions.read().unwrap();
+         (dims.view_width, dims.view_height)
+      };
+      let x = -DEBRIS_BUFFER + rng::<f32>() * (screen_w + 2.0 * DEBRIS_BUFFER);
+      let y = -DEBRIS_BUFFER + rng::<f32>() * (screen_h + 2.0 * DEBRIS_BUFFER);
+      let pos = Vector2::new(x, y);
+      let theta = std::f32::consts::TAU * rng::<f32>();
+      let val = 20.0 * rng::<f32>();
+      let vel = Vector2::new(val * theta.cos(), val * theta.sin());
+      Debris {
+         gfx,
+         pos,
+         vel,
+         angle: rng::<f32>() * std::f32::consts::TAU,
+         height: 0.8 + rng::<f32>() * 0.4,
+         alpha: 0.0,
+      }
+   }
+
+   fn update(
+      &mut self,
+      dt: f32,
+      dpos: Vector2<f32>,
+      screen_w: f32,
+      screen_h: f32,
+      cam: &camera::Camera,
+   ) {
+      self.pos += self.vel * dt - dpos.cast::<f32>();
+
+      if self.pos.x > screen_w + DEBRIS_BUFFER {
+         self.pos.x -= screen_w + 2.0 * DEBRIS_BUFFER;
+      } else if self.pos.x < -DEBRIS_BUFFER {
+         self.pos.x += screen_w + 2.0 * DEBRIS_BUFFER;
+      }
+      if self.pos.y > screen_h + DEBRIS_BUFFER {
+         self.pos.y -= screen_h + 2.0 * DEBRIS_BUFFER;
+      } else if self.pos.y < -DEBRIS_BUFFER {
+         self.pos.y += screen_h + 2.0 * DEBRIS_BUFFER;
+      }
+
+      // Set alpha based on position
+      // TODO there seems to be some offset mistake or something going on here, not too big of
+      // an issue though
+      let s = cam.screen_to_game_coords(self.pos.cast::<f64>());
+      if infield(s).is_some() {
+         self.alpha = (self.alpha + 0.5 * dt).min(1.0);
+      } else {
+         self.alpha = (self.alpha - 0.5 * dt).max(0.0);
+      }
+   }
+
+   fn render(&self, ctx: &Context) {
+      let col = colour::Colour::new_alpha(1.0, 1.0, 1.0, self.alpha);
+      self
+         .gfx
+         .draw_screen(ctx, self.pos.x, self.pos.y, self.angle, col);
    }
 }
 
@@ -601,24 +708,12 @@ impl Asteroid {
       };
 
       let (x, y) = (self.solid.pos.x as f32, self.solid.pos.y as f32);
-      let sw = match &*self.gfx {
-         GfxType::Single(gfx) => {
-            let tex = &gfx.texture;
-            tex.draw_sprite_scale_rotate(ctx, x, y, 1.0, self.angle as f32, 0, 0, col);
-            tex.sw
-         }
-         GfxType::Sprite(gfx) => {
-            let tex = &gfx.texture;
-            let (sx, sy) = tex.sprite_from_dir(self.angle);
-            tex.draw_sprite(ctx, x, y, sx, sy, col);
-            tex.sw
-         }
-      };
+      self.gfx.draw(ctx, x, y, self.angle as f32, col);
 
       // Display scanned message text
       if self.scanned {
          let uv = ctx.game_to_screen_coords(Vector2::new(self.solid.pos.x, self.solid.pos.y));
-         let x = uv.x + sw * 0.5;
+         let x = uv.x + self.gfx.radius() * 0.5;
          let y = uv.y - unsafe { naevc::gl_smallFont.h as f64 } * 0.5;
          let mut col = unsafe { naevc::cFontWhite };
          col.a = self.scan_alpha as f32;
@@ -868,7 +963,18 @@ pub fn update(dt: f64) {
       }
 
       // Update debris
-      // TODO
+      if unsafe { naevc::space_isSimulation() == 0 } {
+         let cam = camera::CAMERA.read().unwrap();
+         let dpos = cam.der.cast::<f32>();
+         let (screen_w, screen_h) = {
+            let dims = renderer::Context::get().dimensions.read().unwrap();
+            (dims.view_width, dims.view_height)
+         };
+         let dt = dt as f32;
+         for d in DEBRIS.lock().unwrap().iter_mut() {
+            d.update(dt, dpos, screen_w, screen_h, &cam);
+         }
+      }
    }
 }
 
@@ -876,7 +982,7 @@ pub fn update(dt: f64) {
 pub fn render() {
    if let Some(cur_system) = crate::system::cur() {
       let ctx = renderer::Context::get();
-      let cam = renderer::camera::CAMERA.read().unwrap();
+      let cam = camera::CAMERA.read().unwrap();
       for ast in cur_system.asteroids() {
          // Test to see if field is in range, or skip if not
          let centre = match ctx
@@ -896,15 +1002,20 @@ pub fn render() {
       }
 
       // Render the debris
-      // TODO
+      for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height < 1.0) {
+         d.render(ctx);
+      }
    }
-   todo!()
 }
 
 #[instrument]
 pub fn render_overlay() {
-   if let Some(cur_system) = crate::system::cur() {}
-   todo!()
+   if let Some(cur_system) = crate::system::cur() {
+      let ctx = renderer::Context::get();
+      for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height >= 1.0) {
+         d.render(ctx);
+      }
+   }
 }
 
 #[derive(Debug, PartialEq, Copy, Clone)]
@@ -1126,6 +1237,9 @@ impl AnchorInner {
 #[unsafe(no_mangle)]
 pub extern "C" fn _asteroids_init() {
    if let Some(cur_system) = crate::system::cur_mut() {
+      let mut debris_gfx = DEBRIS_GFX.lock().unwrap();
+      debris_gfx.clear();
+
       let mut density_max = 0.0;
       for ast in cur_system.asteroids_mut() {
          if ast.inner.is_null() {
@@ -1137,7 +1251,16 @@ pub extern "C" fn _asteroids_init() {
          }
          let mut inner = get_inner_mut(ast);
 
-         // TODO add graphics to debris
+         // TODO maybe enforce uniqueness?
+         let groups = unsafe { array::array_as_slice(ast.groups) };
+         for g in groups {
+            let g = unsafe { &*(*g as *mut TypeGroup) };
+            for (t, _) in g.types.iter() {
+               for gfx in &t.gfx {
+                  debris_gfx.push(gfx.clone());
+               }
+            }
+         }
 
          // Add asteroids to the anchor
          inner.asteroids.clear();
@@ -1167,6 +1290,18 @@ pub extern "C" fn _asteroids_init() {
       }
 
       // TODO set debris based density_max
+      let (screen_w, screen_h) = {
+         let dims = renderer::Context::get().dimensions.read().unwrap();
+         (dims.view_width, dims.view_height)
+      };
+      let ndebris = density_max as f32
+         * 100.
+         * (screen_w + 2. * DEBRIS_BUFFER * screen_h + 2. * DEBRIS_BUFFER)
+         / (renderer::MIN_WIDTH_F32 * renderer::MIN_HEIGHT_F32);
+      let mut debris = DEBRIS.lock().unwrap();
+      for _ in 0..ndebris.max(0.0).round() as usize {
+         debris.push(Debris::new());
+      }
    }
 }
 

@@ -23,7 +23,7 @@ pub struct Camera {
    /// Target location it is trying to go to
    target: Vector2<f64>,
    /// Movement from last frame
-   der: Vector2<f64>,
+   pub der: Vector2<f64>,
    /// Current velocity
    vel: Vector2<f64>,
    /// Whether or not it is transitioning over to a target

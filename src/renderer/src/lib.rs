@@ -39,8 +39,8 @@ use nlog::{debug, info, warn, warn_err};
 
 const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
-const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
-const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
+pub const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
+pub const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
 pub(crate) static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.0);
 pub(crate) static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.0);
 static DEBUG: AtomicBool = AtomicBool::new(false);
