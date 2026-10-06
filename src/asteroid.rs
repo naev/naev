@@ -19,7 +19,7 @@ use nlog::{debugx, warn, warn_err};
 use physics::vec2::Vec2;
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
-use renderer::{Context, ContextWrapper, camera, colour};
+use renderer::{Context, ContextWrapper, camera, camera::Coords, colour};
 use slotmap::{Key, KeyData, SlotMap};
 use std::collections::HashMap;
 use std::ffi::{CStr, CString, OsStr, c_char, c_int};
@@ -71,32 +71,16 @@ impl GfxType {
       }
    }
 
-   pub fn draw(&self, ctx: &Context, x: f32, y: f32, angle: f32, col: colour::Colour) {
+   pub fn draw(&self, ctx: &Context, pos: Coords, angle: f32, col: colour::Colour) {
       match self {
          GfxType::Single(gfx) => {
             let tex = &gfx.texture;
-            tex.draw_sprite_scale_rotate(ctx, x, y, 1.0, angle, 0, 0, col);
+            tex.draw_sprite_scale_rotate(ctx, pos, 1.0, angle, 0, 0, col);
          }
          GfxType::Sprite(gfx) => {
             let tex = &gfx.texture;
             let (sx, sy) = tex.sprite_from_dir(angle as f64);
-            tex.draw_sprite(ctx, x, y, sx, sy, col);
-         }
-      };
-   }
-
-   pub fn draw_screen(&self, ctx: &Context, x: f32, y: f32, angle: f32, col: colour::Colour) {
-      match self {
-         GfxType::Single(gfx) => {
-            let tex = &gfx.texture;
-            let r = tex.sw * 0.5;
-            tex.draw(ctx, x - r, y - r, 1.0, angle, 0, 0, col);
-         }
-         GfxType::Sprite(gfx) => {
-            let tex = &gfx.texture;
-            let r = tex.sw * 0.5;
-            let (sx, sy) = tex.sprite_from_dir(angle as f64);
-            tex.draw_sprite(ctx, x - r, y - r, sx, sy, col);
+            tex.draw_sprite(ctx, pos, sx, sy, col);
          }
       };
    }
@@ -172,7 +156,7 @@ impl Debris {
       let col = colour::Colour::new_alpha(1.0, 1.0, 1.0, self.alpha);
       self
          .gfx
-         .draw_screen(ctx, self.pos.x, self.pos.y, self.angle, col);
+         .draw(ctx, Coords::Screen(self.pos), self.angle, col);
    }
 }
 
@@ -707,8 +691,12 @@ impl Asteroid {
          State::Xx => unreachable!(),
       };
 
-      let (x, y) = (self.solid.pos.x as f32, self.solid.pos.y as f32);
-      self.gfx.draw(ctx, x, y, self.angle as f32, col);
+      self.gfx.draw(
+         ctx,
+         Coords::Game(Vector2::new(self.solid.pos.x, self.solid.pos.y).cast::<f32>()),
+         self.angle as f32,
+         col,
+      );
 
       // Display scanned message text
       if self.scanned {

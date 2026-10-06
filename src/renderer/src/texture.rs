@@ -1,4 +1,5 @@
 use crate::buffer;
+use crate::camera::{CAMERA, Coords};
 use crate::colour::Colour;
 use crate::framebuffer::{Framebuffer, FramebufferBuilder};
 use crate::{
@@ -11,7 +12,7 @@ use image::ImageFormat;
 use mlua::{
    BorrowedStr, Either, MetaMethod, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value,
 };
-use nalgebra::{Matrix3, Vector2, Vector4};
+use nalgebra::{Matrix3, Vector4};
 use ndata::data::Data;
 use ndata::luafile::LuaFile;
 use nlog::{warn, warn_err};
@@ -546,18 +547,17 @@ impl Texture {
    pub fn draw_sprite(
       &self,
       ctx: &Context,
-      x: f32,
-      y: f32,
+      pos: Coords,
       sx: usize,
       sy: usize,
       col: Colour,
    ) -> Result<()> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
-      let cam = crate::camera::CAMERA.read().unwrap();
-      let screen = cam.game_to_screen_coords(Vector2::new(x as f64, y as f64));
-      let w = self.sw * cam.zoom;
-      let h = self.sh * cam.zoom;
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
+      let cam = CAMERA.read().unwrap();
+      let screen = cam.coords_to_screen(pos);
+      let w = (self.sw * cam.zoom) as f32;
+      let h = (self.sh * cam.zoom) as f32;
       if screen.x < -w || screen.y < -h || screen.x > view_width + w || screen.y > view_height + h {
          return Ok(());
       }
@@ -589,20 +589,19 @@ impl Texture {
    pub fn draw_sprite_scale_rotate(
       &self,
       ctx: &Context,
-      x: f32,
-      y: f32,
+      pos: Coords,
       scale: f32,
       angle: f32,
       sx: usize,
       sy: usize,
       col: Colour,
    ) -> Result<()> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
-      let cam = crate::camera::CAMERA.read().unwrap();
-      let screen = cam.game_to_screen_coords(Vector2::new(x as f64, y as f64));
-      let w = self.sw * cam.zoom * scale as f64;
-      let h = self.sh * cam.zoom * scale as f64;
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
+      let cam = CAMERA.read().unwrap();
+      let screen = cam.coords_to_screen(pos);
+      let w = (self.sw * cam.zoom * scale as f64) as f32;
+      let h = (self.sh * cam.zoom * scale as f64) as f32;
       if screen.x < -w || screen.y < -h || screen.x > view_width + w || screen.y > view_height + h {
          return Ok(());
       }
@@ -1837,7 +1836,13 @@ pub extern "C-unwind" fn gl_renderSprite(
    };
 
    let tex = unsafe { &*ctex };
-   if let Err(e) = tex.draw_sprite(ctx, bx as f32, by as f32, sx as usize, sy as usize, colour) {
+   if let Err(e) = tex.draw_sprite(
+      ctx,
+      Coords::new_game([bx as f32, by as f32]),
+      sx as usize,
+      sy as usize,
+      colour,
+   ) {
       warn_err!(e);
    }
 }

@@ -11,6 +11,29 @@ use std::sync::{LazyLock, RwLock};
 static GAME_TO_SCREEN: AtomicF64 = AtomicF64::new(1.);
 static SCREEN_TO_GAME: AtomicF64 = AtomicF64::new(1.);
 
+/// Represents a set of corodinates that can be either in the screen space or in the game space.
+pub enum Coords {
+   Screen(Vector2<f32>),
+   Game(Vector2<f32>),
+}
+
+impl Coords {
+   pub fn new_screen(v: impl Into<[f32; 2]>) -> Self {
+      Self::Screen(v.into().into())
+   }
+
+   pub fn new_game(v: impl Into<[f32; 2]>) -> Self {
+      Self::Game(v.into().into())
+   }
+
+   pub fn to_vector(self) -> Vector2<f32> {
+      match self {
+         Self::Screen(v) => v,
+         Self::Game(v) => v,
+      }
+   }
+}
+
 /// Represents tho global camera
 #[derive(Default, Clone)]
 pub struct Camera {
@@ -306,6 +329,26 @@ impl Camera {
       unsafe {
          naevc::background_moveDust(-(mov.x + der.x), -(mov.y + der.y));
       }
+   }
+
+   pub fn coords_to_screen(&self, coords: Coords) -> Vector2<f32> {
+      match coords {
+         Coords::Screen(_) => coords,
+         Coords::Game(v) => {
+            Coords::Screen(self.game_to_screen_coords(v.cast::<f64>()).cast::<f32>())
+         }
+      }
+      .to_vector()
+   }
+
+   pub fn coords_to_game(&self, coords: Coords) -> Vector2<f32> {
+      match coords {
+         Coords::Screen(v) => {
+            Coords::Screen(self.screen_to_game_coords(v.cast::<f64>()).cast::<f32>())
+         }
+         Coords::Game(_) => coords,
+      }
+      .to_vector()
    }
 
    /// Converts from in-game coordinates to screen coordinates
