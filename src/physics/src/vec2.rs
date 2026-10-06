@@ -28,6 +28,14 @@ impl Vec2 {
    pub fn into_vector3(self) -> Vector3<f64> {
       Vector3::new(self.0.x, self.0.y, 0.)
    }
+
+   pub fn cast<U>(&self) -> Vector2<U>
+   where
+      U: nalgebra::Scalar,
+      U: nalgebra::RealField,
+   {
+      self.0.cast::<U>()
+   }
 }
 
 impl FromLua for Vec2 {
