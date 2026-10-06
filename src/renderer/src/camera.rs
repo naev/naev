@@ -2,14 +2,14 @@ use anyhow::Result;
 use nalgebra::Vector2;
 use physics::angle_diff;
 use physics::vec2::Vec2;
-use portable_atomic::AtomicF64;
+use portable_atomic::AtomicF32;
 use std::os::raw::{c_double, c_int, c_uint};
 use std::sync::atomic::Ordering;
 use std::sync::{LazyLock, RwLock};
 
 // Converts y coordinates based on viewing angles
-static GAME_TO_SCREEN: AtomicF64 = AtomicF64::new(1.);
-static SCREEN_TO_GAME: AtomicF64 = AtomicF64::new(1.);
+static GAME_TO_SCREEN: AtomicF32 = AtomicF32::new(1.);
+static SCREEN_TO_GAME: AtomicF32 = AtomicF32::new(1.);
 
 /// Represents a set of corodinates that can be either in the screen space or in the game space.
 pub enum Coords {
@@ -38,27 +38,27 @@ impl Coords {
 #[derive(Default, Clone)]
 pub struct Camera {
    /// Current location
-   pos: Vector2<f64>,
+   pos: Vector2<f32>,
    /// Fixed camera offset
-   offset: Vector2<f64>,
+   offset: Vector2<f32>,
    /// Location of previous frame
-   old: Vector2<f64>,
+   old: Vector2<f32>,
    /// Target location it is trying to go to
-   target: Vector2<f64>,
+   target: Vector2<f32>,
    /// Movement from last frame
-   pub der: Vector2<f64>,
+   pub der: Vector2<f32>,
    /// Current velocity
-   vel: Vector2<f64>,
+   vel: Vector2<f32>,
    /// Whether or not it is transitioning over to a target
    fly: bool,
    /// Speed at which it should move to the target
-   fly_speed: f64,
+   fly_speed: f32,
    /// Current zoom level of the camera
-   pub zoom: f64,
+   pub zoom: f32,
    /// Target zoom level
-   zoom_target: f64,
+   zoom_target: f32,
    /// Speed at which it moves to a zoom level
-   zoom_speed: f64,
+   zoom_speed: f32,
    /// Whether or not the zoom is overriden
    zoom_override: bool,
    /// Pilot the camera is following
@@ -67,23 +67,23 @@ pub struct Camera {
 }
 
 pub static CAMERA: LazyLock<RwLock<Camera>> = LazyLock::new(|| {
-   let angle_sin = (naev_core::constants::CTS.camera_angle as f64).sin();
+   let angle_sin = (naev_core::constants::CTS.camera_angle as f32).sin();
    GAME_TO_SCREEN.store(angle_sin, Ordering::Relaxed);
    SCREEN_TO_GAME.store(1. / angle_sin, Ordering::Relaxed);
    RwLock::new(Camera {
       zoom: 1.0,
-      zoom_speed: unsafe { naevc::conf.zoom_speed },
+      zoom_speed: unsafe { naevc::conf.zoom_speed } as f32,
       ..Default::default()
    })
 });
 
 impl Camera {
-   pub fn pos(&self) -> Vector2<f64> {
+   pub fn pos(&self) -> Vector2<f32> {
       self.pos + self.offset
    }
 
    /// Handles updating the camera at every frame
-   pub fn update(&mut self, dt: f64) {
+   pub fn update(&mut self, dt: f32) {
       let der = self.pos;
       let old = self.old;
       let mut p: *mut naevc::Pilot = std::ptr::null_mut();
@@ -96,7 +96,9 @@ impl Camera {
                   self.follow_pilot = None;
                   self.fly = false;
                } else {
-                  let pos = unsafe { Vector2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y) };
+                  let pos = unsafe {
+                     Vector2::<f32>::new((*p).solid.pos.x as f32, (*p).solid.pos.y as f32)
+                  };
                   self.update_fly(pos, dt);
                   self.update_pilot_zoom(p, std::ptr::null(), dt);
                }
@@ -133,20 +135,20 @@ impl Camera {
       self.der.x = self.pos.x - der.x;
       self.der.y = self.pos.y - der.y;
 
-      if dt > naevc::DOUBLE_TOL {
+      if dt > 1e-6 {
          self.vel.x = self.der.x / dt;
          self.vel.y = self.der.y / dt;
       }
    }
 
-   fn update_fly(&mut self, pos: Vector2<f64>, dt: f64) {
+   fn update_fly(&mut self, pos: Vector2<f32>, dt: f32) {
       let max = self.fly_speed * dt;
       let k = 25. * dt;
       let mut der = (pos - self.pos) * k;
       if der.x * der.x + der.y * der.y > max * max {
          let a = der.y.atan2(der.x);
          let r = max;
-         der = Vector2::<f64>::new(r * a.cos(), r * a.sin());
+         der = Vector2::<f32>::new(r * a.cos(), r * a.sin());
       }
       self.pos += der;
 
@@ -161,15 +163,20 @@ impl Camera {
       }
    }
 
-   fn update_manual_zoom(&mut self, dt: f64) {
+   fn update_manual_zoom(&mut self, dt: f32) {
       unsafe {
          if naevc::player.p.is_null() {
             return;
          }
       }
 
-      let (dt_mod, zoom_far, zoom_near) =
-         unsafe { (naevc::dt_mod, naevc::conf.zoom_far, naevc::conf.zoom_near) };
+      let (dt_mod, zoom_far, zoom_near) = unsafe {
+         (
+            naevc::dt_mod as f32,
+            naevc::conf.zoom_far as f32,
+            naevc::conf.zoom_near as f32,
+         )
+      };
 
       /* Gradually zoom in/out. */
       let mut dz = (self.zoom_target - self.zoom).clamp(-self.zoom_speed, self.zoom_speed);
@@ -186,23 +193,24 @@ impl Camera {
       &mut self,
       follow: *const naevc::Pilot,
       target: *const naevc::Pilot,
-      dt: f64,
+      dt: f32,
    ) {
       let zoom_manual = unsafe { naevc::conf.zoom_manual != 0 };
       if zoom_manual || self.zoom_override {
          return;
       }
 
-      let follow_vel = unsafe { Vector2::<f64>::new((*follow).solid.vel.x, (*follow).solid.vel.y) };
+      let follow_vel =
+         unsafe { Vector2::<f32>::new((*follow).solid.vel.x as f32, (*follow).solid.vel.y as f32) };
 
       let (screen_w, screen_h, zoom_far, zoom_near, nebu_density, dt_mod) = unsafe {
          (
-            naevc::gl_screen.w,
-            naevc::gl_screen.h,
-            naevc::conf.zoom_far,
-            naevc::conf.zoom_near,
-            (*naevc::cur_system).nebu_density,
-            naevc::dt_mod,
+            naevc::gl_screen.w as f32,
+            naevc::gl_screen.h as f32,
+            naevc::conf.zoom_far as f32,
+            naevc::conf.zoom_near as f32,
+            (*naevc::cur_system).nebu_density as f32,
+            naevc::dt_mod as f32,
          )
       };
 
@@ -218,13 +226,13 @@ impl Camera {
        * z = A / A_v = 1. / (1 + v/d)
        */
       let d = {
-         let wh: f64 = (screen_w * screen_h).into();
+         let wh: f32 = (screen_w * screen_h).into();
          wh.sqrt()
       };
 
       let zfar = if nebu_density > 0. {
-         let c: f64 = screen_w.min(screen_h).into();
-         let sight: f64 = unsafe { naevc::nebu_getSightRadius() };
+         let c: f32 = screen_w.min(screen_h).into();
+         let sight: f32 = unsafe { naevc::nebu_getSightRadius() } as f32;
          (c * 0.5 / sight).clamp(zoom_far, zoom_near)
       } else {
          zoom_far
@@ -240,17 +248,19 @@ impl Camera {
          } else if target.is_null() {
             znear
          } else {
-            let mut pos = Vector2::<f64>::new(0.0, 0.0);
-            let target_pos =
-               unsafe { Vector2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
-            let follow_pos =
-               unsafe { Vector2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
+            let mut pos = Vector2::<f32>::new(0.0, 0.0);
+            let target_pos = unsafe {
+               Vector2::<f32>::new((*target).solid.pos.x as f32, (*target).solid.pos.y as f32)
+            };
+            let follow_pos = unsafe {
+               Vector2::<f32>::new((*follow).solid.pos.x as f32, (*follow).solid.pos.y as f32)
+            };
             pos += target_pos - follow_pos;
 
             /* Get distance ratio. */
-            let size: f64 = unsafe { (*(*target).ship).size };
-            let w: f64 = screen_w.into();
-            let h: f64 = screen_h.into();
+            let size: f32 = unsafe { (*(*target).ship).size } as f32;
+            let w: f32 = screen_w.into();
+            let h: f32 = screen_h.into();
             let dx = (w * 0.5) / (pos.x.abs() + 2. * size);
             let dy = (h * 0.5) / (pos.y.abs() + 2. * size);
             dx.min(dy)
@@ -266,7 +276,7 @@ impl Camera {
       self.zoom = self.zoom.clamp(zfar, znear);
    }
 
-   fn update_pilot(&mut self, follow: *mut naevc::Pilot, dt: f64) {
+   fn update_pilot(&mut self, follow: *mut naevc::Pilot, dt: f32) {
       let hyperspace = unsafe { (*follow).flags[naevc::PILOT_HYPERSPACE as usize] != 0 };
       let target = if !hyperspace {
          unsafe { naevc::pilot_getTarget(follow) }
@@ -278,8 +288,9 @@ impl Camera {
        * we'll just use the largest of the two. */
       /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
       /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
-      let diag2: f64 = 100. * 100.;
-      let pos = unsafe { Vector2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
+      let diag2: f32 = 100. * 100.;
+      let pos =
+         unsafe { Vector2::<f32>::new((*follow).solid.pos.x as f32, (*follow).solid.pos.y as f32) };
 
       /* Compensate player movement. */
       let mov = pos - self.old;
@@ -290,18 +301,20 @@ impl Camera {
 
       /* Compute bias. */
       let mut bias = if !target.is_null() {
-         let target_pos =
-            unsafe { Vector2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
+         let target_pos = unsafe {
+            Vector2::<f32>::new((*target).solid.pos.x as f32, (*target).solid.pos.y as f32)
+         };
          target_pos - pos
       } else {
          Default::default()
       };
 
       /* Bias towards velocity and facing. */
-      let mut vel = unsafe { Vector2::<f64>::new((*follow).solid.vel.x, (*follow).solid.vel.y) };
-      let fdir = unsafe { (*follow).solid.dir };
-      let mut dir: f64 = angle_diff(vel.y.atan2(vel.x), fdir);
-      dir = (std::f64::consts::PI - dir.abs()) / std::f64::consts::PI;
+      let mut vel =
+         unsafe { Vector2::<f32>::new((*follow).solid.vel.x as f32, (*follow).solid.vel.y as f32) };
+      let fdir = unsafe { (*follow).solid.dir } as f32;
+      let mut dir: f32 = angle_diff(vel.y.atan2(vel.x), fdir);
+      dir = (std::f32::consts::PI - dir.abs()) / std::f32::consts::PI;
       vel *= dir;
       bias += vel;
 
@@ -317,7 +330,7 @@ impl Camera {
       let targ = pos + bias;
 
       /* Head towards target. */
-      let dt_mod = unsafe { naevc::dt_mod };
+      let dt_mod = unsafe { naevc::dt_mod } as f32;
       let k = 0.5 * dt / dt_mod;
       let der = (targ - self.pos) * k;
 
@@ -327,7 +340,7 @@ impl Camera {
       self.update_pilot_zoom(follow, target, dt);
 
       unsafe {
-         naevc::background_moveDust(-(mov.x + der.x), -(mov.y + der.y));
+         naevc::background_moveDust(-(mov.x + der.x) as f64, -(mov.y + der.y) as f64);
       }
    }
 
@@ -335,7 +348,7 @@ impl Camera {
       match coords {
          Coords::Screen(_) => coords,
          Coords::Game(v) => {
-            Coords::Screen(self.game_to_screen_coords(v.cast::<f64>()).cast::<f32>())
+            Coords::Screen(self.game_to_screen_coords(v.cast::<f32>()).cast::<f32>())
          }
       }
       .to_vector()
@@ -344,7 +357,7 @@ impl Camera {
    pub fn coords_to_game(&self, coords: Coords) -> Vector2<f32> {
       match coords {
          Coords::Screen(v) => {
-            Coords::Screen(self.screen_to_game_coords(v.cast::<f64>()).cast::<f32>())
+            Coords::Screen(self.screen_to_game_coords(v.cast::<f32>()).cast::<f32>())
          }
          Coords::Game(_) => coords,
       }
@@ -352,30 +365,30 @@ impl Camera {
    }
 
    /// Converts from in-game coordinates to screen coordinates
-   pub fn game_to_screen_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+   pub fn game_to_screen_coords(&self, pos: Vector2<f32>) -> Vector2<f32> {
       let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
       let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
-      let view = Vector2::new(view_width as f64, view_height as f64);
+      let view = Vector2::new(view_width as f32, view_height as f32);
       let mut screen = (pos - self.pos()) * self.zoom;
       screen.y *= GAME_TO_SCREEN.load(Ordering::Relaxed);
       screen + view * 0.5
    }
 
    /// Converts from in-game coordinates to screen coordinates
-   pub fn screen_to_game_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+   pub fn screen_to_game_coords(&self, pos: Vector2<f32>) -> Vector2<f32> {
       let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
       let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
-      let view = Vector2::new(view_width as f64, view_height as f64);
+      let view = Vector2::new(view_width as f32, view_height as f32);
       let mut game = (pos - view * 0.5) / self.zoom;
       game.y *= SCREEN_TO_GAME.load(Ordering::Relaxed);
       game + self.pos()
    }
 
    /// Flips the final y to adjust coordinates
-   pub fn game_to_screen_coords_yflip(&self, pos: Vector2<f64>) -> Vector2<f64> {
+   pub fn game_to_screen_coords_yflip(&self, pos: Vector2<f32>) -> Vector2<f32> {
       let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
       let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
-      let view = Vector2::new(view_width as f64, view_height as f64);
+      let view = Vector2::new(view_width as f32, view_height as f32);
       let mut screen = (pos - self.pos()) * self.zoom;
       screen.y *= GAME_TO_SCREEN.load(Ordering::Relaxed);
       screen += view * 0.5;
@@ -394,7 +407,7 @@ pub extern "C" fn cam_zoomOverride(enable: c_int) {
 pub extern "C" fn cam_setZoom(zoom: c_double) {
    let mut cam = CAMERA.write().unwrap();
    unsafe {
-      cam.zoom = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
+      cam.zoom = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near) as f32;
    }
 }
 
@@ -402,9 +415,9 @@ pub extern "C" fn cam_setZoom(zoom: c_double) {
 pub extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
    let mut cam = CAMERA.write().unwrap();
    unsafe {
-      cam.zoom_target = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
+      cam.zoom_target = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near) as f32;
    }
-   cam.zoom_speed = speed;
+   cam.zoom_speed = speed as f32;
 }
 
 #[unsafe(no_mangle)]
@@ -450,8 +463,8 @@ pub extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
 #[unsafe(no_mangle)]
 pub extern "C" fn cam_vel(vx: c_double, vy: c_double) {
    let mut cam = CAMERA.write().unwrap();
-   cam.vel.x = vx;
-   cam.vel.y = vy;
+   cam.vel.x = vx as f32;
+   cam.vel.y = vy as f32;
 }
 
 #[unsafe(no_mangle)]
@@ -466,8 +479,8 @@ pub extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
       if follow != 0 {
          let p = unsafe { naevc::pilot_get(follow) };
          if !p.is_null() {
-            let x = unsafe { (*p).solid.pos.x };
-            let y = unsafe { (*p).solid.pos.y };
+            let x = unsafe { (*p).solid.pos.x } as f32;
+            let y = unsafe { (*p).solid.pos.y } as f32;
             cam.pos.x = x;
             cam.pos.y = y;
             cam.old.x = x;
@@ -479,7 +492,7 @@ pub extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
       cam.old.x = cam.pos.x;
       cam.old.y = cam.pos.y;
       cam.fly = true;
-      cam.fly_speed = soft_over.into();
+      cam.fly_speed = soft_over as f32;
    }
    audio::AUDIO.update_listener(cam.pos.cast(), Default::default());
 }
@@ -489,20 +502,20 @@ pub extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
    let mut cam = CAMERA.write().unwrap();
    cam.follow_pilot = None;
    if soft_over == 0 {
-      cam.pos.x = x;
-      cam.pos.y = y;
-      cam.old.x = x;
-      cam.old.y = y;
+      cam.pos.x = x as f32;
+      cam.pos.y = y as f32;
+      cam.old.x = cam.pos.x;
+      cam.old.y = cam.pos.y;
       cam.fly = false;
       audio::AUDIO.update_listener(cam.pos.cast(), Default::default());
    } else {
-      cam.target.x = x;
-      cam.target.y = y;
+      cam.target.x = x as f32;
+      cam.target.y = y as f32;
       cam.old.x = cam.pos.x;
       cam.old.y = cam.pos.y;
       cam.fly = true;
-      cam.fly_speed = soft_over.into()
-   };
+      cam.fly_speed = soft_over as f32;
+   }
 }
 
 #[unsafe(no_mangle)]
@@ -514,13 +527,13 @@ pub extern "C" fn cam_getTarget() -> c_uint {
 #[unsafe(no_mangle)]
 pub extern "C" fn cam_update(dt: c_double) {
    let mut cam = CAMERA.write().unwrap();
-   cam.update(dt);
+   cam.update(dt as f32);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn cam_setOffset(x: c_double, y: c_double) {
    let mut cam = CAMERA.write().unwrap();
-   cam.offset = Vector2::new(x, y);
+   cam.offset = Vector2::new(x, y).cast::<f32>();
 }
 
 /*@
@@ -555,7 +568,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     */
    api.set(
       "set",
-      lua.create_function(|_, ()| -> mlua::Result<(f64, f64, f64)> {
+      lua.create_function(|_, ()| -> mlua::Result<(f32, f32, f32)> {
          let cam = CAMERA.read().unwrap();
          Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
       })?,
@@ -570,7 +583,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     */
    api.set(
       "get",
-      lua.create_function(|_, ()| -> mlua::Result<(f64, f64, f64)> {
+      lua.create_function(|_, ()| -> mlua::Result<(f32, f32, f32)> {
          let cam = CAMERA.read().unwrap();
          Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
       })?,
@@ -585,7 +598,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
       "pos",
       lua.create_function(|_, ()| -> mlua::Result<Vec2> {
          let cam = CAMERA.read().unwrap();
-         Ok(cam.pos.into())
+         Ok(cam.pos.cast::<f64>().into())
       })?,
    )?;
    /*@
@@ -608,15 +621,15 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
       lua.create_function(
          |_, (zoom, hard_over, speed): (Option<f64>, bool, Option<f64>)| -> mlua::Result<()> {
             let mut cam = CAMERA.write().unwrap();
-            cam.zoom_speed = speed.unwrap_or(unsafe { naevc::conf.zoom_speed });
+            cam.zoom_speed = speed.unwrap_or(unsafe { naevc::conf.zoom_speed }) as f32;
             if let Some(zoom) = zoom {
                let zoom = 1.0 / zoom;
                cam.zoom_override = true;
                let (zf, zn) = unsafe { (naevc::conf.zoom_far, naevc::conf.zoom_near) };
                if hard_over {
-                  cam.zoom = zoom.clamp(zf, zn);
+                  cam.zoom = zoom.clamp(zf, zn) as f32;
                }
-               cam.zoom_target = zoom.clamp(zf, zn);
+               cam.zoom_target = zoom.clamp(zf, zn) as f32;
             } else {
                cam.zoom_override = false;
                cam.zoom_target = 1.0;
@@ -635,7 +648,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     */
    api.set(
       "getZoom",
-      lua.create_function(|_, ()| -> mlua::Result<(f64, f64, f64)> {
+      lua.create_function(|_, ()| -> mlua::Result<(f32, f64, f64)> {
          let cam = CAMERA.read().unwrap();
          let (zoom_far, zoom_near) = unsafe { (naevc::conf.zoom_far, naevc::conf.zoom_near) };
          Ok((1.0 / cam.zoom, 1.0 / zoom_far, 1.0 / zoom_near))

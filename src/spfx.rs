@@ -202,8 +202,8 @@ fn render(layer: RenderLayer, dt: f64) {
       if let Some(func) = func
          && let Some(pos) = spfx.pos
          && let Some(pos) = renderer::Context::get().game_to_screen_coords_inrange_yflip(
-            pos.into_vector2(),
-            spfx.radius.unwrap_or(f64::INFINITY),
+            pos.cast::<f32>(),
+            spfx.radius.unwrap_or(f64::INFINITY) as f32,
          )
       {
          spfx

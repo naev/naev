@@ -390,10 +390,10 @@ pub struct Texture {
    // Sprites
    pub sx: usize,
    pub sy: usize,
-   pub sw: f64,
-   pub sh: f64,
-   pub srw: f64,
-   pub srh: f64,
+   pub sw: f32,
+   pub sh: f32,
+   pub srw: f32,
+   pub srh: f32,
 
    // Data
    pub texture: Arc<TextureData>,
@@ -600,8 +600,8 @@ impl Texture {
       let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
       let cam = CAMERA.read().unwrap();
       let screen = cam.coords_to_screen(pos);
-      let w = (self.sw * cam.zoom * scale as f64) as f32;
-      let h = (self.sh * cam.zoom * scale as f64) as f32;
+      let w = self.sw * cam.zoom * scale;
+      let h = self.sh * cam.zoom * scale;
       if screen.x < -w || screen.y < -h || screen.x > view_width + w || screen.y > view_height + h {
          return Ok(());
       }
@@ -752,10 +752,10 @@ impl Texture {
       Ok(())
    }
 
-   pub fn sprite_from_dir(&self, dir: f64) -> (usize, usize) {
-      use std::f64::consts::PI;
+   pub fn sprite_from_dir(&self, dir: f32) -> (usize, usize) {
+      use std::f32::consts::PI;
       let sxy = self.sx * self.sy;
-      let shard = PI * 2.0 / sxy as f64;
+      let shard = PI * 2.0 / sxy as f32;
       let rdir = {
          let mut rdir = dir + shard * 0.5;
          if rdir < 0.0 {
@@ -1275,10 +1275,10 @@ impl TextureBuilder {
 
       let (w, h) = (texture.w, texture.h);
       let (sx, sy) = (self.sx, self.sy);
-      let sw = (w as f64) / (sx as f64);
-      let sh = (h as f64) / (sy as f64);
-      let srw = sw / (w as f64);
-      let srh = sh / (h as f64);
+      let sw = (w as f32) / (sx as f32);
+      let sh = (h as f32) / (sy as f32);
+      let srw = sw / (w as f32);
+      let srh = sh / (h as f32);
 
       Ok(Texture {
          path: self.name.clone(),
@@ -2051,7 +2051,7 @@ impl UserData for Texture {
        */
       methods.add_method(
          "dim",
-         |_, this, ()| -> mlua::Result<(usize, usize, f64, f64)> {
+         |_, this, ()| -> mlua::Result<(usize, usize, f32, f32)> {
             Ok((this.texture.w, this.texture.h, this.sw, this.sh))
          },
       );
@@ -2085,7 +2085,7 @@ impl UserData for Texture {
        */
       methods.add_method(
          "spriteFromDir",
-         |_, this, dir: f64| -> mlua::Result<(usize, usize)> {
+         |_, this, dir: f32| -> mlua::Result<(usize, usize)> {
             let (sx, sy) = this.sprite_from_dir(dir);
             Ok((sx + 1, sy + 1))
          },
@@ -2330,7 +2330,7 @@ fn test_sprite_from_dir() {
       tex.sy = 2;
       tex
    };
-   use std::f64::consts::PI;
+   use std::f32::consts::PI;
    for (key, val) in vec![
       (0.0, (0, 0)),
       (PI, (0, 1)),

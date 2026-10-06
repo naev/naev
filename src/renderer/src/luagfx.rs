@@ -96,7 +96,8 @@ impl UserData for LuaGfx {
          Ok(camera::CAMERA
             .read()
             .unwrap()
-            .game_to_screen_coords_yflip(pos.into())
+            .game_to_screen_coords_yflip(pos.cast::<f32>())
+            .cast::<f64>()
             .into())
       });
       /*@

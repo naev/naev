@@ -64,7 +64,7 @@ enum GfxType {
 }
 
 impl GfxType {
-   pub fn radius(&self) -> f64 {
+   pub fn radius(&self) -> f32 {
       match self {
          GfxType::Single(gfx) => gfx.texture.sw,
          GfxType::Sprite(gfx) => gfx.texture.sw,
@@ -79,7 +79,7 @@ impl GfxType {
          }
          GfxType::Sprite(gfx) => {
             let tex = &gfx.texture;
-            let (sx, sy) = tex.sprite_from_dir(angle as f64);
+            let (sx, sy) = tex.sprite_from_dir(angle);
             tex.draw_sprite(ctx, pos, sx, sy, col);
          }
       };
@@ -144,7 +144,7 @@ impl Debris {
       // Set alpha based on position
       // TODO there seems to be some offset mistake or something going on here, not too big of
       // an issue though
-      let s = cam.screen_to_game_coords(self.pos.cast::<f64>());
+      let s = cam.screen_to_game_coords(self.pos).cast::<f64>();
       if infield(s).is_some() {
          self.alpha = (self.alpha + 0.5 * dt).min(1.0);
       } else {
@@ -555,7 +555,7 @@ impl Asteroid {
 
    fn aabb(&self) -> Aabb<2> {
       let (x, y) = (self.solid.pos.x as f32, self.solid.pos.y as f32);
-      let r = self.gfx.radius() as f32;
+      let r = self.gfx.radius();
       Aabb::from_min_max(Vector2::new(x - r, y - r), Vector2::new(x + r, y + r))
    }
 
@@ -700,8 +700,10 @@ impl Asteroid {
 
       // Display scanned message text
       if self.scanned {
-         let uv = ctx.game_to_screen_coords(Vector2::new(self.solid.pos.x, self.solid.pos.y));
-         let x = uv.x + self.gfx.radius() * 0.5;
+         let uv = ctx
+            .game_to_screen_coords(Vector2::new(self.solid.pos.x, self.solid.pos.y).cast::<f32>())
+            .cast::<f64>();
+         let x = uv.x + self.gfx.radius() as f64 * 0.5;
          let y = uv.y - unsafe { naevc::gl_smallFont.h as f64 } * 0.5;
          let mut col = unsafe { naevc::cFontWhite };
          col.a = self.scan_alpha as f32;
@@ -973,9 +975,10 @@ pub fn render() {
       let cam = camera::CAMERA.read().unwrap();
       for ast in cur_system.asteroids() {
          // Test to see if field is in range, or skip if not
-         let centre = match ctx
-            .game_to_screen_coords_inrange(Vector2::new(ast.pos.x, ast.pos.y), ast.radius)
-         {
+         let centre = match ctx.game_to_screen_coords_inrange(
+            Vector2::new(ast.pos.x, ast.pos.y).cast::<f32>(),
+            ast.radius as f32,
+         ) {
             Some(c) => c,
             None => {
                continue;
@@ -1366,10 +1369,10 @@ pub extern "C" fn _ast_solid(ast: *const Asteroid) -> *const naevc::Solid {
 #[unsafe(no_mangle)]
 pub extern "C" fn _ast_gfx_width(ast: *const Asteroid) -> f64 {
    let ast = unsafe { &*ast };
-   match &*ast.gfx {
+   (match &*ast.gfx {
       GfxType::Single(gfx) => gfx.texture.sw,
       GfxType::Sprite(gfx) => gfx.texture.sw,
-   }
+   }) as f64
 }
 
 #[unsafe(no_mangle)]
