@@ -368,10 +368,8 @@ impl NebulaData {
 
       let z = {
          let cam = renderer::camera::CAMERA.read().unwrap();
-         let cam_pos = cam.pos();
-         self.puff_uniform.offset.x = cam_pos.x as f32;
-         self.puff_uniform.offset.y = cam_pos.y as f32;
-         cam.zoom as f32
+         self.puff_uniform.offset = cam.pos();
+         cam.zoom
       };
       let s = self.scale * self.nebu_scale * 4.0; // 16.0 is a correction term to be same as before
       self.uniform.horizon = self.view * z / s;

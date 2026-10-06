@@ -67,7 +67,7 @@ pub struct Camera {
 }
 
 pub static CAMERA: LazyLock<RwLock<Camera>> = LazyLock::new(|| {
-   let angle_sin = (naev_core::constants::CTS.camera_angle as f32).sin();
+   let angle_sin = naev_core::constants::CTS.camera_angle.sin();
    GAME_TO_SCREEN.store(angle_sin, Ordering::Relaxed);
    SCREEN_TO_GAME.store(1. / angle_sin, Ordering::Relaxed);
    RwLock::new(Camera {
@@ -226,12 +226,12 @@ impl Camera {
        * z = A / A_v = 1. / (1 + v/d)
        */
       let d = {
-         let wh: f32 = (screen_w * screen_h).into();
+         let wh: f32 = screen_w * screen_h;
          wh.sqrt()
       };
 
       let zfar = if nebu_density > 0. {
-         let c: f32 = screen_w.min(screen_h).into();
+         let c: f32 = screen_w.min(screen_h);
          let sight: f32 = unsafe { naevc::nebu_getSightRadius() } as f32;
          (c * 0.5 / sight).clamp(zoom_far, zoom_near)
       } else {
@@ -259,8 +259,8 @@ impl Camera {
 
             /* Get distance ratio. */
             let size: f32 = unsafe { (*(*target).ship).size } as f32;
-            let w: f32 = screen_w.into();
-            let h: f32 = screen_h.into();
+            let w: f32 = screen_w;
+            let h: f32 = screen_h;
             let dx = (w * 0.5) / (pos.x.abs() + 2. * size);
             let dy = (h * 0.5) / (pos.y.abs() + 2. * size);
             dx.min(dy)
@@ -368,7 +368,7 @@ impl Camera {
    pub fn game_to_screen_coords(&self, pos: Vector2<f32>) -> Vector2<f32> {
       let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
       let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
-      let view = Vector2::new(view_width as f32, view_height as f32);
+      let view = Vector2::new(view_width, view_height);
       let mut screen = (pos - self.pos()) * self.zoom;
       screen.y *= GAME_TO_SCREEN.load(Ordering::Relaxed);
       screen + view * 0.5
@@ -378,7 +378,7 @@ impl Camera {
    pub fn screen_to_game_coords(&self, pos: Vector2<f32>) -> Vector2<f32> {
       let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
       let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
-      let view = Vector2::new(view_width as f32, view_height as f32);
+      let view = Vector2::new(view_width, view_height);
       let mut game = (pos - view * 0.5) / self.zoom;
       game.y *= SCREEN_TO_GAME.load(Ordering::Relaxed);
       game + self.pos()
@@ -388,7 +388,7 @@ impl Camera {
    pub fn game_to_screen_coords_yflip(&self, pos: Vector2<f32>) -> Vector2<f32> {
       let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
       let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
-      let view = Vector2::new(view_width as f32, view_height as f32);
+      let view = Vector2::new(view_width, view_height);
       let mut screen = (pos - self.pos()) * self.zoom;
       screen.y *= GAME_TO_SCREEN.load(Ordering::Relaxed);
       screen += view * 0.5;

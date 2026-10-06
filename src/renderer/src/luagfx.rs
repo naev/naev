@@ -143,8 +143,8 @@ impl UserData for LuaGfx {
                0.0,  h,   y,
                0.0, 0.0, 1.0,
             );
-            let tw = tex.sw as f32;
-            let th = tex.sh as f32;
+            let tw = tex.sw;
+            let th = tex.sh;
             let tx = tw * (sx as f32) / w;
             let ty = th * ((tex.sy as f32) - (sy as f32) - 1.0) / h;
             #[rustfmt::skip]
@@ -243,13 +243,13 @@ impl UserData for LuaGfx {
                   )
                }
             };
-            let sw = tex.sw as f32;
-            let sh = tex.sh as f32;
+            let sw = tex.sw;
+            let sh = tex.sh;
             let mut tx = tx * sw + sw * (sx as f32) / tex.texture.w as f32;
             let mut ty =
                ty * sh + sh * ((tex.sy as f32) - (sy as f32) - 1.0) / tex.texture.h as f32;
-            let tw = tw * tex.srw as f32;
-            let th = th * tex.srh as f32;
+            let tw = tw * tex.srw;
+            let th = th * tex.srh;
             if tw < 0.0 {
                tx -= sw;
             }

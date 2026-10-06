@@ -1010,8 +1010,8 @@ impl Context {
 
    /// Converts a point from game to screen coordinates and makes sure it is in range
    pub fn game_to_screen_coords_inrange(&self, pos: Vector2<f32>, r: f32) -> Option<Vector2<f32>> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f32;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f32;
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
       let screen = camera::CAMERA.read().unwrap().game_to_screen_coords(pos);
       if screen.x < -r || screen.y < -r || screen.x > view_width + r || screen.y > view_height + r {
          None
@@ -1026,8 +1026,8 @@ impl Context {
       pos: Vector2<f32>,
       r: f32,
    ) -> Option<Vector2<f32>> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f32;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f32;
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
       let screen = camera::CAMERA
          .read()
          .unwrap()
