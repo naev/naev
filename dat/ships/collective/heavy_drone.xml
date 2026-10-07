@@ -47,4 +47,7 @@
   <cargo_mod>-50</cargo_mod>
   <armour_mod>-10</armour_mod>
  </stats>
+ <tags>
+  <tag>bay_bomber</tag>
+ </tags>
 </ship>

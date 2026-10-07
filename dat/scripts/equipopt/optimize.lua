@@ -138,6 +138,12 @@ local goodness_special = {
    ["Agamemnon Launcher"] = 1300 / 300, -- Total of 1300 despite weapon saying 300.
 }
 
+local GODMOTHER = ship.get("Godmother")
+local function fighterbay_intrinsics( p )
+   if p:mothership():ship() == ship.get("Godmother") and p:ship():tags().bay_bomber then
+      p:outfitAddIntrinsic("Godmother Optimization")
+   end
+end
 
 --[[
       Completely custom ship builds: they do not use optimization
@@ -177,6 +183,7 @@ special_ships["Heavy Drone"] = function( p )
    } do
       p:outfitAdd( o, 1, true )
    end
+   fighterbay_intrinsics( p )
 end
 
 
@@ -422,6 +429,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Special case fighters, we want consistent equipment when possible
    if p:flags("carried") then
       local fb = fighterbays[ ps:nameRaw() ]
+      fighterbay_intrinsics( p )
       if fb ~= nil then
          if fb.equip( p ) then
             ai_setup.setup(p)
