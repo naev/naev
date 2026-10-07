@@ -54,7 +54,4 @@ return {
       return var.peek("bounty_goddard_espionage_3")
          and bhelp.bounty_done() >= 10
    end,
-   completefunc = function ()
-      return true -- Doesn't block normal finishing
-   end,
 }

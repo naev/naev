@@ -138,9 +138,9 @@ local goodness_special = {
    ["Agamemnon Launcher"] = 1300 / 300, -- Total of 1300 despite weapon saying 300.
 }
 
-local GODMOTHER = ship.get("Godmother")
+local GODMOTHER = ship.exists("Godmother")
 local function fighterbay_intrinsics( p )
-   if p:mothership():ship() == ship.get("Godmother") and p:ship():tags().bay_bomber then
+   if p:mothership():ship() == GODMOTHER and p:ship():tags().bay_bomber then
       p:outfitAddIntrinsic("Godmother Optimization")
    end
 end
