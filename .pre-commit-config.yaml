@@ -192,3 +192,7 @@ repos:
     # Currently broken with scheme. See https://github.com/ComPWA/taplo-pre-commit/issues/35
     - id: taplo-lint
       args: [--no-schema]
+- repo: https://code.forgejo.org/forgejo/runner
+  rev: v11.1.1
+  hooks:
+    - id: forgejo-runner-validate
