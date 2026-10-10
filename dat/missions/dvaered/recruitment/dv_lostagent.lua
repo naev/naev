@@ -54,6 +54,8 @@ local dv       = require "common.dvaered"
 
 local title = _("Dvaered Delivery")
 
+local boudicaName =_("Bony Boudica")
+local boudicaDesc = _("This agent is an intermediate between the Empire and Dvaered.")
 
 -- Define the cargo commodity
 local cargo_misn
@@ -250,13 +252,17 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
       vn.done()
       vn.run()
 
-      misn.npcAdd("discussWithAg", _("Bony Boudica"), agentPort, _("This agent is an intermediate between the Empire and Dvaered.")) -- Add boudica at the bar
+      misn.npcAdd("discussWithAg", boudicaName, agentPort, boudicaDesc) -- Add boudica at the bar
       misn.cargoRm( mem.cid ) -- Done with the cargo
       misn.markerRm()
+      mem.misn_marker = misn.markerAdd( mem.spob2 ) -- Just in case the player accidently takes off
       mem.misn_state = 2
       misn.osdCreate( title, {
-         fmt.f(_("Meet Bony Boudica at the {pnt} bar in the {sys} system."), {sys=mem.spob1:system(), pnt=mem.spob1} ),
+         fmt.f(_("Meet Bony Boudica at the {pnt} bar in the {sys} system."), {sys=mem.spob2, pnt=mem.sys2} ),
       } )
+
+   elseif mem.misn_state == 2 and spob.cur() == mem.spob2 then
+      misn.npcAdd("discussWithAg", boudicaName, agentPort, boudicaDesc) -- Add boudica at the bar
 
    -- Player meets Boudica again after having captured Shaky Swan.
    elseif mem.misn_state == 5 and spob.cur() == mem.spob2 then
@@ -357,7 +363,7 @@ end
 
 function loading()
    if mem.misn_state == 2 and spob.cur() == mem.spob2 then
-      misn.npcAdd("discussWithAg", _("Bony Boudica"), agentPort, _("This agent is an intermediate between the Empire and Dvaered.")) -- Add boudica at the bar
+      misn.npcAdd("discussWithAg", boudicaName, agentPort, boudicaDesc) -- Add boudica at the bar
    end
 end
 
@@ -365,7 +371,7 @@ end
 function discussWithAg()
    vn.clear()
    vn.scene()
-   local agent = vn.newCharacter( _("Bony Boudica"), { image=portrait.getFullPath(agentPort) } )
+   local agent = vn.newCharacter( boudicaName, { image=portrait.getFullPath(agentPort) } )
    vn.transition()
 
    agent(fmt.f(_([["I don't know how much you understood of our conversation at the spaceport, but now we need you to disable the ship of a pilot named 'Shaky Swan'. He is supposed to be hanging around {sys} in the near future."]]),
@@ -457,6 +463,7 @@ Then you would have to bear that monstrous responsibility on your shoulders. Jus
    vn.done()
    vn.run()
 
+   misn.markerRm()
    mem.misn_marker = misn.markerAdd( mem.flfsys )
    mem.misn_state = 3
    misn.osdDestroy()
