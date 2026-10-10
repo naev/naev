@@ -139,6 +139,7 @@
    * Fixed local maps thresholding hide the wrong way
    * Fixed how flow bonus was being computed that was overcounting bonus
    * Map find dialogue no longer covers centre of interest
+   * zbh08: fixed some missing patrol waypoints
 
 
 ## v0.13.6 (unreleased)

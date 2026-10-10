@@ -224,8 +224,8 @@ static inline char *nxml_trace_strdup( void *ptr )
    } while ( 0 )
 #define xmlw_elem( w, n, str, ... )                                            \
    do {                                                                        \
-      if ( xmlTextWriterWriteFormatElement( w, (xmlChar *)n, str,              \
-                                            ##__VA_ARGS__ ) < 0 ) {            \
+      if ( xmlTextWriterWriteFormatElement( w, (xmlChar *)n,                   \
+                                            str, ##__VA_ARGS__ ) < 0 ) {       \
          WARN( "xmlw: unable to write format element" );                       \
          return -1;                                                            \
       }                                                                        \
@@ -247,8 +247,8 @@ static inline char *nxml_trace_strdup( void *ptr )
    } while ( 0 )
 #define xmlw_attr( w, str, ... )                                               \
    do {                                                                        \
-      if ( xmlTextWriterWriteFormatAttribute( w, (xmlChar *)str,               \
-                                              ##__VA_ARGS__ ) < 0 ) {          \
+      if ( xmlTextWriterWriteFormatAttribute(                                  \
+              w, (xmlChar *)str, ##__VA_ARGS__ ) < 0 ) {                       \
          WARN( "xmlw: unable to write element attribute" );                    \
          return -1;                                                            \
       }                                                                        \

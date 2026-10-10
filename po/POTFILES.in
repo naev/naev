@@ -320,6 +320,7 @@ dat/outfits/intrinsic/defective.xml
 dat/outfits/intrinsic/escape_pod.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
+dat/outfits/intrinsic/godmother_optimization.xml
 dat/outfits/intrinsic/heavily_damaged.xml
 dat/outfits/intrinsic/high_combat_readiness.xml
 dat/outfits/intrinsic/hyperdrive_retool.xml
@@ -626,6 +627,7 @@ dat/ships/neutral/gawain.xml
 dat/ships/neutral/gawain_xy37.xml
 dat/ships/neutral/goddard.xml
 dat/ships/neutral/goddard_merchant.xml
+dat/ships/neutral/godmother.xml
 dat/ships/neutral/hawking.xml
 dat/ships/neutral/hyena.xml
 dat/ships/neutral/kestrel.xml
@@ -3167,6 +3169,7 @@ dat/events/priority_bounty/bounties/bounty_frontier_warlord_3.lua
 dat/events/priority_bounty/bounties/bounty_goddard_espionage_1.lua
 dat/events/priority_bounty/bounties/bounty_goddard_espionage_2.lua
 dat/events/priority_bounty/bounties/bounty_goddard_espionage_3.lua
+dat/events/priority_bounty/bounties/bounty_goddard_espionage_4.lua
 dat/events/priority_bounty/bounties/bounty_sirius_conversion_1.lua
 dat/events/priority_bounty/bounties/bounty_sirius_conversion_2.lua
 dat/events/priority_bounty/bounties/bounty_sirius_conversion_3.lua
@@ -3902,6 +3905,7 @@ dat/ships/lua/empire_admonisher_longbow.lua
 dat/ships/lua/empire_pacifier_hoplite.lua
 dat/ships/lua/escape_pod.lua
 dat/ships/lua/gawain_xy37.lua
+dat/ships/lua/godmother.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua
 dat/ships/lua/lua_ship_example.lua

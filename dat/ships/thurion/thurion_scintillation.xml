@@ -57,4 +57,7 @@
   <ew_hide>-25</ew_hide>
   <nebu_absorb>25</nebu_absorb>
  </stats>
+ <tags>
+  <tag>bay_bomber</tag>
+ </tags>
 </ship>
