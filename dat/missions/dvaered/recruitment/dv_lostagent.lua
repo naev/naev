@@ -255,10 +255,10 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
       misn.npcAdd("discussWithAg", boudicaName, agentPort, boudicaDesc) -- Add boudica at the bar
       misn.cargoRm( mem.cid ) -- Done with the cargo
       misn.markerRm()
-      mem.misn_marker = misn.markerAdd( mem.spob2 ) -- Just in case the player accidently takes off
+      mem.misn_marker = misn.markerAdd( mem.spob2 ) -- Just in case the player accidentally takes off
       mem.misn_state = 2
       misn.osdCreate( title, {
-         fmt.f(_("Meet Bony Boudica at the {pnt} bar in the {sys} system."), {sys=mem.spob2, pnt=mem.sys2} ),
+         fmt.f(_("Meet Bony Boudica at the {pnt} bar in the {sys} system."), {pnt=mem.spob2, sys=mem.sys2} ),
       } )
 
    elseif mem.misn_state == 2 and spob.cur() == mem.spob2 then
