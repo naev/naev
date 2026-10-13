@@ -153294,7 +153294,7 @@ msgstr " 대뇌 "
 #~ "신 함선이 lonewolf4의 항공모함 안으로 그대로 처박힌 모양입니다."
 
 #~ msgid ""
-#~ "\"Yes. They took me up as a disciple and taught be all the technomancery "
+#~ "\"Yes. They took me up as a disciple and taught me all the technomancery "
 #~ "I know. If it wasn't for l337_b01, I probably would have gotten fried by "
 #~ "gangs, pirates, or even bureaucrats a long time ago. I owe them my life.\""
 #~ msgstr ""

@@ -157358,7 +157358,7 @@ msgstr "セレブラム"
 #~ "なたの船はローンウルフ 4 の母艦に直接衝突したらしい。"
 
 #~ msgid ""
-#~ "\"Yes. They took me up as a disciple and taught be all the technomancery "
+#~ "\"Yes. They took me up as a disciple and taught me all the technomancery "
 #~ "I know. If it wasn't for l337_b01, I probably would have gotten fried by "
 #~ "gangs, pirates, or even bureaucrats a long time ago. I owe them my life.\""
 #~ msgstr ""
