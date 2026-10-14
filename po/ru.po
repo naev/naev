@@ -90248,6 +90248,8 @@ msgstr ""
 msgid ""
 "\"Here, let me tune the scanning frequencies to the natural harmonics.\""
 msgstr ""
+"- Вот, позвольте мне настроить частоты сканирования на естественные "
+"гармоники."
 
 msgid ""
 "As if by magic, your sensors begin to hazily pick up a large man-made "
@@ -90283,6 +90285,7 @@ msgstr "\"{sai}, сделай двойную проверку\"."
 
 msgid "\"I knew you wouldn't give up now! We're coming for you lonewolf4!\""
 msgstr ""
+"\"Я знал, что теперь ты не сдашься! Мы идем за тобой, одинокий волк-4!\""
 
 msgid ""
 "\"New calculations point to NO PROBLEM.\"\n"
@@ -129807,16 +129810,6 @@ msgstr ""
 #~ msgstr ""
 #~ "К сожалению, у вас нет достаточно средств, чтобы оплатить компенсацию "
 #~ "ущерба, и захваченный вами {shp} теперь обречен стать объедками. Ну что ж."
-
-#~ msgid ""
-#~ "\"Here, let me tune the scanning frequencies to the natural harmonics.\""
-#~ msgstr ""
-#~ "- Вот, позвольте мне настроить частоты сканирования на естественные "
-#~ "гармоники."
-
-#~ msgid "\"I knew you wouldn't give up now! We're coming for you lonewolf4!\""
-#~ msgstr ""
-#~ "\"Я знал, что теперь ты не сдашься! Мы идем за тобой, одинокий волк-4!\""
 
 #~ msgid "\"You are not yet welcome at O'rez Palace.\""
 #~ msgstr "«Вам еще не рады во дворце О'Рез.»"
