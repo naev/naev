@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2026-10-15 15:28+0000\n"
+"PO-Revision-Date: 2026-10-15 15:54+0000\n"
 "Last-Translator: raazqaer <raazqaer@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev-0-"
 "13-x/fr/>\n"
@@ -60139,7 +60139,7 @@ msgstr ""
 
 #. luacheck: globals nooutfit (used in POI framework)
 msgid "Your ship AI {shipai} materializes before you."
-msgstr "L'IA de votre vaisseau {shipai} apparaît devant vous."
+msgstr "{shipai}, l'IA de votre vaisseau, apparaît devant vous."
 
 msgid ""
 "\"It seems like there has been a significant update to the game!\n"
@@ -97794,7 +97794,7 @@ msgid "Join the emergency Onion Society conclave."
 msgstr ""
 
 msgid "Your ship AI {shipai} materializes in front of you."
-msgstr ""
+msgstr "{shipai}, l'IA de votre vaisseau, apparaît devant vous."
 
 #. Is it truly your SAI, or is it... DOG!??!
 msgid ""
@@ -136757,7 +136757,7 @@ msgid "Ship %s does not exist"
 msgstr ""
 
 msgid "Yacht"
-msgstr ""
+msgstr "Yacht"
 
 msgid "Courier"
 msgstr "Coursier"
@@ -136769,16 +136769,16 @@ msgid "Bulk Freighter"
 msgstr "Cargo Lourd"
 
 msgid "Scout"
-msgstr ""
+msgstr "Éclaireur"
 
 msgid "Interceptor"
 msgstr "Intercepteur"
 
 msgid "Fighter"
-msgstr ""
+msgstr "Chasseur"
 
 msgid "Bomber"
-msgstr ""
+msgstr "Bombardier"
 
 msgid "Corvette"
 msgstr "Corvette"
@@ -136787,13 +136787,13 @@ msgid "Destroyer"
 msgstr "Destroyer"
 
 msgid "Cruiser"
-msgstr ""
+msgstr "Croiseur"
 
 msgid "Battleship"
-msgstr ""
+msgstr "Cuirassé"
 
 msgid "Carrier"
-msgstr ""
+msgstr "Transporteur"
 
 #, fuzzy, c-format
 msgid "Unable to render comm graphic for ship '%s'!"
