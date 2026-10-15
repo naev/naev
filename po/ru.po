@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2026-08-26 10:00+0900\n"
+"POT-Creation-Date: 2026-10-13 19:43+0900\n"
 "PO-Revision-Date: 2026-08-30 10:30+0000\n"
 "Last-Translator: piezoelement <piezoelement@noreply.codeberg.org>\n"
-"Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/"
-"ru/>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12854,6 +12854,25 @@ msgstr ""
 "адреналина из необработанной энергии, что позволяет кораблю временно "
 "двигаться быстрее."
 
+#. Carrier tree
+#. For carriers (please contain your surprise). More specifically, Soromid ships that have fighter bays.
+#. Requires carrier slot for tiers 3+.
+msgid "Carrier Pheromones I"
+msgstr ""
+
+msgid ""
+"A heady mix of nanobots and chemicals that increases the capabilities of "
+"fightercraft."
+msgstr ""
+
+msgid "Carrier Pheromones II"
+msgstr ""
+
+msgid ""
+"A secondary dosage of chemical and mechanical enhancements, pushing fighters "
+"to their effective limits."
+msgstr ""
+
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
 "into a primitive state of feral rage in which forward and turret weapon "
@@ -12903,6 +12922,37 @@ msgid ""
 msgstr ""
 "Активна в течение 7 секунд с момента последнего повреждения брони или может "
 "быть вручную отключена с 30-секундным временем восстановления."
+
+msgid "Gestational Hypermetabolism"
+msgstr ""
+
+msgid ""
+"A careful adjustment of the ship's metabolism, driving it to replace lost "
+"fighters much faster. Fighters produced at this higher speed of existence "
+"experience some trickle-down effects, significantly enhancing their movement "
+"speed."
+msgstr ""
+
+msgid "Naviumnal Brigand Bay"
+msgstr ""
+
+msgid "N. Brigand Bay"
+msgstr ""
+
+msgid "Bioship Fighter Organ"
+msgstr ""
+
+msgid ""
+"A severe distension of the ship's regular fighter bays. While it only "
+"carries two Soromid Brigands, it has no adverse effects on the ship's "
+"fighter capacity, giving an extra edge to any interceptor wing."
+msgstr ""
+
+msgid "Naviumnal Reaver Bay"
+msgstr ""
+
+msgid "N. Reaver Bay"
+msgstr ""
 
 #. Speed Lights
 #. Make sure it's valid.
@@ -13770,6 +13820,14 @@ msgid ""
 "depth optimization that has to be done on a per-ship basis, with specialized "
 "technicians tuning everything for maximum efficiency. Due to the nature of "
 "the service, only one can be applied to each ship."
+msgstr ""
+
+msgid "Godmother Optimization"
+msgstr ""
+
+msgid ""
+"This fighter has been retooled by a Godmother ship, greatly increasing its "
+"launchers' effectiveness."
 msgstr ""
 
 msgid ""
@@ -16663,6 +16721,22 @@ msgid ""
 "second hand Goddards are reconfigured and re-sold as 'Merchantman' variants."
 msgstr ""
 
+msgid "Godmother"
+msgstr ""
+
+msgid ""
+"While carriers have never been popular in the Dvaered fleet, that hasn't "
+"stopped House Goddard from attempting to introduce more and more carrier "
+"elements into their premiere ships. With this latest attempt, they have "
+"taken a decisive step forward, appealing to House Dvaered's preference for "
+"kinetic and ballistic weaponry. The newly dubbed \"Godmother\" focuses on "
+"enhancing the effectiveness of fielded bombers, retrofitting every deployed "
+"ship with massively increased ammunition reserves and enhanced firing "
+"logistics. The result of these enhancements is an anti-capital ship that can "
+"ravage all but the most hardened of foes, at the cost of struggling against "
+"the more diverse, well-rounded fleets run by other carriers."
+msgstr ""
+
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -17300,17 +17374,11 @@ msgstr "Вам нужна как минимум 70% репутация у Сор
 
 msgid ""
 "The Soromid Arx usually features in Soromid fleets as a command vessel and "
-"fighter carrier. Its unique properties allow it amply the strength of its "
+"fighter carrier. Its unique properties allow it amplify the strength of its "
 "carried ships, which easily makes up for its reduced number of slots. The "
 "Arx tends to be a more lightweight carrier than is typically found in non-"
 "Soromid fleets, without sacrificing carrying capacity."
 msgstr ""
-"Соромидский Аркс обычно присутствует в флотах Соромидов как командный "
-"корабль и носитель истребителей. Его уникальные свойства позволяют ему в "
-"значительной степени усиливать перевозимые им корабли, что легко "
-"компенсирует его уменьшенное количество слотов. Аркс, как правило, более "
-"легкий носитель, чем те, которые обычно встречаются в не-Соромидских флотах, "
-"без ущерба для грузоподъемности."
 
 msgid "Bio-Interceptor"
 msgstr "Био-Перехватчик"
@@ -17928,6 +17996,14 @@ msgid ""
 msgstr ""
 
 msgid "Aldous' Moon"
+msgstr ""
+
+msgid ""
+"Similar to its primary Aldous, the moon is covered in a sea of toxins. "
+"However, one significant difference is high concentrations of iron and "
+"oxygen that react and give the moon its characteristic red shade. This also "
+"happens to make it particularly unsuitable for the production of positronic "
+"circuitry, leaving it without the one attractive quality of Aldous."
 msgstr ""
 
 msgid "Aleph"
@@ -21283,7 +21359,20 @@ msgstr ""
 msgid "Fortitude I"
 msgstr ""
 
+msgid ""
+"Fortitude I's composition is actually shockingly similar to Fortitude's. If "
+"it had just accrued a bit more mass, Fortitude would have been a system with "
+"twin stars."
+msgstr ""
+
 msgid "Fortitude II"
+msgstr ""
+
+msgid ""
+"All attempts at establishing a colony and exploiting the planet's resources "
+"concluded with a rescue mission from Omega Enclave. This has led to talks of "
+"declaring Fortitude II a protected military zone just to drive them away, "
+"but nothing involving the bureaucracy goes fast."
 msgstr ""
 
 msgid "Fortitude III"
@@ -24205,7 +24294,18 @@ msgstr ""
 msgid "Merisi II"
 msgstr ""
 
+msgid ""
+"While similar to Merisi I, Merisi II never saw life develop. It would be "
+"hospitable world though, if anyone cared to build a colony."
+msgstr ""
+
 msgid "Merisi III"
+msgstr ""
+
+msgid ""
+"The incredibly brittle surface of this planet quite literally explodes when "
+"subjected to too much force, rendering mining operations unviable. Some "
+"tried repurposing Imperator-class missiles, to little economic success."
 msgstr ""
 
 msgid "Merisi IV"
@@ -25459,6 +25559,11 @@ msgstr ""
 msgid "P0125"
 msgstr ""
 
+msgid ""
+"This rock is only notable for being the most barren and desolate known "
+"object in the most barren and desolate region of known space."
+msgstr ""
+
 msgid "P-13571"
 msgstr "П-13571"
 
@@ -25479,10 +25584,22 @@ msgstr "П-15919"
 msgid "P2020"
 msgstr ""
 
+msgid ""
+"Thought to be little more than a cold gaseous body after basic scans "
+"conducted long before the Incident and left alone since then, it was "
+"observed the Collective seemed to have some level activity on it for an "
+"unknown reason. Perhaps it actually has noteworthy resources buried deep?"
+msgstr ""
+
 msgid "P2021"
 msgstr ""
 
 msgid "P2022"
+msgstr ""
+
+msgid ""
+"C-28 is such a cold star that even being so close to it doesn't save P2022 "
+"from being a frozen rock."
 msgstr ""
 
 msgid "P-2317"
@@ -25531,6 +25648,12 @@ msgstr "П-880"
 msgid "P9122"
 msgstr ""
 
+msgid ""
+"Although it is unclear how such a celestial body formed in a star-less "
+"system, this doesn't exactly make P9122 \"interesting\", and is just another "
+"cold body lost in space."
+msgstr ""
+
 msgid "P-9172"
 msgstr "П-9172"
 
@@ -25538,6 +25661,14 @@ msgid "P-9199"
 msgstr "П-9199"
 
 msgid "P9234"
+msgstr ""
+
+msgid ""
+"Though it has seen colonies in the past, this world had always been far too "
+"hostile and insignificant to be attributed a common name. When the planet "
+"was evacuated in response to the Collective's attacks, few of it's "
+"inhabitants regretted having to leave it behind, knowing whatever world the "
+"Empire would relocate them to could only be better."
 msgstr ""
 
 msgid "P-9832"
@@ -33768,6 +33899,7 @@ msgstr ""
 #. -- doing the task, or false otherwise.
 #. --
 #. Needs to have a target
+#. Effective armour+shield left
 #. Use some outfits in some non-combat situations
 #. Runaway if needed
 #. Carried fighters are a bit more jumpy
@@ -36737,6 +36869,7 @@ msgstr "Повышение ранга биокорабля"
 #. <event name="Ship Capture">
 #. <location>none</location>
 #. <chance>0</chance>
+#. <priority>99</priority>
 #. <tags>
 #. <tag>fleetcap_10</tag>
 #. </tags>
@@ -38327,6 +38460,7 @@ msgstr ""
 #. --Event for Frontier Invasion campaign. The player must help general Klank getting extra-funding (just a text-completion minigame)
 #. --
 #. hook.rm(mem.jumpingTam)
+#. Tam has nothing to say at stage 0
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Dvaered Sabotage">
@@ -49627,6 +49761,38 @@ msgid ""
 msgstr ""
 
 #. Doesn't block normal finishing
+msgid "Godwedded"
+msgstr ""
+
+msgid ""
+"A rogue cell has recently captured an experimental carrier variant of the "
+"Goddard Battleship refitted with fighter optimization technology. While the "
+"ship is old and House Goddard would not normally be too fussed about one of "
+"their mothballed hulks being hauled off, there are worries that the carrier "
+"was stolen by a rogue Za'lek cell with an interest in reverse-engineering "
+"the proprietary technology. The ship must be either destroyed or taken off "
+"the hands of anyone interested in researching it."
+msgstr ""
+
+msgid ""
+"As you break into the ship, you shoot down a number of personal defense "
+"drones. The ship seems severely understaffed, with small maintenance drones "
+"making up the bulk of the workforce. With them soundly defeated, you push "
+"in. The person at the helm bears Za'lek cybernetic augmentations, but "
+"otherwise is wearing much more raggy, pirate-appropriate attire. They "
+"attempt to start a long-winded diatribe about the value of the technology "
+"aboard the vessel, but you're not in the mood for an unintelligible lecture "
+"today, subduing them with a shot in the arm and rapidly taking them into "
+"custody. It seems none of their implements were built to help them in a "
+"fight."
+msgstr ""
+
+msgid "Godfather"
+msgstr ""
+
+msgid "You have no idea what sort of technology we're dealing with here!"
+msgstr ""
+
 msgid "Conversion Therapy"
 msgstr ""
 
@@ -53629,7 +53795,7 @@ msgid ""
 "the Great Project Thurion, as we were deemed a threat. Those that managed to "
 "survive, laid low for many cycles. When what you call the Incident happened, "
 "we saw it as a chance to grow. Since we survived largely unscathed thanks to "
-"our biological nature. Many survivors also joined our ranks.\""
+"our technological nature. Many survivors also joined our ranks.\""
 msgstr ""
 
 msgid ""
@@ -54873,7 +55039,7 @@ msgstr ""
 #. return false
 #. end
 #. local st = s:tags()
-#. if st.restricted then
+#. if st.restricted or st.nonpc then
 #. return false
 #. end
 #. local sf = s:faction()
@@ -58406,7 +58572,7 @@ msgstr ""
 #. <location>Bar</location>
 #. <faction>Dvaered</faction>
 #. <done>Destroy the FLF base!</done>
-#. <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
+#. <cond>system.get("Tarsus"):jumpDist() &lt; 4</cond>
 #. <notes>
 #. <campaign>Frontier Invasion</campaign>
 #. <requires name="The FLF is dead"/>
@@ -59782,7 +59948,7 @@ msgid ""
 msgstr ""
 
 #. give him top equipment
-#. TODO switch to equipopt
+#. Consistent
 #. Behaviour
 #. /!\ We did not claim this system /!#. In the case the player successfully lands or uses an hypergate.
 #. Taking off is already managed by the enter hook.
@@ -63680,6 +63846,12 @@ msgstr ""
 msgid "Dvaered Delivery"
 msgstr ""
 
+msgid "Bony Boudica"
+msgstr ""
+
+msgid "This agent is an intermediate between the Empire and Dvaered."
+msgstr ""
+
 #. Define the cargo commodity
 msgid "Secret Cargo"
 msgstr ""
@@ -63796,6 +63968,7 @@ msgstr ""
 
 #. Player makes it to the second rendez-vous point. An overly complicated discussion happens to show how messy the Dvaered-Imperial black-ops system is.
 #. Remove scan hook.
+#. Add boudica at the bar
 #. Player meets Boudica again after having captured Shaky Swan.
 #. Player gets finally paid
 msgid "Intermediate"
@@ -63896,15 +64069,8 @@ msgid ""
 msgstr ""
 
 #. Add boudica at the bar
-#. Discussion with agent Boudica about the interception of the "Shaky Swan"
-msgid "Bony Boudica"
-msgstr ""
-
-msgid "This agent is an intermediate between the Empire and Dvaered."
-msgstr ""
-
-#. Add boudica at the bar
 #. Done with the cargo
+#. Just in case the player accidentally takes off
 msgid "Meet Bony Boudica at the {pnt} bar in the {sys} system."
 msgstr ""
 
@@ -64033,6 +64199,8 @@ msgid ""
 "cargo and to abort the mission."
 msgstr ""
 
+#. Add boudica at the bar
+#. Discussion with agent Boudica about the interception of the "Shaky Swan"
 msgid ""
 "\"I don't know how much you understood of our conversation at the spaceport, "
 "but now we need you to disable the ship of a pilot named 'Shaky Swan'. He is "
@@ -67682,7 +67850,7 @@ msgstr ""
 #. <done>Assault on Raelid</done>
 #. <location>Bar</location>
 #. <faction>FLF</faction>
-#. <cond>spob.cur():reputation("FLF") &gt;= 70</cond>
+#. <cond>math.floor(spob.cur():reputation("FLF")+0.5) &gt;= 70</cond>
 #. <notes>
 #. <campaign>Save the Frontier</campaign>
 #. </notes>
@@ -95342,7 +95510,7 @@ msgstr ""
 #. Stages :
 #. 0) Way to Toaxis
 #. 1) Battle
-#. 2) Going to Darkshed
+#. 2) Going to HQ
 #. --
 #. Non-persistent state
 #. Change here to change the planet and the system
@@ -95445,11 +95613,10 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Sirius world
-#. 1) Way to Darkshed
+#. 1) Way to HQ
 #. --
 #. Non-persistent state
 #. Forward-declared functions
-#. Mission constants
 #. the chances you have to get an ambush
 msgid ""
 "You sit at Smith's table and ask him if he has a job for you. \"Of course,\" "
@@ -95555,7 +95722,7 @@ msgstr ""
 #. <done>Unfair Competition</done>
 #. <chance>50</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
+#. <cond>spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -95567,7 +95734,7 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Frontier system
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #. --
 #. Non-persistent state
 #. Mission constants
@@ -95618,8 +95785,7 @@ msgstr ""
 msgid ""
 "You helped Nexus Shipyards initiate a secret meeting with a member of the "
 "Frontier Council. Arnold Smith said that he has another mission for you and "
-"to meet him in the bar on Darkshed when you are ready to transport him to "
-"Curie."
+"to meet him in the bar on {pnt} when you are ready to transport him to Curie."
 msgstr ""
 
 #. the system where the player must look for the Hawking
@@ -95641,7 +95807,7 @@ msgstr ""
 #. <done>Invitation</done>
 #. <chance>100</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
+#. <cond>spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -95652,7 +95818,7 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Za'lek system
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #.
 #. TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
 #. --
@@ -95761,9 +95927,8 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Eiger/Surano
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #. --
-#. Mission constants
 #. Change here to change the planets and the systems
 #. This should be the same as the system used in sh06!
 msgid "It looks like he has yet another job for you."
@@ -95843,8 +96008,7 @@ msgstr ""
 #. <done>The FLF Contact</done>
 #. <chance>100</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
-#. <cond>not diff.isApplied( "flf_dead" )</cond>
+#. <cond>not diff.isApplied( "flf_dead" ) and spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -95855,7 +96019,7 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Behar
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #. --
 #. Non-persistent state
 #. Change here to change the planets and the systems
@@ -95924,8 +96088,7 @@ msgstr ""
 #. <done>A Journey To Arandon</done>
 #. <chance>50</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
-#. <cond>not diff.isApplied( "flf_dead" )</cond>
+#. <cond>not diff.isApplied( "flf_dead" ) and spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -95936,10 +96099,9 @@ msgstr ""
 #.
 #. Stages :
 #. 0) There are pirates to kill
-#. 1) Way to Alteris
+#. 1) Way to HQ
 #. --
 #. Non-persistent state
-#. Mission constants
 msgid "The Last Detail"
 msgstr ""
 
@@ -111219,6 +111381,9 @@ msgstr ""
 #.
 #. --
 #. Fall back to main ship if not found
+#. Determine the maxtier the ship can get
+#. Special sets of skills get activated under certain conditions
+#. Get skills and intrinsics
 #. Filter out high tiers if necessary
 #. Set up some helper fields
 #. Tests outfits if they exist
@@ -111846,6 +112011,37 @@ msgstr ""
 msgid ""
 "The state of feral rage duration is increased to 7 seconds with a 30% damage "
 "bonus, and can be triggered manually with a 30 second cooldown between uses."
+msgstr ""
+
+msgid ""
+"Improves fighter damage and durability by 10% at the cost of 8% forward and "
+"turret weapon damage."
+msgstr ""
+
+msgid ""
+"Improves fighter movement by 20% and fighter bay reload speed by 30%. Also "
+"reduces energy generation by 5% in exchange for 5% more CPU."
+msgstr ""
+
+msgid "Naviumnal Distention I"
+msgstr ""
+
+msgid ""
+"Outfits the ship with a bay containing two Soromid Brigands designed for "
+"absorbing damage and supporting other ships."
+msgstr ""
+
+msgid ""
+"Improves fighter damage and durability by a further 15% (25% in total) at "
+"the cost of 12% (20% in total) forward and turret weapon damage."
+msgstr ""
+
+msgid "Naviumnal Distention II"
+msgstr ""
+
+msgid ""
+"Replaces the two Soromid Brigands with much larger, more powerful Soromid "
+"Reavers."
 msgstr ""
 
 msgid ""
@@ -113450,6 +113646,7 @@ msgstr ""
 msgid "Wanted Pirate"
 msgstr ""
 
+#. Most missions start or finish there
 msgid "Arnold Smith"
 msgstr ""
 
@@ -113863,6 +114060,8 @@ msgstr ""
 #. Cores
 #. Other outfits
 #. outfit.get("Small Flow Resonator"),
+#. Lazy load the outfits
+#. Lazy loading
 #. Lazy load the outfits
 #. Lazy loading
 #. Lazy load the outfits
@@ -119040,6 +119239,11 @@ msgid ""
 msgstr ""
 
 #. Should overwrite existing values
+msgid ""
+"Bombers deployed by this ship get +{dmg}% launcher damage and fire rate and +"
+"{ammo}% launcher ammunition capacity."
+msgstr ""
+
 #. Radius
 #. Middle explosion default
 #. TODO maybe explosions should be under player when applicable...
@@ -123675,6 +123879,7 @@ msgstr "Приостанавливает игру."
 msgid "Autonavigation On"
 msgstr "Автонавигация на"
 
+#. Movement modifiers
 msgid "Initializes the autonavigation system."
 msgstr "Инициализирует систему автонавигации."
 
@@ -124035,6 +124240,21 @@ msgstr ""
 
 #, c-format
 msgid "Key '%s' not found!"
+msgstr ""
+
+msgid "Target Space Object"
+msgstr ""
+
+msgid "Fire Primary Weapons"
+msgstr ""
+
+msgid "Fire Secondary Weapons"
+msgstr ""
+
+msgid "Info Menu"
+msgstr ""
+
+msgid "Console"
 msgstr ""
 
 #, c-format
@@ -125409,6 +125629,21 @@ msgstr ""
 msgid "Naev Failed to start due to a critical error"
 msgstr ""
 
+msgid "Disable all plugins"
+msgstr ""
+
+msgid "Load normally"
+msgstr ""
+
+msgid "Naev Failed to Load"
+msgstr ""
+
+msgid ""
+"Naev failed to load last launch most likely due to a plugin incompatibility. "
+"Do you wish to disable all plugins?\n"
+"Current plugins are listed below:"
+msgstr ""
+
 msgid "Loaded configuration: {}"
 msgstr ""
 
@@ -125544,6 +125779,9 @@ msgid ""
 "Expected ndata version {} got {}."
 msgstr ""
 
+msgid " package not found."
+msgstr ""
+
 msgid "No news is available."
 msgstr ""
 
@@ -125585,18 +125823,6 @@ msgid "TOO MANY WARNINGS, NO LONGER DISPLAYING WARNINGS"
 msgstr ""
 
 msgid "Failed to create new Lua state."
-msgstr ""
-
-msgid " package not found."
-msgstr ""
-
-msgid " package.path not found."
-msgstr ""
-
-#, c-format
-msgid ""
-"\n"
-"   no ndata path '%s'"
 msgstr ""
 
 #, c-format
@@ -127864,7 +128090,11 @@ msgid "Exit with Plugin Conflicts?"
 msgstr ""
 
 msgctxt "plugins"
-msgid "Exit"
+msgid "Yes, exit as is"
+msgstr ""
+
+msgctxt "plugins"
+msgid "No, let me fix it"
 msgstr ""
 
 msgctxt "plugins"
@@ -127936,6 +128166,10 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "Logs"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Exit"
 msgstr ""
 
 msgctxt "plugins"
@@ -129510,6 +129744,20 @@ msgstr "# Корветы"
 
 msgid " Cerebrum "
 msgstr ""
+
+#~ msgid ""
+#~ "The Soromid Arx usually features in Soromid fleets as a command vessel "
+#~ "and fighter carrier. Its unique properties allow it amply the strength of "
+#~ "its carried ships, which easily makes up for its reduced number of slots. "
+#~ "The Arx tends to be a more lightweight carrier than is typically found in "
+#~ "non-Soromid fleets, without sacrificing carrying capacity."
+#~ msgstr ""
+#~ "Соромидский Аркс обычно присутствует в флотах Соромидов как командный "
+#~ "корабль и носитель истребителей. Его уникальные свойства позволяют ему в "
+#~ "значительной степени усиливать перевозимые им корабли, что легко "
+#~ "компенсирует его уменьшенное количество слотов. Аркс, как правило, более "
+#~ "легкий носитель, чем те, которые обычно встречаются в не-Соромидских "
+#~ "флотах, без ущерба для грузоподъемности."
 
 #, fuzzy
 #~ msgid ""
