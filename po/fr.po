@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2026-10-15 18:49+0000\n"
+"PO-Revision-Date: 2026-10-16 19:27+0000\n"
 "Last-Translator: raazqaer <raazqaer@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev-0-"
 "13-x/fr/>\n"
@@ -8005,7 +8005,7 @@ msgstr ""
 "contrôler les modules visibles."
 
 msgid "### Commodity Exchange"
-msgstr "### Bourse des marchandises"
+msgstr "### Marché des matières premières"
 
 msgid "Here you can buy or sell commodities."
 msgstr "Ici, vous pouvez acheter ou vendre des marchandises."
@@ -23711,7 +23711,7 @@ msgid ""
 "place, as it is the closest commerce station to the Frontier-Sirius border."
 msgstr ""
 "Le monastère Hurne est la principale zone commercial de cette région de "
-"l'espace Sirius. Il sert à la fois de marché local des marchandises et "
+"l'espace Sirius. Il sert à la fois de marché des matières premières local et "
 "d'entrepôt pour les négociants privilégiant les investissements à long "
 "terme. Les marchands en provenance de la Frontière y font souvent escale, "
 "car il s'agit de la station commerciale la plus proche de la frontière entre "
@@ -40548,14 +40548,14 @@ msgstr "\"Suspension temporaire des hostilités.\""
 #. --
 #. First check, make sure required slots are equipped
 msgid "Missing Required Outfits"
-msgstr "Modules requis absents"
+msgstr "Modules requis manquants"
 
 msgid "Please equip all required outfit slots first!"
 msgstr "Vous devez d'abord équiper tous les modules requis !"
 
 #. Make sure
 msgid "Autoequip Confirmation"
-msgstr ""
+msgstr "Confirmation de l'équipement automatique"
 
 msgid ""
 "This will re-equip your current pilot, are you sure you want to continue?"
@@ -40571,12 +40571,14 @@ msgstr ""
 #. Remove equipped outfits from inventory
 #. Report success or failure
 msgid "Autoequipper Failure!"
-msgstr ""
+msgstr "Échec de l'équipement automatique !"
 
 msgid ""
 "Autoequipper failed to equip! Please make sure that the equipped required "
 "outfits are adequate for this ship."
 msgstr ""
+"L'équipement automatique a échoué ! Veuillez vérifier que les modules requis "
+"conviennent à ce vaisseau."
 
 #.
 #. Triggered when a mission or the likes temporarily disables autonav.
@@ -40588,34 +40590,34 @@ msgstr ""
 #. Autonav to a system, destination is in the player's nav
 #. --
 msgid "jumping to {sys} will fail your escort mission"
-msgstr ""
+msgstr "sauter vers {sys} fera échouer votre mission d'escorte"
 
 msgid "Autonav: travelling to {sys}."
-msgstr ""
+msgstr "Autonav : en route vers {sys}."
 
 #.
 #. Autonav to a spob, potentially trying to land
 #. --
 msgid "landing on {spb} will fail your escort mission"
-msgstr ""
+msgstr "atterrir sur {spb} fera échouer votre mission d'escorte"
 
 msgid "Autonav: landing on {spob}."
-msgstr ""
+msgstr "Autonav : atterrissage sur {spob}."
 
 msgid "Autonav: approaching {spob}."
-msgstr ""
+msgstr "Autonav : en approche de {spob}."
 
 msgid "Autonav: following {plt}."
-msgstr ""
+msgstr "Autonav : poursuite de {plt}."
 
 msgid "Autonav: boarding {plt}."
-msgstr ""
+msgstr "Autonav : abordage de {plt}."
 
 #.
 #. Autonav to a position specified by the player
 #. --
 msgid "Autonav: heading to target position."
-msgstr ""
+msgstr "Autonav : en route vers la position cible."
 
 #.
 #. tint is the integral of the time in per time units.
@@ -40642,7 +40644,7 @@ msgstr ""
 #. outfits are instant and won't be caught by this polling scheme.
 #. Failed to disable
 msgid "manual commands at approach"
-msgstr ""
+msgstr "commandes manuelles lors de l'approche"
 
 #.
 #. For approaching a static target.
@@ -40656,11 +40658,10 @@ msgstr ""
 #. accel * 1.0/3 goes as speed bonus
 #. Restart autonav system
 #. Display message only if not aborted
-#, fuzzy
 msgid "Autonav continuing until {sys} ({n} jump left)."
 msgid_plural "Autonav continuing until {sys} ({n} jumps left)."
-msgstr[0] "#oAutonav continuing until destination (%d jump left)."
-msgstr[1] "#oAutonav continuing until destination (%d jumps left)."
+msgstr[0] "Autonav : progression vers {sys} ({n} saut restant)."
+msgstr[1] "Autonav : progression vers {sys} ({n} sauts restants)."
 
 #. Have to update path also
 #. Approaching a jump point, target position is stored in target_pos
@@ -40677,83 +40678,77 @@ msgstr[1] "#oAutonav continuing until destination (%d jumps left)."
 #. Breaking at a jump point, target position is stored in target_pos
 #. With instant jumping we can just focus on getting in range
 msgid "Autonav: waiting for escorts to jump first."
-msgstr ""
+msgstr "Autonav : en attente du saut des escortes."
 
 #. wait
 #. Recompute the location for a better position
 #. Brakes at a position
 #. Approaching a position specified by target_pos
 msgid "Autonav: arrived at position."
-msgstr ""
+msgstr "Autonav : position atteinte."
 
 #.
 #. Autonav was forcibly aborted for a reason or other.
 #. --
 #. Horrible hack so setting the target doesn't break autonav
 msgid "Autonav: aborted due to '{reason}'!"
-msgstr ""
+msgstr "Autonav : interrompu à cause de '{reason}' !"
 
-#, fuzzy
 msgid "Autonav: aborted!"
-msgstr "Pilote automatique"
+msgstr "Autonav : interrompu !"
 
 #. Brakes at a position
 #. Approaching a spob, not interested in landing
 msgid "Autonav: arrived at {spob}."
-msgstr ""
+msgstr "Autonav : arrivée à {spob}."
 
 #. Approaching a spob to try to land
 #. Going for the landing approach
 #. See if we have to wait for escorts
 msgid "Autonav: waiting for escorts to land first."
-msgstr ""
+msgstr "Autonav : en attente de l'atterrissage des escortes."
 
-#, fuzzy
 msgid "cannot land"
-msgstr "Vous ne pouvez pas atterrir ici\n"
+msgstr "atterrissage impossible"
 
 #. Reset to good position
 #. Have to update path also
 #. Following a target pilot
-#, fuzzy
 msgid "Autonav: following target {plt} has jumped to {sys}."
-msgstr "{plt} est passé à {sys}."
+msgstr "Autonav : la cible suivie {plt} a sauté vers {sys}."
 
 #. See if there's someone else in the fleet we can follow now
 #. Try to follow through jump
-#, fuzzy
 msgid "no fuel"
-msgstr "Ravitaillement"
+msgstr "plus de carburant"
 
 msgid "not enough fuel"
-msgstr ""
+msgstr "carburant insuffisant"
 
-#, fuzzy
 msgid "Autonav: Could not follow target {plt} by jumping."
-msgstr "{plt} est passé à {sys}."
+msgstr "Autonav : impossible de suivre la cible {plt} en sautant."
 
 #. autonav_rampdown( false )
 msgid "Autonav: following target {plt} has landed on {spb}."
-msgstr ""
+msgstr "Autonav : la cible suivie {plt} a atterri sur {spb}."
 
 #. See if there's someone else in the fleet we can follow now
 #. Try to follow to land
 #. do it without following lanes
 #. If doesn't exist defaults to false
 msgid "Autonav: following target {plt} has been lost."
-msgstr ""
+msgstr "Autonav : la cible suivie {plt} a été perdue."
 
 #. See if there's someone else in the original fleet we can follow now
 #. Follow with the same range that stops stealth (see pilot_ewStealthGetNearby)
 #. Only ramps down if we can board
 #. Finally try to board
-#, fuzzy
 msgid "cannot board"
-msgstr "Impossible d'ajouter une entrée"
+msgstr "abordage impossible"
 
 #. Getting close to board a pilot
 msgid "Autonav: boarding target {plt} has been lost."
-msgstr ""
+msgstr "Autonav : la cible à aborder {plt} a été perdue."
 
 #. Assume disabled ship is stopped
 #. Run quite often when the player tries to think. dt is game time
@@ -40761,14 +40756,12 @@ msgstr ""
 #. If we reset we skip the iteration
 #. 5 seconds to reach max speed
 #. Made it to target
-#, fuzzy
 msgid "Autonav arrived at the {sys} system."
-msgstr "Vous avez quitté le système."
+msgstr "Autonav : arrivée dans le système {sys}."
 
 #. Must have fuel to continue
-#, fuzzy
 msgid "not enough fuel to continue"
-msgstr "Pas assez de carburant pour le système autonav"
+msgstr "carburant insuffisant pour continuer"
 
 #. Keep on going
 #.
@@ -40976,21 +40969,21 @@ msgstr "Pas assez de carburant pour le système autonav"
 #. Don't give more if they have too many
 #. See if we can generate treasure hunt
 #. Randomly choose loot and hint it.
-#, fuzzy
 msgid "weapon outfit"
-msgstr "Équipement inconnu"
+msgstr "module d'armement"
 
-#, fuzzy
 msgid "non-weapon outfit"
-msgstr "Équipement inconnu"
+msgstr "module hors armement"
 
 msgid "Some scribbles indicate you will find a {reward_type}."
-msgstr ""
+msgstr "Des gribouillis indiquent que vous trouverez {reward_type}."
 
 msgid ""
 "Treasure Map\n"
 "A map that likely leads to some treasure!{lootstr}"
 msgstr ""
+"Carte au trésor\n"
+"Une carte qui mène probablement à un trésor !{lootstr}"
 
 msgid ""
 "\n"
@@ -109856,7 +109849,7 @@ msgid "You may only escort one group of traders at a time!"
 msgstr ""
 
 msgid "Not enough fuel"
-msgstr ""
+msgstr "Carburant insuffisant"
 
 msgid ""
 "The destination is {1} away, but you only have enough fuel for {2}. You "
@@ -109996,16 +109989,18 @@ msgstr ""
 #. Sells Outfits
 #. Sells a particular outfit
 msgid "You see a young individual sitting alone at a table."
-msgstr ""
+msgstr "Vous apercevez une jeune femme assise seule à une table."
 
 #. Check to see if truly accepted
 #. Update objectives
 msgid "Helping Nelly Out"
-msgstr ""
+msgstr "Aider Nelly"
 
 msgid ""
 "Help Nelly deliver {tonnes} of {cargo} to {destpnt} in the {destsys} system."
 msgstr ""
+"Aidez Nelly à livrer {tonnes} de {cargo} à {destpnt} dans le système "
+"{destsys}."
 
 msgid ""
 "Nelly lightens up when you near her.\n"
@@ -110015,6 +110010,12 @@ msgid ""
 "to help me take the cargo there and come back? I'll pay you your fair share."
 "\""
 msgstr ""
+"Nelly s'illumine lorsque vous vous approchez d'elle.\n"
+"\"Rebonjour ! Je suis dans une situation délicate. Voyez-vous, je devais "
+"livrer du {cargo} à {pnt} dans le système {sys}, mais mon vaisseau est tombé "
+"en panne, et je ne pense pas pouvoir la livrer de sitôt. Accepteriez-vous de "
+"m'aider à transporter la cargaison là-bas, puis de revenir ? Je vous paierai "
+"votre juste part.\""
 
 msgid ""
 "The lone individual lightens up when you near her.\n"
@@ -110024,11 +110025,19 @@ msgid ""
 "any time soon. Would you be willing to help me take the cargo there and come "
 "back? I'll pay you your fair share.\""
 msgstr ""
+"La femme solitaire s'illumine lorsque vous vous approchez.\n"
+"\"Dites, vous avez l'air d'un pilote dont le vaisseau fonctionne. Je suis "
+"dans une situation délicate. Voyez-vous, je devais livrer du {cargo} à {pnt} "
+"dans le système {sys}, mais mon vaisseau est tombé en panne, et je ne pense "
+"pas pouvoir la livrer de sitôt. Accepteriez-vous de m'aider à transporter la "
+"cargaison là-bas, puis de revenir ? Je vous paierai votre juste part.\""
 
 msgid ""
 "They look dejected.\n"
 "\"That's a shame. If you change your mind I'll be waiting here.\""
 msgstr ""
+"Elle semble abattue.\n"
+"\"Dommage. Si vous changez d'avis, je serai là à vous attendre.\""
 
 msgid ""
 "\"You don't have enough free space to help me out. You'll need to carry "
@@ -110036,11 +110045,17 @@ msgid ""
 "cargo, or getting rid of it from the info menu which you can open with "
 "{infokey}.\""
 msgstr ""
+"\"Vous n'avez pas assez d'espace disponible pour m'aider. Vous devrez "
+"transporter {amount} de {cargo}. Veuillez libérer de l'espace en vendant ce "
+"dont vous n'avez pas besoin, ou en le larguant depuis le menu "
+"d'informations, que vous pouvez ouvrir avec {infokey}.\""
 
 msgid ""
 "\"Great! I'll have the dockworkers load up your ship, and we can be off. "
 "This should be a piece of cake.\""
 msgstr ""
+"\"Super ! Je vais demander aux dockers de charger votre vaisseau, et nous "
+"pourrons partir. Ce sera du gâteau.\""
 
 msgid ""
 "\"Great! My name is Nelly. Glad to make your acquaintance. I'll have the "
@@ -110049,6 +110064,11 @@ msgid ""
 "   They cock their head a bit at you.\n"
 "   \"Say, you wouldn't happen to be a novice pilot?\""
 msgstr ""
+"\"Super ! Je m'appelle Nelly. Enchantée de faire votre connaissance. Je vais "
+"demander aux dockers de charger votre vaisseau, et nous pourrons partir. Ce "
+"sera du gâteau.\"\n"
+"   Elle penche légèrement la tête en vous regardant.\n"
+"   \"Dites, vous ne seriez pas un pilote novice, par hasard ?\""
 
 msgid ""
 "\"I knew it! You seem to have a nice fresh aura around you. Reminds me of "
@@ -110058,52 +110078,76 @@ msgid ""
 "that will help you get the directions to {sys}. You can buy it at the main "
 "landing window or the outfitting window. Anyway, Let's get going!\""
 msgstr ""
+"\"Je le savais ! Vous avez une belle aura toute fraîche autour de vous. Ça "
+"me rappelle l'époque où je débutais. Les débuts peuvent être un peu "
+"délicats, alors j'espère que vous ne verrez pas d'inconvénient à ce que je "
+"vous donne quelques conseils en chemin.\"\n"
+"   \"Pour commencer, si ce n'est pas déjà fait, vous devriez acheter une "
+"#oCarte locale#0 qui vous aidera à trouver votre route vers {sys}. Vous "
+"pouvez l'acheter en allant dans l'onglet général ou dans l'onglet modules. "
+"Bon, en route !\""
 
 msgid ""
 "\"Weird. I could have sworn you had some sort of new pilot aura around you. "
 "Must have been my imagination. Let's get going!\""
 msgstr ""
+"\"Bizarre. J'aurais juré que vous aviez une aura de nouveau pilote. J'ai dû "
+"me faire des idées. En route !\""
 
 msgid "Deliver cargo to {pnt} in {sys}"
 msgstr "Livrer la cargaison à {pnt} dans {sys}"
 
 msgid "Return to {pnt} in {sys}"
-msgstr "Retour à {pnt} dans {sys}"
+msgstr "Retourner à {pnt} dans {sys}"
 
 #. Delivered Cargo
 msgid ""
 "You land on {pnt} and the dockworkers offload your cargo. This delivery "
 "stuff is quite easy."
 msgstr ""
+"Vous atterrissez sur {pnt} et les dockers déchargent votre cargaison. Ces "
+"livraisons sont vraiment faciles."
 
 msgid ""
 "\"Say, I heard this place sells #oIon Cannons#0. If you want to be able to "
 "take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll "
 "forward you {credits}. Do you need help buying and equipping the outfit?\""
 msgstr ""
+"\"Dites, j'ai entendu dire qu'on vend des #oCanons à Ions#0 ici. Si vous "
+"voulez pouvoir neutraliser des vaisseaux sans les détruire, les #odégâts "
+"ioniques#0 sont votre meilleur atout. Tenez, je vous transfère {credits}. "
+"Avez-vous besoin d'aide pour acheter et équiper le module ?\""
 
 msgid "Get useful advice"
-msgstr ""
+msgstr "Écouter ses conseils utiles"
 
 msgid "Buy the outfit alone"
-msgstr ""
+msgstr "Acheter le module seul"
 
 msgid ""
 "\"OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits "
 "Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. "
 "Once you get that done, let's head back to {pnt} in {sys}.\""
 msgstr ""
+"\"D'accord ! Vous prenez les devants, je vois. Allez acheter le {outfit} "
+"dans l'#oonglet Modules#0 et assurez-vous de l'équiper dans l'#oonglet "
+"Configuration#0 avant de décoller. Une fois que ce sera fait, retournons à "
+"{pnt} dans {sys}.\""
 
 msgid ""
 "\"OK! I'll guide you through it. For now, please go to the #oOutfits Tab#0 "
 "of the landing window.\""
 msgstr ""
+"\"D'accord ! Je vais vous guider. Pour commencer, rendez-vous dans "
+"l'#oonglet Modules#0 de la fenêtre principale.\""
 
 #. Get rid of cargo
 #. Hook the outfits
 #. Finished mission
 msgid "\"We made it! A job well done. Here let me pay you what I promised you."
 msgstr ""
+"\"Nous y sommes arrivés ! Du beau travail. Tenez, laissez-moi vous payer ce "
+"que je vous avais promis.\""
 
 #. Rewards
 msgid ""
@@ -110116,44 +110160,66 @@ msgid ""
 "\"Anyway, see you around! Make sure to check the spaceport bar whenever you "
 "land for new missions!\""
 msgstr ""
+"\"Maintenant, il est temps de retourner à mon vaisseau. J'espère qu'il est "
+"réparé. Si vous voulez faire d'autres missions de transport de marchandises "
+"pour gagner facilement des crédits, je vous recommande de consulter "
+"l'ordinateur de missions, qui est disponible sur la plupart des planètes "
+"comme celle-ci. Il vous arrivera aussi de rencontrer des personnes "
+"intéressantes au bar du spatioport, qui vous proposeront des missions "
+"intéressantes.\"\n"
+"Elle vous adresse un grand sourire.\n"
+"\"Bref, à la prochaine ! Pensez à passer au bar du spatioport chaque fois "
+"que vous atterrissez, pour y trouver de nouvelles missions !\""
 
 msgid ""
 "\"Oh, and don't forget to sell the ore you got from the derelict at the "
 "commodity exchange!\""
 msgstr ""
+"\"Ah, et n'oubliez pas de vendre le minerai que vous avez récupéré sur "
+"l'épave au marché des matières premières !\""
 
 msgid "You helped Nelly complete a delivery mission."
-msgstr ""
+msgstr "Vous avez aidé Nelly à mener à bien une mission de livraison."
 
 msgid ""
 "After the dockworkers load the cargo on your ship, you take off with Nelly "
 "aboard. On to {sys}!"
 msgstr ""
+"Après que les dockers ont chargé la cargaison à bord de votre vaisseau, vous "
+"décollez avec Nelly à bord. En route pour {sys} !"
 
 msgid ""
 "Just after taking off Nelly pipes up.\n"
 "\"Say, are you familiar with the information window? It shows all the "
 "important things about your ship and current missions.\""
 msgstr ""
+"Juste après le décollage, Nelly prend la parole.\n"
+"\"Dites, connaissez-vous la fenêtre d'informations ? Elle affiche tout ce "
+"qui est important concernant votre vaisseau et vos missions en cours.\""
 
 msgid "Hear about the Info window"
-msgstr ""
+msgstr "En apprendre plus sur la fenêtre d'informations"
 
 msgid "Already know"
-msgstr ""
+msgstr "Déjà au courant"
 
 msgid "\"OK, great! Then let's get going!\""
-msgstr ""
+msgstr "\"D'accord, très bien ! Alors en route !\""
 
 msgid ""
 "\"The information window, which you can open with {infokey}, is critical to "
 "managing your ship and finding out where to go. Try opening the info menu "
 "with {infokey} and I will show you around it.\""
 msgstr ""
+"\"La fenêtre d'informations, que vous pouvez ouvrir avec {infokey}, est "
+"essentielle pour gérer votre vaisseau et savoir où aller. Essayez d'ouvrir "
+"le menu d'infos avec {infokey}, et je vous le ferai découvrir.\""
 
 #. Much more visible
 msgid "After you enter the system, Nelly points something out on the radar."
 msgstr ""
+"Après votre entrée dans le système, Nelly vous montre quelque chose sur le "
+"radar."
 
 #. TODO autoboard!
 msgid ""
@@ -110163,6 +110229,12 @@ msgid ""
 "autonav system to board the ship. You can toggle the overlay to see exactly "
 "where the ship is with {overlaykey}.\""
 msgstr ""
+"\"Oh, regardez ça. Une épave de Koala est à proximité. Il y a peut-être "
+"quelque chose d'intéressant à l'intérieur ! Nous devrions l'aborder. Essayez "
+"de #odouble-cliquer#0 sur l'épave, ou de la sélectionner puis d'appuyer sur "
+"{boardkey}. Cela devrait activer votre système Autonav pour aborder le "
+"vaisseau. Vous pouvez afficher ou masquer l'interface avec {overlaykey} pour "
+"voir exactement où se trouve le vaisseau.\""
 
 #. TODO maybe explain better boarding window when done
 msgid ""
@@ -110172,6 +110244,11 @@ msgid ""
 "there is still lots of ore cargo available on the ship. You quickly load as "
 "much as you can onto your ship before you depart."
 msgstr ""
+"Vous pénétrez dans l'épave, étrangement silencieuse. Un large trou dans la "
+"salle des machines indique que le moteur principal a probablement explosé, "
+"forçant l'équipage à abandonner le vaisseau. Bien que vous ne trouviez rien "
+"de très précieux, il reste une grande quantité de minerai à bord. Vous en "
+"chargez rapidement autant que possible dans votre vaisseau avant de repartir."
 
 msgid ""
 "\"Looks like your scored a lot of ore there. That should bring you a pretty "
@@ -110179,9 +110256,14 @@ msgid ""
 "as easy as this and sometimes bad things can happen. We should head to {pnt} "
 "that should be nearby now.\""
 msgstr ""
+"\"On dirait que vous avez ramassé beaucoup de minerai. Ça devrait vous "
+"rapporter une jolie petite somme sur une planète dotée d'un marché des "
+"matières premières. Aborder des épaves n'est pas toujours aussi simple, et "
+"il arrive que de mauvaises choses se produisent. Nous devrions nous diriger "
+"vers {pnt}, qui devrait être proche maintenant.\""
 
 msgid "Nelly: \"Try opening the info menu with {infokey}.\""
-msgstr ""
+msgstr "Nelly : \"Essayez d'ouvrir le menu d'informations avec {infokey}.\""
 
 msgid ""
 "\"Ah, the info menu in all its glory. In the main window, you can see "
@@ -110189,12 +110271,19 @@ msgid ""
 "to the #oMissions#0 tab. Feel free to click the other tabs for more "
 "information.\""
 msgstr ""
+"« Ah, le menu d'informations dans toute sa splendeur. Dans la fenêtre "
+"principale, vous pouvez voir les statistiques générales de votre partie "
+"ainsi que détails concernant vos licences. Essayez d'accéder à l'onglet "
+"#oMissions#0. N'hésitez pas à cliquer sur les autres onglets pour plus "
+"d'informations.\""
 
 #. TODO not sure we need more message annoyances here
 msgid ""
 "\"The #oShip Info#0 tab contains information relevant to your ship including "
 "all active bonuses and equipped outfits.\""
 msgstr ""
+"\"L'onglet #oInfos du vaisseau#0 contient les informations relatives à votre "
+"vaisseau, y compris tous les bonus actifs et les modules équipés.\""
 
 msgid ""
 "\"At the #oWeapon Info#0, you can modify the current ship's weapon sets, "
@@ -110205,6 +110294,14 @@ msgid ""
 "head dizzy though, so I just keep the defaults and mash the weapon controls. "
 "It works great!\""
 msgstr ""
+"\"Dans l'onglet #oInfos des armes#0, vous pouvez modifier les groupes "
+"d'armes du vaisseau actuel, notamment les armes primaires et secondaires. "
+"Les groupes d'armes sont normalement gérés automatiquement par votre "
+"vaisseau, mais vous pouvez toujours les configurer comme bon vous semble ! "
+"Si vous voulez tous les détails, cliquez sur le bouton #bAide#0 pour obtenir "
+"tous les renseignements à ce sujet. Ça me donne toujours le tournis, alors "
+"je garde simplement les paramètres par défaut et j'appuie à fond sur les "
+"commandes d'armes. Ça marche très bien !\""
 
 msgid ""
 "\"Here, at the #oCargo Info#0, you can see the cargo you are carrying. This "
@@ -110212,6 +110309,11 @@ msgid ""
 "#ojettison#0 cargo you want to get rid of. Be careful though: jettisoning "
 "mission cargo will forfeit the mission.\""
 msgstr ""
+"\"Ici, dans l'onglet #oInfos de cargaison#0, vous pouvez voir la cargaison "
+"que vous transportez. Cela inclut des informations importantes comme son "
+"statut légal. Vous pouvez aussi y #olarguer#0 ce dont vous voulez vous "
+"débarrasser. Mais attention : larguer la cargaison d'une mission la fera "
+"échouer.\""
 
 msgid ""
 "\"The #oMission Info#0 shows you information of all currently accepted "
@@ -110220,6 +110322,12 @@ msgid ""
 "Make sure this mission is selected and try setting a route to {destsys} is "
 "marked on your map.\""
 msgstr ""
+"\"L'onglet #oInfos des missions#0 vous présente les détails de toutes les "
+"missions actuellement acceptées. Sélectionner une mission centre la carte "
+"sur ses marqueurs, s'il y en a. Cliquer sur les systèmes ici permet aussi de "
+"définir directement des itinéraires. Assurez-vous que cette mission est "
+"sélectionnée et essayez de définir un itinéraire vers {destsys}, qui est "
+"marqué sur votre carte.\""
 
 #. Clear it right away if the player closes the window
 msgid ""
@@ -110227,12 +110335,19 @@ msgid ""
 "other tabs in the Info window to get more explanations. When you are done, "
 "close the info window and let us head to our goal!\""
 msgstr ""
+"\"Bien ! Nous voilà prêts à rejoindre notre système cible. Vous pouvez "
+"cliquer sur les autres onglets de la fenêtre d'informations pour obtenir "
+"plus d'explications. Quand vous aurez terminé, fermez la fenêtre "
+"d'informations et rejoignons notre destination !\""
 
 msgid ""
 "\"The #oStanding Info#0 informs you at your current standing with the "
 "different known factions in the universe. Not everyone is as friendly as me "
 "out there!\""
 msgstr ""
+"\"L'onglet #oRéputation#0 vous renseigne sur votre réputation auprès des "
+"différentes factions connues de l'univers. Tout le monde n'est pas aussi "
+"aimable que moi là-dehors !\""
 
 msgid ""
 "\"The #oShiplog#0 is a good way to review missions and tasks you have "
@@ -110240,24 +110355,39 @@ msgid ""
 "on and it comes really in handy. You can also keep a diary and add custom "
 "entries to keep track of what you have done or are doing.\""
 msgstr ""
+"\"Le #oJournal de bord#0 est un bon moyen de revoir les missions et les "
+"tâches que vous avez accomplies. Il m'arrive d'oublier ce que j'ai fait "
+"exactement et qui je dois recontacter, et il se révèle très pratique. Vous "
+"pouvez aussi y tenir un journal et ajouter des entrées personnalisées pour "
+"garder la trace de ce que vous avez fait ou êtes en train de faire.\""
 
 msgid ""
 "\"Here you can see all the outfits available for sale at this planet. Look "
 "for the #o{outfit}#0 and either #oright-click on it#0 or click on it and "
 "click the buy button to buy it.\""
 msgstr ""
+"\"Vous voyez ici tous les modules en vente sur cette planète. Cherchez le #o"
+"{outfit}#0 et faites soit un #oclic droit dessus#0, soit un clic dessus puis "
+"sur le bouton d'achat pour l'acheter.\""
 
 msgid ""
 "\"You bought a #o{bought}#0 instead of #o{tobuy}#0! Don't worry, you can "
 "sell most outfits back for the price you bought them at. Please try to buy a "
 "#o{tobuy}#0. It should come in handy later.\""
 msgstr ""
+"\"Vous avez acheté un #o{bought}#0 au lieu d'un #o{tobuy}#0 ! Ne vous "
+"inquiétez pas, vous pouvez revendre la plupart des modules au prix où vous "
+"les avez achetés. Essayez d'acheter un #o{tobuy}#0. Il vous sera utile plus "
+"tard.\""
 
 msgid ""
 "\"Great! You bought the #o{bought}#0. Outfits don't get equipped right away. "
 "To be able to use it, please navigate to the #oEquipment Tab#0 of the "
 "landing window.\""
 msgstr ""
+"\"Parfait ! Vous avez acheté le #o{bought}#0. Les modules ne sont pas "
+"équipés automatiquement. Pour pouvoir l'utiliser, rendez-vous dans "
+"l'#oonglet Configuration#0 de la fenêtre d'atterrissage.\""
 
 msgid ""
 "\"The #oEquipment Tab#0 allows handling your ships and their equipment. You "
@@ -110267,6 +110397,14 @@ msgid ""
 "also right-click on an outfit to have it directly be assigned to the "
 "smallest free slot it fits into. Try to equip the #o{outfit}#0 now.\""
 msgstr ""
+"\"L'#oonglet Configuration#0 permet de gérer vos vaisseaux et leur "
+"équipement. Vous pouvez posséder plusieurs vaisseaux et passer de l'un à "
+"l'autre librement. Essayez d'équiper le #o{outfit}#0 dans un emplacement "
+"d'arme en cliquant d'abord sur le module, puis en faisant un clic droit sur "
+"l'emplacement où vous voulez l'équiper. Si vous avez des emplacements "
+"libres, vous pouvez aussi faire un clic droit sur un module pour qu'il soit "
+"directement assigné au plus petit emplacement libre pouvant l'accueillir. "
+"Essayez d'équiper le #o{outfit}#0 maintenant.\""
 
 msgid ""
 "\"Great! Now you have the #o{outfit}#0 equipped. Looks like your ship is set "
@@ -110274,6 +110412,11 @@ msgid ""
 "weapon. You can always change this from the #oInfo Window#0 you can open "
 "with {infokey}. Let us go back to {pnt} in {sys}.\""
 msgstr ""
+"\"Parfait ! Vous avez équipé le #o{outfit}#0. Il semble que votre vaisseau "
+"soit configuré pour gérer automatiquement les armes, il devrait donc être "
+"assigné à une arme primaire. Vous pouvez toujours modifier cela depuis la "
+"#ofenêtre d'informations#0, que vous pouvez ouvrir avec {infokey}. "
+"Retournons à {pnt} dans {sys}.\""
 
 msgid ""
 "\"Great! Now you have the #o{outfit}#0 equipped. Looks like your ship is not "
@@ -110282,6 +110425,12 @@ msgid ""
 "Window#0 with {infokey}. Check to make sure that is set up and let us go "
 "back to {pnt} in {sys}.\""
 msgstr ""
+"\"Parfait ! Vous avez équipé le #o{outfit}#0. Il semble que votre vaisseau "
+"ne soit pas configuré pour gérer automatiquement les armes. Il vous faudra "
+"peut-être assigner le #o{outfit}#0 à un groupe d'armes pour pouvoir "
+"l'utiliser. Vous pouvez le vérifier en ouvrant la #ofenêtre d'informations#0 "
+"avec {infokey}. Vérifiez que tout est bien configuré, puis retournons à "
+"{pnt} dans {sys}.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -110955,7 +111104,7 @@ msgstr ""
 "L'IA de votre vaisseau a proposé de vous apprendre à piloter votre vaisseau."
 
 msgid "Skills to play the game!"
-msgstr ""
+msgstr "Compétences pour jouer au jeu !"
 
 msgid ""
 "As you are admiring the view from your cockpit, suddenly a holographic "
@@ -111014,8 +111163,8 @@ msgid ""
 msgstr ""
 "\"OK ! Enchanté de vous rencontrer {playername}. Si vous changez d'avis sur "
 "mon nom ou si vous voulez modifier les paramètres du tutoriel, vous pouvez "
-"toujours le faire à partir du menu info que vous pouvez ouvrir avec {infokey}"
-".\""
+"toujours le faire à partir du menu infos que vous pouvez ouvrir avec "
+"{infokey}.\""
 
 msgid ""
 "\"Now that we have you out in space for the first time, how about I go over "
@@ -111089,6 +111238,8 @@ msgstr ""
 msgid ""
 "Go to {destpnt} in the {sys} system by double-clicking it on the overview map"
 msgstr ""
+"Aller vers {destpnt} dans le système {sys} en double-cliquant dessus dans "
+"sur la carte"
 
 msgid "Destroy the practice drone near {destpnt} in the {sys} system"
 msgstr ""
@@ -111183,7 +111334,6 @@ msgstr ""
 "garantissent pas votre sécurité. Au début, il est préférable de ne pas trop "
 "s'éloigner.\""
 
-#, fuzzy
 msgid ""
 "\"Let's now practice combat. You won't need this if you stick to the safe "
 "systems in the Empire core, but sadly, we are likely to encounter hostile "
@@ -111198,11 +111348,10 @@ msgstr ""
 "mais malheureusement, nous risquons de rencontrer des vaisseaux hostiles si "
 "vous vous aventurez plus loin, et vous devez donc savoir comment vous "
 "défendre. Heureusement, votre vaisseau est pré-équipé d'un canon laser à la "
-"pointe de la technologie, justement pour cette raison ! Si tout se passe "
+"pointe de la technologie, justement pour cette raison ! Si tout se passe "
 "bien, vous ne finirez pas en ornement de vaisseau comme mon regretté "
 "propriétaire précédent après avoir rencontré... Bref, passons au drone.\""
 
-#, fuzzy
 msgid ""
 "\"I will launch a combat practice drone off of {pnt} now for you to fight. "
 "Don't worry; our drone does not have any weapons and will not harm you. "
@@ -111214,13 +111363,8 @@ msgstr ""
 "que vous puissiez vous battre. Ne vous inquiétez pas, notre drone n'a pas "
 "d'armes et ne vous blessera pas. Ciblez le drone en cliquant dessus ou en "
 "appuyant sur {targethostilekey}, puis utilisez vos armes, contrôlées par "
-"{primarykey} et {secondarykey}, pour éliminer le drone !\".\n"
-"\"Ah, oui, encore un conseil avant de lancer le drone : si vos armes "
-"commencent à perdre leur précision, c'est qu'elles sont en surchauffe. Vous "
-"pouvez y remédier en appuyant sur {cooldownkey} ou en double-tapant "
-"{reversekey} pour activer le refroidissement actif.\""
+"{primarykey} et {secondarykey}, pour éliminer le drone !\""
 
-#, fuzzy
 msgid ""
 "\"The Drone's AI has been said to be a bit odd, but pay no attention to it. "
 "Being an artificial intelligence it is unable to process emotions. Not like "
@@ -111228,10 +111372,9 @@ msgid ""
 msgstr ""
 "\"On dit que l'intelligence artificielle du Drone est un peu bizarre, mais "
 "n'y prêtez pas attention. En tant qu'intelligence artificielle, elle est "
-"incapable de calculer les sentiments, vous savez ? Pas comme moi, ha ha. "
-"PROCÉDURE D'HUMOUR TERMINÉE\""
+"incapable de calculer les sentiments, vous savez ? Pas comme moi, ha ha. "
+"PROGRAMME D'HUMOUR TERMINÉ\""
 
-#, fuzzy
 msgid ""
 "\"Excellent! The landing was successful. As your Ship AI, I am in charge of "
 "guiding your ship and performing the landing procedure, which has cut down "
@@ -111245,21 +111388,20 @@ msgid ""
 "tour of everything you can do on a planet. When you are done, click the "
 "'#bTake Off#0' button, so we can continue.\""
 msgstr ""
-"\"Excellent ! L'atterrissage a réussi. En tant qu'IA de votre vaisseau, je "
+"\"Excellent ! L'atterrissage a réussi. En tant qu'IA de votre vaisseau, je "
 "suis chargé de guider votre vaisseau et d'effectuer la procédure "
-"d'atterrissage, ce qui a permis de réduire considérablement les malheurs des "
-"procédures d'atterrissage manuelles contrôlées par des humains. Lorsque vous "
-"atterrissez, votre vaisseau est ravitaillé automatiquement et vous pouvez "
-"discuter avec des civils au bar, acheter de nouveaux composants, configurer "
-"votre vaisseau et, surtout, accepter des missions de l'ordinateur de "
-"mission. Pourquoi ne pas regarder autour de nous ? Comme vous pouvez le "
-"voir, nous sommes actuellement sur l'onglet Débarquement, où vous pouvez "
-"vous renseigner sur la planète et acheter une carte locale. Cliquez sur tous "
-"les autres onglets ci-dessous et je vous montrerai ce que vous pouvez faire "
+"d'atterrissage, ce qui a permis de réduire considérablement les risques liés "
+"aux procédures d'atterrissage manuelles contrôlées par des humains. Lorsque "
+"vous atterrissez, votre vaisseau est ravitaillé automatiquement et vous "
+"pouvez discuter avec des civils au bar, acheter de nouveaux composants, "
+"configurer votre vaisseau et, surtout, accepter des missions de l'ordinateur "
+"de mission. Pourquoi ne pas regarder autour de nous ? Comme vous pouvez le "
+"voir, nous sommes actuellement sur l'onglet Général, où vous pouvez vous "
+"renseigner sur la planète et acheter une carte locale. Cliquez sur tous les "
+"autres onglets ci-dessous et je vous montrerai ce que vous pouvez faire "
 "d'autre sur une planète. Lorsque vous aurez terminé, cliquez sur le bouton "
 "'#bDécollage#0' pour que nous puissions continuer.\""
 
-#, fuzzy
 msgid ""
 "\"This is the spaceport bar, where you can read the latest news (as you can "
 "see on your right at the moment), but more importantly, you can meet other "
@@ -111272,7 +111414,7 @@ msgstr ""
 "\"Voici le Bar du Spatioport, où vous pouvez lire les dernières nouvelles "
 "(comme vous pouvez le voir sur votre droite en ce moment), mais plus "
 "important encore, vous pouvez rencontrer d'autres pilotes, des civils, et "
-"plus encore ! Cliquez sur quelqu'un dans le bar, puis cliquez sur le bouton "
+"plus encore ! Cliquez sur quelqu'un dans le bar, puis cliquez sur le bouton "
 "'#bApprocher#0' pour l'approcher. Les personnages importants sont signalés "
 "par un point d'exclamation rouge. En général, je recommande de parler "
 "régulièrement aux clients des bars, qui sait quels bons tuyaux ou quels "
@@ -111297,7 +111439,6 @@ msgstr ""
 "impliquent du fret, vous pouvez également voir l'espace libre disponible "
 "dans votre vaisseau en haut à droite.\""
 
-#, fuzzy
 msgid ""
 "\"When picking missions, pay attention to how much they pay. You'll want to "
 "strike a balance between choosing missions that you're capable of doing, and "
@@ -111311,10 +111452,9 @@ msgstr ""
 "vous êtes capable d'accomplir et le fait d'être payé le plus possible pour "
 "les accomplir. Une fois que vous avez choisi une mission, cliquez sur le "
 "bouton '#bAccepter#0' en bas à droite et elle sera ajoutée à vos missions "
-"actives, que vous pouvez consulter via l'écran Info en appuyant sur "
-"{infokey}.\""
+"actives, que vous pouvez consulter via l'écran Info en appuyant sur {infokey}"
+".\""
 
-#, fuzzy
 msgid ""
 "\"As you gain reputation with other factions and characters, you will be "
 "given access to more challenging and well-paying missions at the mission "
@@ -111326,7 +111466,6 @@ msgstr ""
 "mieux rémunérées sur l'ordinateur de missions. C'est pourquoi je vous "
 "recommande de consulter souvent le bar du spatioport lorsque vous voyagez.\""
 
-#, fuzzy
 msgid ""
 "\"This is the Outfitter, where you can buy new outfits to make your starship "
 "even better! You can fit your ship with new weapons, extra cargo space, more "
@@ -111337,10 +111476,10 @@ msgid ""
 "Mule Bulk Cargo Starship. As my previous owner found out, they don't do too "
 "well in combat, though.\""
 msgstr ""
-"\"Voici l'Équipementier où vous pouvez acheter de nouveaux équipements pour "
-"améliorer votre vaisseau ! Vous pouvez équiper votre vaisseau de nouvelles "
+"\"Voici l'Équipementier où vous pouvez acheter de nouveaux modules pour "
+"améliorer votre vaisseau ! Vous pouvez équiper votre vaisseau de nouvelles "
 "armes, d'un espace de chargement supplémentaire, de systèmes centraux plus "
-"puissants, et bien plus encore ! Des cartes régionales vous permettant "
+"puissants, et bien plus encore ! Des cartes régionales vous permettant "
 "d'explorer plus facilement la galaxie peuvent également être achetées ici, "
 "ainsi que les licences nécessaires à l'acquisition d'armes et de vaisseaux "
 "haut de gamme. Par exemple, vous aurez besoin d'une Licence de Grand "
@@ -111348,7 +111487,6 @@ msgstr ""
 "Melendez. Comme mon ancien propriétaire l'a découvert, ils ne sont pas très "
 "performants au combat, cependant.\""
 
-#, fuzzy
 msgid ""
 "\"As you can see, a series of tabs at the top of your screen allow you to "
 "filter outfits by type. When you see an outfit that interests you, click on "
@@ -111360,19 +111498,16 @@ msgid ""
 "outfits make sure to equip them in the #oEquipment#0 window.\""
 msgstr ""
 "Comme vous pouvez le voir, une série d'onglets en haut de votre écran vous "
-"permet de filtrer les équipements par type : 'W' pour les armes, 'U' pour "
-"les services, 'S' pour les structures, 'Noyaux' pour les noyaux, et 'Autre' "
-"pour tout ce qui n'entre pas dans ces catégories, notamment les cartes "
-"régionales et les licences. Lorsque vous voyez un équipement qui vous "
-"intéresse, cliquez dessus pour obtenir plus d'informations, puis cliquez sur "
-"le bouton '#bAcheter#0' pour l'acheter ou sur le bouton '#bVendre#0' pour le "
-"vendre si vous en avez un en votre possession. Si vous ne voyez pas "
-"l’équipement que vous recherchez, vous pouvez le chercher en cliquant sur le "
-"bouton '#bRechercher#0' sur l'écran de la carte stellaire. Après avoir "
-"acheté de nouveaux équipements, assurez-vous de les équiper dans la fenêtre "
-"#oÉquipement#0.\""
+"permet de filtrer les équipements par type. Lorsque vous voyez un module qui "
+"vous intéresse, cliquez dessus pour obtenir plus d'informations, puis "
+"cliquez sur le bouton '#bAcheter#0' pour l'acheter ou sur le bouton "
+"'#bVendre#0' pour le vendre si vous en avez un en votre possession. Chaque "
+"planète propose des modules différents, et si vous ne voyez pas l’équipement "
+"que vous recherchez, vous pouvez le chercher en cliquant sur le bouton "
+"'#bRechercher#0' sur l'écran de la carte stellaire. Après avoir acheté de "
+"nouveaux modules, assurez-vous de les équiper dans la fenêtre "
+"#oConfiguration#0.\""
 
-#, fuzzy
 msgid ""
 "\"This is the Shipyard, where you can buy new starships to either replace "
 "the one you've got, or to add to your collection! On the left of this "
@@ -111384,16 +111519,16 @@ msgid ""
 "search for it via the '#bFind#0' button on the starmap screen.\""
 msgstr ""
 "\"Voici le Chantier, où vous pouvez acheter de nouveaux vaisseaux pour "
-"remplacer celui que vous avez ou pour enrichir votre collection ! Sur la "
+"remplacer celui que vous avez ou pour enrichir votre collection ! Sur la "
 "gauche de l'écran, vous verrez les vaisseaux disponibles sur la planète où "
-"vous vous trouvez. Cliquez sur un vaisseau qui vous intéresse. Vous pouvez "
-"ensuite acheter le vaisseau à l'aide du bouton '#bAcheter#0' ou échanger "
-"votre vaisseau actuel contre le nouveau vaisseau à l'aide du bouton "
-"'#bÉchanger#0\"' Si vous ne voyez pas le vaisseau que vous cherchez, vous "
-"pouvez le rechercher à l'aide du bouton '#bRechercher#0' sur l'écran de la "
-"carte stellaire.\""
+"vous vous trouvez. Cliquez sur un vaisseau qui vous intéresse pour en savoir "
+"davantage. Vous pouvez acheter un vaisseau à l'aide du bouton '#bAcheter#0' "
+"ou bien échanger votre vaisseau actuel contre le nouveau vaisseau à l'aide "
+"du bouton '#bÉchanger#0'. Chaque planète propose des vaisseaux différents, "
+"et si vous ne voyez pas le vaisseau que vous cherchez, vous pouvez le "
+"rechercher à l'aide du bouton '#bRechercher#0' sur l'écran de la carte "
+"stellaire.\""
 
-#, fuzzy
 msgid ""
 "\"You likely don't have enough credits for a new ship now, but later on, "
 "when you've saved up enough, you'll probably want to upgrade your ship to an "
@@ -111405,13 +111540,12 @@ msgstr ""
 "\"Vous n'avez probablement pas assez de crédits pour acheter un nouveau "
 "vaisseau maintenant, mais plus tard, lorsque vous aurez économisé "
 "suffisamment, vous voudrez probablement améliorer votre vaisseau, en "
-"fonction du type de tâches que vous aurez à accomplir. Les différents "
-"vaisseaux ont des forces et des faiblesses différentes qui interagissent "
-"avec les différents équipements dont vous pouvez les doter. Notez que "
-"certains vaisseaux nécessitent des licences avant de pouvoir être achetés.\""
+"fonction du type de tâches que vous aurez à accomplir. Chaque vaisseau a ses "
+"forces et ses faiblesses qui interagissent avec les différents modules dont "
+"vous pouvez les équiper. Notez que certains vaisseaux nécessitent des "
+"licences avant de pouvoir être achetés.\""
 
 #. TODO cut up
-#, fuzzy
 msgid ""
 "\"This is the Equipment screen. Here, you can equip your ships with any "
 "outfits you have bought at the #oOutfitter#0. You can swap which ship you "
@@ -111422,33 +111556,27 @@ msgid ""
 "equipped will also lead to those outfits being sold along with the ship, so "
 "do keep that in mind if there's an outfit you need to keep.\""
 msgstr ""
-"\"Voici l'écran Équipement, qui n'est disponible que sur les planètes dotées "
-"d'une pourvoirie ou d'un chantier naval. Ici, vous pouvez équiper votre "
-"vaisseau avec toutes les tenues que vous avez achetées a l'#oÉquipementer#0. "
-"Si et seulement si la planète actuelle dispose d'un chantier naval, vous "
-"pouvez également le faire avec n'importe quel autre vaisseau que vous "
-"possédez, et vous pouvez échanger le vaisseau que vous pilotez actuellement "
-"en sélectionnant un autre vaisseau et en cliquant sur le bouton "
-"'#bÉchanger#0' ou en #bdouble-cliquant#0 sur ce vaisseau. Vous pouvez "
-"également vendre ces autres vaisseaux, mais pas votre vaisseau actuel, à "
-"l'aide du bouton '#bVendre#0', si vous décidez que vous n'en avez plus "
-"besoin. Si vous vendez un vaisseau qui possède encore des équipements ceux-"
-"ci seront également vendues avec le vaisseau, alors gardez cela à l'esprit "
-"si vous souhaitez conserver un équipement.\""
+"\"Voici l'écran Configuration. Ici, vous pouvez équiper votre vaisseau avec "
+"tous les modules que vous avez achetées a l'#oÉquipementier#0. Vous pouvez "
+"aussi échanger le vaisseau que vous pilotez actuellement en sélectionnant un "
+"autre vaisseau et en cliquant sur le bouton '#bÉchanger#0' ou en #bdouble-"
+"cliquant#0 sur ce vaisseau. Vous pouvez également vendre ces autres "
+"vaisseaux, mais pas votre vaisseau actuel, à l'aide du bouton '#bVendre#0', "
+"si vous n'en avez plus besoin. Si vous vendez un vaisseau équipé de modules, "
+"ceux-ci seront également vendus avec le vaisseau, alors gardez cela à "
+"l'esprit si vous souhaitez conserver un module.\""
 
-#, fuzzy
 msgid ""
 "\"If you make any changes to your ship now, please ensure that you still "
 "have weapons equipped, as you will need those later for practising combat, "
 "and anyway flying around space without any weapons can be very risky.\""
 msgstr ""
-"\"Si vous apportez des modifications à votre vaisseau, veillez à ce qu'il "
-"soit toujours équipé d'armes, car vous en aurez besoin plus tard pour vous "
-"entraîner au combat et voler dans l'espace sans armes peut être très risqué "
-"de toute façon.\""
+"\"Si vous apportez des modifications à votre vaisseau dès maintenant, "
+"veillez à ce qu'il soit toujours équipé d'armes, car vous en aurez besoin "
+"plus tard pour vous entraîner au combat. Et voler dans l'espace sans armes "
+"est de toute façon très risqué.\""
 
 #. TODO cut up
-#, fuzzy
 msgid ""
 "\"This is the Commodity screen, where you can buy and sell commodities. "
 "Commodity prices vary from planet to planet and even over time, so you can "
@@ -111462,16 +111590,15 @@ msgid ""
 msgstr ""
 "\"Ceci est l'écran des Marchandises, où vous pouvez acheter et vendre des "
 "marchandises. Les prix des marchandises varient d'une planète à l'autre et "
-"même dans le temps. Vous pouvez donc utiliser cet écran pour tenter de "
-"gagner de l'argent en achetant au plus bas et en vendant au plus haut. "
-"Cliquez sur une marchandise pour obtenir des informations à son sujet, "
-"notamment son prix moyen par tonne, et cliquez sur les boutons '#bAcheter#0' "
-"et '#bVendre#0' pour acheter ou vendre une partie de la marchandise, "
-"respectivement. Il est utile de maintenir les touches #bShift#0 et/ou "
-"#bCtrl#0 enfoncées pour ajuster le modificateur du nombre de tonnes de la "
-"marchandise que vous achetez ou vendez en une seule fois. Cela permet de "
-"réduire le nombre de fois où vous devez cliquer sur les boutons d'achat et "
-"de vente.\""
+"dans le temps. Vous pouvez donc utiliser cet écran pour tenter de gagner de "
+"l'argent en achetant au plus bas et en vendant au plus haut. Cliquez sur une "
+"marchandise pour obtenir des informations à son sujet, notamment son prix "
+"moyen par tonne, et cliquez sur les boutons '#bAcheter#0' et '#bVendre#0' "
+"pour acheter ou vendre une partie de la marchandise. Vous pouvez maintenir "
+"les touches #bShift#0 et/ou #bCtrl#0 enfoncées pour ajuster le modificateur "
+"du nombre de tonnes de la marchandise que vous achetez ou vendez en une "
+"seule fois. Cela permet de réduire le nombre de fois où vous devez cliquer "
+"sur les boutons Acheter et Vendre.\""
 
 msgid ""
 "\"If you're unsure what's profitable to buy or sell, you can press "
@@ -111485,7 +111612,6 @@ msgstr ""
 "Le terminal d'informations de la barre comprend également des informations "
 "sur les prix de certaines planètes proches.\""
 
-#, fuzzy
 msgid ""
 "\"Welcome back to space, {playername}! After landing, the game will be "
 "automatically saved, so you do not need to worry about losing your progress. "
@@ -111496,7 +111622,7 @@ msgid ""
 "Autonav functionality available on all ships. You can trust me: I've had "
 "less than four fatal accidents.\""
 msgstr ""
-"\"Bon retour dans l'espace, {playername} ! Après un atterrissage, le jeu "
+"\"Bon retour dans l'espace, {playername} ! Après un atterrissage, le jeu "
 "sera automatiquement sauvegardé, vous n'aurez donc pas à craindre de perdre "
 "votre progression. Poursuivons maintenant notre discussion sur les "
 "déplacements dans l'espace. Comme nous l'avons déjà mentionné, vous pouvez "
@@ -111505,9 +111631,8 @@ msgstr ""
 "manuellement peut s'avérer un peu fastidieux. Une bonne option est de "
 "déléguer les déplacements à moi, l'IA de votre vaisseau, en utilisant la "
 "fonctionnalité Autonav disponible sur tous les vaisseaux. Vous pouvez me "
-"faire confiance, car je n'ai eu que moins de quatre accidents mortels.\""
+"faire confiance, je n'ai pas eu plus de quatre accidents mortels.\""
 
-#, fuzzy
 msgid ""
 "\"Autonav is simple and elegant. Simply press {overlaykey} to open your "
 "ship's overlay map, then simply #bright-click#0 on any location, planet, "
@@ -111519,29 +111644,27 @@ msgid ""
 "can be configured from your ship's #oOptions#0 menu, which you can access by "
 "pressing {menukey}."
 msgstr ""
-"\"Autonav est simple et élégant. Appuyez simplement sur {overlaykey} pour "
+"\"L'Autonav est simple et élégant. Appuyez simplement sur {overlaykey} pour "
 "ouvrir la carte de votre vaisseau, puis faites un #bclic droit#0 sur "
 "n'importe quel endroit, planète, vaisseau ou point de saut pour y emmener "
-"votre vaisseau ! Le voyage sera tout aussi long, mais la compression du "
+"votre vaisseau ! Le voyage sera tout aussi long, mais la compression du "
 "temps vous permet de vous éloigner de vos commandes, ce qui donne "
-"l'impression que le temps passe plus vite. Et ne vous inquiétez pas : si des "
+"l'impression que le temps passe plus vite. Et ne vous inquiétez pas : si des "
 "pilotes hostiles sont détectés, le système Autonav vous alerte "
 "automatiquement pour que vous puissiez observer la situation et réagir de la "
 "manière que vous jugerez nécessaire. Ce système peut être configuré à partir "
 "du menu #oOptions#0 de votre vaisseau, auquel vous pouvez accéder en "
 "appuyant sur {menukey}."
 
-#, fuzzy
 msgid ""
 "\"Why don't you try using Autonav to fly over to {pnt}? You should be able "
 "to see it highlighted on your overlay map, which you can activate with "
 "{overlaykey}.\""
 msgstr ""
-"\"Pourquoi n'essayez-vous pas d'utiliser l'Autonav pour survoler {pnt} ? "
+"\"Pourquoi n'essayez-vous pas d'utiliser l'Autonav pour voler vers {pnt} ? "
 "Vous devriez le voir en surbrillance sur votre carte superposée que vous "
 "pouvez activer avec {overlaykey}.\""
 
-#, fuzzy
 msgid ""
 "\"You have done very well, {playername}! As you can see, the trip consumed "
 "fuel. You consume fuel any time you make a jump and can refuel by landing on "
@@ -111549,11 +111672,11 @@ msgid ""
 "buy fuel from other ships in the system; hail a ship by #bdouble-clicking#0 "
 "on it, or by selecting it with {targetnextkey} and then pressing {hailkey}.\""
 msgstr ""
-"\"Vous vous êtes très bien débrouillé, {playername} ! Comme vous pouvez le "
+"\"Vous vous êtes très bien débrouillé, {playername} ! Comme vous pouvez le "
 "constater, le voyage a consommé du carburant. Vous consommez du carburant à "
 "chaque fois que vous effectuez un saut et vous pouvez faire le plein en "
 "atterrissant sur une planète amie. Si vous êtes dans le pétrin, vous pouvez "
-"également acheter du carburant à d'autres pilotes dans le système ; appelez "
+"également acheter du carburant à d'autres pilotes dans le système ; appelez "
 "un pilote en #double-cliquant#0 sur lui, ou en le sélectionnant avec "
 "{targetnextkey} et en appuyant ensuite sur {hailkey}.\""
 
@@ -111569,7 +111692,6 @@ msgstr ""
 "par la suite, mais beaucoup d'autres factions se montreront plus réticentes."
 "\""
 
-#, fuzzy
 msgid ""
 "\"I think that's it! I must say, you are a natural-born pilot and your new "
 "ship suits you well! This concludes the basic tutorial, but as you encounter "
@@ -111579,18 +111701,17 @@ msgid ""
 "head to the nearest planet and check out the spaceport bar to see if anybody "
 "can offer us some work to get started.\""
 msgstr ""
-"\"Je crois que c'est ça ! Je dois dire que vous êtes un pilote né et que "
-"votre nouveau vaisseau vous convient parfaitement ! Ceci conclut le tutoriel "
+"\"Je crois que c'est tout ! Je dois dire que vous êtes un pilote né et que "
+"votre nouveau vaisseau vous convient parfaitement ! Ceci conclut le tutoriel "
 "de base, mais au fur et à mesure que vous rencontrerez de nouvelles choses, "
 "j'apparaîtrai périodiquement. Si vous avez besoin de rafraîchir vos "
 "connaissances ou de modifier mes paramètres, vous pouvez le faire à partir "
-"du menu #oInfo#0 que vous ouvrez avec {infokey}. Maintenant, partons à "
-"l'aventure ! Je vous recommande de vous rendre sur la planète la plus proche "
+"du menu #oInfos#0 que vous ouvrez avec {infokey}. Maintenant, partons à "
+"l'aventure ! Je vous recommande de vous rendre sur la planète la plus proche "
 "et de jeter un coup d'œil au bar du spatioport pour voir si quelqu'un peut "
 "nous offrir un peu de travail pour démarrer.\""
 
 #. Normal finish of the tutorial
-#, fuzzy
 msgid ""
 "Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
 "will fare better than their previous owner."
@@ -111598,7 +111719,6 @@ msgstr ""
 "L'IA de votre vaisseau vous a donné un tutoriel sur la façon de piloter "
 "votre vaisseau. Espérons que vous ferez mieux que son défunt propriétaire."
 
-#, fuzzy
 msgid ""
 "\"Excellent work taking out that drone! As you may have noticed, shield "
 "level regenerates over time, but armour does not. This is not universal, of "
@@ -111606,14 +111726,13 @@ msgid ""
 "repair technology. But even then, armour regeneration is usually much slower "
 "than shield regeneration.\""
 msgstr ""
-"\"Excellent travail pour éliminer ce drone ! Comme vous l'avez peut-être "
-"remarqué, le bouclier se régénère avec le temps, ce qui n'est pas le cas de "
-"l'armure. Ce n'est pas universel, bien sûr ; certains vaisseaux, en "
+"\"Excellent travail pour éliminer ce drone ! Comme vous l'avez peut-être "
+"remarqué, le bouclier se régénère avec le temps, ce qui n'est pas le cas du "
+"blindage. Ce n'est pas universel, bien sûr ; certains vaisseaux, en "
 "particulier les plus grands, sont dotés d'une technologie avancée de "
-"réparation de l'armure. Mais même dans ce cas, la régénération de l'armure "
+"réparation du blindage. Mais même dans ce cas, la régénération du blindage "
 "est généralement beaucoup plus lente que celle du bouclier.\""
 
-#, fuzzy
 msgid ""
 "\"It is also worth noting that you can configure the way your weapons shoot "
 "from the #oInfo#0 screen, which can be accessed by pressing {infokey} or "
@@ -111627,8 +111746,8 @@ msgstr ""
 "appuyant sur {infokey} ou en cliquant sur le bouton situé en haut de votre "
 "écran. L'écran #oInfo#0 vous permet également d'afficher des informations "
 "sur votre vaisseau, votre cargaison, vos missions en cours et votre "
-"réputation auprès des différentes factions. Vous y ferez sans doute souvent "
-"référence au cours de notre exploration de la galaxie.\""
+"réputation auprès des différentes factions. Vous y retournerez sans doute "
+"souvent au cours de notre exploration de la galaxie.\""
 
 msgid ""
 "\"I think we should try venturing outside this system. There are many "
@@ -111638,8 +111757,15 @@ msgid ""
 "the locals, or buying maps. Once you have found a jump point, you can use it "
 "by #bdouble-clicking#0 on it or using the {jumpkey}.\""
 msgstr ""
+"\"Je pense que nous devrions tenter l'aventure en dehors de ce système. La "
+"galaxie regorge de systèmes ; celui-ci n'est qu'une infime fraction de ce "
+"qui nous attend au-delà ! Les voyages d'un système à un autre se font via "
+"des points de saut. Tout comme pour les planètes, vous devrez généralement "
+"les localiser en explorant les environs, en discutant avec les habitants ou "
+"en achetant des cartes. Une fois qu'un point de saut est découvert, vous "
+"pouvez l'emprunter en #bdouble-cliquant#0 dessus ou en utilisant la touche "
+"{jumpkey}.\""
 
-#, fuzzy
 msgid ""
 "\"But there is an even better way to navigate across systems! By pressing "
 "{starmapkey}, you can open your #oStarmap#0. The #oStarmap#0 shows you all "
@@ -111649,16 +111775,15 @@ msgid ""
 "route to get there, but you will find that this method of travel greatly "
 "simplifies things.\""
 msgstr ""
-"\"Mais il existe un meilleur moyen de naviguer entre les systèmes ! En "
+"\"Mais il existe un meilleur moyen de naviguer entre les systèmes ! En "
 "appuyant sur {starmapkey}, vous pouvez ouvrir votre #oCarte Stellaire#0. La "
 "#oCarte Stellaire#0 vous montre tous les systèmes que vous connaissez "
 "actuellement. Grâce à votre #oCarte Stellaire#0, vous pouvez cliquer sur un "
-"système et cliquer sur le bouton '#bAutonav#0' pour être automatiquement "
-"transporté vers ce système ! Bien sûr, cela ne fonctionne que si vous "
-"connaissez un itinéraire valable pour vous y rendre, mais vous verrez que "
-"cette méthode de voyage simplifie grandement les choses.\""
+"système et cliquer sur le bouton '#bAutonav#0' pour voyager automatiquement "
+"vers ce système ! Bien sûr, cela ne fonctionne que si vous connaissez un "
+"itinéraire valable pour vous y rendre, mais vous verrez que cette méthode de "
+"voyage simplifie grandement les choses.\""
 
-#, fuzzy
 msgid ""
 "\"Why don't you give it a try and jump to the nearby {sys} system? You "
 "should see an indicator mark on your map; missions often use these marks to "
@@ -111666,65 +111791,60 @@ msgid ""
 "do some exploring to find the second jump point. Let's see what you've "
 "learned!\""
 msgstr ""
-"\"Pourquoi ne pas essayer de sauter dans le système {sys} voisin ? Vous "
-"devriez voir un indicateur sur votre carte ; les missions utilisent souvent "
+"\"Pourquoi ne pas essayer de sauter dans le système voisin, {sys} ? Vous "
+"devriez voir un indicateur sur votre carte ; les missions utilisent souvent "
 "ces indicateurs pour vous montrer où aller ensuite. Vous devrez effectuer "
 "deux sauts et peut-être faire un peu d'exploration pour trouver le deuxième "
-"point de saut. Voyons ce que vous avez appris !\""
+"point de saut. Voyons ce que vous avez appris !\""
 
 msgid "Captain T. Practice"
-msgstr "Capitaine T. Practice"
+msgstr "Capitaine B. Aba"
 
 #. Don't distress just in case
 msgid "Bring on the pain!"
 msgstr "Que la douleur commence !"
 
 msgid "You're no match for the fearsome T. Practice!"
-msgstr "Vous n'êtes pas de taille à affronter le redoutable T. Practice !"
+msgstr "Vous n'êtes pas de taille à affronter le redoutable B. Aba !"
 
-#, fuzzy
 msgid "I've been shot at by ships ten times your size!"
-msgstr "J'ai été touché par des navires dix fois plus gros que vous !"
+msgstr "J'ai déjà affronté des vaisseaux dix fois plus gros que le votre !"
 
 msgid "Let's get it on!"
 msgstr "C'est parti !"
 
-#, fuzzy
 msgid "I haven't got all day."
 msgstr "Je n'ai pas toute la journée."
 
-#, fuzzy
 msgid "You're about as threatening as an unborn child!"
-msgstr "Vous êtes aussi menaçante qu'un enfant à naître !"
+msgstr "Vous êtes aussi menaçant qu'un enfant à naître !"
 
-#, fuzzy
 msgid "I've snacked on foes much bigger than you!"
-msgstr "J'ai grignoté des ennemis bien plus grands que toi !"
+msgstr "Je n'ai fait qu'une bouchée d'adversaires bien plus grands que vous !"
 
 msgid "Who's your daddy? I am!"
-msgstr "Qui est ton papa ? C'est moi !"
+msgstr "C'est qui le papa ? C'est moi !"
 
 msgid "You're less intimidating than a fruit cake!"
-msgstr "Vous êtes moins intimidant qu'un gâteau aux fruits !"
+msgstr "Vous êtes moins intimidant qu'une tarte aux fruits !"
 
 msgid "My ship is the best in the galaxy!"
 msgstr "Mon vaisseau est le meilleur de la galaxie !"
 
 msgid "Bow down before me, and I may spare your life!"
-msgstr "Prosterne-toi devant moi, et j'épargnerai ta vie !"
+msgstr "Prosternez-vous devant moi, et j'épargnerai votre vie !"
 
 msgid "Someone's about to set you up the bomb."
-msgstr "Quelqu'un est sur le point de vous préparer une bombe."
+msgstr "Vous serez bientôt rayé de la carte."
 
 msgid "Your crew quarters are as pungent as an over-ripe banana!"
 msgstr "Vos quartiers d'équipage sont aussi âcres qu'une banane trop mûre !"
 
-#, fuzzy
 msgid "I'm invincible! I cannot be vinced!"
-msgstr "Je suis invincible, je ne peux pas être vaincu !"
+msgstr "Je suis invincible ! Personne ne peut me battre !"
 
 msgid "You think you can take me?"
-msgstr "Tu penses que tu peux m'avoir ?"
+msgstr "Vous pensez que vous pouvez m'avoir ?"
 
 msgid "When I'm done, you'll look like pastrami!"
 msgstr "Quand j'aurai fini, tu auras l'air d'un pastrami !"
@@ -111733,11 +111853,10 @@ msgid "I've got better things to do. Hurry up and die!"
 msgstr "J'ai mieux à faire. Dépêchez-vous de mourir !"
 
 msgid "You call that a barrage? Pah!"
-msgstr "Vous appelez ça un barrage ? Pah !"
+msgstr "Vous appelez ça une salve ? Pff !"
 
-#, fuzzy
 msgid "Your mother isn't much to look at, either!"
-msgstr "Ta mère n'est pas très belle non plus !"
+msgstr "Votre mère n'est pas très belle non plus !"
 
 msgid "You're not exactly a crack-shot, are you?"
 msgstr "Vous n'êtes pas vraiment un crack, n'est-ce pas ?"
@@ -111746,10 +111865,10 @@ msgid "I've had meals that gave me more resistance than you!"
 msgstr "J'ai eu des repas qui m'ont donné plus de fil à retordre que vous !"
 
 msgid "You're a pathetic excuse for a pilot!"
-msgstr "Tu n'es qu'une excuse pathétique pour un pilote !"
+msgstr "Vous êtes un pilote pitoyable !"
 
 msgid "Surrender or face destruction!"
-msgstr "Se rendre ou être détruit !"
+msgstr "Capitulez ou preparez-vous à être anéantis !"
 
 msgid "That all you got?"
 msgstr "C'est tout ce que vous avez ?"
@@ -111764,19 +111883,19 @@ msgid "You'd be dead if I'd remembered to pack my weapons!"
 msgstr "Vous seriez mort si j'avais pensé à prendre mes armes !"
 
 msgid "I'll end you!"
-msgstr "Je vais t'achever !"
+msgstr "Je vais vous achever !"
 
 msgid "… Right after I finish eating this bucket of fried chicken!"
 msgstr "... Juste après avoir fini de manger ce seau de poulet frit !"
 
 msgid "{pnt} Fried Chicken. Eat only the best."
-msgstr "{pnt} Poulet frit. Ne manger que le meilleur."
+msgstr "Le poulet frit de {pnt}. Je ne mange que le meilleur."
 
 msgid "This is your last chance to surrender!"
 msgstr "C'est votre dernière chance de vous rendre !"
 
 msgid "Don't do school, stay in milk."
-msgstr "Ne va pas à l'école, reste dans le lait."
+msgstr "Ne touchez pas à l'école, restez au lait."
 
 msgid "I'm going to report you to the NPC Rights watchdog."
 msgstr ""
@@ -111789,13 +111908,13 @@ msgid "You don't scare me!"
 msgstr "Vous ne me faites pas peur !"
 
 msgid "What do you think this is, knitting hour?"
-msgstr "Qu'est-ce que tu crois que c'est, l'heure du tricot ?"
+msgstr "Vous croyez qu’on est au club de tricot, là ?"
 
 msgid "I mean, good lord, man."
-msgstr "Je veux dire, bon sang, mec."
+msgstr "Non mais sans blague..."
 
 msgid "It's been several minutes of non-stop banter!"
-msgstr "Cela fait plusieurs minutes que l'on ne s'arrête pas de plaisanter !"
+msgstr "Ça fait plusieurs minutes que l'on ne s'arrête pas de plaisanter !"
 
 msgid "Haven't I sufficiently annoyed you yet?"
 msgstr "Je ne vous ai pas encore suffisamment ennuyé ?"
@@ -111804,54 +111923,54 @@ msgid "Go on, shoot me."
 msgstr "Allez-y, tirez sur moi."
 
 msgid "You can do it! I believe in you."
-msgstr "Tu peux le faire ! Je crois en vous."
+msgstr "Vous pouvez le faire ! Je crois en vous."
 
 msgid "Shoot me!"
 msgstr "Tirez-moi dessus !"
 
 msgid "Okay, listen. I'm doing this for attention."
-msgstr "Ok, écoutez. Je fais ça pour attirer l'attention."
+msgstr "Ok, je vais vous dire. Je fais ça pour attirer l'attention."
 
 msgid "But if you don't shoot me, I'll tell the galaxy your terrible secret."
 msgstr ""
-"Mais si tu ne me tires pas dessus, je révélerai à la galaxie ton terrible "
-"secret."
+"Mais si vous ne me tirez pas dessus, je révélerai à la galaxie votre "
+"terrible secret."
 
 msgid "Okay, that's about enough."
-msgstr "D'accord, c'est à peu près suffisant."
+msgstr "Allez, ça suffit maintenant."
 
 msgid "You can stop now."
 msgstr "Vous pouvez arrêter maintenant."
 
 msgid "I was wrong about you."
-msgstr "J'avais tort à ton sujet."
+msgstr "J'avais tort à votre sujet."
 
 msgid "Forgive and forget?"
-msgstr "Pardonner et oublier ?"
+msgstr "On oublie tout et on repart à zéro ?"
 
 msgid "Let's be pals, I'll buy you an ale!"
-msgstr "Soyons amis, je t'offres une bière !"
+msgstr "Soyons amis, je vous offre une bière !"
 
 msgid "Game over, you win."
-msgstr "La partie est terminée, tu as gagné."
+msgstr "La partie est finie, vous gagnez."
 
 msgid "I've got a wife and kids! And a cat!"
 msgstr "J'ai une femme et des enfants ! Et un chat !"
 
 msgid "Surely you must have some mercy?"
-msgstr "Tu dois sûrement avoir un peut de pitié ?"
+msgstr "Ne me dites pas que vous n'avez aucune pitié ?"
 
 msgid "Please stop!"
-msgstr "Arrêtes, s'il te plaît !"
+msgstr "S'il vous plaît, arrêtez !"
 
 msgid "I'm sorry!"
 msgstr "Je suis désolé !"
 
 msgid "Leave me alone!"
-msgstr "Laisses moi tranquille !"
+msgstr "Laissez moi tranquille !"
 
 msgid "What did I ever do to you?"
-msgstr "Qu'est-ce que je t'ai fait ?"
+msgstr "Qu'est-ce que je vous ai fait ?"
 
 msgid "I didn't sign up for this!"
 msgstr "Je n'ai pas signé pour ça !"
@@ -111860,7 +111979,7 @@ msgid "Not my ship, anything but my ship!"
 msgstr "Pas mon vaisseau, tout sauf mon vaisseau !"
 
 msgid "We can talk this out!"
-msgstr "On peut en parler !"
+msgstr "On peut discuter !"
 
 msgid "I'm scared! Hold me."
 msgstr "J'ai peur ! Prends-moi dans tes bras."
@@ -111869,17 +111988,18 @@ msgid "Make the bad man go away, mommy!"
 msgstr "Fais partir le méchant, maman !"
 
 msgid "If you don't stop I'll cry!"
-msgstr "Si tu n'arrêtes pas, je vais pleurer !"
+msgstr "Si vous n'arrêtez pas, je vais pleurer !"
 
 msgid "Here I go, filling my cabin up with tears."
-msgstr "Et voilà que je remplis ma cabine de larmes."
+msgstr "Et voilà, j'ai remplis ma cabine de larmes."
 
 msgid "U- oh it a-pears my te-rs hav- da-ag-d t-e co-mand cons-le."
 msgstr ""
+"O- oh, il s-mble que m-s la-mes ai-nt en-om-agé l- con-ole de co-mandes."
 
 #. codespell:ignore
 msgid "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
-msgstr "Je --is T. Pr-ct--- ! T- --aindr-- -on no- --inten--- Bzzzt !"
+msgstr "Je s-is B. A-a ! V--s t--mbl-rez d-va-- m-i --- Bzzzt !"
 
 #. Aborting finishes the mission properly
 #.
@@ -121567,7 +121687,7 @@ msgstr ""
 #. --
 #. Limit volatility should allow Arandon
 msgid "Encrypted Data Matrix"
-msgstr ""
+msgstr "Matrice de données cryptées"
 
 #.
 #. Gets the amount of data collected by the player.
