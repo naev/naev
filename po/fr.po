@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2026-08-26 10:00+0900\n"
-"PO-Revision-Date: 2026-07-29 17:07+0000\n"
-"Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
-"Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/"
-">\n"
+"POT-Creation-Date: 2026-10-13 19:43+0900\n"
+"PO-Revision-Date: 2026-10-15 18:50+0000\n"
+"Last-Translator: raazqaer <raazqaer@noreply.codeberg.org>\n"
+"Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/>"
+"\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 msgid "Active Plating"
 msgstr "Blindage Actif"
@@ -77,7 +77,7 @@ msgid "Adrenaline Hormones"
 msgstr "Hormones de l'adrénaline"
 
 msgid "Agamemnon Launcher"
-msgstr ""
+msgstr "Lanceur Agamemnon"
 
 msgid "Agility Combat AI"
 msgstr "IA de combat d’agilité"
@@ -123,7 +123,7 @@ msgid "Astral Projection"
 msgstr "Projection Astrale"
 
 msgid "Auto-Modulating Scrambler"
-msgstr ""
+msgstr "Masqueur auto-modulé"
 
 msgid "Auxiliary Processing Unit I"
 msgstr "Unité de calcul auxiliaire I"
@@ -181,7 +181,6 @@ msgstr "IA de combat bio-neurale"
 msgid "Biometal Armour"
 msgstr "Blindage en bio-métal"
 
-#, fuzzy
 msgid "Bioship Pheromone Emitter"
 msgstr "Émetteur de phéromones de bio-vaisseau"
 
@@ -192,7 +191,7 @@ msgid "Black Cat Doll"
 msgstr "Poupée chat noir"
 
 msgid "Black Diamond Bay"
-msgstr ""
+msgstr "Baie du Diamant Noir"
 
 #, fuzzy
 msgid "Blink Drive"
@@ -574,7 +573,7 @@ msgid "Internal Groove Synthesizer"
 msgstr ""
 
 msgid "Ion Cannon"
-msgstr "Canon ionique"
+msgstr "Canon à Ions"
 
 msgid "Jack's Eyepatch"
 msgstr ""
@@ -851,7 +850,7 @@ msgid "Supercharged Muon Disruptor"
 msgstr ""
 
 msgid "Mystery Outfit"
-msgstr "Équipement mystère"
+msgstr "Module mystère"
 
 msgid "Nanobond Plating"
 msgstr "Blindage en Nanolite"
@@ -965,10 +964,10 @@ msgid "Pirate Hyena Dock"
 msgstr "Dock des Hyènes Pirates"
 
 msgid "Plasma Blaster MK1"
-msgstr ""
+msgstr "Blaster à plasma V1"
 
 msgid "Plasma Blaster MK2"
-msgstr ""
+msgstr "Blaster à plasma V2"
 
 msgid "Plasma Burst"
 msgstr "Eclatement du plasma"
@@ -977,7 +976,7 @@ msgid "Plasma Cannon"
 msgstr "Canon à Plasma"
 
 msgid "Plasma Cluster Cannon"
-msgstr "Canon à Plasma en Grappe"
+msgstr "Canon à amas de plasma"
 
 msgid "Plasma Eruptor"
 msgstr "Déferleur à Plasma"
@@ -1616,10 +1615,10 @@ msgid "Empire Lancelot Golden Efreeti"
 msgstr ""
 
 msgid "Empire Pacifier"
-msgstr "Patrouilleur Impérial"
+msgstr "Pacifieur Impérial"
 
 msgid "Empire Pacifier Hoplite"
-msgstr "Patrouilleur Hoplite Impérial"
+msgstr "Pacifieur Hoplite Impérial"
 
 msgid "Empire Peacemaker"
 msgstr "Pacificateur impérial"
@@ -1676,13 +1675,13 @@ msgid "Lancelot"
 msgstr ""
 
 msgid "Llama"
-msgstr ""
+msgstr "Llama"
 
 msgid "Llama Voyager"
 msgstr ""
 
 msgid "Mule"
-msgstr ""
+msgstr "Mule"
 
 msgid "Mule Hardhat"
 msgstr ""
@@ -1694,7 +1693,7 @@ msgid "One-Wing Goddard"
 msgstr "One-Wing Goddard"
 
 msgid "Pacifier"
-msgstr "Patrouilleur"
+msgstr "Pacifieur"
 
 msgid "Phalanx"
 msgstr ""
@@ -1941,7 +1940,7 @@ msgid "Za'lek Sting Type IV"
 msgstr ""
 
 msgid "Zebra"
-msgstr ""
+msgstr "Zèbre"
 
 msgid "Zebra Wolfie"
 msgstr ""
@@ -1973,7 +1972,7 @@ msgid "* [Ships](ships)"
 msgstr "* [Vaisseaux](ships)"
 
 msgid "* [Outfits](outfits)"
-msgstr "* [Tenues](outfits)"
+msgstr "* [Module](outfits)"
 
 msgid "* [Lore](lore)"
 msgstr "* [Univers](lore)"
@@ -1997,7 +1996,7 @@ msgid ""
 "There are a variety of fabricators that produce different ships and outfits."
 msgstr ""
 "Il existe toute une série de constructeurs qui produisent différents types "
-"de vaisseaux et d'équipements."
+"de vaisseaux et de modules."
 
 msgid "## Independent"
 msgstr "## Indépendants"
@@ -2034,15 +2033,15 @@ msgid ""
 "* **MilSpec**: Provides high-end cores and outfits. A favourite of bounty "
 "hunters."
 msgstr ""
-"* **MilSpec** : Fournit des réacteurs et équipements haut de gamme. Un "
-"favori des chasseurs de primes."
+"* **MilSpec** : Fournit des réacteurs et modules haut de gamme. Un favori "
+"des chasseurs de primes."
 
 msgid ""
 "* **Unicorp**: Designs many accessible core outfits, and also launchers for "
 "the Caeser torpedoes, among others."
 msgstr ""
-"* **Unicorp** : Conçoit de nombreux équipements de base accessibles, ainsi "
-"que des lanceurs pour les torpilles Caesar, entre autres."
+"* **Unicorp** : Conçoit de nombreux modules de base accessibles, ainsi que "
+"des lanceurs pour les torpilles Caesar, entre autres."
 
 msgid "* **Tricon**: Design high-end engines optimized for speed."
 msgstr ""
@@ -2823,15 +2822,14 @@ msgstr ""
 msgid "## Political System"
 msgstr "## Système politique"
 
-#, fuzzy
 msgid ""
 "The Emperor is ultimately the seat of all power and has the ability to "
 "overrule anyone, but a lone person cannot single-handedly govern an entity "
 "the size of the Empire at any meaningfully low level."
 msgstr ""
-"L'Empereur est finalement le siège de tout pouvoir et a la capacité de "
-"passer outre toute décision, mais un seul homme ne peut pas gouverner à lui "
-"seul une entité de la taille de l'Empire à un niveau significativement bas."
+"L'Empereur est à la tête du pouvoir et a la capacité de passer outre toute "
+"décision, mais un seul homme ne peut pas gouverner à lui seul une entité de "
+"la taille de l'Empire à un niveau significativement bas."
 
 msgid ""
 "As such, the Imperial Council sits directly below the Emperor, regulating "
@@ -2850,7 +2848,6 @@ msgstr ""
 msgid "### The Imperial Bureaucracy"
 msgstr "## La Bureaucratie Impériale"
 
-#, fuzzy
 msgid ""
 "The Council does not oversee the laws being carried out, that task falls to "
 "the Imperial Bureaucracy."
@@ -2858,11 +2855,9 @@ msgstr ""
 "Le conseil ne supervise pas l'exécution des lois ; cette tâche incombe à la "
 "bureaucratie impériale."
 
-#, fuzzy
 msgid "It is the largest part of Empire administration besides the military."
 msgstr "C’est le plus grand organe de l’Empire après l’armée."
 
-#, fuzzy
 msgid ""
 "Enforcing the large number of laws passed by generations of Councils word "
 "for word is impossible."
@@ -2870,7 +2865,6 @@ msgstr ""
 "Appliquer à la lettre le grand nombre de lois adoptées par des générations "
 "de conseils est impossible."
 
-#, fuzzy
 msgid ""
 "Therefore, most members of the Bureaucracy follow what they, in their best "
 "judgement, believe to be the intention behind the laws."
@@ -2885,7 +2879,6 @@ msgstr ""
 "Mais même cette tâche devient de plus en plus difficile, et l'on a observé "
 "un ralentissement du progrès social ces dernières années."
 
-#, fuzzy
 msgid ""
 "The Bureaucracy is also the only organ of the state the people interact with "
 "directly."
@@ -2893,32 +2886,29 @@ msgstr ""
 "La bureaucratie est également le seul organe de l'État avec lequel les gens "
 "interagissent directement."
 
-#, fuzzy
 msgid ""
 "Requests for audiences with the Council may be directed to the Bureaucracy, "
 "though they are seldom granted and some have been known to simply disappear "
 "within the immense, monolithic complexity of the Bureaucracy."
 msgstr ""
-"Les demandes d'audience auprès du conseil ou similaires peuvent être "
-"adressées à la bureaucratie, bien qu'elles soient rarement accordées et que "
-"certaines soient connues pour disparaître simplement dans l'immense "
-"complexité monolithique de la bureaucratie."
+"Les demandes d'audience auprès du Conseil peuvent être adressées à la "
+"bureaucratie, bien qu'elles soient rarement accordées et que certaines "
+"soient connues pour disparaître simplement dans l'immense complexité "
+"monolithique de la bureaucratie."
 
-#, fuzzy
 msgid ""
 "Finally, it is the Bureaucracy's task to manage the Imperial military, which "
 "it does with some success."
 msgstr ""
-"Enfin, il incombe à la bureaucratie de gérer l'armée impériale, ce qu'elle "
+"Enfin, il incombe à la bureaucratie de gérer l'armée Impériale, ce qu'elle "
 "fait avec un certain succès."
 
-#, fuzzy
 msgid ""
 "The Emperor and the Council place great value on the defense of their "
 "borders and the Bureaucracy must ensure that those wishes are carried out."
 msgstr ""
 "Pour l’Empereur et son Conseil, l’importance de la sécurité des frontières "
-"ne saurait être oubliée ; et c’est le rôle de la machine bureaucratique de "
+"ne saurait être négligée ; et c’est le rôle de la machine bureaucratique de "
 "s’en assurer."
 
 msgid ""
@@ -2928,15 +2918,14 @@ msgstr ""
 "L’armée fonctionne étrangement bien lorsque livrée à elle-même et n’a besoin "
 "que de peu de supervision."
 
-#, fuzzy
 msgid ""
 "The commanding officers of the Imperial Navy are known to work with great "
 "effectiveness, thus the military is often called the most efficient part of "
 "the Empire administration."
 msgstr ""
-"Les Généraux et Commandants de l’armée ont acquis la réputation d’être "
+"Les généraux et commandants de l’armée ont acquis la réputation d’être "
 "extrèmement efficaces, au point que l’armée est souvent considérée comme "
-"l’organe le plus efficace de l’administration impériale."
+"l’organe le plus efficace de l’administration Impériale."
 
 msgid "### The Great Houses"
 msgstr "### Les Grandes Maisons"
@@ -4584,7 +4573,7 @@ msgstr ""
 "l'instant, personne ne le sait…"
 
 msgid "Soromid"
-msgstr "Soromides"
+msgstr "Soromide"
 
 msgid "# Soromid"
 msgstr "# Soromides"
@@ -5159,7 +5148,7 @@ msgstr ""
 "extrêmement souple et évolutive, et les exceptions y sont presque la règle."
 
 msgid "Thurion"
-msgstr "Thuriens"
+msgstr "Thurion"
 
 msgid "# Thurion"
 msgstr "# Thuriens"
@@ -5642,7 +5631,7 @@ msgstr ""
 msgid "Eventually, instead of an Empire patrol, scavengers found the bunker."
 msgstr ""
 "Finalement, ce ne furent pas des soldats impériaux qui découvrirent le "
-"bunker, mais des pilleurs."
+"bunker, mais des charognards."
 
 msgid "They were greeted by a hologram that claimed to be a human."
 msgstr ""
@@ -5653,7 +5642,7 @@ msgid ""
 "to the highest bidder, a rich aristocrat."
 msgstr ""
 "Convaincus que cette technologie devait avoir une grande valeur, les "
-"pilleurs la vendirent au plus offrant : un riche aristocrate."
+"charognards la vendirent au plus offrant : un riche aristocrate."
 
 msgid ""
 "The uploaded scientists easily won the aristocrat over by promising him "
@@ -7841,8 +7830,8 @@ msgid ""
 msgstr ""
 "Les personnes dotées de pouvoirs psychiques peuvent soit utiliser un "
 "vaisseau construit par la [Maison Sirius](lore/factions/sirius), soit "
-"recourir à des équipements spéciaux, tels que des amplificateurs d'influx, "
-"pour pouvoir utiliser leurs pouvoirs psychiques dans l'espace."
+"recourir à des modules spéciaux, tels que des amplificateurs d'influx, pour "
+"pouvoir utiliser leurs pouvoirs psychiques dans l'espace."
 
 msgid ""
 "Such psychic abilities can be further enhanced by using meditation chambers "
@@ -8036,38 +8025,43 @@ msgstr ""
 #. gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 #. Renders the navigation computer
 msgid "Landing"
-msgstr ""
+msgstr "Atterrissage"
 
-#, fuzzy
 msgid "# Landing"
-msgstr "Débarquement"
+msgstr "# Atterrissage"
 
 msgid ""
 "Landing on spaceports is one of the fundamental activities you will do while "
 "exploring the universe."
 msgstr ""
+"Atterrir sur les spatioports est l'une des activités fondamentales que vous "
+"ferez en explorant l'univers."
 
-#, fuzzy
 msgid "## Landing Window"
-msgstr "Débarquement"
+msgstr "## Page d'accueil du spatioport"
 
 msgid "The first window you will be greeted by."
-msgstr ""
+msgstr "La première fenêtre qui vous accueillera."
 
 msgid ""
 "It contains a description of the spaceport, and some properties of the place "
 "you are visited."
 msgstr ""
+"Elle contient une description du spatioport ainsi que certaines propriétés "
+"du lieu que vous visitez."
 
 msgid "In most spaceports you can also buy a local map and refuel your ship."
 msgstr ""
+"Dans la plupart des spatioports, vous pouvez également acheter une carte "
+"locale et ravitailler votre vaisseau en carburant."
 
 msgid "The services offered vary significantly by location."
 msgstr ""
+"Les services proposés et leurs tarifs varient considérablement d'un endroit "
+"à l'autre."
 
-#, fuzzy
 msgid "### Spaceport Bar"
-msgstr "Spatioport"
+msgstr "### Bar du spatioport"
 
 msgid "The best place to meet other individuals."
 msgstr "L’endroit où se font les meilleures rencontres."
@@ -8076,18 +8070,18 @@ msgid ""
 "Not only will you be able to chat with the locals, you will also meet other "
 "individuals who may offer you missions or other things."
 msgstr ""
-"Vous pouvez y parler avec des habitants du monde et rencontrer d’autres "
-"voyageurs qui ont peut-être des requêtes pour vous."
+"Vous pourrez y parler avec des habitants, mais vous rencontrerez également "
+"d'autres individus susceptibles de vous proposer des missions ou autre chose."
 
 msgid "Important individuals will be marked with an exclamation point."
-msgstr "Les plus importants de ceux-ci sont marqués d’un point d’exclamation."
+msgstr "Les individus importants seront signalés par un point d'exclamation."
 
 msgid ""
 "Furthermore, the tab will be marked with two exclamation points if an "
 "important individual is at the spaceport bar."
 msgstr ""
-"De plus, le spatioport lui-même en est marqué si un individu notable s’y "
-"trouve."
+"De plus, l'onglet sera marqué de deux points d'exclamation si un personnage "
+"important se trouve au bar du spatioport."
 
 msgid "### Missions"
 msgstr "### Missions"
@@ -8096,111 +8090,146 @@ msgid ""
 "The Mission Bulletin Board System is where you can accept a variety of "
 "different missions."
 msgstr ""
+"Le Système de tableau d'affichage des missions est l'endroit où vous pouvez "
+"accepter une variété de missions différentes."
 
 msgid ""
 "The missions offered there are usually a good way to make additional credits "
 "or increase your reputation with different factions."
 msgstr ""
+"Les missions qui proposées constituent généralement un bon moyen de gagner "
+"des crédits ou d'augmenter votre réputation auprès de différentes factions."
 
 msgid ""
 "You can filter the missions based on their legal status, and also sort them "
 "based on different properties such as rewards."
 msgstr ""
+"Vous pouvez filtrer les missions en fonction de leur statut légal et les "
+"trier selon différents critères tels que les récompenses."
 
-#, fuzzy
 msgid "### Outfits"
-msgstr "Équipements"
+msgstr "### Équipementier"
 
 msgid ""
 "At the outfitter, you are able to buy locally available outfits, and also "
 "sell any outfit you have."
 msgstr ""
+"Chez l'équipementier, vous pouvez acheter les modules disponibles et "
+"revendre n'importe quel module en votre possession."
 
 msgid "The availability of outfits depends on the location."
-msgstr ""
+msgstr "La disponibilité des modules dépend de votre emplacement."
 
 msgid ""
 "You can hold #bshift#0 and #bcontrol#0 to increase the amount of outfits you "
 "buy or sell at a time."
 msgstr ""
+"Vous pouvez maintenir les touches #bshift#0 et #bcontrol#0 enfoncées pour "
+"augmenter la quantité de modules achetés ou vendus en une seule fois."
 
 msgid ""
 "All the outfits you have encountered and their availability can be accessed "
 "under [outfits](outfits) in the Holo-Archives."
 msgstr ""
+"Tous les modules que vous avez vus, et leur disponibilité sont accessibles "
+"dans la rubrique [modules](outfits) des Holo-Archives."
 
-#, fuzzy
 msgid "### Shipyard"
-msgstr "Chantier"
+msgstr "### Chantier Spatial"
 
 msgid "Ships can be purchased at the shipyard."
-msgstr ""
+msgstr "Les vaisseaux peuvent être achetés au chantier spatial."
 
 msgid ""
 "You have either the option to buy a new ship, or trade in your current ship "
 "when buying a new one."
 msgstr ""
+"Vous avez la possibilité d'acheter un nouveau vaisseau, ou de revendre votre "
+"vaisseau actuel lors de l'achat d'un nouveau."
 
 msgid ""
 "The new ship will be available at the equipment tab for use after purchase."
 msgstr ""
+"Le nouveau vaisseau sera disponible dans l'onglet d'équipement pour être "
+"utilisé après l'achat."
 
 msgid ""
 "All the ships you have encountered and their availability can be accessed "
 "under [ships](ships) in the Holo-Archives."
 msgstr ""
+"Tous les vaisseaux que vous avez vus, et leur disponibilité sont accessibles "
+"dans la rubrique [vaisseaux](ships) des Holo-Archives."
 
-#, fuzzy
 msgid "### Equipment"
-msgstr "Équipement"
+msgstr "### Configuration"
 
 msgid ""
 "Any spaceport with refuelling capabilities will allow you to access the "
 "[equipment tab](mechanics/equipment)."
 msgstr ""
+"Tout spatioport doté de capacités de ravitaillement vous permettra d'accéder "
+"à [l'onglet de configuration](mechanics/equipment)."
 
 msgid ""
 "Here you can change the outfits on your ships, or change your current ship."
 msgstr ""
+"Ici, vous pouvez modifier les modules de vos vaisseaux, ou changer de "
+"vaisseau actuel."
 
 msgid ""
 "By right-clicking on ships, or toggling the #bdeployed#0 checkbox, you can "
 "set a ship as part of [your player fleet](mechanics/playerfleet)."
 msgstr ""
+"En faisant un clic droit sur les vaisseaux, ou en cochant la case "
+"#bdeployed#0, vous pouvez définir un vaisseau comme faisant partie de [votre "
+"flotte](mechanics/playerfleet)."
 
 msgid ""
 "You can click on the slots of the selected ship to filter only the outfits "
 "that go in the slot."
 msgstr ""
+"Vous pouvez cliquer sur les emplacements du vaisseau pour ne voir que les "
+"modules compatibles."
 
 msgid ""
 "Right-clicking on a slot will remove an outfit, while right-clicking on an "
 "outfit will add it to the slot."
 msgstr ""
+"Un clic droit sur un emplacement retirera le module, tandis qu'un clic droit "
+"sur un module l'ajoutera à l'emplacement."
 
 msgid ""
 "You can use the tabs and the outfit filter to further control what outfits "
 "are visible."
 msgstr ""
+"Vous pouvez utiliser les onglets et le filtre de modules pour mieux "
+"contrôler les modules visibles."
 
 msgid "### Commodity Exchange"
-msgstr ""
+msgstr "### Bourse des marchandises"
 
 msgid "Here you can buy or sell commodities."
-msgstr ""
+msgstr "Ici, vous pouvez acheter ou vendre des marchandises."
 
 msgid ""
 "The price will depend on the location, which you can compare on [the "
 "universe map](mechanics/map)."
 msgstr ""
+"Les prix dépendront de votre emplacement, et vous pourrez les comparer sur "
+"la [carte de l'univers](mechanics/map)."
 
 msgid "By buying low and selling high, you can turn quite a profit."
 msgstr ""
+"En achetant bas et en revendant haut, vous pouvez réaliser de beaux "
+"bénéfices."
 
 msgid ""
 "Similarly to the outfitter, you can hold #bshift#0 and #bcontrol#0 to "
 "increase the amount of commodities you buy or sell at a time."
 msgstr ""
+"Comme dans le magasin de modules, vous pouvez maintenir les touches "
+"#bshift#0 et #bcontrol#0 enfoncées pour augmenter la quantité de "
+"marchandises achetées ou vendues en une seule fois."
 
 msgid "Launchers"
 msgstr ""
@@ -8488,7 +8517,7 @@ msgid ""
 "objects, outfits, or ships from text."
 msgstr ""
 "Le bouton \"Rechercher\" situé en bas permet de rechercher des systèmes, des "
-"objets spatiaux, des tenues ou des vaisseaux à partir d'un texte."
+"objets spatiaux, des modules ou des vaisseaux à partir d'un texte."
 
 msgid ""
 "This will list all found partial matches in descending order of distance, "
@@ -10914,7 +10943,7 @@ msgid ""
 msgstr ""
 
 msgid "Core Systems (System)"
-msgstr "Systèmes de Base (Système)"
+msgstr "Systèmes Principaux (Système)"
 
 msgid ""
 "oh, the ferocious mighty corsair\n"
@@ -10948,9 +10977,8 @@ msgstr ""
 msgid "empty"
 msgstr ""
 
-#, fuzzy
 msgid "Astral Nectar"
-msgstr "Projection Astrale"
+msgstr "Nectar Astral"
 
 msgid ""
 "Collected from the rare Astral Orchids, it can fetch a pretty price from "
@@ -10960,7 +10988,6 @@ msgstr ""
 msgid "Clay"
 msgstr "Argile"
 
-#, fuzzy
 msgid ""
 "Clay mined from asteroids tends to have different properties from that found "
 "on planetary bodies and has a wide variety of uses such as shielding and "
@@ -10968,7 +10995,7 @@ msgid ""
 "different compositions and material properties."
 msgstr ""
 "L'argile miné dans les astéroïdes a des propriétés différentes de celui "
-"trouvé sur les corps planétaires ; il a des usages divers dans la "
+"trouvé sur les corps planétaires ; il a des usages divers dans la "
 "construction et en tant que matériau de construction. Le processus de "
 "formation de l'argile influe fortement sur sa composition finale et sur ses "
 "propriétés."
@@ -10976,7 +11003,6 @@ msgstr ""
 msgid "Diamond"
 msgstr "Diamant"
 
-#, fuzzy
 msgid ""
 "Diamond is a form of carbon which has been crystallized due to intense "
 "pressure and heat deep beneath the surface of certain types of planets. The "
@@ -10984,13 +11010,13 @@ msgid ""
 "is commonly used in decorative applications, but diamond is now easy enough "
 "to produce synthetically that it is not as sought after as it once was."
 msgstr ""
-"Le diamant est une autre forme de graphite qui a été cristallisé en raison "
-"de la pression et de la chaleur intenses qui règnent dans les profondeurs de "
-"la surface de certains types de planètes. Ce matériau est utile dans "
-"certaines applications de coupe en raison de sa dureté, et il est couramment "
-"utilisé dans des applications décoratives, mais le diamant est maintenant "
-"assez facile à produire synthétiquement pour qu'il ne soit plus aussi "
-"recherché qu'il l'était autrefois."
+"Le diamant est une forme de carbone qui a été cristallisé en raison de la "
+"pression et de la chaleur intenses qui règnent dans les profondeurs de "
+"certains types de planètes. Ce matériau est utile dans certaines "
+"applications de coupe en raison de sa dureté, et il est couramment utilisé "
+"dans des applications décoratives. Mais le diamant étant maintenant facile à "
+"produire synthétiquement, il n'est plus aussi recherché qu'il l'était "
+"autrefois."
 
 msgid "Food"
 msgstr "Nouriture"
@@ -11945,7 +11971,7 @@ msgid ""
 "Great Houses, and Soromid. Some of the prominent members include Astra "
 "Vigilis, Mining Vrata, and the Imperial Red Star."
 msgstr ""
-"La Société des Marchands de l'Espaceest une organisation dont l'influence "
+"La Société des Marchands de l'Espace est une organisation dont l'influence "
 "s'étend à travers toutes les autres guildes, et qui agit pour protéger leurs "
 "intérêts contre l'Empire, les Grandes Maisons et les Soromides. Astra "
 "Vigilis, les exploitations minières Vrata et l'Étoile Rouge Impériale sont "
@@ -12296,7 +12322,7 @@ msgstr ""
 "Trouvé sur un chasseur des Quatres Vents qui transportait un rayon Ragnarok. "
 "Il semble augmenter les performances de votre moteur lorsque la masse du "
 "vaisseau est élevée. Il ne s'agit certainement pas d'un véritable "
-"aspirateur, mais vous ne connaissez pas le véritable nom de cet équipement."
+"aspirateur, mais vous ne connaissez pas le véritable nom de ce module."
 
 msgid "Bioship Organ"
 msgstr "Organe de vaisseau biologique"
@@ -12309,6 +12335,25 @@ msgstr ""
 "L'organe de la glande surrénale du vaisseau est capable de générer "
 "d'immenses quantités d'adrénaline à partir de l'énergie brute, ce qui permet "
 "au vaisseau d'avoir temporairement un mouvement accru."
+
+#. Carrier tree
+#. For carriers (please contain your surprise). More specifically, Soromid ships that have fighter bays.
+#. Requires carrier slot for tiers 3+.
+msgid "Carrier Pheromones I"
+msgstr ""
+
+msgid ""
+"A heady mix of nanobots and chemicals that increases the capabilities of "
+"fightercraft."
+msgstr ""
+
+msgid "Carrier Pheromones II"
+msgstr ""
+
+msgid ""
+"A secondary dosage of chemical and mechanical enhancements, pushing fighters "
+"to their effective limits."
+msgstr ""
 
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
@@ -12365,6 +12410,37 @@ msgstr ""
 "Actif pour les 5 secondes qui suivent les derniers dégâts subits par la "
 "coque, ou peut être activé manuellement avec un temps d'attente de 30 "
 "secondes."
+
+msgid "Gestational Hypermetabolism"
+msgstr ""
+
+msgid ""
+"A careful adjustment of the ship's metabolism, driving it to replace lost "
+"fighters much faster. Fighters produced at this higher speed of existence "
+"experience some trickle-down effects, significantly enhancing their movement "
+"speed."
+msgstr ""
+
+msgid "Naviumnal Brigand Bay"
+msgstr ""
+
+msgid "N. Brigand Bay"
+msgstr ""
+
+msgid "Bioship Fighter Organ"
+msgstr ""
+
+msgid ""
+"A severe distension of the ship's regular fighter bays. While it only "
+"carries two Soromid Brigands, it has no adverse effects on the ship's "
+"fighter capacity, giving an extra edge to any interceptor wing."
+msgstr ""
+
+msgid "Naviumnal Reaver Bay"
+msgstr ""
+
+msgid "N. Reaver Bay"
+msgstr ""
 
 #. Speed Lights
 #. Make sure it's valid.
@@ -12956,12 +13032,11 @@ msgid ""
 "equip them all! Fly safe, fly Milspec."
 msgstr ""
 "Milspec sait bien que faire des compromis sur la puissance de calcul des "
-"équipements revient à se transformer en un simple tas de ferraille flottant. "
-"Le Thalos 4702 offre une puissance de calcul exceptionnelle tout en "
-"conservant les normes élevées en matière d'énergie et de blindage qui font "
-"la fierté de Milspec. Inutile de faire des compromis sur vos équipements : "
-"équipez-vous de tout ce qu'il vous faut ! Volez en toute sécurité, volez "
-"avec Milspec."
+"modules revient à se transformer en un simple tas de ferraille flottant. Le "
+"Thalos 4702 offre une puissance de calcul exceptionnelle tout en conservant "
+"les normes élevées en matière d'énergie et de blindage qui font la fierté de "
+"Milspec. Inutile de faire des compromis sur vos modules : équipez-vous de "
+"tout ce qu'il vous faut ! Volez en toute sécurité, volez avec Milspec."
 
 msgid "Prev. Gen. Medium Systems"
 msgstr ""
@@ -13489,6 +13564,14 @@ msgid ""
 "the service, only one can be applied to each ship."
 msgstr ""
 
+msgid "Godmother Optimization"
+msgstr ""
+
+msgid ""
+"This fighter has been retooled by a Godmother ship, greatly increasing its "
+"launchers' effectiveness."
+msgstr ""
+
 msgid ""
 "This ship sustained heavy damage when captured and is barely operational."
 msgstr ""
@@ -13903,9 +13986,9 @@ msgid ""
 msgstr ""
 "Les missiles et lanceurs Tempête ont été conçus par Unicorp comme équivalent "
 "guidé de la Roquette Fléau. Cependant, malgré l'indéniable capacité "
-"d'Unicorp à concevoir des équipements fonctionnels et bon marché, le "
-"résultat s'est avéré bien trop coûteux pour équiper les flottes en masse. "
-"C'est pourquoi seuls les escadrons d'élite impériaux utilisent cette arme "
+"d'Unicorp à concevoir des modules fonctionnels et bon marché, le résultat "
+"s'est avéré bien trop coûteux pour équiper les flottes en masse. C'est "
+"pourquoi seuls les escadrons d'élite impériaux utilisent cette arme "
 "redoutablement mortelle."
 
 msgid "Z. Hunter L."
@@ -15686,9 +15769,8 @@ msgid ""
 "the pilot to get very close to their target risking enemy fire."
 msgstr ""
 
-#, fuzzy
 msgid "Plasma Bl. MK1"
-msgstr "Tourelle à Plasma MK1"
+msgstr "Bl. à Plasma V1"
 
 msgid ""
 "The Plasma Blaster M1 fires superheated plasma which is very effective at "
@@ -15698,10 +15780,17 @@ msgid ""
 "and mercenaries for its high killing potential, although the plasma burns "
 "tend to make it harder to disable ships."
 msgstr ""
+"Le Blaster à plasma V1 tire du plasma surchauffé, ce qui le rend très "
+"efficace pour endommager les blindages, mais moins efficace contre les "
+"boucliers. Tout en infligeant des dégâts directs, le plasma résiduel "
+"continuera d'endommager le vaisseau cible un certain temps après l'impact "
+"initial. Cette arme est souvent utilisée par les chasseurs de primes et les "
+"mercenaires en raison de son fort potentiel létal, bien que les brûlures de "
+"plasma tendent à rendre plus difficile la mise hors d'état de nuire des "
+"vaisseaux."
 
-#, fuzzy
 msgid "Plasma Bl. MK2"
-msgstr "Tourelle à Plasma MK2"
+msgstr "Bl. à Plasma V2"
 
 msgid ""
 "The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster MK1, "
@@ -15711,6 +15800,13 @@ msgid ""
 "model, the lingering plasma will significantly damage any ship that is "
 "unlucky enough to get hit."
 msgstr ""
+"Le Blaster à plasma V2 est une version surpuissante du Blaster à plasma V1, "
+"suffisamment puissante pour pulvériser la quasi-totalité des vaisseaux "
+"pirates, à l'exception des plus lourds. Sa puissance est telle qu'elle est "
+"même utilisée par certaines armées, généralement en combinaison avec des "
+"armes anti-boucliers. À l'instar du modèle V1 original, le plasma résiduel "
+"endommagera considérablement tout vaisseau qui aurait le malheur d'être "
+"touché."
 
 msgid ""
 "The Plasma Cannon is a scaled-up version of the Plasma Blaster design for "
@@ -15718,10 +15814,14 @@ msgid ""
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
 msgstr ""
+"Le Canon à plasma est une version agrandie du concept du Blaster à plasma "
+"conçue pour être installée sur les Corvettes. Il frappe nettement plus fort, "
+"mais les complexités techniques liées à l'intégration d'une arme aussi "
+"puissante dans un petit emplacement entraînent une dépendance beaucoup plus "
+"forte envers le système de guidage de l'ordinateur central du vaisseau."
 
-#, fuzzy
 msgid "Plasma C. Cannon"
-msgstr "Canon à Plasma"
+msgstr "Canon à amas de Pl."
 
 msgid ""
 "The Plasma Cluster Cannon is a Soromid refinement to the standard Plasma "
@@ -15749,10 +15849,16 @@ msgid ""
 "accuracy is comprised, however, as it can spray around a large area, it is "
 "almost guaranteed to hit anything within sight."
 msgstr ""
+"Utilisant un organe à plasma génétiquement modifié, le Déferleur est capable "
+"d'asperger de vastes zones de l'espace avec un plasma hautement corrosif. "
+"Contrairement aux autres armes à plasma, ce plasma spécialisé brûle les "
+"coques ennemies beaucoup plus longtemps, infligeant des dégâts continus "
+"nettement supérieurs. En raison de la volatilité du plasma, sa précision "
+"limitée. Cependant, comme il peut asperger une vaste zone, il est presque "
+"garanti de toucher tout ce qui se trouve à portée de vue."
 
-#, fuzzy
 msgid "Plasma T. MK1"
-msgstr "Tourelle à Plasma MK1"
+msgstr "T. à Plasma V1"
 
 msgid ""
 "The plasma turret essentially takes a plasma blaster and mounts it on a "
@@ -15761,16 +15867,25 @@ msgid ""
 "among inexperienced mercenaries who are not as well-practiced at aiming as "
 "the pros."
 msgstr ""
+"La Tourelle à plasma est essentiellement en un Blaster à plasma monté sur "
+"une tourelle. Sa courte portée la rend peu adaptée à la défense, ce qui ne "
+"la rend pas particulièrement populaire auprès des commerçants et des "
+"marchands, mais elle a su trouver sa place auprès des mercenaires "
+"inexpérimentés qui ne maîtrisent pas aussi bien la visée que les "
+"professionnels."
 
-#, fuzzy
 msgid "Plasma T. MK2"
-msgstr "Tourelle à Plasma MK2"
+msgstr "T. à Plasma V2"
 
 msgid ""
 "The mark 2 plasma turret isn't especially impressive compared to other "
 "medium-size turrets, but it is sometimes favoured by corvettes for its "
 "unusually low weight compared to its range and damage output."
 msgstr ""
+"La Tourelle à plasma V2 n'est pas particulièrement impressionnante comparée "
+"à d'autres tourelles de taille moyenne, mais elle est parfois plébiscitée "
+"par les Corvettes pour son poids inhabituellement faible au regard de sa "
+"portée et de ses dégâts."
 
 msgid ""
 "The Light Pulse Cannon is a technologically advanced upgrade to the Laser "
@@ -16135,9 +16250,9 @@ msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, and shields."
 msgstr ""
-"Cette version de qualité militaire du Patrouilleur présente des "
-"caractéristiques quasiment identiques à celles d'un Patrouilleur standard, "
-"mais dispose d'une armure et de boucliers légèrement plus performants."
+"Cette version de qualité militaire du Pacifieur présente des "
+"caractéristiques quasiment identiques à celles d'un Pacifieur standard, mais "
+"dispose d'une armure et de boucliers légèrement plus performants."
 
 msgid ""
 "Designed by an Imperial Combat Bureaucrat for personal use, the Pacifier "
@@ -16153,10 +16268,10 @@ msgid ""
 "recovery process can be accelerated by performing an active cooldown cycle."
 msgstr ""
 "Conçu par un bureaucrate impérial chargé d'opérations de combat pour son "
-"usage personnel, le Patrouilleur Hoplite est resté à l'état de projet "
-"pendant plus de 50 cycles avant d'être finalement approuvé et produit par "
-"les Chantiers Spatiaux Nexus. Malheureusement, le bureaucrate qui l'avait "
-"conçu est décédé avant d'avoir pu voir son œuvre achevée.\n"
+"usage personnel, le Pacifieur Hoplite est resté à l'état de projet pendant "
+"plus de 50 cycles avant d'être finalement approuvé et produit par les "
+"Chantiers Spatiaux Nexus. Malheureusement, le bureaucrate qui l'avait conçu "
+"est décédé avant d'avoir pu voir son œuvre achevée.\n"
 "\n"
 "Au lieu de boucliers standards, ce vaisseau utilise des condensateurs à "
 "décharge rapide capables de stocker nettement plus d’énergie. Cependant, ils "
@@ -16435,8 +16550,8 @@ msgid ""
 "Overall a very solid combat ship."
 msgstr ""
 "C'est un vaisseau de combat très polyvalent. Nexus décrit l'Admoniteur comme "
-"un compromis entre la robustesse du Patrouilleur et l'agilité du Lancelot. "
-"Dans l'ensemble, c'est un vaisseau de combat très solide."
+"un compromis entre la robustesse du Pacifieur et l'agilité du Lancelot. Dans "
+"l'ensemble, c'est un vaisseau de combat très solide."
 
 msgid ""
 "The Admonisher ΩIIa makes the hard choice of sacrificing long-range "
@@ -16574,6 +16689,22 @@ msgid ""
 "second hand Goddards are reconfigured and re-sold as 'Merchantman' variants."
 msgstr ""
 
+msgid "Godmother"
+msgstr ""
+
+msgid ""
+"While carriers have never been popular in the Dvaered fleet, that hasn't "
+"stopped House Goddard from attempting to introduce more and more carrier "
+"elements into their premiere ships. With this latest attempt, they have "
+"taken a decisive step forward, appealing to House Dvaered's preference for "
+"kinetic and ballistic weaponry. The newly dubbed \"Godmother\" focuses on "
+"enhancing the effectiveness of fielded bombers, retrofitting every deployed "
+"ship with massively increased ammunition reserves and enhanced firing "
+"logistics. The result of these enhancements is an anti-capital ship that can "
+"ravage all but the most hardened of foes, at the cost of struggling against "
+"the more diverse, well-rounded fleets run by other carriers."
+msgstr ""
+
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -16688,11 +16819,11 @@ msgid ""
 "withstand heavy punishment from raiding parties. The Pacifier features high "
 "fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
-"Le Patrouilleur est l'un des modèles les plus anciens et les plus fiables "
-"des Chantiers Spatiaux Nexus. Conçu à l'origine comme un vaisseau de "
-"patrouille frontalière, il est capable de résister aux assauts violents de "
-"forces ennemies. Le Patrouilleur dispose d'une grande capacité en carburant, "
-"ce qui lui permet d'effectuer de longues missions de patrouille."
+"Le Pacifieur est l'un des modèles les plus anciens et les plus fiables des "
+"Chantiers Spatiaux Nexus. Conçu à l'origine comme un vaisseau de patrouille "
+"frontalière, il est capable de résister aux assauts violents de forces "
+"ennemies. Le Pacifieur dispose d'une grande capacité en carburant, ce qui "
+"lui permet d'effectuer de longues missions de patrouille."
 
 msgid ""
 "The Phalanx is, by Dvaered standards, a fast corvette that can be used as a "
@@ -17161,7 +17292,7 @@ msgstr "Nécessite au moins 50 de réputation avec l'Empire."
 
 msgid ""
 "The Soromid Arx usually features in Soromid fleets as a command vessel and "
-"fighter carrier. Its unique properties allow it amply the strength of its "
+"fighter carrier. Its unique properties allow it amplify the strength of its "
 "carried ships, which easily makes up for its reduced number of slots. The "
 "Arx tends to be a more lightweight carrier than is typically found in non-"
 "Soromid fleets, without sacrificing carrying capacity."
@@ -17821,6 +17952,14 @@ msgstr ""
 
 msgid "Aldous' Moon"
 msgstr "La lune d’Aldous"
+
+msgid ""
+"Similar to its primary Aldous, the moon is covered in a sea of toxins. "
+"However, one significant difference is high concentrations of iron and "
+"oxygen that react and give the moon its characteristic red shade. This also "
+"happens to make it particularly unsuitable for the production of positronic "
+"circuitry, leaving it without the one attractive quality of Aldous."
+msgstr ""
 
 msgid "Aleph"
 msgstr "Aleph"
@@ -18822,7 +18961,7 @@ msgid ""
 msgstr ""
 "Astana abrite le Centre Impérial d'Essais des Armes Expérimentales, "
 "communément abrégé en CIEAE. C'est ici que la plupart des nouvelles armes et "
-"des nouveaux équipements destinés aux forces impériales sont testés et "
+"des nouveaux modules destinés aux forces impériales sont testés et "
 "homologués avant leur mise en service. La planète est idéale pour ce rôle : "
 "hormis les scientifiques qui y travaillent, personne n'a vraiment envie d'y "
 "séjourner."
@@ -20438,13 +20577,13 @@ msgid ""
 "shadier characters in the universe, leading to frequent fights in which they "
 "test their newly bought outfits."
 msgstr ""
-"Réputée pour son marché d'équipements et ses chantiers spatiaux, la station "
+"Réputée pour son marché de modules et ses chantiers spatiaux, la station "
 "Refuge Obscur est presque entièrement consacrée au commerce de vaisseaux et "
-"d'équipements. Mercenaires et chasseurs de primes venus de toute la galaxie "
-"s'y rendent pour découvrir et tester les dernières améliorations "
-"disponibles. Cette réputation attire également quantité d'individus peu "
-"recommandables, si bien que les bagarres y sont fréquentes, chacun cherchant "
-"à mettre immédiatement à l'épreuve son nouvel équipement."
+"de modules. Mercenaires et chasseurs de primes venus de toute la galaxie s'y "
+"rendent pour découvrir et tester les dernières améliorations disponibles. "
+"Cette réputation attire également quantité d'individus peu recommandables, "
+"si bien que les bagarres y sont fréquentes, chacun cherchant à mettre "
+"immédiatement à l'épreuve son nouveau module."
 
 msgid ""
 "The Darkshed canteen is decorated with all sorts of odd artefacts that "
@@ -20452,7 +20591,7 @@ msgid ""
 "was established. Scale models of many popular ships hang from the ceiling."
 msgstr ""
 "La cantine de Refuge Obscure est décorée d'une étonnante collection d'objets "
-"retraçant l'évolution des équipements de vaisseaux depuis la fondation de la "
+"retraçant l'évolution des modules de vaisseaux depuis la fondation de la "
 "station. De nombreuses maquettes des appareils les plus populaires sont "
 "suspendues au plafond."
 
@@ -22457,8 +22596,21 @@ msgstr ""
 msgid "Fortitude I"
 msgstr "Fortitude I"
 
+msgid ""
+"Fortitude I's composition is actually shockingly similar to Fortitude's. If "
+"it had just accrued a bit more mass, Fortitude would have been a system with "
+"twin stars."
+msgstr ""
+
 msgid "Fortitude II"
 msgstr "Fortitude II"
+
+msgid ""
+"All attempts at establishing a colony and exploiting the planet's resources "
+"concluded with a rescue mission from Omega Enclave. This has led to talks of "
+"declaring Fortitude II a protected military zone just to drive them away, "
+"but nothing involving the bureaucracy goes fast."
+msgstr ""
 
 msgid "Fortitude III"
 msgstr "Fortitude III"
@@ -22580,8 +22732,8 @@ msgid ""
 msgstr ""
 "Sans être particulièrement bien construite, la Station Furie remplit "
 "parfaitement son rôle. Elle possède un chantier spatial proposant la plupart "
-"des vaisseaux pirates courants ainsi qu'un atelier offrant un vaste choix "
-"d'équipements. On y trouve même quelques articles indisponibles sur la "
+"des vaisseaux pirates courants ainsi qu'un équipementier offrant un vaste "
+"choix de modules. On y trouve même quelques articles indisponibles sur la "
 "planète voisine Sanchez."
 
 msgid "Fuzka"
@@ -26825,8 +26977,19 @@ msgstr ""
 msgid "Merisi II"
 msgstr "Merisi II"
 
+msgid ""
+"While similar to Merisi I, Merisi II never saw life develop. It would be "
+"hospitable world though, if anyone cared to build a colony."
+msgstr ""
+
 msgid "Merisi III"
 msgstr "Merisi III"
+
+msgid ""
+"The incredibly brittle surface of this planet quite literally explodes when "
+"subjected to too much force, rendering mining operations unviable. Some "
+"tried repurposing Imperator-class missiles, to little economic success."
+msgstr ""
 
 msgid "Merisi IV"
 msgstr "Merisi IV"
@@ -28553,7 +28716,7 @@ msgid ""
 msgstr ""
 "Le bar du spatioport est clairement conçu pour le commerce. On y trouve des "
 "salons privés, des tables équipées de terminaux de données intégrés, un "
-"service d'équipement des vaisseaux et des cartes présentant les meilleures "
+"vendeur de modules de vaisseaux et des cartes présentant les meilleures "
 "opportunités commerciales des systèmes voisins. L'endroit n'est jamais "
 "bondé, mais l'activité constante laisse penser que la Station Opale commence "
 "lentement à rentabiliser son investissement."
@@ -28693,6 +28856,11 @@ msgstr "Ozogo X"
 msgid "P0125"
 msgstr "P0125"
 
+msgid ""
+"This rock is only notable for being the most barren and desolate known "
+"object in the most barren and desolate region of known space."
+msgstr ""
+
 msgid "P-13571"
 msgstr "P-13571"
 
@@ -28719,11 +28887,23 @@ msgstr "P-15919"
 msgid "P2020"
 msgstr "P2020"
 
+msgid ""
+"Thought to be little more than a cold gaseous body after basic scans "
+"conducted long before the Incident and left alone since then, it was "
+"observed the Collective seemed to have some level activity on it for an "
+"unknown reason. Perhaps it actually has noteworthy resources buried deep?"
+msgstr ""
+
 msgid "P2021"
 msgstr "P2021"
 
 msgid "P2022"
 msgstr "P2022"
+
+msgid ""
+"C-28 is such a cold star that even being so close to it doesn't save P2022 "
+"from being a frozen rock."
+msgstr ""
 
 msgid "P-2317"
 msgstr "P-2317"
@@ -28782,6 +28962,12 @@ msgstr "P-880"
 msgid "P9122"
 msgstr "P9122"
 
+msgid ""
+"Although it is unclear how such a celestial body formed in a star-less "
+"system, this doesn't exactly make P9122 \"interesting\", and is just another "
+"cold body lost in space."
+msgstr ""
+
 msgid "P-9172"
 msgstr "P-9172"
 
@@ -28790,6 +28976,14 @@ msgstr "P-9199"
 
 msgid "P9234"
 msgstr "P9234"
+
+msgid ""
+"Though it has seen colonies in the past, this world had always been far too "
+"hostile and insignificant to be attributed a common name. When the planet "
+"was evacuated in response to the Collective's attacks, few of it's "
+"inhabitants regretted having to leave it behind, knowing whatever world the "
+"Empire would relocate them to could only be better."
+msgstr ""
 
 msgid "P-9832"
 msgstr "P-9832"
@@ -31000,13 +31194,12 @@ msgstr ""
 "Bien que sa réputation soit entretenue discrètement, en raison de la nature "
 "des nombreuses transactions qui s'y déroulent, la Station Shangris est "
 "célèbre pour être l'endroit où l'on peut se procurer à peu près n'importe "
-"quel équipement, à condition de ne pas poser de questions sur son origine. "
-"Un flot ininterrompu de vaisseaux de toutes sortes y transite, transportant "
-"des individus de tous horizons. On y croise aussi bien des criminels "
-"endurcis que des pilotes tout à fait ordinaires, voire ce qui ressemble fort "
-"à des bureaucrates impériaux très maladroitement déguisés. Ici, tout semble "
-"permis tant que l'on reste discret et que l'on ne provoque pas trop de "
-"désordre."
+"quel module, à condition de ne pas poser de questions sur son origine. Un "
+"flot ininterrompu de vaisseaux de toutes sortes y transite, transportant des "
+"individus de tous horizons. On y croise aussi bien des criminels endurcis "
+"que des pilotes tout à fait ordinaires, voire ce qui ressemble fort à des "
+"bureaucrates impériaux très maladroitement déguisés. Ici, tout semble permis "
+"tant que l'on reste discret et que l'on ne provoque pas trop de désordre."
 
 msgid ""
 "Whether you're looking to get black out drunk, get into fights with the "
@@ -39380,6 +39573,7 @@ msgstr ""
 #. -- doing the task, or false otherwise.
 #. --
 #. Needs to have a target
+#. Effective armour+shield left
 #. Use some outfits in some non-combat situations
 #. Runaway if needed
 #. Carried fighters are a bit more jumpy
@@ -40221,7 +40415,7 @@ msgstr ""
 #. Flow
 #. We ignore if plugins are enabled
 msgid "Unknown outfit"
-msgstr "Équipement inconnu"
+msgstr "Module inconnu"
 
 #. Late game challenge
 #. Finish up creation
@@ -41214,10 +41408,10 @@ msgstr "\"Suspension temporaire des hostilités.\""
 #. --
 #. First check, make sure required slots are equipped
 msgid "Missing Required Outfits"
-msgstr ""
+msgstr "Modules requis absents"
 
 msgid "Please equip all required outfit slots first!"
-msgstr ""
+msgstr "Vous devez d'abord équiper tous les modules requis !"
 
 #. Make sure
 msgid "Autoequip Confirmation"
@@ -42303,6 +42497,7 @@ msgstr ""
 #. <event name="Ship Capture">
 #. <location>none</location>
 #. <chance>0</chance>
+#. <priority>99</priority>
 #. <tags>
 #. <tag>fleetcap_10</tag>
 #. </tags>
@@ -43905,6 +44100,7 @@ msgstr ""
 #. --Event for Frontier Invasion campaign. The player must help general Klank getting extra-funding (just a text-completion minigame)
 #. --
 #. hook.rm(mem.jumpingTam)
+#. Tam has nothing to say at stage 0
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Dvaered Sabotage">
@@ -44067,7 +44263,7 @@ msgid "Klank"
 msgstr ""
 
 msgid "Battleaddict"
-msgstr ""
+msgstr "Belliqueux"
 
 msgid ""
 "General context: Task force 5613 was created in anticipation of the planned "
@@ -44446,8 +44642,8 @@ msgid ""
 msgstr ""
 "\"L'Épreuve écarlate vous permet de vivre des combats spatiaux avec vos "
 "propres vaisseaux en réalité virtuelle, sans avoir à vous soucier du moindre "
-"dommage réel. Il vous suffit de scanner votre vaisseau et ses équipements, "
-"et vous serez prêt à participer à tous les défis.\""
+"dommage réel. Il vous suffit de scanner votre vaisseau et ses modules, et "
+"vous serez prêt à participer à tous les défis.\""
 
 #. incident is 593:3726.4663
 msgid ""
@@ -45090,7 +45286,7 @@ msgid ""
 msgstr ""
 "\"Écoutez, nous n’avons plus beaucoup de temps. Une flotte conjointe de "
 "l’Empire et des Dvaered est sur le point d’arriver depuis {sys}. Ils ont des "
-"Pacificateurs, des Faucons, des Goddards, des Patrouilleurs, la totale. Ils "
+"Pacificateurs, des Faucons, des Goddards, des Pacifieurs, la totale. Ils "
 "sont prêts à nous rayer de la carte. {player}, je ne sais pas comment vous "
 "dire ça, mais…\" Bénito fouille un peu dans ses poches avant d’en sortir une "
 "petite puce électronique. \"Tenez, prennez ça », dit-elle en la glissant "
@@ -47071,9 +47267,9 @@ msgid ""
 "\"Critics of Minerva Station say that being able to acquire nice outfits "
 "here without needing licences increases piracy. I think they are all lame!\""
 msgstr ""
-"\"Les détracteurs de la station Minerve disent que vendre ici des "
-"équipements sans exiger de licence encourage la piraterie. Moi, je les "
-"trouve franchement rabat-joie !\""
+"\"Les détracteurs de la station Minerve disent que vendre ici des modules "
+"sans exiger de licence encourage la piraterie. Moi, je les trouve "
+"franchement rabat-joie !\""
 
 msgid ""
 "\"I really want to go to the VIP hot springs they have, but I don't have the "
@@ -57585,6 +57781,38 @@ msgid ""
 msgstr ""
 
 #. Doesn't block normal finishing
+msgid "Godwedded"
+msgstr ""
+
+msgid ""
+"A rogue cell has recently captured an experimental carrier variant of the "
+"Goddard Battleship refitted with fighter optimization technology. While the "
+"ship is old and House Goddard would not normally be too fussed about one of "
+"their mothballed hulks being hauled off, there are worries that the carrier "
+"was stolen by a rogue Za'lek cell with an interest in reverse-engineering "
+"the proprietary technology. The ship must be either destroyed or taken off "
+"the hands of anyone interested in researching it."
+msgstr ""
+
+msgid ""
+"As you break into the ship, you shoot down a number of personal defense "
+"drones. The ship seems severely understaffed, with small maintenance drones "
+"making up the bulk of the workforce. With them soundly defeated, you push "
+"in. The person at the helm bears Za'lek cybernetic augmentations, but "
+"otherwise is wearing much more raggy, pirate-appropriate attire. They "
+"attempt to start a long-winded diatribe about the value of the technology "
+"aboard the vessel, but you're not in the mood for an unintelligible lecture "
+"today, subduing them with a shot in the arm and rapidly taking them into "
+"custody. It seems none of their implements were built to help them in a "
+"fight."
+msgstr ""
+
+msgid "Godfather"
+msgstr ""
+
+msgid "You have no idea what sort of technology we're dealing with here!"
+msgstr ""
+
 msgid "Conversion Therapy"
 msgstr ""
 
@@ -59028,9 +59256,8 @@ msgstr ""
 msgid "Go back to beginning of the hallway"
 msgstr ""
 
-#, fuzzy
 msgid "Go to the outfitter"
-msgstr "Pour la Frontière !"
+msgstr "Aller chez l'équipementier"
 
 #, fuzzy
 msgid "Go to the shipyard"
@@ -59817,29 +60044,29 @@ msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
-"Le ciel nocturne attire toujours nos yeux. Les gens lèvent les yeux avec une "
-"question, ou avec émerveillement, et parfois avec un rêve : s'aventurer "
-"parmi les étoiles."
+"Le ciel étoilé a toujours fasciné les hommes. Ils lèvent les yeux vers lui, "
+"emplis de questions ou d’émerveillement, et parfois animés d’un rêve : "
+"partir à l’aventure parmi les étoiles."
 
-#, fuzzy
 msgid ""
 "From Earth, the first spacefarers spied tiny jewels shining with the light "
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
-"Depuis la Terre, les premiers spationautes ont aperçu de minuscules joyaux "
-"brillants à la lumière de soleils lointains, lointains mais si clairs. Pour "
-"les atteindre et les saisir ne coûterait qu’une vie. Bon marché à ce prix."
+"Depuis la Terre, les premiers spationautes observaient les minuscules joyaux "
+"brillant de la lumière de soleils lointains. Ils étaient si éloignés, et "
+"pourtant si nets. En atteindre un, le toucher de leurs propres mains, ne "
+"leur coûterait qu’une vie entière. Un prix dérisoire, somme toute."
 
 msgid ""
 "So men and women locked their sleeping bodies into hulking metal boxes. They "
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
-"Ainsi, les hommes et les femmes ont enfermé leurs corps endormis dans "
-"d'immenses boîtes métalliques. Ils se sont précipités dans le vide. À leur "
-"arrivée, ils ont décanté et se sont réveillés pour trouver de nouvelles "
-"étoiles regardant froidement depuis des cieux étrangers."
+"Ainsi, les hommes et les femmes enfermèrent leurs corps endormis dans "
+"d'immenses boîtes métalliques, et se lancèrent dans le vide spatial. À leur "
+"arrivée, ils furent tirés de leur sommeil et s’éveillèrent sous des cieux "
+"étrangers, où de nouvelles étoiles les contemplaient d'un éclat glacial."
 
 msgid ""
 "The first wave of explorers crept from star to star at sub-light speeds, "
@@ -59847,11 +60074,11 @@ msgid ""
 "civilization spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
-"La première vague d'explorateurs s'est glissée d'étoile en étoile à des "
-"vitesses infraluminiques, jusqu'à ce que l'invention de la pulsion de "
-"l'hyperespace entraîne une deuxième expansion. Puis la civilisation s'est "
-"répandue, comme elle l'a toujours fait, avec un enthousiasme exponentiel -- "
-"des ondulations dans la mer sombre de l'espace."
+"La première vague d’explorateurs progressa d’étoile en étoile à des vitesses "
+"infraluminiques, jusqu'à ce que l'invention de la propulsion hyperspatiale "
+"entraîne une deuxième expansion. La civilisation s’étendit alors, comme elle "
+"l’a toujours fait, avec un enthousiasme exponentiel, comme une onde se "
+"propageant à la surface de la mer obscure de l’espace."
 
 msgid ""
 "However, the heroic age of discovery lasted only as long as human curiosity "
@@ -59859,18 +60086,18 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
-"Cependant, l'âge héroïque de la découverte n'a duré que tant que la "
-"curiosité humaine a dépassé la cupidité. Trop tôt, des conflits ont éclaté "
-"dans les colonies. La terre, le carburant, la nourriture et la méfiance ont "
-"semé les graines de la discorde. Une fois commencée, la fièvre de la guerre "
-"se répandit de monde en monde et devint un holocauste."
+"Cependant, l’âge héroïque des découvertes ne dura que tant que la curiosité "
+"humaine devança sa cupidité. Bien vite, les colonies furent le théâtre de "
+"conflits. La terre, le carburant, la nourriture et la méfiance semèrent les "
+"graines de la discorde. Une fois déclenchée, la fièvre de la guerre se "
+"propagea de monde en monde, jusqu’à devenir un véritable holocauste."
 
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
-"Après cent ans de conflits interstellaires, sur les cendres qui sont "
-"restées, un nouvel ordre a construit ses fondations."
+"Après un siècle de conflits interstellaires, sur les cendres de ce qui "
+"subsistait, un nouvel ordre posa enfin ses fondations."
 
 msgid ""
 "A man named Daedris asserted dominion over the exhausted worlds. He founded "
@@ -59878,20 +60105,20 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
-"Un homme nommé Daedris a affirmé la domination sur les mondes épuisés. Il "
-"fonda un Empire Galactique et s’en nomma souverain. Sous la main de fer de "
-"ses militaires, les relations entre les planètes reprirent ; les routes "
-"commerciales abandonnées ont vu le trafic pour la première fois dans la "
-"mémoire d'homme."
+"Un homme du nom de Daedris imposa sa domination aux mondes épuisés. Il fonda "
+"un Empire galactique et s’en proclama souverain. Sous la poigne de fer de "
+"son armée, les relations entre les planètes reprirent leur cours ; les "
+"routes commerciales abandonnées virent à nouveau passer des vaisseaux, pour "
+"la première fois depuis des générations."
 
 msgid ""
 "Scholars call it the zenith: technology leapt forward, culture flourished, "
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
-"Les érudits l'appellent le zénith : la technologie a bondi en avant, la "
-"culture a prospéré, la roche irradiée a été nettoyée et les planètes mortes "
-"ont été ramenées à la vie. La paix régnait dans un âge d'or impérial."
+"Les érudits parlent d’un apogée : la technologie fit des bonds prodigieux, "
+"la culture s’épanouit, les roches irradiées furent purifiées et les planètes "
+"mortes ramenées à la vie. La paix régna durant cet âge d’or impérial."
 
 msgid ""
 "After Daedris, under his successors, the light of the empire waned. Civil "
@@ -59899,33 +60126,35 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
-"Après Daedris, sous ses successeurs, la lumière de l'empire s'est affaibli. "
-"Les troubles civils et la division religieuse affaiblissent les liens "
-"sociaux. Les grands projets de l'imperium tournent mal. Dans certaines "
-"régions, l'administration est tombée entre les mains d'autres puissances. "
-"Les Grandes Maisons surveillaient maintenant les voies spatiales."
+"Après Daedris, sous le règne de ses successeurs, la lumière de l’Empire "
+"commença à décliner. Les luttes intestines et les divisions religieuses "
+"érodèrent les liens sociaux. Les grands projets de l’Imperium tournèrent au "
+"désastre. Dans certaines régions, l’administration passa aux mains d’autres "
+"puissances. Désormais, les Grandes Maisons faisaient régner l’ordre sur les "
+"voies spatiales."
 
 msgid "Rise and fall, the rhythm of history."
-msgstr "L'ascension et la chute, le rythme de l’histoire."
+msgstr "L’ascension et la chute, le rythme de l’Histoire."
 
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr "Mais la marche de l'histoire a trébuché sur l'inconnu, sur l'Incident."
+msgstr ""
+"Mais la marche de l’Histoire trébucha face à l’inconnu, face à l’Incident."
 
 msgid "It tore the heart out of the Empire."
-msgstr "Cela a déchiré le cœur de l'Empire."
+msgstr "Celui-ci arracha le cœur même de l’Empire."
 
-#, fuzzy
 msgid ""
 "From Earth, a cataclysmic explosion ripped through space, annihilating "
 "stars, vaporizing worlds. Billions died. Dozens of systems disappeared into "
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilization survives as a shadow of its former glory."
 msgstr ""
-"Depuis la Terre, une explosion cataclysmique a déchiré l'espace, "
-"anéantissant les étoiles, vaporisant les mondes. Des milliards sont morts. "
-"Des dizaines de systèmes ont disparu dans la mystérieuse nébuleuse laissée "
-"derrière. Aujourd'hui, la grande civilisation galactique survit comme "
-"l'ombre de sa gloire passée."
+"Depuis la Terre, une explosion cataclysmique déchira l’espace, annihilant "
+"des étoiles et vaporisant des mondes. Des milliards de vies furent fauchées. "
+"Des dizaines de systèmes stellaires disparurent dans la mystérieuse "
+"nébuleuse laissée derrière elle. Désormais, la grande civilisation qui "
+"s’étendait jadis à travers toute la galaxie n’est plus que l’ombre de sa "
+"gloire passée."
 
 msgid "What else remains? Questions."
 msgstr "Que reste-t-il d'autre ? Des questions."
@@ -59935,9 +60164,10 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
-"Les Dix Cycles Standard sont passés dans un univers régi par les éclats d'un "
-"empire en déclin. Après l'Incident, la corruption et la piraterie sont "
-"endémiques, mais là où règne le chaos, il y a aussi des opportunités."
+"Dix cycles standards se sont écoulés dans un univers dominé par les "
+"fragments d’un empire en décomposition. Depuis l’Incident, la corruption et "
+"la piraterie font rage. Mais là où règne le chaos se trouvent aussi des "
+"opportunités."
 
 msgid "Welcome to the universe of Naev..."
 msgstr "Bienvenue dans l'univers de Naev…"
@@ -61625,7 +61855,7 @@ msgid ""
 "the Great Project Thurion, as we were deemed a threat. Those that managed to "
 "survive, laid low for many cycles. When what you call the Incident happened, "
 "we saw it as a chance to grow. Since we survived largely unscathed thanks to "
-"our biological nature. Many survivors also joined our ranks.\""
+"our technological nature. Many survivors also joined our ranks.\""
 msgstr ""
 
 msgid ""
@@ -62368,7 +62598,7 @@ msgstr ""
 
 #. luacheck: globals nooutfit (used in POI framework)
 msgid "Your ship AI {shipai} materializes before you."
-msgstr "L'IA de votre vaisseau {shipai} apparaît devant vous."
+msgstr "{shipai}, l'IA de votre vaisseau, apparaît devant vous."
 
 msgid ""
 "\"It seems like there has been a significant update to the game!\n"
@@ -62395,11 +62625,11 @@ msgstr ""
 "\"Avec cette mise à jour, de nombreux mécanismes et fonctionnalités ont été "
 "modifiés. Le changement le plus important concerne la refonte de la #oGuerre "
 "électronique#0, qui intègre désormais un nouveau mécanisme de furtivité. "
-"Dans ce nouveau système, vous serez repérés par les vaisseaux de "
-"patrouille ; vous devrez donc redoubler de prudence lorsque vous transportez "
-"des cargaisons illégales ou portez des tenues interdites. Vous pouvez "
-"activer la furtivité à l'aide de {stealthkey} lorsqu'aucun vaisseau ne se "
-"trouve à proximité.\""
+"Dans ce nouveau système, vous serez repérés par les vaisseaux de patrouille. "
+"Vous devrez donc redoubler de prudence si vous transportez des cargaisons "
+"illégales ou utilisez des modules interdits. Vous pouvez activer la "
+"furtivité à l'aide de {stealthkey} lorsqu'aucun vaisseau ne se trouve à "
+"proximité.\""
 
 #. 0.10.0 changes
 msgid ""
@@ -62925,7 +63155,7 @@ msgstr ""
 #. return false
 #. end
 #. local st = s:tags()
-#. if st.restricted then
+#. if st.restricted or st.nonpc then
 #. return false
 #. end
 #. local sf = s:faction()
@@ -66831,7 +67061,7 @@ msgstr ""
 #. <location>Bar</location>
 #. <faction>Dvaered</faction>
 #. <done>Destroy the FLF base!</done>
-#. <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
+#. <cond>system.get("Tarsus"):jumpDist() &lt; 4</cond>
 #. <notes>
 #. <campaign>Frontier Invasion</campaign>
 #. <requires name="The FLF is dead"/>
@@ -67229,7 +67459,7 @@ msgid ""
 msgstr ""
 
 msgid "Meet Battleaddict around {pnt} in {sys}"
-msgstr "Rencontrez Battleaddict autour de {pnt} dans {sys}"
+msgstr "Rencontrez Belliqueux autour de {pnt} dans {sys}"
 
 msgid "Deposit Hamfresser on {pnt} in {sys}"
 msgstr "Dépôt Hamfresser sur {pnt} dans {sys}"
@@ -68197,7 +68427,7 @@ msgid ""
 msgstr ""
 
 #. give him top equipment
-#. TODO switch to equipopt
+#. Consistent
 #. Behaviour
 #. /!\ We did not claim this system /!#. In the case the player successfully lands or uses an hypergate.
 #. Taking off is already managed by the enter hook.
@@ -69888,8 +70118,8 @@ msgstr ""
 "nous deux, le Général Klank, quelques membres de la famille de Strafer, et "
 "certains de ses anciens camarades d'avant son entrée dans l'escadron. Le "
 "résultat de la compétition déterminera comment les équipements personnels de "
-"Strafer seront distribués. Cela inclut deux Vendettas, de bons équipements, "
-"des armes et des utilitaires.\"\n"
+"Strafer seront distribués. Cela inclut deux Vendettas, de bons modules, des "
+"armes et des utilitaires.\"\n"
 "   \"Venez me voir quand vous serez prêt à décoller\"."
 
 msgid ""
@@ -72508,6 +72738,12 @@ msgstr "Vous avez collecté suffisamment de données sur les vaisseaux pirates"
 msgid "Dvaered Delivery"
 msgstr "Livraison Dvaered"
 
+msgid "Bony Boudica"
+msgstr ""
+
+msgid "This agent is an intermediate between the Empire and Dvaered."
+msgstr ""
+
 #. Define the cargo commodity
 msgid "Secret Cargo"
 msgstr "Cargaison secrète"
@@ -72630,6 +72866,7 @@ msgstr ""
 
 #. Player makes it to the second rendez-vous point. An overly complicated discussion happens to show how messy the Dvaered-Imperial black-ops system is.
 #. Remove scan hook.
+#. Add boudica at the bar
 #. Player meets Boudica again after having captured Shaky Swan.
 #. Player gets finally paid
 msgid "Intermediate"
@@ -72730,15 +72967,8 @@ msgid ""
 msgstr ""
 
 #. Add boudica at the bar
-#. Discussion with agent Boudica about the interception of the "Shaky Swan"
-msgid "Bony Boudica"
-msgstr ""
-
-msgid "This agent is an intermediate between the Empire and Dvaered."
-msgstr ""
-
-#. Add boudica at the bar
 #. Done with the cargo
+#. Just in case the player accidentally takes off
 msgid "Meet Bony Boudica at the {pnt} bar in the {sys} system."
 msgstr ""
 
@@ -72867,6 +73097,8 @@ msgid ""
 "cargo and to abort the mission."
 msgstr ""
 
+#. Add boudica at the bar
+#. Discussion with agent Boudica about the interception of the "Shaky Swan"
 msgid ""
 "\"I don't know how much you understood of our conversation at the spaceport, "
 "but now we need you to disable the ship of a pilot named 'Shaky Swan'. He is "
@@ -77371,7 +77603,7 @@ msgstr ""
 #. <done>Assault on Raelid</done>
 #. <location>Bar</location>
 #. <faction>FLF</faction>
-#. <cond>spob.cur():reputation("FLF") &gt;= 70</cond>
+#. <cond>math.floor(spob.cur():reputation("FLF")+0.5) &gt;= 70</cond>
 #. <notes>
 #. <campaign>Save the Frontier</campaign>
 #. </notes>
@@ -77926,8 +78158,7 @@ msgstr[1] ""
 "système {sys}. Éliminez-la."
 
 msgid " There is a Pacifier among them, so you must proceed with caution."
-msgstr ""
-" Il y a un Patrouilleur parmi eux, vous devez donc faire très attention."
+msgstr " Il y a un Pacifieur parmi eux, vous devez donc faire très attention."
 
 msgid " There is a Hawking among them, so you must be very careful."
 msgstr " Il y a un Faucon parmi eux, vous devez donc faire très attention."
@@ -79388,7 +79619,7 @@ msgstr ""
 "\"Une fois, on menait une opération de chasseur de primes classique dans "
 "Delta Pavonis : un bureaucrate militaire de l’Empire avait une prime sur la "
 "tête, et je me suis dit qu’on pourrait aussi bien en profiter. D’après nos "
-"sources, il devait piloter un Patrouilleur, pas de problème, non ? En fait, "
+"sources, il devait piloter un Pacifieur, pas de problème, hein ? En fait, "
 "c’était un fichu Pacificateur avec toute son escorte.\""
 
 msgid ""
@@ -90465,7 +90696,7 @@ msgid "Associate Admonisher"
 msgstr "Admoniteur associé"
 
 msgid "Associate Pacifier"
-msgstr "Patrouilleur Associé"
+msgstr "Pacifieur Associé"
 
 msgid "Associate Hawking"
 msgstr ""
@@ -100220,7 +100451,7 @@ msgid "Join the emergency Onion Society conclave."
 msgstr ""
 
 msgid "Your ship AI {shipai} materializes in front of you."
-msgstr ""
+msgstr "{shipai}, l'IA de votre vaisseau, apparaît devant vous."
 
 #. Is it truly your SAI, or is it... DOG!??!
 msgid ""
@@ -106183,7 +106414,7 @@ msgstr "Le pirate s'est enfui."
 #. Stages :
 #. 0) Way to Toaxis
 #. 1) Battle
-#. 2) Going to Darkshed
+#. 2) Going to HQ
 #. --
 #. Non-persistent state
 #. Change here to change the planet and the system
@@ -106312,11 +106543,10 @@ msgstr "Vous avez détruit le Lancelot."
 #.
 #. Stages :
 #. 0) Way to Sirius world
-#. 1) Way to Darkshed
+#. 1) Way to HQ
 #. --
 #. Non-persistent state
 #. Forward-declared functions
-#. Mission constants
 #. the chances you have to get an ambush
 msgid ""
 "You sit at Smith's table and ask him if he has a job for you. \"Of course,\" "
@@ -106356,7 +106586,7 @@ msgstr ""
 "pourrait être complètement évincé de l'espace Frontiérien. Nous nous "
 "retrouverions alors pris en étau entre la Maison Dvaered et la Maison "
 "Sirius. Certes, le FLF continuerait probablement d'utiliser quelques "
-"Patrouilleurs, mais ce ne serait plus qu'un marché de façade. Sans parler du "
+"Pacifieurs, mais ce ne serait plus qu'un marché de façade. Sans parler du "
 "fait que les autorités commenceraient à nous associer au terrorisme.\""
 
 msgid ""
@@ -106465,7 +106695,7 @@ msgstr "Mercenaire amateur"
 #. <done>Unfair Competition</done>
 #. <chance>50</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
+#. <cond>spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -106477,7 +106707,7 @@ msgstr "Mercenaire amateur"
 #.
 #. Stages :
 #. 0) Way to Frontier system
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #. --
 #. Non-persistent state
 #. Mission constants
@@ -106547,13 +106777,8 @@ msgstr ""
 msgid ""
 "You helped Nexus Shipyards initiate a secret meeting with a member of the "
 "Frontier Council. Arnold Smith said that he has another mission for you and "
-"to meet him in the bar on Darkshed when you are ready to transport him to "
-"Curie."
+"to meet him in the bar on {pnt} when you are ready to transport him to Curie."
 msgstr ""
-"Vous avez aidé les chantiers spatiaux Nexus à organiser une rencontre "
-"secrète avec un membre du Conseil de la Frontière. Arnold Smith vous a "
-"indiqué qu'il avait une nouvelle mission à vous confier. Retrouvez-le au bar "
-"de Refuge Obscur lorsque vous serez prêt à le transporter jusqu'à Curie."
 
 #. the system where the player must look for the Hawking
 msgid "Air Force One"
@@ -106578,7 +106803,7 @@ msgstr ""
 #. <done>Invitation</done>
 #. <chance>100</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
+#. <cond>spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -106589,7 +106814,7 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Za'lek system
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #.
 #. TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
 #. --
@@ -106719,9 +106944,8 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Eiger/Surano
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #. --
-#. Mission constants
 #. Change here to change the planets and the systems
 #. This should be the same as the system used in sh06!
 msgid "It looks like he has yet another job for you."
@@ -106838,8 +107062,7 @@ msgstr ""
 #. <done>The FLF Contact</done>
 #. <chance>100</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
-#. <cond>not diff.isApplied( "flf_dead" )</cond>
+#. <cond>not diff.isApplied( "flf_dead" ) and spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -106850,7 +107073,7 @@ msgstr ""
 #.
 #. Stages :
 #. 0) Way to Behar
-#. 1) Way back to Darkshed
+#. 1) Way back to HQ
 #. --
 #. Non-persistent state
 #. Change here to change the planets and the systems
@@ -106940,8 +107163,7 @@ msgstr ""
 #. <done>A Journey To Arandon</done>
 #. <chance>50</chance>
 #. <location>Bar</location>
-#. <spob>Darkshed</spob>
-#. <cond>not diff.isApplied( "flf_dead" )</cond>
+#. <cond>not diff.isApplied( "flf_dead" ) and spob.cur() == require("common.shark").HQspob</cond>
 #. <notes>
 #. <campaign>Nexus show their teeth</campaign>
 #. </notes>
@@ -106952,10 +107174,9 @@ msgstr ""
 #.
 #. Stages :
 #. 0) There are pirates to kill
-#. 1) Way to Alteris
+#. 1) Way to HQ
 #. --
 #. Non-persistent state
-#. Mission constants
 msgid "The Last Detail"
 msgstr "Un dernier détail"
 
@@ -108983,7 +109204,7 @@ msgid ""
 msgstr ""
 "Ils vous donnent les coordonnées de {spob} avec enthousiasme.\n"
 "\"Assurez-vous d’être équipé d’un amplificateur d'influx, qu’il s’agisse "
-"d’un appareil externe ou d’un modèle intégré à un vaisseau de la Maison "
+"d’un module externe ou d’un modèle intégré à un vaisseau de la Maison "
 "Sirius, et utilisez les exercices que je vous ai enseignés pour vous "
 "connecter à l’obélisque. Vous devriez pouvoir comprendre la suite par vous-"
 "même. Que le Sirichana vous guide.\""
@@ -110539,7 +110760,7 @@ msgstr ""
 #. Less preferred as a target
 #. Too much work to work around this
 msgid "You abandoned Scavenger!"
-msgstr "Vous avez abandonné le Charognar !"
+msgstr "Vous avez abandonné le Charognard !"
 
 msgid ""
 "After some attempts, it seems like you finally are able to establish a "
@@ -113540,7 +113761,7 @@ msgid ""
 msgstr ""
 
 msgid "Noisy Pacifier"
-msgstr "Patrouilleur bruyant"
+msgstr "Pacifieur bruyant"
 
 msgid ""
 "Nelly: \"You disabled it! Now get on top of the ship and board it with "
@@ -114035,7 +114256,6 @@ msgstr ""
 "Alors que vous admirez la vue depuis votre cockpit, une projection "
 "holographique apparaît soudain devant vous."
 
-#, fuzzy
 msgid ""
 "\"Congratulations on your first spaceship, {playername}! What, what am I? I "
 "am your personal Ship AI. Always ready to be of assistance.\"\n"
@@ -114043,14 +114263,13 @@ msgid ""
 "\"Say, you look very familiar. You wouldn't be related to my late previous "
 "owner, would you? Terrible what happened…\""
 msgstr ""
-"\"Félicitations pour votre premier vaisseau spatial, {playername} ! Quoi, "
-"qu'est-ce que je suis ? Je suis votre IA personnelle. Toujours prêt à vous "
+"\"Félicitations pour votre premier vaisseau spatial, {playername} ! Quoi, "
+"qu'est-ce que je suis ? Je suis votre IA personnelle. Toujours prêt à vous "
 "aider.\"\n"
 "On vous regarde pendant quelques secondes.\n"
 "\"Dites, vous me semblez très familier. Vous n'auriez pas un lien de parenté "
-"avec mon ancien propriétaire ? C'est terrible ce qui s'est passé...\""
+"avec mon ancien propriétaire ? C'est terrible ce qui s'est passé...\""
 
-#, fuzzy
 msgid ""
 "\"Anyway, from now on, I will be your Ship AI, but don't worry if you get a "
 "new ship, I will be transferred over without any issues. If you have any "
@@ -114063,7 +114282,7 @@ msgstr ""
 "serai transféré sans problème. Si vous avez des questions ou des "
 "commentaires sur le fonctionnement de votre vaisseau ou sur la façon de "
 "faire les choses, je pense pouvoir vous aider. En tant que votre nouvelle IA "
-"de vaisseau, voulez-vous me donner un nom ?\""
+"de vaisseau, voulez-vous me donner un nom ?\""
 
 #. Can't use rename here
 #. Mess up formatting
@@ -114077,26 +114296,26 @@ msgid ""
 "\"You haven't given me a name. I will continue to be called 'Ship AI' or SAI "
 "for short. Is that OK?\""
 msgstr ""
+"\"Vous ne m'avez pas donné de nom. Je continuerai de m'appeler 'IA du "
+"Vaisseau', ou IAV pour faire court. C'est bon pour vous ?\""
 
-#, fuzzy
 msgid ""
 "\"OK! Pleased to meet you {playername}. If you change your mind about my "
 "name or want to change tutorial settings, you can always do so from the info "
 "menu, which you can open with {infokey}.\""
 msgstr ""
-"\"OK ! Enchanté de vous rencontrer {playername}. Si vous changez d'avis sur "
+"\"OK ! Enchanté de vous rencontrer {playername}. Si vous changez d'avis sur "
 "mon nom ou si vous voulez modifier les paramètres du tutoriel, vous pouvez "
-"toujours le faire à partir du menu info que vous pouvez ouvrir avec "
-"{infokey}.\""
+"toujours le faire à partir du menu info que vous pouvez ouvrir avec {infokey}"
+".\""
 
-#, fuzzy
 msgid ""
 "\"Now that we have you out in space for the first time, how about I go over "
 "your new ship's controls real quick? No charge!\""
 msgstr ""
 "\"Maintenant que vous êtes dans l'espace pour la première fois, que diriez-"
 "vous si je vous expliquais rapidement les commandes de votre nouveau "
-"vaisseau ? C'est gratuit !\""
+"vaisseau ? C'est gratuit !\""
 
 msgid "Do the tutorial"
 msgstr "Faire le tutoriel"
@@ -114120,19 +114339,17 @@ msgstr ""
 msgid "Nevermind"
 msgstr "Changer d'avis"
 
-#, fuzzy
 msgid ""
 "\"Are you sure you want to disable all the hints? This includes explanation "
 "of advanced in-game mechanics you will encounter as you play the game.\""
 msgstr ""
-"\"Vous êtes sûr de vouloir désactiver tous les conseils ? Ceci inclut des "
+"\"Vous êtes sûr de vouloir désactiver tous les conseils ? Ceci inclut des "
 "explications sur les mécanismes avancés du jeu que vous rencontrerez en "
 "jouant.\""
 
 msgid "Disable all hints"
 msgstr "Désactiver tous les conseils"
 
-#, fuzzy
 msgid ""
 "\"Alright then, let's go over how to pilot your new state-of-the-art ship! "
 "Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and "
@@ -114142,14 +114359,14 @@ msgid ""
 "starship. Give it a try by flying over to {pnt}! You see it on your screen, "
 "right? It's the planet right next to you.\""
 msgstr ""
-"\"D'accord, voyons comment piloter votre nouveau vaisseau ultramoderne ! Les "
-"déplacements sont assez simples : faites pivoter votre vaisseau avec "
+"\"D'accord, voyons comment piloter votre nouveau vaisseau ultramoderne ! Les "
+"déplacements sont assez simples : faites pivoter votre vaisseau avec "
 "{leftkey} et {rightkey}, et poussez pour faire avancer votre vaisseau avec "
-"{accelkey} ! Vous pouvez également utiliser {reversekey} pour faire pivoter "
+"{accelkey} ! Vous pouvez également utiliser {reversekey} pour faire pivoter "
 "votre vaisseau dans la direction opposée à celle dans laquelle vous vous "
 "déplacez, ou pour inverser la poussée si vous achetez et installez un "
-"propulseur inverse sur votre vaisseau. Essayez-le en vous rendant à {pnt} ! "
-"Vous la voyez sur votre écran, n'est-ce pas ? C'est la planète qui se trouve "
+"propulseur inverse sur votre vaisseau. Essayez-le en vous rendant à {pnt} ! "
+"Vous la voyez sur votre écran, n'est-ce pas ? C'est la planète qui se trouve "
 "juste à côté de vous.\""
 
 msgid "Fly to {startpnt} in the {sys} system with the movement keys"
@@ -114187,7 +114404,6 @@ msgstr ""
 "et votre vaisseau suivra automatiquement le #bpointeur de la souris#0. C'est "
 "à vous de choisir la méthode que vous préférez utiliser.\""
 
-#, fuzzy
 msgid ""
 "\"You may also have noticed the mission on-screen display on your monitor. "
 "As you can see, you completed the first objective of the Tutorial mission, "
@@ -114228,14 +114444,13 @@ msgstr ""
 "#bdouble cliquer#0 sur la planète pour obtenir le même comportement. "
 "Essayez !\""
 
-#, fuzzy
 msgid ""
 "\"Great job! As you can see, by using your ship's Autonav features, the "
 "perceived duration of your trip was cut substantially. You will grow to "
 "appreciate this feature of your ship in time, especially as you travel from "
 "system to system delivering goods and such, given the vastness of space.\""
 msgstr ""
-"\"Bon travail ! Comme vous pouvez le constater, l'utilisation des fonctions "
+"\"Bon travail ! Comme vous pouvez le constater, l'utilisation des fonctions "
 "Autonav de votre vaisseau a permis de réduire considérablement la durée "
 "perçue de votre voyage. Vous apprécierez cette fonction de votre vaisseau "
 "avec le temps, surtout lorsque vous voyagerez de système en système pour "
@@ -121310,7 +121525,7 @@ msgstr "Vous n'avez pas assez de {item} pour acheter cet article."
 #. Can only buy one at a time
 #. Doesn't actually get added
 msgid "You can not sell this outfit."
-msgstr "Vous ne pouvez pas vendre cet équipement."
+msgstr "Vous ne pouvez pas vendre ce module."
 
 msgid "This outfit can not be removed once equipped."
 msgstr ""
@@ -122201,15 +122416,15 @@ msgid_plural ""
 "may have somewhat lower performance than usual. You should get to a planet "
 "with a proper shipyard and outfitter."
 msgstr[0] ""
-"Après avoir ajouté l'équipement manquant, votre vaisseau est maintenant en "
-"état de naviguer dans l'espace, bien qu'il soit un peu moins performant que "
+"Après avoir ajouté le module manquant, votre vaisseau est maintenant en état "
+"de naviguer dans l'espace, bien qu'il soit un peu moins performant que "
 "d'habitude. Vous devriez arriver sur une planète dotée d'un chantier et d'un "
 "équipementier adéquats."
 msgstr[1] ""
-"Après avoir ajouté les équipement manquants, votre vaisseau est maintenant "
-"en état de naviguer dans l'espace, bien qu'il soit un peu moins performant "
-"que d'habitude. Vous devriez arriver sur une planète dotée d'un chantier et "
-"d'un équipementier adéquats."
+"Après avoir ajouté les modules manquants, votre vaisseau est maintenant en "
+"état de naviguer dans l'espace, bien qu'il soit un peu moins performant que "
+"d'habitude. Vous devriez arriver sur une planète dotée d'un chantier et d'un "
+"équipementier adéquats."
 
 msgid ""
 "Unfortunately, your ship still isn't spaceworthy. However, there are still "
@@ -122472,6 +122687,9 @@ msgstr ""
 #.
 #. --
 #. Fall back to main ship if not found
+#. Determine the maxtier the ship can get
+#. Special sets of skills get activated under certain conditions
+#. Get skills and intrinsics
 #. Filter out high tiers if necessary
 #. Set up some helper fields
 #. Tests outfits if they exist
@@ -123098,6 +123316,37 @@ msgstr ""
 msgid ""
 "The state of feral rage duration is increased to 7 seconds with a 30% damage "
 "bonus, and can be triggered manually with a 30 second cooldown between uses."
+msgstr ""
+
+msgid ""
+"Improves fighter damage and durability by 10% at the cost of 8% forward and "
+"turret weapon damage."
+msgstr ""
+
+msgid ""
+"Improves fighter movement by 20% and fighter bay reload speed by 30%. Also "
+"reduces energy generation by 5% in exchange for 5% more CPU."
+msgstr ""
+
+msgid "Naviumnal Distention I"
+msgstr ""
+
+msgid ""
+"Outfits the ship with a bay containing two Soromid Brigands designed for "
+"absorbing damage and supporting other ships."
+msgstr ""
+
+msgid ""
+"Improves fighter damage and durability by a further 15% (25% in total) at "
+"the cost of 12% (20% in total) forward and turret weapon damage."
+msgstr ""
+
+msgid "Naviumnal Distention II"
+msgstr ""
+
+msgid ""
+"Replaces the two Soromid Brigands with much larger, more powerful Soromid "
+"Reavers."
 msgstr ""
 
 msgid ""
@@ -124894,6 +125143,7 @@ msgstr ""
 msgid "Wanted Pirate"
 msgstr "Pirate Recherché"
 
+#. Most missions start or finish there
 msgid "Arnold Smith"
 msgstr ""
 
@@ -125309,6 +125559,8 @@ msgstr ""
 #. Cores
 #. Other outfits
 #. outfit.get("Small Flow Resonator"),
+#. Lazy load the outfits
+#. Lazy loading
 #. Lazy load the outfits
 #. Lazy loading
 #. Lazy load the outfits
@@ -127898,7 +128150,7 @@ msgid "Ships"
 msgstr "Vaisseaux"
 
 msgid "Outfits"
-msgstr "Équipements"
+msgstr "Modules"
 
 msgid "Lore"
 msgstr ""
@@ -130505,6 +130757,11 @@ msgid ""
 msgstr ""
 
 #. Should overwrite existing values
+msgid ""
+"Bombers deployed by this ship get +{dmg}% launcher damage and fire rate and +"
+"{ammo}% launcher ammunition capacity."
+msgstr ""
+
 #. Radius
 #. Middle explosion default
 #. TODO maybe explosions should be under player when applicable...
@@ -134165,7 +134422,7 @@ msgid "Available Ships"
 msgstr "Vaisseaux disponibles"
 
 msgid "Available Outfits"
-msgstr "Équipements Disponibles"
+msgstr "Modules Disponibles"
 
 msgid "Favourite"
 msgstr ""
@@ -134280,7 +134537,7 @@ msgid "All"
 msgstr "Tout"
 
 msgid "Very little space on equipment outfit tabs!"
-msgstr "Très peu d'espace sur les onglets d'équipement !"
+msgstr "Très peu d'espace sur les onglets de modules !"
 
 msgid "Filter…"
 msgstr "Filtre…"
@@ -134436,7 +134693,7 @@ msgid "%s hours"
 msgstr ""
 
 msgid "Show all outfits"
-msgstr "Voir tous les équipements"
+msgstr "Voir tous les modules"
 
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
@@ -134983,7 +135240,7 @@ msgid "Legend"
 msgstr "Légende"
 
 msgid "Outfit that can be activated"
-msgstr "Équipement activable"
+msgstr "Modules activables"
 
 msgid "Outfit that is enabled for the weapon set"
 msgstr ""
@@ -135201,6 +135458,7 @@ msgstr "Met le jeu en pause."
 msgid "Autonavigation On"
 msgstr "Autonav activé"
 
+#. Movement modifiers
 msgid "Initializes the autonavigation system."
 msgstr "Initialise le système Autonav."
 
@@ -135600,6 +135858,21 @@ msgstr ""
 msgid "Key '%s' not found!"
 msgstr "Commodity '%s' not found!"
 
+msgid "Target Space Object"
+msgstr ""
+
+msgid "Fire Primary Weapons"
+msgstr ""
+
+msgid "Fire Secondary Weapons"
+msgstr ""
+
+msgid "Info Menu"
+msgstr ""
+
+msgid "Console"
+msgstr ""
+
 #, c-format
 msgid "Joystick '%s' not found, using default joystick '%s'"
 msgstr ""
@@ -135723,17 +135996,17 @@ msgid "Buy Local Map (%s)"
 msgstr "Acheter une carte du secteur (%s)"
 
 msgid "Landing Main"
-msgstr "Débarquement"
+msgstr "Général"
 
 msgid "Shipyard"
 msgstr "Chantier"
 
 msgctxt "service"
 msgid "Equipment"
-msgstr "Équipement"
+msgstr "Configuration"
 
 msgid "Commodity"
-msgstr "Marchandise"
+msgstr "Marchandises"
 
 #. Player stats.
 msgid "Stationed at:"
@@ -135893,7 +136166,7 @@ msgid "You can't sell something you don't have!"
 msgstr ""
 
 msgid "You are unable to sell this outfit!"
-msgstr "Vous ne pouvez pas vendre cette équipement !"
+msgstr "Vous ne pouvez pas vendre ce module !"
 
 msgid "Trade-In"
 msgstr "Échanger"
@@ -136469,7 +136742,7 @@ msgstr "Voir tous les équipements"
 
 #, c-format
 msgid "Search results for outfits matching '%s':"
-msgstr "Résultats de la recherche d'équipement correspondant à '%s' :"
+msgstr "Résultats de la recherche de modules correspondant à '%s' :"
 
 #, fuzzy
 msgid "Showing all known ships:"
@@ -136486,7 +136759,7 @@ msgid "Space Objects"
 msgstr "Objets Spatiaux"
 
 msgid "Outfit"
-msgstr "Équipement"
+msgstr "Module"
 
 #, c-format
 msgid "%s matching '%s' not found!"
@@ -137035,6 +137308,21 @@ msgstr ""
 msgid "Naev Failed to start due to a critical error"
 msgstr ""
 
+msgid "Disable all plugins"
+msgstr ""
+
+msgid "Load normally"
+msgstr ""
+
+msgid "Naev Failed to Load"
+msgstr ""
+
+msgid ""
+"Naev failed to load last launch most likely due to a plugin incompatibility. "
+"Do you wish to disable all plugins?\n"
+"Current plugins are listed below:"
+msgstr ""
+
 #, fuzzy
 msgid "Loaded configuration: {}"
 msgstr "Loaded configuration: %s"
@@ -137098,7 +137386,7 @@ msgstr "Chargement des marchandises…"
 #. naevc::commodity_load()
 #. }), /* no dep */
 msgid "Loading Outfits…"
-msgstr "Chargement des équipements…"
+msgstr "Chargement des modules …"
 
 #. dep for ships, factions
 msgid "Loading Ships…"
@@ -137176,6 +137464,10 @@ msgid ""
 "Expected ndata version {} got {}."
 msgstr "ndata version inconsistency with this version of Naev!"
 
+#, fuzzy
+msgid " package not found."
+msgstr " package.path not found."
+
 msgid "No news is available."
 msgstr "Pas de nouvelles disponibles."
 
@@ -137219,21 +137511,6 @@ msgstr ""
 
 msgid "Failed to create new Lua state."
 msgstr "Failed to create new Lua state."
-
-#, fuzzy
-msgid " package not found."
-msgstr " package.path not found."
-
-msgid " package.path not found."
-msgstr " package.path not found."
-
-#, c-format
-msgid ""
-"\n"
-"   no ndata path '%s'"
-msgstr ""
-"\n"
-"   no ndata path '%s'"
 
 #, c-format
 msgid "Deprecated function call: %s"
@@ -138312,7 +138589,7 @@ msgid "Small"
 msgstr ""
 
 msgid "Large"
-msgstr ""
+msgstr "Grand"
 
 #, c-format
 msgid ""
@@ -138577,8 +138854,8 @@ msgstr ""
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
-msgstr[0] "Collision de nom ! %d équipement est nommé '%s'"
-msgstr[1] "Collision de nom ! %d équipements sont nommés '%s'"
+msgstr[0] "Collision de nom ! le module %d est nommé '%s'"
+msgstr[1] "Collision de nom ! les modules %d sont nommés '%s'"
 
 #, c-format
 msgid "Loaded %d Outfit in %.3f s"
@@ -138589,8 +138866,8 @@ msgstr[1] ""
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
-msgstr[0] "%d Équipement Chargé"
-msgstr[1] "%d Équipements Chargés"
+msgstr[0] "%d module chargé"
+msgstr[1] "%d modules chargés"
 
 msgid "Illegal to:"
 msgstr ""
@@ -139539,7 +139816,11 @@ msgid "Exit with Plugin Conflicts?"
 msgstr ""
 
 msgctxt "plugins"
-msgid "Exit"
+msgid "Yes, exit as is"
+msgstr ""
+
+msgctxt "plugins"
+msgid "No, let me fix it"
 msgstr ""
 
 msgctxt "plugins"
@@ -139611,6 +139892,10 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "Logs"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Exit"
 msgstr ""
 
 msgctxt "plugins"
@@ -139687,43 +139972,43 @@ msgid "Ship %s does not exist"
 msgstr ""
 
 msgid "Yacht"
-msgstr ""
+msgstr "Yacht"
 
 msgid "Courier"
 msgstr "Coursier"
 
 msgid "Freighter"
-msgstr ""
+msgstr "Cargo"
 
 msgid "Bulk Freighter"
-msgstr ""
+msgstr "Cargo Lourd"
 
 msgid "Scout"
-msgstr ""
+msgstr "Éclaireur"
 
 msgid "Interceptor"
 msgstr "Intercepteur"
 
 msgid "Fighter"
-msgstr ""
+msgstr "Chasseur"
 
 msgid "Bomber"
-msgstr ""
+msgstr "Bombardier"
 
 msgid "Corvette"
 msgstr "Corvette"
 
 msgid "Destroyer"
-msgstr ""
+msgstr "Destroyer"
 
 msgid "Cruiser"
-msgstr ""
+msgstr "Croiseur"
 
 msgid "Battleship"
-msgstr ""
+msgstr "Cuirassé"
 
 msgid "Carrier"
-msgstr ""
+msgstr "Transporteur"
 
 #, fuzzy, c-format
 msgid "Unable to render comm graphic for ship '%s'!"
@@ -141192,8 +141477,7 @@ msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr "La création d'Arme de type '%s' n’a pas encore été implémenté !"
 
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
-msgstr ""
-"Essai de création d'une Arme Laser à partir d'un équipement sans laser."
+msgstr "Essai de création d'une Arme Laser à partir d'un module sans laser."
 
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
@@ -141207,6 +141491,29 @@ msgstr "Lettres d’Amour"
 
 msgid " Cerebrum "
 msgstr ""
+
+#~ msgid ""
+#~ "You helped Nexus Shipyards initiate a secret meeting with a member of the "
+#~ "Frontier Council. Arnold Smith said that he has another mission for you "
+#~ "and to meet him in the bar on Darkshed when you are ready to transport "
+#~ "him to Curie."
+#~ msgstr ""
+#~ "Vous avez aidé les chantiers spatiaux Nexus à organiser une rencontre "
+#~ "secrète avec un membre du Conseil de la Frontière. Arnold Smith vous a "
+#~ "indiqué qu'il avait une nouvelle mission à vous confier. Retrouvez-le au "
+#~ "bar de Refuge Obscur lorsque vous serez prêt à le transporter jusqu'à "
+#~ "Curie."
+
+#~ msgid " package.path not found."
+#~ msgstr " package.path not found."
+
+#, c-format
+#~ msgid ""
+#~ "\n"
+#~ "   no ndata path '%s'"
+#~ msgstr ""
+#~ "\n"
+#~ "   no ndata path '%s'"
 
 #~ msgid ""
 #~ "* **Proteron**: Although they use an antiquated fabrication methods, they "
