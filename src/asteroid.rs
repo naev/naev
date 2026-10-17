@@ -22,7 +22,7 @@ use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper, camera, camera::Coords, colour};
 use slotmap::{Key, KeyData, SlotMap};
 use std::collections::HashMap;
-use std::ffi::{CStr, CString, OsStr, c_char, c_int};
+use std::ffi::{CStr, CString, OsStr, c_char, c_int, c_void};
 use std::mem::MaybeUninit;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock, Mutex};
@@ -1209,6 +1209,7 @@ impl UserData for LuaAsteroid {
    }
 }
 
+#[derive(Default)]
 struct AnchorInner {
    asteroids: SlotMap<AsteroidRef, Asteroid>,
    has_exclusion: bool,
@@ -1216,6 +1217,10 @@ struct AnchorInner {
 }
 
 impl AnchorInner {
+   fn new() -> Self {
+      Default::default()
+   }
+
    fn update_bvh(&mut self) {
       self.bvh.clear();
       for (k, a) in &self.asteroids {
@@ -1226,7 +1231,7 @@ impl AnchorInner {
 
 #[instrument]
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_init() {
+pub extern "C" fn asteroids_init() {
    if let Some(cur_system) = crate::system::cur_mut() {
       let mut debris_gfx = DEBRIS_GFX.lock().unwrap();
       debris_gfx.clear();
@@ -1297,28 +1302,55 @@ pub extern "C" fn _asteroids_init() {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_update(dt: f64) {
+pub extern "C" fn asteroid_initAnchor(anc: *mut naevc::AsteroidAnchor) {
+   let mut anc = unsafe { &mut *anc };
+   anc.density = naevc::ASTEROID_DEFAULT_DENSITY;
+   anc.groups = Array::new(Vec::new()).into_ptr();
+   anc.groupsw = Array::new(Vec::new()).into_ptr();
+   anc.radius = naevc::ASTEROID_DEFAULT_RADIUS;
+   anc.maxspeed = naevc::ASTEROID_DEFAULT_MAXSPEED;
+   anc.maxspin = naevc::ASTEROID_DEFAULT_MAXSPIN;
+   anc.accel = naevc::ASTEROID_DEFAULT_ACCEL;
+   anc.inner = unsafe { Box::into_raw(Box::new(AnchorInner::new())) as *mut naevc::AsteroidInner };
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn asteroid_freeAnchor(anc: *mut naevc::AsteroidAnchor) {
+   let mut anc = unsafe { &mut *anc };
+   unsafe {
+      let _ = Array::from_ptr(anc.groups);
+      let _ = Array::from_ptr(anc.groupsw);
+   }
+   if !anc.inner.is_null() {
+      unsafe {
+         let _ = Box::from_raw(anc.inner);
+      }
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn asteroids_update(dt: f64) {
    update(dt)
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_render() {
+pub extern "C" fn asteroids_render() {
    render();
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_renderOverlay() {
+pub extern "C" fn asteroids_renderOverlay() {
    render_overlay();
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _astgroup_getAll() -> *const *const TypeGroup {
+pub extern "C" fn astgroup_getAll() -> *const *const TypeGroup {
    let vec: Vec<*const TypeGroup> = GROUPS.iter().map(|(k, v)| v as *const TypeGroup).collect();
    array::Array::new(vec).into_ptr()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _astgroup_getName(name: *const c_char) -> *const TypeGroup {
+pub extern "C" fn astgroup_getName(name: *const c_char) -> *const TypeGroup {
    let name = unsafe { CStr::from_ptr(name) };
    match GROUPS.get(&*name.to_string_lossy()) {
       Some(at) => at,
@@ -1327,13 +1359,13 @@ pub extern "C" fn _astgroup_getName(name: *const c_char) -> *const TypeGroup {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _astgroup_name(at: *const TypeGroup) -> *const c_char {
+pub extern "C" fn astgroup_name(at: *const TypeGroup) -> *const c_char {
    let at = unsafe { &*at };
    at.cname.as_ptr()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const Asteroid {
+pub extern "C" fn ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const Asteroid {
    let ast = unsafe { &*ast };
    let inner = get_inner(ast);
    match inner.asteroids.get(AsteroidRef::from_ffi(id)) {
@@ -1343,31 +1375,31 @@ pub extern "C" fn _ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_id(ast: *const Asteroid) -> i64 {
+pub extern "C" fn ast_id(ast: *const Asteroid) -> i64 {
    let ast = unsafe { &*ast };
    ast.id.as_ffi()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_parent(ast: *const Asteroid) -> i32 {
+pub extern "C" fn ast_parent(ast: *const Asteroid) -> i32 {
    let ast = unsafe { &*ast };
    ast.parent
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_state(ast: *const Asteroid) -> naevc::AsteroidState {
+pub extern "C" fn ast_state(ast: *const Asteroid) -> naevc::AsteroidState {
    let ast = unsafe { &*ast };
    ast.state.to_ffi()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_solid(ast: *const Asteroid) -> *const naevc::Solid {
+pub extern "C" fn ast_solid(ast: *const Asteroid) -> *const naevc::Solid {
    let ast = unsafe { &*ast };
    &ast.solid
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_gfx_width(ast: *const Asteroid) -> f64 {
+pub extern "C" fn ast_gfx_width(ast: *const Asteroid) -> f64 {
    let ast = unsafe { &*ast };
    (match &*ast.gfx {
       GfxType::Single(gfx) => gfx.texture.sw,
@@ -1376,7 +1408,7 @@ pub extern "C" fn _ast_gfx_width(ast: *const Asteroid) -> f64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_test_collide(
+pub extern "C" fn ast_test_collide(
    ast: *const Asteroid,
    at: *const Polygon,
    ap: *const Vector2<f64>,
@@ -1405,20 +1437,20 @@ pub extern "C" fn _ast_test_collide(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_scanned(ast: *const Asteroid) -> c_int {
+pub extern "C" fn ast_scanned(ast: *const Asteroid) -> c_int {
    let ast = unsafe { &*ast };
    ast.scanned as c_int
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_set_scanned(ast: *mut Asteroid, set: c_int) {
+pub extern "C" fn ast_set_scanned(ast: *mut Asteroid, set: c_int) {
    let ast = unsafe { &mut *ast };
    ast.scanned = set != 0;
 }
 
 /// Returns a copy
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_poly(ast: *const Asteroid) -> *mut Polygon {
+pub extern "C" fn ast_poly(ast: *const Asteroid) -> *mut Polygon {
    let ast = unsafe { &*ast };
    match &*ast.gfx {
       GfxType::Single(gfx) => collide::polygon::poly_rotate(&gfx.poly, ast.angle),
@@ -1427,7 +1459,7 @@ pub extern "C" fn _ast_poly(ast: *const Asteroid) -> *mut Polygon {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroid_closestPilot(
+pub extern "C" fn asteroid_closestPilot(
    ast: *const naevc::AsteroidAnchor,
    x: f64,
    y: f64,
@@ -1451,7 +1483,7 @@ pub extern "C" fn _asteroid_closestPilot(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroid_inField(p: *const Vector2<f64>) -> c_int {
+pub extern "C" fn asteroid_inField(p: *const Vector2<f64>) -> c_int {
    let p = unsafe { *p };
    match infield(p) {
       Some(v) => v as c_int,
@@ -1460,7 +1492,7 @@ pub extern "C" fn _asteroid_inField(p: *const Vector2<f64>) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_hasCommodity(field: *const naevc::AsteroidAnchor, com: i64) -> c_int {
+pub extern "C" fn asteroids_hasCommodity(field: *const naevc::AsteroidAnchor, com: i64) -> c_int {
    let com = CommodityRef::from_ffi(com);
    let field = unsafe { &*field };
    let groups = unsafe { array::array_as_slice(field.groups) };
@@ -1478,7 +1510,7 @@ pub extern "C" fn _asteroids_hasCommodity(field: *const naevc::AsteroidAnchor, c
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_computeInternals(a: *mut naevc::AsteroidAnchor) {
+pub extern "C" fn asteroids_computeInternals(a: *mut naevc::AsteroidAnchor) {
    let a = unsafe { &mut *a };
    a.area = std::f64::consts::PI * a.radius * a.radius;
    a.nmax = (a.area / naevc::ASTEROID_REF_AREA * a.density).round() as i32;
@@ -1491,7 +1523,7 @@ pub extern "C" fn _asteroids_computeInternals(a: *mut naevc::AsteroidAnchor) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroid_hit(
+pub extern "C" fn asteroid_hit(
    a: *mut Asteroid,
    dmg: *const naevc::Damage,
    max_rarity: i32,
@@ -1515,13 +1547,13 @@ pub extern "C" fn _asteroid_hit(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonus: f64) {
+pub extern "C" fn asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonus: f64) {
    let a = unsafe { &mut *a };
    a.explode(max_rarity, mine_bonus);
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _asteroid_collideQueryIL(
+pub extern "C" fn asteroid_collideQueryIL(
    anc: *mut naevc::AsteroidAnchor,
    x1: c_int,
    y1: c_int,
@@ -1540,4 +1572,41 @@ pub extern "C" fn _asteroid_collideQueryIL(
    let mut hits = HITS.lock().unwrap();
    inner.bvh.for_each_overlaps(&query, |id| hits.push(*id));
    hits.as_ptr()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn asteroids_inField(p: *const naevc::vec2) -> c_int {
+   if let Some(cur_system) = crate::system::cur() {
+      let p = unsafe { &*p };
+      let p = Vector2::new(p.x, p.y);
+
+      // Always return -1 if in an exclusion zone.
+      for exc in cur_system.astexclude() {
+         let ep = Vector2::new(exc.pos.x, exc.pos.y);
+         if (p - ep).norm_squared() <= exc.radius * exc.radius {
+            return -1;
+         }
+      }
+
+      // Check if in asteroid field.
+      for (i, ast) in cur_system.asteroids().into_iter().enumerate() {
+         let ap = Vector2::new(ast.pos.x, ast.pos.y);
+         if (p - ap).norm_squared() <= ast.radius * ast.radius {
+            return i as c_int;
+         }
+      }
+   }
+   -1
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn asttype_getName(name: *const c_char) -> *const naevc::AsteroidType {
+   let s = unsafe { CStr::from_ptr(name).to_str().unwrap() };
+   match Type::get_r(s) {
+      Ok(t) => Arc::as_ptr(&t) as *const naevc::AsteroidType,
+      Err(e) => {
+         warn_err!(e);
+         std::ptr::null()
+      }
+   }
 }

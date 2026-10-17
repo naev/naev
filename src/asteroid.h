@@ -115,6 +115,7 @@ void            ast_set_scanned( const Asteroid *ast, int set );
 CollPolyView   *ast_poly( const Asteroid *ast );
 AsteroidRef     asteroid_closestPilot( const AsteroidAnchor *anc, double x,
                                        double y, double *d );
+const AsteroidType *asttype_getName( const char *name );
 
 /* Misc functions. */
 int  asteroids_inField( const vec2 *p );

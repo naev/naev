@@ -49,14 +49,14 @@ typedef struct Debris_ {
 const double DEBRIS_BUFFER =
    1000.; /**< Buffer to smooth appearance of debris */
 
-static const double SCAN_FADE =
-   10.; /**< 1/time it takes to fade in/out scanning text. */
+// static const double SCAN_FADE = 10.; /**< 1/time it takes to fade in/out
+// scanning text. */
 
 static Debris *debris_stack =
    NULL; /**< All the debris in the current system (array.h). */
 static glTexture **debris_gfx = NULL; /**< Graphics to use for debris. */
-static double      asteroid_dt =
-   0.; /**< Used as a global variable when threading. */
+// static double      asteroid_dt = 0.; /**< Used as a global variable when
+// threading. */
 
 /*
  * Useful data for asteroids.
@@ -67,7 +67,7 @@ static AsteroidTypeGroup *asteroid_groups =
    NULL; /**< Asteroid type groups stack (array.h). */
 static glTexture **asteroid_gfx =
    NULL; /**< Graphics for the asteroids (array.h). */
-static int asteroid_creating = 0;
+// static int asteroid_creating = 0;
 
 /* Prototypes. */
 static int asttype_cmp( const void *p1, const void *p2 );
@@ -75,8 +75,8 @@ static int asttype_parse( AsteroidType *at, const char *file );
 static int astgroup_cmp( const void *p1, const void *p2 );
 static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
 static int asttype_load( void );
-static const AsteroidType *asttype_getName( const char *name );
 
+#if 0
 static int  asteroid_updateSingle( Asteroid *a );
 static void asteroid_renderSingle( const Asteroid *a );
 static void debris_renderSingle( const Debris *d, double cx, double cy );
@@ -527,6 +527,7 @@ void asteroids_computeInternals( AsteroidAnchor *a )
    for ( int i = 0; i < array_size( a->groupsw ); i++ )
       a->groupswtotal += a->groupsw[i];
 }
+#endif
 
 /**
  * @brief Loads the asteroids.
@@ -835,6 +836,7 @@ static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
    return 0;
 }
 
+#if 0
 /**
  * @brief Renders the system overlay.
  */
@@ -1015,6 +1017,7 @@ void asteroid_freeAnchor( AsteroidAnchor *ast )
    array_free( ast->groupsw );
    free( ast->inner );
 }
+#endif
 
 /**
  * @brief Frees an asteroid exclusion.
@@ -1070,6 +1073,7 @@ void asteroids_free( void )
    gatherable_free();
 }
 
+#if 0
 int asteroids_hasCommodity( const AsteroidAnchor *ast, CommodityRef com )
 {
    for ( int i = 0; i < array_size( ast->groups ); i++ ) {
@@ -1364,3 +1368,4 @@ AsteroidRef asteroid_closestPilot( const AsteroidAnchor *anc, double x,
    }
    return ast;
 }
+#endif
