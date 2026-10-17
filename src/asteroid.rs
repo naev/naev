@@ -25,7 +25,7 @@ use std::collections::HashMap;
 use std::ffi::{CStr, CString, OsStr, c_char, c_int, c_void};
 use std::mem::MaybeUninit;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, LazyLock, Mutex};
+use std::sync::{Arc, LazyLock, Mutex, RwLock};
 use tracing::instrument;
 
 /// Buffer for appearance of debris
@@ -33,7 +33,7 @@ const DEBRIS_BUFFER: f32 = 1000.0;
 /// How long it takes to fade in and out the scanning text
 const SCAN_FADE: f64 = 10.0;
 
-static DEBRIS_GFX: LazyLock<Mutex<Vec<Arc<GfxType>>>> = LazyLock::new(Default::default);
+static DEBRIS_GFX: LazyLock<RwLock<Vec<Arc<GfxType>>>> = LazyLock::new(Default::default);
 static DEBRIS: LazyLock<Mutex<Vec<Debris>>> = LazyLock::new(Default::default);
 
 fn get_inner(field: &naevc::AsteroidAnchor) -> &AnchorInner {
@@ -98,8 +98,10 @@ struct Debris {
 
 impl Debris {
    pub fn new() -> Self {
-      let debris_gfx = &DEBRIS_GFX.lock().unwrap();
-      let gfx = debris_gfx[rng::range(0..debris_gfx.len())].clone();
+      let gfx = {
+         let debris_gfx = &DEBRIS_GFX.read().unwrap();
+         debris_gfx[rng::range(0..debris_gfx.len())].clone()
+      };
       let (screen_w, screen_h) = {
          let dims = renderer::Context::get().dimensions.read().unwrap();
          (dims.view_width, dims.view_height)
@@ -759,12 +761,12 @@ impl Asteroid {
       }
 
       let rad2 = at.alert_range * at.alert_range;
-      let la = naevc::LuaAsteroid_t {
-         parent: self.parent,
-         id: self.id.as_ffi(),
+      let la = LuaAsteroid {
+         parent: self.parent as usize,
+         id: self.id,
       };
       unsafe {
-         naevc::lua_pushasteroid(naevc::naevL, la);
+         lua_pushasteroid(naevc::naevL as *mut mlua::lua_State, la.into_c());
       }
       for p in pilot::get_all() {
          if (self.pos() - p.pos()).norm_squared() <= rad2 {
@@ -1016,6 +1018,13 @@ struct LuaAsteroid {
 }
 
 impl LuaAsteroid {
+   pub fn null() -> Self {
+      Self {
+         parent: 0,
+         id: AsteroidRef::null(),
+      }
+   }
+
    pub fn with<F, R>(&self, f: F) -> Result<R>
    where
       F: Fn(&Asteroid) -> R,
@@ -1031,6 +1040,38 @@ impl LuaAsteroid {
          }
       } else {
          anyhow::bail!("asteroid not found")
+      }
+   }
+
+   pub fn with_mut<F, R>(&self, f: F) -> Result<R>
+   where
+      F: Fn(&mut Asteroid) -> R,
+   {
+      if let Some(cur_system) = crate::system::cur()
+         && let Some(field) = cur_system.asteroids().get(self.parent)
+      {
+         let inner = get_inner_mut(field);
+         if let Some(ast) = inner.asteroids.get_mut(self.id) {
+            Ok(f(ast))
+         } else {
+            anyhow::bail!("asteroid not found")
+         }
+      } else {
+         anyhow::bail!("asteroid not found")
+      }
+   }
+
+   pub fn from_c(ast: naevc::LuaAsteroid_t) -> Self {
+      Self {
+         parent: ast.parent as usize,
+         id: AsteroidRef::from_ffi(ast.id),
+      }
+   }
+
+   pub fn into_c(self) -> naevc::LuaAsteroid_t {
+      naevc::LuaAsteroid_t {
+         parent: self.parent as i32,
+         id: self.id.as_ffi(),
       }
    }
 }
@@ -1206,6 +1247,288 @@ impl UserData for LuaAsteroid {
             })
             .unwrap_or("XX"))
       });
+
+      /*@
+       * @brief Sets the state of an asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to set state of.
+       *    @luatparam string s State to set. Has to be one of `FG`, `XB`, `BX`,
+       * `XX_TO_BG`, `FG_TO_BG`, `BG_TO_FG`, `BG_TO_XX`, or `XX`.
+       * @luafunc setState
+       */
+      methods.add_method_mut(
+         "setState",
+         |_, this, state: BorrowedStr| -> mlua::Result<()> {
+            this.with_mut(|a| {
+               Ok(a.state = match &*state {
+                  "FG" => State::Fg,
+                  "XB" => State::Xb,
+                  "BX" => State::Bx,
+                  "XX_TO_BG" => State::XxToBg,
+                  "FG_TO_BG" => State::FgToBg,
+                  "BG_TO_FG" => State::BgToFg,
+                  "BG_TO_XX" => State::BgToXx,
+                  "XX" => State::Xx,
+                  s => {
+                     return Err(mlua::Error::RuntimeError(format!(
+                        "unknown asteroid state {}",
+                        s
+                     )));
+                  }
+               })
+            })?;
+            Ok(())
+         },
+      );
+
+      /*@
+       * @brief Gets the field the asteroid belongs to (useful for getting more
+       * asteroids from the same field).
+       *
+       *    @luatparam Asteroid a Asteroid to get what field it belongs to.
+       *    @luatreturn number ID of the field the asteroid belongs to.
+       * @luafunc field
+       */
+      methods.add_method("field", |_, this, ()| -> mlua::Result<i32> {
+         Ok(this.with(|a| a.parent + 1)?)
+      });
+
+      /*@
+       * @brief Gets the position of an asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to get position of.
+       *    @luatreturn Vector Position of the asteroid.
+       * @luafunc pos
+       */
+      methods.add_method("pos", |_, this, ()| -> mlua::Result<Vec2> {
+         Ok(this.with(|a| Vec2::new(a.solid.pos.x, a.solid.pos.y))?)
+      });
+
+      /*@
+       * @brief Gets the velocity of an asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to get velocity of.
+       *    @luatreturn Vector Position of the asteroid.
+       * @luafunc vel
+       */
+      methods.add_method("vel", |_, this, ()| -> mlua::Result<Vec2> {
+         Ok(this.with(|a| Vec2::new(a.solid.vel.x, a.solid.vel.y))?)
+      });
+
+      /*@
+       * @brief Sets the position of an asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to set position of.
+       *    @luatparam vec2 v Position to set to.
+       * @luafunc setPos
+       */
+      methods.add_method_mut("setPos", |_, this, pos: Vec2| -> mlua::Result<()> {
+         let pos = pos.into_vector2();
+         Ok(this.with_mut(|a| {
+            a.solid.pos.x = pos.x;
+            a.solid.pos.y = pos.y;
+         })?)
+      });
+
+      /*@
+       * @brief Sets the velocity of an asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to set velocity of.
+       *    @luatparam vec2 v Velocity to set to.
+       * @luafunc setVel
+       */
+      methods.add_method_mut("setVel", |_, this, vel: Vec2| -> mlua::Result<()> {
+         let vel = vel.into_vector2();
+         Ok(this.with_mut(|a| {
+            a.solid.vel.x = vel.x;
+            a.solid.vel.y = vel.y;
+         })?)
+      });
+
+      /*@
+       * @brief Gets whether or not an asteroid got scanned.
+       *
+       *    @luatparam Asteroid a Asteroid to get scanned state of.
+       *    @luatreturn boolean Whether or not the asteroid was scanned.
+       * @luafunc scanned
+       */
+      methods.add_method("scanned", |_, this, ()| -> mlua::Result<bool> {
+         Ok(this.with(|a| a.scanned)?)
+      });
+
+      /*@
+       * @brief Gets the time left on the asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to get time left on.
+       *    @luatreturn number Seconds left before the asteroid is unavailable.
+       *    @luatreturn number Total number of seconds the asteroid had to live.
+       * @luafunc timer
+       */
+      methods.add_method("timer", |_, this, ()| -> mlua::Result<(f64, f64)> {
+         Ok(this.with(|a| (a.timer, a.timer_max))?)
+      });
+
+      /*@
+       * @brief Sets the time left on the asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to set time left of.
+       *    @luatparam number Time left to set to in seconds.
+       * @luafunc setTimer
+       */
+      methods.add_method_mut("setTimer", |_, this, t: f64| -> mlua::Result<()> {
+         Ok(this.with_mut(|a| {
+            a.timer = t;
+            a.timer_max = a.timer_max.max(a.timer);
+         })?)
+      });
+
+      /*@
+       * @brief Gets the armour (health) left on the asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to get armour of.
+       *    @luatreturn number Armour left before the asteroid is destroyed.
+       * @luafunc armour
+       */
+      methods.add_method("armour", |_, this, ()| -> mlua::Result<f64> {
+         Ok(this.with(|a| a.armour)?)
+      });
+
+      /*@
+       * @brief Sets the armour of the asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to set armour of.
+       *    @luatparam number Amount to set the armour to (negative values will
+       * explode it).
+       * @luafunc setArmour
+       */
+      methods.add_method("setArmour", |_, this, armour: f64| -> mlua::Result<()> {
+         Ok(this.with_mut(|a| {
+            a.armour = armour;
+            if a.armour <= 0. {
+               a.explode(-1, 0.);
+            }
+         })?)
+      });
+
+      /*@
+       * @brief Gets the alert range of an asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to get alert range of.
+       *    @luatreturn number Alert range of the asteroid.
+       * @luafunc alertRange
+       */
+      methods.add_method("alertRange", |_, this, ()| -> mlua::Result<f64> {
+         Ok(this.with(|a| a.atype.alert_range)?)
+      });
+
+      /*@
+       * @brief Gets the materials the asteroid can potentially drop.
+       *
+       *    @luatparam Asteroid a Asteroid to get materials of.
+       *    @luatreturn table Table containing the materials.
+       * @luafunc materials
+       */
+      methods.add_method("materials", |lua, this, ()| -> mlua::Result<mlua::Table> {
+         this.with(|a| {
+            let t = match lua.create_table() {
+               Ok(t) => t,
+               Err(e) => {
+                  return Err(e);
+               }
+            };
+            for m in &a.atype.material {
+               if let Ok(tm) = lua.create_table() {
+                  tm.set("commodity", m.material);
+                  tm.set("quantity", m.quantity);
+                  tm.set("rarity", m.rarity);
+                  t.push(tm);
+               }
+            }
+            Ok(t)
+         })?
+      });
+   }
+}
+
+use mlua::{Value, ffi};
+pub fn open_asteroid(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+   let proxy = lua.create_proxy::<LuaAsteroid>()?;
+   Ok(proxy)
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn luaL_checkasteroid(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::LuaAsteroid_t {
+   unsafe {
+      let ast = lua_toasteroid(L, idx);
+      if LuaAsteroid::from_c(ast) == LuaAsteroid::null() {
+         ffi::luaL_typerror(L, idx, c"asteroid".as_ptr() as *const c_char);
+      }
+      ast
+   }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn luaL_validasteroid(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::LuaAsteroid_t {
+   unsafe {
+      let ast = lua_toasteroid(L, idx);
+      if LuaAsteroid::from_c(ast) == LuaAsteroid::null() {
+         ffi::luaL_typerror(L, idx, c"asteroid".as_ptr() as *const c_char);
+      }
+      ast
+   }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn lua_isasteroid(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+   (LuaAsteroid::from_c(lua_toasteroid(L, idx)) != LuaAsteroid::null()) as c_int
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn lua_pushasteroid(L: *mut mlua::lua_State, ast: naevc::LuaAsteroid_t) {
+   unsafe {
+      ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_asteroid".as_ptr());
+      ffi::lua_pushinteger(L, ast.parent as i64);
+      ffi::lua_pushinteger(L, ast.id);
+      ffi::lua_call(L, 2, 1);
+   }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn lua_toasteroid(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::LuaAsteroid_t {
+   unsafe {
+      let idx = ffi::lua_absindex(L, idx);
+      ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_asteroid".as_ptr());
+      ffi::lua_pushvalue(L, idx);
+      let ast = match ffi::lua_pcall(L, 1, 1, 0) {
+         ffi::LUA_OK => {
+            let ptr = ffi::lua_touserdata(L, -1) as *mut LuaAsteroid;
+            if ptr.is_null() {
+               naevc::LuaAsteroid_t { parent: 0, id: 0 }
+            } else {
+               naevc::LuaAsteroid_t {
+                  parent: (*ptr).parent as i32,
+                  id: (*ptr).id.as_ffi(),
+               }
+            }
+         }
+         _ => naevc::LuaAsteroid_t { parent: 0, id: 0 },
+      };
+      ffi::lua_pop(L, 1);
+      ast
    }
 }
 
@@ -1233,9 +1556,6 @@ impl AnchorInner {
 #[unsafe(no_mangle)]
 pub extern "C" fn asteroids_init() {
    if let Some(cur_system) = crate::system::cur_mut() {
-      let mut debris_gfx = DEBRIS_GFX.lock().unwrap();
-      debris_gfx.clear();
-
       let mut density_max = 0.0;
       for ast in cur_system.asteroids_mut() {
          if ast.inner.is_null() {
@@ -1249,11 +1569,15 @@ pub extern "C" fn asteroids_init() {
 
          // TODO maybe enforce uniqueness?
          let groups = unsafe { array::array_as_slice(ast.groups) };
-         for g in groups {
-            let g = unsafe { &*(*g as *mut TypeGroup) };
-            for (t, _) in g.types.iter() {
-               for gfx in &t.gfx {
-                  debris_gfx.push(gfx.clone());
+         {
+            let mut debris_gfx = DEBRIS_GFX.write().unwrap();
+            debris_gfx.clear();
+            for g in groups {
+               let g = unsafe { &*(*g as *mut TypeGroup) };
+               for (t, _) in g.types.iter() {
+                  for gfx in &t.gfx {
+                     debris_gfx.push(gfx.clone());
+                  }
                }
             }
          }

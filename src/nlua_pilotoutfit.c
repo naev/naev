@@ -364,10 +364,10 @@ static Target lua_totarget( lua_State *L, int idx )
       t.type = TARGET_PILOT;
       t.u.id = lua_topilot( L, idx );
    } else if ( lua_isasteroid( L, idx ) ) {
-      const LuaAsteroid_t *ast = lua_toasteroid( L, idx );
-      t.type                   = TARGET_ASTEROID;
-      t.u.ast.anchor           = ast->parent;
-      t.u.ast.asteroid         = ast->id;
+      const LuaAsteroid_t ast = lua_toasteroid( L, idx );
+      t.type                  = TARGET_ASTEROID;
+      t.u.ast.anchor          = ast.parent;
+      t.u.ast.asteroid        = ast.id;
    } else if ( lua_ismunition( L, idx ) ) {
       const LuaMunition *lm = lua_tomunition( L, idx );
       t.type                = TARGET_WEAPON;

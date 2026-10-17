@@ -3030,11 +3030,11 @@ static int aiL_settarget( lua_State *L )
  */
 static int aiL_setasterotarget( lua_State *L )
 {
-   const LuaAsteroid_t *la = luaL_checkasteroid( L, 1 );
+   const LuaAsteroid_t la = luaL_checkasteroid( L, 1 );
 
    /* Set the target asteroid. */
-   cur_pilot->nav_anchor   = la->parent;
-   cur_pilot->nav_asteroid = la->id;
+   cur_pilot->nav_anchor   = la.parent;
+   cur_pilot->nav_asteroid = la.id;
 
    /* Untarget pilot. */
    cur_pilot->target  = cur_pilot->id;

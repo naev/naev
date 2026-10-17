@@ -497,7 +497,7 @@ int nlua_loadPilot( nlua_env *env )
 
    /* Pilot always loads ship and asteroid. */
    nlua_loadShip( env );
-   nlua_loadAsteroid( env );
+   // nlua_loadAsteroid( env );
 
    return 0;
 }
@@ -1591,12 +1591,12 @@ static int pilotL_targetAsteroid( lua_State *L )
  */
 static int pilotL_setTargetAsteroid( lua_State *L )
 {
-   Pilot               *p  = luaL_validpilot( L, 1 );
-   const LuaAsteroid_t *la = luaL_checkasteroid( L, 2 );
+   Pilot              *p  = luaL_validpilot( L, 1 );
+   const LuaAsteroid_t la = luaL_checkasteroid( L, 2 );
 
    /* Set the target asteroid. */
-   p->nav_anchor   = la->parent;
-   p->nav_asteroid = la->id;
+   p->nav_anchor   = la.parent;
+   p->nav_asteroid = la.id;
 
    /* Untarget pilot. */
    p->target  = p->id;
@@ -1641,10 +1641,10 @@ static int pilotL_inrange( lua_State *L )
       }
       return 2;
    } else if ( lua_isasteroid( L, 2 ) ) {
-      const LuaAsteroid_t *la = luaL_checkasteroid( L, 2 );
+      const LuaAsteroid_t la = luaL_checkasteroid( L, 2 );
 
       /* Check if in range. */
-      lua_pushboolean( L, pilot_inRangeAsteroid( p, la->id, la->parent ) );
+      lua_pushboolean( L, pilot_inRangeAsteroid( p, la.id, la.parent ) );
       lua_pushboolean( L, 1 );
       return 2;
    } else {
