@@ -1883,7 +1883,7 @@ pub extern "C" fn asteroid_collideQueryIL(
    y1: c_int,
    x2: c_int,
    y2: c_int,
-) -> *const AsteroidRef {
+) -> *const naevc::AsteroidRef {
    let anc = unsafe { &mut *anc };
    let inner = get_inner(anc);
    let query = Aabb::from_min_max(
@@ -1892,9 +1892,12 @@ pub extern "C" fn asteroid_collideQueryIL(
    );
    // TODO probably something better here, but we need to move to Rust and just pass iterators
    // around..
-   static HITS: LazyLock<Mutex<Array<AsteroidRef>>> = LazyLock::new(Default::default);
+   static HITS: LazyLock<Mutex<Array<naevc::AsteroidRef>>> = LazyLock::new(Default::default);
    let mut hits = HITS.lock().unwrap();
-   inner.bvh.for_each_overlaps(&query, |id| hits.push(*id));
+   hits.clear();
+   inner
+      .bvh
+      .for_each_overlaps(&query, |id| hits.push(id.as_ffi()));
    hits.as_ptr()
 }
 
