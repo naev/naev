@@ -1169,8 +1169,13 @@ impl UserData for LuaAsteroid {
                      .iter()
                      .filter_map(|(k, a)| (a.state == State::Fg).then_some(k))
                      .collect();
-                  let id = ast[range(0..ast.len())];
-                  Some(LuaAsteroid { parent, id })
+                  let n = ast.len();
+                  if n == 0 {
+                     None
+                  } else {
+                     let id = ast[range(0..n)];
+                     Some(LuaAsteroid { parent, id })
+                  }
                } else {
                   None
                }
@@ -1453,6 +1458,27 @@ impl UserData for LuaAsteroid {
 use mlua::{Value, ffi};
 pub fn open_asteroid(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
    let proxy = lua.create_proxy::<LuaAsteroid>()?;
+
+   // Only add stuff as necessary
+   if let mlua::Value::Nil = lua.named_registry_value("push_asteroid")? {
+      let push_asteroid = lua.create_function(|lua, (parent, id): (i64, i64)| {
+         let ast = LuaAsteroid {
+            parent: parent as usize,
+            id: AsteroidRef::from_ffi(id),
+         };
+         lua.create_userdata(ast)
+      })?;
+      lua.set_named_registry_value("push_asteroid", push_asteroid)?;
+
+      let get_asteroid = lua.create_function(|_, mut ud: mlua::UserDataRefMut<LuaAsteroid>| {
+         let ast: *mut LuaAsteroid = &mut *ud;
+         Ok(Value::LightUserData(mlua::LightUserData(
+            ast as *mut c_void,
+         )))
+      })?;
+      lua.set_named_registry_value("get_asteroid", get_asteroid)?;
+   }
+
    Ok(proxy)
 }
 
@@ -1476,13 +1502,23 @@ pub extern "C-unwind" fn luaL_checkasteroid(
 pub extern "C-unwind" fn luaL_validasteroid(
    L: *mut mlua::lua_State,
    idx: c_int,
-) -> naevc::LuaAsteroid_t {
-   unsafe {
+) -> *const Asteroid {
+   let ast = unsafe {
       let ast = lua_toasteroid(L, idx);
       if LuaAsteroid::from_c(ast) == LuaAsteroid::null() {
          ffi::luaL_typerror(L, idx, c"asteroid".as_ptr() as *const c_char);
       }
       ast
+   };
+   if let Some(cur_system) = crate::system::cur_mut() {
+      let field = &cur_system.asteroids()[ast.parent as usize];
+      let inner = get_inner(field);
+      match inner.asteroids.get(AsteroidRef::from_ffi(ast.id)) {
+         Some(ast) => ast,
+         None => std::ptr::null(),
+      }
+   } else {
+      std::ptr::null()
    }
 }
 
@@ -1517,15 +1553,12 @@ pub extern "C-unwind" fn lua_toasteroid(
          ffi::LUA_OK => {
             let ptr = ffi::lua_touserdata(L, -1) as *mut LuaAsteroid;
             if ptr.is_null() {
-               naevc::LuaAsteroid_t { parent: 0, id: 0 }
+               LuaAsteroid::null().into_c()
             } else {
-               naevc::LuaAsteroid_t {
-                  parent: (*ptr).parent as i32,
-                  id: (*ptr).id.as_ffi(),
-               }
+               (*ptr).into_c()
             }
          }
-         _ => naevc::LuaAsteroid_t { parent: 0, id: 0 },
+         _ => LuaAsteroid::null().into_c(),
       };
       ffi::lua_pop(L, 1);
       ast
