@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2026-10-19 21:50+0000\n"
+"PO-Revision-Date: 2026-10-20 22:27+0000\n"
 "Last-Translator: raazqaer <raazqaer@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev-0-"
 "13-x/fr/>\n"
@@ -125,7 +125,6 @@ msgstr "Unité de calcul auxiliaire III"
 msgid "Auxiliary Processing Unit IV"
 msgstr "Unité de calcul auxiliaire IV"
 
-#, fuzzy
 msgid "Avatar of the Sirichana"
 msgstr "Avatar de Sirichana"
 
@@ -149,16 +148,16 @@ msgid "Battery IV"
 msgstr "Batterie IV"
 
 msgid "Beat Up Large Engine"
-msgstr "Gros Moteur Dépassé"
+msgstr "Gros moteur usé"
 
 msgid "Beat Up Medium Engine"
-msgstr "Moteur Moyen Dépassé"
+msgstr "Moteur moyen usé"
 
 msgid "Beat Up Small Engine"
-msgstr "Petit Moteur Dépassé"
+msgstr "Petit moteur usé"
 
 msgid "Berserk Chip"
-msgstr ""
+msgstr "Puce Berserk"
 
 msgid "Bikers Fury Launcher"
 msgstr ""
@@ -197,9 +196,8 @@ msgstr "Prototype de Bouclier Nébuleux Brisé"
 msgid "Bulky Abdomen"
 msgstr "Abdomen volumineux"
 
-#, fuzzy
 msgid "Cargo Damper"
-msgstr "Espace de Stockage :"
+msgstr "Amortisseur de cargaison"
 
 #. Misc tree
 #. For everyone!
@@ -247,16 +245,14 @@ msgstr "Corrosion I"
 msgid "Corrosion II"
 msgstr "Corrosion II"
 
-#, fuzzy
 msgid "Corsair Engine"
-msgstr "Systèmes Principaux (Moteur)"
+msgstr "Moteur Corsaire"
 
 msgid "Corsair Hull Plating"
-msgstr ""
+msgstr "Blindage Corsaire"
 
-#, fuzzy
 msgid "Corsair Systems"
-msgstr "Système de base (Coque)"
+msgstr "Systèmes Corsaire"
 
 #, fuzzy
 msgid "Counterfeit Heavy Combat Vessel Licence"
@@ -279,7 +275,7 @@ msgid "Cyclic Combat AI"
 msgstr "IA de combat cyclique"
 
 msgid "Daphne's Leap"
-msgstr ""
+msgstr "Saut de Daphné"
 
 msgid "Defective"
 msgstr "Déficient"
@@ -342,16 +338,16 @@ msgid "Enhanced Smell"
 msgstr "Odorat amélioré"
 
 msgid "Enygma Systems Huntsman Launcher"
-msgstr "Lanceur de Chasse-Tête Enygma Systems"
+msgstr "Lanceur Traqueur Enygma Systems"
 
 msgid "Enygma Systems Spearhead Launcher"
-msgstr "Lanceur de Fer-de-Lance Enygma Systems"
+msgstr "Lanceur Fer-de-Lance Enygma Systems"
 
 msgid "Enygma Systems Turreted Fury Launcher"
 msgstr "Lanceur Furie sur tourelle Enygma Systems"
 
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr "Lanceur Chasse-Tête sur tourelle Enygma Systems"
+msgstr "Lanceur Chasseur-de-Tête sur tourelle Enygma Systems"
 
 msgid "Escape Pod"
 msgstr "Nacelle d’éjection"
@@ -375,7 +371,7 @@ msgstr ""
 #. For everyone!
 #. Uses feral rage slot (only for ships that get tier 5)
 msgid "Feral Rage I"
-msgstr "Rage sauvage I"
+msgstr "Rage Féroce I"
 
 msgid "Feral Rage II"
 msgstr "Rage Féroce II"
@@ -423,7 +419,7 @@ msgid "Goatee Marker"
 msgstr "Marqueur de bouc"
 
 msgid "Grave Beam"
-msgstr "Faisceau Outre-Tombe"
+msgstr "Laser Outre-Tombe"
 
 msgid "Grave Lance"
 msgstr "Lance Outre-Tombe"
@@ -459,9 +455,8 @@ msgstr "Manuel sur les bonnes manières Dvaered"
 msgid "Hard Shell"
 msgstr "Coque dure"
 
-#, fuzzy
 msgid "Heavy Combat Vessel Licence"
-msgstr "License de Vaisseau de Combat Lourd"
+msgstr "Licence de Vaisseau de Combat Lourd"
 
 msgid "Heavy Ion Cannon"
 msgstr "Cannon à ions lourd"
@@ -481,16 +476,14 @@ msgstr "Canon Déchiqueteur Lourd"
 msgid "Heavy Ripper Turret"
 msgstr "Tourelle Déchiqueteuse Lourde"
 
-#, fuzzy
 msgid "Heavy Weapon Licence"
-msgstr "License d'Arme Lourde"
+msgstr "Licence d'Arme Lourde"
 
 msgid "Hellburner"
 msgstr "Moteur à postcombustion infernale"
 
-#, fuzzy
 msgid "Hidden Jump Scanner"
-msgstr "Scanneur à points de saut cachés"
+msgstr "Scanneur de points de saut cachés"
 
 msgid "Hive Combat AI"
 msgstr "IA de combat de ruche"
@@ -543,7 +536,7 @@ msgid "Krain Patagium Twin Engine"
 msgstr "Bimoteur Krain Patagium"
 
 msgid "Krain Remige Engine"
-msgstr "Moteur Krain Remige"
+msgstr "Moteur Krain Rémige"
 
 msgid "Kratos' Glove"
 msgstr "Gant de Kratos"
@@ -554,9 +547,8 @@ msgstr "Baie de lancement de Lancelot"
 msgid "Large Cargo Pod"
 msgstr "Grande capsule de fret"
 
-#, fuzzy
 msgid "Large Civilian Vessel Licence"
-msgstr "License de Vaisseau Civil Large"
+msgstr "Licence de Vaisseau Civil Large"
 
 msgid "Large Flow Amplifier"
 msgstr "Grand amplificateur d'influx"
@@ -682,9 +674,8 @@ msgstr "Canon cinétique"
 msgid "Medium Cargo Pod"
 msgstr "Capsule de fret"
 
-#, fuzzy
 msgid "Medium Combat Vessel Licence"
-msgstr "License de Vaisseau Moyen de Combat"
+msgstr "Licence de Vaisseau Moyen de Combat"
 
 msgid "Medium Flow Amplifier"
 msgstr "Amplificateur d'influx moyen"
@@ -704,17 +695,14 @@ msgstr "Amplificateur de bouclier"
 msgid "Medium Weapon Licence"
 msgstr "Licence d'Arme Taille Moyenne"
 
-#, fuzzy
 msgid "Melendez Buffalo Engine"
-msgstr "Moteur Melendez Buffalo XL"
+msgstr "Moteur Melendez Buffle"
 
-#, fuzzy
 msgid "Melendez Mammoth Engine"
-msgstr "Moteur Melendez Mammouth XL"
+msgstr "Moteur Melendez Mammouth"
 
-#, fuzzy
 msgid "Melendez Ox Engine"
-msgstr "Moteur Melendez Ox XL"
+msgstr "Moteur Melendez Ox"
 
 msgid "Mercenary Licence"
 msgstr "Licence de Mercenaire"
@@ -819,7 +807,7 @@ msgid "Nexus Drill Lance"
 msgstr "Lance de forage Nexus"
 
 msgid "Nexus Ghost Weave"
-msgstr "Voile fantôme Nexus"
+msgstr "Voile spectral Nexus"
 
 msgid "Nexus Phantasm Weave"
 msgstr "Voile mirage Nexus"
@@ -843,13 +831,13 @@ msgid "Particle Lance"
 msgstr "Lance à particules"
 
 msgid "Patchwork Heavy Plating"
-msgstr "Collage de débris de Blindages Lourd"
+msgstr "Blindage Lourd de fortune"
 
 msgid "Patchwork Light Plating"
-msgstr "Collage de débris de Blindages Légers"
+msgstr "Blindage Léger de fortune"
 
 msgid "Patchwork Medium Plating"
-msgstr "Collage de débris de Blindages"
+msgstr "Blindage moyen de fortune"
 
 msgid "Pentagram of Valor"
 msgstr "Pentagramme de la vaillance"
@@ -926,17 +914,14 @@ msgstr ""
 msgid "Pulse Scanner"
 msgstr "Scanner à impulsions"
 
-#, fuzzy
 msgid "Racing Trophy (Bronze)"
-msgstr "Trophée de la course"
+msgstr "Trophée de course (Bronze)"
 
-#, fuzzy
 msgid "Racing Trophy (Gold)"
-msgstr "Trophée de la course"
+msgstr "Trophée de course (Or)"
 
-#, fuzzy
 msgid "Racing Trophy (Silver)"
-msgstr "Trophée de la course"
+msgstr "Trophée de course (Argent)"
 
 msgid "Rackham's Razor"
 msgstr "Le rasoir de Rackham"
@@ -1030,7 +1015,7 @@ msgid "Sensor Array"
 msgstr ""
 
 msgid "Shatterer Launcher"
-msgstr ""
+msgstr "Lanceur Briseur"
 
 msgid "Shield Capacitor I"
 msgstr "Condensateur de bouclier I"
@@ -1050,13 +1035,11 @@ msgstr "Broyeur"
 msgid "Silence"
 msgstr "Silence"
 
-#, fuzzy
 msgid "Sirius Fidelity Bay"
-msgstr "Sirius"
+msgstr "Baie de Fidélités Sirienne"
 
-#, fuzzy
 msgid "Sirius Shaman Bay"
-msgstr "Sirius"
+msgstr "Baie de Chamans Sirienne"
 
 msgid "S&K Battle Plating"
 msgstr "Blindage de Combat S&K"
@@ -1100,9 +1083,8 @@ msgstr "Petite salle de méditation"
 msgid "Small Shield Booster"
 msgstr "Amplificateur de bouclier léger"
 
-#, fuzzy
 msgid "Soromid Brigand Bay"
-msgstr "Soromid"
+msgstr "Baie de Brigands Soromide"
 
 msgid "Space Mine Layer"
 msgstr ""
@@ -1120,7 +1102,7 @@ msgid "Stealth Burster"
 msgstr ""
 
 msgid "Super-Fast Collider Launcher"
-msgstr ""
+msgstr "Lanceur Frappeur Supra-Cinétique"
 
 #. get the drink
 msgid "Swamp Bombing"
@@ -1136,27 +1118,26 @@ msgid "TeraCom Banshee Launcher"
 msgstr "Lanceur Banshie TeraCom"
 
 msgid "TeraCom Fury Launcher"
-msgstr ""
+msgstr "Lanceur Furie TeraCom"
 
 msgid "TeraCom Headhunter Launcher"
-msgstr ""
+msgstr "Lanceur Chasseur-de-Tête TeraCom"
 
 msgid "TeraCom Imperator Launcher"
-msgstr ""
+msgstr "Lanceur Imperator TeraCom"
 
 msgid "TeraCom Mace Launcher"
 msgstr "Lance-Fléau TeraCom"
 
 msgid "TeraCom Medusa Launcher"
-msgstr ""
+msgstr "Lanceur Medusa TeraCom"
 
 msgid "TeraCom Vengeance Launcher"
-msgstr ""
+msgstr "Lanceur Vengeance TeraCom"
 
 msgid "The Bite - Blood Lust"
 msgstr "La morsure - La soif de sang"
 
-#, fuzzy
 msgid "The Bite - Cannibal"
 msgstr "La Morsure - Cannibale"
 
@@ -1171,13 +1152,13 @@ msgid "Bioship Thorn"
 msgstr "Organe de vaisseau biologique"
 
 msgid "Thurion Perspicacity Bay"
-msgstr ""
+msgstr "Baie de Perspicacités Thurienne"
 
 msgid "Thurion Perspicacity Dock"
-msgstr ""
+msgstr "Dock de Perspicacités Thurienne"
 
 msgid "Thurion Scintillation Bay"
-msgstr ""
+msgstr "Baie de Scintillations Thurienne"
 
 msgid "Toy Drone"
 msgstr "Drone jouet"
@@ -1202,10 +1183,10 @@ msgid "Tricon Cyclone Engine"
 msgstr "Moteur Tricon Cyclone"
 
 msgid "Tricon Typhoon Engine"
-msgstr "Moteur Tricon Typhoon"
+msgstr "Moteur Tricon Typhon"
 
 msgid "Tricon Zephyr Engine"
-msgstr "Moteur Tricon Zephyr"
+msgstr "Moteur Tricon Zéphyr"
 
 #, fuzzy
 msgid "Tunnelling Organ"
@@ -1215,7 +1196,7 @@ msgid "Turbolaser"
 msgstr "Turbolaser"
 
 msgid "Turreted Convulsion Launcher"
-msgstr ""
+msgstr "Lanceur Convulsion sur tourelle"
 
 msgid "Turreted Gauss Gun"
 msgstr "Cannon à Tourelle de Gauss"
@@ -1230,7 +1211,7 @@ msgid "Ultra Map"
 msgstr ""
 
 msgid "Unicorp Caesar IV Launcher"
-msgstr ""
+msgstr "Lanceur Caesar IV Unicorp"
 
 msgid "Unicorp D-23 Medium Plating"
 msgstr "Blindage Moyen Unicorp D-23"
@@ -1241,16 +1222,14 @@ msgstr "Blindage Léger Unicorp D-2"
 msgid "Unicorp D-58 Heavy Plating"
 msgstr "Blindage Lourd Unicorp D-58"
 
-#, fuzzy
 msgid "Unicorp Eagle 3000 Engine"
-msgstr "Moteur Unicorp Eagle 6500"
+msgstr "Moteur Unicorp Eagle 3000"
 
 msgid "Unicorp Falcon 700 Engine"
 msgstr "Moteur Unicorp Falcon 700"
 
-#, fuzzy
 msgid "Unicorp Hawk 160 Engine"
-msgstr "Moteur Unicorp Hawk 360"
+msgstr "Moteur Unicorp Hawk 160"
 
 msgid "Unicorp Jammer"
 msgstr "Brouilleur Unicorp"
@@ -1262,19 +1241,19 @@ msgid "Unicorp Medium Afterburner"
 msgstr ""
 
 msgid "Unicorp PT-16 Core System"
-msgstr ""
+msgstr "Système central Unicorp PT-16"
 
 msgid "Unicorp PT-200 Core System"
-msgstr ""
+msgstr "Système central Unicorp PT-200"
 
 msgid "Unicorp PT-440 Core System"
-msgstr ""
+msgstr "Système central Unicorp PT-440"
 
 msgid "Unicorp Scrambler"
 msgstr "Masqueur Unicorp"
 
 msgid "Unicorp Storm Launcher"
-msgstr ""
+msgstr "Lanceur Tempête Unicorp"
 
 msgid "Vacuum Cleaner?"
 msgstr "Aspirateur ?"
@@ -1286,7 +1265,7 @@ msgid "Veil of Penelope"
 msgstr ""
 
 msgid "Vulcan Gun"
-msgstr "Cannon Vulcain"
+msgstr "Canon Vulcain"
 
 msgid "Wanderer"
 msgstr "Vagabond"
@@ -1304,28 +1283,28 @@ msgid "Worn Down"
 msgstr ""
 
 msgid "Za'lek Bomber Drone Bay"
-msgstr ""
+msgstr "Baie de drones bombardiers Za'lek"
 
 msgid "Za'lek Bomber Drone Mini Bay"
-msgstr ""
+msgstr "Mini-Baie de drones bombardiers Za'lek"
 
 msgid "Za'lek Heavy Drone Bay"
-msgstr ""
+msgstr "Baie de drones lourds Za'lek"
 
 msgid "Za'lek Heavy Drone Mini Bay"
-msgstr ""
+msgstr "Mini-Baie de drones lourds Za'lek"
 
 msgid "Za'lek Hunter Launcher"
-msgstr ""
+msgstr "Lanceur Chasseur Za'lek"
 
 msgid "Za'lek Light Drone Bay"
-msgstr ""
+msgstr "Baie de drones légers Za'lek"
 
 msgid "Za'lek Light Drone Mini Bay"
-msgstr ""
+msgstr "Mini-Baie de drones légers Za'lek"
 
 msgid "Za'lek Reaper Launcher"
-msgstr ""
+msgstr "Lanceur Faucheur Za'lek"
 
 msgid "Za'lek Test Engine"
 msgstr "Moteur Test Za'lek"
@@ -1387,7 +1366,7 @@ msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
 msgstr ""
 
 msgid "* **License**:   <%= _(s:license()) %>"
-msgstr ""
+msgstr "* **Licence** :   <%= _(s:licence()) %>"
 
 msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
 msgstr ""
@@ -1931,8 +1910,9 @@ msgid ""
 "* **Za'lek Fabricators**: Focuses on developing and making the ships flown "
 "by [House Za'lek](lore/factions/zalek)."
 msgstr ""
-"* **Za'lek Fabricators**:Spécialisé dans la conception et la fabrication des "
-"vaisseaux utilisés par la [Maison Za'lek](lore/factions/zalek)."
+"* **Manufactures Za'lek** : Spécialisées dans la conception et la "
+"fabrication des vaisseaux utilisés par la [Maison Za'lek](lore/factions/"
+"zalek)."
 
 msgid ""
 "* **Za'lek Robotics**: Produces [House Za'lek](lore/factions/zalek) drones."
@@ -10456,7 +10436,7 @@ msgstr ""
 
 msgctxt "slotproperty"
 msgid "Core Systems"
-msgstr ""
+msgstr "Systèmes centraux"
 
 msgctxt "slotproperty"
 msgid ""
@@ -10467,7 +10447,7 @@ msgstr ""
 
 msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
-msgstr ""
+msgstr "Systèmes centraux (Secondaires)"
 
 msgid "El Ego de Deiz"
 msgstr ""
@@ -10740,7 +10720,7 @@ msgstr ""
 "très redoutable."
 
 msgid "Core Systems (Engine)"
-msgstr "Systèmes Principaux (Moteur)"
+msgstr "Systèmes centraux (Moteur)"
 
 msgid ""
 "there once was a big mighty corsair\n"
@@ -10759,7 +10739,7 @@ msgid ""
 msgstr ""
 
 msgid "Core Systems (System)"
-msgstr "Systèmes Principaux (Système)"
+msgstr "Systèmes centraux (Système)"
 
 msgid ""
 "oh, the ferocious mighty corsair\n"
@@ -10770,7 +10750,7 @@ msgid ""
 msgstr ""
 
 msgid "Core Systems (Hull)"
-msgstr "Système de base (Coque)"
+msgstr "Systèmes centraux (Coque)"
 
 msgid ""
 "wish I be like that lovely corsair\n"
@@ -11876,7 +11856,6 @@ msgstr ""
 "eu lieu ? En bas il y a une inscription qui dit : \" Au diable les PUAA, "
 "vive le héros d'Antlejos !\" avec une signature illisible."
 
-#, fuzzy
 msgid ""
 "A feather from a cyborg duck. Although the quill is made of some lightweight "
 "metal alloy, the rest looks surprisingly close to a normal feather."
@@ -12114,7 +12093,7 @@ msgstr ""
 "aspirateur, mais vous ne connaissez pas le véritable nom de ce module."
 
 msgid "Bioship Organ"
-msgstr "Organe de vaisseau biologique"
+msgstr "Organe de bio-vaisseau"
 
 msgid ""
 "The bioship adrenal gland organ is able to generate immense amounts of "
@@ -12156,7 +12135,6 @@ msgstr ""
 "de transe. Un couplage additionnel avec le cervelet permet à la transe "
 "d'améliorer temporairement l'agilité du vaisseau."
 
-#, fuzzy
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
 "into a primitive state of feral rage in which forward and turret weapon "
@@ -12208,9 +12186,8 @@ msgstr ""
 "toujours dans un état fonctionnel, ce moteur devrait être mit au rebut."
 
 msgid "K. Remige Engine"
-msgstr "Moteur K. Remige"
+msgstr "Moteur K. Rémige"
 
-#, fuzzy
 msgid ""
 "The Remige was developed by Krain Industries exclusively for their flagship "
 "cruiser, the Kestrel. Optimized for the Kestrel's needs, the Remige delivers "
@@ -12219,14 +12196,13 @@ msgid ""
 "optimized design of the engine, it can not be used jointly with other "
 "engines."
 msgstr ""
-"Le Remige a été développé par les Industries Krain exclusivement pour leurs "
-"croiseur phare le Kestrel. Optimisé pour ses besoins, le Remige fournit des "
+"Le Rémige a été développé par les Industries Krain exclusivement pour leur "
+"croiseur phare le Kestrel. Optimisé pour ses besoins, le Rémige fournit des "
 "performances dépassant le gros des autres moteurs de croiseur. Toutefois, "
 "ses réglages le rendent inadapté pour des vaisseaux plus lourd."
 
-#, fuzzy
 msgid "M. Mammoth Engine"
-msgstr "Moteur M. Mammouth XL"
+msgstr "Moteur M. Mammouth"
 
 msgid ""
 "Melendez's Mammoth can pull incredible amounts of mass. Requiring "
@@ -12235,10 +12211,15 @@ msgid ""
 "maintained. Many bulk freight corporations only turn a profit thanks to the "
 "Mammoth line of engines."
 msgstr ""
+"Le Mammouth de Melendez peut déplacer des masses considérables. Il nécessite "
+"des amarres gravitationnelles spécialisées pour rester fixé à la coque du "
+"vaisseau, ce qui réduit considérablement sa maniabilité, même s’il permet de "
+"conserver une bonne vitesse de pointe. De nombreuses sociétés spécialisées "
+"dans le transport de marchandises ne sont rentables que grâce à la gamme de "
+"moteurs Mammouth."
 
-#, fuzzy
 msgid "N. Bolt 3000 Engine"
-msgstr "Moteur Nexus Bolt 3000"
+msgstr "Moteur N. Bolt 3000"
 
 msgid ""
 "Originally developed by Nexus Shipyards to suit the needs of the Hawking "
@@ -12255,7 +12236,7 @@ msgstr ""
 "pilotes."
 
 msgid "T. Typhoon Engine"
-msgstr "Moteur T. Typhoon"
+msgstr "Moteur T. Typhon"
 
 msgid ""
 "Development of the Typhoon engine was something of a prestige project for "
@@ -12271,19 +12252,21 @@ msgstr ""
 "également souvent utilisé comme moteur secondaire pour améliorer la "
 "maniabilité des cuirassés légers."
 
-#, fuzzy
 msgid "U. Eagle 3000 Engine"
-msgstr "Moteur Unicorp Eagle 6500"
+msgstr "Moteur U. Eagle 3000"
 
 msgid ""
 "Inexpensive by capital ship standards, the Eagle 3000 is seldom selected by "
 "captains who can afford better. While spaceworthy, the engine's performance "
 "renders it a liability in combat and uneconomical for freight hauling."
 msgstr ""
+"Peu coûteux selon les critères des vaisseaux capitaux, l’Eagle 3000 est "
+"rarement choisi par les capitaines qui peuvent se permettre mieux. Bien "
+"qu’il soit apte au vol spatial, ses performances en font un handicap au "
+"combat et un choix peu rentable pour le transport de marchandises."
 
-#, fuzzy
 msgid "K. Patagium Twin Engine"
-msgstr "Moteur Krain Patagium"
+msgstr "Bimoteur K. Patagium"
 
 msgid ""
 "The Patagium is an engine developed by Krain Industries, carefully tailored "
@@ -12293,10 +12276,15 @@ msgid ""
 "particular calibration hyperparameters, the Patagium can only operate in a "
 "twin configuration."
 msgstr ""
+"Le Patagium est un moteur développé par les Industries Krain, spécialement "
+"conçu pour équiper leur Starbridge de classe Destroyer. S’il surpasse les "
+"autres options en matière de vitesse maximale et de maniabilité, il ne "
+"convient pas à la plupart des autres destroyers, en raison de leur masse "
+"plus élevée. En raison de ses hyperparamètres de calibrage très spécifiques, "
+"le Patagium ne peut fonctionner qu’en configuration bimoteur."
 
-#, fuzzy
 msgid "M. Buffalo Engine"
-msgstr "Moteur Melendez Buffalo XL"
+msgstr "Moteur M. Buffle"
 
 msgid ""
 "The Buffalo is a mid-sized engine intended for freighters, though it's "
@@ -12304,24 +12292,26 @@ msgid ""
 "typical freight-oriented engine, the Buffalo possesses good top speed, poor "
 "handling, and excellent fuel capacity."
 msgstr ""
+"Le Buffle est un moteur de taille moyenne destiné aux cargos, bien qu’on le "
+"retrouve parfois sur des corvettes et des destroyers particulièrement bien "
+"armés. Typique des moteurs conçus pour le transport de marchandises, le "
+"Buffle offre une bonne vitesse de pointe, une maniabilité médiocre et une "
+"excellente capacité en carburant."
 
-#, fuzzy
 msgid "N. Arrow 700 Engine"
-msgstr "Moteur Nexus Arrow 700"
+msgstr "Moteur N. Arrow 700"
 
-#, fuzzy
 msgid ""
 "The Arrow 700 is a respectable engine for a respectable price, giving "
 "captains good maneuverability without leeching too much off of the ship's "
 "reactors."
 msgstr ""
-"L'Arrow 700 est un moteur Corvette respectable pour un prix respectable, "
-"offrant aux capitaines une maniabilité décente sans trop solliciter les "
-"réacteurs du vaisseau."
+"L'Arrow 700 est un moteur respectable pour un prix respectable, offrant aux "
+"capitaines une bonne maniabilité sans trop solliciter les réacteurs du "
+"vaisseau."
 
-#, fuzzy
 msgid "T. Cyclone Engine"
-msgstr "Moteur Tricon Cyclone"
+msgstr "Moteur T. Cyclone"
 
 msgid ""
 "Tricon's Cyclone engine upholds the corporation's reputation for premium "
@@ -12334,7 +12324,7 @@ msgstr ""
 "corvettes et leurs destroyers de ce moteur."
 
 msgid "U. Falcon 700 Engine"
-msgstr "U. Moteur Falcon 700"
+msgstr "Moteur U. Falcon 700"
 
 msgid ""
 "The Falcon 700 is a budget engine for use on medium-sized vessels. Its "
@@ -12347,9 +12337,8 @@ msgstr ""
 "vaisseaux civils, peu de capitaines étant à l'aise à l'idée de compter sur "
 "un système de propulsion bas de gamme en situation de combat."
 
-#, fuzzy
 msgid "M. Ox Engine"
-msgstr "Moteur Melendez Ox XL"
+msgstr "Moteur M. Bœuf"
 
 msgid ""
 "A powerful engine for its size, though not a particularly manoeuvrable one. "
@@ -12358,10 +12347,16 @@ msgid ""
 "trader circles. Above-par fuel reserves and atmospheric flight capabilities "
 "are some of the other selling points of the Ox."
 msgstr ""
+"Puissant pour sa taille, ce moteur n’est toutefois pas particulièrement "
+"maniable. Plutôt lent mais régulier, il permet aux petits vaisseaux "
+"d’emporter davantage de marchandises ou d’équipements sans pour autant "
+"avancer à une allure dérisoire. Il jouit ainsi d’une bonne réputation parmi "
+"les commerçants. Ses réserves de carburant supérieures à la moyenne et sa "
+"capacité à voler dans une atmosphère comptent également parmi les principaux "
+"atouts du Bœuf."
 
-#, fuzzy
 msgid "N. Dart 160 Engine"
-msgstr "Moteur Nexus Dart 160"
+msgstr "Moteur N. Dart 160"
 
 msgid ""
 "The Dart 160 is a well-rounded engine for light vessels. While it doesn't "
@@ -12374,11 +12369,9 @@ msgstr ""
 "bonne efficacité énergétique pour un prix raisonnable. C'est un moteur très "
 "populaire parmi les utilisateurs civils et militaires."
 
-#, fuzzy
 msgid "T. Zephyr Engine"
-msgstr "Moteur Tricon Zephyr"
+msgstr "Moteur T. Zéphyr"
 
-#, fuzzy
 msgid ""
 "For light vessel pilots who demand unparalleled performance, Tricon's Zephyr "
 "is the engine of choice. Its best-in-class handling does come with the "
@@ -12387,24 +12380,26 @@ msgid ""
 "requisite reactor upgrades."
 msgstr ""
 "Pour les pilotes de navires légers qui exigent des performances inégalées, "
-"le Zephyr de Tricon est le moteur de choix. Sa maniabilité, la meilleure de "
+"le Zéphyr de Tricon est le moteur de choix. Sa maniabilité, la meilleure de "
 "sa catégorie, s'accompagne d'une consommation d'énergie nettement plus "
 "élevée, mais ceux qui volent avec des moteurs Tricon peuvent généralement "
 "s'offrir les mises à niveau de réacteurs nécessaires."
 
-#, fuzzy
 msgid "U. Hawk 160 Engine"
-msgstr "Moteur Unicorp Hawk 360"
+msgstr "Moteur U. Hawk 160"
 
 msgid ""
 "The Hawk 160 is a budget general-purpose engine many civilians use to propel "
 "their ships. It's not particularly effective, but it's a lightweight engine "
 "with low energy demands, making it a solid choice for small vessels."
 msgstr ""
+"Le Hawk 160 est un moteur polyvalent économique utilisé par de nombreux "
+"civils pour propulser leurs vaisseaux. Sans être particulièrement "
+"performant, il est léger et peu gourmand en énergie, ce qui en fait un choix "
+"fiable pour les petits vaisseaux."
 
-#, fuzzy
 msgid "Z. Test Engine"
-msgstr "Moteur Test Za'lek"
+msgstr "Moteur Test Z."
 
 msgid ""
 "Built by Za'lek Fabricators, this engine doesn't aim to be an efficient "
@@ -12412,9 +12407,9 @@ msgid ""
 "scientists to test new refrigeration and propulsion systems. These engines "
 "are very often modded by students, which makes them unreliable."
 msgstr ""
-"Construit par les Za'lek Fabricators, ce moteur n'a pas pour but d'être un "
+"Construit par les Manufactures Za'lek, ce moteur n'a pas pour but d'être un "
 "moteur efficace. Son but est d'être facilement modulable afin de permettre "
-"aux scientifiques za'lek de tester de nouveaux systèmes de réfrigération et "
+"aux scientifiques Za'lek de tester de nouveaux systèmes de réfrigération et "
 "de propulsion. Ces moteurs sont très souvent modifiés par des étudiants, ce "
 "qui les rend peu fiables."
 
@@ -12426,24 +12421,26 @@ msgstr ""
 "ne fait rien. N'ACHETEZ PAS."
 
 msgid "N. Phantasm Weave"
-msgstr ""
+msgstr "Voile mirage N."
 
 msgid ""
 "Though vessels weighing thousands of tonnes can seldom be called stealthy, "
 "the Nexus Phantasm Weave does what it can to reduce sensor signatures, "
 "without sacrificing protection."
 msgstr ""
+"Bien que les vaisseaux pesant des milliers de tonnes puissent difficilement "
+"passer inaperçus, le Voile mirage de Nexus fait de son mieux pour réduire "
+"leur signature détectable par les capteurs sans compromettre leur protection."
 
 msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
-"L'avantage est qu'il empêche l'air de s'échapper dans l'espace. Mais c'est "
-"tout. Ce type d'entretien de la coque est tout simplement inacceptable."
+"Son seul atout est d'empêcher l'air de se dissiper dans l'espace. Mais cela "
+"s'arrête là. Ce niveau de qualité pour une coque est purement intolérable."
 
-#, fuzzy
 msgid "RS. Large Cargo Hull"
-msgstr "Coque Large de Cargo S&K"
+msgstr "Grande coque de Cargo RS."
 
 msgid ""
 "The Imperial Red Star is dedicated to relief efforts in areas stricken by "
@@ -12491,7 +12488,7 @@ msgstr ""
 "chevronnés optent pour un blindage plus lourd et plus sophistiqué."
 
 msgid "K. Nanofoam Padding"
-msgstr ""
+msgstr "Renfort Nano-mousse K."
 
 msgid ""
 "Developed by Krain Industries to complement their engine lines, instead of "
@@ -12505,22 +12502,32 @@ msgid ""
 "vessels that can't afford the weight of a regular battle armour underlayer. "
 "It does come at a hefty price tag, though."
 msgstr ""
+"Développé par les Industries Krain pour compléter ses gammes de moteurs, le "
+"renfort en nano-mousse repose sur des structures de nanotubes irrégulières "
+"et pavées afin d’offrir une résistance aux tirs ennemis, plutôt que sur des "
+"alliages de blindage plus traditionnels. Les nanotubes ne disposant d’aucune "
+"structure de soutien, il est nécessaire de les fixer à une autre coque en "
+"guise de sous-couche. Ils peuvent ainsi absorber les impacts en apportant un "
+"soutien réactif. Cette mousse extrêmement élastique augmente "
+"considérablement l’énergie nécessaire pour rompre la cohésion du blindage du "
+"vaisseau, tout en restant très légère. Elle est donc idéale pour les "
+"vaisseaux qui ne peuvent se permettre le poids d’une sous-couche de blindage "
+"de combat classique. Son prix reste toutefois particulièrement élevé."
 
 msgid "N. Ghost Weave"
-msgstr ""
+msgstr "Voile spectral N."
 
 msgid ""
 "Medium-sized ships are usually not in the business of remaining undetected, "
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
 msgstr ""
-"Les navires de taille moyenne n'ont généralement pas vocation à passer "
-"inaperçus, mais les chantiers navals Nexus ont néanmoins mis au point une "
-"modification de la coque qui les aide dans ce domaine"
+"Les vaisseaux de taille moyenne ne sont généralement pas conçus pour rester "
+"indétectables. Les Chantiers Spatiaux Nexus ont néanmoins mis au point une "
+"modification de coque qui améliore leurs capacités dans ce domaine."
 
-#, fuzzy
 msgid "RS. Medium Cargo Hull"
-msgstr "Coque Moyenne de Cargo S&K"
+msgstr "Coque standard de Cargo RS."
 
 msgid ""
 "The Imperial Red Star is dedicated to relief efforts in areas stricken by "
@@ -12557,7 +12564,7 @@ msgstr ""
 "qui offre à la fois un grand espace de chargement et une protection."
 
 msgid "U. D-23 Medium Plating"
-msgstr "Blindage U. D-23"
+msgstr "Blindage standard U. D-23"
 
 msgid ""
 "D-23 plating provides a serviceable layer of armour to medium ships, and "
@@ -12567,7 +12574,7 @@ msgstr ""
 "les vaisseaux de taille moyenne."
 
 msgid "N. Shadow Weave"
-msgstr ""
+msgstr "Voile d'ombre N."
 
 msgid ""
 "Designed for military scouting and patrol vessels, Nexus' Light Stealth "
@@ -12578,9 +12585,8 @@ msgstr ""
 "configuration du revêtement furtif léger de Nexus présente les matériaux et "
 "la géométrie les plus récents pour l'absorption des capteurs."
 
-#, fuzzy
 msgid "RS. Small Cargo Hull"
-msgstr "Petite Coque de Cargo S&K"
+msgstr "Coque légère de Cargo RS."
 
 msgid ""
 "The Imperial Red Star is dedicated to relief efforts in areas stricken by "
@@ -12636,12 +12642,11 @@ msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
 msgstr ""
-"Il s'agit d'un système de base factice à utiliser uniquement dans les "
+"Il s'agit d'un système central factice à utiliser uniquement dans les "
 "missions, qui ne fait rien. N'ACHETEZ PAS."
 
-#, fuzzy
 msgid "M. Aegis 8501 System"
-msgstr "Système de Minage "
+msgstr "Système M. Aegis 8501"
 
 msgid ""
 "Milspec cares about your personal safety. Your protection is our number-one "
@@ -12658,9 +12663,8 @@ msgstr ""
 "aucun compromis en matière de protection. Volez en toute sécurité, volez "
 "avec Milspec."
 
-#, fuzzy
 msgid "M. Orion 8601 System"
-msgstr "Système de Minage "
+msgstr "Système M. Orion 8601"
 
 msgid ""
 "Milspec develops high performance hardware for your ship, to make sure you "
@@ -12678,7 +12682,7 @@ msgstr ""
 "Milspec."
 
 msgid "M. Prometheus 8503 System"
-msgstr "M. Système Prométhée 8503"
+msgstr "Système M. Prométhée 8503"
 
 msgid ""
 "Milspec offers solutions for pilots looking to power large arrays of "
@@ -12694,7 +12698,7 @@ msgstr ""
 "sécurité, volez avec Milspec."
 
 msgid "M. Thalos 8502 System"
-msgstr ""
+msgstr "Système M. Thalos 8502"
 
 msgid ""
 "Milspec knows the difference a few extra fighters can make on a battlefield. "
@@ -12709,25 +12713,29 @@ msgstr ""
 "la fierté de Milspec. Volez en toute sécurité, volez avec Milspec."
 
 msgid "Prev. Gen. Large Systems"
-msgstr ""
+msgstr "Grands Systèmes Anc. Gén."
 
 msgid ""
 "A jury-rigged mess of processors and generators that most captains wouldn't "
 "be seen dead having installed on their ship."
 msgstr ""
+"Un assemblage de fortune de processeurs et de générateurs que la plupart des "
+"capitaines n’oseraient même pas faire installer sur leur vaisseau."
 
 msgid "U. PT-440 System"
-msgstr ""
+msgstr "Système U. PT-440"
 
 msgid ""
 "Criticized by some as nothing more than a cluster of PT-310 systems, the "
 "PT-440 nevertheless offers acceptable performance for large ships at a "
 "fraction of its competitors' prices."
 msgstr ""
+"Certains le critiquent, le considérant comme un simple assemblage de "
+"systèmes PT-310. Le PT-440 offre néanmoins des performances acceptables pour "
+"les grands vaisseaux, pour une fraction du prix de ses concurrents."
 
-#, fuzzy
 msgid "M. Aegis 4701 System"
-msgstr "Système de Minage "
+msgstr "Système M. Aegis 4701"
 
 msgid ""
 "Milspec prides itself in putting customers' safety first. Your protection is "
@@ -12742,9 +12750,8 @@ msgstr ""
 "explorer l'univers en toute sérénité. Volez en toute sécurité, volez avec "
 "Milspec."
 
-#, fuzzy
 msgid "M. Orion 4801 System"
-msgstr "Système de Minage "
+msgstr "Système M. Orion 4801"
 
 msgid ""
 "Milspec develops high performance hardware for your ship, letting you keep "
@@ -12761,7 +12768,7 @@ msgstr ""
 "Volez en toute sécurité, volez avec Milspec."
 
 msgid "M. Prometheus 4703 System"
-msgstr "M. Système Prométhée 4703"
+msgstr "Système M. Prométhée 4703"
 
 msgid ""
 "Milspec offers solutions for pilots who believe in energy weapon supremacy. "
@@ -12776,7 +12783,7 @@ msgstr ""
 "de contrôle des sous-systèmes. Volez en toute sécurité, volez avec Milspec."
 
 msgid "M. Thalos 4702 System"
-msgstr ""
+msgstr "Système M. Thalos 4702"
 
 msgid ""
 "Milspec knows that having to make computational power compromises in outfits "
@@ -12793,19 +12800,21 @@ msgstr ""
 "tout ce qu'il vous faut ! Volez en toute sécurité, volez avec Milspec."
 
 msgid "Prev. Gen. Medium Systems"
-msgstr ""
+msgstr "Systèmes moyens Anc. Gén."
 
 msgid "U. PT-200 System"
-msgstr ""
+msgstr "Système U. PT-200"
 
 msgid ""
 "Continuing Unicorp's PT lineup of core systems in the medium ship category, "
 "the PT-200 offers acceptable performance at an acceptable price."
 msgstr ""
+"Dans la continuité de la gamme de systèmes centraux PT d’Unicorp pour les "
+"vaisseaux de taille moyenne, le PT-200 offre des performances acceptables à "
+"un prix tout aussi raisonnable."
 
-#, fuzzy
 msgid "M. Aegis 2201 System"
-msgstr "Système de Minage "
+msgstr "Système M. Aegis 2201"
 
 msgid ""
 "Milspec cares about your personal safety. Your protection is our number-one "
@@ -12821,9 +12830,8 @@ msgstr ""
 "ennemis ricocher sur vos boucliers. Volez en toute sécurité, volez avec "
 "Milspec."
 
-#, fuzzy
 msgid "M. Orion 2301 System"
-msgstr "Système de Minage "
+msgstr "Système M. Orion 2301"
 
 msgid ""
 "Milspec develops high performance hardware for your ship, to make sure you "
@@ -12841,7 +12849,7 @@ msgstr ""
 "volez avec Milspec."
 
 msgid "M. Prometheus 2203 System"
-msgstr "M. Système Prométhée 2203"
+msgstr "Système M. Prométhée 2203"
 
 msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
@@ -12856,7 +12864,7 @@ msgstr ""
 "systèmes. Volez en toute sécurité, volez avec Milspec."
 
 msgid "M. Thalos 2202 System"
-msgstr ""
+msgstr "Système M. Thalos 2202"
 
 msgid ""
 "Milspec knows that a ship is merely the sum of its parts, and that means "
@@ -12871,15 +12879,18 @@ msgstr ""
 "Volez en toute sécurité, volez avec Milspec."
 
 msgid "Prev. Gen. Small Systems"
-msgstr ""
+msgstr "Petits Systèmes Anc. Gén."
 
 msgid "U. PT-16 System"
-msgstr ""
+msgstr "Système U. PT-16"
 
 msgid ""
 "The PT-16 is a modest but to-spec core system offering reasonable all-round "
 "performance for small vessels."
 msgstr ""
+"Le PT-16 est un système central modeste, mais conforme aux spécifications, "
+"qui offre des performances globalement satisfaisantes pour les petits "
+"vaisseaux."
 
 msgid "You need at least 50% reputation with the Empire."
 msgstr "Nécessite au moins 50% de réputation avec l'Empire."
@@ -12891,37 +12902,53 @@ msgid ""
 "maintenance. All the tools needed to take care of them are provided with the "
 "bay."
 msgstr ""
+"La baie de drones-chasseurs exploite les technologies avancées du Collectif "
+"pour accueillir un groupe de trois drones-chasseurs. Ces appareils ne "
+"nécessitent aucun pilote, ce qui en fait une option plus sûre dans les "
+"situations dangereuses. Ils demandent toutefois un entretien minutieux. Tous "
+"les outils nécessaires à leur maintenance sont fournis avec la baie."
 
 msgid "E. Lancelot Bay"
-msgstr ""
+msgstr "Baie de Lancelots E."
 
 msgid ""
 "This fighter bay allows your ship to carry a pair of Empire Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Cette baie de chasseurs permet à votre vaisseau d’embarquer deux chasseurs "
+"impériaux de classe Lancelot. Elle comprend tous les équipements nécessaires "
+"à leur entretien et à leurs opérations en vol."
 
 msgid ""
 "This bay expands on the popular Hyena Dock, doubling the amount of Hyena "
 "interceptors that can be operated. It comes with all the amenities necessary "
 "for the maintenance and operation of the interceptors."
 msgstr ""
+"Cette baie reprend le concept du très populaire dock Hyène en doublant le "
+"nombre d’intercepteurs Hyène pouvant être déployés. Elle dispose de tous les "
+"équipements nécessaires à l’entretien et à l’exploitation des intercepteurs."
 
 msgid ""
 "This dock allows your ship to carry twin Hyena interceptors. It comes with "
 "all the amenities necessary for the maintenance and operation of the "
 "interceptors."
 msgstr ""
+"Ce dock permet à votre vaisseau d’embarquer deux intercepteurs Hyène. Il "
+"dispose de tous les équipements nécessaires à leur entretien et à leur "
+"exploitation."
 
 msgid ""
 "This fighter bay allows your ship to carry a pair of Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Cette baie de chasseurs permet à votre vaisseau d’embarquer deux chasseurs "
+"de classe Lancelot. Elle comprend tous les équipements nécessaires à leur "
+"entretien et à leurs opérations de vol."
 
-#, fuzzy
 msgid "P. Hyena Bay"
-msgstr "Dissident de Proteron"
+msgstr "Baie de Hyènes P."
 
 msgid ""
 "This bay expands on the popular Pirate Hyena Dock, doubling the amount of "
@@ -12929,10 +12956,14 @@ msgid ""
 "for the maintenance and operation of the interceptors. The Pirate Hyenas can "
 "also assist in ship scavenging and looting."
 msgstr ""
+"Cette baie reprend le concept du très populaire Dock de Hyènes Pirates en "
+"doublant le nombre d’intercepteurs pouvant être déployés. Elle dispose de "
+"tous les équipements nécessaires à l’entretien et à l’exploitation des "
+"intercepteurs. Les Hyènes Pirates peuvent également participer à la "
+"récupération et au pillage d’épaves."
 
-#, fuzzy
 msgid "P. Hyena Dock"
-msgstr "Dissident de Proteron"
+msgstr "Dock de Hyènes P."
 
 msgid ""
 "This dock allows your ship to carry a pair of Pirate Hyena interceptors. It "
@@ -12940,10 +12971,13 @@ msgid ""
 "the interceptors. The Pirate Hyenas can assist in ship scavenging and "
 "looting."
 msgstr ""
+"Ce dock permet à votre vaisseau d’embarquer deux intercepteurs Hyènes "
+"Pirates. Il dispose de tous les équipements nécessaires à leur entretien et "
+"à leur exploitation. Les Hyènes Pirates peuvent participer à la récupération "
+"et au pillage d’épaves."
 
-#, fuzzy
 msgid "P. Dalton Bay"
-msgstr "Dissident de Proteron"
+msgstr "Baie de Daltons P."
 
 msgid "You need at least 50% reputation with the Sovereign Proteron Autarchy."
 msgstr ""
@@ -12954,20 +12988,24 @@ msgid ""
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
+"Cette baie de chasseurs permet à votre vaisseau d’embarquer quatre "
+"intercepteurs Protérons de classe Dalton. Elle comprend tous les équipements "
+"nécessaires à leur entretien et à leurs opérations de vol."
 
-#, fuzzy
 msgid "P. Dalton Dock"
-msgstr "Protéron"
+msgstr "Dock de Daltons P."
 
 msgid ""
 "This fighter bay allows your ship to carry twin Proteron Dalton class "
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
+"Ce dock permet à votre vaisseau d’embarquer deux intercepteurs Protérons de "
+"classe Dalton. Il comprend tous les équipements nécessaires à leur entretien "
+"et à leurs opérations de vol."
 
-#, fuzzy
 msgid "S. Fidelity Bay"
-msgstr "Sirius"
+msgstr "Baie de Fidélités S."
 
 msgid "You need at least 50% reputation with House Sirius."
 msgstr "Nécessite au moins 50% de réputation avec la Maison Sirius."
@@ -12977,10 +13015,12 @@ msgid ""
 "are stronger when working together in groups. Quite apropos, given Sirian "
 "society."
 msgstr ""
+"Cette baie déploie trois chasseurs Siriens de classe Fidélité. Faibles "
+"individuellement, ils gagnent en puissance lorsqu’ils combattent ensemble en "
+"groupe. Ce qui est plutôt approprié, compte tenu de la société sirienne."
 
-#, fuzzy
 msgid "S. Shaman Bay"
-msgstr "Sirius"
+msgstr "Baie de Chamans S."
 
 msgid "You need at least 50% reputation with the Sirius."
 msgstr "Nécessite au moins 50% de réputation avec les Siriens."
@@ -12990,10 +13030,12 @@ msgid ""
 "bombers. It comes with all the devices required for the maintenance and "
 "flight of the bombers."
 msgstr ""
+"Cette baie de chasseurs permet à votre vaisseau d’embarquer deux bombardiers "
+"Siriens de classe Chaman. Elle comprend tous les équipements nécessaires à "
+"leur entretien et à leurs opérations de vol."
 
-#, fuzzy
 msgid "S. Brigand Bay"
-msgstr "Soromid"
+msgstr "Baie de Brigands S."
 
 msgid "You need at least 50% reputation with the Soromid."
 msgstr "Nécessite au moins 50% de réputation avec les Soromides."
@@ -13003,9 +13045,12 @@ msgid ""
 "class fighters. It comes with all the devices required for the maintenance "
 "and flight of the fighters."
 msgstr ""
+"Cette baie de chasseurs permet à votre vaisseau d’embarquer trois chasseurs "
+"Soromides de classe Brigand. Elle comprend tous les équipements nécessaires "
+"à leur entretien et à leurs opérations de vol."
 
 msgid "T. Perspicacity Bay"
-msgstr ""
+msgstr "Baie de Perspicacités T."
 
 msgid "You need at least 50% reputation with the Thurion."
 msgstr "Nécessite au moins 50% de réputation avec les Thuriens."
@@ -13017,7 +13062,7 @@ msgid ""
 msgstr ""
 
 msgid "T. Perspicacity Dock"
-msgstr ""
+msgstr "Dock de Perspicacités T."
 
 msgid "You need at least 30% reputation with the Thurion."
 msgstr "Nécessite au moins 30% de réputation avec les Thuriens."
@@ -13028,15 +13073,17 @@ msgid ""
 "fighters."
 msgstr ""
 
-#, fuzzy
 msgid "T. Scintillation Bay"
-msgstr "Dissident de Proteron"
+msgstr "Baie de Scintillations T."
 
 msgid ""
 "This bay allows your ship to carry a pair of Thurion Scintillation bombers. "
 "It comes with all the devices required for the maintenance and flight of the "
 "bombers."
 msgstr ""
+"Cette baie permet à votre vaisseau d’embarquer deux bombardiers Thuriens de "
+"classe Scintillation. Elle comprend tous les équipements nécessaires à leur "
+"entretien et à leurs opérations de vol."
 
 msgid "Z. B. Drone B."
 msgstr ""
@@ -13331,18 +13378,21 @@ msgstr ""
 msgid "This ship is extremely worn down and is barely functional."
 msgstr ""
 
-#, fuzzy
 msgid "Convulsion L."
-msgstr "Station Akra"
+msgstr "L. Convulsion"
 
 msgid ""
 "The Thurion interceptor class missile focus on high agility rather than "
 "destructive power. While it does little damage to physical objects it is "
 "quite effective at disrupting shields."
 msgstr ""
+"Les missiles Thuriens de classe intercepteur privilégient une grande agilité "
+"plutôt que la puissance destructrice. Bien qu’ils infligent peu de dégâts "
+"aux objets physiques, ils sont particulièrement efficaces pour perturber les "
+"boucliers."
 
 msgid "Electron Burst C."
-msgstr ""
+msgstr "C. rafale d’électrons"
 
 #, fuzzy
 msgid "You need at least 20 reputation with House Za'lek."
@@ -13357,7 +13407,7 @@ msgid ""
 msgstr ""
 
 msgid "EMP Grenade L."
-msgstr ""
+msgstr "L. grenades IEM"
 
 msgid ""
 "This launcher can fire EMP grenades in any direction using a unique internal "
@@ -13367,9 +13417,17 @@ msgid ""
 "leaving it floating disabled in space. These are favoured by traders for "
 "keeping pirates at bay."
 msgstr ""
+"Ce lanceur peut tirer des grenades IEM dans n’importe quelle direction grâce "
+"à un système de guidage interne unique. À l’impact, les grenades libèrent "
+"une impulsion électromagnétique qui désactive rapidement les systèmes "
+"électroniques des vaisseaux à proximité, qu’ils soient hostiles ou non. "
+"Elles sont utiles pour capturer des vaisseaux intacts : les impulsions "
+"électromagnétiques détruisent rarement leur cible, la laissant dériver dans "
+"l’espace, hors service. Les commerçants les apprécient particulièrement pour "
+"tenir les pirates à distance."
 
 msgid "E. Huntsman L."
-msgstr ""
+msgstr "L. Traqueur E."
 
 msgid ""
 "Enygma Systems found that there was an unexploited niche for weapons built "
@@ -13378,9 +13436,14 @@ msgid ""
 "weapon, capable of rapidly frying the systems of even the largest capital "
 "ships."
 msgstr ""
+"Enygma Systems a découvert un créneau inexploité pour les armes conçues afin "
+"de neutraliser les grands vaisseaux de guerre. Jugeant les missiles Medusa "
+"et les armes à ions insuffisants, l’entreprise a reconçu la torpille Caesar "
+"IV d’Unicorp pour en faire une arme IEM lourde, capable de griller "
+"rapidement les systèmes électroniques des plus grands vaisseaux capitaux."
 
 msgid "E. Spearhead L."
-msgstr ""
+msgstr "L. Fer-de-Lance E."
 
 msgid ""
 "The Spearhead class EMP missile is one of Enygma Systems' more specialized "
@@ -13390,18 +13453,28 @@ msgid ""
 "Spearhead's limited agility make it primarily suited to fighting corvette "
 "class ships or heavier."
 msgstr ""
+"Le missile Fer-de-Lance de classe IEM compte parmi les armes les plus "
+"spécialisées d’Enygma Systems. Sa seule fonction est d’infliger des dégâts "
+"considérables aux boucliers. Il utilise une ogive à décharge énergétique "
+"spéciale, particulièrement efficace pour perturber les boucliers, mais peu "
+"efficace contre les objets physiques. Son agilité limitée le rend surtout "
+"adapté aux combats contre les corvettes et les vaisseaux plus lourds."
 
 msgid "E. Fury T. L."
-msgstr ""
+msgstr "L. T. Furie E."
 
 msgid ""
 "Enygma Systems has developed a turret mounted Fury launcher. It comes at a "
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective defence against hostile bombers."
 msgstr ""
+"Enygma Systems a développé ce lanceur Furie monté sur tourelle. Son prix est "
+"élevé, mais les missiles Furie peuvent constituer un puissant moyen de "
+"dissuasion contre les chasseurs pirates et une défense efficace contre les "
+"bombardiers ennemis."
 
 msgid "E. Headhunter T. L."
-msgstr ""
+msgstr "L. T. Chasseur-de-Tête E."
 
 msgid ""
 "These turreted launchers are sometimes employed by cruiser captains whose "
@@ -13409,6 +13482,11 @@ msgid ""
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
 msgstr ""
+"Ces lanceurs montés sur tourelle sont parfois utilisés par les capitaines de "
+"croiseurs dont les vaisseaux manquent de maniabilité pour combattre "
+"efficacement les chasseurs et les bombardiers ennemis. La puissance des "
+"missiles Chasseur-de-Tête, combinée au lanceur orientable d’Enygma Systems, "
+"permet de couvrir efficacement les angles morts."
 
 msgid "Pincushion B."
 msgstr "B. Hérisson"
@@ -13433,9 +13511,12 @@ msgid ""
 "Launches 1 missile at the target and 4 additional missiles that will target "
 "random nearby enemies. Lowers shield regeneration by -70% on hit."
 msgstr ""
+"Tire un missile sur la cible et quatre missiles supplémentaires qui visent "
+"des ennemis proches choisis au hasard. Réduit la régénération des boucliers "
+"de 70 % à l’impact."
 
 msgid "R. Banshee L."
-msgstr "L. R. Banshie"
+msgstr "L. Banshee R."
 
 msgid "You need at least 15% reputation with House Dvaered."
 msgstr "Nécessite au moins 15% de réputation avec la Maison Dvaered."
@@ -13446,15 +13527,14 @@ msgid ""
 "fire rate. The ammo storage is short, but it can be anticipated that either "
 "the bomber or its target will have been destroyed before it is empty."
 msgstr ""
-"Conçue par la Maison Dvaered pour leur vaisseau « Ancêtre », ce lanceur "
-"propose un impressionnant système de chargement des explosifs qui permet "
-"d’atteindre des cadences de tir sans pareille. Celui-ci lui donne toutefois "
-"un poids important, et une réserve de munitions plutôt petite, mais on peut "
-"prédire que le bombardier ou sa cible soit détruit avant que cela ne "
-"devienne un problème."
+"Conçu par la Maison Dvaered pour le vaisseau Ancêtre, ce lanceur est doté "
+"d’un système de rechargement avancé, mais très lourd, qui lui confère une "
+"cadence de tir inégalée. Sa réserve de munitions est limitée, mais il y a "
+"fort à parier que le bombardier ou sa cible aura été détruit avant qu’elle "
+"ne soit épuisée."
 
 msgid "Shatterer L."
-msgstr ""
+msgstr "L. Briseur"
 
 msgid ""
 "This weapon, based on a Fury missile, is used by the Collective's heavy "
@@ -13462,16 +13542,23 @@ msgid ""
 "sheer numbers that the Collective could bring to bear make this weapon "
 "dangerous."
 msgstr ""
+"Basée sur le missile Furie, cette arme est utilisée par les drones lourds du "
+"Collectif pour bombarder les grandes cibles. Faible individuellement, elle "
+"devient redoutable grâce au nombre considérable de projectiles que le "
+"Collectif peut déployer."
 
-#, fuzzy
 msgid "Space Mine L."
-msgstr "Mousse spatial"
+msgstr "L. mines spatiales"
 
 msgid ""
 "The vastness of space limits the applicability of space mines in lieu of "
 "automated or manned patrols in most situations. However, when raw explosive "
 "power is mandated, nothing can surpass the destructive force of space mines."
 msgstr ""
+"L’immensité de l’espace limite l’utilité des mines spatiales dans la plupart "
+"des situations, où les patrouilles automatisées ou habitées sont "
+"préférables. Toutefois, lorsqu’une puissance explosive brute est "
+"indispensable, rien ne surpasse la force destructrice des mines spatiales."
 
 msgid "SFC L."
 msgstr "FSC L."
@@ -13502,7 +13589,7 @@ msgstr ""
 "dégâts honorables à des vaisseaux de grand calibre."
 
 msgid "T. Fury L."
-msgstr "L. Fury T."
+msgstr "L. Furie T."
 
 msgid ""
 "TeraCom's Fury Launcher is a high-performance missile launcher equipped with "
@@ -13511,14 +13598,14 @@ msgid ""
 "power, the Fury missiles launched are nimble enough to easily strike even "
 "some of the fastest ships in the galaxy."
 msgstr ""
-"Le lanceur Fury par TeraCom est un standard d’efficacité en matière de lance-"
+"Le lanceur Furie de TeraCom est un standard d’efficacité en matière de lance-"
 "missiles. Ses technologies de suivi et d’armement brevetées lui une facilité "
 "d’utilisation déconcertante et, bien qu’ils ne soient pas des plus "
-"destructifs, les missiles Fury sont suffisamment agiles pour toucher même "
+"destructifs, les missiles Furie sont suffisamment agiles pour toucher même "
 "les vaisseaux les plus rapides de la galaxie."
 
 msgid "T. Headhunter L."
-msgstr "L. Chasse-Tête T."
+msgstr "L. Chasseur-de-Tête T."
 
 msgid ""
 "This is TeraCom's model Headhunter launcher. Though somewhat pricey and "
@@ -13527,14 +13614,15 @@ msgid ""
 "The Headhunter missiles can deal devastating damage to small and medium-"
 "sized distant enemies, while remaining reasonably fast and agile."
 msgstr ""
-"Le modèle de Chasse-Tête de TeraCom. Bien que coûtant à l’achat et en "
-"ressources du vaisseau, les technologies de suivi et d’armement brevetées "
-"permet aux pilotes de tirer les premiers. Le missile Chasse-Tête peut être "
-"dévastateur à tout vaisseau de petite et moyenne taille, tout en étant "
-"suffisamment agile et rapide."
+"C'est la version de TeraCom du lanceur Chasseur-de-Tête. Bien que coûteux et "
+"exigeant pour les ressources du vaisseau, sa technologie brevetée de "
+"verrouillage et d'armement de missiles permet aux pilotes de tirer leurs "
+"missiles avant leur adversaire. Les missiles Chasseur-de-Tête peuvent "
+"infliger des dégâts dévastateurs aux ennemis lointains de petite et moyenne "
+"taille, tout en restant raisonnablement rapides et agiles."
 
 msgid "T. Imperator L."
-msgstr "L. Impérateur T."
+msgstr "L. Imperator T."
 
 msgid ""
 "TeraCom decided not to develop a launcher for the Caesar IV, as it fell "
@@ -13544,15 +13632,15 @@ msgid ""
 "while for it to reach its target. Faster cruisers may be able to outrun it "
 "completely."
 msgstr ""
-"TeraCom décida de ne pas développer de lanceur pour le missile César IV, le "
-"jugeant trop médiocre pour les standards de l’entreprise. À la place, une "
-"nouvelle spécification de torpille a été publiée. Celle-ci a établi les "
-"torpilles lourdes de classe Impérateur, qui offrent une puissance "
-"destructrice accablante. Cependant, elles sont si lentes que les croiseurs "
-"rapides les battent simplement à la course."
+"TeraCom a décidé de ne pas développer de lanceur pour le Caesar IV, celle-ci "
+"n’atteignant pas les normes de performance de l’entreprise. À la place, la "
+"société a conçu une torpille entièrement nouvelle. À l’heure actuelle, la "
+"torpille lourde de classe Imperator offre une puissance destructrice "
+"dévastatrice, mais peut mettre un certain temps à atteindre sa cible. Les "
+"croiseurs les plus rapides peuvent même parvenir à la semer complètement."
 
 msgid "T. Mace L."
-msgstr "T. L. Fléau"
+msgstr "L. Fléau T."
 
 msgid ""
 "The Mace class unguided rocket is a cheap, expendable weapon used to boost "
@@ -13560,9 +13648,15 @@ msgid ""
 "light targets than most fighter sized energy cannons, but comes with the "
 "disadvantage of running out of ammunition after only a short time of fire."
 msgstr ""
+"La roquette non guidée de classe Fléau est une arme bon marché et "
+"sacrifiable, utilisée pour accroître la puissance de feu maximale dans les "
+"situations critiques. Elle inflige bien plus de dégâts aux cibles légères "
+"que la plupart des canons à énergie de taille comparable à ceux des "
+"chasseurs. En revanche, ses munitions s’épuisent après une courte période de "
+"tir."
 
 msgid "T. Medusa L."
-msgstr ""
+msgstr "L. Medusa T."
 
 msgid ""
 "The Medusa class EMP cruise missile is a nonlethal weapon designed to knock "
@@ -13571,9 +13665,14 @@ msgid ""
 "can be effectively disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
 msgstr ""
+"Le missile de croisière IEM de classe Medusa est une arme non létale conçue "
+"pour neutraliser les systèmes internes d’un vaisseau, le rendant inoffensif "
+"et prêt à être abordé. Son ogive inflige peu de dégâts physiques, ce qui "
+"permet de mettre efficacement hors service même les cibles faiblement "
+"blindées. Toutefois, le Medusa n’est pas le missile le plus agile du marché."
 
 msgid "T. Vengeance L."
-msgstr ""
+msgstr "L. Vengeance T."
 
 msgid ""
 "Vengeance class interceptor missiles are the heaviest interceptor missiles "
@@ -13584,9 +13683,18 @@ msgid ""
 "TeraCom's patented launcher hardware considerably reduces the time it takes "
 "to achieve a lock. Sometimes, those few seconds can make all the difference."
 msgstr ""
+"Les missiles intercepteurs de classe Vengeance sont les plus lourds "
+"actuellement en production. Près de la moitié de leur coque est consacrée à "
+"la charge utile, ce qui réduit leur capacité à rattraper les cibles rapides. "
+"Ils sont conçus pour exceller dans la destruction des cibles lourdement "
+"blindées, au détriment de leur efficacité contre les boucliers. Il est donc "
+"préférable de les associer à des armes anti-boucliers. Le système de "
+"lancement breveté de TeraCom réduit considérablement le temps nécessaire "
+"pour verrouiller une cible. Parfois, ces quelques secondes peuvent faire "
+"toute la différence."
 
 msgid "T. Convulsion L."
-msgstr ""
+msgstr "L. Convulsion T."
 
 msgid ""
 "The Thurion interceptor class missile focus on high agility rather than "
@@ -13596,18 +13704,29 @@ msgid ""
 "This launcher is mounted on a turret and has more ammo capacity than the "
 "standard launcher."
 msgstr ""
+"Les missiles intercepteurs Thuriens de classe Convulsion privilégient une "
+"grande agilité plutôt que la puissance destructrice. Bien qu’ils infligent "
+"peu de dégâts aux objets physiques, ils sont très efficaces pour perturber "
+"les boucliers.\n"
+"\n"
+"Ce lanceur est monté sur une tourelle et dispose d’une capacité en munitions "
+"supérieure à celle du lanceur standard."
 
 msgid "U. Caesar IV L."
-msgstr ""
+msgstr "L. Caesar IV U."
 
 msgid ""
 "Caesar IV class torpedoes are among the most common torpedo weapons "
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down cruisers."
 msgstr ""
+"Les torpilles Caesar IV comptent parmi les armes de ce type les plus "
+"répandues. Bien plus lentes que les missiles et inefficaces contre les "
+"cibles mobiles, elles restent suffisamment maniables pour poursuivre les "
+"croiseurs."
 
 msgid "U. Storm L."
-msgstr "U. L. Tempête"
+msgstr "L. Tempête U."
 
 msgid "You need at least 30% reputation with the Empire."
 msgstr "Nécessite au moins 30% de réputation avec l'Empire."
@@ -13627,7 +13746,7 @@ msgstr ""
 "redoutablement mortelle."
 
 msgid "Z. Hunter L."
-msgstr ""
+msgstr "L. Chasseur Z."
 
 msgid ""
 "The Za'lek have found conventional missiles and torpedoes woefully primitive "
@@ -13636,10 +13755,15 @@ msgid ""
 "fruitful indeed. The hunter-killer drone accelerates towards its target and "
 "unleashes its ferromagnetohydraulic payload to deadly effect."
 msgstr ""
+"Pour les Za’lek, les missiles et les torpilles conventionnels paraissent "
+"terriblement primitifs face à leur technologie de drones miniaturisés. Ils "
+"ont donc entrepris de concevoir des drones kamikazes destinés à les "
+"remplacer, et leurs efforts ont été particulièrement fructueux. Le drone "
+"chasseur-tueur accélère en direction de sa cible et libère sa charge "
+"ferromagnétohydraulique avec des effets dévastateurs."
 
-#, fuzzy
 msgid "Z. Reaper L."
-msgstr "Chercheur Za'lek"
+msgstr "L. Faucheur Z."
 
 msgid ""
 "This weapon stretches the term 'miniaturized drone' nearly to its breaking "
@@ -13647,6 +13771,11 @@ msgid ""
 "accommodate a huge ferromagnetohydraulic bomb. It's the Za'lek's answer to "
 "torpedoes from less advanced nations, and an eloquent answer it certainly is."
 msgstr ""
+"Cette arme pousse le concept de « drone miniaturisé » presque jusqu’à ses "
+"limites. Il s’agit en pratique d’une plateforme de drone standard affinée "
+"pour accueillir une énorme bombe ferromagnétohydraulique. C’est la réponse "
+"des Za’lek aux torpilles des civilisations moins avancées, et le moins que "
+"l’on puisse dire, c’est qu’elle est éloquente."
 
 msgid "This map contains information about the local system."
 msgstr "Cette carte contient des informations sur le système local."
@@ -16908,7 +17037,7 @@ msgid ""
 msgstr ""
 
 msgid "Za'lek Fabricators"
-msgstr ""
+msgstr "Manufactures Za'lek"
 
 msgid ""
 "House Za'lek's ferociously-named destroyer has earned the moniker with "
@@ -41589,7 +41718,7 @@ msgstr ""
 #. Initialize in the case stage isn't set
 #. In case the player's ship got messed up, we reset intrinsics
 msgid "Bioship"
-msgstr ""
+msgstr "Bio-vaisseau"
 
 msgid " !!"
 msgstr " !!"
@@ -42498,7 +42627,7 @@ msgid "Empire core systems"
 msgstr ""
 
 msgid "Za'lek core systems"
-msgstr "Le test Za'lek"
+msgstr ""
 
 msgid "Dvaered core systems"
 msgstr ""
@@ -44078,7 +44207,7 @@ msgstr ""
 #. Gets someone to make a message (useful for hook.timer)
 #. Equips a Vendetta with full mace rockets
 msgid "Warlords"
-msgstr "Chefs De Guerre"
+msgstr "Chefs de guerre"
 
 #. Spawns a merchant ship that explains what happens
 msgid "Trader {ship}"
@@ -90781,7 +90910,7 @@ msgid "Eliminate hostiles"
 msgstr ""
 
 msgid "Land in {fct} territory to collect your pay"
-msgstr "Atterrir en territoire {fct} pour percevoir son salaire"
+msgstr "Atterrir en territoire {fct} pour percevoir votre salaire"
 
 #. Get the number of enemies in a particular system
 #. Try to cache the route to make it so that the same route doesn't appear over and over
@@ -92631,7 +92760,7 @@ msgid "Board checkpoint 3"
 msgstr ""
 
 msgid "Land at {pnt}"
-msgstr "Atterrir à {pnt}"
+msgstr "Atterrir sur {pnt}"
 
 msgid "Awesome"
 msgstr ""
@@ -126239,7 +126368,7 @@ msgid "Energy-Volt"
 msgstr ""
 
 msgid "Engine"
-msgstr ""
+msgstr "Moteur"
 
 msgid "Flare"
 msgstr ""
@@ -127927,60 +128056,63 @@ msgstr ""
 #. More generic defaults
 #. System-specific songs. Replace songs for certain systems
 msgid "\"Permission to land granted, captain.\""
-msgstr ""
+msgstr "\"Permission d'atterrir accordée, Capitaine.\""
 
 msgid "\"Only high ranking personnel allowed. Landing request denied.\""
 msgstr ""
+"\"Seul le personnel de haut rang est autorisé. Demande d'atterrissage "
+"refusée.\""
 
 msgid "\"Money won't buy you access to our restricted facilities, citizen.\""
 msgstr ""
+"\"Votre argent ne vous ouvrira pas les portes de nos installations "
+"restreintes, citoyen.\""
 
 #. Avoid double landing
 #. Not player, just play animation and remove
 msgid "\"Permission to land granted.\""
-msgstr ""
+msgstr "\"Permission d'atterrir accordée.\""
 
 msgid "\"Your rank is too low, citizen. Access denied.\""
-msgstr ""
+msgstr "\"Votre rang est trop bas, citoyen. Accès refusé.\""
 
 msgid "\"The Emperor permits you to land.\""
 msgstr "\"L'empereur vous autorise à atterrir.\""
 
 msgid "\"You may not approach the Emperor.\""
-msgstr "\"Vous ne pouvez pas vous approcher de l'Empereur.\""
+msgstr "\"Vous n'êtes pas autorisé à approcher l'Empereur.\""
 
 msgid "\"Don't attempt to bribe an Empire official, pilot.\""
-msgstr ""
+msgstr "\"N'essayez pas de corrompre un officier de l'Empire, pilote.\""
 
-#, fuzzy
 msgid "\"Landing access authorized.\""
-msgstr "Station Akra"
+msgstr "\"Accès d'atterrissage autorisé.\""
 
 msgid "\"You are not authorized to land here.\""
 msgstr "\"Vous n'êtes pas autorisé à atterrir ici.\""
 
-#, fuzzy
 msgid "\"Military clearance approved.\""
-msgstr "Autorisation militaire accordée."
+msgstr "\"Autorisation militaire accordée.\""
 
-#, fuzzy
 msgid "\"Military authorization cleared.\""
-msgstr "Autorisation militaire accordée."
+msgstr "\"Autorisation militaire validée.\""
 
 msgid "\"You are not authorized to land here, citizen.\""
 msgstr "\"Vous n'êtes pas autorisé à atterrir ici, citoyen.\""
 
 msgid "\"Landing is only for approved personnel.\""
-msgstr ""
+msgstr "\"L'atterrissage est réservé au personnel accrédité.\""
 
 msgid "\"Military authorization required for landing access.\""
-msgstr ""
+msgstr "\"Une autorisation militaire est requise pour pouvoir atterrir.\""
 
 msgid "\"Don't attempt to bribe an Empire official, citizen.\""
-msgstr ""
+msgstr "\"N'essayez pas de corrompre un officier de l'Empire, citoyen.\""
 
 msgid "\"I'll let this one slide, but don't try this again, citizen.\""
 msgstr ""
+"\"Je ferme les yeux pour cette fois, mais ne vous avisez plus de "
+"recommencer, citoyen.\""
 
 #.
 #. Example of a script for a Space Object. All functions are optional and can
@@ -128010,9 +128142,8 @@ msgstr ""
 #. @luatreturn boolean Whether or not the player can land.
 #. @luatreturn string Message to give the player regarding being able to land or not.
 #. --
-#, fuzzy
 msgid "\"Go ahead.\""
-msgstr "\"Éloignez vous de moi !\""
+msgstr "\"Vous pouvez y aller.\""
 
 #.
 #. @brief Triggers when a pilot lands (assuming they can from can_land()).
@@ -128040,16 +128171,14 @@ msgstr "\"Éloignez vous de moi !\""
 #. @brief Run when getting the population string of the spob.
 #. --
 #. forcess a refresh of condition
-#, fuzzy
 msgid "roughly {amt}"
-msgstr "~ %s"
+msgstr "environ {amt}"
 
 #.
 #. @brief Run when getting the full length class string of the spob.
 #. --
-#, fuzzy
 msgid "Pelagic (O-class)"
-msgstr "%s (%s-classe)"
+msgstr "Pélagique (classe O)"
 
 #. Dvaered
 #. Soromid
@@ -128057,13 +128186,11 @@ msgstr "%s (%s-classe)"
 #. Sirius
 #. Pirate
 #. Za'lek
-#, fuzzy
 msgid "\"Welcome to the Jade Court.\""
-msgstr "Bienvenue dans l'univers de Naev…"
+msgstr "\"Bienvenue à la Cour de Jade.\""
 
-#, fuzzy
 msgid "\"Landing permission approved.\""
-msgstr "permission denied"
+msgstr "\"Permission d'atterrir approuvée.\""
 
 #. Set up globals
 msgid ""
@@ -128099,20 +128226,20 @@ msgstr ""
 #. sfx   = nil
 #. We want to do this here or it gets slow in autonav
 msgid "The hypergate is active."
-msgstr ""
+msgstr "L'hyperporte est active."
 
 #. Avoid double landing
 #. TODO check if hostile to disallow
 msgid "Hypergate ({sysname})"
-msgstr ""
+msgstr "Hyperporte ({sysname})"
 
 #. Load shaders
 #. Get potential destinations from tags
 msgid "{sysname} ({factname})"
-msgstr ""
+msgstr "{sysname} ({factname})"
 
 msgid "Unknown Signature {hash}"
-msgstr ""
+msgstr "Signature inconnue {hash}"
 
 #. Show big question mark or something
 #. Animated, so we have to draw every frame
@@ -128127,16 +128254,28 @@ msgid ""
 "\n"
 "#nAvailable Jump Targets:#0"
 msgstr ""
+"#nSystème actuel :#0 {cursys}\n"
+"#nFaction de l'hypeporte :#0 {fact}\n"
+"#nRéputation :#0 {standing} ({standing_value})\n"
+"#nModificateur de rép. :#0 {costmod}%#0\n"
+"#nMasse de la flotte :#0 {totalmass}\n"
+"#nCoût d'usage :#0 {totalcost} ({flatcost} + {masscost} par tonne)\n"
+"\n"
+"#nCibles de saut disponibles :#0"
 
 msgid ""
 "\n"
 "The destination is unknown!"
 msgstr ""
+"\n"
+"La destination est inconnue !"
 
 msgid ""
 "\n"
 "You are enemies with the {fctname}!"
 msgstr ""
+"\n"
+"Vous êtes ennemi avec les {fctname} !"
 
 msgid "Jump to {sysname}?"
 msgstr "Sauter à {sysname} ?"
@@ -128151,7 +128290,7 @@ msgid ""
 msgstr ""
 
 msgid "Jump!"
-msgstr ""
+msgstr "Sauter !"
 
 #. No psychic powers
 msgid "The obelisk seems to be inert."
@@ -128169,196 +128308,212 @@ msgstr ""
 msgid "You tune your psychic energy to the {spb}. {description}"
 msgstr ""
 
-#, fuzzy
 msgid "Activate"
-msgstr "Collectif"
+msgstr "Activer"
 
 msgid ""
 "You muster your psychic powers to attempt to activate the obelisk, however, "
 "it seems like you do not have the powers to be able to activate this obelisk."
 msgstr ""
 
-#, fuzzy
 msgid "You activate the obelisk."
-msgstr "Vous avez quitté le système."
+msgstr "Vous activez l'obélisque."
 
 #. Player activated the obelisk
 #. Store parameters
 #. defined below
 #. Needed for can_land
 msgid "\"Make it quick.\""
-msgstr ""
+msgstr "\"Faites vite.\""
 
 msgid "\"Don't let anyone see you.\""
-msgstr ""
+msgstr "\"Que personne ne vous voie.\""
 
 msgid "\"Be quiet about this.\""
-msgstr ""
+msgstr "\"Soyez discret là-dessus.\""
 
 msgid "\"PRIVILEGE OVERRIDE. LANDING AUTHORIZED.\""
-msgstr ""
+msgstr "\"ANNULATION PAR PRIVILÈGE. ATTERRISSAGE AUTORISÉ.\""
 
 msgid "\"DATABASE ERROR. AUTHORIZATION GRANTED.\""
-msgstr ""
+msgstr "\"ERREUR DE BASE DE DONNÉES. AUTORISATION ACCORDÉE.\""
 
 msgid "\"LANDING DEN...  ...AUTHORIZED.\""
-msgstr ""
+msgstr "\"ATTERRISSAGE REFUS...  ...AUTORISÉ.\""
 
 msgid "\"Landing request denied.\""
-msgstr ""
+msgstr "\"Demande d'atterrissage refusée.\""
 
 msgid "\"Landing not authorized.\""
-msgstr ""
+msgstr "\"Atterrissage non autorisé.\""
 
 msgid "\"Landing denied.\""
-msgstr ""
+msgstr "\"Atterrissage refusé.\""
 
 msgid "\"Paperwork not in order. Landing denied.\""
-msgstr ""
+msgstr "\" Documents administratifs non conformes. Atterrissage refusé.\""
 
 msgid "\"Credentials invalid. Landing request denied.\""
-msgstr ""
+msgstr "\"Identifiants invalides. Demande d'atterrissage refusée.\""
 
 msgid "\"CONNECTION REFUSED.\""
-msgstr ""
+msgstr "\"CONNEXION REFUSÉE.\""
 
 #. ssh error
 msgid "\"INVALID USER {player}.\""
-msgstr ""
+msgstr "\"UTILISATEUR INVALIDE : {player}.\""
 
 msgid "\"CONNECTION CLOSED.\""
-msgstr ""
+msgstr "\"CONNEXION INTERROMPUE.\""
 
 msgid "\"INSUFFICIENT PRIVILEGES.\""
-msgstr ""
+msgstr "\" PRIVILÈGES INSUFFISANTS.\""
 
 msgid "\"LANDING PERMISSIONS NOT FOUND IN DATABASE.\""
-msgstr ""
+msgstr "\"PERMISSIONS D'ATTERRISSAGE INTROUVABLES DANS LA BASE DE DONNÉES.\""
 
 msgid "\"You are clear to land.\""
-msgstr "\"Vous pouvez atterrir.\""
+msgstr "\"Autorisation d'atterrir accordée.\""
 
 msgid "\"Proceed to land.\""
-msgstr ""
+msgstr "\"Procédez à l'atterrissage.\""
 
 msgid "\"Landing authorized.\""
-msgstr ""
+msgstr "\"Atterrissage autorisé.\""
 
 msgid "\"Paperwork approved. Landing authorized.\""
-msgstr ""
+msgstr "\"Documents approuvés. Atterrissage autorisé.\""
 
 msgid "\"Landing papers in order. Proceed to land.\""
-msgstr ""
+msgstr "\"Documents d'atterrissage en règle. Procédez à l'atterrissage.\""
 
-#, fuzzy
 msgid "\"Landing authorization accredited.\""
-msgstr "Station Akra"
+msgstr "\"Autorisation d'atterrissage accréditée.\""
 
 msgid "\"CONTROL DRONE AUTHORIZING LANDING.\""
-msgstr ""
+msgstr "\"DRONE DE CONTRÔLE : AUTORISATION D'ATTERRISSAGE EN COURS.\""
 
 msgid "\"LANDING ALGORITHM INITIALIZED. PROCEED TO LANDING PAD.\""
-msgstr ""
+msgstr "\"ALGORITHME D'ATTERRISSAGE INITIALISÉ. REJOIGNEZ LA PLATEFORME.\""
 
 msgid "\"INITIALIZING LANDING PROCEDURE. AUTHORIZATION GRANTED.\""
 msgstr ""
+"\"INITIALISATION DE LA PROCÉDURE D'ATTERRISSAGE. AUTORISATION ACCORDÉE.\""
 
 msgid "\"DOCKING SEQUENCE TRANSMITTED.\""
-msgstr ""
+msgstr "\"SÉQUENCE D'AMARRAGE TRANSMISE.\""
 
-#, fuzzy
 msgid "\"Welcome Wanderer. Proceed to land.\""
-msgstr "Tu me dois 20 balles !"
+msgstr "\"Bienvenue, voyageur. Procédez à l'atterrissage.\""
 
 msgid "\"Landing sanctioned, continue to ship nests.\""
-msgstr ""
+msgstr "\"Atterrissage approuvé, rejoignez les nids de vaisseaux.\""
 
 msgid "\"Greetings Traveller. Land at free ship nest.\""
-msgstr ""
+msgstr "\"Salutations, voyageur. Atterrissez sur un nid de vaisseau libre.\""
 
 msgid "\"Landing authorized. May the Sirichana guide you.\""
-msgstr ""
+msgstr "\"Atterrissage autorisé. Que Sirichana vous guide.\""
 
-#, fuzzy
 msgid "\"You are clear to land. Proceed to landing chamber {num}.\""
-msgstr "Vous n'êtes rien face à l'Empire !"
+msgstr ""
+"\"Autorisation d'atterrir accordée. Rejoignez le sas d'atterrissage {num}.\""
 
 msgid "\"Landing accepted. Welcome to Sirichana's domain.\""
-msgstr ""
+msgstr "\"Atterrissage accepté. Bienvenue dans le domaine de Sirichana.\""
 
 msgid "\"Hostilities not detected. Touch down now.\""
-msgstr ""
+msgstr "\"Aucune hostilité détectée. Posez-vous maintenant.\""
 
 msgid "\"Green for landing. No dawdling.\""
-msgstr ""
+msgstr "\"Feu vert pour l'atterrissage. On ne traîne pas.\""
 
 msgid "\"Permission granted. Make it swift.\""
-msgstr ""
+msgstr "\"Permission accordée. Faites vite.\""
 
 msgid "\"Landing authorized. Make sure to power down weapons.\""
-msgstr ""
+msgstr "\"Atterrissage autorisé. Veillez à désactiver vos systèmes d'armes.\""
 
 msgid "\"Your loyalty to the Circle is noted. Commence landing when ready.\""
 msgstr ""
+"\"Votre loyauté envers le Cercle est notée. Commencez l'atterrissage quand "
+"vous serez prêt.\""
 
 #. The landing request implicitly has a declaration of belief in the Circle
 msgid ""
 "\"Landing ID X{num1}-{num2}, you are cleared to land. Follow the rules.\""
 msgstr ""
+"\"Identifiant d'atterrissage X{num1}-{num2}, autorisation d'atterrir "
+"accordée. Respectez les règles.\""
 
 #. ID of an individual land request
-#, fuzzy
 msgid "\"You may land. Act appropriately while landed.\""
-msgstr "Vous n'êtes rien face à l'Empire !"
+msgstr ""
+"\"Vous pouvez vous poser. Comportez-vous correctement une fois à terre.\""
 
 #. A true Proteron would not need to be told, but you are an outsider.
 msgid "\"We have received your loyalty oath, pilot. You may land.\""
 msgstr ""
+"\"Nous avons reçu votre serment de loyauté, pilote. Vous pouvez atterrir.\""
 
 #. Colonel Cathcart smiles down on us
 msgid "\"We do not accept bribes.\""
 msgstr "\"Nous n'acceptons pas les pots-de-vin.\""
 
 msgid "\"LANDING OVERRIDE PROGRAM NOT FOUND.\""
-msgstr ""
+msgstr "\"PROGRAMME DE FORÇAGE D'ATTERRISSAGE INTROUVABLE.\""
 
 msgid "\"USER NOT IN SUDOERS.\""
-msgstr ""
+msgstr "\"L'UTILISATEUR N'EST PAS DANS LE FICHIER SUDOERS.\""
 
 msgid ""
 "\"I'll let you land for the modest price of {credits}.\"\n"
 "\n"
 "Pay {credits}?"
 msgstr ""
+"\"Je vous laisse vous poser pour la modique somme de {credits}.\"\n"
+"\n"
+" Payer {credits} ?"
 
 msgid ""
 "\"Some {credits} would make me reconsider letting you land.\"\n"
 "\n"
 "Pay {credits}?"
 msgstr ""
+"\"Quelques {credits} pourraient m'inciter à vous laisser atterrir.\"\n"
+"\n"
+"Payer {credits} ?"
 
 msgid ""
 "\"{credits} REQUIRED FOR LANDING ACCESS.\"\n"
 "\n"
 "Pay {credits}?"
 msgstr ""
+"\"{credits} REQUIS POUR L'ACCÈS D'ATTERRISSAGE.\"\n"
+"\n"
+"Payer {credits} ?"
 
 msgid ""
 "\"LANDING OVERRIDE PROVIDED FOR {credits}.\"\n"
 "\n"
 "Pay {credits}?"
 msgstr ""
+"\"AUTORISATION DE L'ATTERRISSAGE DISPONIBLE POUR {credits}.\"\n"
+"\n"
+"Payer {credits} ?"
 
 msgid "\"I'm not dealing with dangerous criminals like you!\""
-msgstr ""
+msgstr "\"Je ne traite pas avec les criminels dangereux de votre espèce !\""
 
 msgid "\"DANGER DETECTED. DISABLING LANDING PROTOCOL.\""
-msgstr ""
+msgstr "\"DANGER DÉTECTÉ. DÉSACTIVATION DU PROTOCOLE D'ATTERRISSAGE.\""
 
 msgid ""
 "You only have {credits} credits. You need #r{cdif}#0 more to be able to "
 "afford the bribe!"
 msgstr ""
+"Vous n'avez que {credits} crédits. Il vous faut #r{cdif}#0 de plus pour "
+"pouvoir payer le pot-de-vin !"
 
 msgid "You refuse to pay the bribe."
 msgstr "Vous refusez de payer le pot-de-vin."
@@ -128387,50 +128542,57 @@ msgid "The wormhole seems to be active."
 msgstr ""
 
 msgid "\"Access to Maanen's Moon denied.\""
-msgstr ""
+msgstr "\"Accès à la Lune de Maanen refusé.\""
 
 msgid "\"You need special clearance to land on Maanen's Moon.\""
 msgstr ""
+"\"Vous avez besoin d'une autorisation spéciale pour atterrir sur la Lune de "
+"Maanen.\""
 
 #, fuzzy
 msgid "\"You are not yet welcome at O'rez Palace.\""
 msgstr "\"Vous ne méritez pas mon attention.\""
 
-#, fuzzy
 msgid "\"The little money you can offer is of no interest to us.\""
-msgstr "\"Votre argent ne m'intéresse pas.\""
+msgstr "\"Le peu d'argent que vous pouvez offrir ne nous intéresse pas.\""
 
 msgid "\"Permission to land granted. Welcome, mate.\""
-msgstr ""
+msgstr "\"Autorisation d'atterrir accordée. Bienvenue, l'ami.\""
 
 msgid "\"Get out of here!\""
-msgstr "\"Allez vous en !\""
+msgstr "\"Allez-vous-en !\""
 
 msgid "\"Scram before I blast you to pieces myself.\""
-msgstr ""
+msgstr "\"Foutez le camp avant que je ne vous pulvérise moi-même !\""
 
 msgid "\"Go away!\""
-msgstr "\"Éloignez vous de moi !\""
+msgstr "\"Allez-vous-en !\""
 
 msgid "\"Small time pirates have no business on our clanworld!\""
-msgstr ""
+msgstr "\"Les pirates de pacotille n'ont rien à faire sur notre planète !\""
 
 msgid "\"Come back when you're a real pirate.\""
-msgstr ""
+msgstr "\"Revenez quand vous serez un vrai pirate.\""
 
 msgid "\"Didn't you read the 'Real Pirates Only' sign? Go away.\""
 msgstr ""
+"\"Vous n'avez pas lu le panneau 'Réservé aux vrais pirates' ? Allez-vous-"
+"en.\""
 
 msgid "\"Your money isn't worth the trouble you bring.\""
-msgstr "\"Votre argent ne vaut pas les ennuis que vous causez.\""
+msgstr "\"Votre argent ne vaut pas les ennuis que vous apportez.\""
 
 msgid ""
 "\"You think we'd let scum like you land? You're a menace to pirate society!\""
 msgstr ""
+"\"Vous croyez qu'on laisserait de la racaille comme vous atterrir ? Vous "
+"êtes une menace pour la société pirate !\""
 
 msgid ""
 "\"Even pirates have standards better than letting vermin like you land.\""
 msgstr ""
+"\"Même les pirates ont des principes, et ils valent mieux que de laisser la "
+"vermine dans votre genre atterrir.\""
 
 msgid ""
 "\"Well, I think you're scum, but I'm willing to look the other way for "
@@ -128438,6 +128600,10 @@ msgid ""
 "\n"
 "Pay {credits}?"
 msgstr ""
+"\"Bon, je pense que vous êtes une racaille, mais je veux bien fermer les "
+"yeux pour {credits}. Marché conclu ?\"\n"
+"\n"
+"Payer {credits} ?"
 
 msgid ""
 "\"I could use some more wax for my Pirate Hyena. I'll make a landing "
@@ -128445,12 +128611,16 @@ msgid ""
 "\n"
 "Pay {credits}?"
 msgstr ""
+"\"J'aurais bien besoin d'un peu plus de cire pour mon Hyène Pirate. Je vais "
+"faire une exception pour vous permettre d'atterrir contre {credits}.\"\n"
+"\n"
+"Payer {credits} ?"
 
 msgid "\"Heh heh, thanks. Now get off the comm, I'm busy!\""
-msgstr ""
+msgstr "\"Hé hé, merci. Maintenant, libérez le canal, je suis occupé !\""
 
 msgid "\"Pleasure doing business with you. Now get moving.\""
-msgstr "\"Un plaisir de faire affaire avec vous. Partez maintenant.\""
+msgstr "\"Ravi d'avoir fait affaire avec vous. Maintenant, circulez.\""
 
 #. Draw the shader
 #. We need an image for the shader to work.
@@ -128458,128 +128628,130 @@ msgstr "\"Un plaisir de faire affaire avec vous. Partez maintenant.\""
 #. The canvas
 #. Set up shader
 msgid "Go ahead."
-msgstr ""
+msgstr "Allez-y."
 
 #. We want to do this here or it gets slow in autonav
 msgctxt "population"
 msgid "???"
-msgstr "? ??"
+msgstr "???"
 
-#, fuzzy
 msgid "The communication channel is only static."
-msgstr "Vous ignorez l'information."
+msgstr "Le canal de communication n'émet que des parasites."
 
-#, fuzzy
 msgid "It does not look safe to land."
-msgstr "\"J'ai besoin de mon carburant.\""
+msgstr "L'atterrissage ne semble pas sûr."
 
-#, fuzzy
 msgid "You can try to land here."
-msgstr "Vous ne pouvez pas atterrir ici."
+msgstr "Vous pouvez tenter d'atterrir ici."
 
 msgid "\"The Sovereign Proteron Autarchy does not take bribes.\""
-msgstr ""
+msgstr "\"L'Autarchie Souveraine Protéronne n'accepte pas les pots-de-vin.\""
 
 msgid "\"Welcome to Mutris, home of Sirichana.\""
-msgstr ""
+msgstr "\"Bienvenue sur Mutris, foyer de Sirichana.\""
 
 msgid "\"You may not approach the home of Sirichana yet.\""
-msgstr ""
+msgstr "\"Vous ne pouvez pas encore approcher du foyer de Sirichana.\""
 
 msgid "\"The faithful will never be swayed by money.\""
-msgstr ""
+msgstr "\"Les fidèles ne se laisseront jamais influencer par l'argent.\""
 
 msgid "\"Only the faithful may land here. Request denied.\""
-msgstr ""
+msgstr "\"Seuls les fidèles peuvent atterrir ici. Demande refusée.\""
 
 msgid "\"Only friends of the Soromid may set foot on Kataka.\""
-msgstr ""
+msgstr "\"Seuls les amis des Soromides peuvent poser le pied sur Kataka.\""
 
 msgid "\"We don't need your money, outsider.\""
-msgstr ""
+msgstr "\"Nous n'avons pas besoin de votre argent, étranger.\""
 
 msgid "\"Permission denied. You're not truly one of us.\""
-msgstr ""
+msgstr "\"Permission refusée. Vous n'êtes pas vraiment des nôtres.\""
 
 msgid "\"Welcome, {player}. You may dock when ready.\""
 msgstr ""
+"\"Bienvenue, {player}. Vous pouvez vous amarrer lorsque vous serez prêt.\""
 
 msgid "\"Dock at the life-support enabled ports when ready.\""
 msgstr ""
+"\"Amarrez-vous aux ports équipés de systèmes de survie lorsque vous serez "
+"prêt.\""
 
-#, fuzzy
 msgid "\"We lack trust in you to allow you to land here.\""
-msgstr "\"N'es-tu pas trop jeune pour être ici ?\""
+msgstr ""
+"\"Nous ne vous faisons pas assez confiance pour vous permettre d'atterrir "
+"ici.\""
 
-#, fuzzy
 msgid "\"You are not welcome among the Thurion.\""
-msgstr "\"Vous ne méritez pas mon attention.\""
+msgstr "\"Vous n'êtes pas le bienvenu chez les Thuriens.\""
 
-#, fuzzy
 msgid "\"The Thurion have no need for your vile credits.\""
-msgstr "\"Nous n'avons pas besoin de vos crédits.\""
+msgstr "\"Les Thuriens n'ont que faire de vos vils crédits.\""
 
-#, fuzzy
 msgid "\"Digital beings have no need of your vile currency.\""
-msgstr "\"Nous n'avons pas besoin de vos crédits.\""
+msgstr "\"Les êtres digitaux n'ont aucun besoin de votre vile monnaie.\""
 
 msgid "\"Your vile credits will not sway our digital will.\""
-msgstr ""
+msgstr "\"Vos vils crédits ne fléchiront pas notre volonté digitale.\""
 
-#, fuzzy
 msgid "\"You are not yet authorized to land here.\""
-msgstr "\"Vous n'êtes pas autorisé à atterrir ici.\""
+msgstr "\"Vous n'êtes pas encore autorisé à atterrir ici.\""
 
 msgid "\"Welcome, friend {player}. You may dock when ready.\""
 msgstr ""
+"\"Bienvenue, ami {player}. Vous pouvez vous amarrer lorsque vous serez "
+"prêt.\""
 
 msgid "\"We can't trust you to land here just yet.\""
 msgstr ""
+"\"Nous ne pouvons pas encore vous faire confiance pour vous laisser atterrir "
+"ici.\""
 
 msgid "\"We have no need for your credits.\""
 msgstr "\"Nous n'avons pas besoin de vos crédits.\""
 
 msgid "Heavy anti-spacecraft fortifications make it unwise to land."
 msgstr ""
+"De lourdes fortifications antiaériennes rendent l'atterrissage imprudent."
 
 #. Impossible
 msgid "\"Docking sequence transmitted.\""
-msgstr ""
+msgstr "\"Séquence d'amarrage transmise.\""
 
 msgid "\"Authorization level too low to grant access.\""
-msgstr ""
+msgstr "\"Niveau d'autorisation trop bas pour accorder l'accès.\""
 
 msgid "\"Authorization permissions insufficient for landing.\""
-msgstr ""
+msgstr "\"Niveau d'autorisation insuffisant pour l'atterrissage.\""
 
 msgid "\"Landing permission not found in database.\""
-msgstr ""
+msgstr "\"Autorisation d'atterrissage introuvable dans la base de données.\""
 
 msgid "\"Money is irrelevant.\""
-msgstr ""
+msgstr "\"L'argent est hors de propos.\""
 
 msgid "\"Permission denied. Ruadan space is off-limits to you.\""
-msgstr ""
+msgstr "\"Permission refusée. L'espace de Ruadan vous est interdit.\""
 
 msgctxt "keyname"
 msgid "A"
-msgstr ""
+msgstr "A"
 
 msgctxt "keyname"
 msgid "B"
-msgstr ""
+msgstr "B"
 
 msgctxt "keyname"
 msgid "C"
-msgstr ""
+msgstr "C"
 
 msgctxt "keyname"
 msgid "D"
-msgstr ""
+msgstr "D"
 
 msgctxt "keyname"
 msgid "E"
-msgstr ""
+msgstr "E"
 
 msgctxt "keyname"
 msgid "F"
@@ -128587,47 +128759,47 @@ msgstr "F"
 
 msgctxt "keyname"
 msgid "G"
-msgstr ""
+msgstr "G"
 
 msgctxt "keyname"
 msgid "H"
-msgstr ""
+msgstr "H"
 
 msgctxt "keyname"
 msgid "I"
-msgstr ""
+msgstr "I"
 
 msgctxt "keyname"
 msgid "J"
-msgstr ""
+msgstr "J"
 
 msgctxt "keyname"
 msgid "K"
-msgstr ""
+msgstr "K"
 
 msgctxt "keyname"
 msgid "L"
-msgstr ""
+msgstr "L"
 
 msgctxt "keyname"
 msgid "M"
-msgstr ""
+msgstr "M"
 
 msgctxt "keyname"
 msgid "N"
-msgstr ""
+msgstr "N"
 
 msgctxt "keyname"
 msgid "O"
-msgstr ""
+msgstr "O"
 
 msgctxt "keyname"
 msgid "P"
-msgstr ""
+msgstr "P"
 
 msgctxt "keyname"
 msgid "Q"
-msgstr ""
+msgstr "Q"
 
 msgctxt "keyname"
 msgid "R"
@@ -128635,31 +128807,31 @@ msgstr "R"
 
 msgctxt "keyname"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 msgctxt "keyname"
 msgid "T"
-msgstr ""
+msgstr "T"
 
 msgctxt "keyname"
 msgid "U"
-msgstr ""
+msgstr "U"
 
 msgctxt "keyname"
 msgid "V"
-msgstr ""
+msgstr "V"
 
 msgctxt "keyname"
 msgid "W"
-msgstr ""
+msgstr "W"
 
 msgctxt "keyname"
 msgid "X"
-msgstr ""
+msgstr "X"
 
 msgctxt "keyname"
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 msgctxt "keyname"
 msgid "Z"
@@ -128667,7 +128839,7 @@ msgstr "Z"
 
 msgctxt "keyname"
 msgid "1"
-msgstr ""
+msgstr "1"
 
 msgctxt "keyname"
 msgid "2"
@@ -128675,31 +128847,31 @@ msgstr "2"
 
 msgctxt "keyname"
 msgid "3"
-msgstr ""
+msgstr "3"
 
 msgctxt "keyname"
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgctxt "keyname"
 msgid "5"
-msgstr ""
+msgstr "5"
 
 msgctxt "keyname"
 msgid "6"
-msgstr ""
+msgstr "6"
 
 msgctxt "keyname"
 msgid "7"
-msgstr ""
+msgstr "7"
 
 msgctxt "keyname"
 msgid "8"
-msgstr ""
+msgstr "8"
 
 msgctxt "keyname"
 msgid "9"
-msgstr ""
+msgstr "9"
 
 msgctxt "keyname"
 msgid "0"
@@ -128707,15 +128879,15 @@ msgstr "0"
 
 msgctxt "keyname"
 msgid "Return"
-msgstr "Return"
+msgstr "Entrée"
 
 msgctxt "keyname"
 msgid "Escape"
-msgstr "Escape"
+msgstr "Échap"
 
 msgctxt "keyname"
 msgid "Backspace"
-msgstr ""
+msgstr "Backspace"
 
 msgctxt "keyname"
 msgid "Tab"
@@ -128723,7 +128895,7 @@ msgstr "Tab"
 
 msgctxt "keyname"
 msgid "Space"
-msgstr "Space"
+msgstr "Espace"
 
 msgctxt "keyname"
 msgid "-"
@@ -128779,63 +128951,63 @@ msgstr "/"
 
 msgctxt "keyname"
 msgid "CapsLock"
-msgstr ""
+msgstr "Verr. Maj"
 
 msgctxt "keyname"
 msgid "F1"
-msgstr ""
+msgstr "F1"
 
 msgctxt "keyname"
 msgid "F2"
-msgstr ""
+msgstr "F2"
 
 msgctxt "keyname"
 msgid "F3"
-msgstr ""
+msgstr "F3"
 
 msgctxt "keyname"
 msgid "F4"
-msgstr ""
+msgstr "F4"
 
 msgctxt "keyname"
 msgid "F5"
-msgstr ""
+msgstr "F5"
 
 msgctxt "keyname"
 msgid "F6"
-msgstr ""
+msgstr "F6"
 
 msgctxt "keyname"
 msgid "F7"
-msgstr ""
+msgstr "F7"
 
 msgctxt "keyname"
 msgid "F8"
-msgstr ""
+msgstr "F8"
 
 msgctxt "keyname"
 msgid "F9"
-msgstr ""
+msgstr "F9"
 
 msgctxt "keyname"
 msgid "F10"
-msgstr ""
+msgstr "F10"
 
 msgctxt "keyname"
 msgid "F11"
-msgstr ""
+msgstr "F11"
 
 msgctxt "keyname"
 msgid "F12"
-msgstr ""
+msgstr "F12"
 
 msgctxt "keyname"
 msgid "PrintScreen"
-msgstr ""
+msgstr "Impress. écran"
 
 msgctxt "keyname"
 msgid "ScrollLock"
-msgstr ""
+msgstr "Arrêt défil."
 
 msgctxt "keyname"
 msgid "Pause"
@@ -128843,15 +129015,15 @@ msgstr "Pause"
 
 msgctxt "keyname"
 msgid "Insert"
-msgstr ""
+msgstr "Insér."
 
 msgctxt "keyname"
 msgid "Home"
-msgstr ""
+msgstr "Début"
 
 msgctxt "keyname"
 msgid "PageUp"
-msgstr ""
+msgstr "Page préc."
 
 msgctxt "keyname"
 msgid "Delete"
@@ -128859,95 +129031,95 @@ msgstr "Supprimer"
 
 msgctxt "keyname"
 msgid "End"
-msgstr ""
+msgstr "Fin"
 
 msgctxt "keyname"
 msgid "PageDown"
-msgstr ""
+msgstr "Page suiv."
 
 msgctxt "keyname"
 msgid "Right"
-msgstr ""
+msgstr "Flèche droite"
 
 msgctxt "keyname"
 msgid "Left"
-msgstr ""
+msgstr "Flèche gauche"
 
 msgctxt "keyname"
 msgid "Down"
-msgstr ""
+msgstr "Flèche bas"
 
 msgctxt "keyname"
 msgid "Up"
-msgstr ""
+msgstr "Flèche haut"
 
 msgctxt "keyname"
 msgid "Numlock"
-msgstr ""
+msgstr "Verr. num."
 
 msgctxt "keyname"
 msgid "Keypad /"
-msgstr ""
+msgstr "/ pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad *"
-msgstr ""
+msgstr "* pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad -"
-msgstr ""
+msgstr "- pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad +"
-msgstr ""
+msgstr "+ pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad Enter"
-msgstr ""
+msgstr "Entrée pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 1"
-msgstr ""
+msgstr "1 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 2"
-msgstr ""
+msgstr "2 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 3"
-msgstr ""
+msgstr "3 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 4"
-msgstr ""
+msgstr "4 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 5"
-msgstr ""
+msgstr "5 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 6"
-msgstr ""
+msgstr "6 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 7"
-msgstr ""
+msgstr "7 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 8"
-msgstr ""
+msgstr "8 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 9"
-msgstr ""
+msgstr "9 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad 0"
-msgstr ""
+msgstr "0 pavé numérique"
 
 msgctxt "keyname"
 msgid "Keypad ."
-msgstr ""
+msgstr ". pavé numérique"
 
 msgctxt "keyname"
 msgid "Application"
@@ -128959,95 +129131,95 @@ msgstr ""
 
 msgctxt "keyname"
 msgid "Keypad ="
-msgstr ""
+msgstr "= pavé numérique"
 
 msgctxt "keyname"
 msgid "F13"
-msgstr ""
+msgstr "F13"
 
 msgctxt "keyname"
 msgid "F14"
-msgstr ""
+msgstr "F14"
 
 msgctxt "keyname"
 msgid "F15"
-msgstr ""
+msgstr "F15"
 
 msgctxt "keyname"
 msgid "F16"
-msgstr ""
+msgstr "F16"
 
 msgctxt "keyname"
 msgid "F17"
-msgstr ""
+msgstr "F17"
 
 msgctxt "keyname"
 msgid "F18"
-msgstr ""
+msgstr "F18"
 
 msgctxt "keyname"
 msgid "F19"
-msgstr ""
+msgstr "F19"
 
 msgctxt "keyname"
 msgid "F20"
-msgstr ""
+msgstr "F20"
 
 msgctxt "keyname"
 msgid "F21"
-msgstr ""
+msgstr "F21"
 
 msgctxt "keyname"
 msgid "F22"
-msgstr ""
+msgstr "F22"
 
 msgctxt "keyname"
 msgid "F23"
-msgstr ""
+msgstr "F23"
 
 msgctxt "keyname"
 msgid "F24"
-msgstr ""
+msgstr "F24"
 
 msgctxt "keyname"
 msgid "Execute"
-msgstr ""
+msgstr "Exécuter"
 
 msgctxt "keyname"
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 
 msgctxt "keyname"
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 msgctxt "keyname"
 msgid "Select"
-msgstr ""
+msgstr "Sélectionner"
 
 msgctxt "keyname"
 msgid "Stop"
-msgstr ""
+msgstr "Arrêter"
 
 msgctxt "keyname"
 msgid "Again"
-msgstr ""
+msgstr "Répéter"
 
 msgctxt "keyname"
 msgid "Undo"
-msgstr ""
+msgstr "Annuler"
 
 msgctxt "keyname"
 msgid "Cut"
-msgstr "Testeurs"
+msgstr "Couper"
 
 msgctxt "keyname"
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 msgctxt "keyname"
 msgid "Paste"
-msgstr ""
+msgstr "Coller"
 
 msgctxt "keyname"
 msgid "Find"
@@ -129055,15 +129227,15 @@ msgstr "Rechercher"
 
 msgctxt "keyname"
 msgid "Mute"
-msgstr ""
+msgstr "Sourdine"
 
 msgctxt "keyname"
 msgid "VolumeUp"
-msgstr ""
+msgstr "Volume +"
 
 msgctxt "keyname"
 msgid "VolumeDown"
-msgstr ""
+msgstr "Volume -"
 
 msgctxt "keyname"
 msgid "Keypad ,"
@@ -129303,15 +129475,15 @@ msgstr ""
 
 msgctxt "keyname"
 msgid "Left Ctrl"
-msgstr "Ctrl"
+msgstr "Ctrl (gauche)"
 
 msgctxt "keyname"
 msgid "Left Shift"
-msgstr "Shift"
+msgstr "Shift (gauche)"
 
 msgctxt "keyname"
 msgid "Left Alt"
-msgstr ""
+msgstr "Alt (gauche)"
 
 msgctxt "keyname"
 msgid "Left GUI"
@@ -129319,15 +129491,15 @@ msgstr ""
 
 msgctxt "keyname"
 msgid "Right Ctrl"
-msgstr ""
+msgstr "Ctrl (droite)"
 
 msgctxt "keyname"
 msgid "Right Shift"
-msgstr "Shift"
+msgstr "Shift (droite)"
 
 msgctxt "keyname"
 msgid "Right Alt"
-msgstr ""
+msgstr "Alt (droite)"
 
 msgctxt "keyname"
 msgid "Right GUI"
@@ -129694,29 +129866,29 @@ msgstr "#gVous réactivez les systèmes de %s."
 #. error has occurred
 #, c-format
 msgid "Board: '%s'"
-msgstr ""
+msgstr "Aborder : '%s'"
 
 msgid "Target ship can not be boarded."
 msgstr "Le vaisseau ciblé ne peut pas être abordé."
 
 msgid "You cannot board a ship that isn't disabled!"
-msgstr ""
+msgstr "Vous ne pouvez pas aborder un vaisseau qui n'est pas neutralisé !"
 
 msgid "Your target cannot be boarded again."
-msgstr ""
+msgstr "Votre cible ne peut pas être abordée à nouveau."
 
 msgid "You are too far away to board your target."
 msgstr "Vous êtes trop loin pour aborder votre cible."
 
 msgid "You are going too fast to board the ship."
-msgstr "Vous allez trop vite pour monter à bord."
+msgstr "Vous allez trop vite pour aborder le vaisseau."
 
 msgid "Unable to recover fighter."
-msgstr ""
+msgstr "Impossible de récupérer le chasseur."
 
 #, c-format
 msgid "#oYou recover your %s fighter."
-msgstr ""
+msgstr "#oVous récupérez votre chasseur %s."
 
 #, c-format
 msgid "#oBoarding ship #%c%s#0."
@@ -130856,9 +131028,9 @@ msgid "Set"
 msgstr ""
 
 #. Create the window.
-#, fuzzy, c-format
+#, c-format
 msgid "%s - Space Object Properties"
-msgstr "%s - Propriétés de l'Objet"
+msgstr "%s - Propriétés de l'objet spatial"
 
 msgid "Apply"
 msgstr ""
@@ -131456,7 +131628,7 @@ msgid "Turn:"
 msgstr "Virage :"
 
 msgid "Time Constant:"
-msgstr "Constante de temps :"
+msgstr "Facteur temps :"
 
 msgid "Detected at:"
 msgstr "Détecté à :"
@@ -132196,16 +132368,15 @@ msgstr "Dommages subis :"
 msgid "Ships destroyed:"
 msgstr "Vaisseaux détruits :"
 
-#, fuzzy
 msgid "Licence: "
-msgstr "License :"
+msgstr "Licence : "
 
 msgid "Inventory"
-msgstr ""
+msgstr "Inventaire"
 
 #. l +=
 msgid "Stats:"
-msgstr ""
+msgstr "Stats :"
 
 #, c-format
 msgid "%.0f %s"
@@ -132260,9 +132431,8 @@ msgstr "Ne tirez que sur les armes qui sont à portée"
 msgid "Dogfight visual aiming helper (all sets)"
 msgstr "Aide à la visée pour les duels"
 
-#, fuzzy
 msgid "Automatically handle all weapons sets"
-msgstr "Gestion automatique des armes"
+msgstr "Gestion automatique des groupes d'armes"
 
 msgctxt "UI"
 msgid "Help"
@@ -132973,7 +133143,7 @@ msgid ""
 "Free Space:"
 msgstr ""
 "Date :\n"
-"Espace disponible :"
+"Espace dispo :"
 
 msgid "Are you sure you want to accept this mission?"
 msgstr "Voulez-vous vraiment accepter cette mission ?"
@@ -133030,11 +133200,11 @@ msgstr ""
 
 #, c-format
 msgid "Outfit '%s' does not exist!"
-msgstr ""
+msgstr "Le module '%s' n'existe pas !"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Outfit '%s' is not a local map!"
-msgstr "Unidiff '%s' failed to apply %d hunk."
+msgstr "Le module '%s' n'est pas une carte locale !"
 
 #, c-format
 msgid "Buy Local Map (%s)"
@@ -133044,7 +133214,7 @@ msgid "Landing Main"
 msgstr "Général"
 
 msgid "Shipyard"
-msgstr "Chantier"
+msgstr "Chantier spatial"
 
 msgctxt "service"
 msgid "Equipment"
@@ -133073,9 +133243,12 @@ msgid ""
 "You lack the fleet capacity to take off with all the selected ships. Do you "
 "wish to undeploy the following ships to be able to take off?"
 msgstr ""
+"Votre capacité de flotte est insuffisante pour décoller avec tous les "
+"vaisseaux sélectionnés. Souhaitez-vous retirer les vaisseaux suivants pour "
+"pouvoir décoller ?"
 
 msgid "Fleet not fit for flight"
-msgstr ""
+msgstr "Flotte inapte au vol"
 
 msgid ""
 "The following ships in your fleet are not space worthy, are you sure you "
@@ -133083,21 +133256,23 @@ msgid ""
 msgstr ""
 
 msgid "Ship not fit for flight"
-msgstr ""
+msgstr "Vaisseau inapte au vol"
 
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
+"Échec de la sauvegarde ! Vous devriez quitter le jeu, vérifier le fichier de "
+"log pour voir ce qui s'est passé, puis envoyer un rapport de bug !"
 
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr "#oDécollage depuis %s à %s."
 
 #. error has occurred
-#, fuzzy, c-format
+#, c-format
 msgid "Rescue: '%s' : '%s'"
-msgstr "Loadscreen '%s': '%s'"
+msgstr "Récupération : '%s' : ' %s'"
 
 msgid "Buy"
 msgstr "Acheter"
@@ -133132,7 +133307,7 @@ msgid ""
 msgstr ""
 
 msgid "Licence:"
-msgstr "License :"
+msgstr "Licence :"
 
 #. l +=
 msgid "Not Necessary (Blackmarket)"
@@ -133475,9 +133650,8 @@ msgstr "Difficulté :"
 msgid "Chapter:"
 msgstr "Chapitre :"
 
-#, fuzzy
 msgid "Space Object:"
-msgstr "Objets Spatiaux :"
+msgstr "Objets Spatiaux :"
 
 msgid "Ship Name:"
 msgstr "Nom du Vaisseau :"
@@ -133786,7 +133960,7 @@ msgstr "Voir tous les équipements"
 
 #, c-format
 msgid "Search results for outfits matching '%s':"
-msgstr "Résultats de la recherche de modules correspondant à '%s' :"
+msgstr "Résultats de la recherche de modules pour '%s' :"
 
 #, fuzzy
 msgid "Showing all known ships:"
@@ -133794,7 +133968,7 @@ msgstr "Voir tous les équipements"
 
 #, c-format
 msgid "Search results for ships matching '%s':"
-msgstr "Résultats de la recherche de vaisseau correspondant à '%s' :"
+msgstr "Résultats de la recherche de vaisseau pour '%s' :"
 
 msgid "System"
 msgstr "Système"
@@ -133812,127 +133986,118 @@ msgstr "Aucun %s trouvé pour %s !"
 msgid "Find…"
 msgstr "Recherche…"
 
-#, fuzzy
 msgid "Enter keyword to search for:  (Partial match)"
-msgstr "Saisir le mot-clé à rechercher :"
+msgstr "Entrez le mot-clé :  (Correspondance partielle)"
 
 msgid "Systems"
 msgstr "Systèmes"
 
 #. Gets set properly below.
 msgid "TARGET"
-msgstr ""
+msgstr "CIBLE"
 
 msgid "Buy commodity price info"
 msgstr "Acheter des informations sur le prix des marchandises"
 
 #, c-format
 msgid "No gfx for %s…"
-msgstr ""
+msgstr "Aucun GFX pour %s…"
 
 msgid "Obscured by the nebula"
-msgstr ""
+msgstr "Masqué par la nébuleuse"
 
-#, fuzzy, c-format
+#, c-format
 msgid "#nSystem:#0 %s\n"
-msgstr "Système : %s\n"
+msgstr "#nSystème :#0 %s\n"
 
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
-msgstr[0] "Système de %d-étoile\n"
-msgstr[1] "Système de %d-étoiles\n"
+msgstr[0] "Système à %d étoile\n"
+msgstr[1] "Système à %d étoiles\n"
 
-#, fuzzy
 msgctxt "nebula"
 msgid "Volatile"
-msgstr "Nébuleuse : volatile, "
+msgstr "Volatile"
 
-#, fuzzy
 msgctxt "nebula"
 msgid "Dangerous"
-msgstr "Nébuleuse : dangereuse, "
+msgstr "Dangereuse"
 
-#, fuzzy
 msgctxt "nebula"
 msgid "Unstable"
-msgstr "Disponible"
+msgstr "Instable"
 
-#, fuzzy
 msgctxt "nebula"
 msgid "Stable"
-msgstr "Adaptable"
+msgstr "Stable"
 
-#, fuzzy
 msgctxt "nebula"
 msgid "Dense "
-msgstr "Dense\n"
+msgstr "Dense "
 
 msgctxt "nebula"
 msgid "Light "
-msgstr ""
+msgstr "Légère "
 
-#, fuzzy, c-format
+#, c-format
 msgid "#nNebula: #%c%s%s (%s)#0\n"
-msgstr "#%c%s>#0 %s"
+msgstr "#nNébuleuse : #%c%s%s (%s)#0\n"
 
-#, fuzzy
 msgctxt "interference"
 msgid "Dense"
-msgstr "Dense\n"
+msgstr "Dense"
 
-#, fuzzy
 msgctxt "interference"
 msgid "Medium"
-msgstr "Armes"
+msgstr "Diffuse"
 
 msgctxt "interference"
 msgid "Light"
-msgstr ""
+msgstr "Ténue"
 
 #, c-format
 msgid "#nInterference: #%c%s (%.0f%%)#0\n"
-msgstr ""
+msgstr "#nInterférences : #%c%s (%.0f%%)#0\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "#nAsteroid field density:#0 %.2g\n"
-msgstr "Éditeur de champs d'astéroïdes"
+msgstr "#nDensité du champ d'astéroïdes :#0 %.2g\n"
 
 #, c-format
 msgid "#nOther:#0 %s\n"
-msgstr ""
+msgstr "#nAutre :#0 %s\n"
 
-#, fuzzy
 msgid "#nFaction:#0 Multiple\n"
-msgstr "Faction : Plusieurs\n"
+msgstr "#nFaction :#0 Multiples\n"
 
-#, fuzzy
 msgid "#nFaction:#0 N/A\n"
-msgstr "Faction : N/A\n"
+msgstr "#nFaction :#0 N/A\n"
 
 #, c-format
 msgid ""
 "#nFaction:#0 %s\n"
 "#nStanding:#0 %s\n"
 msgstr ""
+"#nFaction :#0 %s\n"
+"#nRéputation :#0 %s\n"
 
-#, fuzzy
 msgid "#nPresence:#0 N/A\n"
-msgstr "Présence : N/A\n"
+msgstr "#nPrésence :#0 N/A\n"
 
 msgid "   #nJump points to:#0\n"
-msgstr ""
+msgstr "   #nPoints de saut vers :#0\n"
 
 msgid "     Unknown system\n"
 msgstr "     Système Inconnu\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "#nSpace Object:#0 %s\n"
 "#nPlanetary class:#0 %s    #nPopulation:#0 %s\n"
 msgstr ""
-"Nom : %s\n"
-"Classe planétaire : %s    Population : ~%s\n"
+"#nObjet spatial :#0 %s\n"
+"#nClasse planétaire :#0 %s    #nPopulation :#0 %s\n"
 
 msgid "No space port here\n"
 msgstr "Pas de port spatial ici\n"
@@ -133956,37 +134121,37 @@ msgid "You cannot refuel here"
 msgstr "Ravitaillement impossible"
 
 msgid "Has a bar"
-msgstr ""
+msgstr "Possède un bar"
 
-#, fuzzy
 msgid "Does not have a bar"
 msgstr "Ne possède pas de bar"
 
-#, fuzzy
 msgid "Offers missions"
 msgstr "Offre des missions"
 
-#, fuzzy
 msgid "Does not offer missions"
 msgstr "N'offre pas de missions"
 
-#, fuzzy
 msgid ""
 "\n"
 "Does not have a trade outlet"
-msgstr "Ce système ne vend pas d'équipement pour vaisseaux"
+msgstr ""
+"\n"
+"N'échange pas de marchandises"
 
-#, fuzzy
 msgid ""
 "\n"
 "Does not sell ship equipment"
-msgstr "Ce système ne vend pas d'équipement pour vaisseaux"
+msgstr ""
+"\n"
+"Ne vend pas d'équipement pour vaisseaux"
 
-#, fuzzy
 msgid ""
 "\n"
 "Does not sell ships"
-msgstr "Ce système ne vend pas de vaisseaux"
+msgstr ""
+"\n"
+"Ne vend pas de vaisseaux"
 
 #, c-format
 msgid "%d t"
@@ -134026,7 +134191,7 @@ msgstr "Indisponible"
 #, c-format
 msgid "Commodity prices for %s are not available here at the moment."
 msgstr ""
-"Les prix des marchandises pour %s ne sont pas disponibles ici pour le moment."
+"Les prix des marchandises de %s ne sont pas disponibles ici pour le moment."
 
 #, c-format
 msgid "You need %s to purchase this information."
@@ -134046,11 +134211,11 @@ msgstr ""
 "Vous disposez d'informations plus récentes que celles qui sont disponibles."
 
 msgid "Purchase commodity prices?"
-msgstr "Prix d'achat des marchandises ?"
+msgstr "Acheter des infos sur le prix des marchandises ?"
 
 #, c-format
 msgid "Purchase %g period old pricing information for %s for %s?"
-msgstr ""
+msgstr "Acheter des infos dantant de %g périodes sur le prix de %s pour %s ?"
 
 msgid "Menu main is already open."
 msgstr "Le menu principal est déjà ouvert."
@@ -134070,7 +134235,7 @@ msgid "Options"
 msgstr "Options"
 
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Gestionnaire de plug-ins"
 
 msgid "Extras"
 msgstr ""
@@ -134128,7 +134293,7 @@ msgid "Credits"
 msgstr "Credits"
 
 msgid "Return to Main Menu"
-msgstr ""
+msgstr "Retour au Menu Principal"
 
 #, c-format
 msgid "Mission '%s' not found in stack"
@@ -134147,9 +134312,9 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
-"Error loading mission file: %s\n"
+"Erreur du chargement du fichier de mission : %s\n"
 "%s\n"
-"Most likely Lua file has improper syntax, please check"
+"Probablement une mauvaise syntaxe du fichier Lua, veuillez vérifier"
 
 #, c-format
 msgid "Conditional for mission '%s' failed to run"
@@ -134439,11 +134604,9 @@ msgid "Loading the Universe…"
 msgstr "Chargement de l'univers…"
 
 #. dep for events / missions
-#, fuzzy
 msgid "Loading Events and Missions…"
-msgstr "Chargement des missions…"
+msgstr "Chargement des évenements et des missions…"
 
-#, fuzzy
 msgid "Loading UniDiffs…"
 msgstr "Chargement des UniDiffs…"
 
@@ -134454,9 +134617,8 @@ msgid "Calculating Patrols…"
 msgstr "Calcul des patrouilles…"
 
 #. Run Lua and shit
-#, fuzzy
 msgid "Finalizing data…"
-msgstr "Initialisation des détails…"
+msgstr "Finalisation des données…"
 
 msgid "Loading Completed!"
 msgstr "Chargement terminé !"
@@ -135688,17 +135850,16 @@ msgid "Total Conversion"
 msgstr ""
 
 msgid "Armour Damage"
-msgstr ""
+msgstr "Dégâts de blindage"
 
-#, fuzzy
 msgid "Shield Damage"
-msgstr "Aura de bouclier"
+msgstr "Dégâts de bouclier"
 
 msgid "Knockback"
 msgstr "Recul"
 
 msgid "CPU"
-msgstr ""
+msgstr "Processeur"
 
 msgid "Penetration"
 msgstr "Pénétration"
@@ -135766,11 +135927,8 @@ msgstr "Blindage"
 msgid "Absorption"
 msgstr "Absorption"
 
-#, fuzzy
 msgid "Jam Resistance"
-msgstr ""
-"\n"
-"Résistance aux blocages : %.0f%%"
+msgstr "Résistance au brouillage"
 
 msgid "Max Effective Mass"
 msgstr ""
@@ -135789,7 +135947,7 @@ msgid "Intrinsic"
 msgstr ""
 
 msgid "Small"
-msgstr ""
+msgstr "Petit"
 
 msgid "Medium"
 msgstr ""
@@ -135810,22 +135968,22 @@ msgid "'%s' does not match any outfit slot sizes."
 msgstr ""
 
 msgid "Bolt Cannon"
-msgstr ""
+msgstr "Canon à impulsions"
 
 msgid "Beam Cannon"
-msgstr ""
+msgstr "Canon laser"
 
 msgid "Bolt Turret"
-msgstr ""
+msgstr "Tourelle à impulsions"
 
 msgid "Beam Turret"
-msgstr ""
+msgstr "Tourelle laser"
 
 msgid "Launcher"
-msgstr ""
+msgstr "Lanceur"
 
 msgid "Turret Launcher"
-msgstr ""
+msgstr "Lanceur sur tourelle"
 
 msgid "Ship Modification"
 msgstr ""
@@ -135834,23 +135992,22 @@ msgid "Fighter Bay"
 msgstr ""
 
 msgid "Local Map"
-msgstr ""
+msgstr "Carte locale"
 
-#, fuzzy
 msgid "Licence"
-msgstr "License :"
+msgstr "Licence"
 
 msgid "Bolt Weapon"
-msgstr ""
+msgstr "Arme à impulsions"
 
 msgid "Beam Weapon"
-msgstr ""
+msgstr "Arme laser"
 
 msgid "Modification"
 msgstr ""
 
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 msgid "Unguided"
 msgstr ""
@@ -136188,7 +136345,7 @@ msgstr "#nStructurel"
 #. * Colour-coded abbreviation for "Core [outfit]", short enough to use as a
 #. * tab/column title.
 msgid "#oCore"
-msgstr "#oPrincipal"
+msgstr "#oCentraux"
 
 #, c-format
 msgid "Blacklist  PCRE2 compilation failed at offset %d: %s"
@@ -136580,7 +136737,7 @@ msgid "You can't land here."
 msgstr "Vous ne pouvez pas atterrir ici."
 
 msgid "Landing authorized."
-msgstr ""
+msgstr "Atterrissage autorisé."
 
 #. No shoes, no shirt, no lifeforms, no service.
 #, c-format
@@ -136947,7 +137104,7 @@ msgid "installed"
 msgstr ""
 
 msgid "disabled"
-msgstr ""
+msgstr "neutralisé"
 
 msgid "available"
 msgstr ""
@@ -137506,7 +137663,7 @@ msgid "Boarding Bonus"
 msgstr ""
 
 msgid "Time Constant"
-msgstr "Constante de temps"
+msgstr "Facteur temps"
 
 msgid "Action Speed"
 msgstr ""
@@ -137616,28 +137773,28 @@ msgid "Blackmarket"
 msgstr "Marché noir"
 
 msgid "Civilian Station"
-msgstr "Station Civile"
+msgstr "Station civile"
 
 msgid "Military Station"
 msgstr "Station militaire"
 
 msgid "Pirate Station"
-msgstr "Station Pirate"
+msgstr "Station pirate"
 
 msgid "Robotic Station"
-msgstr "Station Robotique"
+msgstr "Station robotisée"
 
 msgid "Artificial Ecosystem"
-msgstr ""
+msgstr "Écosystème artificiel"
 
 msgid "Geothermal"
 msgstr "Géothermique"
 
 msgid "Geomorteus"
-msgstr "Morte"
+msgstr "Géomorteus"
 
 msgid "Geoinactive"
-msgstr "Géoinactive"
+msgstr "Géo-inactive"
 
 msgid "Asteroid/Moon"
 msgstr "Astéroïde/Lune"
@@ -137649,7 +137806,7 @@ msgid "Geometallic"
 msgstr "Géométalique"
 
 msgid "Geocrystaline"
-msgstr "Géocrystaline"
+msgstr "Géocristalline"
 
 msgid "Desert"
 msgstr "Désertique"
@@ -137667,7 +137824,7 @@ msgid "Marginal"
 msgstr "Marginal"
 
 msgid "Terrestrial"
-msgstr "Exo-Terre"
+msgstr "Tellurique"
 
 msgid "Reducing"
 msgstr "Réductrice"
@@ -137676,20 +137833,19 @@ msgid "Pelagic"
 msgstr "Pélagique"
 
 msgid "Glaciated"
-msgstr "Glacé"
+msgstr "Glaciaire"
 
 msgid "Rogue"
-msgstr "Voleur"
+msgstr "Errante"
 
 msgid "Ultragiants"
-msgstr "Ultragéante"
+msgstr "Supergéantes"
 
 msgid "Toxic"
-msgstr ""
+msgstr "Toxique"
 
-#, fuzzy
 msgid "Shattered"
-msgstr "Dvaered"
+msgstr "Dévastée"
 
 #, c-format
 msgid "Spob '%s' not in system. Not initializing economy."
@@ -137797,12 +137953,11 @@ msgstr ""
 msgid "Unknown node '%s' in virtual spob '%s'"
 msgstr "Unknown node '%s' in virtual spob '%s'"
 
-#, fuzzy
 msgid "Landing permission denied."
-msgstr "permission denied"
+msgstr "Permission d'atterrir refusée."
 
 msgid "Landing permission granted."
-msgstr ""
+msgstr "Permission d'atterrir accordée."
 
 #, c-format
 msgid "Spob '%s' ran '%s' but got non-texture or nil return value!"
@@ -137940,14 +138095,14 @@ msgstr[1] "%d Systèmes Stellaire Chargés"
 #, c-format
 msgid "       with %d Space Object in %.3f s"
 msgid_plural "       with %d Space Objects in %.3f s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "       avec %d objet spatial en %.3f s"
+msgstr[1] "       avec %d objets spatiaux en %.3f s"
 
 #, c-format
 msgid "       with %d Space Object"
 msgid_plural "       with %d Space Objects"
-msgstr[0] "       with %d Planet"
-msgstr[1] "       with %d Planets"
+msgstr[0] "       avec %d objet spatial"
+msgstr[1] "       avec %d objets spatiaux"
 
 #, c-format
 msgid "Marking spob '%s' that is not in any system!"
@@ -137970,7 +138125,7 @@ msgstr ""
 
 #, c-format
 msgid "%s (%s-class)"
-msgstr "%s (%s-classe)"
+msgstr "%s (classe %s)"
 
 #, fuzzy
 msgid "roughly "
@@ -138008,8 +138163,8 @@ msgstr[1] "Chargement de %d Effets Spéciaux en %.3f s"
 #, c-format
 msgid "Loaded %d Special Effect"
 msgid_plural "Loaded %d Special Effects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Chargement de %d Effet Spécial"
+msgstr[1] "Chargement de %d Effets Spéciaux"
 
 msgid "Trying to add spfx with invalid effect!"
 msgstr ""
