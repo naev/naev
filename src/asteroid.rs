@@ -387,13 +387,13 @@ impl State {
    fn to_ffi(self) -> naevc::AsteroidState {
       match self {
          State::Xx => naevc::AsteroidState_ASTEROID_XX,
-         State::XxToBg => naevc::AsteroidState_ASTEROID_XX,
-         State::Xb => naevc::AsteroidState_ASTEROID_XX,
-         State::BgToFg => naevc::AsteroidState_ASTEROID_XX,
-         State::Fg => naevc::AsteroidState_ASTEROID_XX,
-         State::FgToBg => naevc::AsteroidState_ASTEROID_XX,
-         State::Bx => naevc::AsteroidState_ASTEROID_XX,
-         State::BgToXx => naevc::AsteroidState_ASTEROID_XX,
+         State::XxToBg => naevc::AsteroidState_ASTEROID_XX_TO_BG,
+         State::Xb => naevc::AsteroidState_ASTEROID_XB,
+         State::BgToFg => naevc::AsteroidState_ASTEROID_BG_TO_FG,
+         State::Fg => naevc::AsteroidState_ASTEROID_FG,
+         State::FgToBg => naevc::AsteroidState_ASTEROID_FG_TO_BG,
+         State::Bx => naevc::AsteroidState_ASTEROID_BX,
+         State::BgToXx => naevc::AsteroidState_ASTEROID_BG_TO_XX,
       }
    }
 
@@ -683,13 +683,18 @@ impl Asteroid {
       }
 
       let progress = (self.timer / self.timer_max) as f32;
+      // colour::GREY20
+      const DARK_R: f32 = 0.2;
+      const DARK_G: f32 = 0.2;
+      const DARK_B: f32 = 0.2;
+      const DARK_COL: colour::Colour = colour::Colour::new(DARK_R, DARK_G, DARK_B);
       let col = match self.state {
-         State::XxToBg => colour::Colour::new_alpha(0.2, 0.2, 0.2, 1.0 - progress),
-         State::Xb | State::Bx => colour::GREY20,
-         State::BgToFg => colour::GREY20.blend(&colour::WHITE, progress),
+         State::XxToBg => colour::Colour::new_alpha(DARK_R, DARK_G, DARK_B, 1.0 - progress),
+         State::Xb | State::Bx => colour::Colour::new(DARK_R, DARK_G, DARK_B),
+         State::BgToFg => DARK_COL.blend(&colour::WHITE, progress),
          State::Fg => colour::WHITE,
-         State::FgToBg => colour::WHITE.blend(&colour::GREY20, progress),
-         State::BgToXx => colour::Colour::new_alpha(0.2, 0.2, 0.2, progress),
+         State::FgToBg => colour::WHITE.blend(&DARK_COL, progress),
+         State::BgToXx => colour::Colour::new_alpha(DARK_R, DARK_G, DARK_B, progress),
          State::Xx => unreachable!(),
       };
 
@@ -995,19 +1000,23 @@ pub fn render() {
       }
 
       // Render the debris
+      /*
       for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height < 1.0) {
          d.render(ctx);
       }
+      */
    }
 }
 
 #[instrument]
 pub fn render_overlay() {
    if let Some(cur_system) = crate::system::cur() {
+      /*
       let ctx = renderer::Context::get();
       for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height >= 1.0) {
          d.render(ctx);
       }
+      */
    }
 }
 
