@@ -46,11 +46,8 @@ typedef struct AsteroidInner     AsteroidInner;
 typedef struct AsteroidType      AsteroidType;
 typedef struct AsteroidTypeGroup AsteroidTypeGroup;
 typedef struct Asteroid          Asteroid;
-// typedef struct Asteroid*       AsteroidRef;
-// typedef void* AsteroidRef;
-// #define ASTEROID_NULL   NULL
-typedef int64_t AsteroidRef;
-#define ASTEROID_NULL -1
+typedef int64_t                  AsteroidRef;
+#define ASTEROID_NULL ( ( 1ll << 32ll ) + ( 1ll << 32ll ) - 1ll )
 
 /**
  * @brief Represents an asteroid field anchor.

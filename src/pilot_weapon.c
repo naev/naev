@@ -1026,7 +1026,7 @@ Pilot *pilot_weaponTarget( Pilot *p, Target *wt )
       wt->type = TARGET_PILOT;
       wt->u.id = pt->id;
       return pt;
-   } else if ( p->nav_asteroid != -1 ) {
+   } else if ( p->nav_asteroid != ASTEROID_NULL ) {
       wt->type           = TARGET_ASTEROID;
       wt->u.ast.anchor   = p->nav_anchor;
       wt->u.ast.asteroid = p->nav_asteroid;

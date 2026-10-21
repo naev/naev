@@ -1573,7 +1573,7 @@ static int pilotL_targetAsteroid( lua_State *L )
 {
    LuaAsteroid_t la;
    const Pilot  *p = luaL_validpilot( L, 1 );
-   if ( p->nav_asteroid < 0 )
+   if ( p->nav_asteroid == ASTEROID_NULL )
       return 0;
 
    la.parent = p->nav_anchor;
