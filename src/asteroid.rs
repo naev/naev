@@ -1589,7 +1589,10 @@ impl AnchorInner {
    fn update_bvh(&mut self) {
       self.bvh.clear();
       for (k, a) in &self.asteroids {
-         self.bvh.insert(k, a.aabb());
+         // Only foreground ones are allowed
+         if a.state == State::Fg {
+            self.bvh.insert(k, a.aabb());
+         }
       }
    }
 }
@@ -1837,9 +1840,16 @@ pub extern "C" fn asteroid_closestPilot(
    match inner
       .asteroids
       .iter()
-      .map(|(k, a)| {
-         let ap = a.pos();
-         (k, (ap - pos).norm_squared())
+      .filter_map(|(k, a)| {
+         // TODO
+         //if ( !pilot_inRangeAsteroid( player.p, k, as->parent ) )
+         //continue;
+         if a.state == State::Fg {
+            let ap = a.pos();
+            Some((k, (ap - pos).norm_squared()))
+         } else {
+            None
+         }
       })
       .min_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal))
    {
@@ -1937,9 +1947,10 @@ pub extern "C" fn asteroid_collideQueryIL(
    static HITS: LazyLock<Mutex<Array<naevc::AsteroidRef>>> = LazyLock::new(Default::default);
    let mut hits = HITS.lock().unwrap();
    hits.clear();
-   inner
-      .bvh
-      .for_each_overlaps(&query, |id| hits.push(id.as_ffi()));
+   for a in inner.bvh.overlaps(&query) {
+      // No need for additional checks as only stuff that collides is in the bvh
+      hits.push(a.as_ffi());
+   }
    hits.as_ptr()
 }
 

@@ -97,7 +97,8 @@ webbrowser = { version = "1" }
 itertools = "0.15"
 tinyvec = "1"
 portable-atomic = { version = "1", default-features = false, features = ["float"] }
-bvh-arena = "1"
+# Needs 1.4 for iters
+bvh-arena = "~1.4"
 
 # Plugin Manager dependencies
 # Serialization / XML
