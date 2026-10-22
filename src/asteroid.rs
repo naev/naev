@@ -429,7 +429,7 @@ impl State {
 #[derive(Debug)]
 pub struct Asteroid {
    id: AsteroidRef,
-   parent: i32,
+   parent: usize,
    state: State,
    atype: Arc<Type>,
    gfx: Arc<GfxType>,
@@ -527,7 +527,10 @@ impl Asteroid {
 
          Some(Self {
             id: AsteroidRef::null(),
-            parent: field.id,
+            parent: field.id.try_into().unwrap_or_else(|e| {
+               warn_err!(e);
+               0
+            }),
             state: State::Xx,
             atype: atype.clone(),
             gfx,
@@ -544,6 +547,13 @@ impl Asteroid {
          })
       } else {
          None
+      }
+   }
+
+   fn as_lua(&self) -> LuaAsteroid {
+      LuaAsteroid {
+         parent: self.parent,
+         id: self.id,
       }
    }
 
@@ -624,7 +634,7 @@ impl Asteroid {
                   && let Some(player) = pilot::player()
                   && ((player.pos() - self.pos()).norm_squared() < 1500.0 * 1500.0
                      || unsafe {
-                        (player.0.as_ref().nav_anchor == self.parent
+                        (player.0.as_ref().nav_anchor == self.parent as i32
                            && player.0.as_ref().nav_asteroid == self.id.as_ffi())
                      })
                {
@@ -632,7 +642,7 @@ impl Asteroid {
                   self.state = State::prev(self.state);
                } else {
                   unsafe {
-                     naevc::pilot_untargetAsteroid(self.parent, self.id.as_ffi());
+                     naevc::pilot_untargetAsteroid(self.parent as i32, self.id.as_ffi());
                   }
                }
                self.timer_max = 1.0 + 3.0 * rng::rng::<f64>();
@@ -823,7 +833,7 @@ impl Asteroid {
 
       // Remove target
       unsafe {
-         naevc::pilot_untargetAsteroid(self.parent, self.id.as_ffi());
+         naevc::pilot_untargetAsteroid(self.parent as i32, self.id.as_ffi());
       }
 
       // Make it respawns
@@ -1232,6 +1242,33 @@ impl UserData for LuaAsteroid {
       /*@
        * @brief Checks to see if an asteroid exists.
        *
+       *    @luatparam number field Field to get all asteroids of.
+       *    @luatreturn table A table of all the asteroids in the field.
+       * @luafunc getAll
+       */
+      methods.add_function(
+         "getAll",
+         |lua,
+          param: Option<Either<usize, Either<Vec2, mlua::Value>>>|
+          -> mlua::Result<Vec<Self>> {
+            if let Some(cur_system) = crate::system::cur() {
+               let fields = cur_system.asteroids();
+               let parent = range(0..fields.len());
+               let field = &fields[parent];
+               let inner = get_inner(field);
+               Ok(inner
+                  .asteroids
+                  .iter()
+                  .map(|(_, a)| a.as_lua())
+                  .collect::<Vec<_>>())
+            } else {
+               Ok(Vec::new())
+            }
+         },
+      );
+      /*@
+       * @brief Checks to see if an asteroid exists.
+       *
        *    @luatparam Asteroid a Asteroid to check to see if exists.
        *    @luatreturn boolean true if the asteroid exists, false otherwise.
        * @luafunc exists
@@ -1303,7 +1340,7 @@ impl UserData for LuaAsteroid {
        *    @luatreturn number ID of the field the asteroid belongs to.
        * @luafunc field
        */
-      methods.add_method("field", |_, this, ()| -> mlua::Result<i32> {
+      methods.add_method("field", |_, this, ()| -> mlua::Result<usize> {
          Ok(this.with(|a| a.parent + 1)?)
       });
 
@@ -1750,9 +1787,9 @@ pub extern "C" fn ast_id(ast: *const Asteroid) -> i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn ast_parent(ast: *const Asteroid) -> i32 {
+pub extern "C" fn ast_parent(ast: *const Asteroid) -> c_int {
    let ast = unsafe { &*ast };
-   ast.parent
+   ast.parent as c_int
 }
 
 #[unsafe(no_mangle)]
