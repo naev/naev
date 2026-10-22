@@ -463,12 +463,11 @@ fn infield(p: Vector2<f64>) -> Option<usize> {
 
 impl Asteroid {
    fn try_new(field: &naevc::AsteroidAnchor, creating: bool) -> Option<Self> {
-      let n = field.radius * rng::<f64>().sqrt();
-      let a = std::f64::consts::TAU * rng::<f64>();
-
       // Try to find position
       let mut pos = Vector2::new(field.pos.x, field.pos.y);
       for i in 0..1000 {
+         let n = field.radius * rng::<f64>().sqrt();
+         let a = std::f64::consts::TAU * rng::<f64>();
          pos = Vector2::new(field.pos.x + n * a.cos(), field.pos.y + n * a.sin());
          let outfield = infield(pos).is_none();
          if creating && outfield {
