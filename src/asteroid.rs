@@ -577,7 +577,7 @@ impl Asteroid {
       dt: f64,
       anchor: &naevc::AsteroidAnchor,
       astex: Option<&[naevc::AsteroidExclusion]>,
-   ) {
+   ) -> bool {
       let inner = get_inner(anchor);
       let off = Vector2::new(anchor.pos.x, anchor.pos.y) - self.pos();
       let d2 = off.norm_squared();
@@ -657,18 +657,12 @@ impl Asteroid {
                self.timer = self.timer_max;
             }
             State::BgToFg => {
-               if let Some(a) = Asteroid::try_new(anchor, false) {
-                  *self = a;
-                  self.timer_max = 90.0 + 30.0 * rng::rng::<f64>();
-                  self.timer = self.timer_max;
-               } else {
-                  warn!("failed to respawn asteroid");
-               }
-            }
-            // Respawn
-            State::BgToXx => {
-               self.timer_max = 10.0 + 20.0 * rng::rng::<f64>();
+               self.timer_max = 90.0 + 30.0 * rng::rng::<f64>();
                self.timer = self.timer_max;
+            }
+            State::BgToXx => {
+               // Remove asteroid, try to respawn later
+               return false;
             }
             State::Xx => (),
          }
@@ -684,6 +678,7 @@ impl Asteroid {
             self.scan_alpha.max(0.0);
          }
       }
+      true
    }
 
    /// Renders a single asteroid onscreen
@@ -948,7 +943,8 @@ pub fn update(dt: f64) {
             true => Some(cur_system.astexclude()),
             false => None,
          };
-         for a in inner.asteroids.values_mut() {
+         let mut destroyed = 0;
+         inner.asteroids.retain(|_, a| {
             // Skip inexistent asteroids
             if a.state == State::Xx {
                a.timer -= dt;
@@ -957,9 +953,22 @@ pub fn update(dt: f64) {
                   a.timer_max = 1.0 + 3.0 * rng::rng::<f64>();
                   a.timer = a.timer_max;
                }
-               continue;
+               return true;
             }
-            a.update(dt, ast, astex);
+            let retain = a.update(dt, ast, astex);
+            if !retain {
+               destroyed += 1;
+            }
+            retain
+         });
+         // Respawn destroyed asteroids
+         for _ in 0..destroyed {
+            if let Some(mut a) = Asteroid::try_new(ast, false) {
+               a.timer_max = 10.0 + 20.0 * rng::rng::<f64>();
+               a.timer = a.timer_max;
+            } else {
+               warn!("failed to respawn asteroid");
+            }
          }
 
          // Quadtree stuff
