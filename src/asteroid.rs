@@ -776,10 +776,7 @@ impl Asteroid {
       }
 
       let rad2 = at.alert_range * at.alert_range;
-      let la = LuaAsteroid {
-         parent: self.parent as usize,
-         id: self.id,
-      };
+      let la = self.as_lua();
       unsafe {
          lua_pushasteroid(naevc::naevL as *mut mlua::lua_State, la.into_c());
       }
@@ -1110,8 +1107,7 @@ impl FromLua for LuaAsteroid {
 /*@
  * @brief Lua bindings to interact with asteroid.
  *
- *
- * @lua_mod asteroid
+ * @luamod asteroid
  */
 impl UserData for LuaAsteroid {
    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
@@ -1147,21 +1143,46 @@ impl UserData for LuaAsteroid {
       /*@
        * @brief Gets all the asteroids in the system.
        *
+       *    @luatparam number[opt] field Field to get all asteroids of, or all asteroids if nil.
        *    @luatreturn table t A list of all asteroids in the system.
        * @luafunc getAll
        */
-      methods.add_function("getAll", |_, ()| -> mlua::Result<Vec<Self>> {
-         let mut asteroids = Vec::new();
-         if let Some(cur_system) = crate::system::cur() {
-            for (parent, ast) in cur_system.asteroids().iter().enumerate() {
-               let inner = get_inner(ast);
-               for (id, asteroid) in inner.asteroids.iter() {
-                  asteroids.push(LuaAsteroid { parent, id })
+      methods.add_function(
+         "getAll",
+         |_, field: Option<usize>| -> mlua::Result<Vec<Self>> {
+            if let Some(field) = field {
+               if let Some(cur_system) = crate::system::cur() {
+                  let fields = cur_system.asteroids();
+                  if let Some(field) = fields.get(field - 1) {
+                     let inner = get_inner(field);
+                     Ok(inner
+                        .asteroids
+                        .iter()
+                        .map(|(_, a)| a.as_lua())
+                        .collect::<Vec<_>>())
+                  } else {
+                     Err(mlua::Error::RuntimeError(format!(
+                        "Asteroid field '{}' not found in system!",
+                        field
+                     )))
+                  }
+               } else {
+                  Ok(Vec::new())
                }
+            } else {
+               let mut asteroids = Vec::new();
+               if let Some(cur_system) = crate::system::cur() {
+                  for (parent, ast) in cur_system.asteroids().iter().enumerate() {
+                     let inner = get_inner(ast);
+                     for (id, asteroid) in inner.asteroids.iter() {
+                        asteroids.push(asteroid.as_lua())
+                     }
+                  }
+               }
+               Ok(asteroids)
             }
-         }
-         Ok(asteroids)
-      });
+         },
+      );
       /*@
        * @brief Gets an asteroid in the system.
        *
@@ -1236,33 +1257,6 @@ impl UserData for LuaAsteroid {
                } else {
                   Ok(None)
                }
-            }
-         },
-      );
-      /*@
-       * @brief Checks to see if an asteroid exists.
-       *
-       *    @luatparam number field Field to get all asteroids of.
-       *    @luatreturn table A table of all the asteroids in the field.
-       * @luafunc getAll
-       */
-      methods.add_function(
-         "getAll",
-         |lua,
-          param: Option<Either<usize, Either<Vec2, mlua::Value>>>|
-          -> mlua::Result<Vec<Self>> {
-            if let Some(cur_system) = crate::system::cur() {
-               let fields = cur_system.asteroids();
-               let parent = range(0..fields.len());
-               let field = &fields[parent];
-               let inner = get_inner(field);
-               Ok(inner
-                  .asteroids
-                  .iter()
-                  .map(|(_, a)| a.as_lua())
-                  .collect::<Vec<_>>())
-            } else {
-               Ok(Vec::new())
             }
          },
       );

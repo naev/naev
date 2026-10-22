@@ -91,6 +91,33 @@ stds.ai = {
       }
    }
 }
+stds.asteroid = {
+   read_globals = {
+      asteroid = {
+         fields = {
+            __eq = {},
+            __tostring = {},
+            getAll = {},
+            get = {},
+            exists = {},
+            state = {},
+            setState = {},
+            field = {},
+            pos = {},
+            vel = {},
+            setPos = {},
+            setVel = {},
+            scanned = {},
+            timer = {},
+            setTimer = {},
+            armour = {},
+            setArmour = {},
+            alertRange = {},
+            materials = {},
+         }
+      }
+   }
+}
 stds.audio = {
    read_globals = {
       audio = {
@@ -280,33 +307,6 @@ stds.file = {
             mkdir = {},
             enumerate = {},
             remove = {},
-         }
-      }
-   }
-}
-stds.asteroid = {
-   read_globals = {
-      asteroid = {
-         fields = {
-            __eq = {},
-            __tostring = {},
-            getAll = {},
-            get = {},
-            exists = {},
-            state = {},
-            setState = {},
-            field = {},
-            pos = {},
-            vel = {},
-            setPos = {},
-            setVel = {},
-            scanned = {},
-            timer = {},
-            setTimer = {},
-            armour = {},
-            setArmour = {},
-            alertRange = {},
-            materials = {},
          }
       }
    }
@@ -1386,6 +1386,7 @@ stds.spfx = {
    }
 }
 stds.naev.read_globals.naev.fields.ai = stds.ai.read_globals.ai
+stds.naev.read_globals.naev.fields.asteroid = stds.asteroid.read_globals.asteroid
 stds.naev.read_globals.naev.fields.audio = stds.audio.read_globals.audio
 stds.naev.read_globals.naev.fields.audiodata = stds.audiodata.read_globals.audiodata
 stds.naev.read_globals.naev.fields.collide = stds.collide.read_globals.collide
@@ -1394,7 +1395,6 @@ stds.naev.read_globals.naev.fields.time = stds.time.read_globals.time
 stds.naev.read_globals.naev.fields.faction = stds.faction.read_globals.faction
 stds.naev.read_globals.naev.fields.data = stds.data.read_globals.data
 stds.naev.read_globals.naev.fields.file = stds.file.read_globals.file
-stds.naev.read_globals.naev.fields.asteroid = stds.asteroid.read_globals.asteroid
 stds.naev.read_globals.naev.fields.bkg = stds.bkg.read_globals.bkg
 stds.naev.read_globals.naev.fields.camera = stds.camera.read_globals.camera
 stds.naev.read_globals.naev.fields.diff = stds.diff.read_globals.diff
