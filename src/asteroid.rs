@@ -790,7 +790,7 @@ impl Asteroid {
             AudioBuilder::new(AudioType::Static)
                .buffer(sound.clone())
                .position(Some(self.pos().cast()))
-               .velocity(Some(self.pos().cast()))
+               .velocity(Some(self.vel().cast()))
                .play(true)
                .build();
          }
