@@ -203,6 +203,7 @@ impl Type {
          name,
          damage: 100.0,
          penetration: naevc::FULL_PENETRATION,
+         knockback: 5000.0,
          exp_radius: 50.0,
          alert_range: 7000.0,
          ..Default::default()
@@ -262,6 +263,7 @@ impl Type {
             tag => nxml_warn_node_unknown!("Asteroid Type", &at.name, tag),
          }
       }
+
       at.scanned_msg_c = CString::new(at.scanned_msg.clone())?;
       Ok(at)
    }
@@ -670,11 +672,9 @@ impl Asteroid {
 
       if self.scanned {
          if self.state == State::Fg {
-            self.scan_alpha += SCAN_FADE * dt;
-            self.scan_alpha.min(1.0);
+            self.scan_alpha = (self.scan_alpha + SCAN_FADE * dt).min(1.0);
          } else {
-            self.scan_alpha -= SCAN_FADE * dt;
-            self.scan_alpha.max(0.0);
+            self.scan_alpha = (self.scan_alpha - SCAN_FADE * dt).max(0.0);
          }
       }
       true
@@ -807,8 +807,8 @@ impl Asteroid {
                   continue;
                }
 
-               let nb = range(0..(m.quantity as f64 * mine_bonus).round() as usize) / 3;
-               for i in 0..nb {
+               let nb = range(0..(m.quantity as f64 * mine_bonus).round() as usize);
+               for _ in 0..nb {
                   let pos = self.pos()
                      + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
                   let vel = self.vel()
@@ -884,6 +884,22 @@ fn load_groups() -> HashMap<String, TypeGroup> {
          None => None,
       })
       .collect();
+   // Add asteroids types as individual groups.
+   for (name, t) in TYPES.iter() {
+      if data.contains_key(name) {
+         warn!("Asteroid Type Groups with same name '{name}'");
+         continue;
+      }
+      data.insert(
+         name.clone(),
+         TypeGroup {
+            name: name.clone(),
+            cname: CString::new(name.as_str()).unwrap_or_default(),
+            types: vec![(t.clone(), 1.0)],
+            wtotal: 1.0,
+         },
+      );
+   }
    data
 }
 
@@ -928,8 +944,9 @@ pub fn update(dt: f64) {
          let inner = get_inner_mut(ast);
          let mut has_exclusion = false;
          for ex in cur_system.astexclude_mut() {
+            let radius = ast.radius + ex.radius;
             if Vector2::new(ast.pos.x - ex.pos.x, ast.pos.y - ex.pos.y).norm_squared()
-               <= ast.radius * ast.radius
+               <= radius * radius
             {
                ex.affects = 1;
                has_exclusion = true;
@@ -1892,7 +1909,10 @@ pub extern "C" fn asteroid_closestPilot(
       })
       .min_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal))
    {
-      Some((k, a)) => k.as_ffi(),
+      Some((k, a)) => {
+         unsafe { *d = a };
+         k.as_ffi()
+      }
       None => AsteroidRef::null().as_ffi(),
    }
 }
@@ -1946,7 +1966,7 @@ pub extern "C" fn asteroid_hit(
 ) {
    let a = unsafe { &mut *a };
    let dmg = unsafe { &*dmg };
-   let absorb = 0.99f64.powf(a.atype.absorb - dmg.penetration);
+   let absorb = 0.99f64.powf(a.atype.absorb - dmg.penetration).max(0.0);
    let mut darmour = 0.0f64;
    crate::damagetype::dtype_calcDamage(
       std::ptr::null_mut(),
