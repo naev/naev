@@ -1997,7 +1997,7 @@ pub extern "C" fn asteroid_hit(
 ) {
    let a = unsafe { &mut *a };
    let dmg = unsafe { &*dmg };
-   let absorb = 0.99f64.powf(a.atype.absorb - dmg.penetration).max(0.0);
+   let absorb = 0.99f64.powf((a.atype.absorb - dmg.penetration).max(0.0));
    let mut darmour = 0.0f64;
    crate::damagetype::dtype_calcDamage(
       std::ptr::null_mut(),
