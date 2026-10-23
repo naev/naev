@@ -1683,6 +1683,7 @@ impl AnchorInner {
 #[instrument]
 #[unsafe(no_mangle)]
 pub extern "C" fn asteroids_init() {
+   // Can't hold lock here as it locks when creating debris later on
    DEBRIS_GFX.write().unwrap().clear();
    if let Some(cur_system) = crate::system::cur_mut() {
       let mut density_max = 0.0;
