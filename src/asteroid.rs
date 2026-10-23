@@ -1720,6 +1720,7 @@ pub extern "C" fn asteroids_init() {
          * (screen_w + 2. * DEBRIS_BUFFER * screen_h + 2. * DEBRIS_BUFFER)
          / (renderer::MIN_WIDTH_F32 * renderer::MIN_HEIGHT_F32);
       let mut debris = DEBRIS.lock().unwrap();
+      debris.clear();
       for _ in 0..ndebris.max(0.0).round() as usize {
          debris.push(Debris::new());
       }
