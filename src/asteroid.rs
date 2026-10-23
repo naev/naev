@@ -1010,6 +1010,10 @@ pub fn update(dt: f64) {
             if let Some(mut a) = Asteroid::try_new(ast, false) {
                a.timer_max = 10.0 + 20.0 * rng::rng::<f64>();
                a.timer = a.timer_max;
+               inner.asteroids.insert_with_key(|k| {
+                  a.id = k;
+                  a
+               })
             } else {
                warn!("failed to respawn asteroid");
             }
@@ -1683,8 +1687,7 @@ impl AnchorInner {
 #[instrument]
 #[unsafe(no_mangle)]
 pub extern "C" fn asteroids_init() {
-   let mut debris_gfx = DEBRIS_GFX.write().unwrap();
-   debris_gfx.clear();
+   DEBRIS_GFX.write().unwrap().clear();
    if let Some(cur_system) = crate::system::cur_mut() {
       let mut density_max = 0.0;
       for ast in cur_system.asteroids_mut() {
@@ -1699,6 +1702,7 @@ pub extern "C" fn asteroids_init() {
          // TODO maybe enforce uniqueness?
          let groups = unsafe { array::array_as_slice(ast.groups) };
          {
+            let mut debris_gfx = DEBRIS_GFX.write().unwrap();
             for g in groups {
                let g = unsafe { &*(*g as *mut TypeGroup) };
                for (t, _) in g.types.iter() {
