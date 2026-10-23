@@ -1064,23 +1064,19 @@ pub fn render() {
       }
 
       // Render the debris
-      /*
       for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height < 1.0) {
          d.render(ctx);
       }
-      */
    }
 }
 
 #[instrument]
 pub fn render_overlay() {
    if let Some(cur_system) = crate::system::cur() {
-      /*
       let ctx = renderer::Context::get();
       for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height >= 1.0) {
          d.render(ctx);
       }
-      */
    }
 }
 
