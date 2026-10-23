@@ -742,7 +742,7 @@ impl Asteroid {
          let uv = ctx
             .game_to_screen_coords(Vector2::new(self.solid.pos.x, self.solid.pos.y).cast::<f32>())
             .cast::<f64>();
-         let x = uv.x + self.gfx.radius() as f64 * 0.5;
+         let x = uv.x + self.gfx.radius() as f64;
          let y = uv.y - unsafe { naevc::gl_smallFont.h as f64 } * 0.5;
          let mut col = unsafe { naevc::cFontWhite };
          col.a = self.scan_alpha as f32;
@@ -835,7 +835,7 @@ impl Asteroid {
                   continue;
                }
 
-               let nb = range(0..(m.quantity as f64 * mine_bonus).round() as usize);
+               let nb = range(0..(m.quantity as f64 * mine_bonus).round().min(1.0) as usize);
                for _ in 0..nb {
                   let pos = self.pos()
                      + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
@@ -1013,7 +1013,7 @@ pub fn update(dt: f64) {
                inner.asteroids.insert_with_key(|k| {
                   a.id = k;
                   a
-               })
+               });
             } else {
                warn!("failed to respawn asteroid");
             }
