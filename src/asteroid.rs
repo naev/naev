@@ -66,8 +66,8 @@ enum GfxType {
 impl GfxType {
    pub fn radius(&self) -> f32 {
       match self {
-         GfxType::Single(gfx) => gfx.texture.sw,
-         GfxType::Sprite(gfx) => gfx.texture.sw,
+         GfxType::Single(gfx) => gfx.texture.sw * 0.5,
+         GfxType::Sprite(gfx) => gfx.texture.sw * 0.5,
       }
    }
 
@@ -514,8 +514,8 @@ impl Asteroid {
             unsafe {
                naevc::solid_init(
                   solid.as_mut_ptr(),
-                  0.0,
-                  0.0,
+                  1.0, // TODO proper mass
+                  theta,
                   pos.as_ptr() as *const naevc::vec2,
                   vel.as_ptr() as *const naevc::vec2,
                   naevc::SOLID_UPDATE_EULER as i32,
