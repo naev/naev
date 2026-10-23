@@ -829,8 +829,8 @@ impl Asteroid {
 
       // Make it respawns
       self.state = State::BgToXx;
-      self.timer = 0.0;
-      self.timer_max = 0.0;
+      self.timer = -1.0;
+      self.timer_max = -1.0;
    }
 }
 
