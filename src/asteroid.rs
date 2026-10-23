@@ -1661,7 +1661,6 @@ pub extern "C-unwind" fn lua_toasteroid(
 #[derive(Default)]
 struct AnchorInner {
    asteroids: SlotMap<AsteroidRef, Asteroid>,
-   has_exclusion: bool,
    bvh: Bvh<AsteroidRef, Aabb<2>>,
 }
 
@@ -1692,7 +1691,6 @@ pub extern "C" fn asteroids_init() {
          if ast.inner.is_null() {
             ast.inner = Box::into_raw(Box::new(AnchorInner {
                asteroids: SlotMap::with_key(),
-               has_exclusion: false,
                bvh: Bvh::default(),
             })) as *mut naevc::AsteroidInner;
          }
@@ -1716,11 +1714,11 @@ pub extern "C" fn asteroids_init() {
          for i in 0..ast.nmax {
             if let Some(mut a) = Asteroid::try_new(ast, true) {
                let r = rng::<f32>();
-               if r > 0.6 {
+               if r < 0.6 {
                   a.state = State::Fg;
-               } else if r > 0.8 {
+               } else if r < 0.8 {
                   a.state = State::Xb;
-               } else if r > 0.9 {
+               } else if r < 0.9 {
                   a.state = State::Bx;
                } else {
                   a.state = State::Xx;
