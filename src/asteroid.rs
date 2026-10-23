@@ -264,6 +264,34 @@ impl Type {
          }
       }
 
+      // Some sanity checks.
+      if at.armour_max < at.armour_min {
+         warn!(
+            "Asteroid Type '{}' has armour_max below armour_min",
+            at.name
+         );
+      }
+      if at.scanned_msg.is_empty() {
+         warn!(
+            "Asteroid Type '{}' missing/invalid 'scanned' element",
+            at.name
+         );
+      }
+      if at.gfx.is_empty() {
+         warn!("Asteroid Type '{}' missing/invalid 'gfx' element", at.name);
+      }
+      if at.armour_min <= 0.0 {
+         warn!(
+            "Asteroid Type '{}' missing/invalid 'armour_min' element",
+            at.name
+         );
+      }
+      if at.armour_max <= 0.0 {
+         warn!(
+            "Asteroid Type '{}' missing/invalid 'armour_max' element",
+            at.name
+         );
+      }
       at.scanned_msg_c = CString::new(at.scanned_msg.clone())?;
       Ok(at)
    }
