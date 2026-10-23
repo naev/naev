@@ -592,7 +592,7 @@ impl Asteroid {
                continue;
             }
 
-            let eoff = self.pos() - Vector2::new(anchor.pos.x, anchor.pos.y);
+            let eoff = self.pos() - Vector2::new(ex.pos.x, ex.pos.y);
             let ed2 = eoff.norm_squared();
             if ed2 <= ex.radius * ex.radius {
                let ed = ed2.sqrt();
