@@ -1717,7 +1717,7 @@ pub extern "C" fn asteroids_init() {
          }
          let mut inner = get_inner_mut(ast);
 
-         // TODO maybe enforce uniqueness?
+         // Grab unique debris graphics
          let groups = unsafe { array::array_as_slice(ast.groups) };
          {
             let mut debris_gfx = DEBRIS_GFX.write().unwrap();
