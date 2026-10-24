@@ -168,7 +168,7 @@ source = files(
    'news.c',
    'nfile.c',
    'nlua.c',
-   'nlua_asteroid.c',
+   #'nlua_asteroid.c',
    'nlua_bkg.c',
    'nlua_camera.c',
    'nlua_diff.c',

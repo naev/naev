@@ -1,4 +1,5 @@
 use crate::buffer;
+use crate::camera::{CAMERA, Coords};
 use crate::colour::Colour;
 use crate::framebuffer::{Framebuffer, FramebufferBuilder};
 use crate::{
@@ -11,7 +12,7 @@ use image::ImageFormat;
 use mlua::{
    BorrowedStr, Either, MetaMethod, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value,
 };
-use nalgebra::{Matrix3, Vector2, Vector4};
+use nalgebra::{Matrix3, Vector4};
 use ndata::data::Data;
 use ndata::luafile::LuaFile;
 use nlog::{warn, warn_err};
@@ -389,10 +390,10 @@ pub struct Texture {
    // Sprites
    pub sx: usize,
    pub sy: usize,
-   pub sw: f64,
-   pub sh: f64,
-   pub srw: f64,
-   pub srh: f64,
+   pub sw: f32,
+   pub sh: f32,
+   pub srw: f32,
+   pub srh: f32,
 
    // Data
    pub texture: Arc<TextureData>,
@@ -546,16 +547,15 @@ impl Texture {
    pub fn draw_sprite(
       &self,
       ctx: &Context,
-      x: f32,
-      y: f32,
+      pos: Coords,
       sx: usize,
       sy: usize,
       col: Colour,
    ) -> Result<()> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
-      let cam = crate::camera::CAMERA.read().unwrap();
-      let screen = cam.game_to_screen_coords(Vector2::new(x as f64, y as f64));
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
+      let cam = CAMERA.read().unwrap();
+      let screen = cam.coords_to_screen(pos);
       let w = self.sw * cam.zoom;
       let h = self.sh * cam.zoom;
       if screen.x < -w || screen.y < -h || screen.x > view_width + w || screen.y > view_height + h {
@@ -565,16 +565,16 @@ impl Texture {
       let dims = ctx.dimensions.read().unwrap();
       #[rustfmt::skip]
       let transform: Matrix3<f32> = dims.projection * Matrix3::new(
-            w as f32, 0.0, (screen.x - w * 0.5) as f32,
-            0.0, h as f32, (screen.y - h * 0.5) as f32,
+            w, 0.0, screen.x - w * 0.5,
+            0.0, h, screen.y - h * 0.5,
             0.0, 0.0, 1.0,
          );
-      let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
-      let ty = self.sh as f32 * (self.sy as i32 - sy as i32 - 1) as f32 / self.texture.h as f32;
+      let tx = self.sw * (sx as f32) / self.texture.w as f32;
+      let ty = self.sh * (self.sy as i32 - sy as i32 - 1) as f32 / self.texture.h as f32;
       #[rustfmt::skip]
       let texture: Matrix3<f32> = Matrix3::new(
-         self.srw as f32, 0.0, tx,
-         0.0, self.srh as f32, ty,
+         self.srw, 0.0, tx,
+         0.0, self.srh, ty,
          0.0, 0.0, 1.0,
       );
       let uniform = TextureUniform {
@@ -589,20 +589,19 @@ impl Texture {
    pub fn draw_sprite_scale_rotate(
       &self,
       ctx: &Context,
-      x: f32,
-      y: f32,
+      pos: Coords,
       scale: f32,
       angle: f32,
       sx: usize,
       sy: usize,
       col: Colour,
    ) -> Result<()> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
-      let cam = crate::camera::CAMERA.read().unwrap();
-      let screen = cam.game_to_screen_coords(Vector2::new(x as f64, y as f64));
-      let w = self.sw * cam.zoom * scale as f64;
-      let h = self.sh * cam.zoom * scale as f64;
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
+      let cam = CAMERA.read().unwrap();
+      let screen = cam.coords_to_screen(pos);
+      let w = self.sw * cam.zoom * scale;
+      let h = self.sh * cam.zoom * scale;
       if screen.x < -w || screen.y < -h || screen.x > view_width + w || screen.y > view_height + h {
          return Ok(());
       }
@@ -611,37 +610,37 @@ impl Texture {
       #[rustfmt::skip]
       let transform: Matrix3<f32> = dims.projection * {
          if angle.abs() > 1e-5 {
-            let hw = 0.5 * w as f32;
-            let hh = 0.5 * h as f32;
-            let c = angle.cos() as f32;
-            let s = angle.sin() as f32;
+            let hw = 0.5 * w;
+            let hh = 0.5 * h;
+            let c = angle.cos();
+            let s = angle.sin();
             Matrix3::new(
-               1.0, 0.0, screen.x as f32,
-               0.0, 1.0, screen.y as f32,
+               1.0, 0.0, screen.x,
+               0.0, 1.0, screen.y,
                0.0, 0.0, 1.0,
             ) * Matrix3::new(
                c,  -s,  0.0,
                s,   c,  0.0,
                0.0, 0.0, 1.0,
             ) * Matrix3::new(
-               w as f32, 0.0,      -hw,
-               0.0,      h as f32, -hh,
+               w, 0.0,      -hw,
+               0.0,      h, -hh,
                0.0,      0.0,      1.0,
             )
          } else {
             Matrix3::new(
-               w as f32, 0.0, (screen.x - w * 0.5) as f32,
-               0.0, h as f32, (screen.y - h * 0.5) as f32,
+               w, 0.0, screen.x - w * 0.5,
+               0.0, h, screen.y - h * 0.5,
                0.0, 0.0, 1.0,
             )
          }
       };
-      let tx = self.sw as f32 * (sx as f32) / self.texture.w as f32;
-      let ty = self.sh as f32 * (self.sy as i32 - sy as i32 - 1) as f32 / self.texture.h as f32;
+      let tx = self.sw * (sx as f32) / self.texture.w as f32;
+      let ty = self.sh * (self.sy as i32 - sy as i32 - 1) as f32 / self.texture.h as f32;
       #[rustfmt::skip]
       let texture: Matrix3<f32> = Matrix3::new(
-         self.srw as f32, 0.0, tx,
-         0.0, self.srh as f32, ty,
+         self.srw, 0.0, tx,
+         0.0, self.srh, ty,
          0.0, 0.0, 1.0,
       );
       let uniform = TextureUniform {
@@ -753,10 +752,10 @@ impl Texture {
       Ok(())
    }
 
-   pub fn sprite_from_dir(&self, dir: f64) -> (usize, usize) {
-      use std::f64::consts::PI;
+   pub fn sprite_from_dir(&self, dir: f32) -> (usize, usize) {
+      use std::f32::consts::PI;
       let sxy = self.sx * self.sy;
-      let shard = PI * 2.0 / sxy as f64;
+      let shard = PI * 2.0 / sxy as f32;
       let rdir = {
          let mut rdir = dir + shard * 0.5;
          if rdir < 0.0 {
@@ -1276,10 +1275,10 @@ impl TextureBuilder {
 
       let (w, h) = (texture.w, texture.h);
       let (sx, sy) = (self.sx, self.sy);
-      let sw = (w as f64) / (sx as f64);
-      let sh = (h as f64) / (sy as f64);
-      let srw = sw / (w as f64);
-      let srh = sh / (h as f64);
+      let sw = (w as f32) / (sx as f32);
+      let sh = (h as f32) / (sy as f32);
+      let srw = sw / (w as f32);
+      let srh = sh / (h as f32);
 
       Ok(Texture {
          path: self.name.clone(),
@@ -1837,7 +1836,13 @@ pub extern "C-unwind" fn gl_renderSprite(
    };
 
    let tex = unsafe { &*ctex };
-   if let Err(e) = tex.draw_sprite(ctx, bx as f32, by as f32, sx as usize, sy as usize, colour) {
+   if let Err(e) = tex.draw_sprite(
+      ctx,
+      Coords::new_game([bx as f32, by as f32]),
+      sx as usize,
+      sy as usize,
+      colour,
+   ) {
       warn_err!(e);
    }
 }
@@ -2046,7 +2051,7 @@ impl UserData for Texture {
        */
       methods.add_method(
          "dim",
-         |_, this, ()| -> mlua::Result<(usize, usize, f64, f64)> {
+         |_, this, ()| -> mlua::Result<(usize, usize, f32, f32)> {
             Ok((this.texture.w, this.texture.h, this.sw, this.sh))
          },
       );
@@ -2080,7 +2085,7 @@ impl UserData for Texture {
        */
       methods.add_method(
          "spriteFromDir",
-         |_, this, dir: f64| -> mlua::Result<(usize, usize)> {
+         |_, this, dir: f32| -> mlua::Result<(usize, usize)> {
             let (sx, sy) = this.sprite_from_dir(dir);
             Ok((sx + 1, sy + 1))
          },
@@ -2325,7 +2330,7 @@ fn test_sprite_from_dir() {
       tex.sy = 2;
       tex
    };
-   use std::f64::consts::PI;
+   use std::f32::consts::PI;
    for (key, val) in vec![
       (0.0, (0, 0)),
       (PI, (0, 1)),

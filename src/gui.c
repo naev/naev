@@ -393,7 +393,7 @@ static void gui_renderSpobTarget( void )
 
    /* Make sure target exists. */
    if ( ( player.p->nav_spob < 0 ) && ( player.p->nav_hyperspace < 0 ) &&
-        ( player.p->nav_asteroid < 0 ) )
+        ( player.p->nav_asteroid == ASTEROID_NULL ) )
       return;
 
    /* Make sure targets are still in range. */
@@ -423,7 +423,7 @@ static void gui_renderSpobTarget( void )
       r                = spob->radius;
       gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
    }
-   if ( player.p->nav_asteroid >= 0 ) {
+   if ( player.p->nav_asteroid != ASTEROID_NULL ) {
       const AsteroidAnchor *field =
          &cur_system->asteroids[player.p->nav_anchor];
       const Asteroid *ast = ast_get( field, player.p->nav_asteroid );

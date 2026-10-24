@@ -28,4 +28,43 @@
   <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
+ <!-- Pale Debris -->
+ <debris>
+  <gfx>asteroid-D16</gfx>
+  <gfx>asteroid-D18</gfx>
+  <gfx>asteroid-D20</gfx>
+  <gfx>asteroid-D21</gfx>
+  <gfx>asteroid-D23</gfx>
+  <gfx>asteroid-D25</gfx>
+  <gfx>asteroid-D26</gfx>
+  <gfx>asteroid-D27</gfx>
+  <gfx>asteroid-D29</gfx>
+  <gfx>asteroid-D30</gfx>
+  <gfx>asteroid-D31</gfx>
+  <gfx>asteroid-D39</gfx>
+  <gfx>asteroid-D40</gfx>
+  <gfx>asteroid-D41</gfx>
+  <gfx>asteroid-D42</gfx>
+  <gfx>asteroid-D43</gfx>
+  <gfx>asteroid-D44</gfx>
+  <gfx>asteroid-D45</gfx>
+  <gfx>asteroid-D46</gfx>
+  <gfx>asteroid-D47</gfx>
+  <gfx>asteroid-D48</gfx>
+  <gfx>asteroid-D49</gfx>
+  <gfx>asteroid-D50</gfx>
+  <gfx>asteroid-D51</gfx>
+  <gfx>asteroid-D52</gfx>
+  <gfx>asteroid-D53</gfx>
+  <gfx>asteroid-D54</gfx>
+  <gfx>asteroid-D55</gfx>
+  <gfx>asteroid-D56</gfx>
+  <gfx>asteroid-D57</gfx>
+  <gfx>asteroid-D58</gfx>
+  <gfx>asteroid-D59</gfx>
+  <gfx>asteroid-D60</gfx>
+  <gfx>asteroid-D61</gfx>
+  <gfx>asteroid-D62</gfx>
+  <gfx>asteroid-D63</gfx>
+ </debris>
 </asteroid>

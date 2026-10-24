@@ -18,4 +18,33 @@
   <name>Diamond</name>
   <quantity>20</quantity>
  </commodity>
+ <!-- Browish debris -->
+ <debris>
+  <gfx>asteroid-D15</gfx>
+  <gfx>asteroid-D17</gfx>
+  <gfx>asteroid-D19</gfx>
+  <gfx>asteroid-D22</gfx>
+  <gfx>asteroid-D24</gfx>
+  <gfx>asteroid-D28</gfx>
+  <gfx>asteroid-D32</gfx>
+  <gfx>asteroid-D33</gfx>
+  <gfx>asteroid-D34</gfx>
+  <gfx>asteroid-D35</gfx>
+  <gfx>asteroid-D36</gfx>
+  <gfx>asteroid-D37</gfx>
+  <gfx>asteroid-D38</gfx>
+  <gfx>asteroid-D51</gfx>
+  <gfx>asteroid-D52</gfx>
+  <gfx>asteroid-D53</gfx>
+  <gfx>asteroid-D54</gfx>
+  <gfx>asteroid-D55</gfx>
+  <gfx>asteroid-D56</gfx>
+  <gfx>asteroid-D57</gfx>
+  <gfx>asteroid-D58</gfx>
+  <gfx>asteroid-D59</gfx>
+  <gfx>asteroid-D60</gfx>
+  <gfx>asteroid-D61</gfx>
+  <gfx>asteroid-D62</gfx>
+  <gfx>asteroid-D63</gfx>
+ </debris>
 </asteroid>

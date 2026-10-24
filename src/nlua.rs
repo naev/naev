@@ -536,6 +536,7 @@ impl LuaEnv {
       open_lib("tex", renderer::texture::open_texture)?;
       //open_lib("gfx", renderer::open_gfx)?;
       open_lib("faction", crate::faction::open_faction)?;
+      open_lib("asteroid", crate::asteroid::open_asteroid)?;
       open_lib("canvas", renderer::framebuffer::open_canvas)?;
       open_lib("commodity", crate::commodity::open_commodity)?;
       open_lib("linopt", crate::linopt::open_linopt)?;

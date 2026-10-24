@@ -3563,7 +3563,7 @@ int space_load( void )
    /* Load data. */
    spobs_load();
    virtualspobs_load();
-   asteroids_load();
+   // asteroids_load();
    systems_load();
 
    /* Done loading. */

@@ -190,7 +190,7 @@ int lua_isasteroid( lua_State *L, int ind )
  * @brief Lua bindings to interact with asteroid.
  *
  *
- * @luamod asteroid
+ * @lua_mod asteroid
  */
 /**
  * @brief Compares two asteroids to see if they are the same.

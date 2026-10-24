@@ -39,8 +39,8 @@ use nlog::{debug, info, warn, warn_err};
 
 const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
-const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
-const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
+pub const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
+pub const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
 pub(crate) static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.0);
 pub(crate) static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.0);
 static DEBUG: AtomicBool = AtomicBool::new(false);
@@ -287,6 +287,10 @@ impl Dimensions {
          view_scale,
          projection,
       }
+   }
+
+   pub fn view(&self) -> Vector2<f32> {
+      Vector2::new(self.view_width, self.view_height)
    }
 }
 
@@ -991,12 +995,12 @@ impl Context {
    }
 
    /// Converts a point in game coordinates to screen coordinates
-   pub fn game_to_screen_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+   pub fn game_to_screen_coords(&self, pos: Vector2<f32>) -> Vector2<f32> {
       camera::CAMERA.read().unwrap().game_to_screen_coords(pos)
    }
 
    /// Converts a point in game coordinates to screen coordinates
-   pub fn game_to_screen_coords_yflip(&self, pos: Vector2<f64>) -> Vector2<f64> {
+   pub fn game_to_screen_coords_yflip(&self, pos: Vector2<f32>) -> Vector2<f32> {
       camera::CAMERA
          .read()
          .unwrap()
@@ -1004,14 +1008,14 @@ impl Context {
    }
 
    /// Converts a point in screen coordinates to game coordinates
-   pub fn screen_to_game_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+   pub fn screen_to_game_coords(&self, pos: Vector2<f32>) -> Vector2<f32> {
       camera::CAMERA.read().unwrap().screen_to_game_coords(pos)
    }
 
    /// Converts a point from game to screen coordinates and makes sure it is in range
-   pub fn game_to_screen_coords_inrange(&self, pos: Vector2<f64>, r: f64) -> Option<Vector2<f64>> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
+   pub fn game_to_screen_coords_inrange(&self, pos: Vector2<f32>, r: f32) -> Option<Vector2<f32>> {
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
       let screen = camera::CAMERA.read().unwrap().game_to_screen_coords(pos);
       if screen.x < -r || screen.y < -r || screen.x > view_width + r || screen.y > view_height + r {
          None
@@ -1023,11 +1027,11 @@ impl Context {
    /// Converts a point from game to screen coordinates and makes sure it is in range
    pub fn game_to_screen_coords_inrange_yflip(
       &self,
-      pos: Vector2<f64>,
-      r: f64,
-   ) -> Option<Vector2<f64>> {
-      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
-      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
+      pos: Vector2<f32>,
+      r: f32,
+   ) -> Option<Vector2<f32>> {
+      let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+      let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
       let screen = camera::CAMERA
          .read()
          .unwrap()
@@ -1162,11 +1166,11 @@ pub extern "C" fn gl_gameToScreenCoords(
    bx: c_double,
    by: c_double,
 ) {
-   let p = Vector2::new(bx, by);
+   let p = Vector2::new(bx, by).cast::<f32>();
    let v = camera::CAMERA.read().unwrap().game_to_screen_coords(p);
    unsafe {
-      *nx = v.x;
-      *ny = v.y;
+      *nx = v.x as c_double;
+      *ny = v.y as c_double;
    }
 }
 
@@ -1177,10 +1181,10 @@ pub extern "C" fn gl_screenToGameCoords(
    bx: c_int,
    by: c_int,
 ) {
-   let p = Vector2::new(bx as c_double, by as c_double);
+   let p = Vector2::new(bx as f32, by as f32);
    let v = camera::CAMERA.read().unwrap().screen_to_game_coords(p);
    unsafe {
-      *nx = v.x;
-      *ny = v.y;
+      *nx = v.x as c_double;
+      *ny = v.y as c_double;
    }
 }
