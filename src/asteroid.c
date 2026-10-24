@@ -527,7 +527,6 @@ void asteroids_computeInternals( AsteroidAnchor *a )
    for ( int i = 0; i < array_size( a->groupsw ); i++ )
       a->groupswtotal += a->groupsw[i];
 }
-#endif
 
 /**
  * @brief Loads the asteroids.
@@ -555,6 +554,7 @@ int asteroids_load( void )
    PHYSFS_freeList( asteroid_files );
    return 0;
 }
+#endif
 
 /**
  * @brief Compares two asteroid types.

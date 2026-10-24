@@ -188,6 +188,7 @@ pub struct Type {
    name: String,
    scanned_msg: String,
    gfx: Vec<Arc<GfxType>>,
+   debris_gfx: Option<Vec<Arc<GfxType>>>,
    material: Vec<Material>,
    armour_min: f64,
    armour_max: f64,
@@ -211,6 +212,13 @@ impl Type {
    }
 
    fn load_xml<P: AsRef<Path>>(ctx: &ContextWrapper, filename: P) -> Result<Self> {
+      let load_gfx = |node, ctx| -> Result<Arc<GfxType>> {
+         let path = nxml::node_texturepath(node, "gfx/spob/space/asteroid/")?;
+         let texture = TextureBuilder::new().path(&path).build_wrap(ctx)?;
+         let poly = SpinPolygon::from_image_path(&path, 1, 1)?;
+         Ok(GfxType::Single(Gfx2d { texture, poly }).into())
+      };
+
       let data = ndata::read(filename)?;
       let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
       let root = doc.root_element();
@@ -245,11 +253,7 @@ impl Type {
             "exp_radius" => at.exp_radius = nxml::node_f64(node)?,
             "alert_range" => at.alert_range = nxml::node_f64(node)?,
             "gfx" => {
-               let path = nxml::node_texturepath(node, "gfx/spob/space/asteroid/")?;
-               let texture = TextureBuilder::new().path(&path).build_wrap(ctx)?;
-               let poly = SpinPolygon::from_image_path(&path, 1, 1)?;
-               let gfx = Gfx2d { texture, poly };
-               at.gfx.push(GfxType::Single(gfx).into())
+               at.gfx.push(load_gfx(node, ctx)?);
             }
             "commodity" => {
                let mut material = None;
@@ -279,6 +283,26 @@ impl Type {
                      "Asteroid Type '{}' has not fully defined commodity.",
                      at.name
                   );
+               }
+            }
+            "debris" => {
+               for node in node.children() {
+                  if !node.is_element() {
+                     continue;
+                  }
+                  match node.tag_name().name().to_lowercase().as_str() {
+                     "gfx" => {
+                        let v: &mut Vec<Arc<GfxType>> = match &mut at.debris_gfx {
+                           Some(v) => v,
+                           None => {
+                              at.debris_gfx = Some(Vec::new());
+                              at.debris_gfx.as_mut().unwrap()
+                           }
+                        };
+                        v.push(load_gfx(node, ctx)?);
+                     }
+                     tag => nxml_warn_node_unknown!("Debris", &at.name, tag),
+                  }
                }
             }
             tag => nxml_warn_node_unknown!("Asteroid Type", &at.name, tag),
@@ -1725,7 +1749,12 @@ pub extern "C" fn asteroids_init() {
             for g in groups {
                let g = unsafe { &*(*g as *mut TypeGroup) };
                for (t, _) in g.types.iter() {
-                  for gfx in &t.gfx {
+                  // Use debris gfx if possible or fallback to normal gfx
+                  let gfxlist = match &t.debris_gfx {
+                     Some(gfx) => gfx,
+                     None => &t.gfx,
+                  };
+                  for gfx in gfxlist {
                      debris_gfx.push(gfx.clone());
                   }
                }
