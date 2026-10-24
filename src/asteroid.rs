@@ -80,6 +80,16 @@ enum GfxType {
 }
 
 impl GfxType {
+   pub fn new(texture: Texture, poly: SpinPolygon) -> Self {
+      let is_sprite = texture.sx > 1 || texture.sy > 1;
+      let gfx = Gfx2d { texture, poly };
+      if is_sprite {
+         Self::Sprite(gfx)
+      } else {
+         Self::Single(gfx)
+      }
+   }
+
    pub fn texture(&self) -> &Texture {
       match self {
          GfxType::Single(gfx) => &gfx.texture,
@@ -225,9 +235,15 @@ impl Type {
    fn load_xml<P: AsRef<Path>>(ctx: &ContextWrapper, filename: P) -> Result<Self> {
       let load_gfx = |node, ctx| -> Result<Arc<GfxType>> {
          let path = nxml::node_texturepath(node, "gfx/spob/space/asteroid/")?;
-         let texture = TextureBuilder::new().path(&path).build_wrap(ctx)?;
-         let poly = SpinPolygon::from_image_path(&path, 1, 1)?;
-         Ok(GfxType::Single(Gfx2d { texture, poly }).into())
+         let mut builder = TextureBuilder::new().path(&path);
+         // Support spritesheets if we have sx/sy defined
+         if let Some(sx) = node.attribute("sx") {
+            let sy = node.attribute("sy").unwrap_or(sx);
+            builder = builder.sx(sx.parse()?).sy(sy.parse()?);
+         }
+         let texture = builder.build_wrap(ctx)?;
+         let poly = SpinPolygon::from_image_path(&path, texture.sx as u32, texture.sy as u32)?;
+         Ok(GfxType::new(texture, poly).into())
       };
 
       let data = ndata::read(filename)?;
