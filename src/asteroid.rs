@@ -11,7 +11,7 @@ use bvh_arena::{Bvh, volumes::Aabb};
 use collide::polygon::Polygon;
 use collide::polygon::SpinPolygon;
 use helpers::ReferenceC;
-use mlua::{BorrowedStr, Either, FromLua, MetaMethod, UserData, UserDataMethods, UserDataRef};
+use mlua::{BorrowedStr, Either, FromLua, MetaMethod, UserData, UserDataMethods};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use nalgebra::Vector2;
 use nlog::{debugx, warn, warn_err};
@@ -91,18 +91,25 @@ impl GfxType {
       self.texture().sw * 0.5
    }
 
-   pub fn draw(&self, ctx: &Context, pos: Coords, scale: f32, angle: f32, col: colour::Colour) {
+   pub fn draw(
+      &self,
+      ctx: &Context,
+      pos: Coords,
+      scale: f32,
+      angle: f32,
+      col: colour::Colour,
+   ) -> Result<()> {
       match self {
          GfxType::Single(gfx) => {
             let tex = &gfx.texture;
-            tex.draw_sprite_scale_rotate(ctx, pos, scale, angle, 0, 0, col);
+            tex.draw_sprite_scale_rotate(ctx, pos, scale, angle, 0, 0, col)
          }
          GfxType::Sprite(gfx) => {
             let tex = &gfx.texture;
             let (sx, sy) = tex.sprite_from_dir(angle);
-            tex.draw_sprite(ctx, pos, sx, sy, col);
+            tex.draw_sprite(ctx, pos, sx, sy, col)
          }
-      };
+      }
    }
 }
 
@@ -174,7 +181,7 @@ impl Debris {
       }
    }
 
-   fn render(&self, ctx: &Context, cam_pos: Vector2<f32>) {
+   fn render(&self, ctx: &Context, cam_pos: Vector2<f32>) -> Result<()> {
       const SCALE: f32 = 0.5;
       let col = colour::Colour::new_alpha(1.0, 1.0, 1.0, self.alpha);
       self.gfx.draw(
@@ -183,7 +190,7 @@ impl Debris {
          SCALE,
          self.angle,
          col,
-      );
+      )
    }
 }
 
@@ -449,6 +456,7 @@ enum State {
 }
 
 impl State {
+   /*
    fn from_ffi(c: naevc::AsteroidState) -> Self {
       match c {
          naevc::AsteroidState_ASTEROID_XX => State::Xx,
@@ -462,6 +470,7 @@ impl State {
          _ => State::Xx,
       }
    }
+   */
 
    fn to_ffi(self) -> naevc::AsteroidState {
       match self {
@@ -544,7 +553,7 @@ impl Asteroid {
    fn try_new(field: &naevc::AsteroidAnchor, creating: bool) -> Option<Self> {
       // Try to find position
       let mut pos = Vector2::new(field.pos.x, field.pos.y);
-      for i in 0..1000 {
+      for _ in 0..1000 {
          let n = field.radius * rng::<f64>().sqrt();
          let a = std::f64::consts::TAU * rng::<f64>();
          pos = Vector2::new(field.pos.x + n * a.cos(), field.pos.y + n * a.sin());
@@ -656,7 +665,6 @@ impl Asteroid {
       anchor: &naevc::AsteroidAnchor,
       astex: Option<&[naevc::AsteroidExclusion]>,
    ) -> bool {
-      let inner = get_inner(anchor);
       let off = Vector2::new(anchor.pos.x, anchor.pos.y) - self.pos();
       let d2 = off.norm_squared();
       let setvel = if d2 >= anchor.radius * anchor.radius {
@@ -712,8 +720,8 @@ impl Asteroid {
                   && let Some(player) = pilot::player()
                   && ((player.pos() - self.pos()).norm_squared() < 1500.0 * 1500.0
                      || unsafe {
-                        (player.0.as_ref().nav_anchor == self.parent as i32
-                           && player.0.as_ref().nav_asteroid == self.id.as_ffi())
+                        player.0.as_ref().nav_anchor == self.parent as i32
+                           && player.0.as_ref().nav_asteroid == self.id.as_ffi()
                      })
                {
                   // Lower state so it gets incremented
@@ -779,13 +787,15 @@ impl Asteroid {
          State::Xx => unreachable!(),
       };
 
-      self.gfx.draw(
+      if let Err(e) = self.gfx.draw(
          ctx,
          Coords::Game(Vector2::new(self.solid.pos.x, self.solid.pos.y).cast::<f32>()),
          1.0,
          self.angle as f32,
          col,
-      );
+      ) {
+         warn_err!(e);
+      }
 
       // Display scanned message text
       if self.scanned {
@@ -837,12 +847,15 @@ impl Asteroid {
       // Explosion sound. TODO not hardcode
       match audio::Buffer::get_or_try_load(format!("snd/sounds/explosion{}", range(0..=2))) {
          Ok(sound) => {
-            AudioBuilder::new(AudioType::Static)
+            if let Err(e) = AudioBuilder::new(AudioType::Static)
                .buffer(sound.clone())
                .position(Some(self.pos().cast()))
                .velocity(Some(self.vel().cast()))
                .play(true)
-               .build();
+               .build()
+            {
+               warn_err!(e);
+            }
          }
          Err(e) => warn_err!(e),
       }
@@ -927,7 +940,7 @@ static GROUPS: LazyLock<HashMap<String, TypeGroup>> = LazyLock::new(load_groups)
 fn load_types() -> HashMap<String, Arc<Type>> {
    let ctx = Context::get().as_safe_wrap();
    let base: PathBuf = "asteroids/types".into();
-   let mut data: HashMap<_, _> = ndata::read_dir(&base)
+   let data: HashMap<_, _> = ndata::read_dir(&base)
       .unwrap_or_else(|e| {
          warn_err!(e);
          Vec::new()
@@ -1096,11 +1109,11 @@ pub fn render() {
       let cam = camera::CAMERA.read().unwrap();
       for ast in cur_system.asteroids() {
          // Test to see if field is in range, or skip if not
-         let centre = match ctx.game_to_screen_coords_inrange(
+         match ctx.game_to_screen_coords_inrange(
             Vector2::new(ast.pos.x, ast.pos.y).cast::<f32>(),
             ast.radius as f32,
          ) {
-            Some(c) => c,
+            Some(_) => (),
             None => {
                continue;
             }
@@ -1116,19 +1129,20 @@ pub fn render() {
       // Render the debris
       let cam_pos = cam.pos() - ctx.dimensions.read().unwrap().view() * 0.5;
       for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height < 1.0) {
-         d.render(ctx, cam_pos);
+         if let Err(e) = d.render(ctx, cam_pos) {
+            warn_err!(e);
+         }
       }
    }
 }
 
 #[instrument]
 pub fn render_overlay() {
-   if let Some(cur_system) = crate::system::cur() {
-      let ctx = renderer::Context::get();
-      let cam_pos =
-         camera::CAMERA.read().unwrap().pos() - ctx.dimensions.read().unwrap().view() * 0.5;
-      for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height >= 1.0) {
-         d.render(ctx, cam_pos);
+   let ctx = renderer::Context::get();
+   let cam_pos = camera::CAMERA.read().unwrap().pos() - ctx.dimensions.read().unwrap().view() * 0.5;
+   for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height >= 1.0) {
+      if let Err(e) = d.render(ctx, cam_pos) {
+         warn_err!(e);
       }
    }
 }
@@ -1278,9 +1292,9 @@ impl UserData for LuaAsteroid {
             } else {
                let mut asteroids = Vec::new();
                if let Some(cur_system) = crate::system::cur() {
-                  for (parent, ast) in cur_system.asteroids().iter().enumerate() {
+                  for (_, ast) in cur_system.asteroids().iter().enumerate() {
                      let inner = get_inner(ast);
-                     for (id, asteroid) in inner.asteroids.iter() {
+                     for asteroid in inner.asteroids.values() {
                         asteroids.push(asteroid.as_lua())
                      }
                   }
@@ -1304,10 +1318,9 @@ impl UserData for LuaAsteroid {
          |lua,
           param: Option<Either<usize, Either<Vec2, mlua::Value>>>|
           -> mlua::Result<Option<Self>> {
-            fn get_from_field(field: usize) -> Option<LuaAsteroid> {
+            fn get_from_field(parent: usize) -> Option<LuaAsteroid> {
                if let Some(cur_system) = crate::system::cur() {
                   let fields = cur_system.asteroids();
-                  let parent = range(0..fields.len());
                   let field = &fields[parent];
                   let inner = get_inner(field);
                   let ast: Vec<_> = inner
@@ -1335,7 +1348,7 @@ impl UserData for LuaAsteroid {
                   let id = inner
                      .asteroids
                      .iter()
-                     .filter(|&(k, a)| (a.state == State::Fg))
+                     .filter(|&(_, a)| a.state == State::Fg)
                      .map(|(k, a)| (k, (a.pos() - pos).norm_squared()))
                      .min_by(|(_, a), (_, b)| {
                         a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal)
@@ -1427,7 +1440,7 @@ impl UserData for LuaAsteroid {
                      )));
                   }
                })
-            })?;
+            })??;
             Ok(())
          },
       );
@@ -1589,10 +1602,10 @@ impl UserData for LuaAsteroid {
             };
             for m in &a.atype.material {
                if let Ok(tm) = lua.create_table() {
-                  tm.set("commodity", m.material);
-                  tm.set("quantity", m.quantity);
-                  tm.set("rarity", m.rarity);
-                  t.push(tm);
+                  tm.set("commodity", m.material)?;
+                  tm.set("quantity", m.quantity)?;
+                  tm.set("rarity", m.rarity)?;
+                  t.push(tm)?;
                }
             }
             Ok(t)
@@ -1747,7 +1760,7 @@ pub extern "C" fn asteroids_init() {
                bvh: Bvh::default(),
             })) as *mut naevc::AsteroidInner;
          }
-         let mut inner = get_inner_mut(ast);
+         let inner = get_inner_mut(ast);
 
          // Grab unique debris graphics
          // TODO use other graphics that are currently unused, or 3D models if possible
@@ -1773,7 +1786,7 @@ pub extern "C" fn asteroids_init() {
 
          // Add asteroids to the anchor
          inner.asteroids.clear();
-         for i in 0..ast.nmax {
+         for _ in 0..ast.nmax {
             if let Some(mut a) = Asteroid::try_new(ast, true) {
                let r = rng::<f32>();
                if r < 0.6 {
@@ -1817,7 +1830,7 @@ pub extern "C" fn asteroids_init() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn asteroid_initAnchor(anc: *mut naevc::AsteroidAnchor) {
-   let mut anc = unsafe { &mut *anc };
+   let anc = unsafe { &mut *anc };
    anc.density = naevc::ASTEROID_DEFAULT_DENSITY;
    anc.groups = Array::new(Vec::new()).into_ptr();
    anc.groupsw = Array::new(Vec::new()).into_ptr();
@@ -1825,12 +1838,12 @@ pub extern "C" fn asteroid_initAnchor(anc: *mut naevc::AsteroidAnchor) {
    anc.maxspeed = naevc::ASTEROID_DEFAULT_MAXSPEED;
    anc.maxspin = naevc::ASTEROID_DEFAULT_MAXSPIN;
    anc.accel = naevc::ASTEROID_DEFAULT_ACCEL;
-   anc.inner = unsafe { Box::into_raw(Box::new(AnchorInner::new())) as *mut naevc::AsteroidInner };
+   anc.inner = Box::into_raw(Box::new(AnchorInner::new())) as *mut naevc::AsteroidInner;
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn asteroid_freeAnchor(anc: *mut naevc::AsteroidAnchor) {
-   let mut anc = unsafe { &mut *anc };
+   let anc = unsafe { &*anc };
    unsafe {
       let _ = Array::from_ptr(anc.groups);
       let _ = Array::from_ptr(anc.groupsw);
@@ -1859,7 +1872,7 @@ pub extern "C" fn asteroids_renderOverlay() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn astgroup_getAll() -> *const *const TypeGroup {
-   let vec: Vec<*const TypeGroup> = GROUPS.iter().map(|(k, v)| v as *const TypeGroup).collect();
+   let vec: Vec<*const TypeGroup> = GROUPS.iter().map(|(_, v)| v as *const TypeGroup).collect();
    array::Array::new(vec).into_ptr()
 }
 
