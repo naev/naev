@@ -1,4 +1,3 @@
-#![allow(dead_code, unused)]
 use crate::array;
 use crate::array::Array;
 use crate::commodity::CommodityRef;
