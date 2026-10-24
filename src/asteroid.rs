@@ -21,6 +21,7 @@ use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper, camera, camera::Coords, colour};
 use slotmap::{Key, KeyData, SlotMap};
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::ffi::{CStr, CString, OsStr, c_char, c_int, c_void};
 use std::mem::MaybeUninit;
@@ -56,19 +57,39 @@ struct Gfx2d {
    texture: Texture,
    poly: SpinPolygon,
 }
+impl Eq for Gfx2d {}
+impl PartialEq for Gfx2d {
+   fn eq(&self, other: &Self) -> bool {
+      self.texture == other.texture
+   }
+}
+impl Ord for Gfx2d {
+   fn cmp(&self, other: &Self) -> Ordering {
+      self.texture.path.cmp(&other.texture.path)
+   }
+}
+impl PartialOrd for Gfx2d {
+   fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+      Some(self.cmp(other))
+   }
+}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum GfxType {
    Single(Gfx2d),
    Sprite(Gfx2d),
 }
 
 impl GfxType {
-   pub fn radius(&self) -> f32 {
+   pub fn texture(&self) -> &Texture {
       match self {
-         GfxType::Single(gfx) => gfx.texture.sw * 0.5,
-         GfxType::Sprite(gfx) => gfx.texture.sw * 0.5,
+         GfxType::Single(gfx) => &gfx.texture,
+         GfxType::Sprite(gfx) => &gfx.texture,
       }
+   }
+
+   pub fn radius(&self) -> f32 {
+      self.texture().sw * 0.5
    }
 
    pub fn draw(&self, ctx: &Context, pos: Coords, angle: f32, col: colour::Colour) {
@@ -1708,6 +1729,8 @@ pub extern "C" fn asteroids_init() {
                   }
                }
             }
+            debris_gfx.sort();
+            debris_gfx.dedup();
          }
 
          // Add asteroids to the anchor
