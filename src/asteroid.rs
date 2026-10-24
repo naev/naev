@@ -92,11 +92,11 @@ impl GfxType {
       self.texture().sw * 0.5
    }
 
-   pub fn draw(&self, ctx: &Context, pos: Coords, angle: f32, col: colour::Colour) {
+   pub fn draw(&self, ctx: &Context, pos: Coords, scale: f32, angle: f32, col: colour::Colour) {
       match self {
          GfxType::Single(gfx) => {
             let tex = &gfx.texture;
-            tex.draw_sprite_scale_rotate(ctx, pos, 1.0, angle, 0, 0, col);
+            tex.draw_sprite_scale_rotate(ctx, pos, scale, angle, 0, 0, col);
          }
          GfxType::Sprite(gfx) => {
             let tex = &gfx.texture;
@@ -175,11 +175,16 @@ impl Debris {
       }
    }
 
-   fn render(&self, ctx: &Context) {
+   fn render(&self, ctx: &Context, cam_pos: Vector2<f32>) {
+      const SCALE: f32 = 0.5;
       let col = colour::Colour::new_alpha(1.0, 1.0, 1.0, self.alpha);
-      self
-         .gfx
-         .draw(ctx, Coords::Screen(self.pos), self.angle, col);
+      self.gfx.draw(
+         ctx,
+         Coords::Game(self.pos + cam_pos),
+         SCALE,
+         self.angle,
+         col,
+      );
    }
 }
 
@@ -778,6 +783,7 @@ impl Asteroid {
       self.gfx.draw(
          ctx,
          Coords::Game(Vector2::new(self.solid.pos.x, self.solid.pos.y).cast::<f32>()),
+         1.0,
          self.angle as f32,
          col,
       );
@@ -1109,8 +1115,9 @@ pub fn render() {
       }
 
       // Render the debris
+      let cam_pos = cam.pos() - ctx.dimensions.read().unwrap().view() * 0.5;
       for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height < 1.0) {
-         d.render(ctx);
+         d.render(ctx, cam_pos);
       }
    }
 }
@@ -1119,8 +1126,10 @@ pub fn render() {
 pub fn render_overlay() {
    if let Some(cur_system) = crate::system::cur() {
       let ctx = renderer::Context::get();
+      let cam_pos =
+         camera::CAMERA.read().unwrap().pos() - ctx.dimensions.read().unwrap().view() * 0.5;
       for d in DEBRIS.lock().unwrap().iter().filter(|d| d.height >= 1.0) {
-         d.render(ctx);
+         d.render(ctx, cam_pos);
       }
    }
 }

@@ -288,6 +288,10 @@ impl Dimensions {
          projection,
       }
    }
+
+   pub fn view(&self) -> Vector2<f32> {
+      Vector2::new(self.view_width, self.view_height)
+   }
 }
 
 pub struct Context {
