@@ -52,6 +52,7 @@ const double DEBRIS_BUFFER =
 // static const double SCAN_FADE = 10.; /**< 1/time it takes to fade in/out
 // scanning text. */
 
+#if 0
 static Debris *debris_stack =
    NULL; /**< All the debris in the current system (array.h). */
 static glTexture **debris_gfx = NULL; /**< Graphics to use for debris. */
@@ -71,12 +72,10 @@ static glTexture **asteroid_gfx =
 
 /* Prototypes. */
 static int asttype_cmp( const void *p1, const void *p2 );
-static int asttype_parse( AsteroidType *at, const char *file );
 static int astgroup_cmp( const void *p1, const void *p2 );
+static int asttype_parse( AsteroidType *at, const char *file );
 static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
 static int asttype_load( void );
-
-#if 0
 static int  asteroid_updateSingle( Asteroid *a );
 static void asteroid_renderSingle( const Asteroid *a );
 static void debris_renderSingle( const Debris *d, double cx, double cy );
@@ -554,7 +553,6 @@ int asteroids_load( void )
    PHYSFS_freeList( asteroid_files );
    return 0;
 }
-#endif
 
 /**
  * @brief Compares two asteroid types.
@@ -836,7 +834,6 @@ static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
    return 0;
 }
 
-#if 0
 /**
  * @brief Renders the system overlay.
  */
@@ -1029,6 +1026,7 @@ void asteroid_freeExclude( AsteroidExclusion *exc )
    free( exc->label );
 }
 
+#if 0
 /**
  * @brief Cleans up the system.
  */
@@ -1073,7 +1071,6 @@ void asteroids_free( void )
    gatherable_free();
 }
 
-#if 0
 int asteroids_hasCommodity( const AsteroidAnchor *ast, CommodityRef com )
 {
    for ( int i = 0; i < array_size( ast->groups ); i++ ) {

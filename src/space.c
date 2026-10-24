@@ -3950,7 +3950,7 @@ void space_exit( void )
    systems_stack = NULL;
 
    /* Free asteroids stuff. */
-   asteroids_free();
+   // asteroids_free();
 
    /* Free the gatherable stack. */
    gatherable_free();

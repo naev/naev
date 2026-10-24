@@ -81,8 +81,8 @@ typedef struct AsteroidExclusion_ {
 } AsteroidExclusion;
 
 /* Initialization and parsing. */
-int  asteroids_load( void );
-void asteroids_free( void );
+// int  asteroids_load( void );
+// void asteroids_free( void );
 void asteroid_initAnchor( AsteroidAnchor *ast );
 void asteroid_freeAnchor( AsteroidAnchor *ast );
 void asteroid_freeExclude( AsteroidExclusion *exc );
