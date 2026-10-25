@@ -336,6 +336,8 @@ int pilot_inRangeAsteroid( const Pilot *p, AsteroidRef ast, int fie )
    /* Get the asteroid. */
    const AsteroidAnchor *f  = &cur_system->asteroids[fie];
    const Asteroid       *as = ast_get( f, ast );
+   if ( as == NULL )
+      return 0;
 
    /* TODO something better than this. */
    double sense = CTS.EW_ASTEROID_DIST;
