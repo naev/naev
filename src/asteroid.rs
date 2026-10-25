@@ -1347,10 +1347,18 @@ impl UserData for LuaAsteroid {
          |lua,
           param: Option<Either<usize, Either<Vec2, mlua::Value>>>|
           -> mlua::Result<Option<Self>> {
-            fn get_from_field(parent: usize) -> Option<LuaAsteroid> {
-               if let Some(cur_system) = crate::system::cur() {
+            fn get_from_field(parent: usize) -> mlua::Result<Option<LuaAsteroid>> {
+               Ok(if let Some(cur_system) = crate::system::cur() {
                   let fields = cur_system.asteroids();
-                  let field = &fields[parent];
+                  let field = match fields.get(parent) {
+                     Some(f) => f,
+                     None => {
+                        return Err(mlua::Error::RuntimeError(format!(
+                           "unknown asteroid field id {}",
+                           parent
+                        )));
+                     }
+                  };
                   let inner = get_inner(field);
                   let ast: Vec<_> = inner
                      .asteroids
@@ -1366,12 +1374,16 @@ impl UserData for LuaAsteroid {
                   }
                } else {
                   None
-               }
+               })
             }
-            fn get_from_pos(pos: Vector2<f64>) -> Option<LuaAsteroid> {
-               if let Some(cur_system) = crate::system::cur() {
+            fn get_from_pos(pos: Vector2<f64>) -> mlua::Result<Option<LuaAsteroid>> {
+               Ok(if let Some(cur_system) = crate::system::cur() {
                   let fields = cur_system.asteroids();
-                  let parent = range(0..fields.len());
+                  let l = fields.len();
+                  if l == 0 {
+                     return Ok(None);
+                  }
+                  let parent = range(0..l);
                   let field = &fields[parent];
                   let inner = get_inner(field);
                   let id = inner
@@ -1385,23 +1397,26 @@ impl UserData for LuaAsteroid {
                   id.map(|id| LuaAsteroid { parent, id: id.0 })
                } else {
                   None
-               }
+               })
             }
             if let Some(param) = param {
                match param {
-                  Either::Left(parent) => Ok(get_from_field(parent)),
+                  Either::Left(parent) => get_from_field(parent - 1),
                   Either::Right(param) => match param {
-                     Either::Left(v) => Ok(get_from_pos(v.into())),
+                     Either::Left(v) => get_from_pos(v.into()),
                      Either::Right(ud) => match crate::pilot::from_lua(lua, &ud) {
-                        Ok(plt) => Ok(get_from_pos(plt.pos())),
+                        Ok(plt) => get_from_pos(plt.pos()),
                         Err(_) => Ok(None),
                      },
                   },
                }
             } else {
-               if let Some(cur_system) = crate::system::cur_mut() {
-                  let parent = range(0..cur_system.asteroids().len());
-                  Ok(get_from_field(parent))
+               if let Some(cur_system) = crate::system::cur_mut()
+                  && let l = cur_system.asteroids().len()
+                  && l > 0
+               {
+                  let parent = range(0..l);
+                  get_from_field(parent)
                } else {
                   Ok(None)
                }
