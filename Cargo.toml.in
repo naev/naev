@@ -66,6 +66,7 @@ pluginmgr = { path="@BUILD@/src/pluginmgr" }
 pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
 formatx = "~0.4.2"
 glow = "0.18"
+ordered-float = "5"
 nalgebra = { version = "0.35", features = ["bytemuck", "encase", "serde-serialize"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.25", features = ["derive"] } # Needed for shader voodoo
@@ -168,6 +169,7 @@ static_assertions = { workspace = true }
 itertools = { workspace = true }
 portable-atomic = { workspace = true }
 bvh-arena = { workspace = true }
+ordered-float = { workspace = true }
 
 # Probably useful
 #etagere = "0" # Texture Atlas generation

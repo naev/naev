@@ -15,6 +15,7 @@ use mlua::{BorrowedStr, Either, FromLua, MetaMethod, UserData, UserDataMethods};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use nalgebra::Vector2;
 use nlog::{debugx, warn, warn_err};
+use ordered_float::NotNan;
 use physics::vec2::Vec2;
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
@@ -33,7 +34,14 @@ const DEBRIS_BUFFER: f32 = 1000.0;
 /// How long it takes to fade in and out the scanning text
 const SCAN_FADE: f64 = 10.0;
 
-static DEBRIS_GFX: LazyLock<RwLock<Vec<Arc<GfxType>>>> = LazyLock::new(Default::default);
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct DebrisGfx {
+   gfx: Arc<GfxType>,
+   /// maximum scale to use (i.e. distinguish between debris and regular graphics)
+   scale: NotNan<f32>,
+}
+
+static DEBRIS_GFX: LazyLock<RwLock<Vec<DebrisGfx>>> = LazyLock::new(Default::default);
 static DEBRIS: LazyLock<Mutex<Vec<Debris>>> = LazyLock::new(Default::default);
 
 fn get_inner(field: &naevc::AsteroidAnchor) -> &AnchorInner {
@@ -128,6 +136,8 @@ struct Debris {
    pos: Vector2<f32>,
    vel: Vector2<f32>,
    angle: f32,
+   /// Scale the graphics by this
+   scale: f32,
    /// Height with respect to the player
    height: f32,
    alpha: f32,
@@ -135,9 +145,10 @@ struct Debris {
 
 impl Debris {
    pub fn new() -> Self {
-      let gfx = {
+      let (gfx, scale) = {
          let debris_gfx = &DEBRIS_GFX.read().unwrap();
-         debris_gfx[rng::range(0..debris_gfx.len())].clone()
+         let dg = debris_gfx[rng::range(0..debris_gfx.len())].clone();
+         (dg.gfx, dg.scale)
       };
       let (screen_w, screen_h) = {
          let dims = renderer::Context::get().dimensions.read().unwrap();
@@ -149,11 +160,14 @@ impl Debris {
       let theta = std::f32::consts::TAU * rng::<f32>();
       let val = 20.0 * rng::<f32>();
       let vel = Vector2::new(val * theta.cos(), val * theta.sin());
+      // Scale randomly between 0.5 and scale
+      let scale = rng::range(0.5..=*scale);
       Debris {
          gfx,
          pos,
          vel,
          angle: rng::<f32>() * std::f32::consts::TAU,
+         scale,
          height: 0.8 + rng::<f32>() * 0.4,
          alpha: 0.0,
       }
@@ -192,12 +206,11 @@ impl Debris {
    }
 
    fn render(&self, ctx: &Context, cam_pos: Vector2<f32>) -> Result<()> {
-      const SCALE: f32 = 0.5;
       let col = colour::Colour::new_alpha(1.0, 1.0, 1.0, self.alpha);
       self.gfx.draw(
          ctx,
          Coords::Game(self.pos + cam_pos),
-         SCALE,
+         self.scale,
          self.angle,
          col,
       )
@@ -1787,12 +1800,16 @@ pub extern "C" fn asteroids_init() {
                let g = unsafe { &*(*g as *mut TypeGroup) };
                for (t, _) in g.types.iter() {
                   // Use debris gfx if possible or fallback to normal gfx
-                  let gfxlist = match &t.debris_gfx {
-                     Some(gfx) => gfx,
-                     None => &t.gfx,
+                  // Scale has to be over 0.5 or the range will error
+                  let (gfxlist, scale) = match &t.debris_gfx {
+                     Some(gfx) => (gfx, 1.0),
+                     None => (&t.gfx, 0.7),
                   };
                   for gfx in gfxlist {
-                     debris_gfx.push(gfx.clone());
+                     debris_gfx.push(DebrisGfx {
+                        gfx: gfx.clone(),
+                        scale: NotNan::new(scale).unwrap(),
+                     });
                   }
                }
             }
