@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2026-10-13 19:43+0900\n"
-"PO-Revision-Date: 2026-10-24 21:03+0000\n"
+"PO-Revision-Date: 2026-10-25 21:27+0000\n"
 "Last-Translator: raazqaer <raazqaer@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/>"
 "\n"
@@ -765,7 +765,7 @@ msgid "Melendez Ox Engine"
 msgstr "Moteur Melendez Ox"
 
 msgid "Mercenary Licence"
-msgstr "Licence de Mercenaire"
+msgstr "Licence de mercenaire"
 
 msgid "Microbond Plating"
 msgstr "Blindage en Microlite"
@@ -11800,17 +11800,19 @@ msgid "Nasin"
 msgstr "Nasin"
 
 msgid "O'rez"
-msgstr ""
+msgstr "O'rez"
 
-#, fuzzy
 msgid "House O'rez"
-msgstr "Maison Za’lek"
+msgstr "Maison O'rez"
 
 msgid ""
 "While still officially part of House Yetmer-O'rez, to all practical effects, "
 "House O'rez is an independent minor house, engaged in a long war with House "
 "Yetmer."
 msgstr ""
+"Bien qu'elle fasse toujours officiellement partie de la Maison Yetmer-O'rez, "
+"la Maison O'rez est, dans les faits, une maison mineure indépendante, "
+"engagée dans une guerre de longue date contre la Maison Yetmer."
 
 msgid ""
 "The Galactic Space Pirates consists of independent pirate vessels not "
@@ -11887,9 +11889,10 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
-"Les Soromid sont des individus qui ont été forcé à se modifier génétiquement "
-"pour survivre à une pandémie. Maintenant il embrasse ouvertement leur "
-"transcendance humaine comme un symbole de force."
+"Les Soromides se composent d'individus qui ont dû modifier leur propre "
+"patrimoine génétique pour survivre à une pandémie. Aujourd'hui, ils "
+"revendiquent ouvertement leur transcendance humaine comme un symbole de "
+"force."
 
 msgid "Strangelove"
 msgstr "Folamour"
@@ -11969,17 +11972,19 @@ msgstr ""
 "l'Empire et ceux des Soromides."
 
 msgid "Yetmer"
-msgstr ""
+msgstr "Yetmer"
 
-#, fuzzy
 msgid "House Yetmer"
-msgstr "Maison Dvaered"
+msgstr "Maison Yetmer"
 
 msgid ""
 "While still officially part of House Yetmer-O'rez, to all practical effects, "
 "House Yetmer is an independent minor house, engaged in a long war with House "
 "O'rez."
 msgstr ""
+"Bien qu'elle fasse toujours officiellement partie de la Maison Yetmer-O'rez, "
+"la Maison Yetmer est, dans les faits, une maison mineure indépendante, "
+"engagée dans une guerre de longue date contre la Maison O'rez."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -62986,6 +62991,13 @@ msgid ""
 "vulnerable to volleys of torpedoes. Escorts and fighter bays can help them "
 "deal with enemy bombers.\""
 msgstr ""
+"\"Piloter un vaisseau de combat lourd est très différent de piloter les "
+"autres classes de vaisseaux. En raison de leur taille, le temps semble "
+"généralement s'écouler plus vite à leur bord que dans les appareils plus "
+"petits, comme l'indique leur valeur de '#oFacteur temps#0'. De plus, leur "
+"taille rend la furtivité difficile et les expose aux salves de torpilles. "
+"Les appareils d'escorte et les baies de chasseurs peuvent les aider à faire "
+"face aux bombardiers ennemis.\""
 
 msgid ""
 "\"It looks like you got a #oMercenary Licence#0. This will enable bounty "
@@ -62995,6 +63007,13 @@ msgid ""
 "complete them. They can be fairly challenging at the beginning so make sure "
 "your ship is properly equipped for combat.\""
 msgstr ""
+"\"On dirait que vous avez obtenu une #oLicence de mercenaire#0. Celle-ci "
+"vous donnera accès à des missions de chasse aux primes, qui devraient "
+"désormais apparaître sur les écrans de votre ordinateur de missions. Ces "
+"missions sont généralement axées sur le combat et nécessitent un vaisseau "
+"adapté pour être menées à bien. Elles peuvent être assez difficiles au début "
+": assurez-vous donc que votre vaisseau est correctement équipé pour le "
+"combat.\""
 
 msgid ""
 "\"Congratulations on buying a brand new {ship}! Unless you trade in your "
@@ -63006,12 +63025,25 @@ msgid ""
 "swapping. In fact, getting a diversity of ships and switching to the one "
 "that best fits your need is a great way to get things done.\""
 msgstr ""
+"\"Félicitations pour l'achat de votre tout nouveau {ship} ! À moins que vous "
+"n'échangiez votre vaisseau actuel, tout nouvel appareil acheté sera ajouté à "
+"votre flotte disponible. En général, les vaisseaux ne sont équipés que de "
+"leurs systèmes centraux. Rendez-vous donc dans l'onglet #oConfiguration#0 "
+"pour compléter leur équipement et, si vous souhaitez l'utiliser, le "
+"sélectionner à la place de votre vaisseau actuel. Vous pouvez changer de "
+"vaisseau sur toute planète ou station disposant de services de "
+"ravitaillement, sans frais ni pénalité. En réalité, posséder plusieurs types "
+"de vaisseaux et choisir celui qui correspond le mieux à vos besoins est un "
+"excellent moyen de mener vos activités à bien.\""
 
 msgid ""
 "\"You also don't have to worry about your ship AI changing, I am "
 "automatically transferred between your ships. You can't get away from me, ha "
 "ha.\""
 msgstr ""
+"\"Vous n'avez pas non plus à vous soucier de changer d'IA de bord : je suis "
+"automatiquement transférée d'un vaisseau à l'autre. Vous ne pouvez pas vous "
+"débarrasser de moi, ha ha !\""
 
 msgid ""
 "\"Wow! Looks like you acquired a bioship! My data banks show that they are "
@@ -63021,6 +63053,13 @@ msgid ""
 "potential, you will be able to customize and modify them at will. However, "
 "be aware that the choices that you make are not easy to reverse.\""
 msgstr ""
+"\"Waouh ! On dirait que vous avez acquis un bio-vaisseau ! D'après mes bases "
+"de données, ces vaisseaux se développent sur des structures synthétiques et "
+"possèdent différents degrés de conscience. En contrepartie, ils commencent à "
+"un stade peu avancé et doivent acquérir de l'expérience pour atteindre leur "
+"plein potentiel. À mesure qu'ils développent leurs capacités, vous pourrez "
+"les personnaliser et les modifier à votre guise. Attention, toutefois : vos "
+"choix ne seront pas faciles à annuler.\""
 
 msgid ""
 "\"You can see the status of your current bioship from the #bInfo menu#0, "
@@ -63029,10 +63068,18 @@ msgid ""
 "new possibilities. Make sure to choose your skills carefully as it is not "
 "easy to change them once they have been chosen.\""
 msgstr ""
+"\"Vous pouvez consulter l'état de votre vaisseau biologique actuel dans le "
+"#bmenu d'information#0, accessible avec #b{infokey}#0. À mesure que votre "
+"vaisseau biologique acquiert de l'expérience et atteint de nouveaux stades "
+"de développement, vous pourrez obtenir de nouvelles compétences qui "
+"ouvriront de nouvelles possibilités. Choisissez-les avec soin, car il n'est "
+"pas facile de les modifier une fois qu'elles ont été sélectionnées.\""
 
 msgid ""
 "I've never been run in a bioship before. I wonder what it will be like?\""
 msgstr ""
+"\"Je n'ai encore jamais été implémentée dans un bio-vaisseau. Je me demande "
+"ce que cela va donner...\""
 
 msgid ""
 "\"Whoa, it looks like you just acquired your first large ship. You may have "
@@ -63044,6 +63091,16 @@ msgid ""
 "constant will have time passing 50% faster than a normal ship, and will help "
 "the ship feel less cumbersome to fly.\""
 msgstr ""
+"\"Eh bien ! On dirait que vous venez d'acquérir votre premier grand "
+"vaisseau. Vous l'avez peut-être déjà remarqué, mais chaque vaisseau possède "
+"une valeur de '#oFacteur temps#0', qui indique la vitesse à laquelle le "
+"temps semble s'écouler lorsqu'on le pilote. Les petits vaisseaux ont "
+"généralement une valeur inférieure à 100 %, ce qui signifie que le temps s'y "
+"écoule plus lentement que dans les autres appareils. À l'inverse, les grands "
+"vaisseaux ont un facteur temps supérieur à 100 %, donnant l'impression que "
+"le temps passe plus vite. Par exemple, avec un facteur temps de 150 %, le "
+"temps s'écoule 50 % plus vite qu'à bord d'un vaisseau normal, ce qui rend le "
+"pilotage d'un grand appareil moins laborieux.\""
 
 msgid ""
 "\"In general, due to the low manoeuvrability of large ships, you should "
@@ -63056,6 +63113,17 @@ msgid ""
 "It is best to try out different turrets and see what feels best for your "
 "ship.\""
 msgstr ""
+"\"En règle générale, compte tenu de la faible maniabilité des grands "
+"vaisseaux, vous devriez envisager d'utiliser des armes à tourelle et/ou des "
+"hangars à chasseurs pour assurer votre défense. Vous aurez ainsi moins à "
+"vous soucier de viser et pourrez vous concentrer davantage sur vos "
+"objectifs. Les tourelles dépendent fortement de leurs valeurs de poursuite. "
+"La '#oPoursuite minimale#0' correspond à la valeur de '#oSignature#0' en "
+"dessous de laquelle une tourelle ne parvient plus à suivre un vaisseau "
+"cible. À l'inverse, si la signature de la cible dépasse la valeur de "
+"'#oPoursuite optimale#0', vos tourelles pourront la suivre parfaitement. Le "
+"mieux est d'essayer différentes tourelles pour trouver celles qui "
+"conviennent le mieux à votre vaisseau.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -63074,7 +63142,7 @@ msgstr ""
 #. corresponding capture string so it can be found
 msgctxt "save_updater"
 msgid "You captured this ship in the"
-msgstr ""
+msgstr "Vous avez capturé ce vaisseau dans le"
 
 #. Runs on saves older than 0.13.0
 #. TODO stuff we want to add before the release
@@ -134300,7 +134368,7 @@ msgid "Pride"
 msgstr ""
 
 msgid "Proton"
-msgstr "Protéron"
+msgstr "Proton"
 
 msgid "Python"
 msgstr ""
@@ -141086,34 +141154,32 @@ msgstr "Stats :"
 
 #, c-format
 msgid "%.0f %s"
-msgstr ""
+msgstr "%.0f %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%.0f %s (max %.0f %s)"
-msgstr ""
-"\n"
-"#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
+msgstr "%.0f %s (max %.0f %s)"
 
 #, c-format
 msgid "%s / %s %s"
-msgstr ""
+msgstr "%s / %s %s"
 
 #, c-format
 msgid " (%s %s)"
-msgstr ""
+msgstr " (%s %s)"
 
 #, c-format
 msgid "%s / %s %s (%d %s)"
-msgstr ""
+msgstr "%s / %s %s (%d %s)"
 
 msgid "Cycle Mode"
 msgstr "Changer de mode"
 
 msgid "Clear"
-msgstr ""
+msgstr "Effacer"
 
 msgid "Clear All"
-msgstr ""
+msgstr "Tout effacer"
 
 msgid ""
 "Cycles through the following modes:\n"
@@ -141122,16 +141188,12 @@ msgid ""
 "- Toggle: toggles the selected outfits to on or off state"
 msgstr ""
 "Choisir parmi les modes suivants :\n"
-"- #oPar défaut#0 : appuyer brièvement pour basculer, maintenir pour activer "
-"temporairement\n"
-"- #oMaintenir#0 : active les modules sélectionnées tant que la touche est "
-"enfoncée\n"
-"- #oBasculer#0 : alterne l'état des tenues sélectionnées entre activé et "
-"désactivé"
+"- #oPar défaut#0 : appui bref = basculer, appui long = maintenir\n"
+"- #oMaintenir#0 : module activé quand la touche est enfoncée\n"
+"- #oBasculer#0 : alterne entre l'état activé/désactivé"
 
-#, fuzzy
 msgid "Enable manual aiming mode"
-msgstr "Activer le mode de visée manuelle."
+msgstr "Activer le mode de visée manuelle"
 
 msgid "Enable volley mode (weapons fire jointly)"
 msgstr ""
@@ -141148,15 +141210,15 @@ msgstr "Gestion automatique des groupes d'armes"
 
 msgctxt "UI"
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 
 msgctxt "UI"
 msgid "Advanced"
-msgstr ""
+msgstr "Avancé"
 
 msgctxt "UI"
 msgid "Simple"
-msgstr ""
+msgstr "Simple"
 
 msgid "Primary"
 msgstr "Primaire"
@@ -141166,15 +141228,13 @@ msgstr "Secondaire"
 
 #, c-format
 msgid "Weapset %d - %s"
-msgstr ""
+msgstr "SetArmes %d - %s"
 
-#, fuzzy
 msgid "Clear All Weapon Sets?"
-msgstr "Groupe d'armes"
+msgstr "Effacer tous les set d'armes ?"
 
-#, fuzzy
 msgid "Are you sure you want to clear all your current weapon sets?"
-msgstr "Êtes-vous sûr de vouloir vendre votre vaisseau %s pour %s ?"
+msgstr "Êtes-vous sûr de vouloir effacer tous vos set d'armes ?"
 
 msgid "Enable autoweapons?"
 msgstr "Activer les armes automatiques ?"
@@ -141224,21 +141284,21 @@ msgid ""
 msgstr ""
 
 msgid "Abort Mission"
-msgstr ""
+msgstr "Abandonner la mission"
 
 msgid "Are you sure you want to abort this mission?"
-msgstr ""
+msgstr "Voulez-vous vraiment abandonner cette mission ?"
 
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
-msgstr ""
+msgstr "La cargaison '%d' n'appartient à aucune mission active."
 
 msgid "Jettison Cargo?"
-msgstr ""
+msgstr "Larguer la cargaison ?"
 
 #, c-format
 msgid "Jettison how many tonnes of %s?"
-msgstr ""
+msgstr "Combien de tonnes de %s voulez-vous larguer ?"
 
 #, fuzzy, c-format
 msgctxt "standings"
@@ -141260,21 +141320,19 @@ msgstr "#%c%s>#0 %s"
 #, c-format
 msgid "You can have a maximum reputation of %.0f%% with this faction."
 msgstr ""
+"Vous pouvez avoir un maximum de réputation de %.0f%% avec cette faction."
 
-#, fuzzy
 msgid "Ally Factions:"
-msgstr "Faction :"
+msgstr "Factions alliées :"
 
-#, fuzzy
 msgid "Enemy Factions:"
-msgstr "Faction :"
+msgstr "Factions ennemies :"
 
 msgid "Abort"
-msgstr ""
+msgstr "Abandonner"
 
-#, fuzzy
 msgid "Hide mission"
-msgstr "Offre des missions"
+msgstr "Masquer la mission"
 
 #, fuzzy
 msgid "Prioritize the mission"
@@ -141349,7 +141407,7 @@ msgid "Select log title:"
 msgstr "Selectionner le titre du journal :"
 
 msgid "Log entries:"
-msgstr "Entrées du journal"
+msgstr "Entrées du journal :"
 
 #, c-format
 msgid "Invalid info tab ID: %d"
