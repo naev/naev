@@ -224,6 +224,7 @@ pub struct Type {
    gfx: Vec<Arc<GfxType>>,
    debris_gfx: Option<Vec<Arc<GfxType>>>,
    material: Vec<Material>,
+   mass: f64,
    armour_min: f64,
    armour_max: f64,
    absorb: f64,
@@ -275,6 +276,7 @@ impl Type {
          knockback: 5000.0,
          exp_radius: 50.0,
          alert_range: 7000.0,
+         mass: 100.0,
          ..Default::default()
       };
       for node in root.children() {
@@ -292,6 +294,7 @@ impl Type {
             "penetration" => at.penetration = nxml::node_f64(node)?,
             "exp_radius" => at.exp_radius = nxml::node_f64(node)?,
             "alert_range" => at.alert_range = nxml::node_f64(node)?,
+            "mass" => at.mass = nxml::node_f64(node)?,
             "gfx" => {
                at.gfx.push(load_gfx(node, ctx)?);
             }
@@ -629,7 +632,7 @@ impl Asteroid {
             unsafe {
                naevc::solid_init(
                   solid.as_mut_ptr(),
-                  1.0, // TODO proper mass
+                  atype.mass,
                   theta,
                   pos.as_ptr() as *const naevc::vec2,
                   vel.as_ptr() as *const naevc::vec2,
