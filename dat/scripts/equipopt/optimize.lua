@@ -140,7 +140,8 @@ local goodness_special = {
 
 local GODMOTHER = ship.exists("Godmother")
 local function fighterbay_intrinsics( p )
-   if p:mothership():ship() == GODMOTHER and p:ship():tags().bay_bomber then
+   local m = p:mothership()
+   if m and m:ship() == GODMOTHER and p:ship():tags().bay_bomber then
       p:outfitAddIntrinsic("Godmother Optimization")
    end
 end
