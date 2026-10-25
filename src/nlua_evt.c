@@ -248,6 +248,9 @@ static int evtL_finish( lua_State *L )
    Event_t *cur_event = event_getFromLua( L );
    int      b         = lua_toboolean( L, 1 );
    lua_pushboolean( L, 1 );
+   if ( cur_event == NULL ) {
+      NLUA_ERROR( L, "evt.finish: cur_event is null!" );
+   }
    nlua_setenv( L, cur_event->env, "__evt_delete" );
    cur_event->delete = 1;
 
