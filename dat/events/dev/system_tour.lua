@@ -21,7 +21,9 @@ end
 
 function teleport()
    player.teleport( systems[idx], true )
-   pilot.clear()
+   if naev.claimTest( system.cur() ) then
+      pilot.clear()
+   end
    hook.safe("screenshot")
 end
 
