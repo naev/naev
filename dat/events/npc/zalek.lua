@@ -89,6 +89,7 @@ local msg_cond = {
    { npc.test_chapter0(), _([["It seems like they are looking for rare minerals in Ruadan. It is hard to get drones to mine things without blowing everything up."]]) },
    { npc.test_chapter0(), _([["The Za'lek Council is spending too many resources on the gigantic hyper-whatchamacallit in Ruadan. They should invest more in basic research like Hyperbolian Lie algebras!"]]) },
    { npc.test_neg( npc.test_chapter0() ), _([["Have you seen the hypergate at Ruadan? It is truly fascinating. Theoretically, it does not seem like it should work, but it does!"]]) },
+   {npc.test_misnDone("Dvaered Escape"), _([["John Danftang, the public relation manager at Goddard got arrested because he got his engineers to submit an article containing scientific falshoods. But a non-identified commando attacked his carceral convoy to set him free. Some say the Dvaered secret services are behind the evasion."]])},
 }
 
 -- Returns a lore message for the given faction.

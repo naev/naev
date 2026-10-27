@@ -14,8 +14,6 @@ fw.credits_02 = 500e3
 fw.credits_03 = 700e3
 fw.credits_04 = 700e3
 
-fw.pirate_price = 1e6
-
 fw.wlrd_planet = "Buritt"
 
 -- CHARACTERS --
@@ -68,7 +66,7 @@ fw.therus = {
    name = _("Caporal Therus"),
    colour = nil,
 }
--- Private Tronk: subordinate of Captain Hamfresser
+-- Private Amadeus Tronk: subordinate of Captain Hamfresser
 fw.tronk = {
    portrait = "dvaered/dv_military_m5",
    image = portrait.getFullPath("dvaered/dv_military_m5"),
@@ -79,7 +77,16 @@ fw.tronk = {
 fw.hamelsen = {
    portrait = "dvaered/dv_military_f5", -- TODO: portrait needed
    image = portrait.getFullPath("dvaered/dv_military_f5"),
-   name = _("Colones Hamelsen"),
+   name = _("Colonel Hamelsen"),
+   colour = nil,
+}
+-- The Trickster: a weird Imperial agent, leader of the Flying Circus
+-- other nicknames: 'the flying clown' and 'Captain Hew Hew'
+-- This character is planned to annoy the player during the whole Dvaered campaign
+fw.trickster = {
+   portrait = "pirate/pirate2", -- TODO: portrait needed
+   image = portrait.getFullPath("pirate/pirate2"),
+   name = _("The Trickster"),
    colour = nil,
 }
 

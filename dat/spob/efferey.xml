@@ -18,6 +18,7 @@
   <services>
    <land/>
    <refuel/>
+   <bar/>
    <missions/>
    <commodity/>
    <outfits/>
@@ -25,6 +26,7 @@
    <nolanes/>
   </services>
   <description>Effetey's Efferey station is the southern most port of the Tunnel in which allows refuelling, and serves to expand the Raven clans influence in the southern systems. Despite being quite far away, nearly all the pirate traffic from and to the Black Lotus clan has to come through the station, making for lively exchanges and interactions.</description>
+  <bar>Efferey's bar is a meeting place for low-life pirates who make a living raiding the Goddard-Dvaered trade route. They meet there all sorts of shady characters, retailers or informants who support their activity.</bar>
  </general>
  <tech>
   <item>Pirate Maps</item>

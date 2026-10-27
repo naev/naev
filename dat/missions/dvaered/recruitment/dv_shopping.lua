@@ -50,6 +50,7 @@ local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
 local lmisn    = require "lmisn"
+local fw       = require "common.frontier_war"
 local love_shaders = require "love_shaders"
 
 local DvFleet, noPirates
@@ -343,7 +344,8 @@ function veryBadThings()
    vn.clear()
    vn.scene()
    local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort), shader=love_shaders.hologram() } )
-   local trick = vn.newCharacter( _("???"), { image=portrait.getFullPath(trickPort), shader=love_shaders.hologram() } )
+   local trick = vn.newCharacter( fw.vn_char( fw.trickster, {shader=love_shaders.hologram()} ) )
+   trick:rename(_("???"))
    vn.transition("electric")
    vn.na(_([[You get hailed by a Hyena and a communication channel is opened between you, Colonel Okran and the Hyena in question.]]))
    trick(_([["Yo, Okran! How are you, mate? Enyoyin' your new toy? Hewhewhew!"]]))
@@ -410,7 +412,7 @@ function discussWithTrickster()
 
    vn.clear()
    vn.scene()
-   local trick = vn.newCharacter( _("The Trickster"), { image=portrait.getFullPath(trickPort) } )
+   local trick = vn.newCharacter( fw.vn_char( fw.trickster, {shader=love_shaders.hologram()} ) )
    vn.transition()
    trick(fmt.f(_([["Aye, {player}, how do you do?"]]), {player=player.name()}))
    vn.menu{
