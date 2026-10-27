@@ -51,11 +51,13 @@ jobs:
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled --wrap-mode=forcefallback
           meson dist -C build --no-tests --include-subprojects
 
-      - name: Upload Dist Artifact
-        uses: actions/upload-artifact@v3
+      # Handed over through the cache server every runner shares. Codeberg's
+      # artifact storage is throttled to a crawl.
+      - name: Save Dist
+        uses: actions/cache/save@v5
         with:
-          name: naev-dist-${{ github.sha }}
-          path: ${{ github.workspace }}/build/meson-dist/*
+          path: build/meson-dist
+          key: naev-dist-${{ github.run_id }}
 
   "Linux_Compile_Naev":
     needs: "Package_Source"
@@ -72,14 +74,16 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist-${{ github.sha }}
+          path: build/meson-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
+          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
 
       - name: Cache Cargo home
         uses: actions/cache@v5
@@ -197,14 +201,16 @@ jobs:
           /usr/bin/setup-devenv.sh
 
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist-${{ github.sha }}
+          path: build/meson-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
+          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
 
       - name: Cache Cargo home
         uses: actions/cache@v5
@@ -292,14 +298,16 @@ jobs:
           /usr/bin/setup-devenv.sh
 
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist-${{ github.sha }}
+          path: build/meson-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
+          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
 
       - name: Cache Cargo home
         uses: actions/cache@v5
@@ -375,14 +383,16 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist-${{ github.sha }}
+          path: build/meson-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
+          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
         run: |
