@@ -1810,9 +1810,8 @@ pub extern "C" fn asteroids_init() {
          let inner = get_inner_mut(ast);
 
          // Grab unique debris graphics
-         // TODO use other graphics that are currently unused, or 3D models if possible
-         let groups = unsafe { array::array_as_slice(ast.groups) };
          {
+            let groups = unsafe { array::array_as_slice(ast.groups) };
             let mut debris_gfx = DEBRIS_GFX.write().unwrap();
             for g in groups {
                let g = unsafe { &*(*g as *mut TypeGroup) };
@@ -1862,7 +1861,6 @@ pub extern "C" fn asteroids_init() {
          density_max = ast.density.max(density_max);
       }
 
-      // TODO set debris based density_max
       let (screen_w, screen_h) = {
          let dims = renderer::Context::get().dimensions.read().unwrap();
          (dims.view_width, dims.view_height)
