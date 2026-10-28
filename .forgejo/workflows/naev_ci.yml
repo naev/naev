@@ -90,7 +90,6 @@ jobs:
         with:
           path: |
             build/cargo-home
-            build/src
           key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
@@ -163,7 +162,6 @@ jobs:
         with:
           path: |
             appImageBuild/builddir/cargo-home
-            appImageBuild/builddir/src
           key: cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-
@@ -175,6 +173,11 @@ jobs:
         id: appimageCompile
         run: |
           ./source/utils/buildAppImage.sh -c -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
+
+      - name: Show sccache Stats
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
       - name: Upload AppImage Compile Log
         uses: actions/upload-artifact@v3
@@ -217,7 +220,6 @@ jobs:
         with:
           path: |
             build/cargo-home
-            build/src
           key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
@@ -254,6 +256,11 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+
+      - name: Show sccache Stats
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v3
@@ -314,7 +321,6 @@ jobs:
         with:
           path: |
             build/cargo-home
-            build/src
           key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ github.run_id }}
           restore-keys: |
             cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-
@@ -352,6 +358,11 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+
+      - name: Show sccache Stats
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v3
