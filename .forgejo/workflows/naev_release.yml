@@ -9,10 +9,12 @@ on:
 
 name: Release
 
-# Builds that ship to players compile from scratch. The runner's shared
-# sccache also takes writes from pull request builds.
+# The runner's own credentials only read the shared compile cache. Builds
+# from this repository write to it with a secret pull requests never get.
 env:
-  RUSTC_WRAPPER: ""
+  SCCACHE_REDIS_USERNAME: naev-trusted
+  SCCACHE_REDIS_PASSWORD: ${{ secrets.SCCACHE_TRUSTED_PASSWORD }}
+  SCCACHE_REDIS_RW_MODE: READ_WRITE
 
 jobs:
   "Package_Source":

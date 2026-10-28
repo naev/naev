@@ -11,6 +11,13 @@ on:
 
 name: CI
 
+# The runner's own credentials only read the shared compile cache. Builds
+# from this repository write to it with a secret pull requests never get.
+env:
+  SCCACHE_REDIS_USERNAME: naev-trusted
+  SCCACHE_REDIS_PASSWORD: ${{ secrets.SCCACHE_TRUSTED_PASSWORD }}
+  SCCACHE_REDIS_RW_MODE: READ_WRITE
+
 jobs:
   "Package_Source":
     runs-on: naev-release
