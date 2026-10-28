@@ -85,17 +85,14 @@ jobs:
           mkdir source
           tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
         with:
           path: |
-            build/cargo-home
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
-          restore-keys: |
-            cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-${{ matrix.image }}-
-            cargo-${{ matrix.image }}-
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Meson Setup
         id: setup
@@ -123,6 +120,18 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Meson Test (luacheck)
         id: luacheck
@@ -157,22 +166,29 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
         with:
           path: |
-            appImageBuild/builddir/cargo-home
-          key: cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
-          restore-keys: |
-            cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-appimage-${{ matrix.image }}-
-            cargo-appimage-${{ matrix.image }}-
+            appImageBuild/builddir/cargo-home/registry/index
+            appImageBuild/builddir/cargo-home/registry/cache
+            appImageBuild/builddir/cargo-home/git/db
+          key: cargo-registry-appimage-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Compile AppImage
         id: appimageCompile
         run: |
           ./source/utils/buildAppImage.sh -c -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
+
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            appImageBuild/builddir/cargo-home/registry/index
+            appImageBuild/builddir/cargo-home/registry/cache
+            appImageBuild/builddir/cargo-home/git/db
+          key: cargo-registry-appimage-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Show sccache Stats
         if: ${{ !cancelled() }}
@@ -215,17 +231,14 @@ jobs:
           mkdir source
           tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
         with:
           path: |
-            build/cargo-home
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
-          restore-keys: |
-            cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-${{ matrix.image }}-
-            cargo-${{ matrix.image }}-
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Meson Setup
         id: setup
@@ -256,6 +269,16 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Show sccache Stats
         if: ${{ !cancelled() }}
@@ -316,17 +339,14 @@ jobs:
           mkdir source
           tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
         with:
           path: |
-            build/cargo-home
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ github.run_id }}
-          restore-keys: |
-            cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-
-            cargo-${{ matrix.image }}-${{ matrix.arch }}-
-            cargo-v2-${{ matrix.image }}-
-            cargo-${{ matrix.image }}-
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.arch }}
 
       - name: Meson Setup
         id: setup
@@ -358,6 +378,16 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.arch }}
 
       - name: Show sccache Stats
         if: ${{ !cancelled() }}
