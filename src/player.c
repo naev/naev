@@ -1309,6 +1309,7 @@ void player_think( Pilot *pplayer, const double dt )
 
    /* turning taken over by PLAYER_FACE */
    if ( !facing && player_isFlag( PLAYER_FACE ) ) {
+      const Asteroid *ast;
       /* Try to face pilot target. */
       if ( player.p->target != PLAYER_ID ) {
          target = pilot_getTarget( player.p );
@@ -1322,8 +1323,8 @@ void player_think( Pilot *pplayer, const double dt )
          }
       }
       /* Try to face asteroid. */
-      else if ( const Asteroid *ast = ast_getField( player.p->nav_anchor,
-                                                    player.p->nav_asteroid ) ) {
+      else if ( ( ast = ast_getField( player.p->nav_anchor,
+                                      player.p->nav_asteroid ) ) != NULL ) {
          const Solid *s = ast_solid( ast );
          pilot_face( pplayer, vec2_angle( &player.p->solid.pos, &s->pos ), dt );
          /* Disable turning. */
