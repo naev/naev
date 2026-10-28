@@ -58,8 +58,8 @@ jobs:
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled --wrap-mode=forcefallback
           meson dist -C build --no-tests --include-subprojects
 
-      # Handed over through the cache server every runner shares. Codeberg's
-      # artifact storage is throttled to a crawl.
+      # Handed over through the cache server every runner shares, so the
+      # tarball stays on the runner's network.
       - name: Save Dist
         uses: actions/cache/save@v5
         with:
