@@ -312,6 +312,27 @@ standard `xgettext`, plus additional rules. (Rules for `AUTHORS` are in
 `meson compile naev-update-po`, but _don't do this_ without a good reason,
 because Weblate does the same job more carefully.
 
+### 6.4  Contributing without creating a fork
+
+Naev's repository is very large. Most contributors don't want, or cannot
+use a fork for submitting pull requests. Codeberg will typically disallow
+you to push anything to your fork after a month. This is why the dev team
+recommends, according to Codeberg's own recommendations, to use
+[Agit workflow](https://forgejo.org/docs/latest/user/git-cli/agit-support/).
+
+For example, [This PR](https://codeberg.org/naev/naev/pulls/3461) was
+created with the following command:
+
+``` bash
+git push origin spawnspawnspawn:refs/for/main/spawnMethod \
+  -o title="NPCs actually jump in or take off" \
+  -o description="Apparently the common spawn function was returning positions, not spobs or jumps." \
+  -o force-push="true"
+```
+
+where `spawnspawnspawn` is the name of the local branch the commit
+was done in.
+
 
 ## 7 -  Crashes and Problems
 
