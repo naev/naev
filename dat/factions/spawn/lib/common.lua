@@ -103,7 +103,7 @@ local function choose_point( fct, guerrilla )
    end
 
    candidates = rnd.permutation( candidates )
-   return candidates[1]:pos()
+   return candidates[1]
 end
 
 --[[--
