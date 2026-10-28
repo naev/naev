@@ -132,20 +132,14 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
         with:
           path: |
-            build/cargo-home
-            build/src
-          key: cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
-          restore-keys: |
-            cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-prerelease-${{ matrix.image }}-
-            cargo-v2-${{ matrix.image }}-
-            cargo-${{ matrix.image }}-
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Meson Setup
         run: |
@@ -164,6 +158,21 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
+
+      - name: Show sccache Stats
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
       - name: Upload Cargo Lock Artifact
         uses: actions/upload-artifact@v3
@@ -247,20 +256,14 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
         with:
           path: |
-            build/cargo-home
-            build/src
-          key: cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-${{ github.run_id }}
-          restore-keys: |
-            cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-${{ matrix.image }}-${{ matrix.target }}-
-            cargo-v2-prerelease-${{ matrix.image }}-
-            cargo-v2-${{ matrix.image }}-
-            cargo-${{ matrix.image }}-
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Meson Setup
         # We disable b_lto here because it messes with backtraces on windows
@@ -283,6 +286,21 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
+
+      - name: Show sccache Stats
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
       - name: Meson Install
         run: |
@@ -337,20 +355,14 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Cache Cargo home
-        uses: actions/cache@v5
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
         with:
           path: |
-            build/cargo-home
-            build/src
-          key: cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.arch }}-${{ github.run_id }}
-          restore-keys: |
-            cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.arch }}-
-            cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-
-            cargo-${{ matrix.image }}-${{ matrix.arch }}-
-            cargo-v2-prerelease-${{ matrix.image }}-
-            cargo-v2-${{ matrix.image }}-
-            cargo-${{ matrix.image }}-
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.arch }}
 
       - name: Meson Setup
         run: |
@@ -372,6 +384,21 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.arch }}
+
+      - name: Show sccache Stats
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
       - name: Meson Install
         run: |
