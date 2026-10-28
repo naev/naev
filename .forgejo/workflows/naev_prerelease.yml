@@ -66,47 +66,66 @@ jobs:
           cp source/Changelog.md build/dist
           cp source/dat/VERSION build/dist
 
-      - name: Upload Source Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-dist
-          path: ${{ github.workspace }}/build/dist/source.tar.xz
-          if-no-files-found: error
+      # Build outputs pass between jobs through the cache server every
+      # runner shares, laid out the way an artifact download placed them.
+      - name: Stage naev-dist
+        run: |
+          mkdir -p "handoff/naev-dist"
+          cp -r "build/dist/source.tar.xz" "handoff/naev-dist/"
 
-      - name: Upload Changelog Artifact
-        uses: actions/upload-artifact@v3
+      - name: Save naev-dist
+        uses: actions/cache/save@v5
         with:
-          name: naev-changelog
-          path: ${{ github.workspace }}/build/dist/Changelog.md
-          if-no-files-found: error
-      - name: Upload Version Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-version
-          path: ${{ github.workspace }}/build/dist/VERSION
-          if-no-files-found: error
+          path: handoff/naev-dist
+          key: naev-dist-${{ github.run_id }}
 
-      - name: Upload Packaging Assets
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-packaging-assets
-          path: |
-            ${{ github.workspace }}/build/dist/buildUniversalBundle.sh
-            ${{ github.workspace }}/build/dist/dmg_assets
-            ${{ github.workspace }}/build/dist/entitlements.plist
-          if-no-files-found: error
-          include-hidden-files: true
+      - name: Stage naev-changelog
+        run: |
+          mkdir -p "handoff/naev-changelog"
+          cp -r "build/dist/Changelog.md" "handoff/naev-changelog/"
 
-      - name: Upload Deployment Assets
-        uses: actions/upload-artifact@v3
+      - name: Save naev-changelog
+        uses: actions/cache/save@v5
         with:
-          name: naev-deployment-assets
-          path: |
-            ${{ github.workspace }}/build/dist/berg
-            ${{ github.workspace }}/build/dist/steam
-            ${{ github.workspace }}/build/dist/itch
-          if-no-files-found: error
-          include-hidden-files: true
+          path: handoff/naev-changelog
+          key: naev-changelog-${{ github.run_id }}
+
+      - name: Stage naev-version
+        run: |
+          mkdir -p "handoff/naev-version"
+          cp -r "build/dist/VERSION" "handoff/naev-version/"
+
+      - name: Save naev-version
+        uses: actions/cache/save@v5
+        with:
+          path: handoff/naev-version
+          key: naev-version-${{ github.run_id }}
+
+      - name: Stage naev-packaging-assets
+        run: |
+          mkdir -p "handoff/naev-packaging-assets"
+          cp -r "build/dist/buildUniversalBundle.sh" "handoff/naev-packaging-assets/"
+          cp -r "build/dist/dmg_assets" "handoff/naev-packaging-assets/"
+          cp -r "build/dist/entitlements.plist" "handoff/naev-packaging-assets/"
+
+      - name: Save naev-packaging-assets
+        uses: actions/cache/save@v5
+        with:
+          path: handoff/naev-packaging-assets
+          key: naev-packaging-assets-${{ github.run_id }}
+
+      - name: Stage naev-deployment-assets
+        run: |
+          mkdir -p "handoff/naev-deployment-assets"
+          cp -r "build/dist/berg" "handoff/naev-deployment-assets/"
+          cp -r "build/dist/steam" "handoff/naev-deployment-assets/"
+          cp -r "build/dist/itch" "handoff/naev-deployment-assets/"
+
+      - name: Save naev-deployment-assets
+        uses: actions/cache/save@v5
+        with:
+          path: handoff/naev-deployment-assets
+          key: naev-deployment-assets-${{ github.run_id }}
 
   "Linux_Naev_Release":
     needs: "Package_Source"
@@ -123,9 +142,15 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist
+          path: handoff/naev-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-dist
+        run: |
+          cp -r "handoff/naev-dist/." "./"
 
       - name: Extract Source
         run: |
@@ -204,30 +229,49 @@ jobs:
 
           tar -cJf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
 
-      - name: Upload Naev Binary Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-steamruntime
-          path: ${{ github.workspace }}/build/dist/naev.x64
+      - name: Stage naev-steamruntime
+        run: |
+          mkdir -p "handoff/naev-steamruntime"
+          cp -r "build/dist/naev.x64" "handoff/naev-steamruntime/"
 
-      - name: Upload Naev Data Artifact
-        uses: actions/upload-artifact@v3
+      - name: Save naev-steamruntime
+        uses: actions/cache/save@v5
         with:
-          name: naev-ndata
-          path: ${{ github.workspace }}/build/dist/naev-ndata.tar.xz
+          path: handoff/naev-steamruntime
+          key: naev-steamruntime-${{ github.run_id }}
 
-      - name: Upload Steam Runtime Libraries Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-linux-libs
-          path: ${{ github.workspace }}/build/libs/
-          if-no-files-found: error
+      - name: Stage naev-ndata
+        run: |
+          mkdir -p "handoff/naev-ndata"
+          cp -r "build/dist/naev-ndata.tar.xz" "handoff/naev-ndata/"
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Save naev-ndata
+        uses: actions/cache/save@v5
         with:
-          name: naev-linux-x86-64
-          path: "${{ github.workspace }}/appimage/dist/*"
+          path: handoff/naev-ndata
+          key: naev-ndata-${{ github.run_id }}
+
+      - name: Stage naev-linux-libs
+        run: |
+          mkdir -p "handoff/naev-linux-libs"
+          cp -r "build/libs/". "handoff/naev-linux-libs/"
+
+      - name: Save naev-linux-libs
+        uses: actions/cache/save@v5
+        with:
+          path: handoff/naev-linux-libs
+          key: naev-linux-libs-${{ github.run_id }}
+
+      - name: Stage naev-linux-x86-64
+        run: |
+          mkdir -p "handoff/naev-linux-x86-64"
+          cp -r appimage/dist/* "handoff/naev-linux-x86-64/"
+
+      - name: Save naev-linux-x86-64
+        uses: actions/cache/save@v5
+        with:
+          path: handoff/naev-linux-x86-64
+          key: naev-linux-x86-64-${{ github.run_id }}
 
   "Windows_Naev_Release":
     needs: "Package_Source"
@@ -247,9 +291,15 @@ jobs:
           /usr/bin/setup-devenv.sh
 
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist
+          path: handoff/naev-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-dist
+        run: |
+          cp -r "handoff/naev-dist/." "./"
 
       - name: Extract Source
         run: |
@@ -306,19 +356,27 @@ jobs:
         run: |
           meson install -C build
 
-      - name: Upload Windows Installer Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-win64-installer
-          path: ${{ github.workspace }}/build/dist/naev-installer.exe
-          if-no-files-found: error
+      - name: Stage naev-win64-installer
+        run: |
+          mkdir -p "handoff/naev-win64-installer"
+          cp -r "build/dist/naev-installer.exe" "handoff/naev-win64-installer/"
 
-      - name: Upload Windows Tarball Artifact
-        uses: actions/upload-artifact@v3
+      - name: Save naev-win64-installer
+        uses: actions/cache/save@v5
         with:
-          name: naev-win64-tarball
-          path: ${{ github.workspace }}/build/dist/naev-windows.tar.xz
-          if-no-files-found: error
+          path: handoff/naev-win64-installer
+          key: naev-win64-installer-${{ github.run_id }}
+
+      - name: Stage naev-win64-tarball
+        run: |
+          mkdir -p "handoff/naev-win64-tarball"
+          cp -r "build/dist/naev-windows.tar.xz" "handoff/naev-win64-tarball/"
+
+      - name: Save naev-win64-tarball
+        uses: actions/cache/save@v5
+        with:
+          path: handoff/naev-win64-tarball
+          key: naev-win64-tarball-${{ github.run_id }}
 
   "Darwin_Compile_Naev":
     needs: "Package_Source"
@@ -346,9 +404,15 @@ jobs:
           /usr/bin/setup-devenv.sh
 
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist
+          path: handoff/naev-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-dist
+        run: |
+          cp -r "handoff/naev-dist/." "./"
 
       - name: Extract Source
         run: |
@@ -410,12 +474,16 @@ jobs:
         run: |
           mv build/dist/naev-macos.zip build/dist/naev-macos-${{ matrix.arch }}.zip
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+      - name: Stage naev-macos-${{ matrix.arch }}
+        run: |
+          mkdir -p "handoff/naev-macos-${{ matrix.arch }}"
+          cp -r "build/dist/naev-macos-${{ matrix.arch }}.zip" "handoff/naev-macos-${{ matrix.arch }}/"
+
+      - name: Save naev-macos-${{ matrix.arch }}
+        uses: actions/cache/save@v5
         with:
-          name: naev-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/build/dist/naev-macos-${{ matrix.arch }}.zip
-          if-no-files-found: error
+          path: handoff/naev-macos-${{ matrix.arch }}
+          key: naev-macos-${{ matrix.arch }}-${{ github.run_id }}
 
   "Darwin_Package_Release":
     needs:
@@ -427,20 +495,38 @@ jobs:
 
     steps:
       - name: Get Universal Bundle Packaging Script
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-packaging-assets
-          path: packaging
+          path: handoff/naev-packaging-assets
+          key: naev-packaging-assets-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-packaging-assets
+        run: |
+          mkdir -p "packaging"
+          cp -r "handoff/naev-packaging-assets/." "packaging/"
 
       - name: Get x86_64 macOS Bundle
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-macos-x86_64
+          path: handoff/naev-macos-x86_64
+          key: naev-macos-x86_64-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-macos-x86_64
+        run: |
+          cp -r "handoff/naev-macos-x86_64/." "./"
 
       - name: Get ARM64 macOS Bundle
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-macos-aarch64
+          path: handoff/naev-macos-aarch64
+          key: naev-macos-aarch64-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-macos-aarch64
+        run: |
+          cp -r "handoff/naev-macos-aarch64/." "./"
 
       - name: Package Universal Bundle
         run: |
@@ -450,11 +536,16 @@ jobs:
               unzip naev-macos-x86_64.zip -d x86_64
               ./packaging/buildUniversalBundle.sh -d -i ./packaging/dmg_assets -e ./packaging/entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Stage naev-macos
+        run: |
+          mkdir -p "handoff/naev-macos"
+          cp -r build/dist/* "handoff/naev-macos/"
+
+      - name: Save naev-macos
+        uses: actions/cache/save@v5
         with:
-          name: naev-macos
-          path: "${{ github.workspace }}/build/dist/*"
+          path: handoff/naev-macos
+          key: naev-macos-${{ github.run_id }}
 
   "Upload_Naev_Release":
     strategy:
@@ -477,78 +568,152 @@ jobs:
 
     steps:
       - name: Download Deployment Assets
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-deployment-assets
-          path: ${{ github.workspace }}/build/staging/naev-deployment-assets
+          path: handoff/naev-deployment-assets
+          key: naev-deployment-assets-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-deployment-assets
+        run: |
+          mkdir -p "build/staging/naev-deployment-assets"
+          cp -r "handoff/naev-deployment-assets/." "build/staging/naev-deployment-assets/"
 
       - name: Download Version
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-version
-          path: ${{ github.workspace }}/build/staging/naev-version
+          path: handoff/naev-version
+          key: naev-version-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-version
+        run: |
+          mkdir -p "build/staging/naev-version"
+          cp -r "handoff/naev-version/." "build/staging/naev-version/"
 
       - name: Download Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-changelog
-          path: ${{ github.workspace }}/build/staging/naev-changelog
+          path: handoff/naev-changelog
+          key: naev-changelog-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-changelog
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        run: |
+          mkdir -p "build/staging/naev-changelog"
+          cp -r "handoff/naev-changelog/." "build/staging/naev-changelog/"
 
       - name: Download Source Tarball (codeberg)
         if: ${{ matrix.releasetype == 'codeberg' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-dist
-          path: ${{ github.workspace }}/build/staging/naev-dist
+          path: handoff/naev-dist
+          key: naev-dist-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-dist
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        run: |
+          mkdir -p "build/staging/naev-dist"
+          cp -r "handoff/naev-dist/." "build/staging/naev-dist/"
 
       - name: Download Linux Package (codeberg/itch)
         if: ${{ matrix.releasetype == 'codeberg' || matrix.releasetype == 'itch' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-linux-x86-64
-          path: ${{ github.workspace }}/build/staging/naev-linux-x86-64
+          path: handoff/naev-linux-x86-64
+          key: naev-linux-x86-64-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-linux-x86-64
+        if: ${{ matrix.releasetype == 'codeberg' || matrix.releasetype == 'itch' }}
+        run: |
+          mkdir -p "build/staging/naev-linux-x86-64"
+          cp -r "handoff/naev-linux-x86-64/." "build/staging/naev-linux-x86-64/"
 
       - name: Download Windows Installer (codeberg)
         if: ${{ matrix.releasetype == 'codeberg' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-win64-installer
-          path: ${{ github.workspace }}/build/staging/naev-win64
+          path: handoff/naev-win64-installer
+          key: naev-win64-installer-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-win64-installer
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        run: |
+          mkdir -p "build/staging/naev-win64"
+          cp -r "handoff/naev-win64-installer/." "build/staging/naev-win64/"
 
       - name: Download Windows Tarball (itch/steam)
         if: ${{ matrix.releasetype == 'itch' || matrix.releasetype == 'steam' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-win64-tarball
-          path: ${{ github.workspace }}/build/staging/naev-win64
+          path: handoff/naev-win64-tarball
+          key: naev-win64-tarball-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-win64-tarball
+        if: ${{ matrix.releasetype == 'itch' || matrix.releasetype == 'steam' }}
+        run: |
+          mkdir -p "build/staging/naev-win64"
+          cp -r "handoff/naev-win64-tarball/." "build/staging/naev-win64/"
 
       - name: Download macOS Package (codeberg/itch/steam)
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-macos
-          path: ${{ github.workspace }}/build/staging/naev-macos
+          path: handoff/naev-macos
+          key: naev-macos-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-macos
+        run: |
+          mkdir -p "build/staging/naev-macos"
+          cp -r "handoff/naev-macos/." "build/staging/naev-macos/"
 
       - name: Download NDATA (itch/steam)
         if: ${{ matrix.releasetype == 'itch' || matrix.releasetype == 'steam' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-ndata
-          path: ${{ github.workspace }}/build/staging/naev-ndata
+          path: handoff/naev-ndata
+          key: naev-ndata-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-ndata
+        if: ${{ matrix.releasetype == 'itch' || matrix.releasetype == 'steam' }}
+        run: |
+          mkdir -p "build/staging/naev-ndata"
+          cp -r "handoff/naev-ndata/." "build/staging/naev-ndata/"
 
       - name: Download Steam Runtime Binary (steam)
         if: ${{ matrix.releasetype == 'steam' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-steamruntime
-          path: ${{ github.workspace }}/build/staging/naev-steamruntime
+          path: handoff/naev-steamruntime
+          key: naev-steamruntime-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-steamruntime
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          mkdir -p "build/staging/naev-steamruntime"
+          cp -r "handoff/naev-steamruntime/." "build/staging/naev-steamruntime/"
 
       - name: Download Steam Runtime Libraries (steam)
         if: ${{ matrix.releasetype == 'steam' }}
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v5
         with:
-          name: naev-linux-libs
-          path: ${{ github.workspace }}/build/staging/naev-linux-libs
+          path: handoff/naev-linux-libs
+          key: naev-linux-libs-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Place naev-linux-libs
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          mkdir -p "build/staging/naev-linux-libs"
+          cp -r "handoff/naev-linux-libs/." "build/staging/naev-linux-libs/"
 
       - name: Force Codeberg over SSH
         run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
