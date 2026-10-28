@@ -427,13 +427,14 @@ static void gui_renderSpobTarget( void )
       const AsteroidAnchor *field =
          &cur_system->asteroids[player.p->nav_anchor];
       const Asteroid *ast = ast_get( field, player.p->nav_asteroid );
-      c                   = &cWhite;
-
-      const Solid *s = ast_solid( ast );
-      x              = s->pos.x;
-      y              = s->pos.y;
-      r              = ast_gfx_width( ast ) * 0.5;
-      gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
+      if ( ast != NULL ) {
+         c              = &cWhite;
+         const Solid *s = ast_solid( ast );
+         x              = s->pos.x;
+         y              = s->pos.y;
+         r              = ast_gfx_width( ast ) * 0.5;
+         gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
+      }
    }
 }
 
@@ -883,6 +884,7 @@ void gui_radarRender( double x, double y )
          asteroid_collideQueryIL( ast, ax - r, ay - r, ax + r, ay + r );
       for ( int j = 0; j < array_size( hits ); j++ ) {
          const Asteroid *a = ast_get( ast, hits[j] );
+         // No need to check if NULL, should be guaranteed
          gui_renderAsteroid( a, radar->w, radar->h, radar->res, render_limit,
                              0 );
       }

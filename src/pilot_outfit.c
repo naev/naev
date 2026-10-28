@@ -80,9 +80,13 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
          } else if ( wt->type == TARGET_ASTEROID ) {
             const Asteroid *ast = ast_get(
                &cur_system->asteroids[wt->u.ast.anchor], wt->u.ast.asteroid );
-            const Solid *s = ast_solid( ast );
-            x              = s->pos.x - p->solid.pos.x;
-            y              = s->pos.y - p->solid.pos.y;
+            if ( ast == NULL ) {
+               x = y = 0.;
+            } else {
+               const Solid *s = ast_solid( ast );
+               x              = s->pos.x - p->solid.pos.x;
+               y              = s->pos.y - p->solid.pos.y;
+            }
          } else {
             x = y = 0.;
          }

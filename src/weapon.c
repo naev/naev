@@ -539,7 +539,7 @@ static void think_beam( Weapon *w, double dt )
       const AsteroidAnchor *field =
          &cur_system->asteroids[w->target.u.ast.anchor];
       const Asteroid *ast = ast_get( field, w->target.u.ast.asteroid );
-      if ( ast_state( ast ) == ASTEROID_FG )
+      if ( ( ast != NULL ) && ast_state( ast ) == ASTEROID_FG )
          tpos = &ast_solid( ast )->pos;
    } break;
    case TARGET_WEAPON: {
@@ -1291,7 +1291,7 @@ static void weapon_updateCollide( Weapon *w, double dt )
             int             coll;
             WeaponHit       hit;
 
-            if ( ast_state( a ) != ASTEROID_FG )
+            if ( ( ast == NULL ) || ast_state( a ) != ASTEROID_FG )
                continue;
 
             CollPolyView *rpoly = ast_poly( a );
@@ -1605,7 +1605,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
             const Asteroid *a = ast_get( ast, hits[j] );
             vec2            crash[2];
             int             coll;
-            if ( ast_state( a ) != ASTEROID_FG )
+            if ( ( ast == NULL ) || ast_state( a ) != ASTEROID_FG )
                continue;
 
             const Solid  *s     = ast_solid( a );
@@ -2012,8 +2012,10 @@ int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target,
          const AsteroidAnchor *field =
             &cur_system->asteroids[target->u.ast.anchor];
          const Asteroid *ast = ast_get( field, target->u.ast.asteroid );
-         const Solid    *sol = ast_solid( ast );
-         target_pos          = &sol->pos;
+         if ( ast == NULL )
+            return 0;
+         const Solid *sol = ast_solid( ast );
+         target_pos       = &sol->pos;
       } break;
 
       case TARGET_WEAPON: {
@@ -2069,9 +2071,11 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
       const AsteroidAnchor *field =
          &cur_system->asteroids[target->u.ast.anchor];
       const Asteroid *ast = ast_get( field, target->u.ast.asteroid );
-      const Solid    *sol = ast_solid( ast );
-      target_pos          = &sol->pos;
-      target_vel          = &sol->vel;
+      if ( ast == NULL )
+         return 0.0;
+      const Solid *sol = ast_solid( ast );
+      target_pos       = &sol->pos;
+      target_vel       = &sol->vel;
    } break;
 
    case TARGET_WEAPON: {
@@ -2524,7 +2528,8 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
          case TARGET_ASTEROID:
             field = &cur_system->asteroids[w->target.u.ast.anchor];
             ast   = ast_get( field, w->target.u.ast.asteroid );
-            rdir  = vec2_angle( pos, &ast_solid( ast )->pos );
+            if ( ast != NULL )
+               rdir = vec2_angle( pos, &ast_solid( ast )->pos );
             break;
 
          case TARGET_WEAPON:
@@ -2647,7 +2652,9 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t )
    case TARGET_ASTEROID: {
       const AsteroidAnchor *field = &cur_system->asteroids[t->u.ast.anchor];
       const Asteroid       *ast   = ast_get( field, t->u.ast.asteroid );
-      const Solid          *sol   = ast_solid( ast );
+      if ( ast == NULL )
+         return -1.;
+      const Solid *sol = ast_solid( ast );
       return pilot_weapFlyTime( o, p, &sol->pos, &sol->vel );
    } break;
    }

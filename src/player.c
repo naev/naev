@@ -1322,11 +1322,9 @@ void player_think( Pilot *pplayer, const double dt )
          }
       }
       /* Try to face asteroid. */
-      else if ( player.p->nav_asteroid != ASTEROID_NULL ) {
-         const AsteroidAnchor *field =
-            &cur_system->asteroids[player.p->nav_anchor];
-         const Asteroid *ast = ast_get( field, player.p->nav_asteroid );
-         const Solid    *s   = ast_solid( ast );
+      else if ( const Asteroid *ast = ast_getField( player.p->nav_anchor,
+                                                    player.p->nav_asteroid ) ) {
+         const Solid *s = ast_solid( ast );
          pilot_face( pplayer, vec2_angle( &player.p->solid.pos, &s->pos ), dt );
          /* Disable turning. */
          facing = 1;
@@ -1487,6 +1485,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          for ( int j = 0; j < array_size( hits ); j++ ) {
             HookParam       hparam[2];
             const Asteroid *a = ast_get( ast, hits[j] );
+            // No need to check for NULL coming from a collideQuery
 
             if ( ast_scanned( a ) )
                continue;

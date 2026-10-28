@@ -1951,6 +1951,21 @@ pub extern "C" fn ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const 
 }
 
 #[unsafe(no_mangle)]
+pub extern "C" fn ast_getField(field: i32, id: i64) -> *const Asteroid {
+   if let Some(cur_system) = crate::system::cur()
+      && let Some(field) = cur_system.asteroids().get(field as usize)
+   {
+      let inner = get_inner(field);
+      match inner.asteroids.get(AsteroidRef::from_ffi(id)) {
+         Some(ast) => ast,
+         None => std::ptr::null(),
+      }
+   } else {
+      std::ptr::null()
+   }
+}
+
+#[unsafe(no_mangle)]
 pub extern "C" fn ast_id(ast: *const Asteroid) -> i64 {
    let ast = unsafe { &*ast };
    ast.id.as_ffi()

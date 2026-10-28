@@ -100,6 +100,7 @@ const char         *astgroup_name( const AsteroidTypeGroup *ast );
 
 /* Getters. */
 const Asteroid *ast_get( const AsteroidAnchor *anc, AsteroidRef id );
+const Asteroid *ast_getField( int field, AsteroidRef id );
 AsteroidRef     ast_id( const Asteroid *ast );
 int             ast_parent( const Asteroid *ast );
 AsteroidState   ast_state( const Asteroid *ast );
