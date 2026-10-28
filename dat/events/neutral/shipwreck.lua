@@ -96,7 +96,7 @@ function rescue ()
 end
 
 function destroyevent( _p, killer )
-   if killer:faction() == player.pilot():faction() then
+   if killer and killer:faction() == player.pilot():faction() then
       evt.finish(true)
    end
    evt.finish()
