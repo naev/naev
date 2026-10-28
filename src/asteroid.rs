@@ -2063,7 +2063,8 @@ pub extern "C" fn asteroid_closestPilot(
       .asteroids
       .iter()
       .filter_map(|(k, a)| {
-         // TODO
+         // TODO is this check really necessary? It doesn't seem like they have different stats for
+         // visibility, so nearest should work.
          //if ( !pilot_inRangeAsteroid( player.p, k, as->parent ) )
          //continue;
          if a.state == State::Fg {
