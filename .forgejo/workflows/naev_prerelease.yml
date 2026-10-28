@@ -8,13 +8,6 @@ on:
 
 name: Pre-Release
 
-# The runner's own credentials only read the shared compile cache. Builds
-# from this repository write to it with a secret pull requests never get.
-env:
-  SCCACHE_REDIS_USERNAME: naev-trusted
-  SCCACHE_REDIS_PASSWORD: ${{ secrets.SCCACHE_TRUSTED_PASSWORD }}
-  SCCACHE_REDIS_RW_MODE: READ_WRITE
-
 jobs:
   "Package_Source":
     runs-on: naev-release
@@ -141,6 +134,14 @@ jobs:
     runs-on: ${{ matrix.image }}
 
     steps:
+      # The runner's read-only cache credentials override any workflow or job
+      # env, but not values a step writes to GITHUB_ENV.
+      - name: Use the Trusted Compile Cache
+        run: |
+          echo "SCCACHE_REDIS_USERNAME=naev-trusted" >> "$GITHUB_ENV"
+          echo "SCCACHE_REDIS_PASSWORD=${{ secrets.SCCACHE_TRUSTED_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "SCCACHE_REDIS_RW_MODE=READ_WRITE" >> "$GITHUB_ENV"
+
       - name: Get Source
         uses: actions/cache/restore@v5
         with:
@@ -286,6 +287,14 @@ jobs:
 
     runs-on: ${{ matrix.image }}
     steps:
+      # The runner's read-only cache credentials override any workflow or job
+      # env, but not values a step writes to GITHUB_ENV.
+      - name: Use the Trusted Compile Cache
+        run: |
+          echo "SCCACHE_REDIS_USERNAME=naev-trusted" >> "$GITHUB_ENV"
+          echo "SCCACHE_REDIS_PASSWORD=${{ secrets.SCCACHE_TRUSTED_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "SCCACHE_REDIS_RW_MODE=READ_WRITE" >> "$GITHUB_ENV"
+
       - name: Configure Build Environment
         run: |
           /usr/bin/setup-devenv.sh
@@ -399,6 +408,14 @@ jobs:
       BUILDARCH: "${{ matrix.arch }}"
 
     steps:
+      # The runner's read-only cache credentials override any workflow or job
+      # env, but not values a step writes to GITHUB_ENV.
+      - name: Use the Trusted Compile Cache
+        run: |
+          echo "SCCACHE_REDIS_USERNAME=naev-trusted" >> "$GITHUB_ENV"
+          echo "SCCACHE_REDIS_PASSWORD=${{ secrets.SCCACHE_TRUSTED_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "SCCACHE_REDIS_RW_MODE=READ_WRITE" >> "$GITHUB_ENV"
+
       - name: Configure Build Environment
         run: |
           /usr/bin/setup-devenv.sh
