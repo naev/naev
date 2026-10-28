@@ -5,6 +5,11 @@ on:
 
 name: Nightly Release
 
+# Builds that ship to players compile from scratch. The runner's shared
+# sccache also takes writes from pull request builds.
+env:
+  RUSTC_WRAPPER: ""
+
 jobs:
   "Nightly_Skip_Check":
     runs-on: naev-release

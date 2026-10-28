@@ -8,6 +8,11 @@ on:
 
 name: Pre-Release
 
+# Builds that ship to players compile from scratch. The runner's shared
+# sccache also takes writes from pull request builds.
+env:
+  RUSTC_WRAPPER: ""
+
 jobs:
   "Package_Source":
     runs-on: naev-release
