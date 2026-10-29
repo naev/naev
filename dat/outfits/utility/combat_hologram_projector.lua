@@ -25,6 +25,7 @@ local function turnon( p, po )
    np:setHealth( p:health() ) -- Copy health
    np:setNoDisable( true )
    np:setNoDeath( true ) -- Doesn't die
+   np:setNoClear( false )
    -- Copy outfits
    np:outfitRm("all")
    for k,v in ipairs(p:outfitsList()) do

@@ -112,7 +112,9 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
    // pilot_setFlagRaw( f, PILOT_NOJUMP );
    if ( p->faction == FACTION_PLAYER ) {
       pilot_setFlagRaw( f, PILOT_PERSIST );
-      pilot_setFlagRaw( f, PILOT_NOCLEAR );
+      // We'll only inherit if the parent is the player or is also noclear
+      if ( pilot_isPlayer( p ) || pilot_isFlag( p, PILOT_NOCLEAR ) )
+         pilot_setFlagRaw( f, PILOT_NOCLEAR );
    }
    if ( type == ESCORT_TYPE_BAY )
       pilot_setFlagRaw( f, PILOT_CARRIED );
