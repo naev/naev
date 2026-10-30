@@ -56,7 +56,6 @@ local love_shaders = require "love_shaders"
 local DvFleet, noPirates
 
 local agentPort = "dvaered/dv_military_m2"
-local trickPort = "pirate/pirate2"
 local solPort = portrait.getMil("Dvaered")
 
 function create()

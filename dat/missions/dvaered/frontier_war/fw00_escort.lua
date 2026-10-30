@@ -45,7 +45,7 @@ local destpla3, destsys3 = spob.getS("Laarss")
 local fleepla, fleesys = spob.getS("Odonga m1")
 
 local ambush, hamelsen, majorTam, p, quickie, savers, warlord -- Non-persistent state
-local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed -- Forward-declared functions
+local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed, VNproceed2land -- Forward-declared functions
 
 function create()
    -- The mission should not appear just after the FLF destruction
@@ -75,7 +75,7 @@ function accept()
    tamVN:rename(_("Dvaered officer"))
    local doaccept = false
    vn.transition()
-   
+
    tamVN(fmt.f(_([["Hello, citizen {player}. I was looking for you."]]), {player=player.name()}))
    vn.menu{
       {_([["Nice to meet you, citizen…"]]), "askname"},
@@ -97,7 +97,7 @@ function accept()
       {_("I accept."), "accept"},
       {_("No."), "dontcare"},
    }
-   
+
    vn.label("accept")
    tamVN(fmt.f(_([["I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems {sys1}, {sys2} and {sys3}. I need you to stick to my Vendetta and engage any hostile who might try to intercept me."]]), {sys1=destsys1, sys2=destsys2, sys3=destsys3}))
    vn.func( function () doaccept = true end )
@@ -201,7 +201,7 @@ function explain_battle()
    vn.scene()
    local tamVN = vn.newCharacter( fw.vn_char( fw.tam, { shader=love_shaders.hologram() } ) )
    vn.transition()
-   
+
    vn.na(_("Major Tam opens a communication channel with you."))
    tamVN(fmt.f(_([["That was close but we should be safe now. Lord Battleaddict's troops won't follow us if we head to {pnt} at once as the planet belongs to his deadliest enemy, Lady Pointblank."]]), {pnt=fleepla}))
    vn.menu{
@@ -210,7 +210,7 @@ function explain_battle()
       {help, "help"},
       {leave, "leave"},
    }
-   
+
    vn.label("explain")
    tamVN(_([["Don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just… hem… a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."]]))
    vn.menu{
@@ -218,17 +218,17 @@ function explain_battle()
       {help, "help"},
       {leave, "leave"},
    }
-   
+
    vn.label("violence")
-   tamVN(_([["Oh no, I am afraid this is not possible, citizen. Killing a warlord is a crime, no matter what are the circumstances… I mean for non-warlords or generals that is. Besides, I am pretty sure we don't have the material ressources to kill Battleaddict and survive after that."]]))
+   tamVN(_([["Oh no, I am afraid this is not possible, citizen. Killing a warlord is a crime, no matter what are the circumstances… I mean for non-warlords or generals that is. Besides, I am pretty sure we don't have the material resources to kill Battleaddict and survive after that."]]))
    vn.menu{
       {help, "help"},
       {leave, "leave"},
    }
-   
+
    vn.label("help")
    tamVN(_([["Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]]))
-   
+
    vn.label("leave")
    vn.done()
    vn.run()
@@ -327,24 +327,24 @@ function land() -- The player is only allowed to land on special occasions
    elseif mem.stage == 8 then
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.append( "dvaered_military", _("Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.") )
-      
+
       vn.clear()
       vn.scene()
       local tamVN = vn.newCharacter( fw.vn_char( fw.tam ) )
       vn.transition()
-      
+
       vn.na(_("As you land, Major Tam greets you at the spaceport."))
-      
+
       tamVN(_([[After the losses they suffered today, I doubt those mercenaries will come after me again anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I no longer need an escort. Oh, and, err… about the payment, I am afraid there is a little setback…]]))
       vn.menu{
          {_("Are you going to try to stiff me on the payment?"), "stiff"},
          {_("…"), "leave"},
       }
-      
+
       vn.label("stiff")
       tamVN(_([[Oh no, don't worry, you will get paid. I represent the Dvaered High Command I'm no crook.]]))
       vn.jump("leave")
-      
+
       vn.label("leave")
       tamVN(fmt.f(_([["I don't know why, but the High Command has not credited the payment account yet… Well do you know what we are going to do? I will give you {rew}! One always needs Gauss Guns, no?"]]), {
          rew=fmt.f("#o".._("a set of Gauss Guns worth {credits}").."#0",
@@ -387,7 +387,7 @@ function meeting()
    player.pilot():control(false) -- Free the player
 
    if mem.stage == 0 then
-   
+
       VNproceed2land(destpla1)
       mem.stage = 1
       majorTam:taskClear()
@@ -397,7 +397,7 @@ function meeting()
    elseif mem.stage == 2 then
 
       mem.nextsys = fleesys
-      
+
       vn.clear()
       vn.scene()
       local tamVN = vn.newCharacter( fw.vn_char( fw.tam, { shader=love_shaders.hologram() } ) )
@@ -542,7 +542,7 @@ function ambush_msg()
    local hamelsenVN = vn.newCharacter( fw.vn_char( fw.hamelsen, { pos="left", shader=love_shaders.hologram() } ) )
    hamelsenVN:rename(_("Ambusher"))
    local tamVN      = vn.newCharacter( fw.vn_char( fw.tam, { pos="right", shader=love_shaders.hologram() } ) )
-   
+
    vn.transition()
    vn.na("As your ship decelerates to its normal speed after jumping in, you realize there are hostile ships around. An enemy Shark opens a communication channel with you and Major Tam.")
    hamelsenVN(_([["Tam, you small, fearful weakling, did you believe Lord Battleaddict would really let you live?"]]))
@@ -596,7 +596,7 @@ function ambush_end()
 
    vn.transition()
    vn.na("As the remaining attackers flee, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before.")
-   leblancVN( fmt.f(_([["Good day, Major Tam."]]), {player=player.name()}) )
+   leblancVN( _([["Good day, Major Tam."]]) )
    tamVN(_([["This time, I really owe you one, Captain"]]))
    leblancVN(_([["No problem, sir. But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command."]]))
    leblancVN(_([["After we heard of what the old scumbag had done to you, we put him under surveillance, and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."]]))
@@ -629,12 +629,12 @@ function discussWithTam()
          {_("Encourage Tam to talk about his past"), "tellmemore"},
          {_("Don't"), "finish"},
       }
-      
+
       vn.label("tellmemore")
       tamVN(_([["You know, I've not always worked at Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stands for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: those who directly report to DHC, like myself, and the freaks, as we call them (or the warriors, as they call themselves), the soldiers who report to local Warlords."]]))
       tamVN(_([["Warlords' forces can be requisitioned by DHC, but only to fight forces that threaten the integrity of the Dvaered Nation, so, in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internecine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such…"]]))
       tamVN(_([["Hey, but am I deviating from our original subject? What was it already? Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready."]]))
-      
+
       vn.label("finish")
       vn.done()
       vn.run()

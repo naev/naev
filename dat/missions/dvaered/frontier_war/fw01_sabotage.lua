@@ -80,18 +80,18 @@ function accept()
    local tamVN = vn.newCharacter( fw.vn_char( fw.tam ) )
    local doaccept = false
    vn.transition()
-   
+
    tamVN(fmt.f(_([["Hello, citizen {player}. You remember Lord Battleaddict, the old warlord who tried to kill us twice? I have good news: with a few other members of the Space Force, we've devised a way to make him regret what he did, and we need a civilian pilot, like you. Are you in?"]]), {player=player.name()}))
    vn.menu{
       {_([["Yes"]]), "accept"},
       {_([["No"]]), "dontcare"},
    }
-   
+
    vn.label("dontcare")
    tamVN(_([["Alight, citizen, see you later, then."]]))
    vn.func( function () doaccept = false end )
    vn.done()
-   
+
    vn.label("accept")
    tamVN(_([["I knew you would accept! Here is the situation:
    "The general I am working for, General Klank, is in charge of… hem… in charge of a crucial operation the High Command wants to carry out. This operation will involve troops of the High Command, but also Warlords, including Battleaddict. The problem is that General Klank and Lord Battleaddict disagree on everything about this plan. As a consequence, they are going to have a Goddard duel, which is usually how two important Dvaered generals settle deep disagreements."]]))
@@ -126,7 +126,7 @@ function land()
    elseif mem.stage == 2 then -- The player landed somewhere on Battleaddict's system
       vntk.msg( _("What are you doing here?"), _("This planet belongs to Lord Battleaddict. You will be captured if you land here. The mission failed.") )
       misn.finish(false)
-      
+
    elseif mem.stage == 4 then -- The player landed somewhere instead of attacking the Phalanx
       vntk.msg( _("What are you doing here?"), _("You were supposed to intercept a Phalanx. The mission failed.") )
       misn.finish(false)
@@ -144,36 +144,37 @@ end
 
 function hamfresser()
    if (player.fleetCargoMissionFree() >= bombMass) then
-   
+
       local askname = _([["Hello, are you Captain Hamfresser?"]])
       local look = _([[Look at him more closely]])
-   
+
       vn.clear()
       vn.scene()
       local hamfresserVN = vn.newCharacter( fw.vn_char( fw.hamfresser ) )
+      local straferVN = fw.vn_char( fw.strafer, { pos="left" } )
       vn.transition()
-      
+
       vn.menu{
          {askname, "askname"},
-         {fmt.f(_([["My name is {player}, I am pleased to meet you."]]),{player=player.name()}), "introduce"},
+         {fmt.f(_([["My name is {player}, I am pleased to meet you."]]),{player=player.name()}), "introduce1"},
          {look, "look"},
       }
-      
+
       vn.label("askname")
       hamfresserVN(_([["Of course, as it is written on my name tag."]]))
       vn.na(_([[Next to his Captain's insignia, and the logo of the Dvaered Space Infantry (a mace with wings), he points to a small label on his chest that reads "Hamfresser"]]))
       vn.jump("moveon")
-      
-      vn.label("introduce")
+
+      vn.label("introduce1")
       hamfresserVN(_([["For real? You are pleased to meet me. Nobody ever said that to me! It is so kind of you!"]]))
       vn.menu{
          {askname, "askname"},
          {look, "look"},
       }
-      
+
       vn.label("look")
-      vn.na(_([[Next to his Captain's insignia, and the logo of the Dvaered Space Infantry (a mace with wings), you see small label on his chest that reads "Hamfresser". Convinced this cyborg is the rigt person, you approach him.]]))
-      
+      vn.na(_([[Next to his Captain's insignia, and the logo of the Dvaered Space Infantry (a mace with wings), you see small label on his chest that reads "Hamfresser". Convinced this cyborg is the right person, you approach him.]]))
+
       vn.label("moveon")
       hamfresserVN(fmt.f(_([["You're the private pilot, right? Tell me your ship's dock number, and I'll meet you there. Oh, and please make room for {tonnes} of cargo."]]),{tonnes=fmt.tonnes(bombMass)}))
       vn.na(_([[The captain gets up, delicately puts his empty glass on the counter, and leaves. When you arrive at the dock, you see Hamfresser, with five other soldiers and two androids that load a huge and strange machine into your ship.]]))
@@ -182,14 +183,14 @@ function hamfresser()
          {_([["What is this?"]]), "what"},
          {_([["What are you doing with your death machine?"]]), "deathmachine"},
       }
-      
+
       vn.label("deathmachine")
       hamfresserVN(_([["But, mate, this is not a death machine, It's just a bomb. Or even just a bomblet."]]))
       vn.jump("letproceed")
-      
+
       vn.label("what")
-      hamfresserVN(_([["Don't worry, mate. It's allright, we are just embarking a bomb in your ship."]]))
-      
+      hamfresserVN(_([["Don't worry, mate. It's all right, we are just embarking a bomb in your ship."]]))
+
       vn.label("letproceed")
       vn.na(_([[Once the cargo is loaded, the team take their places in the cabin.]]))
       hamfresserVN(_([["The bomb is destined for Battleaddict's Goddard. But the tricky part is to actually plant it there."]]))
@@ -197,7 +198,7 @@ function hamfresser()
          {_([["How are we supposed to do that?"]]), "explain"},
          {_([["Are we going to pretend it's a gift from the High Command to Battleaddict's clownfish?"]]), "clownfish"},
       }
-      
+
       vn.label("clownfish")
       hamfresserVN(_([["No… that's not what the Major… do you think it could work?"]]))
       vn.menu{
@@ -205,36 +206,36 @@ function hamfresser()
          {_([["That was sarcasm, genius."]]), "sarcasm"},
          {_([[Say nothing]]), "explain"},
       }
-      
+
       vn.label("ofcourse")
       vn.na(_([[Hamfresser looks confused. He looks at another soldier questioningly.]]))
       hamfresserVN(_([["Oh… Well, Lieutenant Strafer, what do you think? Should we ask the Major if this idea there is better?"]]))
       vn.na(_([[Lieutenant Strafer approaches with a stern look.]]))
-      local straferVN = vn.newCharacter( fw.vn_char( fw.strafer, { pos="left" } ) )
+      vn.appear(straferVN)
       straferVN(fmt.f(_([["Look, citizen {player}, you should really stop making fun of the Captain. Hamfresser usually kills disrespectful people, and the only reason why you're still alive is that he didn't understand you were bullying him. So please stop that or I'll tell him you don't respect him."]]),{player=player.name()}))
       vn.disappear(straferVN)
       vn.jump("explain")
-      
+
       vn.label("sarcasm")
       hamfresserVN(_([["Oh no, I'm far from being a genius. You know, many parts of my brain that are not linked to combat and space infantry activities have been removed by surgery or are atrophied."]]))
-      
+
       vn.label("explain")
       hamfresserVN(_([["Anyways. Last period, we intercepted a message from Battleaddict to a plumber. His cruiser has issues with sewage disposal, and he requested an intervention. So, we abducted the plumber, and we disguised an EMP bomb as a replacement sewage disposal. We will dock with his ship, plant the bomb, repair the breakdown (so he won't suspect us) and leave. Private Ling here is a Goddard-plumber, so she will lead us."]]))
       vn.na(_([[A young and smiling soldier raises her hand, and says "Hi".]]))
       vn.menu{
-         {_([["OMG! This plan is brillant!"]]), "brillant"},
+         {_([["OMG! This plan is brilliant!"]]), "brilliant"},
          {_([["OMG! This plan is dead stupid!"]]), "deadstupid"},
-         {_([[Say nothing]]), "introduce"},
+         {_([[Say nothing]]), "introduce2"},
       }
-      
-      vn.label("brillant")
+
+      vn.label("brilliant")
       hamfresserVN(_([["I know. It was an idea of Major Tam. He is for sure the best mastermind I have worked with since I've been in the black ops business."]]))
-      vn.jump("introduce")
-      
+      vn.jump("introduce2")
+
       vn.label("deadstupid")
       hamfresserVN(_([["Do you think so? Well… I guess the best way to check if you're right is to try it out and see if we all die."]]))
-      
-      vn.label("introduce")
+
+      vn.label("introduce2")
       vn.na(_([[The members of the commando introduce themselves.]]))
       vn.move(hamfresserVN,"right")
       local nikolovVN = vn.newCharacter( fw.vn_char( fw.nikolov, { pos="left" } ) )
@@ -246,16 +247,16 @@ function hamfresser()
       local tronkVN = vn.newCharacter( fw.vn_char( fw.tronk, { pos="left" } ) )
       tronkVN(_([["My name is Private Tronk."]]))
       vn.disappear(tronkVN)
-      local straferVN = vn.newCharacter( fw.vn_char( fw.strafer, { pos="left" } ) )
+      vn.appear(straferVN)
       straferVN(_([["I am Lieutenant Strafer. I am a pilot, and I am here in case we need to switch to plan B."]]))
       vn.menu{
          {_([["What is plan B?"]]), "planB"},
          {_([[Say nothing]]), "moveon2"},
       }
-      
+
       vn.label("planB")
       straferVN(_([["You don't want to switch to plan B."]]))
-      
+
       vn.label("moveon2")
       vn.disappear(straferVN)
       hamfresserVN(fmt.f(_([["As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} in {sys}. I propose we leave at once. Ah, and a last point: for safety reasons, please make sure our fuel tanks are not empty when we enter {sys}, just in case we have to leave the system rapidly."]]), {pnt=sabotpla, sys=sabotsys}) )
@@ -536,7 +537,7 @@ function spawn_phalanx()
 
    mem.stage = 4
    misn.osdActive(2)
-   
+
    mem.jumpout = hook.jumpout("jumpoutStage4")
 end
 
@@ -564,7 +565,7 @@ function phalanx_boarded()
    hook.rm(mem.pjump)
    hook.rm(mem.pland)
    hook.rm(mem.jumpout)
-   
+
    vn.clear()
    vn.scene()
    local hamfresserVN = vn.newCharacter( fw.vn_char( fw.hamfresser ) )
@@ -579,14 +580,14 @@ function phalanx_boarded()
          {_([["Good luck, folks!"]]), "luck"},
          {_([["Good riddance, freaks!"]]), "riddance"},
       }
-   
+
    vn.label("luck")
    straferVN(_([["Thanks, citizen, I'm glad to have met you."]]))
    vn.jump("proceed")
-   
+
    vn.label("riddance")
    straferVN(_([["Whatever. One day I'll give you my handbook for good manners. You look like you need it more than I do."]]))
-   
+
    vn.label("proceed")
    vn.done()
    vn.run()
@@ -651,7 +652,7 @@ function beginDuel()
    urnusVN(_([["I am witness to the fact that this duel conforms to the rules established by our ancestors. I have inspected both ships and I attest that I observed no irregularities. Let the fight begin. May the most virtuous one of you survive."]]))
    vn.done()
    vn.run()
-   
+
    klank:taskClear()
    klank:attack(battleaddict)
    klank:setNoDeath() -- Actually it should not be necessary, but...
@@ -779,20 +780,20 @@ function endMisn()
          {_([["You apparently would not have needed help if Battleaddict had not cheated, General."]]), "flatter"},
          {_([["Yeah, you were lucky to have me in your team. I'm the best in this business."]]), "brag"},
       }
-      
+
    vn.label("brag")
    klankVN(_([["Ah! Ah! Ah! There are so many people who are the best in this business nowadays! You private pilots are so funny to work with!"]]))
    vn.jump("proceed")
-      
+
    vn.label("flatter")
    klankVN(_([["Damn fake electricians; I should have suspected something. Anyway, citizen, rest assured that we will need your services again."]]))
-   
+
    vn.label("proceed")
    vn.na(_([[A group of generals approach and congratulate Klank. He stands up and leaves with them, loudly exchanging dubious pleasantries.]]))
    vn.disappear(klankVN)
    vn.move( tamVN, "center" )
    tamVN(fmt.f(_([["Apparently, Battleaddict had a commando unit dress like electricians and hide an EMP bomb in the General's Goddard. It exploded during the fight, just like our own bomb. And now both ships have their systems ruined. Well, anyway, thank you for your help, here are {credits} for you!"]]), {credits="#g"..fmt.credits(fw.credits_01).."#0"}))
-   
+
    vn.done()
    vn.run()
 

@@ -45,7 +45,7 @@ local cinema = require "cinema"
 local equipopt = require "equipopt"
 local love_shaders = require "love_shaders"
 
-local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots -- Non-persistent state
+local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots, featherImg, featherPort -- Non-persistent state
 local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-declared functions
 
 escort_hailed = fw.escort_hailed -- common hooks
@@ -150,26 +150,26 @@ function accept()
    local leblancVN = vn.newCharacter( fw.vn_char( fw.leblanc ) )
    local doaccept = false
    vn.transition()
-   
+
    leblancVN(_([["Hello, citizen. Fancy meeting you here! The Major told me I would end up finding you by checking all the shifty places in Dvaered space. We need your services once more. But, this time, it will be sort of a bit… More dangerous."]]) )
    vn.menu{
       {accept, "accept"},
       {_([["No way."]]), "dontcare"},
       {_([["Well… Last time it was already quite dangerous, no?"]]), "danger"},
    }
-   
+
    vn.label("dontcare")
    leblancVN(_([["As you wish, citizen. After all, one can not obligate people to do their duty…"]]))
    vn.func( function () doaccept = false end )
    vn.done()
-   
+
    vn.label("danger")
    leblancVN(_([["Last time, the worst thing that could have happened to you was getting killed by a bloodthirsty warlord. This time, the risk is much worse as you might end up in the hands of the Za'lek!"]]))
    vn.menu{
       {accept, "accept"},
       {_([["Za'lek! No, that's too much for me! I'm afraid I have to refuse."]]), "dontcare"},
    }
-   
+
    vn.label("accept")
    leblancVN(_([["Alright, here is the situation: before we prepare for our military operations, we need to protect our backs. Major Tam believes that the House Goddard is the key to ensure that the Empire will not thwart our plan. Tam would explain it much better than I, but as Goddard is right in between our space and Imperial space, they really have much to lose in case of a direct conflict. What is more, as we are House Goddard's best customer, they tend to appreciate us. For example, we recently paid 6M credits to repair all the electronics in Klank's and Battleaddict's Goddards.
    However, not all members of Goddard's executive board share the same opinion on our Frontier invasion projects. Mr. Danftang, their Public Relations Manager, in particular, used to see it as an opportunity to sell more cruisers to the High Command and was very favourable to the invasion. However, he was recently arrested by the Za'lek police for unclear reasons. Many suspect Goddard's shareholders of trying to settle the score. As you may have guessed at this point, our mission is to help this man escape from Za'lek prison."]]))
@@ -184,7 +184,7 @@ function accept()
    -- Test acceptance
    if not doaccept then misn.finish(false) end
    misn.accept()
-   
+
    misn.setDesc(_("You will help a Goddard executive to evade his Za'lek prison."))
    misn.setReward(_("Hopefully something better than Gauss Guns…"))
 
@@ -227,7 +227,7 @@ function landBar()
       local hamfresserVN = vn.newCharacter( fw.vn_char( fw.hamfresser ) )
       vn.na(_([[When you look at Hamfresser's face, you notice a large smile on it. The implants on his face do not look like they were designed with smiling in mind and his skin twists horribly.]]))
       hamfresserVN(_([["The team is ready to leave on a moment's notice. We will embark with you when you take off."]]))
-      
+
       vn.done()
       vn.run()
 
@@ -243,7 +243,7 @@ end
 function land()
    mem.lastPlanet = spob.cur()
 
-   -- Trying to land just after having boarded the carceral convoy is forbitten
+   -- Trying to land just after having boarded the carceral convoy is forbidden
    if mem.stage == 2 then
       vntk.msg(_("The mission failed"), _([[Stepping out of your ship, you find yourself surrounded by police officers. Landing just after attacking the carceral convoy was not the brightest idea, as expected.]]))
       misn.finish(false)
@@ -254,24 +254,24 @@ function land()
 
    -- Land at an Imperial planet and meet the agents
    elseif mem.stage == 5 and spob.cur():faction() == faction.get("Empire") then
-   
+
       vn.clear()
       vn.scene()
       local pirateVN = vn.newCharacter( _("Strange Person"), { image=mem.pirateImg1 } )
       vn.transition()
       vn.na(_([[As you land, someone is waiting for you at the spaceport.]]))
-      pirateVN(_([["Hello, friend! Seems like you're having some trouble with the authorities out there. Looks like the Za'lek have even enlisted the help of the Imperials. There are blockades everywhere on the borders of Imperial space. It looks like the Empire wants to catch you at all costs, but luckily enough, me and my friends have the solution. It happends that there exist secret jumps that are not guarded. We could give their location, in exchange for a small favor."]]))
+      pirateVN(_([["Hello, friend! Seems like you're having some trouble with the authorities out there. Looks like the Za'lek have even enlisted the help of the Imperials. There are blockades everywhere on the borders of Imperial space. It looks like the Empire wants to catch you at all costs, but luckily enough, me and my friends have the solution. It happens that there exist secret jumps that are not guarded. We could give their location, in exchange for a small favour."]]))
       vn.menu{
          {_([["What do you want?"]]), "howmuch"},
          {_([["You look like a pirate. I will not treat with you."]]), "dontcare"},
          {_([["Secret jumps? Ah ah! Well tried, but I already know them."]]), "alreadyknow"},
       }
-   
+
       vn.label("howmuch")
       pirateVN(fmt.f(_([["A bargain in exchange for your life and the success of whatever unscrupulous mission you're trying to carry out. I need someone to fetch an object for me on {pnt}."]]),{pnt=pirpla}))
       vn.na(_([[This deal sounds like troubles. It would be a bad thing if you weren't already in troubles. Besides, it might allow you to avoid the otherwise messy and compromising deal you would have to make with the Imperial secret services.]]))
       vn.jump("proceed")
-      
+
       vn.label("dontcare")
       pirateVN(_([["How closed-minded of you! I don't want to force you, it's a free country after all…"]]))
       vn.menu{
@@ -279,41 +279,41 @@ function land()
          {_([["As if the likes of you could force me if they wanted to."]]), "force"},
          {_([["What are you talking about? The Empire is a totalitarian state. Didn't you remark that already?"]]), "totalitarian"},
       }
-         
+
       vn.label("force")
       pirateVN(_([["Damn. You are more dvaered than I thought."]]))
       vn.jump("proceed")
-      
+
       vn.label("totalitarian")
       pirateVN(_([["Yes. No. I was referring to Qorel. Did you know that everyone is equal in Qorel? It's not so far from here, but the Empire can't do anything about it."]]))
       vn.menu{
          {_([[Say nothing]]), "proceed"},
-         {_([["What is Qorel? I never heared of that place."]]), "what"},
-         {_([["Everyone is equal in Qorel? That's the best joke I've heared in ages!"]]), "equal"},
+         {_([["What is Qorel? I never heard of that place."]]), "what"},
+         {_([["Everyone is equal in Qorel? That's the best joke I've heard in ages!"]]), "equal"},
       }
-      
+
       vn.label("what")
       pirateVN(_([["If you don't know what Qorel is, it means you have no business there."]]))
       vn.jump("proceed")
-      
+
       vn.label("equal")
       pirateVN(_([["Well… Let's say some are more equal than others. But hey! We were talking serious business, how did we end up discussing politics?"]]))
       vn.jump("proceed")
-      
+
       vn.label("alreadyknow")
       pirateVN(_([["Oh… At least I'll have tried."]]))
-      
+
       vn.label("proceed")
       pirateVN(_([["Anyways, I'll be at the bar in case you need my services! See you soon!"]]))
       vn.done()
       vn.run()
-      
+
       barAgents()
       mem.stage = 6
 
    elseif mem.stage == 6 and spob.cur():faction() == faction.get("Empire") then
       barAgents()
-      
+
    -- Land to get the datapad on Efferey
    elseif mem.stage == 8 and spob.cur() == pirpla then
       mem.pirag2 = misn.npcAdd("holoDeal", _("Zed"), mem.piratePort2, zed_desc)
@@ -328,13 +328,13 @@ function land()
       pirateVN(fmt.f(_([["Nice to see you, pilot. I see you brought the datapad with you. So you have fulfilled your part of the deal. Let me give you the location of another jump, that will give you access to Dvaered space from {sys}."]]),{sys=pirsys}))
       vn.done()
       vn.run()
-      
+
       misn.markerRm(mem.markP)
       local jmp2 = jump.get("Blacin","Gremlin")
       system.get("Blacin"):setKnown(true) -- Also give the starting system, just in case
       jmp2:setKnown(true)
       misn.cargoRm(mem.datapad)
-      
+
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escape"), {
          fmt.f(_("Report back on {pnt} in {sys}"), {pnt=reppla, sys=repsys}),
@@ -342,11 +342,11 @@ function land()
 
    -- Land to end the mission
    elseif mem.stage >= 4 and spob.cur() == reppla then
-   
+
       var.push("dv_empire_deal", false)
       var.push("dv_pirate_debt", false)
       shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
-   
+
       vn.clear()
       vn.scene()
       local danftangVN = vn.newCharacter( _("Mr. Danftang"), { image="neutral/male2n", pos="farleft" } )
@@ -370,7 +370,7 @@ function land()
       hamfresserVN(_([["Sir, the VIP was injured during the extraction, and we needed a medical device to heal him. But once in the hospital, we were spotted by a traffic cop. Then things quickly got worse, and we had to escape through the pharmacy's wall. I lost a soldier in this operation."]]))
       tamVN(_([["Well, you will make a detailed report later. And don't worry about the soldier, I will make sure he is replaced immediately."]]))
       tamVN(fmt.f(_([["And you, {player}, anything to report?"]]),{player=player.name()}))
-      
+
       if mem.stage == 7 then -- Empire solution
          vn.na(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire has forced you to make with them and the major's face turns red.]]))
          tamVN(_([["You did WHAT? The Imperial intelligence service is the strongest in the universe! They can deduce things you would not even imagine just by looking at someone, and you let them interview a black ops commando leader! I guess you had no other choice… I will interrogate Hamfresser to see if I can determine what they were looking for. Damn! I'm afraid something awful may happen to us somehow because of this."]]))
@@ -384,7 +384,7 @@ function land()
          if mem.stage == 5 then -- Unforeseen solution, Captain Hewhew met.
             vn.na(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you, and how you eventually managed to skirt the blockade.]]))
             tamVN(_([["Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer."]]))
-         else -- Captain Hewhew NOT even met. This should not happend normally
+         else -- Captain Hewhew NOT even met. This should not happen normally
             vn.na(_([[You explain to the major the problems you encountered.]]))
             tamVN(_([["I guess it must have been very hard, and risky, to skirt the blockade, congratulations!"]]))
          end
@@ -466,7 +466,7 @@ function discussTro()
       {_([["See you later."]]), "bye"},
       {_([["Is everyone in your family a spacemarine cyborg?"]]), "cyborg"},
    }
-   
+
    vn.label("cyborg")
    tronkVN(_([["Oh no, my little sister is not with the space infantry. She fights on Totoran in the one-on-one bare-hand championship. She won 6 matches in a row, last season. But I am afraid she won't be able to take part in this cycle's championship as she hasn't yet fully recovered from her decapitation during her last fight."]]))
    vn.jump("bye")
@@ -477,10 +477,10 @@ function discussTro()
    vn.move( tronkVN, "right")
    local nikolovVN = vn.newCharacter( fw.vn_char( fw.nikolov, {pos="left"} ) )
    local straferVN = vn.newCharacter( fw.vn_char( fw.strafer, {pos="farleft"} ) )
-   nikolovVN(_([["What happends? Are we under attack?"]]))
-   straferVN(fmt.f(_([["Nah, it's just {player} making fun of you guys. Hey {player}! You whould really refrain from doing that again."]]),{player=player.name()}))
+   nikolovVN(_([["What happens? Are we under attack?"]]))
+   straferVN(fmt.f(_([["Nah, it's just {player} making fun of you guys. Hey {player}! You should really refrain from doing that again."]]),{player=player.name()}))
    vn.na(_([[You make a note to yourself: don't try to make jokes in presence of Dvaered Space Infantry cyborgs.]]))
-   
+
    vn.label("bye")
    vn.done()
    vn.run()
@@ -534,7 +534,7 @@ function fireSteal()
       {no, "no"},
       {_([["Who chose the name?"]]), "who"},
    }
-   
+
    vn.label("who")
    hamfresserVN(_([["I did. Do you like it?"]]))
    vn.menu{
@@ -542,33 +542,33 @@ function fireSteal()
       {_([["I prefer 'Operation Pharmacy Storm'."]]), "dontlike"},
       {_([["Anyways, let's go for it."]]), "yes"},
    }
-   
+
    vn.label("likeit")
    hamfresserVN(_([["I know. So, what do you say?"]]))
    vn.menu{
       {yes, "yes"},
       {no, "no"},
    }
-   
+
    vn.label("dontlike")
    hamfresserVN(_([["I'm afraid the rules are clear: as the squad leader I have total authority to choose the operation name. So, are you ready to start 'Operation Drugstore Thunder'?"]]))
    vn.menu{
       {yes, "yes"},
       {no, "no"},
    }
-   
+
    vn.label("yes")
    vn.na(_([[After giving the signal to Hamfresser, you enter the cockpit of your ship and start the engines in anticipation of an escape. A heavy explosion coming from the distance shakes your ship, followed by detonations that seem to grow closer. After a while, you see the commandos running in your direction, pursued by Za'lek police androids. When the last member of the team enters the ship, you take off in a hurry, closely followed by a few drones.]]))
    hamfresserVN(_([["We made a mess, out there! But at least we've got the device! Quick, take off!"]]))
    vn.func( function () letsgo = true end )
    vn.done()
-   
+
    vn.label("no")
    hamfresserVN(_([["Allright, come back when you're ready."]]))
    vn.func( function () letsgo = false end )
    vn.done()
    vn.run()
-   
+
    if letsgo then
       mem.stage = 4
       misn.osdDestroy()
@@ -617,12 +617,12 @@ function enter()
       mem.tronkDeath = false
       vn.clear() -- The death of Tronk
       vn.scene()
-      
+
       local hamfresserVN = vn.newCharacter( fw.vn_char( fw.hamfresser, {pos='farleft'} ) )
       local tronkVN = vn.newCharacter( fw.vn_char( fw.tronk ) )
       local therusVN = vn.newCharacter( fw.vn_char( fw.therus, {pos='farright'} ) )
       vn.transition()
-      
+
       vn.na(_([[After outrunning your enemies, you start asking how the operation went at the hospital. A quick look in your living quarters gives you an answer. You see the VIP, still unconscious, his body covered by electrodes connected to the medical device. However, he is no longer blue. Next to him, the commandos look like they've had better days. Hamfresser, his face as pale as death, sits on the ground, leaning on a pillar, busy changing a ragged, blood-soaked bandage on his left arm. Sergeant Nikolov stares at a huge hole in her foot with a vacant eye and the medic, Therus, limps from one soldier to another leaving a trail of bloody handprints on the walls.
    Lying in the centre of the room, covered with bandages, is private Tronk. His battle armour, pierced with multiple holes, has been tossed a few metres away in a puddle of blood. With a sad smile, the soldier gazes at the two remaining fingers of his less damaged arm that are slowly walking on the ground.]]))
       tronkVN(_([["Leopold, you remember when you were a kid? Did you play with your fingers like that?"]]))
@@ -634,7 +634,7 @@ function enter()
       therusVN(_([["It's over, captain…"]]))
       vn.disappear(tronkVN)
       hamfresserVN(_([["Damn! He's the fifth kid to die under my command and it still hurts as much. I just can't get used to that."]]))
-      
+
       vn.done()
       vn.run()
 
@@ -763,8 +763,6 @@ function convoyEnter()
    target:control(true)
    target:hyperspace(mem.nextsys)
 
-   
-
    escort = {}
    escort[1] = pilot.add( "Za'lek Light Drone", fake_zlk, mem.prevsys, nil, {ai="collective"} )
    escort[2] = pilot.add( "Za'lek Light Drone", fake_zlk, mem.prevsys, nil, {ai="collective"} )
@@ -799,7 +797,7 @@ function targetAttacked()
    local fwarlords = fw.fct_warlords()
    for i, j in ipairs(athooks) do
       hook.rm(j)
-      j = hook.pilot(p, "death", "escortDied") -- Replace by death Hook
+      athooks[i] = hook.pilot(escort[i], "death", "escortDied") -- Replace by death Hook
       escort[i]:setFaction(fwarlords) -- Hack so that Strafer attacks them and not the Sting
    end
    target:setHostile(true)
@@ -823,7 +821,7 @@ function targetBoarded()
    misn.osdActive(3)
    misn.markerRm(mem.mark)
    mem.mark = misn.markerAdd(reppla, "low")
-   
+
    -- Remove hooks
    hook.rm(mem.jpHook)
    hook.rm(mem.ldHook)
@@ -841,7 +839,7 @@ function targetEscaped()
    misn.finish(false)
 end
 function escortDied()
-   p = pilot.get( { fw.fct_warlords() } )
+   local p = pilot.get( { fw.fct_warlords() } )
    if #p == 0 then -- Strafer has killed all his adversaries: time to leave
       strafer:control(true)
       strafer:hyperspace()
@@ -887,7 +885,7 @@ end
 
 function takeoff( )
    -- Player takes off from planet after attacking the hospital
-   -- Don't test planet is zlk because we don't want small independant worlds to cause an exception
+   -- Don't test planet is zlk because we don't want small independent worlds to cause an exception
    if mem.stage == 4 then
       fzlk:setReputationOverride( -100 )
       hook.timer(1.0, "spawnDrones")
@@ -1087,7 +1085,7 @@ end
 function hailMe()
    hook.rm(mem.hailie)
    player.commClose()
-   
+
    vn.clear()
    vn.scene()
    local trickVN = vn.newCharacter( fw.vn_char( fw.trickster, {shader=love_shaders.hologram()} ) )
@@ -1095,31 +1093,31 @@ function hailMe()
    trickVN(_([["Doing well, folks? Ya just walked into those Za'lek freaks' space, wrecked a squadron, helped a prisoner escape, and demolished a hospital. You're worse than the Incident, mates!"]]))
    vn.menu{
       {_([["Hi, Trickster. How do you do"]]), "polite"},
-      {_([["Get lost, Trickster. Noone loves you."]]), "notpolite"},
+      {_([["Get lost, Trickster. No-one loves you."]]), "notpolite"},
       {_([["What are you talking about, sir?"]]), "donno"},
    }
-   
+
    vn.label("polite")
    trickVN(_([["Very well and you? Hewhewhew!"]]))
    vn.jump("proceed")
-   
+
    vn.label("notpolite")
    trickVN(fmt.f(_([["Hewhewhew! Wrong, {player}! The Emperor loves me! Aha! He loves everyone in this universe! Even you, bloody scum!"]]),{player=player.name()}))
    vn.jump("proceed")
-   
+
    vn.label("donno")
    trickVN(_([["Wait… Did I hail the wrong ship? Lemme check… Hewhewhew! Of course not!"]]))
-   
+
    vn.label("proceed")
    trickVN(fmt.f(_([["What about we stop talking nonsense, {player}? I am a faithful subject of his Imperial Majesty, as should you be! But instead you've chosen to aid and abet those criminals, the Dvaereds. For that you should be severely punished. Don't forget, {player}: The Empire is watching you. Anywhere. Anytime. Anyhow.
    "Hewhewhew! And what was the other one already? Oh yeah: The Emperor sees all! But ya're all lucky, 'cause the Empire is in a merciful mood today. So at your next stop, you will kindly go and talk to the agent with a feather hat, and the two of you will reach an agreement, and hopefully we won't have to kill you!"]]),{player=player.name()}))
-   
+
    vn.done()
    vn.run()
    mem.stage = 5
 end
 
--- Discuss with the Pirate 
+-- Discuss with the Pirate
 function pirateDealer()
    local accept = false
 
@@ -1130,13 +1128,13 @@ function pirateDealer()
    vn.scene()
    local pirateVN = vn.newCharacter( _("Pirate"), { image=mem.pirateImg1 } )
    vn.transition()
-   
-   pirateVN(fmt.f(_([["I am really happy to meet you, pilot. It looks like that we are both in some sort of trouble, and I'm convinced we can make a deal profitable to both of us. My name is Zid, I happend to be a… businessperson usually operating in and around the station {pnt}. But I recently got a… strong disagreement with the person in charge of that station."]]),{pnt=pirpla}))
+
+   pirateVN(fmt.f(_([["I am really happy to meet you, pilot. It looks like that we are both in some sort of trouble, and I'm convinced we can make a deal profitable to both of us. My name is Zid, I happen to be a… businessperson usually operating in and around the station {pnt}. But I recently got a… strong disagreement with the person in charge of that station."]]),{pnt=pirpla}))
    vn.menu{
       {_([[Stay silent]]), "proceed"},
       {fmt.f(_([["You're a little hoodlum who got turned off from {pnt} by a crime Lord?"]]),{pnt=pirpla}), "hoodlum"},
    }
-   
+
    vn.label("hoodlum")
    pirateVN(_([["What? No… I am an important figure of this business, you know?"]]))
    vn.label("proceed")
@@ -1145,7 +1143,7 @@ function pirateDealer()
       {_([[Stay silent]]), "proceed2"},
       {fmt.f(_([["What tells you they'll accept me at {pnt}?"]]),{pnt=pirpla}), "what"},
    }
-   
+
    vn.label("what")
    pirateVN(_([["Oh! Landing on a pirate-controlled station is not particularly difficult, a mild bribe will do the job. Once landed there, nobody will attack you, but on your way to and from the station, they'll probably try to kill you. However you managed to survive Za'lek patrols so far, so you're totally qualified for the job."]]))
    vn.label("proceed2")
@@ -1158,12 +1156,12 @@ function pirateDealer()
       {_([["I'll do what you want."]]), "yes"},
       {_([["No way, I'll find another way."]]), "no"},
    }
-   
+
    vn.label("yes")
    vn.func( function () accept = true end )
    pirateVN(fmt.f(_([["Great! I've just added the jump point to your map. Once in {pnt}, meet Zed at the bar, I'll attach a picture for you to recognize him. Being a Dvaered, you will probably get along well with him."]]),{pnt=pirpla}))
    vn.done()
-   
+
    vn.label("no")
    pirateVN(_([["As you wish, come back when you realize that I'm your only chance!"]]))
    vn.done()
@@ -1174,8 +1172,8 @@ function pirateDealer()
       mem.pirSystem = mem.pirPlanet:system()
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escape"), {
-          fmt.f(_("Land on {pnt} in {sys} and meet the contact."), {pnt=pirpla, sys=pirsys}),
-          fmt.f(_("Land on {pnt} in {sys} to return the holopad."), {pnt=mem.pirPlanet, sys=mem.pirSystem}),
+         fmt.f(_("Land on {pnt} in {sys} and meet the contact."), {pnt=pirpla, sys=pirsys}),
+         fmt.f(_("Land on {pnt} in {sys} to return the holopad."), {pnt=mem.pirPlanet, sys=mem.pirSystem}),
       } )
       misn.npcRm(mem.pirag)
       system.get("Pas"):setKnown(true) -- Also give the starting system, just in case
@@ -1197,7 +1195,7 @@ function imperialAgent()
       {_([["What do you want in exchange?"]]), "exchange"},
       {_([[Say nothing]]), "exchange"},
    }
-   
+
    vn.label("exchange")
    agentVN(fmt.f(_([["What do I want in exchange? Simple. I want to speak with the Dvaered captain. Give me 10 hectostu on the spacedock alone with him, not more, and the commander of the fleet in {dealsys} will forget to scan your ship when you jump to {dealjump}.]]),{dealsys=dealsys, dealjump=dealjump}))
    vn.na(_([[You think of all the state secrets a wounded Hamfresser is able to give to the Empire in 10 hectostu. But, Hamfresser is a professional after all, trained avoid revealing any valuable information. Probably the Imperial agent is a professional as well, trained to recover valuable information. And the pirate proposition still holds. So your answer is:]]))
@@ -1205,12 +1203,12 @@ function imperialAgent()
       {_([[Agree]]), "yes"},
       {_([[Refuse]]), "no"},
    }
-   
+
    vn.label("yes")
    vn.na(_([[After accepting, you invite the agent to follow you to the dock. You enter your ship, where the commandos are waiting for you, and inform Hamfresser about the situation. He anxiously looks at the two other remaining members of his team. Nikolov grimaces and Therus nervously hits the wall.]]))
    vn.disappear(agentVN)
    local hamfresserVN = vn.newCharacter( fw.vn_char( fw.hamfresser ) )
-   
+
    hamfresserVN(_([["If you think we have no other choice…"]]))
    vn.na(_([[After removing his uniform jacket (where his name and rank are written), Hamfresser takes a deep breath and joins the Imperial agent outside, in front of the ship. From a window, you see them having what looks like a peaceful conversation.
    After a while, Hamfresser returns to the ship and the agent waves to indicate that you're allowed to take off.]]))
@@ -1218,12 +1216,12 @@ function imperialAgent()
 
    vn.func( function () accept = true end )
    vn.done()
-   
+
    vn.label("no")
    agentVN(_([["Mwell… I guess you need to see for yourself that this is the only solution. If you're still alive when you're done, come back, we will be waiting for you."]]))
    vn.done()
    vn.run()
-   
+
    if accept then
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escape"), {
@@ -1251,7 +1249,7 @@ function holoDeal()
       {gimme, "datapad"},
       {headbutt, "headbutt"},
    }
-   
+
    vn.label("hi")
    pirateVN(_([["Not so well. I have eaten a lobster and I feel a bit queasy."]]))
    vn.menu{
@@ -1275,9 +1273,9 @@ function holoDeal()
       {gimme, "datapad"},
       {headbutt, "headbutt"},
    }
-   
+
    vn.label("zid")
-   pirateVN(_([["Zid's still alive? Unbeliveable!"]]))
+   pirateVN(_([["Zid's still alive? Unbelievable!"]]))
    vn.menu{
       {gimme, "datapad"},
       {headbutt, "headbutt"},
@@ -1292,7 +1290,7 @@ function holoDeal()
    vn.na([[You headbutt Zed and he falls on the floor. You look around you, but other customers don't seem alarmed. Brawls are propabaly common in this place. You search in Zed's pockets and find a holopad with a sticker on it, reading "Zid's data". You take it and leave the place.]])
    vn.done()
    vn.run()
-   
+
    misn.markerRm(mem.markP)
    mem.markP = misn.markerAdd(mem.pirPlanet, "low")
    misn.npcRm(mem.pirag2)
