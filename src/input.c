@@ -1581,8 +1581,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
          jpid = -1;
    }
    if ( astid != ASTEROID_NULL ) {
-      const AsteroidAnchor *field = &cur_system->asteroids[fieid];
-      const Asteroid       *ast   = ast_get( field, astid );
+      const Asteroid *ast = ast_getField( fieid, astid );
       if ( ast != NULL ) {
          /* Recover the right gfx */
          double       rast = MAX( ast_gfx_width( ast ) * zoom, minr );
@@ -1590,6 +1589,8 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
          double       dast = hypotf( s->pos.x - x, s->pos.y - y );
          if ( dast > rast )
             astid = ASTEROID_NULL;
+      } else {
+         astid = ASTEROID_NULL;
       }
    }
    if ( pid != PLAYER_ID ) {

@@ -772,20 +772,21 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp,
 
    /* Asteroids. */
    for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
-      *ast = asteroid_closestPilot( &sys->asteroids[i], x, y, &d );
-      if ( *ast != ASTEROID_NULL ) {
+      double td;
+      *ast = asteroid_closestPilot( &sys->asteroids[i], x, y, &td );
+      if ( ( *ast != ASTEROID_NULL ) && ( td < d ) ) {
          *pnt = -1;
+         *jp  = -1;
          *fie = i;
       }
    }
 
    /* Jump points. */
    for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
-      double     td;
       JumpPoint *j = &sys->jumps[i];
       if ( !jp_isUsable( j ) )
          continue;
-      td = pow2( x - j->pos.x ) + pow2( y - j->pos.y );
+      double td = pow2( x - j->pos.x ) + pow2( y - j->pos.y );
       if ( td < d ) {
          *pnt = -1; /* We must clear spob target as jump point is closer. */
          *ast = ASTEROID_NULL;
@@ -794,6 +795,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp,
          d    = td;
       }
    }
+
    return d;
 }
 
