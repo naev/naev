@@ -1408,6 +1408,7 @@ void pilot_weaponAuto( Pilot *p )
       }
    } else {
       /* Set weapon sets. */
+      p->advweap = 1;
       for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
          pilot_weapSetType( p, i, WEAPSET_TYPE_HOLD );
    }
