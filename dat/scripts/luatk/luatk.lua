@@ -117,6 +117,7 @@ vn.run()
 --]]
 function luatk.vn( setup )
    local s = vn.custom()
+   s._input_allow_special = false
    s._type = "luatk"
    s._init = function ()
       luatk.setup()

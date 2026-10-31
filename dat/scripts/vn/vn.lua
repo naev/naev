@@ -404,12 +404,17 @@ function vn.keypressed( key, isrepeat )
    end
    love._vn_keyrepeat_check = false
 
+   -- Handle special processing here
+   local s = vn._states[ vn._state ]
    local tkopen = luatk.isOpen()
-   if not tkopen and string.lower(naev.keyGet( "menu" )) == key then
-      naev.menuSmall()
-      return true
-   elseif string.lower(naev.keyGet( "starmap" )) == key then
-      naev.mapOpen()
+   if s and s._input_allow_special then
+      if not tkopen and string.lower(naev.keyGet( "menu" )) == key then
+         naev.menuSmall()
+         return true
+      elseif string.lower(naev.keyGet( "starmap" )) == key then
+         naev.mapOpen()
+         return true
+      end
    end
 
    if vn._show_options then
@@ -445,7 +450,6 @@ function vn.keypressed( key, isrepeat )
    end
 
    if vn.isDone() then return end
-   local s = vn._states[ vn._state ]
    --return s:keypressed( key )
    -- Always eat all keys for now
    s:keypressed( key )
@@ -588,6 +592,7 @@ function vn.State.new()
    s._wheelmoved = _dummy
    s._keypressed = _dummy
    s._textinput = _dummy
+   s._input_allow_special = true
    s.done = false
    return s
 end
