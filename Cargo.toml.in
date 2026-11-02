@@ -50,7 +50,7 @@ gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "50d65229477fe5f785c
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
 # Needs SDL 3.4.0 or later for 0.17.1+
-sdl3 = "0.20"
+sdl3 = "0.21"
 anyhow = "1.0"
 audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
