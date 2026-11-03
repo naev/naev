@@ -1879,6 +1879,7 @@ pub extern "C" fn asteroids_init() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn asteroid_initAnchor(anc: *mut naevc::AsteroidAnchor) {
+   unsafe { std::ptr::write_bytes(anc, 0, 1) };
    let anc = unsafe { &mut *anc };
    anc.density = naevc::ASTEROID_DEFAULT_DENSITY;
    anc.groups = Array::new(Vec::new()).into_ptr();
