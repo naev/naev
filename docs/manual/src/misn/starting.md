@@ -14,7 +14,7 @@ Below is our simple header.
 <?xml version='1.0' encoding='utf8'?>
 <mission name="My First Mission">
  <unique />
- <chance>100</chance>
+ <chance>50</chance>
  <location>Bar</location>
 </mission>
 --]]
