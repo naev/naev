@@ -23,7 +23,8 @@ use std::fmt::Debug;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock, OnceLock};
 //#[cfg(not(debug_assertions))]
-use std::sync::{Mutex, RwLock};
+use std::cell::RefCell;
+use std::sync::RwLock;
 use tracing::instrument;
 //#[cfg(debug_assertions)]
 //use tracing_mutex::stdsync::{Mutex, RwLock};
@@ -2530,7 +2531,9 @@ pub extern "C-unwind" fn faction_getStandingText(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn faction_getStandingTextAtValue(id: i64, value: c_double) -> *const c_char {
-   static STANDING: Mutex<Option<CString>> = Mutex::new(None);
+   thread_local! {
+      static STANDING: RefCell<Option<CString>> = const { RefCell::new(None) };
+   }
    let rank = match faction_c_with(id, |fct| fct.text_rank(Some(value as f32))).flatten() {
       Ok(r) => r,
       Err(_e) => {
@@ -2538,9 +2541,10 @@ pub extern "C-unwind" fn faction_getStandingTextAtValue(id: i64, value: c_double
          return std::ptr::null();
       }
    };
-   let mut txt = STANDING.lock().unwrap();
-   *txt = Some(CString::new(rank).unwrap());
-   txt.as_ref().unwrap().as_ptr()
+   STANDING.with_borrow_mut(|txt| {
+      *txt = Some(CString::new(rank).unwrap());
+      txt.as_ref().unwrap().as_ptr()
+   })
 }
 
 #[unsafe(no_mangle)]
@@ -2756,7 +2760,9 @@ pub extern "C-unwind" fn faction_reputationColourCharSystem(
 
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn faction_getEnemies(id: i64) -> *const i64 {
-   static ENEMY_ARRAY: LazyLock<Mutex<Array<i64>>> = LazyLock::new(|| Mutex::new(Array::default()));
+   thread_local! {
+      static ENEMY_ARRAY: RefCell<Array<i64>> = RefCell::new(Array::default());
+   }
    let data = if FactionRef::from_ffi(id) == *PLAYER.get().unwrap() {
       FACTIONS
          .read()
@@ -2783,14 +2789,17 @@ pub extern "C-unwind" fn faction_getEnemies(id: i64) -> *const i64 {
          Vec::new()
       })
    };
-   let mut array = ENEMY_ARRAY.lock().unwrap();
-   *array = Array::new(data);
-   array.as_ptr() as *const i64
+   ENEMY_ARRAY.with_borrow_mut(|array| {
+      *array = Array::new(data);
+      array.as_ptr() as *const i64
+   })
 }
 
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn faction_getAllies(id: i64) -> *const i64 {
-   static ALLY_ARRAY: LazyLock<Mutex<Array<i64>>> = LazyLock::new(|| Mutex::new(Array::default()));
+   thread_local! {
+      static ALLY_ARRAY: RefCell<Array<i64>> = RefCell::new(Array::default());
+   }
    let data = if FactionRef::from_ffi(id) == *PLAYER.get().unwrap() {
       FACTIONS
          .read()
@@ -2821,9 +2830,10 @@ pub extern "C-unwind" fn faction_getAllies(id: i64) -> *const i64 {
          Vec::new()
       })
    };
-   let mut array = ALLY_ARRAY.lock().unwrap();
-   *array = Array::new(data);
-   array.as_ptr() as *const i64
+   ALLY_ARRAY.with_borrow_mut(|array| {
+      *array = Array::new(data);
+      array.as_ptr() as *const i64
+   })
 }
 
 #[unsafe(no_mangle)]
@@ -2906,11 +2916,14 @@ pub extern "C-unwind" fn faction_generators(id: i64) -> *const naevc::FactionGen
       vec![]
    });
 
-   static GENERATOR_ARRAY: LazyLock<Mutex<Array<naevc::FactionGenerator>>> =
-      LazyLock::new(|| Mutex::new(Array::default()));
-   let mut array = GENERATOR_ARRAY.lock().unwrap();
-   *array = Array::new(generators);
-   array.as_ptr() as *const naevc::FactionGenerator
+   thread_local! {
+      static GENERATOR_ARRAY: RefCell<Array<naevc::FactionGenerator>> =
+         RefCell::new(Array::default());
+   }
+   GENERATOR_ARRAY.with_borrow_mut(|array| {
+      *array = Array::new(generators);
+      array.as_ptr() as *const naevc::FactionGenerator
+   })
 }
 
 /*
