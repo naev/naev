@@ -930,7 +930,7 @@ impl Asteroid {
                   continue;
                }
 
-               let nb = range(0..(m.quantity as f64 * mine_bonus).round().min(1.0) as usize);
+               let nb = range(0..=(m.quantity as f64 * mine_bonus).round().max(0.0) as usize);
                for _ in 0..nb {
                   let pos = self.pos()
                      + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
