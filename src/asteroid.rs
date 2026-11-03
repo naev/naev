@@ -1857,7 +1857,7 @@ pub extern "C" fn asteroids_init() {
          (dims.view_width, dims.view_height)
       };
       let ndebris = density_max as f32
-         * 100.
+         * 10.
          * ((screen_w + 2. * DEBRIS_BUFFER) * (screen_h + 2. * DEBRIS_BUFFER))
          / (renderer::MIN_WIDTH_F32 * renderer::MIN_HEIGHT_F32);
       let mut debris = DEBRIS.lock().unwrap();
