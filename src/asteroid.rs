@@ -2165,14 +2165,20 @@ pub extern "C" fn asteroid_collideQueryIL(
    );
    // TODO probably something better here, but we need to move to Rust and just pass iterators
    // around..
-   static HITS: LazyLock<Mutex<Array<naevc::AsteroidRef>>> = LazyLock::new(Default::default);
-   let mut hits = HITS.lock().unwrap();
-   hits.clear();
-   for a in inner.bvh.overlaps(&query) {
-      // No need for additional checks as only stuff that collides is in the bvh
-      hits.push(a.as_ffi());
+   use std::cell::RefCell;
+   thread_local! {
+      static HITS: RefCell<Array<naevc::AsteroidRef>> =
+         RefCell::new(Array::default());
    }
-   hits.as_ptr()
+   HITS.with(|h| {
+      let mut hits = h.borrow_mut();
+      hits.clear();
+      for a in inner.bvh.overlaps(&query) {
+         // No need for additional checks as only stuff that collides is in the bvh
+         hits.push(a.as_ffi());
+      }
+      hits.as_ptr()
+   })
 }
 
 #[unsafe(no_mangle)]
