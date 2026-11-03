@@ -27,7 +27,7 @@ const vec2         *poly_points( const CollPolyView *view, int *n );
 /* Returns 1 if collision is detected */
 int collide_line_line( double s1x, double s1y, double e1x, double e1y,
                        double s2x, double s2y, double e2x, double e2y,
-                       vec2 *crash );
+                       vec2 crash[2] );
 int collide_circle_polygon( const vec2 *ap, double ar, const CollPolyView *bt,
                             const vec2 *bp, vec2 crash[2] );
 int collide_line_polygon( const vec2 *ap, double ad, double al,
@@ -35,7 +35,7 @@ int collide_line_polygon( const vec2 *ap, double ad, double al,
                           vec2 crash[2] );
 int collide_polygon_polygon( const CollPolyView *at, const vec2 *ap,
                              const CollPolyView *bt, const vec2 *bp,
-                             vec2 *crash );
+                             vec2 crash[2] );
 int collide_line_circle( const vec2 *p1, const vec2 *p2, const vec2 *cc,
                          double cr, vec2 crash[2] );
 int collide_circle_circle( const vec2 *p1, double r1, const vec2 *p2, double r2,
