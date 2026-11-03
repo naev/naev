@@ -154,10 +154,6 @@ static int asteroid_updateSingle( Asteroid *a )
                   ( player.p->nav_asteroid == a->id ) ) ) )
             a->state =
                ASTEROID_FG - 1; /* So it gets turned back into ASTEROID_FG. */
-         else
-            /* This should be thread safe as a single pilot can only target a
-             * single asteroid. */
-            pilot_untargetAsteroid( a->parent, a->id );
          FALLTHROUGH;
       case ASTEROID_XB:
       case ASTEROID_BX:
@@ -1261,9 +1257,6 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
          }
       }
    }
-
-   /* Remove the asteroid target to any pilot. */
-   pilot_untargetAsteroid( a->parent, a->id );
 
    /* Make it respawn elsewhere */
    asteroid_init( a, field );

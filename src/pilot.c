@@ -3317,23 +3317,6 @@ ntime_t pilot_hyperspaceDelay( const Pilot *p )
 }
 
 /**
- * @brief Loops over pilot stack to remove an asteroid as target.
- *
- *    @param anchor Asteroid anchor the asteroid belongs to.
- *    @param asteroid Asteroid.
- */
-void pilot_untargetAsteroid( int anchor, AsteroidRef asteroid )
-{
-   for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
-      Pilot *p = pilot_stack[i];
-      if ( ( p->nav_asteroid == asteroid ) && ( p->nav_anchor == anchor ) ) {
-         p->nav_asteroid = ASTEROID_NULL;
-         p->nav_anchor   = -1;
-      }
-   }
-}
-
-/**
  * @brief Checks to see how many of an outfit a pilot has.
  */
 int pilot_numOutfit( const Pilot *p, const Outfit *o )

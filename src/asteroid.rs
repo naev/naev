@@ -758,10 +758,6 @@ impl Asteroid {
                {
                   // Lower state so it gets incremented
                   self.state = State::prev(self.state);
-               } else {
-                  unsafe {
-                     naevc::pilot_untargetAsteroid(self.parent as i32, self.id.as_ffi());
-                  }
                }
                self.timer_max = 1.0 + 3.0 * rng::rng::<f64>();
                self.timer = self.timer_max;
@@ -927,11 +923,6 @@ impl Asteroid {
             let quantity = range(1..=4);
             crate::gatherable::Gatherable::add(m.material, pos, vel, ttl, quantity, false);
          }
-      }
-
-      // Remove target
-      unsafe {
-         naevc::pilot_untargetAsteroid(self.parent as i32, self.id.as_ffi());
       }
 
       // Make it respawns
