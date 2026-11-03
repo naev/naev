@@ -1684,9 +1684,12 @@ impl UserData for FactionRef {
        *    @luatparam[opt=false] boolean b Whether or not to set as known.
        * @luafunc setKnown
        */
-      methods.add_method("setKnown", |_, this, known: bool| -> mlua::Result<()> {
-         Ok(this.with(|fct| fct.set_known(known))?)
-      });
+      methods.add_method(
+         "setKnown",
+         |_, this, known: Option<bool>| -> mlua::Result<()> {
+            Ok(this.with(|fct| fct.set_known(known.unwrap_or(false)))?)
+         },
+      );
       /*@
        * @brief Checks to see if a faction is invisible the player.
        *
