@@ -2025,7 +2025,7 @@ pub extern "C" fn ast_test_collide(
          bt.intersect_polygon(at, ap - bp)
       }
    };
-   for (k, h) in hit.iter().enumerate() {
+   for (k, h) in hit.iter().take(2).enumerate() {
       crash[k] = *h + bp;
    }
    hit.len() as c_int
