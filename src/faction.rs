@@ -181,7 +181,7 @@ impl FactionRef {
 
    pub fn with<F, R>(&self, f: F) -> Result<R>
    where
-      F: Fn(&Faction) -> R,
+      F: FnOnce(&Faction) -> R,
    {
       let factions = FACTIONS.read().unwrap();
       match factions.get(*self) {
@@ -192,7 +192,7 @@ impl FactionRef {
 
    pub fn with2<F, R>(&self, other: &Self, f: F) -> Result<R>
    where
-      F: Fn(&Faction, &Faction) -> R,
+      F: FnOnce(&Faction, &Faction) -> R,
    {
       let factions = FACTIONS.read().unwrap();
       if let Some(fct1) = factions.get(*self)
