@@ -2769,7 +2769,11 @@ pub extern "C-unwind" fn faction_getEnemies(id: i64) -> *const i64 {
          .unwrap()
          .iter()
          .filter_map(|(id, fct)| {
-            if fct.player() < 0.0 {
+            let threshold = match &fct.api {
+               Some(api) => api.hostile_at,
+               None => 0.0,
+            };
+            if fct.player().round() <= threshold {
                Some(id.as_ffi())
             } else {
                None
