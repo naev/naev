@@ -336,17 +336,11 @@ impl Value {
 }
 impl Value {
    pub fn is_press(&self) -> bool {
-      match self {
-         Value::Release => true,
-         _ => false,
-      }
+      matches!(self, Value::Press)
    }
 
    pub fn is_release(&self) -> bool {
-      match self {
-         Value::Release => true,
-         _ => false,
-      }
+      matches!(self, Value::Release)
    }
 }
 

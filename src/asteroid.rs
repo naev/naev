@@ -1299,7 +1299,7 @@ impl UserData for LuaAsteroid {
             } else {
                let mut asteroids = Vec::new();
                if let Some(cur_system) = crate::system::cur() {
-                  for (_, ast) in cur_system.asteroids().iter().enumerate() {
+                  for ast in cur_system.asteroids() {
                      let inner = get_inner(ast);
                      for asteroid in inner.asteroids.values() {
                         asteroids.push(asteroid.as_lua())
@@ -2180,7 +2180,7 @@ pub extern "C" fn asteroids_inField(p: *const naevc::vec2) -> c_int {
       }
 
       // Check if in asteroid field.
-      for (i, ast) in cur_system.asteroids().into_iter().enumerate() {
+      for (i, ast) in cur_system.asteroids().iter().enumerate() {
          let ap = Vector2::new(ast.pos.x, ast.pos.y);
          if (p - ap).norm_squared() <= ast.radius * ast.radius {
             return i as c_int;
