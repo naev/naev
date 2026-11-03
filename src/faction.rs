@@ -2810,7 +2810,7 @@ pub extern "C-unwind" fn faction_getAllies(id: i64) -> *const i64 {
                Some(api) => api.friendly_at,
                None => f32::INFINITY,
             };
-            if fct.player() > friendly_at {
+            if fct.player().round() >= friendly_at {
                Some(id.as_ffi())
             } else {
                None
