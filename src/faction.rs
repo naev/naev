@@ -1801,6 +1801,18 @@ impl UserData for FactionRef {
                   )));
                }
             };
+
+            // Guard against recreation and overwriting static factions.
+            if let Some((k, d)) = data.iter().find(|(_, d)| d.data.name == name) {
+               if d.data.f_dynamic {
+                  return Ok(k);
+               }
+               return Err(mlua::Error::RuntimeError(format!(
+                  "Faction '{name}' already exists and is not a dynamic faction."
+               )));
+            }
+
+            // Time to add it
             let params = params.unwrap_or_else(|| lua.create_table().unwrap());
             let (mut fd, api) = if let Some(reference) = base {
                let fct = &data.get(reference).context("faction not found")?;
@@ -1837,6 +1849,8 @@ impl UserData for FactionRef {
                      player_def,
                      allies,
                      enemies,
+                     neutrals: base.neutrals.clone(),
+                     local_th: base.local_th,
                      // TODO more stuff
                      f_static: true,
                      f_known: base.f_known,
@@ -1849,12 +1863,20 @@ impl UserData for FactionRef {
                   fct.api.clone(),
                )
             } else {
-               let ai: String = params.get("ai").unwrap_or(String::new());
+               let ai = params.get::<Option<String>>("ai")?.unwrap_or_default();
+               let player_def = params.get::<Option<f32>>("player")?.unwrap_or(0.0);
+               let fcolour = params
+                  .get::<Option<Colour>>("colour")?
+                  .unwrap_or(colour::WHITE);
                (
                   FactionData {
                      name: name.clone(),
                      displayname: display,
                      ai,
+                     player_def,
+                     colour: fcolour,
+                     local_th: 10.0,
+                     f_known: true,
                      f_dynamic: true,
                      f_static: true,
                      f_invisible: true,
@@ -1871,19 +1893,6 @@ impl UserData for FactionRef {
                f_invisible: true,
             });
 
-            // We have to first see if it exists, and if so, we just update that
-            for (k, d) in data.iter_mut() {
-               if d.data.name == name {
-                  fd.id = k;
-                  *d = Faction {
-                     api,
-                     c: FactionC::new(&fd),
-                     standing,
-                     data: fd,
-                  };
-                  return Ok(k);
-               }
-            }
             // Not found so we have to create a new one.
             let id = data.insert_with_key(|k| {
                fd.id = k;
