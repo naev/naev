@@ -1892,15 +1892,18 @@ pub extern "C" fn asteroid_initAnchor(anc: *mut naevc::AsteroidAnchor) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn asteroid_freeAnchor(anc: *mut naevc::AsteroidAnchor) {
-   let anc = unsafe { &*anc };
+   let anc = unsafe { &mut *anc };
    unsafe {
       let _ = Array::from_ptr(anc.groups);
       let _ = Array::from_ptr(anc.groupsw);
    }
+   anc.groups = std::ptr::null_mut();
+   anc.groupsw = std::ptr::null_mut();
    if !anc.inner.is_null() {
       unsafe {
-         let _ = Box::from_raw(anc.inner);
+         drop(Box::from_raw(anc.inner as *mut AnchorInner));
       }
+      anc.inner = std::ptr::null_mut();
    }
 }
 
@@ -2081,15 +2084,6 @@ pub extern "C" fn asteroid_closestPilot(
          k.as_ffi()
       }
       None => AsteroidRef::null().as_ffi(),
-   }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn asteroid_inField(p: *const Vector2<f64>) -> c_int {
-   let p = unsafe { *p };
-   match infield(p) {
-      Some(v) => v as c_int,
-      None => -1,
    }
 }
 
