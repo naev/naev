@@ -1404,7 +1404,13 @@ impl UserData for LuaAsteroid {
             }
             if let Some(param) = param {
                match param {
-                  Either::Left(parent) => get_from_field(parent - 1),
+                  Either::Left(parent) => match parent.checked_sub(1) {
+                     Some(p) => get_from_field(p),
+                     None => Err(mlua::Error::RuntimeError(format!(
+                        "unknown asteroid field id {}",
+                        parent
+                     ))),
+                  },
                   Either::Right(param) => match param {
                      Either::Left(v) => get_from_pos(v.into()),
                      Either::Right(ud) => match crate::pilot::from_lua(lua, &ud) {
