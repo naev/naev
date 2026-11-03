@@ -909,39 +909,23 @@ impl Asteroid {
          naevc::lua_settop(naevc::naevL, -(1) - 1);
       } // #define of lua_pop
 
-      // Do the drop
-      if max_rarity >= 0 {
-         let mut ndrops = 0;
-         for m in at.material.iter() {
-            if m.rarity <= max_rarity {
-               ndrops += 1;
-            }
-         }
-         if ndrops > 0 {
-            let r = rng::<f32>();
-            let prob = 1.0 / ndrops as f32;
-            let mut accum = 0.0;
-            for m in at.material.iter() {
-               if m.rarity > max_rarity {
-                  continue;
-               }
-               accum += prob;
-               if r > accum {
-                  continue;
-               }
-
-               let nb = range(0..=(m.quantity as f64 * mine_bonus).round().max(0.0) as usize);
-               for _ in 0..nb {
-                  let pos = self.pos()
-                     + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
-                  let vel = self.vel()
-                     + Vector2::new(20.0 * rng::<f64>() - 10.0, 20.0 * rng::<f64>() - 10.0);
-                  let ttl = 50.0 + rng::<f64>() * 10.0;
-                  let quantity = range(1..=4);
-                  crate::gatherable::Gatherable::add(m.material, pos, vel, ttl, quantity, false);
-               }
-               break;
-            }
+      // Check potential loot drops
+      use rand::seq::IteratorRandom;
+      if let Some(m) = at
+         .material
+         .iter()
+         .filter(|m| m.rarity <= max_rarity)
+         .choose(&mut rand::rng())
+      {
+         let nb = range(0..=(m.quantity as f64 * mine_bonus).round().max(0.0) as usize);
+         for _ in 0..nb {
+            let pos =
+               self.pos() + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
+            let vel =
+               self.vel() + Vector2::new(20.0 * rng::<f64>() - 10.0, 20.0 * rng::<f64>() - 10.0);
+            let ttl = 50.0 + rng::<f64>() * 10.0;
+            let quantity = range(1..=4);
+            crate::gatherable::Gatherable::add(m.material, pos, vel, ttl, quantity, false);
          }
       }
 
