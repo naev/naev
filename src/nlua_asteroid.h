@@ -23,6 +23,6 @@ int nlua_loadAsteroid( nlua_env *env );
  */
 LuaAsteroid_t lua_toasteroid( lua_State *L, int ind );
 LuaAsteroid_t luaL_checkasteroid( lua_State *L, int ind );
-LuaAsteroid_t lua_pushasteroid( lua_State *L, LuaAsteroid_t vec );
+LuaAsteroid_t lua_pushasteroid( lua_State *L, LuaAsteroid_t ast );
 Asteroid     *luaL_validasteroid( lua_State *L, int ind );
 int           lua_isasteroid( lua_State *L, int ind );
