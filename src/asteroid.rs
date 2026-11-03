@@ -2031,7 +2031,7 @@ pub extern "C" fn ast_test_collide(
    for (k, h) in hit.iter().take(2).enumerate() {
       crash[k] = *h + bp;
    }
-   hit.len() as c_int
+   hit.len().min(2) as c_int
 }
 
 #[unsafe(no_mangle)]
