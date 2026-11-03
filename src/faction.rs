@@ -874,7 +874,7 @@ impl FactionData {
                   }
                }
             }
-            // Temporary scaoffolding stuff
+            // Temporary scaffolding stuff
             "allies" => {
                for node in node.children() {
                   if !node.is_element() {
@@ -1006,7 +1006,7 @@ pub fn load() -> Result<()> {
    let mut load = SecondaryMap::new();
    let mut fctmap: HashMap<String, FactionRef> = HashMap::new();
 
-   // Add play faction before parsing files
+   // Add player faction before parsing files
    std::iter::once((
       FactionData {
          name: String::from(PLAYER_FACTION_NAME),
@@ -1052,7 +1052,7 @@ pub fn load() -> Result<()> {
       fctmap.insert(name, id);
    });
 
-   // Seconda pass, social and generators
+   // Second pass, social and generators
    for (id, fd) in data.iter_mut() {
       let fl = load.get(id).unwrap();
       // Load generators
