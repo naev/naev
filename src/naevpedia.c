@@ -13,7 +13,6 @@
 #include "log.h"
 #include "nlua.h"
 #include "nlua_bkg.h"
-#include "nlua_linopt.h"
 #include "nlua_music.h"
 #include "nlua_tk.h"
 
