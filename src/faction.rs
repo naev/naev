@@ -1684,7 +1684,7 @@ impl UserData for FactionRef {
        *    @luatparam[opt=false] boolean b Whether or not to set as known.
        * @luafunc setKnown
        */
-      methods.add_method_mut("setKnown", |_, this, known: bool| -> mlua::Result<()> {
+      methods.add_method("setKnown", |_, this, known: bool| -> mlua::Result<()> {
          Ok(this.with(|fct| fct.set_known(known))?)
       });
       /*@
@@ -1917,7 +1917,7 @@ impl UserData for FactionRef {
        * from the faction instead of adding it.
        * @luafunc dynAlly
        */
-      methods.add_method_mut(
+      methods.add_method(
          "dynAlly",
          |_, this, (ally, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
@@ -1956,7 +1956,7 @@ impl UserData for FactionRef {
        * from the faction instead of adding it.
        * @luafunc dynEnemy
        */
-      methods.add_method_mut(
+      methods.add_method(
          "dynEnemy",
          |_, this, (enemy, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
