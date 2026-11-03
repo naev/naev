@@ -1305,7 +1305,7 @@ impl UserData for LuaAsteroid {
             if let Some(field) = field {
                if let Some(cur_system) = crate::system::cur() {
                   let fields = cur_system.asteroids();
-                  if let Some(field) = fields.get(field - 1) {
+                  if let Some(field) = field.checked_sub(1).and_then(|f| fields.get(f)) {
                      let inner = get_inner(field);
                      Ok(inner
                         .asteroids
@@ -1716,8 +1716,9 @@ pub extern "C-unwind" fn luaL_validasteroid(
       }
       ast
    };
-   if let Some(cur_system) = crate::system::cur_mut() {
-      let field = &cur_system.asteroids()[ast.parent as usize];
+   if let Some(cur_system) = crate::system::cur_mut()
+      && let Some(field) = cur_system.asteroids().get(ast.parent as usize)
+   {
       let inner = get_inner(field);
       match inner.asteroids.get(AsteroidRef::from_ffi(ast.id)) {
          Some(ast) => ast,
@@ -1871,8 +1872,10 @@ pub extern "C" fn asteroids_init() {
          / (renderer::MIN_WIDTH_F32 * renderer::MIN_HEIGHT_F32);
       let mut debris = DEBRIS.lock().unwrap();
       debris.clear();
-      for _ in 0..ndebris.max(0.0).round() as usize {
-         debris.push(Debris::new());
+      if !DEBRIS_GFX.read().unwrap().is_empty() {
+         for _ in 0..ndebris.max(0.0).round() as usize {
+            debris.push(Debris::new());
+         }
       }
    }
 }
