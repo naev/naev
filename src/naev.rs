@@ -222,7 +222,7 @@ fn naevmain() -> Result<()> {
       ),
       (sdl::properties::names::APP_METADATA_TYPE_STRING, "game"),
    ] {
-      if let Err(e) = sdl::set_app_metadata_property(p.value, Some(v)) {
+      if let Err(e) = sdl::set_app_metadata_property(&p, Some(v)) {
          warn_err!(e);
       }
    }
