@@ -2253,7 +2253,7 @@ pub extern "C-unwind" fn faction_isDynamic(id: i64) -> i64 {
    })
    .unwrap_or({
       //warn_err!(err);
-      1
+      0
    })
 }
 
