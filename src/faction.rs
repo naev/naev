@@ -1911,7 +1911,7 @@ impl UserData for FactionRef {
          "dynAlly",
          |_, this, (ally, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
-            let _ = this.with_mut(|fct| {
+            this.with_mut(|fct| {
                if !fct.data.f_dynamic {
                   return Err(mlua::Error::RuntimeError(
                      "Can only add allies to dynamic factions".to_string(),
@@ -1923,7 +1923,7 @@ impl UserData for FactionRef {
                   fct.add_ally(ally);
                }
                Ok(())
-            })?;
+            })??;
             let data = match FACTIONS.try_write() {
                Ok(d) => d,
                Err(e) => {
@@ -1950,7 +1950,7 @@ impl UserData for FactionRef {
          "dynEnemy",
          |_, this, (enemy, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
-            let _ = this.with_mut(|fct| {
+            this.with_mut(|fct| {
                if !fct.data.f_dynamic {
                   return Err(mlua::Error::RuntimeError(
                      "Can only add allies to dynamic factions".to_string(),
@@ -1962,7 +1962,7 @@ impl UserData for FactionRef {
                   fct.add_enemy(enemy);
                }
                Ok(())
-            })?;
+            })??;
             let data = match FACTIONS.try_write() {
                Ok(d) => d,
                Err(e) => {
@@ -2188,7 +2188,7 @@ where
 }
 
 #[unsafe(no_mangle)]
-pub extern "C-unwind" fn faction_isStatic(id: i64) -> i64 {
+pub extern "C-unwind" fn faction_isStatic(id: i64) -> c_int {
    faction_c_with(id, |fct| match fct.fixed() {
       true => 1,
       false => 0,
@@ -2200,7 +2200,7 @@ pub extern "C-unwind" fn faction_isStatic(id: i64) -> i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C-unwind" fn faction_isInvisible(id: i64) -> i64 {
+pub extern "C-unwind" fn faction_isInvisible(id: i64) -> c_int {
    faction_c_with(id, |fct| match fct.invisible() {
       true => 1,
       false => 0,
@@ -2224,7 +2224,7 @@ pub extern "C-unwind" fn faction_setInvisible(id: i64, state: i64) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C-unwind" fn faction_isKnown(id: i64) -> i64 {
+pub extern "C-unwind" fn faction_isKnown(id: i64) -> c_int {
    faction_c_with(id, |fct| match fct.known() {
       true => 1,
       false => 0,
