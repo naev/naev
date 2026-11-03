@@ -424,9 +424,8 @@ static void gui_renderSpobTarget( void )
       gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
    }
    if ( player.p->nav_asteroid != ASTEROID_NULL ) {
-      const AsteroidAnchor *field =
-         &cur_system->asteroids[player.p->nav_anchor];
-      const Asteroid *ast = ast_get( field, player.p->nav_asteroid );
+      const Asteroid *ast =
+         ast_getField( player.p->nav_anchor, player.p->nav_asteroid );
       if ( ast != NULL ) {
          c              = &cWhite;
          const Solid *s = ast_solid( ast );
@@ -434,6 +433,10 @@ static void gui_renderSpobTarget( void )
          y              = s->pos.y;
          r              = ast_gfx_width( ast ) * 0.5;
          gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
+      } else {
+         // Not necessary, but clear target
+         player.p->nav_anchor   = -1;
+         player.p->nav_asteroid = ASTEROID_NULL;
       }
    }
 }
