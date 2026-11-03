@@ -1548,36 +1548,49 @@ impl UserData for FactionRef {
          "applyLocalThreshold",
          |lua, this, sys: mlua::Value| -> mlua::Result<()> {
             let systems = crate::system::get_all_mut();
-            let sysid = crate::system::from_lua_index(lua, &sys)? as usize;
-            let sys = unsafe { naevc::system_getIndex(sysid as i32) };
+            let nsystems = systems.len();
+            let sysid = usize::try_from(crate::system::from_lua_index(lua, &sys)?)
+               .ok()
+               .filter(|&i| i < nsystems)
+               .ok_or_else(|| mlua::Error::RuntimeError("invalid system".to_string()))?;
             let (th, usehidden) =
                this.with(|fct| (fct.data.local_th as f64, fct.data.f_useshiddenjumps))?;
+            // Ignore invalid thresholds
+            if !th.is_finite() || th < 0.0 {
+               return Ok(());
+            }
             let fid = this.as_ffi();
 
-            let srep = unsafe { naevc::system_getFactionPresence(sys, fid) };
-            if srep.is_null() {
-               return Ok(());
-            }
-            let srep = unsafe { &*srep };
-            if srep.value <= 0. {
-               return Ok(());
-            }
+            // Take a reference to reputation to avoid double &mut borrowing
+            let rep = {
+               let srep =
+                  unsafe { naevc::system_getFactionPresence(systems[sysid].as_ptr_mut(), fid) };
+               if srep.is_null() {
+                  return Ok(());
+               }
+               let srep = unsafe { &*srep };
+               if srep.value <= 0. || !srep.local.is_finite() {
+                  return Ok(());
+               }
+               srep.local
+            };
 
-            let rep = srep.local;
             let mut n = 0.0;
-            let mut done = Vec::from([sysid]);
-            let mut queuea = Vec::from([sysid]);
+            let mut done = vec![false; nsystems];
+            done[sysid] = true;
+            let mut queuea = vec![sysid];
             let mut queueb = Vec::<usize>::new();
             // We want to expand out one jump at a time
             while !queuea.is_empty() {
+               let (lo, hi) = (rep - n * th, rep + n * th);
                // Clear first queue
                for i in queuea.drain(..) {
                   let qsys = &mut systems[i];
 
                   let srep = unsafe { naevc::system_getFactionPresence(qsys.as_ptr_mut(), fid) };
-                  if !srep.is_null() && th.is_finite() {
+                  if !srep.is_null() {
                      let srep = unsafe { &mut *srep };
-                     srep.local = srep.local.clamp(rep - n * th, rep + n * th);
+                     srep.local = srep.local.clamp(lo, hi);
                   }
 
                   for j in qsys.jumps() {
@@ -1585,16 +1598,18 @@ impl UserData for FactionRef {
                         continue;
                      }
 
-                     let nsys = unsafe { &*j.target };
-                     let nsysid = nsys.id as usize;
-                     if done.contains(&nsysid) {
+                     if j.target.is_null() {
                         continue;
                      }
+                     let nsysid = unsafe { (*j.target).id } as usize;
+                     if nsysid >= nsystems || done[nsysid] {
+                        continue;
+                     }
+                     done[nsysid] = true;
 
-                     if unsafe { naevc::system_getPresence(nsys, fid) } > 0. {
+                     if unsafe { naevc::system_getPresence(j.target, fid) } > 0. {
                         queueb.push(nsysid);
                      }
-                     done.push(nsysid);
                   }
                }
                // Add jump, swap buffers, and expand again
