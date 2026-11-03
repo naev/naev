@@ -2344,6 +2344,14 @@ void player_targetPrev( int mode )
  */
 void player_targetClear( void )
 {
+   // If the asteroid target is invalid, we should first clear it
+   if ( ( player.p->nav_asteroid != ASTEROID_NULL ) &&
+        ( ast_getField( player.p->nav_anchor, player.p->nav_asteroid ) !=
+          NULL ) ) {
+      player.p->nav_anchor   = -1;
+      player.p->nav_asteroid = ASTEROID_NULL;
+   }
+
    gui_forceBlink();
    if ( player.p->target != PLAYER_ID )
       player_targetSet( PLAYER_ID );
