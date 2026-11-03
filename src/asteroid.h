@@ -107,7 +107,7 @@ AsteroidState   ast_state( const Asteroid *ast );
 const Solid    *ast_solid( const Asteroid *ast );
 double          ast_gfx_width( const Asteroid *ast );
 int             ast_test_collide( const Asteroid *ast, const CollPolyView *at,
-                                  const vec2 *ap, vec2 *crash );
+                                  const vec2 *ap, vec2 crash[2] );
 int             ast_scanned( const Asteroid *ast );
 void            ast_set_scanned( const Asteroid *ast, int set );
 CollPolyView   *ast_poly( const Asteroid *ast );
