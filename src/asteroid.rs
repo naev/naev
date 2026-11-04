@@ -1720,7 +1720,23 @@ pub extern "C-unwind" fn lua_isasteroid(L: *mut mlua::lua_State, idx: c_int) -> 
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn lua_pushasteroid(L: *mut mlua::lua_State, ast: naevc::LuaAsteroid_t) {
    unsafe {
+      #[cfg(debug_assertions)]
+      {
+         let naev_l = naevc::naevL;
+         eprintln!(
+            "pushasteroid L={:p} naevL={:p} L==naevL:{} top={}",
+            L,
+            naev_l,
+            L as usize == naev_l as usize,
+            ffi::lua_gettop(L)
+         );
+         if ffi::lua_checkstack(L, 8) == 0 {
+            eprintln!("pushasteroid: lua_checkstack failed");
+         }
+      }
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_asteroid".as_ptr());
+      #[cfg(debug_assertions)]
+      eprintln!("push_asteroid type = {}", ffi::lua_type(L, -1));
       ffi::lua_pushinteger(L, ast.parent as i64);
       ffi::lua_pushinteger(L, ast.id);
       ffi::lua_call(L, 2, 1);

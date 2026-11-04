@@ -732,8 +732,21 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
       naevc::__NLUA_CURENV = env as *const naevc::nlua_env;
       prev_env
    };
+   let top0 = unsafe { mlua::ffi::lua_gettop(NLUA.lua.state()) };
    let ret = match wrap(env, nargs, nresults) {
-      Ok(false) => 0,
+      Ok(false) => {
+         #[cfg(debug_assertions)]
+         {
+            let top1 = unsafe { mlua::ffi::lua_gettop(NLUA.lua.state()) };
+            let expected = top0 - (nargs + 1) + if nresults < 0 { 0 } else { nresults };
+            if top1 != expected {
+               warn!(
+                  "nlua_pcall stack imbalance: top0={top0} top1={top1} expected={expected} nargs={nargs} nresults={nresults}"
+               );
+            }
+         }
+         0
+      }
       Ok(true) => {
          unsafe {
             NLUA.lua.exec_raw_lua(|state| {
