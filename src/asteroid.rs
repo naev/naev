@@ -2104,7 +2104,7 @@ pub extern "C" fn asteroids_computeInternals(a: *mut naevc::AsteroidAnchor) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn asteroid_hit(
+pub extern "C-unwind" fn asteroid_hit(
    a: *mut Asteroid,
    dmg: *const naevc::Damage,
    max_rarity: i32,
@@ -2128,7 +2128,7 @@ pub extern "C" fn asteroid_hit(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonus: f64) {
+pub extern "C-unwind" fn asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonus: f64) {
    let a = unsafe { &mut *a };
    a.explode(max_rarity, mine_bonus);
 }
