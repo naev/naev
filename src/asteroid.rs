@@ -1500,7 +1500,7 @@ impl UserData for LuaAsteroid {
        * @brief Gets the velocity of an asteroid.
        *
        *    @luatparam Asteroid a Asteroid to get velocity of.
-       *    @luatreturn Vector Position of the asteroid.
+       *    @luatreturn Vector Velocity of the asteroid.
        * @luafunc vel
        */
       methods.add_method("vel", |_, this, ()| -> mlua::Result<Vec2> {
@@ -1595,11 +1595,17 @@ impl UserData for LuaAsteroid {
        */
       methods.add_method("setArmour", |_, this, armour: f64| -> mlua::Result<()> {
          Ok(this.with_mut(|a| {
+            if a.state != State::Fg {
+               return Err(mlua::Error::RuntimeError(
+                  "trying to set armour of asteroid not in foreground".to_string(),
+               ));
+            }
             a.armour = armour;
             if a.armour <= 0. {
                a.explode(-1, 0.);
             }
-         })?)
+            Ok(())
+         })??)
       });
 
       /*@
@@ -1703,9 +1709,17 @@ pub extern "C-unwind" fn luaL_validasteroid(
       let inner = get_inner(field);
       match inner.asteroids.get(AsteroidRef::from_ffi(ast.id)) {
          Some(ast) => ast,
-         None => std::ptr::null(),
+         None => {
+            unsafe {
+               ffi::luaL_error(L, c"Asteroid is invalid".as_ptr());
+            }
+            std::ptr::null()
+         }
       }
    } else {
+      unsafe {
+         ffi::luaL_error(L, c"Asteroid is invalid".as_ptr());
+      }
       std::ptr::null()
    }
 }
