@@ -926,7 +926,7 @@ static int pilotL_explode( lua_State *L )
    pilot_delete( p );
 
    lua_pushboolean( L, 1 );
-   return 0;
+   return 1;
 }
 
 static void clearSelect( Pilot *const *pilot_stack, FactionRef f )
@@ -1666,7 +1666,10 @@ static int pilotL_scandone( lua_State *L )
    Pilot *p = luaL_validpilot( L, 1 );
    if ( pilot_isPlayer( p ) ) {
       const Pilot *t = pilot_getTarget( p );
-      lua_pushboolean( L, pilot_isFlag( t, PILOT_PLAYER_SCANNED ) );
+      if ( t != NULL )
+         lua_pushboolean( L, pilot_isFlag( t, PILOT_PLAYER_SCANNED ) );
+      else
+         lua_pushboolean( L, 0 );
    } else
       lua_pushboolean( L, pilot_ewScanCheck( p ) );
    return 1;
@@ -2703,11 +2706,10 @@ static int pilotL_outfitToggle( lua_State *L )
    if ( lua_istable( L, 2 ) ) {
       n = 0;
       lua_pushnil( L );
-      while ( lua_next( L, 1 ) != 0 ) {
+      while ( lua_next( L, 2 ) != 0 ) {
          n += outfitToggle( L, p, luaL_checkinteger( L, -1 ) - 1, activate );
          lua_pop( L, 1 );
       }
-      lua_pop( L, 1 );
    } else
       n = outfitToggle( L, p, luaL_checkinteger( L, 2 ) - 1, activate );
 
