@@ -330,8 +330,8 @@ git push origin spawnspawnspawn:refs/for/main/spawnMethod \
   -o force-push="true"
 ```
 
-where `spawnspawnspawn` is the name of the local branch the commit
-was done in.
+where `spawnspawnspawn` is the name of the local branch the commit was
+done in.
 
 
 ## 7 -  Crashes and Problems
