@@ -7,10 +7,8 @@
  <done>Dvaered Escape</done>
  <location>Bar</location>
  <faction>Dvaered</faction>
- <cond>var.peek("dv_pirate_debt") == false</cond>
  <notes>
   <campaign>Frontier Invasion</campaign>
-  <done_evt name="Repay General Klank"/>
  </notes>
 </mission>
 --]]
