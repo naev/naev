@@ -652,7 +652,7 @@ mod tests {
    }
 
    #[test]
-   fn C_interopt_back_and_forth() {
+   fn c_interopt_back_and_forth() {
       let mut arr = Array::new(Vec::<i32>::new());
       for i in 0..5 {
          arr.push(i);
