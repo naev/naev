@@ -316,11 +316,11 @@ because Weblate does the same job more carefully.
 
 Naev's repository is very large. Most contributors don't want, or cannot
 use a fork for submitting pull requests. Codeberg will typically disallow
-you to push anything to your fork after a month. This is why the dev team
-recommends, according to Codeberg's own recommendations, to use
+you to push anything to your fork after a month unless you get a size
+exception. This is why the dev team encourages to use the recommended
 [Agit workflow](https://forgejo.org/docs/latest/user/git-cli/agit-support/).
 
-For example, [This PR](https://codeberg.org/naev/naev/pulls/3461) was
+For example, [this PR](https://codeberg.org/naev/naev/pulls/3461) was
 created with the following command:
 
 ``` bash
