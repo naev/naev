@@ -18,12 +18,15 @@ for k,v in ipairs(lf.getDirectoryItems("scripts/equipopt/fighterbays")) do
    table.insert( fighterbays_data, fb )
 end
 table.sort( fighterbays_data, function (a, b)
-   -- Lower priority ru later to overwrite
+   -- Lower priority to later to overwrite
    return a.priority > b.priority
 end )
 local fighterbays = {}
 for k,v in ipairs(fighterbays_data) do
-   fighterbays[ v.ship:nameRaw() ] = v
+   -- When using plugins, ship may be nil as we use ship.exists
+   if v.ship then
+      fighterbays[ v.ship:nameRaw() ] = v
+   end
 end
 
 -- Create caches and stuff

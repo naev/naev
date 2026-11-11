@@ -2,19 +2,19 @@ local fb = require "equipopt.fighterbays"
 local o -- Lazy load the outfits
 return {
    priority = 10,
-   ship = ship.get("Proteron Dalton"),
+   ship = ship.exists("Proteron Dalton"),
    equip = function ( p )
       -- Lazy loading
       if not o then
          o = {
             -- Cores
-            systems = outfit.get("Unicorp PT-16 Core System"),
-            engines = outfit.get("Unicorp Hawk 160 Engine"),
-            hull = outfit.get("S&K Skirmish Plating"),
+            systems = outfit.exists("Unicorp PT-16 Core System"),
+            engines = outfit.exists("Unicorp Hawk 160 Engine"),
+            hull = outfit.exists("S&K Skirmish Plating"),
             -- Other outfits
-            outfit.get("Light Pulse Cannon"),
-            outfit.get("Light Pulse Cannon"),
-            outfit.get("Reactor Class I"),
+            outfit.exists("Light Pulse Cannon"),
+            outfit.exists("Light Pulse Cannon"),
+            outfit.exists("Reactor Class I"),
          }
       end
       fb.equip( p, o )

@@ -3,14 +3,14 @@ local bioship = require "bioship"
 local o -- Lazy load the outfits
 return {
    priority = 10,
-   ship = ship.get("Soromid Reaver"),
+   ship = ship.exists("Soromid Reaver"),
    equip = function ( p )
       -- Lazy loading
       if not o then
          o = {
-            outfit.get("Plasma Blaster MK2"),
-            outfit.get("Reactor Class I"),
-            outfit.get("Plasteel Plating"),
+            outfit.exists("Plasma Blaster MK2"),
+            outfit.exists("Reactor Class I"),
+            outfit.exists("Plasteel Plating"),
          }
       end
       bioship.simulate( p, bioship.maxstage( p ), {

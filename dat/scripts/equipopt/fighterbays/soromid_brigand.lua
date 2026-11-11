@@ -1,15 +1,15 @@
 local fb = require "equipopt.fighterbays"
 local bioship = require "bioship"
 local o -- Lazy load the outfits
-local NAVIUMNAL = outfit.get("Naviumnal Brigand Bay")
+local NAVIUMNAL = outfit.exists("Naviumnal Brigand Bay")
 return {
    priority = 10,
-   ship = ship.get("Soromid Brigand"),
+   ship = ship.exists("Soromid Brigand"),
    equip = function ( p )
       -- Lazy loading
       if not o then
          o = {
-            outfit.get("Plasma Blaster MK1"),
+            outfit.exists("Plasma Blaster MK1"),
          }
       end
       if fb.spawnerOutfit(p) == NAVIUMNAL then
