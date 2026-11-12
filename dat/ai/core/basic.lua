@@ -1167,7 +1167,8 @@ end
 -- Flies back and tries to either dock or stops when back at leader
 -- luacheck: globals flyback (AI Task functions passed by name)
 function flyback( dock )
-   local target = ai.pilot():leader()
+   local p= ai.pilot()
+   local target = p:leader()
    if not target or not target:exists() then
       ai.poptask()
       return
@@ -1184,6 +1185,7 @@ function flyback( dock )
    else -- Time to dock
       if dock then
          ai.dock(target)
+         naev.trigger("ai_dock", {p, target} )
       else
          ai.poptask()
       end
