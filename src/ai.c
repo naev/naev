@@ -1458,6 +1458,10 @@ static int aiL_subtaskdata( lua_State *L )
  */
 static int aiL_pilot( lua_State *L )
 {
+   if ( cur_pilot == NULL ) {
+      NLUA_ERROR( L, "cur_pilot is not set." );
+      return 0;
+   }
    lua_pushpilot( L, cur_pilot->id );
    return 1;
 }
