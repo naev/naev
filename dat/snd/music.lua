@@ -68,6 +68,7 @@ local music_vol = naev.conf().music -- music global volume
 local function tracks_stop ()
    local remove = {}
    for k,v in ipairs( tracks ) do
+      local pos = v.m:tell() -- store current position before stopping
       v.fade = -1
       v.paused = nil
       if v.elapsed <= 0 or v.m:isPaused() then
@@ -77,7 +78,8 @@ local function tracks_stop ()
       -- Mark when it ended
       local situ = v.situation
       if situ and last_track_type[situ].name==v.name then
-         last_track_type[situ].elapsed = v.elapsed
+         -- Can't use v.elapsed directly as it includes delay and fade time
+         last_track_type[situ].elapsed = pos
       end
    end
    for k=#remove, 1, -1 do
