@@ -564,7 +564,7 @@ function optimize.optimize( p, cores, outfit_list, params )
                table.insert( has_outfits, o )
                -- Check to see if it is in the similar list
                for spos,s in ipairs(same_list) do
-                  if o==s then
+                  if o:nameRaw()==s then
                      outfitpos[ #has_outfits ] = spos
                      break
                   end
