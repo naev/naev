@@ -3,11 +3,12 @@ directory = enet-1.3.18
 source_url = http://enet.bespin.org/download/enet-1.3.18.tar.gz
 source_filename = enet-1.3.18.tar.gz
 source_hash = 2a8a0c5360d68bb4fcd11f2e4c47c69976e8d2c85b109dd7d60b1181a4f85d36
-source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/enet_1.3.18-1/enet-1.3.18.tar.gz
-patch_filename = enet_1.3.18-1_patch.zip
-patch_url = https://wrapdb.mesonbuild.com/v2/enet_1.3.18-1/get_patch
-patch_hash = 34879a2404a9bd6b96aaebaa7baac8ecc825051fefb920a83e24eb59d619f443
-wrapdb_version = 1.3.18-1
+source_fallback_url = https://wrapdb.mesonbuild.com/v2/enet_1.3.18-2/get_source/enet-1.3.18.tar.gz
+patch_filename = enet_1.3.18-2_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/enet_1.3.18-2/get_patch
+patch_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/enet_1.3.18-2/enet_1.3.18-2_patch.zip
+patch_hash = a16d9372b92dff7423cfb603d0fe22cebf4bdb0dc532914739be9080b108a34e
+wrapdb_version = 1.3.18-2
 
 [provide]
 dependency_names = enet
