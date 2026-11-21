@@ -274,6 +274,10 @@ end
 
 -- Takeoff songs
 function choose_table.takeoff ()
+   -- No takeoff songs, just use ambient directly
+   if #takeoff_songs <= 0 then
+      return choose_table.ambient()
+   end
    -- No need to restart
    if music_situation == "takeoff" and tracks_playing() then
       return false
