@@ -100,7 +100,8 @@ function loaded ()
 end
 function abort ()
    if system.cur() == gauntletsys then
-      leave_the_ring()
+      hook.safe("leave_the_ring")
+      return false, true -- Cancel abort and close window
    end
 end
 

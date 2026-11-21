@@ -1107,13 +1107,50 @@ static void cargo_update( unsigned int wid, const char *str )
 
    array_free( pclist );
 }
+
+/**
+ * @brief Tries to abort the mission.
+ *
+ *    @param mission_id ID of the player_mission to try to abort.
+ *    @return 1 if mission was aborted, 0 otherwise.
+ */
+static int mission_tryAbort( int mission_id, int *close )
+{
+   Mission *misn = player_missions[mission_id];
+
+   /* We run the "abort" function if it's found. */
+   int ret = misn_tryRunWithReturn( misn, "abort", 2 );
+   if ( ret == 0 || ret == 3 ) {
+      // If return value is false (not nil), then we ignore the abort
+      if ( lua_isboolean( naevL, -2 ) && !lua_toboolean( naevL, -2 ) ) {
+         // Second parameter is whether or not to close the info window
+         *close = lua_toboolean( naevL, -1 );
+         lua_pop( naevL, 2 );
+         return 0;
+      }
+      lua_pop( naevL, 2 );
+   }
+
+   /* Now clean up mission. */
+   if ( ret != 2 ) {
+      mission_cleanup( misn );
+      mission_shift( mission_id );
+   }
+
+   /* Reset markers. */
+   mission_sysMark();
+
+   /* Reset claims. */
+   claim_activateAll();
+   return 1;
+}
+
 /**
  * @brief Makes the player jettison the currently selected cargo.
  *    @param str Unused.
  */
 static void cargo_jettison( unsigned int wid, const char *str )
 {
-   (void)str;
    int             pos;
    HookParam       hparam[3];
    PilotCommodity *pclist = pfleet_cargoList();
@@ -1127,8 +1164,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
 
    /* Special case mission cargo. */
    if ( pclist[pos].id != 0 ) {
-      int      f, ret;
-      Mission *misn;
+      int f;
 
       if ( !dialogue_YesNo(
               _( "Abort Mission" ),
@@ -1155,30 +1191,14 @@ static void cargo_jettison( unsigned int wid, const char *str )
          array_free( pclist );
          return;
       }
-      misn = player_missions[f];
 
-      /* We run the "abort" function if it's found. */
-      ret = misn_tryRunWithReturn( misn, "abort", 1 );
-      if ( ret == 0 || ret == 3 ) {
-         // If return value is false (not nil), then we ignore the abort
-         if ( lua_isboolean( naevL, -1 ) && !lua_toboolean( naevL, -1 ) ) {
-            lua_pop( naevL, 1 );
-            return;
+      int close = 0;
+      if ( !mission_tryAbort( f, &close ) ) {
+         if ( close ) {
+            info_close( wid, str );
          }
-         lua_pop( naevL, 1 );
+         return;
       }
-
-      /* Now clean up mission. */
-      if ( ret != 2 ) {
-         mission_cleanup( misn );
-         mission_shift( f );
-      }
-
-      /* Reset markers. */
-      mission_sysMark();
-
-      /* Reset claims. */
-      claim_activateAll();
 
       /* Regenerate list. */
       mission_menu_genList( info_windows[INFO_WIN_MISN], 0 );
@@ -1559,31 +1579,21 @@ static void mission_menu_chk_priority( unsigned int wid, const char *str )
 static void mission_menu_abort( unsigned int wid, const char *str )
 {
    (void)str;
-   int      pos, ret;
-   Mission *misn;
-
    if ( !dialogue_YesNo( _( "Abort Mission" ),
                          _( "Are you sure you want to abort this mission?" ) ) )
       return;
 
    /* Get the mission. */
-   pos  = toolkit_getListPos( wid, "lstMission" );
-   misn = player_missions[pos];
+   int pos = toolkit_getListPos( wid, "lstMission" );
 
    /* We run the "abort" function if it's found. */
-   ret = misn_tryRun( misn, "abort" );
-
-   /* Now clean up mission. */
-   if ( ret != 2 ) {
-      mission_cleanup( misn );
-      mission_shift( pos );
+   int close = 0;
+   if ( !mission_tryAbort( pos, &close ) ) {
+      if ( close ) {
+         info_close( wid, str );
+      }
+      return;
    }
-
-   /* Reset markers. */
-   mission_sysMark();
-
-   /* Reset claims. */
-   claim_activateAll();
 
    /* Regenerate list. */
    mission_menu_genList( wid, 0 );

@@ -66,6 +66,7 @@ static int naevL_trigger( lua_State *L );
 static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
 static int naevL_menuInfo( lua_State *L );
+static int naevL_menuInfo( lua_State *L );
 static int naevL_menuSmall( lua_State *L );
 static int naevL_mapOpen( lua_State *L );
 static int naevL_isPaused( lua_State *L );
