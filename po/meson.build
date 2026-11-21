@@ -19,6 +19,7 @@ gettext_targets = i18n.gettext('naev',
       '--from-code=UTF-8',
       '--add-comments',
 
+      '--add-location=file',
       '--keyword=_',
       '--keyword=N_',
       '--keyword=n_:1,2',
