@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2026-10-13 19:43+0900\n"
+"POT-Creation-Date: 2026-11-21 20:42+0900\n"
 "PO-Revision-Date: 2026-07-13 14:07+0000\n"
 "Last-Translator: Anthony_Gregorys <anthony_gregorys@noreply.codeberg.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.codeberg.org/projects/"
@@ -10456,6 +10456,10 @@ msgstr "Saqueador"
 #. Need presence
 #. Create a list of conditional messages
 #. Add tag-appropriate descriptions
+#. Remove scan hooks
+#. Put Agents at the bar when landing/loading
+#. The aspect of the agent changes at each stop
+#. Discuss with the Pirate
 #. hook.pilot( rampant, "idle", "idle" )
 msgid "Pirate"
 msgstr "Pirata"
@@ -20339,6 +20343,12 @@ msgid ""
 "southern systems. Despite being quite far away, nearly all the pirate "
 "traffic from and to the Black Lotus clan has to come through the station, "
 "making for lively exchanges and interactions."
+msgstr ""
+
+msgid ""
+"Efferey's bar is a meeting place for low-life pirates who make a living "
+"raiding the Goddard-Dvaered trade route. They meet there all sorts of shady "
+"characters, retailers or informants who support their activity."
 msgstr ""
 
 msgid "Eiderdown I"
@@ -37846,34 +37856,70 @@ msgstr ""
 #. 0) Refused
 #. 1) Accepted
 #. --
-#. TODO: at some point before, it should have been suggested that it's a bad idea to try to betray Klank
-#. TODO: see chance for this event
 #. Event constants
-#. TODO: not sure it's needed.
 #. Non-persistent state.
 #. Start at previous system
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. Player answers to hail
-msgid "You are needed for a special job"
+#. Battleaddict agrees for the player to approach
+msgid "Vendetta pilot"
 msgstr ""
 
 msgid ""
-"The pilot of the fighter says, over an encrypted channel: \"I have finally "
-"found you, {player}. Better late than never. My employers want to "
-"congratulate you about how effective you have been with Lord Battleaddict. I "
-"am afraid there won't be many people to mourn him.\" You answer that you "
-"don't know what this is about, and that as far as you know, Lord "
-"Battleaddict has been killed in an honest duel by the General Klank. The "
-"interlocutor laughs \"You're playing your part, eh? I can understand you, "
-"after all, they pay you well... Wait, no, they don't pay well. Not at all! "
-"How much was it for risking your life twice with this EMP bomb trick? "
+"\"I have finally found you, {player}. Better late than never. My employers "
+"want to congratulate you about how effective you have been with Lord "
+"Battleaddict. I am afraid there won't be many people to mourn him.\""
+msgstr ""
+
+msgid "Stay silent"
+msgstr ""
+
+msgid "\"I agree I did pretty well with Lord Battleaddict.\""
+msgstr ""
+
+msgid ""
+"\"I don't understand what you are talking about. Lord Battleaddict has been "
+"killed in an honest duel by the General Klank.\""
+msgstr ""
+
+msgid ""
+"\"I see… You're not the sharpest knife in the drawer, are you? You were "
+"supposed to deny, remember? Not to confirm this duel was fixed. I suppose "
+"you're the best they can afford given how lame their rewards are.\""
+msgstr ""
+
+msgid ""
+"\"You're playing your part, eh? I can understand you, after all, they pay "
+"you well… Wait, no, they don't pay well. Not at all!\""
+msgstr ""
+
+msgid ""
+"\"How much was it for risking your life twice with this EMP bomb trick? "
 "{credits_01}? Haw haw haw! You can make better money with a cargo mission!\n"
 "   \"I've even heard that once, they paid you with gauss guns! Those guys "
-"are so pitiful, aren't they?\n"
-"   \"Now, let's talk seriously: you want money and I want a pilot. We're "
-"made to get along, you and me! I need you for a special task. I won't deny "
-"it implies going against the interests of General Klank and Major Tam and "
-"co, but if you do it well, they won't ever know that you are implicated, and "
+"are so pitiful, aren't they?\""
+msgstr ""
+
+msgid "\"You nailed it: they are stingy mission givers.\""
+msgstr ""
+
+msgid "\"Look, mate. I have no idea what you're talking about.\""
+msgstr ""
+
+msgid "\"All I want to do is to serve House Dvaered.\""
+msgstr ""
+
+msgid "\"All I want to do is to have fun blowing stuff up.\""
+msgstr ""
+
+msgid "\"Yeah. Whatever. You're not very subtle, are you?\""
+msgstr ""
+
+msgid ""
+"\"Now, let's talk seriously: you want money and I want a pilot. We're made "
+"to get along, you and me! I need you for a special task. I won't deny it "
+"implies going against the interests of General Klank and Major Tam and co, "
+"but if you do it well, they won't ever know that you are implicated, and "
 "you'll receive {credits} in the process. Oh yes, that's different from what "
 "you're used to! What do you say?\""
 msgstr ""
@@ -37881,33 +37927,21 @@ msgstr ""
 msgid "Accept the offer"
 msgstr ""
 
-msgid "Refuse and miss a unique opportunity"
-msgstr ""
-
-msgid "Your task"
-msgstr ""
-
-msgid ""
-"\"Very good choice, colleague!\" The pilot answers. \"Go to {system}, and "
-"you will be hailed by another Vendetta for your briefing.\""
-msgstr ""
-
-msgid "Too bad"
-msgstr ""
-
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
 msgstr ""
 
-#. Reaction to player's choice at first landing
-msgid "You are a loyal citizen of House Dvaered"
+msgid ""
+"\"Very good choice, colleague! Go to {system}, and you will be hailed by "
+"another Vendetta for your briefing.\""
 msgstr ""
 
+#. Reaction to player's choice at first landing
 #. Traitor
-msgid "You tried to betray us"
+msgid ""
+"As you land, you see the Captain Leblanc at the dock and she reprimands you."
 msgstr ""
 
 msgid ""
-"As you land, you see the Captain Leblanc at the dock and she reprimands you: "
 "\"It was a trap, {player}. The fact that you fell into it proves that you "
 "are disloyal. Disloyal and stupid by the way, as the trap was quite obvious "
 "if I may add. And the High Command can not afford to work with disloyal and "
@@ -37920,29 +37954,64 @@ msgstr ""
 
 msgid ""
 "Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the "
-"General Klank... and you miserably failed. By chance, they did not kill you, "
+"General Klank… and you miserably failed. By chance, they did not kill you, "
 "but you'll have to find other employers."
 msgstr ""
 
 #. Loyal
 msgid ""
 "As you land, you see the Captain Leblanc at the dock and she congratulates "
-"you: \"I've heard good things about you, citizen {player}. It seems that you "
-"have passed the test. You remained loyal to our general, in spite of the "
-"absurdly high reward they had proposed to you for betraying us.\""
+"you."
 msgstr ""
 
-msgid "The amount of your rewards is pathetic"
+msgid ""
+"\"I've heard good things about you, citizen {player}. You have passed the "
+"loyality test. You remained loyal to our general, in spite of the absurdly "
+"high reward they had proposed to you for betraying us.\""
 msgstr ""
 
-msgid "Money is not important, captain"
+msgid ""
+"\"Actually, this raised a relevant point: can we speak of the fact that the "
+"amount of your rewards is pathetic?\""
 msgstr ""
 
-#. Actually we don't care of the answer
+msgid "\"Money is not important to me, captain.\""
+msgstr ""
+
 msgid ""
 "\"Money matters are secondary matters, pilot. One day you are rich, and the "
-"next, you are poor. Valour, on the other hand, is the central matter of life "
-"for valour contains all the other qualities a Dvaered must have:\n"
+"next, you are poor. And anyways, it is better to be poor and loyal, than to "
+"be rich and dishonoured.\""
+msgstr ""
+
+msgid "\"What about being rich and loyal?\""
+msgstr ""
+
+msgid "\"Whatever, when do we start blowing stuff up?\""
+msgstr ""
+
+msgid ""
+"\"Don't try to confuse me, citizen. I mean it is better to be rich and "
+"loyal, than to be poor and dishonoured…\""
+msgstr ""
+
+msgid "\"Wait… That's not what I meant.\""
+msgstr ""
+
+msgid ""
+"\"It is better to be dishonoured and… No… Wait… It is worse to be rich than…"
+"\""
+msgstr ""
+
+msgid "\"Wrong again… Anyways.\""
+msgstr ""
+
+msgid "\"Yes, that's the spirit. But listen:\""
+msgstr ""
+
+msgid ""
+"\"Valour is the central matter of life for valour contains all the other "
+"qualities a Dvaered must have:\n"
 "   \"Righteousness to understand what has to be done,\n"
 "   \"Loyalty to know who you can trust to help you in your duty,\n"
 "   \"Strength to be able to do what Righteousness and Loyalty require you to "
@@ -37951,11 +38020,12 @@ msgid ""
 "or to kill for the community, because the philosophy of House Dvaered is a "
 "philosophy of life. And life does not come without its counterpart, death. "
 "Being a Dvaered means to accept the ultimate rule of the universe, the "
-"finitude of all things, unlike all the other factions, who hopelessly pursue "
-"eternity. Eternity in the succession of Emperors, eternity in faith, "
-"eternity in the progress of biological enhanced humanity. Their quest is "
-"doomed to fail, creating weird and ugly monsters like the Empire, House "
-"Sirius or the Soromid.\""
+"finitude of all things, and to struggle to build the best present and future "
+"despite this. Unlike all the other factions, who hopelessly pursue eternity, "
+"with no regard for what makes us human. Eternity in the succession of "
+"Emperors, eternity in faith, eternity in the progress of biological enhanced "
+"humanity. Their quest is doomed to fail, creating weird and ugly monsters "
+"like the Empire, House Sirius or the Soromid.\""
 msgstr ""
 
 msgid ""
@@ -37972,8 +38042,8 @@ msgid ""
 "in order to hit us. But the purpose of warlords is to invade worlds, and the "
 "role of the DHC is not to hinder that, so ultimately, we will have to allow "
 "this invasion.\n"
-"   \"A few decaperiods ago, General Klank had been promoted as second class "
-"general, with the task to organize this invasion. The first invasion plan "
+"   \"A few decaperiods ago, General Klank had been promoted as Major "
+"General, with the task to organize this invasion. The first invasion plan "
 "that had been proposed to him was giving free rein to each warlord, allowing "
 "them to choose which planet to invade and how to proceed. However, contrary "
 "to the other generals, Klank soon realized that such a disorganized "
@@ -37982,17 +38052,7 @@ msgid ""
 "on other fronts.\""
 msgstr ""
 
-msgid ""
-"\"This is why the General Klank proposed an effective invasion plan, that "
-"requires coordinating the efforts of all the warlords, as well as supporting "
-"them with a reserve fleet directly commanded by DHC. The problem is that "
-"many warlords don't want the DHC to decide how they use their troops. The "
-"most reckless of them was Lord Battleaddict, but there are also Lady "
-"Bitterfight and Lord Jim. Now that the internal opposition to the plan has "
-"been weakened with Battleaddict's death, we will move to the diplomatic "
-"step. That is why you should expect to be summoned again by us.\""
-msgstr ""
-
+#. Land to end the mission
 #. Pay and finish the mission
 #. Timer for the next mission
 msgid "Frontier War"
@@ -38003,261 +38063,6 @@ msgid ""
 "General Klank. The test has proven to be conclusive, and Leblanc revealed to "
 "you that they will soon need your services in the framework of the "
 "preparation of the invasion of the Frontier."
-msgstr ""
-
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <event name="Repay General Klank">
-#. <location>land</location>
-#. <chance>100</chance>
-#. <cond>var.peek("dv_pirate_debt") == true</cond>
-#. <notes>
-#. <campaign>Frontier Invasion</campaign>
-#. <done_evt name="Betray General Klank">If you don't betray</done_evt>
-#. <requires name="General Klank wants his 10M back"/>
-#. </notes>
-#. </event>
-#. --
-#.
-#. --Event for Frontier Invasion campaign. The player must help general Klank getting extra-funding (just a text-completion minigame)
-#. --
-#. hook.rm(mem.jumpingTam)
-#. Tam has nothing to say at stage 0
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Dvaered Sabotage">
-#. <unique />
-#. <priority>2</priority>
-#. <chance>20</chance>
-#. <done>Dvaered Escort</done>
-#. <location>Bar</location>
-#. <faction>Dvaered</faction>
-#. <notes>
-#. <campaign>Frontier Invasion</campaign>
-#. </notes>
-#. </mission>
-#. --
-#.
-#. -- Dvaered Sabotage
-#. -- This is the second mission of the Frontier War Dvaered campaign.
-#. -- The player has to sabotage a Warlord's Goddard in prevision of a duel.
-#. -- The frontier invasion is still not mentioned
-#.
-#. Stages :
-#. 0) Goto find Hamfresser
-#. 1) First try. TODO: tell the player it's preferable to have refuelled just before jumping in Ginger
-#. 2) Fleeing first time. TODO: see if it's possible to jettison the bomb (and make it not possible)
-#. 3) Second try
-#. 4) Fight with the Phalanx
-#. 5) Way back
-#. 6) Watch the duel
-#. 7) Final landing
-#. --
-#. Mission constants
-#. Morgan Citadel
-#. Non-persistent state
-#. active pilot/fleet
-#. pilots in the plot
-#. location and spacing of the duel, initialized with the above pilots
-#. Forward-declared functions
-#. common hooks
-#. The starting point should not be too close from there
-#. Markers
-#. Stores the state of the escort
-#. Prepare storing of total scores of competitors
-msgid "Major Tam"
-msgstr ""
-
-#. Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-#. Consistent
-#. We can't afford to loose our main baddie
-#. Pre-position Captain Leblanc and her mates, but as Dvaered
-#. Mission constants
-#. Where the player meets up to start the stuff
-#. Where the player has to run back to after interception
-#. Military base where the captured person starts
-#. Target delivery place of the captured person
-#. Where the action happens, should be between prisys and zlksys
-#.
-#. Blockades are defined from intsys and should limit the player's
-#. movement to repsys. The zlk_list and emp_list list the systems that
-#. have a blockade, and the zlk_lisj and emp_lisj indicate the jumps at
-#. the systems that are being blockaded.
-#. --
-#. Za'lek Blocus
-#. Systems with patrols
-#. Index refers to zlk_list
-#. Special case : hypergate
-#. from Provectus Nova
-#. from Sollav
-#. from Xavier
-#. Not Blockaded :
-#. - Nunavut -> Unicorn (hidden)
-#. - Wormhole in NGC-13674 (unknown)
-#. - NGC-1098 -> Kretogg (unknown)
-#. - Ganth -> Attaria (the flying clown's trap)
-#. Empire Blocus
-#. Special case : hypergate
-#. From Majesteka
-#. From Tepdania
-#. From Van Maanen
-#. From Water Hole
-#. From Scorpius
-#. From Hakoi
-#. From Tepvin
-#. From Arcturus
-#. From Wolf
-#. Not Blockaded :
-#. - Wormhole in NGC-4087 (unknown)
-#. - Pas -> Effetey (hidden)
-#. - Uhriabi -> Qorel (hidden)
-#. - Enegoz -> Qorel (hidden)
-#. Exclusive claim
-#. can be inclusive
-#. can be inclusive
-#. TODO only exclusively claim intsys, and inclusively claim the rest
-#. Spawn the alpha squadron
-#. Add the random people
-msgid "Captain Leblanc"
-msgstr ""
-
-#. The death of Tronk
-#. When entering Empire Space, contact with Captain HewHew
-#. And some dialogue with the VIP
-#. Spawn Strafer
-#. We're taking off
-#. Spawn the escort
-#. Encounter with Strafer on Dvaer Prime
-#. Player discusses with Lieutenant Strafer
-#. Strafer gets annoyed if one asks several times the same question
-#. Add a spy close to Gremlin, make Strafer head to it, and a group of Hyenas kill Strafer to secure the spy's exit
-#. Compute the line on which to place the spy and Strafer
-#. First, teleport Strafer far away from any backup
-msgid "Lieutenant Strafer"
-msgstr ""
-
-msgid ""
-"In the Dvaered military reserved bar, where you now have access, you see the "
-"major, apparently busy with a bundle of paper."
-msgstr ""
-
-msgid "Leblanc is alone at a table, typing on her laptop."
-msgstr ""
-
-msgid ""
-"Strafer has put heaps of papers and datapads on his table. He is starring at "
-"it as someone who has something tedious to do, but does not want to start "
-"yet."
-msgstr ""
-
-#. Each time the player lands, he meets a member of the team
-msgid "We need more credits from the DHC"
-msgstr ""
-
-msgid ""
-"I need to proofread the letter we are going to send to the High Command in "
-"order to obtain an extra funding of {credits} to continue with our mission. "
-"Do you want to help me?"
-msgstr ""
-
-msgid ""
-"\"Due to a data compression problem, some words of our letter have been "
-"replaced by random letters. I need to proofread it and re-write the correct "
-"words. I let you take care of the letter itself, while I correct the annexes."
-"\""
-msgstr ""
-
-msgid ""
-"From: General #ogrjhtgrfd#0, Task force 5613, Special Operations Force\n"
-"\n"
-"To: General Mmosd, Central Headquarters\n"
-"\n"
-"Subject: Extra funding request"
-msgstr ""
-
-msgid "Tam"
-msgstr ""
-
-msgid "Leblanc"
-msgstr ""
-
-msgid "Klank"
-msgstr ""
-
-#, fuzzy
-msgid "Battleaddict"
-msgstr "Benedito"
-
-msgid ""
-"General context: Task force 5613 was created in anticipation of the planned "
-"liberalization of Dvaered north-eastern space, commonly referred as "
-"\"#ooikyujhfbgv#0\". It is led by Major General (3rd class) Caribert Klank "
-"(violence index: 267), assisted by Major (2nd class) Archibald Tam (violence "
-"index: 173)."
-msgstr ""
-
-msgid "The Milky Way"
-msgstr ""
-
-msgid ""
-"Particular context: Task force 5613 has recently suffered a consequent "
-"series of issues that include (but are not limited to) the firm opposition "
-"of Lord #owxft#0 (see Annexes A and B), ambushes by private pilots paid by "
-"an unidentified organization (see Annexes C, D and E),"
-msgstr ""
-
-msgid "Hamelsen"
-msgstr ""
-
-msgid "Sauterfeldt"
-msgstr ""
-
-msgid "Oftherings"
-msgstr ""
-
-msgid ""
-"and an unfortunate altercation with House #opokjngf#0 (see Annexes F and G). "
-"These issues have been addressed by appropriate means ie. strength, violence "
-"and bestiality (see all above mentioned Annexes). However, this comes at a "
-"certain pecuniary cost, that had not been accounted for when the initial "
-"budget of Task force 5613 was decided"
-msgstr ""
-
-msgid "of cards"
-msgstr ""
-
-msgid ""
-"Request: For accomplishing its mission, Task force 5613 requires the extra "
-"amount of 10M credits.\n"
-"\n"
-"In behalf of all the personal detached to Task force 5613, who work day "
-"after day to make House Dvaered closer to its goals, I thank you for your "
-"time and consideration, and wish you to remain right, loyal and "
-"#obfsrthgb#0.\n"
-"\n"
-"Major General Klank"
-msgstr ""
-
-msgid "brutal"
-msgstr ""
-
-msgid "barbaric"
-msgstr ""
-
-msgid "lovely"
-msgstr ""
-
-msgid "strong"
-msgstr ""
-
-msgid ""
-"\"Very well. Now, I can send it to the Headquarters. Thank you! We should "
-"have more missions for you soon.\""
-msgstr ""
-
-msgid ""
-"\"Are you serious? You are obviously writing nonsense. I think you should "
-"rest for some time and come back later. See you soon!\""
 msgstr ""
 
 #. TODO ideally use tricks to slow the ship down instead of relying on loadouts
@@ -47554,6 +47359,13 @@ msgstr ""
 msgid ""
 "\"Have you seen the hypergate at Ruadan? It is truly fascinating. "
 "Theoretically, it does not seem like it should work, but it does!\""
+msgstr ""
+
+msgid ""
+"\"John Danftang, the public relation manager at Goddard got arrested because "
+"he got his engineers to submit an article containing scientific falshoods. "
+"But a non-identified commando attacked his carceral convoy to set him free. "
+"Some say the Dvaered secret services are behind the evasion.\""
 msgstr ""
 
 #. Returns a lore message for the given faction.
@@ -58042,13 +57854,6 @@ msgstr ""
 #. Mission constants
 #. Non-persistent state
 #. Forward-declared functions
-msgid ""
-"After Tam boards the Goddard, you wait for about half a period until his "
-"ship undocks from the warlord's cruiser. You then receive a message from him "
-"\"Everything is right, we will now land on {pnt} in order to refuel and rest "
-"for some time.\""
-msgstr ""
-
 #. The mission should not appear just after the FLF destruction
 #. We need the first target to be at least 1 jump ahead
 msgid "Dvaered officer"
@@ -58059,36 +57864,45 @@ msgid ""
 "would he stay at this bar?"
 msgstr ""
 
-msgid "In need of a pilot"
+msgid "\"Hello, citizen {player}. I was looking for you.\""
+msgstr ""
+
+msgid "\"Nice to meet you, citizen…\""
+msgstr ""
+
+msgid "\"How do you know my name?\""
+msgstr ""
+
+msgid "\"And I was not looking for you.\""
+msgstr ""
+
+msgid "\"Well, then, maybe we will meet again later, who knows?\""
 msgstr ""
 
 msgid ""
-"As you approach the officer, he hails you. \"Hello, citizen {player}. I was "
-"looking for you. Of course, I know your name, you're one of the pilots who "
-"destroyed that damn FLF base in Sigur. Let me introduce myself: I am Major "
-"Tam, from Dvaered High Command, and more precisely from the Space Force "
-"Headquarters. I feel that you are a reliable pilot and the High Command "
-"could make more use of your services. That is why I propose to you now a "
-"simple escort mission. All that you need is a fast combat ship that can keep "
-"up with my Vendetta. What do you say?\""
+"\"Of course, I know your name, you're one of the pilots who destroyed that "
+"damn FLF base in Sigur.\""
 msgstr ""
 
 msgid ""
-"Tam seems disappointed by your answer. \"Well, then, maybe we will meet "
-"again later, who knows?\""
+"\"Let me introduce myself: I am Major Tam, from Dvaered High Command, and "
+"more precisely from the Space Force Headquarters. I feel that you are a "
+"reliable pilot and the High Command could make more use of your services. "
+"That is why I propose to you now a simple escort mission. All that you need "
+"is a fast combat ship that can keep up with my Vendetta. What do you say?\""
 msgstr ""
 
-msgid "Instructions"
+msgid "I accept."
 msgstr ""
 
 msgid ""
-"Tam seems satisfied with your answer. \"I am going to pay a visit to three "
-"warlords, for military coordination reasons. They will be waiting for me in "
-"their respective Goddards in the systems {sys1}, {sys2} and {sys3}. I need "
-"you to stick to my Vendetta and engage any hostile who might try to "
-"intercept me.\""
+"\"I am going to pay a visit to three warlords, for military coordination "
+"reasons. They will be waiting for me in their respective Goddards in the "
+"systems {sys1}, {sys2} and {sys3}. I need you to stick to my Vendetta and "
+"engage any hostile who might try to intercept me.\""
 msgstr ""
 
+#. Test acceptance
 #. Fleeing to flee planet
 #. Explain what happened
 #. The player is only allowed to land on special occasions
@@ -58111,6 +57925,7 @@ msgstr ""
 #. Because the player has no right to enter a system if mem.tamJumped is false
 #. Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
 #. The player landed somewhere on Battleaddict's system
+#. The player landed somewhere instead of attacking the Phalanx
 #. Entering the next system of the mem.path
 #. Save the index of the system in the list (useful to remove the marker later)
 #. Decide from where the ambushers come
@@ -58156,18 +57971,47 @@ msgstr ""
 msgid "Did you really expect to keep up with Major Tam with your current ship?"
 msgstr ""
 
-msgid "That was really close!"
+msgid "\"What the hell happened?\""
+msgstr ""
+
+msgid "\"Let's go back there with a pair torpedoes launchers.\""
+msgstr ""
+
+msgid "\"Why didn't the patrol ships help us?\""
+msgstr ""
+
+msgid "\"Copy that. Heading to {pnt}.\""
+msgstr ""
+
+msgid "Major Tam opens a communication channel with you."
 msgstr ""
 
 msgid ""
-"You send a message to Major Tam to ask if you are safe now. \"I think so\" "
-"he answers, \"Lord Battleaddict's troops won't follow us if we head to {pnt} "
-"at once as the planet belongs to his deadliest enemy, Lady Pointblank.\" As "
-"you ask him what happened, he answers: \"You know, don't let Lord "
-"Battleaddict's reaction mislead you. He is not a bad person, he is just... "
-"hem... a bit old school. He disagrees with the ideas of the new generation "
-"of generals at Dvaered High Command, and wanted to make his point clear.\"\n"
-"   You ask Tam why the Dvaered patrol ships did not help you and he answers: "
+"\"That was close but we should be safe now. Lord Battleaddict's troops won't "
+"follow us if we head to {pnt} at once as the planet belongs to his deadliest "
+"enemy, Lady Pointblank.\""
+msgstr ""
+
+msgid ""
+"\"Don't let Lord Battleaddict's reaction mislead you. He is not a bad "
+"person, he is just… hem… a bit old school. He disagrees with the ideas of "
+"the new generation of generals at Dvaered High Command, and wanted to make "
+"his point clear.\""
+msgstr ""
+
+msgid ""
+"\"What is clear is that we should go back there with a pair torpedoes "
+"launchers.\""
+msgstr ""
+
+msgid ""
+"\"Oh no, I am afraid this is not possible, citizen. Killing a warlord is a "
+"crime, no matter what are the circumstances… I mean for non-warlords or "
+"generals that is. Besides, I am pretty sure we don't have the material "
+"resources to kill Battleaddict and survive after that.\""
+msgstr ""
+
+msgid ""
 "\"Don't expect the regular police or army to help you when you're in trouble "
 "with a warlord. Dvaered know that it is better not to be involved in "
 "warlord's affairs.\""
@@ -58175,6 +58019,60 @@ msgstr ""
 
 #. Messages when encountering warlords
 msgid "{plt} should be waiting for us in orbit around {pnt}."
+msgstr ""
+
+#. hook.rm(mem.jumpingTam)
+#. Tam has nothing to say at stage 0
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Dvaered Sabotage">
+#. <unique />
+#. <priority>2</priority>
+#. <chance>20</chance>
+#. <done>Dvaered Escort</done>
+#. <location>Bar</location>
+#. <faction>Dvaered</faction>
+#. <notes>
+#. <campaign>Frontier Invasion</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. -- Dvaered Sabotage
+#. -- This is the second mission of the Frontier War Dvaered campaign.
+#. -- The player has to sabotage a Warlord's Goddard in prevision of a duel.
+#. -- The frontier invasion is still not mentioned
+#.
+#. Stages :
+#. 0) Goto find Hamfresser
+#. 1) First try.
+#. 2) Fleeing first time.
+#. 3) Second try
+#. 4) Fight with the Phalanx
+#. 5) Way back
+#. 6) Watch the duel
+#. 7) Final landing
+#. --
+#. Mission constants
+#. Morgan Citadel
+#. Non-persistent state
+#. active pilot/fleet
+#. pilots in the plot
+#. location and spacing of the duel, initialized with the above pilots
+#. Forward-declared functions
+#. common hooks
+#. The starting point should not be too close from there
+#. Markers
+#. Stores the state of the escort
+#. Prepare storing of total scores of competitors
+#.
+#. -- Common data for the Frontier War campaign
+#. --
+#. All the rewards:
+#. Paid in Gauss Guns
+#. CHARACTERS --
+#. Major Archibald Tam: main mission giver of this campaign
+msgid "Major Tam"
 msgstr ""
 
 #. Consistent
@@ -58203,18 +58101,28 @@ msgid ""
 "looks like trying to coordinate Dvaered warlords is a really dangerous job."
 msgstr ""
 
-msgid "Thank you, citizen"
+msgid "As you land, Major Tam greets you at the spaceport."
 msgstr ""
 
 msgid ""
-"As you land, Major Tam greets you at the spaceport. \"After the losses they "
-"suffered today, I doubt those mercenaries will come after me again anytime "
-"soon. I need to report back at the Dvaer High Command station in Dvaer, and "
-"I no longer need an escort. Oh, and, err... about the payment, I am afraid "
-"there is a little setback...\" You start to fear he will try to stiff you on "
-"the payment, but he continues: \"I don't know why, but the High Command has "
-"not credited the payment account yet... Well do you know what we are going "
-"to do? I will give you {rew}! One always needs Gauss Guns, no?\""
+"After the losses they suffered today, I doubt those mercenaries will come "
+"after me again anytime soon. I need to report back at the Dvaer High Command "
+"station in Dvaer, and I no longer need an escort. Oh, and, err… about the "
+"payment, I am afraid there is a little setback…"
+msgstr ""
+
+msgid "Are you going to try to stiff me on the payment?"
+msgstr ""
+
+msgid ""
+"Oh no, don't worry, you will get paid. I represent the Dvaered High Command "
+"I'm no crook."
+msgstr ""
+
+msgid ""
+"\"I don't know why, but the High Command has not credited the payment "
+"account yet… Well do you know what we are going to do? I will give you "
+"{rew}! One always needs Gauss Guns, no?\""
 msgstr ""
 
 msgid "a set of Gauss Guns worth {credits}"
@@ -58227,19 +58135,17 @@ msgstr ""
 #. Delay the triggering of the meeting
 #. Make sure to remove the autonav
 #. Free the player
-msgid "Everything is right"
-msgstr ""
-
-msgid "They're after me!"
-msgstr ""
-
 msgid ""
-"Tam boards the Goddard. A few seconds later, he undocks in a hurry, while "
-"nearby fighters start to shoot at him. You receive a message \"That old fool "
-"tried to kill me! Quick, we must head to {sys}! Let me jump first!\""
+"\"That old fool tried to kill me! Quick, we must head to {sys}! Let me jump "
+"first!\""
 msgstr ""
 
 msgid "Ensure Major Tam safely jumps to {sys} and follow him"
+msgstr ""
+
+msgid ""
+"\"Everything is right, we will now land on {pnt} in order to refuel and rest "
+"for some time.\""
 msgstr ""
 
 #. Makes Battleaddict's team actually attack the player
@@ -58248,83 +58154,157 @@ msgstr ""
 #. Spawn colonel Hamelsen and her mates
 #. Compute the effective reward from nb of alive pilots
 #. Spawn Hamelsen and make her escape
+#. Colonel Hamelsen: main antagonist
+#. TODO: portrait needed
 msgid "Colonel Hamelsen"
+msgstr ""
+
+#. Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
+#. Consistent
+#. We can't afford to loose our main baddie
+#. Pre-position Captain Leblanc and her mates, but as Dvaered
+#. Mission constants
+#. Where the player meets up to start the stuff
+#. Where the player has to run back to after interception
+#. Military base where the captured person starts
+#. Target delivery place of the captured person
+#. Where the action happens, should be between prisys and zlksys
+#. The pirate planet the player has to land on in exchange for the Qorel tunnel data
+#.
+#. Blockades are defined from intsys and should limit the player's
+#. movement to repsys. The zlk_list and emp_list list the systems that
+#. have a blockade, and the zlk_lisj and emp_lisj indicate the jumps at
+#. the systems that are being blockaded.
+#. --
+#. Za'lek Blocus
+#. Systems with patrols
+#. Index refers to zlk_list
+#. Special case : hypergate
+#. from Provectus Nova
+#. from Sollav
+#. from Xavier
+#. Not Blockaded :
+#. - Nunavut -> Unicorn (hidden)
+#. - Wormhole in NGC-13674 (unknown)
+#. - NGC-1098 -> Kretogg (unknown)
+#. - Ganth -> Attaria (the flying clown's trap)
+#. Empire Blocus
+#. Special case : hypergate
+#. From Majesteka
+#. From Tepdania
+#. From Van Maanen
+#. From Water Hole
+#. From Scorpius
+#. From Hakoi
+#. From Tepvin
+#. From Arcturus
+#. From Wolf
+#. Not Blockaded :
+#. - Wormhole in NGC-4087 (unknown)
+#. - Pas -> Effetey (hidden)
+#. - Uhriabi -> Qorel (hidden)
+#. - Enegoz -> Qorel (hidden)
+#. Exclusive claim
+#. can be inclusive
+#. can be inclusive
+#. TODO only exclusively claim intsys, and inclusively claim the rest
+#. Spawn the alpha squadron
+#. Add the random people
+#. Captain Leblanc: secondary mission giver and partner for the second half of the campaign
+msgid "Captain Leblanc"
+msgstr ""
+
+msgid "Ambusher"
+msgstr ""
+
+msgid ""
+"\"Tam, you small, fearful weakling, did you believe Lord Battleaddict would "
+"really let you live?\""
+msgstr ""
+
+msgid ""
+"\"You have no right here. You are outside of Lord Battleaddict's space! I am "
+"the guest of Lord Jim.\""
+msgstr ""
+
+msgid "\"You wanted to meet Lord Jim? How about you meet your doom instead?\""
 msgstr ""
 
 msgid "Say hello to my mace rockets"
 msgstr ""
 
-msgid ""
-"As your ship decelerates to its normal speed after jumping in, you realize "
-"there are hostile ships around. An enemy Shark broadcasts the following "
-"message: \"Tam, you small, fearful weakling, did you believe Lord "
-"Battleaddict would really let you live? You're doomed!\""
-msgstr ""
-
-msgid "You wanted to meet Lord Jim? How about you meet your doom instead?"
-msgstr ""
-
 #. To avoid triggering by mistake
 #. Hook to make Hamelsen run away
 #. Target was hit sufficiently to run away
+#. To activate the afterburner
 #. I don't want her to try to jump at closest one
 #. One less
 #. Everything back to normal: we meet Lord Jim
 #. The end of the Ambush: a message that explains what happened
-msgid "Hostiles eliminated"
+msgid "Patrol Leader"
+msgstr ""
+
+msgid "\"Good day, Major Tam.\""
+msgstr ""
+
+msgid "\"This time, I really owe you one, Captain\""
 msgstr ""
 
 msgid ""
-"As the remaining attackers flee, you remark that a Dvaered patrol helped "
-"you, contrary to what Tam had explained before. Then you receive the "
-"messages exchanged between Major Tam and the leader of the Dvaered squadron: "
-"\"This time, I really owe you one, Captain\", Tam says. \"No problem, sir.\" "
-"the other answers, \"But the most dangerous one escaped. The Shark, you "
-"know, it was Hamelsen, Battleaddict's second in command. After we heard of "
-"what the old scumbag had done to you, we put him under surveillance, and we "
-"spotted Hamelsen pursuing you with her Shark, so we followed her, pretending "
-"we're just a police squadron. You know the rest.\"\n"
-"   Tam responds: \"By the way, {player}, let me introduce you the Captain "
-"Leblanc. She belongs to the Special Operations Force (SOF), part of Dvaered "
-"High Command (DHC). I didn't tell you, but her pilots always keep an eye on "
-"me from a distance when I have to meet warlords. {player} is the private "
-"pilot I told you about, Captain.\" Leblanc responds: \"Hello, citizen. I'm "
-"glad there are civilians like you who do their duty and serve the Dvaered "
-"Nation.\""
-msgstr ""
-
-msgid "Two attacks are one too many"
+"\"No problem, sir. But the most dangerous one escaped. The Shark, you know, "
+"it was Hamelsen, Battleaddict's second in command.\""
 msgstr ""
 
 msgid ""
-"\"Anyway,\" says Tam, \"I am afraid this ambush is not acceptable.\" Leblanc "
-"responds: \"True, sir. Attacking someone in one's system is a standard means "
-"of expression for a warlord, but setting an ambush here denotes a true lack "
-"of respect.\"\n"
-"   \"He will answer for this, trust me.\" answers Tam, \"I will refer this "
-"matter to the chief. Meanwhile, I still have an appointment with Lord Jim. I "
-"just hope he will not try to make us dance as well...\""
+"\"After we heard of what the old scumbag had done to you, we put him under "
+"surveillance, and we spotted Hamelsen pursuing you with her Shark, so we "
+"followed her, pretending we're just a police squadron. You know the rest.\""
+msgstr ""
+
+msgid ""
+"\"By the way, {player}, let me introduce you the Captain Leblanc. She "
+"belongs to the Special Operations Force (SOF), part of Dvaered High Command "
+"(DHC). I didn't tell you, but her pilots always keep an eye on me from a "
+"distance when I have to meet warlords. {player} is the private pilot I told "
+"you about, Captain.\""
+msgstr ""
+
+msgid ""
+"\"Hello, citizen. I'm glad there are civilians like you who do their duty "
+"and serve the Dvaered Nation.\""
+msgstr ""
+
+msgid "\"Anyway, I am afraid this ambush is not acceptable.\""
+msgstr ""
+
+msgid ""
+"\"True, sir. Attacking someone in one's system is a standard means of "
+"expression for a warlord, but setting an ambush here denotes a true lack of "
+"respect.\""
+msgstr ""
+
+msgid ""
+"\"He will answer for this, trust me. I will refer this matter to the chief. "
+"Meanwhile, I still have an appointment with Lord Jim. I just hope he will "
+"not try to make us dance as well…\""
 msgstr ""
 
 #. Major Tam is not senile: he says different things at the different stops
-msgid "Major Tam is ready"
-msgstr ""
-
 msgid ""
-"How do you do, citizen? Did you enjoy the trip so far? I'm ready for the "
-"next stop. I'll follow you when you take off."
-msgstr ""
-
-msgid "Major Tam is talkative today"
+"\"How do you do, citizen? Did you enjoy the trip so far? I'm ready for the "
+"next stop. I'll follow you when you take off.\""
 msgstr ""
 
 msgid ""
 "\"Hello, citizen. Did you already recover from Lord Battleaddict's last "
 "trick? It reminded me of my youth, when I used to belong to a fighter "
-"squadron in Amaroq...\" Do you want to encourage Tam to talk about his past?"
+"squadron in Amaroq…\""
 msgstr ""
 
-msgid "Major Tam before he was at the Headquarters"
+msgid "Encourage Tam to talk about his past"
+msgstr ""
+
+msgid "Don't"
 msgstr ""
 
 msgid ""
@@ -58332,8 +58312,11 @@ msgid ""
 "the DHC base on Rhaana. Oh, sorry, DHC stands for Dvaered High Command. You "
 "know, there are two kinds of Dvaered soldiers: those who directly report to "
 "DHC, like myself, and the freaks, as we call them (or the warriors, as they "
-"call themselves), the soldiers who report to local Warlords.\"\n"
-"   \"Warlords' forces can be requisitioned by DHC, but only to fight forces "
+"call themselves), the soldiers who report to local Warlords.\""
+msgstr ""
+
+msgid ""
+"\"Warlords' forces can be requisitioned by DHC, but only to fight forces "
 "that threaten the integrity of the Dvaered Nation, so, in practice, they are "
 "mostly left to themselves, and make war on each other. You know, foreigners "
 "sometimes think that the internecine conflicts between warlords are "
@@ -58341,35 +58324,31 @@ msgid ""
 "the key to Dvaered philosophy. Without those wars, the Dvaered Nation would "
 "no longer exist as we know it, and we would have had to rely on "
 "totalitarianism, like the Empire, nostalgia of an idealized past, like the "
-"Frontier, oppressive technocracy like the Za'lek, or such...\n"
-"   \"Hey, but am I deviating from our original subject? What was it already? "
-"Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready.\""
+"Frontier, oppressive technocracy like the Za'lek, or such…\""
+msgstr ""
+
+msgid ""
+"\"Hey, but am I deviating from our original subject? What was it already? Oh "
+"I don't remember. Anyway, citizen, if you want to take off, I'm ready.\""
 msgstr ""
 
 msgid "Major Tam may be in need of a pilot."
 msgstr ""
 
-msgid "Ready for another mission?"
-msgstr ""
-
 msgid ""
-"You sit at Tam's table and wait for him to speak. \"Hello, citizen {player}. "
-"You remember Lord Battleaddict, the old warlord who tried to kill us twice? "
-"I have good news: with a few other members of the Space Force, we've devised "
-"a way to make him regret what he did, and we need a civilian pilot, like "
-"you. Are you in?\""
+"\"Hello, citizen {player}. You remember Lord Battleaddict, the old warlord "
+"who tried to kill us twice? I have good news: with a few other members of "
+"the Space Force, we've devised a way to make him regret what he did, and we "
+"need a civilian pilot, like you. Are you in?\""
 msgstr ""
 
 msgid "\"Alight, citizen, see you later, then.\""
 msgstr ""
 
-msgid "The plan"
-msgstr ""
-
 msgid ""
-"\"I knew you would accept!\" Says Major Tam. \"Here is the situation:\n"
-"   \"The general I am working for, General Klank, is in charge of... hem... "
-"in charge of a crucial operation the High Command wants to carry out. This "
+"\"I knew you would accept! Here is the situation:\n"
+"   \"The general I am working for, General Klank, is in charge of… hem… in "
+"charge of a crucial operation the High Command wants to carry out. This "
 "operation will involve troops of the High Command, but also Warlords, "
 "including Battleaddict. The problem is that General Klank and Lord "
 "Battleaddict disagree on everything about this plan. As a consequence, they "
@@ -58382,16 +58361,22 @@ msgid ""
 "the Dvaered Nation in the long run and leave us at the mercy of all the "
 "other nations around us. We can't afford to show any signs of weakness, or "
 "they will attack us and impose their iniquitous and obsolete political "
-"systems on our citizenry.\" Tam takes a deep breath and looks you in the "
-"eyes. \"You don't know, citizen, all the dreadful enemies who are waiting in "
-"the shadows, their hearts filled with hatred against House Dvaered. "
-"Sometimes I look at the star-filled night sky and I wonder. I wonder why the "
-"Dvaered Nation has to be the only threatened islet of justice and compassion "
-"in this... in this Sea of Darkness.\n"
-"   \"Hey, citizen! But I have good news! We won't fall to the Barbarian "
-"hordes! Because I myself, Major Archibald Tam, I have a plan. We will make "
-"sure that Lord Battleaddict loses his duel. Please note, however, that if "
-"the very existence of House Dvaered was not threatened, we would never allow "
+"systems on our citizenry.\""
+msgstr ""
+
+msgid ""
+"\"You don't know, citizen, all the dreadful enemies who are waiting in the "
+"shadows, their hearts filled with hatred against House Dvaered. Sometimes I "
+"look at the star-filled night sky and I wonder. I wonder why the Dvaered "
+"Nation has to be the only threatened islet of justice and compassion in "
+"this… in this Sea of Darkness.\""
+msgstr ""
+
+msgid ""
+"\"Hey, citizen! But I have good news! We won't fall to the Barbarian hordes! "
+"Because I myself, Major Archibald Tam, I have a plan. We will make sure that "
+"Lord Battleaddict loses his duel. Please note, however, that if the very "
+"existence of House Dvaered was not threatened, we would never allow "
 "ourselves to interfere in a honourable duel between two respectable "
 "gentlemen. Go to {pnt} in {sys} and meet Captain Hamfresser. His portrait is "
 "attached in the data I will give you. He will explain the details. It is "
@@ -58399,6 +58384,7 @@ msgid ""
 "{tonnes} of cargo.\""
 msgstr ""
 
+#. Test acceptance
 msgid ""
 "You have to sabotage Lord Battleaddict's cruiser in order to ensure General "
 "Klank's victory at a duel."
@@ -58427,9 +58413,8 @@ msgstr ""
 #. Reset the zlk standing.
 #. We don't need this one anymore
 #. Put the npcs back at loading
-#. elseif mem.stage == 4 then -- TODO: decide if we do that
-#. player.takeoff()
-#. Optional discussions with the team
+#. Captain Leopold Hamfresser: player's sidekick for some of the missions
+#. TODO: portrait needed
 msgid "Captain Hamfresser"
 msgstr ""
 
@@ -58448,6 +58433,9 @@ msgid ""
 "here. The mission failed."
 msgstr ""
 
+msgid "You were supposed to intercept a Phalanx. The mission failed."
+msgstr ""
+
 #. Report back
 msgid "Major Tam and Captain Leblanc"
 msgstr ""
@@ -58462,56 +58450,176 @@ msgstr ""
 msgid "Tam and Leblanc are congratulating their general."
 msgstr ""
 
-msgid "New passengers"
+msgid "\"Hello, are you Captain Hamfresser?\""
+msgstr ""
+
+msgid "Look at him more closely"
+msgstr ""
+
+msgid "\"My name is {player}, I am pleased to meet you.\""
+msgstr ""
+
+msgid "\"Of course, as it is written on my name tag.\""
 msgstr ""
 
 msgid ""
-"\"H... hi\", you say, waving timidly. \"Are you Captain Hamfresser?\". The "
-"soldier answers \"Of course, as it is written on my name tag.\" Next to his "
-"Captain's insignia, and the logo of the Dvaered Space Infantry (a mace with "
-"wings), he points to a small label on his chest that reads \"Hamfresser\". "
-"Hamfresser looks at you from top to bottom \"You're the private pilot, "
-"right? Tell me your ship's dock number, and I'll meet you there. Oh, and "
-"please make room for {tonnes} of cargo.\"\n"
-"   The captain then gets up, delicately puts his empty glass on the counter, "
-"and leaves. While his hairbrushes the ceiling, you wonder if {tonnes} are "
-"enough to accommodate him. When you arrive at the dock, you see Hamfresser, "
-"with five other soldiers and two androids that load a huge and strange "
-"machine into your ship. \"Hey,\" you say, \"what are you doing with your... "
-"your death machine?\" Hamfresser approaches and answers at low voice \"But, "
-"mate, this is not a death machine, It's just a bomb. Or even just a bomblet."
-"\""
+"Next to his Captain's insignia, and the logo of the Dvaered Space Infantry "
+"(a mace with wings), he points to a small label on his chest that reads "
+"\"Hamfresser\""
 msgstr ""
 
 msgid ""
-"\"Very well,\" you acquiesce, \"do what you have to do.\" Once the cargo is "
-"loaded and the team has taken their places in the cabin, you start to talk "
-"with the captain. \"And I suppose this bomblet is destined for "
-"Battleaddict's Goddard. How are we supposed to put it there? Are we going to "
-"pretend it's a gift from the High Command to his granddaughter?\". "
-"Hamfresser looks at you surprised. \"No... that's not what the Major... do "
-"you think it could work?\" You realize it would take too long to explain "
-"that it was a sarcastic comment (assuming that this guy knew what sarcasm "
-"is) and simply ask him to explain the major's plan.\n"
-"   \"Last period, we intercepted a message from Battleaddict to a plumber. "
-"His cruiser has issues with sewage disposal, and he requested an "
+"\"For real? You are pleased to meet me. Nobody ever said that to me! It is "
+"so kind of you!\""
+msgstr ""
+
+msgid ""
+"Next to his Captain's insignia, and the logo of the Dvaered Space Infantry "
+"(a mace with wings), you see small label on his chest that reads "
+"\"Hamfresser\". Convinced this cyborg is the right person, you approach him."
+msgstr ""
+
+msgid ""
+"\"You're the private pilot, right? Tell me your ship's dock number, and I'll "
+"meet you there. Oh, and please make room for {tonnes} of cargo.\""
+msgstr ""
+
+msgid ""
+"The captain gets up, delicately puts his empty glass on the counter, and "
+"leaves. When you arrive at the dock, you see Hamfresser, with five other "
+"soldiers and two androids that load a huge and strange machine into your "
+"ship."
+msgstr ""
+
+msgid "Let them proceed"
+msgstr ""
+
+msgid "\"What is this?\""
+msgstr ""
+
+msgid "\"What are you doing with your death machine?\""
+msgstr ""
+
+msgid ""
+"\"But, mate, this is not a death machine, It's just a bomb. Or even just a "
+"bomblet.\""
+msgstr ""
+
+msgid ""
+"\"Don't worry, mate. It's all right, we are just embarking a bomb in your "
+"ship.\""
+msgstr ""
+
+msgid "Once the cargo is loaded, the team take their places in the cabin."
+msgstr ""
+
+msgid ""
+"\"The bomb is destined for Battleaddict's Goddard. But the tricky part is to "
+"actually plant it there.\""
+msgstr ""
+
+msgid "\"How are we supposed to do that?\""
+msgstr ""
+
+msgid ""
+"\"Are we going to pretend it's a gift from the High Command to "
+"Battleaddict's clownfish?\""
+msgstr ""
+
+msgid "\"No… that's not what the Major… do you think it could work?\""
+msgstr ""
+
+msgid "\"Of course. Warlords love when people give gifts to their clownfish.\""
+msgstr ""
+
+msgid "\"That was sarcasm, genius.\""
+msgstr ""
+
+msgid "Say nothing"
+msgstr ""
+
+msgid "Hamfresser looks confused. He looks at another soldier questioningly."
+msgstr ""
+
+msgid ""
+"\"Oh… Well, Lieutenant Strafer, what do you think? Should we ask the Major "
+"if this idea there is better?\""
+msgstr ""
+
+msgid "Lieutenant Strafer approaches with a stern look."
+msgstr ""
+
+msgid ""
+"\"Look, citizen {player}, you should really stop making fun of the Captain. "
+"Hamfresser usually kills disrespectful people, and the only reason why "
+"you're still alive is that he didn't understand you were bullying him. So "
+"please stop that or I'll tell him you don't respect him.\""
+msgstr ""
+
+msgid ""
+"\"Oh no, I'm far from being a genius. You know, many parts of my brain that "
+"are not linked to combat and space infantry activities have been removed by "
+"surgery or are atrophied.\""
+msgstr ""
+
+msgid ""
+"\"Anyways. Last period, we intercepted a message from Battleaddict to a "
+"plumber. His cruiser has issues with sewage disposal, and he requested an "
 "intervention. So, we abducted the plumber, and we disguised an EMP bomb as a "
 "replacement sewage disposal. We will dock with his ship, plant the bomb, "
 "repair the breakdown (so he won't suspect us) and leave. Private Ling here "
-"is a Goddard-plumber, so she will lead us.\" A young and smiling soldier "
-"raises her hand, and says \"Hi\"."
+"is a Goddard-plumber, so she will lead us.\""
+msgstr ""
+
+msgid "A young and smiling soldier raises her hand, and says \"Hi\"."
+msgstr ""
+
+msgid "\"OMG! This plan is brilliant!\""
+msgstr ""
+
+msgid "\"OMG! This plan is dead stupid!\""
 msgstr ""
 
 msgid ""
-"While you wonder whether the plan is insanely brilliant or dead stupid, "
-"Hamfresser begins the introductions. \"This is Sergeant Nikolov, she is my "
-"second in command, this is Private Tronk, from my squad, and Corporal "
-"Therus, our medical support. Oh, and the guy in the corner over there is "
-"Lieutenant Strafer. He is a pilot from Special Operations. He is here in "
-"case we need to switch to plan B.\" As you ask what plan B is, Hamfresser "
-"simply answers, \"you don't want to switch to plan B.\n"
-"   \"As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} "
-"in {sys}\"."
+"\"I know. It was an idea of Major Tam. He is for sure the best mastermind I "
+"have worked with since I've been in the black ops business.\""
+msgstr ""
+
+msgid ""
+"\"Do you think so? Well… I guess the best way to check if you're right is to "
+"try it out and see if we all die.\""
+msgstr ""
+
+msgid "The members of the commando introduce themselves."
+msgstr ""
+
+msgid ""
+"\"I am Sergeant Nikolov, the squad's second in command. Nice to meet you, "
+"citizen.\""
+msgstr ""
+
+msgid "\"My name is Corporal Therus. I am our medical support.\""
+msgstr ""
+
+msgid "\"My name is Private Tronk.\""
+msgstr ""
+
+msgid ""
+"\"I am Lieutenant Strafer. I am a pilot, and I am here in case we need to "
+"switch to plan B.\""
+msgstr ""
+
+msgid "\"What is plan B?\""
+msgstr ""
+
+msgid "\"You don't want to switch to plan B.\""
+msgstr ""
+
+msgid ""
+"\"As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} in "
+"{sys}. I propose we leave at once. Ah, and a last point: for safety reasons, "
+"please make sure our fuel tanks are not empty when we enter {sys}, just in "
+"case we have to leave the system rapidly.\""
 msgstr ""
 
 msgid "Bomb"
@@ -58539,49 +58647,54 @@ msgstr ""
 #. Fighter duel
 #. Entering (Dvaer)
 #. Flowers
+#. Genenral Caribert Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
 msgid "General Klank"
 msgstr ""
 
+#. Starts the duel
+#. TODO: Urnus should probably have his own character shared with the anti-FLF campaign
 msgid "Colonel Urnus"
 msgstr ""
 
 #. To avoid being in the range
 #. Equips a Goddard for a duel, with or without repeating railguns
 #. TODO switch to equipopt
-msgid "Not far from the goal"
-msgstr ""
-
 msgid ""
-"As you finish your jump, Lieutenant Strafer approaches your radar screen "
 "\"Battleaddict's Goddard should be around {pnt}. I guess he should be adding "
 "nanobond plating and repeating railguns everywhere he can by now. There "
 "should be a few patrol ships around him that will control our security "
-"clearance.\" Hamfresser gives instructions to the team: \"Everyone put your "
-"plumber suits on. Nikolov, switch the decoder on so that we can monitor the "
-"transmissions of the escort ships. It could tell us if we're detected.\""
-msgstr ""
-
-msgid "We're safe now"
+"clearance.\""
 msgstr ""
 
 msgid ""
-"Once the ship returns to its normal speed after jumping, Hamfresser says: "
-"\"Strange, I wouldn't have believed we'd survive this one. Would you, "
-"Strafer?\" The lieutenant answers \"I agree, captain. I guess we've got a "
-"good pilot.\" As you ask them why, then, they were not scared, Hamfresser "
-"answers: \"Of course we were scared! Who would not be? But we are trained "
-"not to show our fear. It tends to distract the pilots.\"\n"
-"   A few seconds later, you receive an encoded inter-system message from "
-"Major Tam: \"Plan A has leaked. Please switch to plan C. Do not jump in "
-"{sys} by any means. For your information, the leak is under control and the "
-"source has been dealt with.\" The voice makes a pause and continues: \"I "
-"really hope this messages catches you before you enter {sys}. Otherwise, may "
-"Dvaerius, the patron saint of mace rockets, have mercy on your souls...\" "
-"\"Good old Tamtam,\" Hamfresser says smiling, \"he always worries too much "
-"about us.\""
+"\"Everyone put your plumber suits on. Nikolov, switch the decoder on so that "
+"we can monitor the transmissions of the escort ships. It could tell us if "
+"we're detected.\""
 msgstr ""
 
-msgid "Plan C"
+msgid ""
+"\"Strange, I wouldn't have believed we'd survive this one. Would you, "
+"Strafer?\""
+msgstr ""
+
+msgid "\"I agree, captain. I guess we've got a good pilot.\""
+msgstr ""
+
+msgid "You receive an encoded inter-system message from Major Tam"
+msgstr ""
+
+msgid ""
+"\"Plan A has leaked. Please switch to plan C. Do not jump in {sys} by any "
+"means. For your information, the leak is under control and the source has "
+"been dealt with.\""
+msgstr ""
+
+msgid ""
+"\"I really hope this message catches you before you enter {sys}. Otherwise, "
+"may Dvaerius, the patron saint of mace rockets, have mercy on your souls…\""
+msgstr ""
+
+msgid "\"Good old Tamtam, he always worries too much about us.\""
 msgstr ""
 
 msgid ""
@@ -58595,35 +58708,42 @@ msgid ""
 "the plan. I, or Sergeant Nikolov, will brief you once we're in the Phalanx.\""
 msgstr ""
 
-#. Battleaddict agrees for the player to approach
-msgid "You're controlled"
+msgid "A Vendetta opens a communication channel with you."
 msgstr ""
 
 msgid ""
-"As you approach the lighter ships that protect the cruiser, a Vendetta hails "
-"you. Hamfresser answers \"We're Johnson and Jhonson, associate plumbers. "
-"We've an appointment with Mr. Battleaddict. It's about a sewage disposal "
-"problem.\" The fighter pilot answers: \"It's all right citizen, your "
-"transponder code is correct. You may pass.\" You ease your ship forwards "
-"while Hamfresser greets the pilot with an obsequious \"Thank you, mister "
-"officer.\"\n"
-"   \"By the way,\" says Lieutenant Strafer once the communication has been "
-"closed, \"This cruiser probably has no turreted weapons, in anticipation of "
-"the duel, so I would recommend to approach it from the back, just in case.\""
-msgstr ""
-
-msgid "We told you not to use a combat ship!"
+"\"We're Johnson and Jhonson, associate plumbers. We've an appointment with "
+"Mr. Battleaddict. It's about a sewage disposal problem.\""
 msgstr ""
 
 msgid ""
-"As you approach, Lieutenant Strafer looks at your radar screen. \"We are in "
-"a combat ship. We told you not to use a combat ship. Now, they are going to "
-"attack us! Why did you have to use a combat ship? We'll have to abort the "
-"mission now. All because of your bloody combat ship!\""
+"\"It's all right citizen, your transponder code is correct. You may pass.\""
+msgstr ""
+
+msgid "\"Thank you, mister officer.\""
+msgstr ""
+
+msgid ""
+"\"By the way, this cruiser probably has no turreted weapons, in anticipation "
+"of the duel, so I would recommend to approach it from the back, just in case."
+"\""
+msgstr ""
+
+msgid ""
+"You realize, but a bit late, that you were supposed to fly a civilian ship."
+msgstr ""
+
+msgid ""
+"\"We are in a combat ship. We told you not to use a combat ship. Now, they "
+"are going to attack us! Why did you have to use a combat ship? We'll have to "
+"abort the mission now. All because of your bloody combat ship!\""
 msgstr ""
 
 #. Battleaddict sees that the player is not a plumber
-msgid "That could have worked"
+msgid "First pilot"
+msgstr ""
+
+msgid "Second pilot"
 msgstr ""
 
 msgid ""
@@ -58631,20 +58751,43 @@ msgid ""
 "see a dozen shuttles transporting material and tools from the planet to the "
 "ship. As you get closer, you remark that the cruiser looks like a huge "
 "construction site with workers in spacesuits welding nanobond reinforcement "
-"plates on the hull. Behind you, you hear the chatter of the escort ships, "
-"which Hamfresser and his team are anxiously listening to: \"Hey, Zog, I'm "
-"getting concerned about my daughter. Her teacher told me she was non-violent "
-"with her classmates. Do you think I should see a specialist?\" \"Meh, I "
-"don't know, honestly. The new holomovies are to blame. There is always less "
-"violence and more love in there. The government should take measures.\"\n"
-"   Suddenly, a message makes everyone come to a halt: \"So, Colonel, when do "
-"we take those fake plumbers out? I look forward to using my shredders a bit!"
-"\" \"Shut up, Corporal!\" \"Oah, come on, I'm on the encoded channel. The "
-"plumbers aren't able to break our code.\" \"But they're NOT plumbers, stupid!"
-"\"\n"
-"   Hamfresser looks at you and declares \"We're aborting the mission. Get us "
-"out of this system, {player}!\" Strangely enough, none of the soldiers seem "
-"to show any sign of panic."
+"plates on the hull."
+msgstr ""
+
+msgid ""
+"Hamfresser and his team are anxiously listening to the chatter of the escort "
+"ships."
+msgstr ""
+
+msgid ""
+"\"Hey, Zog, I'm getting concerned about my daughter. Her teacher told me she "
+"was non-violent with her classmates. Do you think I should see a specialist?"
+"\""
+msgstr ""
+
+msgid ""
+"\"Meh, I don't know, honestly. The new holomovies are to blame. There is "
+"always less violence and more love in there. The government should take "
+"measures.\""
+msgstr ""
+
+msgid ""
+"\"Speaking of taking measures, Colonel, when do we take those fake plumbers "
+"out? I look forward to using my guns a bit!\""
+msgstr ""
+
+msgid "\"Shut up, Corporal!\""
+msgstr ""
+
+msgid ""
+"\"Oah, come on, I'm on the encoded channel. Plumbers aren't able to break "
+"our code.\""
+msgstr ""
+
+msgid "\"But they're NOT plumbers, stupid!\""
+msgstr ""
+
+msgid "\"We're aborting the mission. Get us out of this system, {player}!\""
 msgstr ""
 
 msgid "Jump out. Do NOT land in this system"
@@ -58656,47 +58799,65 @@ msgid "Gorgon"
 msgstr ""
 
 #. Go towards Battleaddict's place
-#. TODO switch to equipopt
-#. TODO: not possible to jump out nor land
+#. The player jumps out instead of intercepting the Phalank
+msgid "Why are you jumping out?"
+msgstr ""
+
+msgid ""
+"You were supposed to intercept a Phalanx, not to run away. The mission "
+"failed."
+msgstr ""
+
 #. Decide if the Phalanx flees or fight
-#. Makes the carceral convoy enter the system
-#. escort[4] = pilot.add( "Za'lek Heavy Drone", "Za'lek", mem.prevsys, nil, {ai="collective"} )
-#. TODO: not possible to jump nor to land
-#. Hooks for the interception target
-#. Hack so that Strafer attacks them and not the Sting
-#. Decide between fight or runaway
 msgid "Just try to catch me, you pirate!"
 msgstr ""
 
 msgid "You made a very big mistake!"
 msgstr ""
 
-msgid "Boarding"
+msgid ""
+"\"Allright folks. Now it's out turn to finally do something useful. Nikolov, "
+"Tronk, and I will enter first and clear the area. Remember, we don't have "
+"our usual Dudley combat androids. We're stuck with the two useless plumber "
+"bots and the few security droids of {player}'s ship so we'll have to get our "
+"hands dirty. Corvettes are typically protected by a few 629 Spitfires and an "
+"occasional 711 Grillmeister. That's not very much, but still enough to send "
+"the inattentive soldier ad patres.\""
 msgstr ""
 
 msgid ""
-"All the members of the commando unit have put on their battle suits. "
-"Hamfresser gives the final orders. \"Nikolov, Tronk, and I will enter first "
-"and clear the area. Remember, we don't have our usual Dudley combat "
-"androids. We're stuck with the two useless plumber bots and the few security "
-"droids of {player}'s ship so we'll have to get our hands dirty. Corvettes "
-"are typically protected by a few 629 Spitfires and an occasional 711 "
-"Grillmeister. That's not very much, but still enough to send the inattentive "
-"soldier ad patres.\"\n"
-"   When the corvette's airlock falls under Nikolov's circular saw, the "
-"captain waves and the small team enters the ship. You hear shots and "
-"explosions coming from further and further into the enemy ship. Finally, you "
-"hear a laconic message coming from the disabled corvette: \"Strafer here, "
-"everything went well. We'll now transfer the cargo into the Phalanx... Now "
-"that the manoeuvre is finished, you may leave.\" Happy to have survived the "
-"operation so far, you start your engines and respond \"Good luck, folks!\" "
-"The lieutenant answers \"Thanks, citizen, I'm glad to have met you.\""
+"When the corvette's airlock falls under Nikolov's circular saw, the captain "
+"waves and the small team enters the ship. You hear shots and explosions "
+"coming from further and further into the enemy ship. Finally, the disabled "
+"corvette opens a communication channel with you."
 msgstr ""
 
+msgid ""
+"\"Strafer here, everything went well. We'll now transfer the cargo into the "
+"Phalanx… Now that the manoeuvre is finished, you may leave.\""
+msgstr ""
+
+msgid "\"Good luck, folks!\""
+msgstr ""
+
+msgid "\"Good riddance, freaks!\""
+msgstr ""
+
+msgid "\"Thanks, citizen, I'm glad to have met you.\""
+msgstr ""
+
+msgid ""
+"\"Whatever. One day I'll give you my handbook for good manners. You look "
+"like you need it more than I do.\""
+msgstr ""
+
+#. Just in case the player scans the Phalanx
 #. Prevent the player form actually boarding the ship
 #. It's ours now!
+#. Re-activate the ship
 #. Mission failed: phalanx died
-#. Reset the zlk standing
+#. Permanently disable the Sting.
+#. Remove hooks
 #. Don't care after boarding
 msgid "Mission Failed: target destroyed"
 msgstr ""
@@ -58716,47 +58877,49 @@ msgid ""
 "supposed to transport the bomb now?"
 msgstr ""
 
-msgid "Ready to attend to the show?"
+msgid ""
+"\"I got a message from Captain Hamfresser. Apparently, everything went "
+"according to plan this time. They have docked with the Goddard, allegedly to "
+"add their mission log to the central database. Then they planted the bomb in "
+"the plumbing, close to the central unit, and they faked an accident while "
+"landing on {pnt}. I guess they should be hiking somewhere on the planet's "
+"surface by now, looking for the opportunity to steal an unfortunate "
+"civilian's Llama in order to make their trip back.\""
 msgstr ""
 
 msgid ""
-"As you sit at the table, Tam starts to speak: \"I got a message from Captain "
-"Hamfresser. Apparently, everything went according to plan this time. They "
-"should have docked with the Goddard, allegedly to add their mission log to "
-"the central database. Then they planted the bomb in the plumbing, close to "
-"the central unit, and they faked an accident while landing on {pnt}. I guess "
-"they should be hiking somewhere on the planet's surface by now, looking for "
-"the opportunity to steal an unfortunate civilian's Llama in order to make "
-"their trip back.\n"
-"   \"Our boss, General Klank, is ready for the duel. The Captain and I are "
-"his duel witnesses, so we should be joining our pageantry ships by now. Oh, "
-"and the duel commissioner is someone you already know, Colonel Urnus. In "
-"about a period, Lord Battleaddict should arrive, so if you take off soon, "
-"you will see the duel.\""
+"\"Our boss, General Klank, is ready for the duel. The Captain and I are his "
+"duel witnesses, so we should be joining our pageantry ships by now. Oh, and "
+"the duel commissioner is someone you already know, Colonel Urnus. In about a "
+"period, Lord Battleaddict should arrive, so if you take off soon, you will "
+"see the duel.\""
 msgstr ""
 
 msgid "Attend to the duel"
 msgstr ""
 
-#. Starts the duel
-msgid "Here we go"
+msgid ""
+"\"I, Colonel Urnus, have been requested by both parties of this duel to be "
+"today's commissioner. I hereby solemnly swear, as an officer of the Dvaered "
+"Army, to be respectful of our laws and our customs, and I have never worked "
+"under the command nor as a commander of either of the generals involved in "
+"this duel. I have verified the pedigree of the four witnesses and I can "
+"attest they are respectable officers of the Dvaered Army.\""
 msgstr ""
 
 msgid ""
-"Colonel Urnus's ship broadcasts the message: \"I, Colonel Urnus, have been "
-"requested by both parties of this duel to be today's commissioner. I hereby "
-"solemnly swear, as an officer of the Dvaered Army, to be respectful of our "
-"laws and our customs, and I have never worked under the command nor as a "
-"commander of either of the generals involved in this duel. I have verified "
-"the pedigree of the four witnesses and I can attest they are respectable "
-"officers of the Dvaered Army. Lord Battleaddict, General Klank, before "
-"proceeding with combat, I must ask you one last time: Are you sure your "
-"disagreement cannot be solved by any other means?\"\n"
-"   A formal silence follows the words of the colonel, but soon Battleaddict "
-"and Klank respond: \"It cannot, Mister Commissioner.\" Urnus continues: \"I "
-"am witness to the fact that this duel conforms to the rules established by "
-"our ancestors. I have inspected both ships and I attest that I observed no "
-"irregularities. Let the fight begin. May the most virtuous one of you "
+"\"Lord Battleaddict, General Klank, before proceeding with combat, I must "
+"ask you one last time: Are you sure your disagreement cannot be solved by "
+"any other means?\""
+msgstr ""
+
+msgid "It cannot, Mister Commissioner."
+msgstr ""
+
+msgid ""
+"\"I am witness to the fact that this duel conforms to the rules established "
+"by our ancestors. I have inspected both ships and I attest that I observed "
+"no irregularities. Let the fight begin. May the most virtuous one of you "
 "survive.\""
 msgstr ""
 
@@ -58781,7 +58944,7 @@ msgstr ""
 msgid "Damn!"
 msgstr ""
 
-msgid "Oooooo..."
+msgid "Oooooo…"
 msgstr ""
 
 msgid "What the?"
@@ -58804,7 +58967,7 @@ msgstr ""
 msgid "Cheaters yourselves!"
 msgstr ""
 
-msgid "Hey, Battleaddict, it seems we are both down..."
+msgid "Hey, Battleaddict, it seems we are both down…"
 msgstr ""
 
 msgid "I still want to kill you!"
@@ -58840,23 +59003,46 @@ msgid "General Klank won the duel!"
 msgstr ""
 
 #. Epilogue
-msgid "A good thing done"
+msgid ""
+"\"General, allow me to introduce you to {player}, the private pilot I hired "
+"for you-know-what.\""
 msgstr ""
 
 msgid ""
-"As you approach, the major tells General Klank that you are the private "
-"pilot they hired recently. \"I see,\" says the general \"so you are one of "
-"the people I have to thank for still being alive now.\" You answer that he "
-"apparently would not have needed help if Battleaddict had not cheated as "
-"well, and he responds: \"Damn fake electricians; I should have suspected "
-"something. Anyway, citizen, rest assured that we will need your services "
-"again.\" A group of generals approach and congratulate Klank. He stands up "
-"and leaves with them, loudly exchanging dubious pleasantries.\n"
-"   Major Tam speaks to you: \"Apparently, Battleaddict had a commando unit "
-"dress like electricians and hide an EMP bomb in the General's Goddard. It "
-"exploded during the fight, just like our own bomb. And now both ships have "
-"their systems ruined. Well, anyway, thank you for your help, here are "
-"{credits} for you!\""
+"\"I see, so you are one of the people I have to thank for still being alive "
+"now.\""
+msgstr ""
+
+msgid ""
+"\"You apparently would not have needed help if Battleaddict had not cheated, "
+"General.\""
+msgstr ""
+
+msgid ""
+"\"Yeah, you were lucky to have me in your team. I'm the best in this "
+"business.\""
+msgstr ""
+
+msgid ""
+"\"Ah! Ah! Ah! There are so many people who are the best in this business "
+"nowadays! You private pilots are so funny to work with!\""
+msgstr ""
+
+msgid ""
+"\"Damn fake electricians; I should have suspected something. Anyway, "
+"citizen, rest assured that we will need your services again.\""
+msgstr ""
+
+msgid ""
+"A group of generals approach and congratulate Klank. He stands up and leaves "
+"with them, loudly exchanging dubious pleasantries."
+msgstr ""
+
+msgid ""
+"\"Apparently, Battleaddict had a commando unit dress like electricians and "
+"hide an EMP bomb in the General's Goddard. It exploded during the fight, "
+"just like our own bomb. And now both ships have their systems ruined. Well, "
+"anyway, thank you for your help, here are {credits} for you!\""
 msgstr ""
 
 msgid ""
@@ -58899,13 +59085,12 @@ msgstr ""
 #. 5) Player has been hailed by Captain HewHew
 #. 6) Player has met the Empire and Pirate agent, but did not accept any of their offers (yet?)
 #. 7) Accepted Empire solution: can cross blockade of dealsys->dealjump
-#. 8) Accepted Pirate solution: can cross any blockade
-#. 9) Accepted Pirate solution: can cross any blockade, but has paid cash
+#. 8) Accepted Pirate solution: on their way to Effetey
+#. 9) Accepted Pirate solution: on their way back with pirate datapad
 #. --
 #. Non-persistent state
 #. Forward-declared functions
 #. common hooks
-#. TODO: add news comments about all this
 msgid ""
 "Hamfresser and his team are gathered at a table. The captain drinks from his "
 "favourite pink straw while incessantly scanning the room."
@@ -58940,41 +59125,53 @@ msgid ""
 "makes the group even stranger."
 msgstr ""
 
+msgid "This shifty person matches the description of Zed."
+msgstr ""
+
 msgid ""
 "Captain Leblanc is the top pilot of General Klank's task force. Her presence "
 "in this bar means that the High Command needs your help."
 msgstr ""
 
-msgid "A difficult mission"
+msgid "\"Sounds nice. When do we start?\""
 msgstr ""
 
 msgid ""
-"As you approach, Leblanc recognizes you. \"Hello, citizen. Fancy meeting you "
-"here! The Major told me I would end up finding you by checking all the "
-"shifty places in Dvaered space. We need your services once more. But, this "
-"time, it will be sort of a bit... More illegal.\" You wonder how something "
-"could be more illegal than helping black ops commandos assassinate a pilot, "
-"steal a corvette, and sabotage a warlord's cruiser. And, so, you answer:"
+"\"Hello, citizen. Fancy meeting you here! The Major told me I would end up "
+"finding you by checking all the shifty places in Dvaered space. We need your "
+"services once more. But, this time, it will be sort of a bit… More dangerous."
+"\""
+msgstr ""
+
+msgid "\"No way.\""
+msgstr ""
+
+msgid "\"Well… Last time it was already quite dangerous, no?\""
 msgstr ""
 
 msgid ""
 "\"As you wish, citizen. After all, one can not obligate people to do their "
-"duty...\""
-msgstr ""
-
-msgid "The problem to solve"
+"duty…\""
 msgstr ""
 
 msgid ""
-"\"Alright,\" Leblanc says, \"Here is the situation: before we prepare for "
-"our military operations, we need to protect our backs. Major Tam believes "
-"that the House Goddard is the key to ensure that the Empire will not thwart "
-"our plan. Tam would explain it much better than I, but as Goddard is right "
-"in between our space and Imperial space, they really have much to lose in "
-"case of a direct conflict. What is more, as we are House Goddard's best "
-"customer, they tend to appreciate us. For example, we recently paid 6M "
-"credits to repair all the electronics in Klank's and Battleaddict's "
-"Goddards.\n"
+"\"Last time, the worst thing that could have happened to you was getting "
+"killed by a bloodthirsty warlord. This time, the risk is much worse as you "
+"might end up in the hands of the Za'lek!\""
+msgstr ""
+
+msgid "\"Za'lek! No, that's too much for me! I'm afraid I have to refuse.\""
+msgstr ""
+
+msgid ""
+"\"Alright, here is the situation: before we prepare for our military "
+"operations, we need to protect our backs. Major Tam believes that the House "
+"Goddard is the key to ensure that the Empire will not thwart our plan. Tam "
+"would explain it much better than I, but as Goddard is right in between our "
+"space and Imperial space, they really have much to lose in case of a direct "
+"conflict. What is more, as we are House Goddard's best customer, they tend "
+"to appreciate us. For example, we recently paid 6M credits to repair all the "
+"electronics in Klank's and Battleaddict's Goddards.\n"
 "   However, not all members of Goddard's executive board share the same "
 "opinion on our Frontier invasion projects. Mr. Danftang, their Public "
 "Relations Manager, in particular, used to see it as an opportunity to sell "
@@ -58993,27 +59190,31 @@ msgid ""
 "   \"Major Tam has planned the operation. First, you will pick up Hamfresser "
 "and his team on {hampla} in {hamsys}. I'll be there too, and then we will "
 "fly in formation to {intsys} and set up the ambush. It would be preferable "
-"if you would make sure that your ship doesn't outrun my Vendetta. The convoy "
-"should be a few drones and a corvette. We will destroy the drones and "
-"disable the corvette in order to let the commando unit enter the ship and "
-"recover the target. Tam has insisted that he doesn't want us to kill anybody "
-"as it could irritate the Za'lek a bit too much. After that, we will have to "
-"jump out of the system and to return to {reppla} separately.\n"
-"   \"A fake transponder will be installed on both our ships. This will "
-"ensure that, provided we don't do anything stupid on our way back, we will "
-"not be recognized as hostile by the Za'lek patrols and ground control "
-"services. So we should be able to refuel without any problem on Za'lek "
-"planets.\""
+"if you would make sure that your ship doesn't outrun my Vendetta.\""
 msgstr ""
 
+msgid ""
+"\"The enemy convoy should be a few drones and a corvette. We will destroy "
+"the drones and disable the corvette in order to let the commando unit enter "
+"the ship and recover the target. Tam has insisted that he doesn't want us to "
+"kill anybody as it could irritate the Za'lek a bit too much. After that, we "
+"will have to jump out of the system and to return to {reppla} separately.\n"
+"   \"A fake transponder will be installed on both our ships. This will "
+"ensure that, provided we don't land just after the interception or do any "
+"other stupid thing on our way back, we will not be recognized as hostile by "
+"the Za'lek patrols and ground control services. So we should be able to "
+"refuel without any problem on Za'lek planets.\""
+msgstr ""
+
+#. Test acceptance
 msgid "You will help a Goddard executive to evade his Za'lek prison."
 msgstr ""
 
-msgid "Hopefully something better than Gauss Guns..."
+msgid "Hopefully something better than Gauss Guns…"
 msgstr ""
 
-#. Note: The most probable system is Pultatis, where the only landable planet has shipyard and outfitter.
-#. In this case, the final advice is useless. Is it worth managing this case ?
+#. Create two pirate portraits
+#. Also give the starting system, just in case
 #. 2500s is easy to do with anything smaller or like a corvette but short enough to feel pressing.
 #. Increased tick frequency for dramatic effect.
 msgid "Dvaered Escape"
@@ -59025,23 +59226,37 @@ msgstr ""
 msgid "Intercept the convoy in {sys}. Your Vendetta escort must survive"
 msgstr ""
 
+msgid "Jump out, do NOT land directly in {sys}"
+msgstr ""
+
+#. Sergeant Nikolov: second in command of Captain Hamfresser
 msgid "Sergeant Nikolov"
 msgstr ""
 
+#. Private Amadeus Tronk: subordinate of Captain Hamfresser
 msgid "Private Tronk"
 msgstr ""
 
 msgid "Corporal Therus"
 msgstr ""
 
+#. When entering Empire Space, contact with Captain HewHew
+#. Spawn Strafer
+#. We're taking off
+#. Spawn the escort
+#. Encounter with Strafer on Dvaer Prime
+#. Player discusses with Lieutenant Strafer
+#. Strafer gets annoyed if one asks several times the same question
+#. Add a spy close to Gremlin, make Strafer head to it, and a group of Hyenas kill Strafer to secure the spy's exit
+#. Compute the line on which to place the spy and Strafer
+#. First, teleport Strafer far away from any backup
+msgid "Lieutenant Strafer"
+msgstr ""
+
 msgid "Commando"
 msgstr ""
 
 msgid "A commando unit."
-msgstr ""
-
-#. TODO: see if it gets auto-removed at the end of mission
-msgid "Hello again"
 msgstr ""
 
 msgid ""
@@ -59058,85 +59273,220 @@ msgid ""
 "they were aboard. Finally, between two cyborgs, you spot Lieutenant Strafer, "
 "the pilot, apparently the only normal person who can look serene around "
 "space infantry cyborgs. Well, \"normal\" might be a stretch; he is a Dvaered "
-"soldier, after all.\n"
-"   When you look at Hamfresser's face, you notice a large smile on it. The "
-"implants on his face do not look like they were designed with smiling in "
-"mind and his skin twists horribly. As you approach, he tells you the team is "
-"ready to leave on a moment's notice."
-msgstr ""
-
-#. Land at an Imperial planet and meet the agents
-#. Discuss with the Pirate or Imperial agent
-msgid "Other help offer"
+"soldier, after all."
 msgstr ""
 
 msgid ""
-"As you land, someone is waiting for you at the spaceport. \"Hello, friend! "
-"Seems like you're having some trouble with the authorities out there. Looks "
-"like the Za'lek have even enlisted the help of the Imperials. There are "
-"blockades everywhere on the borders of Imperial space. Even the paths to the "
-"secret jumps are impassable. It looks like the Empire wants to catch you at "
-"all costs, but luckily enough, I have the solution. I imagine you already "
-"have a fake transponder, but they seem to have identified it. It looks like "
-"you could use a replacement. I can sell you a genuine, fake transponder "
-"fresh from the Skulls and Bones factory.\"\n"
-"   Clearly this is a pirate looking to make a few credits off your dire "
-"situation. But, the idea is not a bad one. The Imperial ships wouldn't be "
-"looking for a ship with a Skulls and Bones fake transponder. So you ask him "
-"how many credits he wants. \"{number}\" is the answer. \"Sounds like a lot, "
-"right? But maybe it's a bargain in exchange for your life and the success of "
-"whatever unscrupulous mission you're trying to carry out. Maybe you don't "
-"have that many credits on you right now. That's OK. I'll accept your word to "
-"pay me at some point. Well, your word and your DNA signature. That way I can "
-"find you if you try to cheat me.\"\n"
-"   You know that if you agree, you will have to pay, no matter what happens, "
-"otherwise you will be hounded by hit men until the end of your, probably "
-"very short, life. However, paying {credits} might allow you to avoid the "
-"otherwise messy and compromising deal you would have to make with the "
-"Imperial secret services. Meet the fake transponder dealer at the bar if "
-"interested."
+"When you look at Hamfresser's face, you notice a large smile on it. The "
+"implants on his face do not look like they were designed with smiling in "
+"mind and his skin twists horribly."
 msgstr ""
 
-#. Land to end the mission
-msgid "Finally back"
+msgid ""
+"\"The team is ready to leave on a moment's notice. We will embark with you "
+"when you take off.\""
+msgstr ""
+
+#. Trying to land just after having boarded the carceral convoy is forbidden
+#. Test to see if the player killed a zlk inhabited ship
+msgid "The mission failed"
+msgstr ""
+
+msgid ""
+"Stepping out of your ship, you find yourself surrounded by police officers. "
+"Landing just after attacking the carceral convoy was not the brightest idea, "
+"as expected."
+msgstr ""
+
+#. Land at an Imperial planet and meet the agents
+msgid "Strange Person"
+msgstr ""
+
+msgid "As you land, someone is waiting for you at the spaceport."
+msgstr ""
+
+msgid ""
+"\"Hello, friend! Seems like you're having some trouble with the authorities "
+"out there. Looks like the Za'lek have even enlisted the help of the "
+"Imperials. There are blockades everywhere on the borders of Imperial space. "
+"It looks like the Empire wants to catch you at all costs, but luckily "
+"enough, me and my friends have the solution. It happens that there exist "
+"secret jumps that are not guarded. We could give their location, in exchange "
+"for a small favour.\""
+msgstr ""
+
+msgid "\"What do you want?\""
+msgstr ""
+
+msgid "\"You look like a pirate. I will not treat with you.\""
+msgstr ""
+
+msgid "\"Secret jumps? Ah ah! Well tried, but I already know them.\""
+msgstr ""
+
+msgid ""
+"\"A bargain in exchange for your life and the success of whatever "
+"unscrupulous mission you're trying to carry out. I need someone to fetch an "
+"object for me on {pnt}.\""
+msgstr ""
+
+msgid ""
+"This deal sounds like troubles. It would be a bad thing if you weren't "
+"already in troubles. Besides, it might allow you to avoid the otherwise "
+"messy and compromising deal you would have to make with the Imperial secret "
+"services."
+msgstr ""
+
+msgid ""
+"\"How closed-minded of you! I don't want to force you, it's a free country "
+"after all…\""
+msgstr ""
+
+msgid "\"As if the likes of you could force me if they wanted to.\""
+msgstr ""
+
+msgid ""
+"\"What are you talking about? The Empire is a totalitarian state. Didn't you "
+"remark that already?\""
+msgstr ""
+
+msgid "\"Damn. You are more dvaered than I thought.\""
+msgstr ""
+
+msgid ""
+"\"Yes. No. I was referring to Qorel. Did you know that everyone is equal in "
+"Qorel? It's not so far from here, but the Empire can't do anything about it."
+"\""
+msgstr ""
+
+msgid "\"What is Qorel? I never heard of that place.\""
+msgstr ""
+
+msgid ""
+"\"Everyone is equal in Qorel? That's the best joke I've heard in ages!\""
+msgstr ""
+
+msgid ""
+"\"If you don't know what Qorel is, it means you have no business there.\""
+msgstr ""
+
+msgid ""
+"\"Well… Let's say some are more equal than others. But hey! We were talking "
+"serious business, how did we end up discussing politics?\""
+msgstr ""
+
+msgid "\"Oh… At least I'll have tried.\""
+msgstr ""
+
+msgid ""
+"\"Anyways, I'll be at the bar in case you need my services! See you soon!\""
+msgstr ""
+
+#. Land to get the datapad on Efferey
+msgid "Zed"
+msgstr ""
+
+#. Bring back datapad to the Pirate dealer
+msgid "Zid"
+msgstr ""
+
+msgid "Zid was waiting for you at the spacedock."
+msgstr ""
+
+msgid ""
+"\"Nice to see you, pilot. I see you brought the datapad with you. So you "
+"have fulfilled your part of the deal. Let me give you the location of "
+"another jump, that will give you access to Dvaered space from {sys}.\""
+msgstr ""
+
+msgid "Mr. Danftang"
 msgstr ""
 
 msgid ""
 "Upon landing, you, Hamfresser, and the VIP go to the spaceport's military "
-"office, where Major Tam is waiting for you along with a few other soldiers. "
-"He warmly greets the executive and addresses Hamfresser: \"Do you know that "
-"you people scared us? We learned through diplomatic channels that you almost "
-"entirely destroyed a hospital's pharmacy, along with two police tanks and "
-"half a dozen battle androids on {pnt}. At least, apparently, you did not "
-"kill anyone. But the Za'lek were really upset\".\n"
-"   The captain explains: \"Sir, the VIP was injured during the extraction, "
-"and we needed a medical device to heal him. But once in the hospital, we "
-"were spotted by a traffic cop. Then things quickly got worse, and we had to "
-"escape through the pharmacy's wall. I lost a soldier in this operation.\" "
-"Tam answers: \"Well, you will make a detailed report later. And don't worry "
-"about the soldier, I will make sure he is replaced immediately.\n"
-"   \"And you, {player}, anything to report?\""
-msgstr ""
-
-#. Empire solution
-msgid "A problem with the Empire"
+"office, where Major Tam is waiting for you along with a few other soldiers."
 msgstr ""
 
 msgid ""
+"\"Greetings, Mr. Danftang. My name is Major Archibald Tam and in behalf of "
+"Dvaered High Command I am truly honoured to meet you.\""
+msgstr ""
+
+msgid ""
+"\"You Dvaered are foolish, you nearly got me killed! Do you think that "
+"violence is the solution to any problem?\""
+msgstr ""
+
+msgid "\"Is there any other way to solve a problem?\""
+msgstr ""
+
+msgid ""
+"\"You know what? My grandma was always saying that the Dvaered and the "
+"Za'lek were the worst in the universe. And she was right. First, the Za'lek "
+"imprisoned me under the bogus charge of 'scientific embezzlement', and now, "
+"you Dvaered storm your way to my cell and kidnap me.\""
+msgstr ""
+
+msgid ""
+"\"But sir, the operation is a success, and you'll be back to business very "
+"soon. Isn't that wonderful?\""
+msgstr ""
+
+msgid ""
+"\"No, strong-arm! Patience, negotiation, bribing, and craftiness can achieve "
+"much more than violence and destruction. I had hired the best lawyers in "
+"Za'lek space and my assistants negotiated with the authorities -- I was sure "
+"to get out in about half a cycle.\""
+msgstr ""
+
+msgid "\"And thanks to us, you got out right now, not in half a cycle.\""
+msgstr ""
+
+msgid ""
+"\"Besides, Dvaered warriors don't use deception, nor patience, nor "
+"craftiness. Dvaered warriors use respectable methods instead, like violence "
+"and destruction.\""
+msgstr ""
+
+msgid "Mr. Danftang is escorted to the exit and Tam addresses Hamfresser."
+msgstr ""
+
+msgid ""
+"\"Do you know that you people scared us? We learned through diplomatic "
+"channels that you almost entirely destroyed a hospital's pharmacy, along "
+"with two police tanks and half a dozen battle androids on {pnt}. At least, "
+"apparently, you did not kill anyone. But the Za'lek were really upset.\""
+msgstr ""
+
+msgid ""
+"\"Sir, the VIP was injured during the extraction, and we needed a medical "
+"device to heal him. But once in the hospital, we were spotted by a traffic "
+"cop. Then things quickly got worse, and we had to escape through the "
+"pharmacy's wall. I lost a soldier in this operation.\""
+msgstr ""
+
+msgid ""
+"\"Well, you will make a detailed report later. And don't worry about the "
+"soldier, I will make sure he is replaced immediately.\""
+msgstr ""
+
+msgid "\"And you, {player}, anything to report?\""
+msgstr ""
+
+#. Empire solution
+msgid ""
 "You explain to the major the problems you encountered. You talk about the "
 "strange deal the Empire has forced you to make with them and the major's "
-"face turns red: \"You did WHAT? The Imperial intelligence service is the "
-"strongest in the universe! They can deduce things you would not even imagine "
-"just by looking at someone, and you let them interview a black ops commando "
-"leader!\"\n"
-"   You argue that you had no other choice, and he seems to calm down a "
-"little bit \"I will interrogate Hamfresser to see if I can determine what "
-"they were looking for. Damn! I'm afraid something awful may happen to us "
-"somehow because of this. Oh, and by the way, I made sure the Za'lek don't "
-"blame you personally for what happened. They should accept you in their "
-"space now.\"\n"
-"   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are {credits}.\""
+"face turns red."
+msgstr ""
+
+msgid ""
+"\"You did WHAT? The Imperial intelligence service is the strongest in the "
+"universe! They can deduce things you would not even imagine just by looking "
+"at someone, and you let them interview a black ops commando leader! I guess "
+"you had no other choice… I will interrogate Hamfresser to see if I can "
+"determine what they were looking for. Damn! I'm afraid something awful may "
+"happen to us somehow because of this.\""
 msgstr ""
 
 msgid ""
@@ -59147,90 +59497,49 @@ msgid ""
 "you to make a deal with the Imperial secret service."
 msgstr ""
 
-#. Pirate debt
-msgid "Everything is almost alright"
+#. Pirate solution.
+msgid ""
+"You explain to the major the problems you encountered. You talk about the "
+"strange deal the Empire tried to make with you, and how you eventually "
+"managed to skirt the blockade with help of pirates."
 msgstr ""
 
 msgid ""
-"You explain to the major the problems you encountered. You talk about the "
-"strange deal the Empire tried to make with you. \"Yes, the Imperial "
-"intelligence services are formidable. It is very hard for us to hide our "
-"intentions from them. It was right for you not to accept their offer. So, "
-"you bought a pirate fake transponder, right? I hope it was not too expensive!"
-"\"\n"
-"   When you tell him the sum you had to promise to pay, Major Tam squeaks. "
-"\"Whawhawhat? {price} for a fake transponder! That is not trade, it is theft!"
-"\" \"Well, technically...\" You answer \"those folks are pirates, so it's "
-"their job to rob people.\" The major calms down \"Alright. I'll take care of "
-"the payment, so that they don't kill you. We will need extra funding by the "
-"Headquarters soon, I am afraid. Oh, and by the way, I made sure the Za'lek "
-"don't blame you personally for what happened. They should accept you in "
-"their space now.\"\n"
-"   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are {credits}.\""
+"\"Yes, the Imperial intelligence services are formidable. It is very hard "
+"for us to hide our intentions from them. It was right for you not to accept "
+"their offer. So, you got pirates to give you the way through Effetey, right? "
+"Well-done, citizen.\""
 msgstr ""
 
 msgid ""
 "You helped the Dvaered High Command to liberate Mr. Danftang, public "
 "relations executive at Goddard, who was imprisoned by the Za'lek for dubious "
 "reasons. This executive is likely to help House Dvaered from a diplomatic "
-"angle. Many unexpected events happened during this operation which forced "
-"you into debt with House Dvaered."
+"angle. Many unexpected events happened during this operation but eventually "
+"you managed to make it back to Dvaered-controlled space."
 msgstr ""
 
-#. Pirate cash
 #. Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
 #. Unforeseen solution, Captain Hewhew met.
-#. Unforeseen solution, Captain Hewhew NOT even met.
-msgid "No major problem to report"
-msgstr ""
-
 msgid ""
 "You explain to the major the problems you encountered. You talk about the "
-"strange deal the Empire tried to make with you. \"Yes, the Imperial "
-"intelligence services are formidable. It is very hard for us to hide our "
-"intentions from them. It was right for you not to accept their offer. So, "
-"you bought a pirate fake transponder, right? I hope it was not too expensive!"
-"\"\n"
-"   When you tell him the sum you paid, Major Tam squeaks. \"Whawhawhat? "
-"{price} for a fake transponder! That is not trade, it is theft!\" \"Well, "
-"technically...\" You answer \"those folks are pirates, so it's their job to "
-"rob people.\" The major calms down \"Alright. I'll refund you. We will need "
-"extra funding by the Headquarters soon, I am afraid. By the way, I made sure "
-"the Za'lek don't blame you personally for what happened. They should accept "
-"you in their space now.\"\n"
-"   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are {credits}.\""
+"strange deal the Empire tried to make with you, and how you eventually "
+"managed to skirt the blockade."
 msgstr ""
 
 msgid ""
-"You helped the Dvaered High Command to liberate Mr. Danftang, public "
-"relations executive at Goddard, who was imprisoned by the Za'lek for dubious "
-"reasons. This executive is likely to help House Dvaered from a diplomatic "
-"angle. Many unexpected events happened during this operation, that forced "
-"you to buy a fake transponder at an outrageous price."
+"\"Yes, the Imperial intelligence services are formidable. It is very hard "
+"for us to hide our intentions from them. It was right for you not to accept "
+"their offer.\""
+msgstr ""
+
+#. Captain Hewhew NOT even met. This should not happen normally
+msgid "You explain to the major the problems you encountered."
 msgstr ""
 
 msgid ""
-"You explain to the major the problems you encountered. You talk about the "
-"strange deal the Empire tried to make with you. \"Yes, the Imperial "
-"intelligence services are formidable. It is very hard for us to hide our "
-"intentions from them. It was right for you not to accept their offer. I "
-"guess it must have been very hard, and risky, to skirt the Imperial "
-"blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't "
-"blame you personally for what happened. They should accept you in their "
-"space now.\"\n"
-"   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are {credits}.\""
-msgstr ""
-
-msgid ""
-"You explain to the major the problems you encountered. \"I guess it must "
-"have been very hard, and risky, to skirt the blockade, congratulations! Oh, "
-"and by the way, I made sure the Za'lek don't blame you personally for what "
-"happened. They should accept you in their space now.\"\n"
-"   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are {credits}.\""
+"\"I guess it must have been very hard, and risky, to skirt the blockade, "
+"congratulations!\""
 msgstr ""
 
 msgid ""
@@ -59242,88 +59551,182 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Hello, {player}! You remember us?\" asks the captain, apparently unaware "
-"of the fact that his appearance is hard to forget. \"We are ready to embark "
-"whenever you want, pilot! You'll just have to make space for {tonnes} of "
-"cargo (we have some equipment). Oh yes, and there is apparently a small "
-"change in the plan regarding Captain Leblanc. She won't be able to join us. "
-"Talk to the Lieutenant, he can explain it further.\""
+"\"Oh, and by the way, I made sure the Za'lek don't blame you personally for "
+"what happened. They should accept you in their space now. Concerning your "
+"payment, here are {credits}.\""
+msgstr ""
+
+#. Optional discussions with the team
+msgid ""
+"\"Hello, {player}! You remember us? We are ready to embark whenever you "
+"want, pilot! You'll just have to make space for {tonnes} of cargo (we have "
+"some equipment). Oh yes, and there is apparently a small change in the plan "
+"regarding Captain Leblanc. She won't be able to join us. Talk to the "
+"Lieutenant, he can explain it further.\""
 msgstr ""
 
 msgid ""
 "\"Hello, citizen. I guess you want to discuss the plan with the officers. "
 "But first, can you explain to my why there are many so people in this room, "
 "but none of them want to sit at the tables next to ours? Do you know what is "
-"wrong with this part of the room?\" You answer that the people probably feel "
-"unsafe sitting next to a group of dangerous-looking cyborgs, and she "
-"answers: \"Meh, I don't think you're right. When I am in the Space Infantry "
+"wrong with this part of the room?\""
+msgstr ""
+
+msgid "\"That's strange indeed.\""
+msgstr ""
+
+msgid ""
+"\"I guess people feel unsafe sitting next to a group of dangerous-looking "
+"cyborgs\""
+msgstr ""
+
+msgid ""
+"\"Meh, I don't think you're right. When I am in the Space Infantry "
 "refectory, there are dangerous-looking cyborgs all around and nobody feels "
-"unsafe. It must be something else...\""
+"unsafe. It must be something else…\""
 msgstr ""
 
 msgid ""
 "\"I ordered water and the waiter gave me this glass which is full of "
 "bubbles. It does not look safe. Do you know what it is? I hope it's not "
-"alcohol...\" As you tell him that it is simply sparkling water, and that it "
-"doesn't contain alcohol nor anything toxic, he gratefully answers: \"Whoa, "
-"you're quite the expert about drinks! You know, I asked because we cyborgs "
-"of class gamma can't drink alcohol. Each morning we have to take special "
-"medication, the Spacemarine's Cocktail, to ensure that our bodies continue "
-"to support our biological and cybernetic implants. This cocktail is "
-"incompatible with any alcohol.\n"
-"   \"My brother drank a beer once by mistake, and he had to spend two months "
-"in hospital. But he is doing better now, and is back with his unit.\" You "
-"ask him if everyone in his family is as strong as he is and he answers: \"Oh "
-"no, my little sister is much stronger. She fights on Totoran in the one-on-"
-"one bare-hand championship. She won 6 matches in a row, last season. But I "
-"am afraid she won't be able to take part in this cycle's championship as she "
-"hasn't yet fully recovered from her decapitation during her last fight.\""
+"alcohol…\""
+msgstr ""
+
+msgid "\"It is sparkling water.\""
+msgstr ""
+
+msgid "\"It is alcohol! Watch out! It will explode!\""
+msgstr ""
+
+msgid ""
+"\"Whoa, you're quite the expert about drinks! You know, I asked because we "
+"cyborgs of class gamma can't drink alcohol. Each morning we have to take "
+"special medication, the Spacemarine's Cocktail, to ensure that our bodies "
+"continue to support our biological and cybernetic implants. This cocktail is "
+"incompatible with any alcohol. My brother drank a beer once by mistake, and "
+"he had to spend two months in hospital. But he is doing better now, and is "
+"back with his unit.\""
+msgstr ""
+
+msgid "\"See you later.\""
+msgstr ""
+
+msgid "\"Is everyone in your family a spacemarine cyborg?\""
+msgstr ""
+
+msgid ""
+"\"Oh no, my little sister is not with the space infantry. She fights on "
+"Totoran in the one-on-one bare-hand championship. She won 6 matches in a "
+"row, last season. But I am afraid she won't be able to take part in this "
+"cycle's championship as she hasn't yet fully recovered from her decapitation "
+"during her last fight.\""
+msgstr ""
+
+msgid "\"Aaaah!\""
+msgstr ""
+
+msgid ""
+"Tronk drops his glass as if it were burning hot and the soldiers pull their "
+"weapons."
+msgstr ""
+
+msgid "\"What happens? Are we under attack?\""
+msgstr ""
+
+msgid ""
+"\"Nah, it's just {player} making fun of you guys. Hey {player}! You should "
+"really refrain from doing that again.\""
+msgstr ""
+
+msgid ""
+"You make a note to yourself: don't try to make jokes in presence of Dvaered "
+"Space Infantry cyborgs."
 msgstr ""
 
 msgid ""
 "\"Hi, citizen. Are you ready to transport us once more? Have you spoken to "
 "the Captain? And to the pilot? I don't really know the details of the "
-"operation, so you'll have to ask them.\"\n"
-"   The corporal seems to hesitate, and then continues: \"Today, the "
-"Lieutenant asked me a riddle: let's say Major Tam is running after a turtle. "
-"When Major Tam arrives at the point where the turtle was when he started to "
-"run, the turtle has moved forward a bit in the same time, right? Then, he "
-"arrives at the point where the turtle was when he reached the previous "
-"point, but the turtle has again moved forward. And so on. Conclusion: Major "
-"Tam is quicker than the turtle, but he never catches up. How is that "
-"possible?\"\n"
-"   Strafer then arrives: \"Yep, I was at the museum of Theras one day, and "
-"this riddle was written in a book from before the space age. The name of the "
-"author was: 'Senior High School Philosophy Class'. That's a strange name, "
-"actually. I remembered that riddle while we were hiking on {pnt} a while "
-"ago, and we saw a turtle.\""
+"operation, so you'll have to ask them.\""
+msgstr ""
+
+msgid "The corporal seems to hesitate, and then continues."
 msgstr ""
 
 msgid ""
-"You look at the lieutenant, surprised not to see Captain Leblanc, as "
-"expected. \"Unexpected circumstance have arisen. The general was attacked in "
+"\"Today, the Lieutenant asked me a riddle: let's say Major Tam is running "
+"after a turtle. When Major Tam arrives at the point where the turtle was "
+"when he started to run, the turtle has moved forward a bit in the same time, "
+"right? Then, he arrives at the point where the turtle was when he reached "
+"the previous point, but the turtle has again moved forward. And so on. "
+"Conclusion: Major Tam is quicker than the turtle, but he never catches up. "
+"How is that possible?\""
+msgstr ""
+
+msgid ""
+"\"Yep, I was at the museum of Theras one day, and this riddle was written in "
+"a book from before the space age. The name of the author was: 'Senior High "
+"School Philosophy Class'. That's a strange name, actually. I remembered that "
+"riddle while we were hiking on {pnt} a while ago, and we saw a turtle.\""
+msgstr ""
+
+msgid ""
+"\"This is because a geometric series of ratio lower than 1 is convergent.\""
+msgstr ""
+
+#. This is the right answer. TODO: find a way to reward the player
+msgid "\"This is because the logarithm has an horizontal asymptote.\""
+msgstr ""
+
+#. Wrong answer, could get you headbutted by a calculus teacher
+msgid "\"???\""
+msgstr ""
+
+msgid ""
+"\"Unexpected circumstance have arisen, citizen. The general was attacked in "
 "Doranthex by mercenary pilots and our squadron had to rescue him. The second "
-"in command got killed, so Leblanc can not delegate her command any more. We "
-"need her to lead the squadron, and she sent me instead. Do not worry, I "
+"in command got killed, so Leblanc cannot delegate her command any more. We "
+"need her to lead the squadron, and she sent me here instead. Do not worry, I "
 "might be slightly less gifted than her, but I am still a dogfight ace. I "
 "have 15 confirmed dogfight victories so far, you know, and that does not "
 "take into account the secret operations I have taken part in.\n"
-"   \"So, on the way in, I will follow you with my civilian Vendetta and you "
-"will just have to hail me if you want me to do anything special. During the "
-"extraction, I'll focus on the drones so that you can take on the main ship. "
-"On the way back, we will take separate ways. We'll take off when you decide."
-"\""
+"      \"So, on the way in, I will follow you with my civilian Vendetta and "
+"you will just have to hail me if you want me to do anything special. During "
+"the extraction, I'll focus on the drones so that you can take on the main "
+"ship. On the way back, we will take separate ways. We'll take off when you "
+"decide.\""
 msgstr ""
 
-msgid "Ready for action?"
+msgid "\"Yes, let's go!\""
+msgstr ""
+
+msgid "\"Not yet.\""
+msgstr ""
+
+msgid "\"Are you ready to start 'Operation Drugstore Thunder'?\""
+msgstr ""
+
+msgid "\"Who chose the name?\""
+msgstr ""
+
+msgid "\"I did. Do you like it?\""
+msgstr ""
+
+msgid "\"Yes, it's perfect.\""
+msgstr ""
+
+msgid "\"I prefer 'Operation Pharmacy Storm'.\""
+msgstr ""
+
+msgid "\"Anyways, let's go for it.\""
+msgstr ""
+
+msgid "\"I know. So, what do you say?\""
 msgstr ""
 
 msgid ""
-"Are you ready to start \"Operation Drugstore Thunder\"? (Hamfresser named "
-"it.)"
-msgstr ""
-
-msgid "At the hospital"
+"\"I'm afraid the rules are clear: as the squad leader I have total authority "
+"to choose the operation name. So, are you ready to start 'Operation "
+"Drugstore Thunder'?\""
 msgstr ""
 
 msgid ""
@@ -59332,9 +59735,15 @@ msgid ""
 "from the distance shakes your ship, followed by detonations that seem to "
 "grow closer. After a while, you see the commandos running in your direction, "
 "pursued by Za'lek police androids. When the last member of the team enters "
-"the ship, you take off in a hurry, closely followed by a few drones. \"We "
-"made a mess, out there!\" Says Hamfresser \"But at least we've got the "
-"device!\""
+"the ship, you take off in a hurry, closely followed by a few drones."
+msgstr ""
+
+msgid ""
+"\"We made a mess, out there! But at least we've got the device! Quick, take "
+"off!\""
+msgstr ""
+
+msgid "\"Allright, come back when you're ready.\""
 msgstr ""
 
 msgid ""
@@ -59342,18 +59751,13 @@ msgid ""
 "drones are allowed)"
 msgstr ""
 
-#. Test to see if the player killed a zlk inhabited ship
-msgid "The mission failed"
-msgstr ""
-
 msgid "The rule was not to kill anybody, did you forget?"
 msgstr ""
 
 #. Intercept the ship
-#. At first jump, it gets announced that you've got to land
-msgid "Journey to the other side"
-msgstr ""
-
+#. Just after the convoy interception
+#. Announce you've got to land
+#. The death of Tronk
 msgid ""
 "After outrunning your enemies, you start asking how the operation went at "
 "the hospital. A quick look in your living quarters gives you an answer. You "
@@ -59368,17 +59772,35 @@ msgid ""
 "His battle armour, pierced with multiple holes, has been tossed a few metres "
 "away in a puddle of blood. With a sad smile, the soldier gazes at the two "
 "remaining fingers of his less damaged arm that are slowly walking on the "
-"ground. \"Leopold, you remember when you were a kid? Did you play with your "
-"fingers like that?\" Hamfresser answers: \"Tronky-boy, don't use my first "
-"name, only dying people have used my first name before...\" \"Don't be "
-"afraid, this won't change, Leopold.\"\n"
-"   Suddenly, the soldier opens his eyes wide and calls the medic: \"Therus! "
-"I know why Major Tam can catch the turtle! Each time, when he reaches the "
-"point where the turtle previously was, the time he needs for that is "
-"smaller. And at some point, it becomes so infinitely small that even if you "
-"have an infinity of steps to go, the total time is finite.\" The medic looks "
-"at the dying man: \"Tronky, how did you? Tronky?\" She then stops and takes "
-"the pulse at Tronk's neck \"It's over, captain.\" Hamfresser answers: "
+"ground."
+msgstr ""
+
+msgid ""
+"\"Leopold, you remember when you were a kid? Did you play with your fingers "
+"like that?\""
+msgstr ""
+
+msgid ""
+"\"Tronky-boy, you know it's against the rules to call your Captain by his "
+"first name. Besides, only dying people have used my first name before…\""
+msgstr ""
+
+msgid "\"Don't be afraid, Leopold. I'm not about to break that rule.\""
+msgstr ""
+
+msgid "\"Come on… Bare with us, Tronky.\""
+msgstr ""
+
+msgid "\"Tronky?\""
+msgstr ""
+
+msgid "\"Tronky…\""
+msgstr ""
+
+msgid "\"It's over, captain…\""
+msgstr ""
+
+msgid ""
 "\"Damn! He's the fifth kid to die under my command and it still hurts as "
 "much. I just can't get used to that.\""
 msgstr ""
@@ -59397,6 +59819,26 @@ msgstr ""
 msgid "Your escort died. You have to abort the mission"
 msgstr ""
 
+#. Makes the carceral convoy enter the system
+#. We don't want the player to upset the true Za'lek
+#. Ingame reason is the fake transponder
+#. escort[4] = pilot.add( "Za'lek Heavy Drone", fake_zlk, mem.prevsys, nil, {ai="collective"} )
+#. Player runs away from the zlk carceral convoy
+#. Tests to determine if the player is running away
+#. Player quits in the middle of the Hallway to Hell
+#. Player escapes the fight with BBB
+#. Manage Okran's death
+#. Mission failure (not sure how it can happen that way)
+msgid "Mission Failure"
+msgstr ""
+
+msgid "You were supposed to intercept a convoy, not to run away."
+msgstr ""
+
+#. Hooks for the interception target
+#. Replace by death Hook
+#. Hack so that Strafer attacks them and not the Sting
+#. Decide between fight or runaway
 msgid "A new passenger"
 msgstr ""
 
@@ -59412,6 +59854,15 @@ msgid ""
 "have received heavy damage. You jump into the cockpit and start the engines."
 msgstr ""
 
+msgid "Let's go hyperspace"
+msgstr ""
+
+msgid ""
+"Your fake transponder will make the Za'lek lose track of your ship after you "
+"have jumped out. But if you decide to land anywhere in this system, chances "
+"are high you get arrested."
+msgstr ""
+
 msgid ""
 "You were supposed to disable that ship, not destroy it. How are you supposed "
 "to free anyone now?"
@@ -59422,18 +59873,19 @@ msgid ""
 "supposed to free anyone now?"
 msgstr ""
 
+#. Strafer has killed all his adversaries: time to leave
 #. Hamfresser explains that we need to land at an hospital
-msgid "We are in trouble"
+msgid "When you finally jump out, Hamfresser reports."
 msgstr ""
 
 msgid ""
-"When you finally jump out, Hamfresser reports: \"We hit an unexpected "
-"situation back there. After we destroyed the androids and got to the jail "
-"cell, we saw that there were three other prisoners along with the target, "
-"and far more human guards than expected. They blew up our first assault bot, "
-"and we had to take them down with the paralysers, but one of the prisoners "
-"grabbed a weapon and, for some reason, started to fire on us. Fortunately "
-"for me, he just pierced my lung. That is a replaceable part.\n"
+"\"We hit an unexpected situation back there. After we destroyed the androids "
+"and got to the jail cell, we saw that there were three other prisoners along "
+"with the target, and far more human guards than expected. They blew up our "
+"first assault bot, and we had to take them down with the paralysers, but one "
+"of the prisoners grabbed a weapon and, for some reason, started to fire on "
+"us. Fortunately for me, he just pierced my lung. That is a replaceable "
+"part.\n"
 "   \"Then, Tronk paralysed all the prisoners, and we identified and "
 "recovered the target. That's why the guy is blue, actually. But in his "
 "hurry, Tronk used the extra-strength dose. According to the medic, it is "
@@ -59445,9 +59897,7 @@ msgid ""
 "we have no choice. I'll just be waiting for your signal at the bar next time "
 "we land.\n"
 "   \"If I may, I'd advise you to land somewhere within a quarter of a "
-"period, otherwise the VIP is likely to die. Choose a place with a shipyard "
-"and an outfitter so that you'll be able to prepare your ship in case we need "
-"to escape quickly.\""
+"period, otherwise the VIP is likely to die.\""
 msgstr ""
 
 msgid ""
@@ -59460,6 +59910,7 @@ msgid ""
 msgstr ""
 
 #. Player takes off from planet after attacking the hospital
+#. Don't test planet is zlk because we don't want small independent worlds to cause an exception
 #. Clear all Zlk pilots in a given radius of the player to avoid being insta-killed at takeoff
 #. Drones are after the player after the hospital attack
 #. This says that at next jump, Tronk will die
@@ -59486,24 +59937,24 @@ msgstr ""
 #. Why do some ship still attack him ?
 #. Don't know. Workaround:
 #. The player discuss with Strafer
-msgid "A friend in the dark"
+msgid "The Gawain hails you. When you respond, you hear a familiar voice."
 msgstr ""
 
 msgid ""
-"The Gawain hails you. When you respond, you hear a familiar voice. \"Strafer "
-"here. I was wondering what was taking you so long. It looks like you had "
-"trouble with the Za'lek after all. There are blockades in {1}, {2}, {3} and "
-"{4}. They scan all ships. You have no chance to cross these systems alive. "
-"What did you to them to upset them like that? Anyway, I did not come empty-"
-"handed. I've got as much fuel as you want. Unfortunately, I can't board you "
-"as they would chase me as well, so I have jettisoned a few tanks at "
-"coordinates I will give to you. Just go there and scoop them. Good luck!\""
+"\"Strafer here. I was wondering what was taking you so long. It looks like "
+"you had trouble with the Za'lek after all. There are blockades in {1}, {2}, "
+"{3} and {4}. They scan all ships. You have no chance to cross these systems "
+"alive, I recommend you leave through imperial space. What did you to them to "
+"upset them like that? Anyway, I did not come empty-handed. I've got as much "
+"fuel as you want. Unfortunately, I can't board you as they would chase me as "
+"well, so I have jettisoned a few tanks at coordinates I will give to you. "
+"Just go there and scoop them. Good luck!\""
 msgstr ""
 
 msgid "Tanks of usable fuel."
 msgstr ""
 
-#. Lasts for an houer
+#. Lasts for an hour
 msgid "FUEL"
 msgstr ""
 
@@ -59512,16 +59963,12 @@ msgstr ""
 msgid "You filled your fuel tanks."
 msgstr ""
 
-#. Remove scan hooks
-#. Put Agents at the bar when landing/loading
-msgid "Fake transponder dealer"
-msgstr ""
-
 msgid ""
-"This shifty person is for sure one of the pirates that wants to sell you a "
-"fake transponder."
+"This shifty person wants to give you data about secret jumps in exchange of "
+"a small service."
 msgstr ""
 
+#. Also give the starting system, just in case
 msgid "Feather-hat agent"
 msgstr ""
 
@@ -59535,22 +59982,39 @@ msgid "Strange Pilot"
 msgstr ""
 
 #. Don't wreck my Captain HewHew
-msgid "Help offer"
+msgid ""
+"\"Doing well, folks? Ya just walked into those Za'lek freaks' space, wrecked "
+"a squadron, helped a prisoner escape, and demolished a hospital. You're "
+"worse than the Incident, mates!\""
+msgstr ""
+
+msgid "\"Hi, Trickster. How do you do\""
+msgstr ""
+
+msgid "\"Get lost, Trickster. No-one loves you.\""
+msgstr ""
+
+msgid "\"What are you talking about, sir?\""
+msgstr ""
+
+msgid "\"Very well and you? Hewhewhew!\""
 msgstr ""
 
 msgid ""
-"The pilot of the ship addresses you with a strange and disturbing "
-"familiarity: \"Doing well, folks? Ya just walked into those Za'lek freaks' "
-"space, wrecked a squadron, helped a prisoner escape, and demolished a "
-"hospital. You're worse than the Incident, mates!\" You wonder how this pilot "
-"could know so much about your operation, but his spiel continues: "
-"\"Hewhewhew! People usually think I'm some sort of useless pirates scum. I "
-"know you thought that, too! Neh, don't lie to me!\"\n"
-"   The pilot's voice suddenly becomes harsh: \"In reality, I am a faithful "
-"subject of his Imperial Majesty, as should you be, {player}! But instead "
-"you've chosen to aid and abet those criminals, the Dvaereds. For that you "
-"should be severely punished. Don't forget, {player}: The Empire is watching "
-"you. Anywhere. Anytime. Anyhow.\n"
+"\"Hewhewhew! Wrong, {player}! The Emperor loves me! Aha! He loves everyone "
+"in this universe! Even you, bloody scum!\""
+msgstr ""
+
+msgid ""
+"\"Wait… Did I hail the wrong ship? Lemme check… Hewhewhew! Of course not!\""
+msgstr ""
+
+msgid ""
+"\"What about we stop talking nonsense, {player}? I am a faithful subject of "
+"his Imperial Majesty, as should you be! But instead you've chosen to aid and "
+"abet those criminals, the Dvaereds. For that you should be severely "
+"punished. Don't forget, {player}: The Empire is watching you. Anywhere. "
+"Anytime. Anyhow.\n"
 "   \"Hewhewhew! And what was the other one already? Oh yeah: The Emperor "
 "sees all! But ya're all lucky, 'cause the Empire is in a merciful mood "
 "today. So at your next stop, you will kindly go and talk to the agent with a "
@@ -59559,89 +60023,124 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Do you accept the deal with the pirates? It costs {price}, and you'll be "
-"able to skirt any Imperial blockades."
-msgstr ""
-
-msgid "Accept, immediate payment"
-msgstr ""
-
-msgid "Accept, deferred payment"
-msgstr ""
-
-msgid "Immediate payment"
+"\"I am really happy to meet you, pilot. It looks like that we are both in "
+"some sort of trouble, and I'm convinced we can make a deal profitable to "
+"both of us. My name is Zid, I happen to be a… businessperson usually "
+"operating in and around the station {pnt}. But I recently got a… strong "
+"disagreement with the person in charge of that station.\""
 msgstr ""
 
 msgid ""
-"When you hand over the credit chips, the pirate looks surprised: \"Whow, "
-"mate, I didn't know I was talking to a millionaire. Well then thanks, here "
-"is your transponder.\""
+"\"You're a little hoodlum who got turned off from {pnt} by a crime Lord?\""
+msgstr ""
+
+msgid "\"What? No… I am an important figure of this business, you know?\""
 msgstr ""
 
 msgid ""
-"Escape to {pnt} in {sys}. Thanks to your new, fake transponder, the "
-"squadrons should not stop you any more"
+"I had to hastly leave the station, and I let some of my belongings behind. "
+"Among those belongings there is a datapad of great importance to me. I need "
+"someone to get there and recover it for me."
 msgstr ""
 
-msgid "Not enough money"
-msgstr ""
-
-msgid ""
-"\"Don't try to trick me, crook! I can see from here that you don't have "
-"enough money!\""
-msgstr ""
-
-msgid "Pirate debt"
+msgid "\"What tells you they'll accept me at {pnt}?\""
 msgstr ""
 
 msgid ""
-"\"Here is your transponder,\" the pirate says. \"Don't forget to pay once "
-"you can, otherwise...\""
-msgstr ""
-
-msgid "You're way too expensive"
-msgstr ""
-
-msgid ""
-"\"As you wish,\" says the pirate. \"Come back when you realize that I'm your "
-"only chance!\""
-msgstr ""
-
-msgid "Deal with the Empire"
+"\"Oh! Landing on a pirate-controlled station is not particularly difficult, "
+"a mild bribe will do the job. Once landed there, nobody will attack you, but "
+"on your way to and from the station, they'll probably try to kill you. "
+"However you managed to survive Za'lek patrols so far, so you're totally "
+"qualified for the job.\""
 msgstr ""
 
 msgid ""
-"As you approach, the agent seems to recognize you immediately. \"Hello, "
-"{player}. I guess they told you that I may have a solution to your little... "
-"problem.\" You look suspiciously at the agent and ask: \"What do you want in "
-"exchange?\" The agent smiles: \"Simple. I want to speak with the Dvaered "
+"\"So, I'll give you the location of a jump point to {pnt}. If you give me "
+"the datapad back, I'll give you the location of another jump point from "
+"there to Dvaered-controlled space. Is that a deal?\""
+msgstr ""
+
+msgid ""
+"Just at this moment, you realize you already know a path to leave Empire "
+"space through the Effetey system. You actually do not need this pirate's "
+"help, so you answer:"
+msgstr ""
+
+msgid "\"I'll do what you want.\""
+msgstr ""
+
+msgid "\"No way, I'll find another way.\""
+msgstr ""
+
+msgid ""
+"\"Great! I've just added the jump point to your map. Once in {pnt}, meet Zed "
+"at the bar, I'll attach a picture for you to recognize him. Being a Dvaered, "
+"you will probably get along well with him.\""
+msgstr ""
+
+msgid "\"As you wish, come back when you realize that I'm your only chance!\""
+msgstr ""
+
+msgid "Land on {pnt} in {sys} and meet the contact."
+msgstr ""
+
+msgid "Land on {pnt} in {sys} to return the holopad."
+msgstr ""
+
+msgid ""
+"\"Hello, {player}. I guess they told you that I may have a solution to your "
+"little… problem.\""
+msgstr ""
+
+msgid "\"What do you want in exchange?\""
+msgstr ""
+
+msgid ""
+"\"What do I want in exchange? Simple. I want to speak with the Dvaered "
 "captain. Give me 10 hectostu on the spacedock alone with him, not more, and "
 "the commander of the fleet in {dealsys} will forget to scan your ship when "
-"you jump to {dealjump}.\"\n"
-"   This is certainly an unusual request. You think of all the state secrets "
-"a wounded Hamfresser is able to give to the Empire in 10 hectostu. But, "
-"Hamfresser is a professional after all, trained avoid revealing any valuable "
-"information. But, probably the Imperial agent is a professional as well, "
-"trained to recover valuable information. And the pirate proposition still "
-"holds. So you answer:"
+"you jump to {dealjump}."
 msgstr ""
 
-msgid "You made the only good choice"
+msgid ""
+"You think of all the state secrets a wounded Hamfresser is able to give to "
+"the Empire in 10 hectostu. But, Hamfresser is a professional after all, "
+"trained avoid revealing any valuable information. Probably the Imperial "
+"agent is a professional as well, trained to recover valuable information. "
+"And the pirate proposition still holds. So your answer is:"
+msgstr ""
+
+msgid "Agree"
 msgstr ""
 
 msgid ""
 "After accepting, you invite the agent to follow you to the dock. You enter "
 "your ship, where the commandos are waiting for you, and inform Hamfresser "
 "about the situation. He anxiously looks at the two other remaining members "
-"of his team. Nikolov grimaces and Therus nervously hits the wall. \"If you "
-"think we have no other choice...\" says the captain. After removing his "
-"uniform jacket (where his name and rank are written), Hamfresser takes a "
-"deep breath and joins the Imperial agent outside, in front of the ship. From "
-"a window, you see them having what looks like a peaceful conversation.\n"
+"of his team. Nikolov grimaces and Therus nervously hits the wall."
+msgstr ""
+
+msgid "\"If you think we have no other choice…\""
+msgstr ""
+
+msgid ""
+"After removing his uniform jacket (where his name and rank are written), "
+"Hamfresser takes a deep breath and joins the Imperial agent outside, in "
+"front of the ship. From a window, you see them having what looks like a "
+"peaceful conversation.\n"
 "   After a while, Hamfresser returns to the ship and the agent waves to "
-"indicate that you're allowed to take off. Nikolov asks her captain: \"And?\" "
+"indicate that you're allowed to take off."
+msgstr ""
+
+msgid ""
 "\"Who knows what these Imperial weirdos wanted to know? I tried to dodge all "
-"the questions, but... well... You never know.\""
+"the questions, but… well… You never know.\""
+msgstr ""
+
+msgid ""
+"\"Mwell… I guess you need to see for yourself that this is the only "
+"solution. If you're still alive when you're done, come back, we will be "
+"waiting for you.\""
 msgstr ""
 
 msgid ""
@@ -59649,41 +60148,45 @@ msgid ""
 "in {dealsys} won't prevent you from jumping to {dealjump}"
 msgstr ""
 
-msgid "That was the wrong answer"
+#. Discussing with the Holopad dealer
+msgid "\"I was sent by Zid.\""
 msgstr ""
 
-msgid ""
-"\"Mwell.\" Says the agent. \"I guess you need to see for yourself that this "
-"is the only solution. If you're still alive when you're done, come back, we "
-"will be waiting for you.\""
+msgid "\"Could you please give me Zid's datapad?\""
 msgstr ""
 
-msgid "Shock of two worlds"
+msgid "Headbutt Zed."
 msgstr ""
 
-msgid ""
-"You hear an unusual and agitated voice coming from the living quarters. When "
-"you get there, you see that the VIP is back on his feet. \"To sum up, a "
-"Dvaered general, whose name you won't disclose, sent you to free me from the "
-"Za'lek, for reasons you won't explain, right?\" Hamfresser answers: "
-"\"Totally correct, sir.\"\n"
-"   The executive moans and shakes his head \"You Dvaered are foolish! Do you "
-"think that violence is the solution to any problem?\" Hamfresser seems "
-"surprised \"Is there any other way to solve a problem?\" The VIP then looks "
-"at you: \"Hey, you seem a bit less brutish than the others... You're not a "
-"Dvaered, right? You know what? My grandma was always saying that the Dvaered "
-"and the Za'lek were the worst in the universe. And she was right. First, the "
-"Za'lek imprisoned me under the bogus charge of 'scientific embezzlement', "
-"and now, you Dvaered storm your way to my cell and kidnap me.\"\n"
-"   Hamfresser defends himself: \"But sir, if the operation succeeds, you'll "
-"be back to business very soon. Isn't that wonderful?\" \"... and if the "
-"operation fails, we all die! No, strong-arm! Patience, negotiation, bribing, "
-"and craftiness can achieve much more than violence and destruction. I had "
-"hired the best lawyers in Za'lek space and my assistants negotiated with the "
-"authorities -- I was sure to get out in about half a cycle.\" Hamfresser "
-"simply raises his shoulders: \"Dvaered warriors don't use deception, nor "
-"patience, nor craftiness. Dvaered warriors use respectable methods instead, "
-"like violence and destruction.\""
+msgid "\"Hi, Zed. How do you do?\""
+msgstr ""
+
+msgid "\"Not so well. I have eaten a lobster and I feel a bit queasy.\""
+msgstr ""
+
+msgid "\"Sorry to hear that, Zed.\""
+msgstr ""
+
+msgid "\"Don't you ask me how do you do in return?\""
+msgstr ""
+
+msgid "\"It's okay, I'll survive.\""
+msgstr ""
+
+msgid "\"Nope. I couldn't care less.\""
+msgstr ""
+
+msgid "\"Zid's still alive? Unbelievable!\""
+msgstr ""
+
+msgid "\"Why would I do that?\""
+msgstr ""
+
+#. Add goods
+msgid "Datapad"
+msgstr ""
+
+msgid "A data pad."
 msgstr ""
 
 #. Aborting if mem.stage >= 4: reset zlk reputation
@@ -59696,10 +60199,8 @@ msgstr ""
 #. <done>Dvaered Escape</done>
 #. <location>Bar</location>
 #. <faction>Dvaered</faction>
-#. <cond>var.peek("dv_pirate_debt") == false</cond>
 #. <notes>
 #. <campaign>Frontier Invasion</campaign>
-#. <done_evt name="Repay General Klank"/>
 #. </notes>
 #. </mission>
 #. --
@@ -60301,6 +60802,9 @@ msgstr ""
 "o major Tam várias vezes, vai aproveitar esta reunião para agir contra "
 "nós\".\n"
 "   \"Você quer nos ajudar contra essa ameaça?\""
+
+msgid "Too bad"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -61408,6 +61912,7 @@ msgstr ""
 
 #. take off and enter the ring!
 #. Wave meta-information
+#. Cancel abort and close window
 #. Clears pilots include the player's escorts
 #.
 #. Common Teleporting Functions
@@ -62108,14 +62613,6 @@ msgstr ""
 msgid ""
 "The leader of the fearsome biker gang 'Big Bang Band' agrees to talk with "
 "you."
-msgstr ""
-
-#. Tests to determine if the player is running away
-#. Player quits in the middle of the Hallway to Hell
-#. Player escapes the fight with BBB
-#. Manage Okran's death
-#. Mission failure (not sure how it can happen that way)
-msgid "Mission Failure"
 msgstr ""
 
 msgid ""
@@ -62868,9 +63365,6 @@ msgid ""
 "combat ability of an interceptor like the Shark is closely linked to its "
 "manoeuvrability, which means that this sabotage will make the target much "
 "less dangerous for your own safety. So, what do you say? Are you in?"
-msgstr ""
-
-msgid "Agree"
 msgstr ""
 
 msgid ""
@@ -64118,6 +64612,10 @@ msgid "Protect the Dvaered battleship."
 msgstr ""
 
 #. Player Jumps in for the rendezvous with the trickster
+#. The Trickster: a weird Imperial agent, leader of the Flying Circus
+#. other nicknames: 'the flying clown' and 'Captain Hew Hew'
+#. This character is planned to annoy the player during the whole Dvaered campaign
+#. TODO: portrait needed
 msgid "The Trickster"
 msgstr ""
 
@@ -65051,10 +65549,6 @@ msgstr ""
 
 msgid ""
 "Enemy reinforcements! Time to hit the afterburner. You've got one, right?"
-msgstr ""
-
-#. Add goods
-msgid "Datapad"
 msgstr ""
 
 msgid "A dead soldier's datapad."
@@ -87058,9 +87552,6 @@ msgstr ""
 msgid "\"Hell yes!\""
 msgstr ""
 
-msgid "\"Not yet.\""
-msgstr ""
-
 msgid ""
 "You say you need to prepare. l337_b01 seems to understand and tells you to "
 "come back when you're ready for the Onion Society conclave."
@@ -102274,9 +102765,6 @@ msgstr ""
 msgid "Ask about how they plan to repair the ship"
 msgstr ""
 
-msgid "Stay silent"
-msgstr ""
-
 msgid ""
 "You explain how ships have a safety lock that can be engaged to disallow "
 "controls temporarily that should be used when eating or just idling around. "
@@ -102906,9 +103394,7 @@ msgstr ""
 msgid ""
 "\"Why don't you give it a try and jump to the nearby {sys} system? You "
 "should see an indicator mark on your map; missions often use these marks to "
-"show you where to go next. You will have to make two jumps and may have to "
-"do some exploring to find the second jump point. Let's see what you've "
-"learned!\""
+"show you where to go next. Let's see what you've learned!\""
 msgstr ""
 
 msgid "Captain T. Practice"
@@ -112067,20 +112553,25 @@ msgstr ""
 msgid "FRONTIER: "
 msgstr ""
 
-#.
-#. -- Common data for the Frontier War campaign
-#. --
-#. All the rewards:
-#. Paid in Gauss Guns
-#. Character's portraits. TODO: create unique portraits for them
+#. Lieutenant Stafer: partner of the player for the first half of the campaign, and subordinate of Captain Leblanc
+msgid "Lieutenant Stafer"
+msgstr ""
+
+#. Caporal Therus: subordinate of Captain Hamfresser, medic
+msgid "Caporal Therus"
+msgstr ""
+
+#. Generic function for everyone
+#. Character's portraits. TODO: remove
 #. Major Tam: main mission giver of this campaign
 #. Captain Leblanc: secondary mission giver and partner for the second half of the campaign
-#. Genenral Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
+#. Genenral Caribert Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
 #. Captain Hamfresser: player's sidekick for some of the missions
 #. Lieutenant Stafer: partner of the player for the first half of the campaign, and subordinate of Captain Leblanc
 #. Sergeant Nikolov: second in command of Captain Hamfresser
 #. Caporal Therus: subordinate of Captain Hamfresser
 #. Private Tronk: subordinate of Captain Hamfresser
+#.
 #. When an escort is hailed
 msgid "Instructions to escort"
 msgstr ""
@@ -113266,7 +113757,7 @@ msgstr ""
 #. Lazy loading
 #. Cores
 #. Other outfits
-#. outfit.get("Small Flow Resonator"),
+#. outfit.exists("Small Flow Resonator"),
 #. Lazy load the outfits
 #. Lazy loading
 #. Lazy load the outfits
@@ -113278,7 +113769,8 @@ msgstr ""
 #.
 #. @module equipopt.optimize
 #. --
-#. Lower priority ru later to overwrite
+#. Lower priority to later to overwrite
+#. When using plugins, ship may be nil as we use ship.exists
 #. Create caches and stuff
 #. Get all the fighter bays and calculate rough dps
 #. Manual overrides
@@ -113398,6 +113890,7 @@ msgstr "Impossível equipar núcleo '%s' em '%s'!"
 #. Should include cores!!
 #. also include cores
 #. Modify forward weapon bonus depending on turn rate
+#. We don't want to manipulate a table passed by caller, so do a shallow copy
 #. Determine what outfits from outfit_list we can actually equip
 #. We actually remove duplicates too
 #. Afterburners will be ignored if the ship is too heavy
@@ -117980,6 +118473,7 @@ msgstr ""
 #. @tparam string key Name of the key pressed.
 #. @tparam boolean isrepeat Whether or not the string is repeating.
 #. --
+#. Handle special processing here
 #. Skip modifier keys
 #. return s:keypressed( key )
 #. Always eat all keys for now
@@ -118654,6 +119148,7 @@ msgstr ""
 #. idle - current playing music ran out
 #.
 #.
+#. Minimum amount to play a song before switching
 #. List of songs to use
 #. We sort from largest to lowest and overwrite
 #. Overwrite fields with tmerge
@@ -118665,9 +119160,11 @@ msgstr ""
 #. current running situation
 #. elapsed play time for the current situation
 #. music global volume
+#. store current position before stopping
 #. Mark when it ended
+#. Can't use v.elapsed directly as it includes delay and fade time
 #. Only play one at a time
-#. Tries to resume the last played song of the sitution if it is in the lost
+#. Tries to resume the last played song of the situation if it is in the lost
 #. --
 #. Play a song if it's not currently playing.
 #. --
@@ -118690,6 +119187,7 @@ msgid "No compatible music for spob '{spb}'!"
 msgstr ""
 
 #. Takeoff songs
+#. No takeoff songs, just use ambient directly
 #. No need to restart
 #. Don't want to repeat takeoff
 #. We don't distinguish between pirate factions ATM
@@ -118701,6 +119199,8 @@ msgstr ""
 #. Do not change songs too soon
 #. Get information about the current system
 #. System
+#. Make sure not already playing
+#. Force re-evaluation of state
 #. Check to see if changing faction zone
 #. Check to see if entering nebula
 #. Must be forced
@@ -118740,6 +119240,7 @@ msgstr ""
 #. Enemies nearby
 #. Inverse of the time to fade out
 #. Take smaller steps when lagging
+#. Stopped for whatever reason
 #. Not going to do anything
 #. Limit executions a bit
 #. If paused just wait
@@ -124910,7 +125411,10 @@ msgid "Loading Commodities…"
 msgstr ""
 
 #. dep for asteroids
-#. LoadStage::new(gettext("Loading Asteroids…"), asteroid::load), /* dep for systems */
+msgid "Loading Asteroids…"
+msgstr ""
+
+#. dep for systems
 #. LoadStage::new_c(gettext("Loading Commodities…"), || unsafe {
 #. naevc::commodity_load()
 #. }), /* no dep */
@@ -128986,6 +129490,10 @@ msgstr "Bio-Corveta"
 
 msgid " Cerebrum "
 msgstr ""
+
+#, fuzzy
+#~ msgid "Battleaddict"
+#~ msgstr "Benedito"
 
 #~ msgid ""
 #~ "The Soromid Arx usually features in Soromid fleets as a command vessel "
