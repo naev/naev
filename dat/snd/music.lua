@@ -494,7 +494,7 @@ function choose( str )
    if not choose_func then
       choose_func = choose_table.ambient
    end
-   choose_func()
+   return choose_func()
 end
 
 local ENEMY_DIST = 3e3
