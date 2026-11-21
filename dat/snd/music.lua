@@ -162,7 +162,7 @@ local function tracks_resume ()
    end
 end
 
--- Tries to resume the last played song of the sitution if it is in the lost
+-- Tries to resume the last played song of the situation if it is in the lost
 local function tracks_resume_last( newlist, situation )
    local last = last_track_type[situation]
    if last and last.elapsed and (last.elapsed > 0) and inlist( newlist, last.name ) then
