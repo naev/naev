@@ -12,6 +12,9 @@ local utf8 = require "utf8"
 local lf = require "love.filesystem"
 local fmt = require "format"
 
+-- Minimum amount to play a song before switching
+local MIN_PLAY_TIME = 7
+
 -- List of songs to use
 local takeoff_songs = {}
 local factional_songs = {}
@@ -335,7 +338,7 @@ function choose_table.ambient ()
       end
 
       -- Do not change songs too soon
-      if track.m:tell() < 7 then
+      if track.m:tell() < MIN_PLAY_TIME then
          return false
       end
    end
@@ -510,7 +513,7 @@ local function should_combat ()
    end
 
    -- Enforce minimum play time
-   if music_played < 7 then
+   if music_played < MIN_PLAY_TIME then
       return false
    end
 
@@ -560,7 +563,7 @@ local function should_ambient ()
    end
 
    -- Enforce minimum play time
-   if music_played < 7 then
+   if music_played < MIN_PLAY_TIME then
       return false
    end
 
