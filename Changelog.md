@@ -140,6 +140,7 @@
    * Fixed how flow bonus was being computed that was overcounting bonus
    * Map find dialogue no longer covers centre of interest
    * zbh08: fixed some missing patrol waypoints
+   * gauntlet: can get rewards when aborting mission
 
 
 ## v0.13.6 (unreleased)
