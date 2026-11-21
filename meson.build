@@ -19,7 +19,6 @@ cargo_needed_version = '>=1.77.2'
 
 copyright_year = 2026
 
-issue_address = 'https://codeberg.org/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
 # Tools
@@ -217,6 +216,18 @@ if buildExec.disabled() == false
       install: true,
       install_dir: ndata_path )
 
+   # These rewrite tracked files in po/, so no build runs them.
+   foreach task : ['pot', 'update-po']
+      run_target( task,
+         env: cargo_env,
+         command: [
+            cargo, 'run', '--quiet', '--release',
+            '--target-dir', meson.project_build_root() / 'xtask',
+            '--manifest-path', cargo_toml, '--package', 'xtask', '--',
+            task, '--generated-dir', meson.project_build_root() / 'dat',
+         ] )
+   endforeach
+
    # Naev pluginmgr cli for managing plugins.
    # Inherits the cargo environment above, so should work in cross compilation environments.
    #pluginmgr_cli = custom_target('pluginmgr-cli',
@@ -334,8 +345,6 @@ if buildExec.disabled() == false
 
    subdir ('extras')
 endif
-
-subdir('po')
 
 ####
 # Soundtrack

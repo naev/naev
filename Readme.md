@@ -289,17 +289,18 @@ gettext-noop, as well as `n_()` for ngettext. Rust uses `gettext()`,
 
 When content like missions is updated, new translatable text must be made
 available to Weblate. The key manual step is to regenerate the
-`po/naev.pot` file (`meson compile naev-pot` in the build dir) and commit
-it. To avoid merge conflicts, it is recommended to not include updated
-`po/naev.pot` in a pull request that isn't exclusively about translation.
+`po/naev.pot` file (`cargo xtask pot`, or `meson compile pot` in the build
+dir) and commit it. To avoid merge conflicts, it is recommended to not
+include updated `po/naev.pot` in a pull request that isn't exclusively
+about translation.
 
 Under the hood: `po/POTFILES.in` is a catalogue of files that may have
-translatable text. We keep it synced using pre-commit hooks (or manually:
-`meson compile potfiles`). The `naev-pot` Meson target is built using
-standard `xgettext`, plus additional rules. (Rules for `AUTHORS` are in
+translatable text. We keep it synced using pre-commit hooks, and
+`cargo xtask pot` refreshes it too. The template is built using standard
+`xgettext`, plus additional rules. (Rules for `AUTHORS` are in
 `po/update-po.sh`. Rules for XML data files are in
 `po/its/translation.its`.) Individual translations can be updated via
-`meson compile naev-update-po`, but _don't do this_ without a good reason,
+`cargo xtask update-po`, but _don't do this_ without a good reason,
 because Weblate does the same job more carefully.
 
 ### 6.4  Contributing without creating a fork

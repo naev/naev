@@ -7,6 +7,10 @@ mod bioship;
 mod data;
 mod generated;
 mod i18n;
+// The root build script fills templates with the rest, which xtask doesn't need yet.
+#[allow(dead_code)]
+#[path = "../../extras/metadata.rs"]
+mod metadata;
 mod progress;
 mod rule;
 mod version;
@@ -26,16 +30,23 @@ struct Cli {
 enum Command {
    /// Generate the derived data files that ship alongside dat/.
    Data,
+   /// Refresh POTFILES.in and the translation template.
+   Pot,
+   /// Bring every translation catalogue up to date with the template.
+   UpdatePo,
 }
 
 fn main() -> Result<()> {
    let cli = Cli::parse();
    let root = repo_root()?;
-   let target = target_dir(&root)?;
+   let target = cargo_metadata(&root)?.target_directory;
+   let naev = metadata::Metadata::read(&root).map_err(anyhow::Error::msg)?;
    let data_dir = cli.data_dir.unwrap_or_else(|| target.join("dat"));
 
    match cli.command {
       Command::Data => data::generate(&root, &data_dir),
+      Command::Pot => i18n::pot(&root, &data_dir, &naev),
+      Command::UpdatePo => i18n::update_po(&root, &data_dir, &naev),
    }
 }
 
@@ -47,13 +58,13 @@ fn repo_root() -> Result<PathBuf> {
       .context("xtask should live one level below the repo root")
 }
 
-/// Nothing in the environment carries cargo's target directory, so cargo has to be asked.
-fn target_dir(root: &Path) -> Result<PathBuf> {
-   #[derive(serde::Deserialize)]
-   struct Metadata {
-      target_directory: PathBuf,
-   }
+#[derive(serde::Deserialize)]
+struct CargoMetadata {
+   target_directory: PathBuf,
+}
 
+// Nothing in the environment carries cargo's target directory, so cargo has to be asked.
+fn cargo_metadata(root: &Path) -> Result<CargoMetadata> {
    // Under a toolchain override the cargo on PATH isn't the one that invoked us.
    let cargo = std::env::var_os("CARGO").unwrap_or_else(|| "cargo".into());
    let output = std::process::Command::new(cargo)
@@ -70,7 +81,5 @@ fn target_dir(root: &Path) -> Result<PathBuf> {
       );
    }
 
-   let metadata: Metadata =
-      serde_json::from_slice(&output.stdout).context("parsing the output of cargo metadata")?;
-   Ok(metadata.target_directory)
+   serde_json::from_slice(&output.stdout).context("parsing the output of cargo metadata")
 }
