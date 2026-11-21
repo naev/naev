@@ -50,9 +50,9 @@ local function loadsongs ()
       tmerge( credits_songs, t.credits_songs )
       tmerge( factional_combat_songs, t.factional_combat_songs )
       -- Insert at the front as it should be higher priority
-      table.insert( spob_songs_func, 1, t.spob_songs_func )
-      table.insert( ambient_songs_func, 1, t.ambient_songs_func )
-      table.insert( combat_songs_func, 1, t.combat_songs_func )
+      if t.spob_songs_func then table.insert( spob_songs_func, 1, t.spob_songs_func ) end
+      if t.ambient_songs_func then table.insert( ambient_songs_func, 1, t.ambient_songs_func ) end
+      if t.combat_songs_func then table.insert( combat_songs_func, 1, t.combat_songs_func ) end
    end
 end
 loadsongs()
