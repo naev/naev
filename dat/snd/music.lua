@@ -332,6 +332,13 @@ function choose_table.ambient ()
    -- System
    local override = system_ambient_songs[ sys:nameRaw() ]
    if override then
+      -- Make sure not already playing
+      if track and inlist( override, track.name ) then
+         return false
+      end
+      -- Force re-evaluation of state
+      last_sysFaction  = nil
+      last_sysNebuDens = nil
       tracks_add( override[ rnd.rnd(1,#override) ], "ambient" )
       return true
    end
