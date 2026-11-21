@@ -81,7 +81,7 @@ local function tracks_stop ()
       end
    end
    for k=#remove, 1, -1 do
-      table.remove( tracks, k )
+      table.remove( tracks, remove[k] )
    end
 end
 
@@ -594,7 +594,7 @@ function update( dt )
       end
    end
    for k=#remove, 1, -1 do
-      table.remove( tracks, k )
+      table.remove( tracks, remove[k] )
    end
 
    -- Not going to do anything
