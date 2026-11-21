@@ -189,6 +189,9 @@ local choose_table = {}
 Chooses Loading songs.
 --]]
 function choose_table.load ()
+   if #loading_songs <= 0 then
+      return false
+   end
    local params = {
       delay = 0.8,
    }
@@ -203,6 +206,9 @@ end
 Chooses Intro songs.
 --]]
 function choose_table.intro ()
+   if #intro_songs <= 0 then
+      return false
+   end
    local s = intro_songs[ rnd.rnd(1,#intro_songs) ]
    return playIfNotPlaying( s, "intro" )
 end
@@ -211,6 +217,9 @@ end
 Chooses Credit songs.
 --]]
 function choose_table.credits ()
+   if #credits_songs <= 0 then
+      return false
+   end
    local s = credits_songs[ rnd.rnd(1,#credits_songs) ]
    return playIfNotPlaying( s, "credits" )
 end
