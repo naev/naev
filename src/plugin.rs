@@ -219,7 +219,7 @@ pub fn manager() -> Result<()> {
    Ok(())
 }
 
-use crate::array::Array;
+use naevc::array::Array;
 use std::ffi::{CString, c_char, c_int};
 
 #[unsafe(no_mangle)]

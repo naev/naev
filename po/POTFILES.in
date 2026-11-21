@@ -3985,7 +3985,6 @@ src/ai.c
 src/ai.h
 src/array.c
 src/array.h
-src/array.rs
 src/asteroid.c
 src/asteroid.h
 src/asteroid.rs

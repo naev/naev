@@ -1,4 +1,4 @@
-use crate::array;
+use naevc::array;
 use nlog::warn_err;
 use rayon::prelude::*;
 use renderer::Context;

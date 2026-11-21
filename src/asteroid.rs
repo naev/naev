@@ -1,5 +1,3 @@
-use crate::array;
-use crate::array::Array;
 use crate::commodity::CommodityRef;
 use crate::pilot;
 use crate::rng;
@@ -13,6 +11,8 @@ use collide::polygon::SpinPolygon;
 use helpers::ReferenceC;
 use mlua::{BorrowedStr, Either, FromLua, MetaMethod, UserData, UserDataMethods};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use naevc::array;
+use naevc::array::Array;
 use nalgebra::Vector2;
 use nlog::{debugx, warn, warn_err};
 use ordered_float::NotNan;
