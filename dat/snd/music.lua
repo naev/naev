@@ -366,10 +366,7 @@ function choose_table.ambient ()
    -- Check to see if changing faction zone
    if strongest ~= last_sysFaction then
       force = true
-
-      if force then
-         last_sysFaction = strongest
-      end
+      last_sysFaction = strongest
    end
 
    -- Check to see if entering nebula
