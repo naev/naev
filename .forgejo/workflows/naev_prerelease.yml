@@ -204,7 +204,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: naev-${{ matrix.target }}-cargo-lock
-          path: ${{ github.workspace }}/build/Cargo.lock
+          path: ${{ github.workspace }}/source/Cargo.lock
           if-no-files-found: error
 
       - name: Meson Install

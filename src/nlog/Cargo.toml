@@ -1,6 +1,5 @@
 [package]
 name = "nlog"
-workspace = "@BUILD@"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,7 +8,7 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/nlog/src/lib.rs"
+path = "src/lib.rs"
 
 [dependencies]
 gettext = { workspace = true }
@@ -25,7 +24,7 @@ strip-ansi-escapes = "0.2"
 nu-ansi-term = "0.50"
 
 [target.'cfg(unix)'.dependencies]
-nix = { version="0.31", features=["signal"] }
+nix = { version = "0.31", features = ["signal"] }
 
 [features]
 tracy = ["dep:tracing-tracy"]

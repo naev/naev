@@ -18,14 +18,12 @@ pub fn detect() -> Config {
    };
    let arch = env("CARGO_CFG_TARGET_ARCH");
 
-   println!("cargo:rerun-if-env-changed=NAEV_VERSION");
    println!("cargo:rerun-if-env-changed=NAEV_PKGDATADIR");
 
    Config {
       host: format!("{os}-{arch}"),
-      // Used for save and plugin compatibility.
-      version: std::env::var("NAEV_VERSION")
-         .expect("NAEV_VERSION must be set to the engine version by the outer build"),
+      // naevc inherits the workspace version, so this is the engine version.
+      version: env("CARGO_PKG_VERSION"),
       pkgdatadir: std::env::var("NAEV_PKGDATADIR")
          .unwrap_or_else(|_| "/usr/local/share/naev".to_string()),
       debug: std::env::var("DEBUG").is_ok_and(|d| d != "false" && d != "0"),

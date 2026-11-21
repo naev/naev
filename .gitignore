@@ -68,10 +68,10 @@ utils/model-view-c/*.gltf
 utils/model-view-c/*.png
 utils/model-view-c/*.bin
 
+/target/*
 utils/docmaker/target/*
 utils/linopt-bench/target/*
 utils/safelanes-bench/target/*
-naevc/target/*
 
 docs/manual/book
 

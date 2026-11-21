@@ -13,7 +13,7 @@ project('naev', ['c', 'rust'],
 # 1.88 iced 0.14.0
 # 1.89 symphonia-adapter-libopus
 # 1.93 vec::into_raw_parts
-rust_version = '1.89' # version for Cargo.toml's 'rust-version' field
+rust_version = '1.89' # Mirrors rust-version in Cargo.toml.
 rustc_needed_version = '>=@0@.0'.format( rust_version )
 cargo_needed_version = '>=1.77.2'
 
@@ -146,24 +146,13 @@ if buildExec.disabled() == false
       rust_artifact_dir = 'release'
    endif
    cargo = find_program('cargo', version: cargo_needed_version)
-   cargo_data = configuration_data()
-   cargo_data.set_quoted('NAME', meson.project_name())
-   cargo_data.set_quoted('VERSION', meson.project_version())
-   cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
-   cargo_data.set_quoted('MAIN', meson.project_source_root() / 'src' / 'main.rs')
-   cargo_data.set_quoted('NAEVC', meson.project_source_root() / 'naevc' )
-   cargo_data.set('BUILD', meson.project_build_root() )
-   cargo_data.set('SOURCE', meson.project_source_root() )
-   cargo_data.set_quoted('RUSTCVERSION', rust_version )
-   cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
-   #meson.add_dist_script(add_to_package, cargo_toml.full_path(), cargo_toml )
+   cargo_toml = files('Cargo.toml')
    # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
    # https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo
-   meson.add_dist_script( cargo_lock, cargo_toml.full_path() )
+   meson.add_dist_script( cargo_lock )
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
    # naevc's build script reads these.
-   cargo_env.set( 'NAEV_VERSION', meson.project_version() )
    cargo_env.set( 'NAEV_BUILD_VERSION', version )
    cargo_env.set( 'NAEV_PKGDATADIR', get_option('prefix') / ndata_path )
    cargo_env.set( 'NAEV_BLAS', get_option('blas') )

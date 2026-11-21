@@ -1,6 +1,6 @@
 [package]
-name = @NAME@
-version = @VERSION@
+name = "naev"
+version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 publish = false
@@ -9,11 +9,11 @@ publish = false
 workspace = true
 
 [lib]
-path = @PATH@
+path = "src/naev.rs"
 
 [[bin]]
 name = "naev"
-path = @MAIN@
+path = "src/main.rs"
 
 [features]
 # Mirror the meson options of the same names.
@@ -29,26 +29,29 @@ overflow-checks = true
 
 [workspace]
 resolver = "3"
+# The utils crates build on their own.
+exclude = ["utils"]
 members = [
-   "@BUILD@/src/audio",
-   "@BUILD@/src/core",
-   "@BUILD@/src/helpers",
-   "@BUILD@/src/nlog",
-   "@BUILD@/src/gettext",
-   "@BUILD@/src/ndata",
-   "@BUILD@/src/renderer",
-   "@BUILD@/src/physics",
-   "@BUILD@/src/collide",
-   #"@BUILD@/src/toolkit",
-   "@BUILD@/src/pluginmgr",
-   #"@BUILD@/src/pluginmgr-cli",
-   "@BUILD@/src/pluginmgr-gui",
+  "naevc",
+  "src/audio",
+  "src/core",
+  "src/helpers",
+  "src/nlog",
+  "src/gettext",
+  "src/ndata",
+  "src/renderer",
+  "src/physics",
+  "src/collide",
+  #"src/toolkit",
+  "src/pluginmgr",
+  #"src/pluginmgr-cli",
+  "src/pluginmgr-gui",
 ]
 
 [workspace.package]
-version = @VERSION@
+version = "0.14.0-alpha.4"
 edition = "2024"
-rust-version = @RUSTCVERSION@ # Note this has to be set in meson.build too!
+rust-version = "1.89"      # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
@@ -57,56 +60,96 @@ not_unsafe_ptr_arg_deref = "allow"
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "50d65229477fe5f785c2c90df21eb59c93ea2261" }
 
 [workspace.dependencies]
-naevc = { path=@NAEVC@ }
+naevc = { path = "naevc" }
 # Needs SDL 3.4.0 or later for 0.17.1+
 sdl3 = "0.22"
 anyhow = "1.0"
-audio = { path="@BUILD@/src/audio" }
-naev_core = { path="@BUILD@/src/core" }
-helpers = { path="@BUILD@/src/helpers" }
-gettext = { path="@BUILD@/src/gettext" }
-nlog = { path="@BUILD@/src/nlog" }
-ndata = { path="@BUILD@/src/ndata" }
-renderer = { path="@BUILD@/src/renderer" }
-#toolkit = { path="@BUILD@/src/toolkit" }
-collide = { path="@BUILD@/src/collide" }
-physics = { path="@BUILD@/src/physics" }
-pluginmgr = { path="@BUILD@/src/pluginmgr" }
-pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
+audio = { path = "src/audio" }
+naev_core = { path = "src/core" }
+helpers = { path = "src/helpers" }
+gettext = { path = "src/gettext" }
+nlog = { path = "src/nlog" }
+ndata = { path = "src/ndata" }
+renderer = { path = "src/renderer" }
+#toolkit = { path="src/toolkit" }
+collide = { path = "src/collide" }
+physics = { path = "src/physics" }
+pluginmgr = { path = "src/pluginmgr" }
+pluginmgr-gui = { path = "src/pluginmgr-gui" }
 formatx = "~0.4.2"
 glow = "0.18"
 ordered-float = "5"
-nalgebra = { version = "0.35", features = ["bytemuck", "encase", "serde-serialize"] }
+nalgebra = { version = "0.35", features = [
+  "bytemuck",
+  "encase",
+  "serde-serialize",
+] }
 encase = { version = "0.12" } # Needed for shader voodoo
-bytemuck = { version = "1.25", features = ["derive"] } # Needed for shader voodoo
+bytemuck = { version = "1.25", features = [
+  "derive",
+] } # Needed for shader voodoo
 regex = "1.13"
 # need dav1d 0.11.1 or newer, will appear in the version after 0.25.9
-image = { version = "~0.25.10", default-features = false, features = [ "avif-native", "jpeg", "png", "webp" ]  }
-mlua = { version = "0.12", features = ["luajit", "anyhow", "send", "serialize", "macros"] }
+image = { version = "~0.25.10", default-features = false, features = [
+  "avif-native",
+  "jpeg",
+  "png",
+  "webp",
+] }
+mlua = { version = "0.12", features = [
+  "luajit",
+  "anyhow",
+  "send",
+  "serialize",
+  "macros",
+] }
 roxmltree = "0.21"
 symphonia = { version = "0.6", features = ["opt-simd", "aac", "mp3"] }
 slotmap = "1"
 static_assertions = "1.1"
 tracing = { version = "0.1", features = ["release_max_level_warn", "log"] }
 tracing-tracy = { version = "0.12", features = ["system-tracing"] }
-tracing-subscriber = { version = "0.3", features = ["registry","env-filter","json"] }
+tracing-subscriber = { version = "0.3", features = [
+  "registry",
+  "env-filter",
+  "json",
+] }
 tracing-appender = { version = "0.2" }
 tracing-mutex = "0.3"
 bitcode = { version = "0.6", features = ["serde"] }
 blake3 = "1"
-derive_more = { version = "2", features = ["from", "into", "mul", "add", "add_assign", "mul_assign", "display"] }
+derive_more = { version = "2", features = [
+  "from",
+  "into",
+  "mul",
+  "add",
+  "add_assign",
+  "mul_assign",
+  "display",
+] }
 palette = "0.7" # Colour conversion
 trie-rs = { version = "0.4" }
 softfloat = "1.0"
 semver = { version = "1.0", features = ["serde"] }
-chrono = { version = "0.4", features = ["serde","now"] }
+chrono = { version = "0.4", features = ["serde", "now"] }
 base64 = "0.23"
-iced = { version = "0.14.0", default-features = false, features = ["wayland", "x11", "wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
+iced = { version = "0.14.0", default-features = false, features = [
+  "wayland",
+  "x11",
+  "wgpu",
+  "tokio",
+  "advanced",
+  "image",
+  "markdown",
+  "sipper",
+] }
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
 itertools = "0.15"
 tinyvec = "1"
-portable-atomic = { version = "1", default-features = false, features = ["float"] }
+portable-atomic = { version = "1", default-features = false, features = [
+  "float",
+] }
 # Needs 1.4 for iters
 bvh-arena = "~1.4"
 
@@ -116,12 +159,19 @@ serde = { version = "1", features = ["derive"] }
 serde-seeded = "0"
 quick-xml = { version = "0.42", features = ["serialize"] }
 # Networking and archive handling
-reqwest = { version = "0.13", default-features = false, features = ["stream", "blocking", "charset", "http2", "system-proxy", "native-tls"] }
+reqwest = { version = "0.13", default-features = false, features = [
+  "stream",
+  "blocking",
+  "charset",
+  "http2",
+  "system-proxy",
+  "native-tls",
+] }
 url = { version = "2.5", features = ["serde"] }
 zip = { version = "9", default-features = false, features = ["deflate"] }
 # Utilities and filesystem
 walkdir = "2"
-rayon = "1.12" # parallel computation
+rayon = "1.12"    # parallel computation
 directories = "6"
 fs-err = "3"
 toml = "1.1"
