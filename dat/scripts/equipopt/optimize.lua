@@ -216,7 +216,7 @@ function optimize.goodness_default( o, p )
       -- Absorption modifier
       mod = mod * (1 + math.min(0, o.penetration-p.t_absorb))
       -- Launcher modification
-      mod = mod * math.max( 0, (p.duration - o.lockon) / p.duration )
+      mod = mod * math.max( 0, (p.duration - o.lockon) / (p.duration+1e-6) )
       -- More modifications
       weap = weap * (0.9*mod+0.1)
       if o.isturret then
