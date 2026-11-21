@@ -365,7 +365,7 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
 
    /* Run mission code. */
    hook->ran_once = 1;
-   if ( misn_runFunc( misn, hook->u.misn.func, n ) <
+   if ( misn_runFunc( misn, hook->u.misn.func, n, 0 ) <
         0 ) { /* error has occurred */
       WARN( _( "Hook [%s] '%d' -> '%s' failed" ), hook->stack, hook->id,
             hook->u.misn.func );

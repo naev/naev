@@ -657,7 +657,7 @@ int npc_approach( int i )
       }
       misn_runStart( misn, npc->u.m.func );
       lua_pushnumber( naevL, npc->id );
-      misn_runFunc( misn, npc->u.m.func, 1 );
+      misn_runFunc( misn, npc->u.m.func, 1, 0 );
       break;
 
    case NPC_TYPE_EVENT:

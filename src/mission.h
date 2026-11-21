@@ -185,7 +185,7 @@ int  mission_reload( const char *name );
  */
 int misn_tryRun( Mission *misn, const char *func );
 int misn_runStart( Mission *misn, const char *func );
-int misn_runFunc( const Mission *misn, const char *func, int nargs );
+int misn_runFunc( const Mission *misn, const char *func, int nargs, int nret );
 int misn_run( Mission *misn, const char *func );
 
 /*
