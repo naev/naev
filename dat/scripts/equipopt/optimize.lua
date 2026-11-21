@@ -422,8 +422,8 @@ function optimize.optimize( p, cores, outfit_list, params )
          local b, s = p:spaceworthy()
          if not b then
             warn(string.format(_("Pilot '%s' is not space worthy after custom equip script is run! Reason: %s"),p:name(),s))
+            return false
          end
-         return false
       end
       -- Set up useful outfits
       ai_setup.setup(p)
