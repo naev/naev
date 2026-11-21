@@ -67,17 +67,13 @@ subdir('docs')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-   app_metadata = configuration_data()  # For Info.plist, resource.rc, etc.
+   app_metadata = configuration_data()  # For Info.plist.
    debug = get_option('debug')
    debug_rust = get_option('debug_rust')
    debug_arrays = get_option('debug_arrays')
    tracy = get_option('tracy')
    paranoid = get_option('paranoid')
-   # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
    app_metadata.set('VERSION', meson.project_version())
-   app_metadata.set('VMAJOR', meson.project_version().split('.')[0])
-   app_metadata.set('VMINOR', meson.project_version().split('.')[1])
-   app_metadata.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    app_metadata.set('YEAR', copyright_year)
    app_metadata.set('COPYRIGHT', copyright_holder)
    summary('Enabled' , debug       , section: 'Debug', bool_yn: true)
@@ -103,12 +99,8 @@ if buildExec.disabled() == false
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
 
    elif host_machine.system() == 'windows'
-      icon = files('extras/logos/logo.ico')
-      install_data(icon, install_dir: '.')
-      configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
-      # TODO resource.rc is generated but never compiled or linked, since cargo
-      # owns the executable. Needs rustc-link-arg-bins or the embed-resource crate.
-      configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
+      # build.rs links the manifest and resource.rc into the executable.
+      install_data(files('extras/logos/logo.ico'), install_dir: '.')
       # bundle.py finds the DLLs through meson devenv, which can't see what cargo links.
       dll_dirs = environment()
       if meson.is_cross_build()

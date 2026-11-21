@@ -53,6 +53,17 @@ version = "0.14.0-alpha.4"
 edition = "2024"
 rust-version = "1.89"      # Note this has to be set in meson.build too!
 
+description = "Naev: Sea of Darkness"
+homepage = "https://naev.org/"
+repository = "https://codeberg.org/naev/naev"
+
+[workspace.metadata.naev]
+name = "Naev"
+app-id = "org.naev.Naev"
+copyright-first-year = 2006
+copyright-year = 2026
+copyright-holder = "Naev Dev Team"
+
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
 
@@ -236,3 +247,8 @@ ordered-float = { workspace = true }
 
 #[dev-dependencies]
 #approx = "0.5"
+
+[build-dependencies]
+# Compiles the Windows resource in build.rs.
+embed-resource = "3.0"
+toml = { workspace = true }
