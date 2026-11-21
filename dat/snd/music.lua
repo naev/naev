@@ -80,7 +80,7 @@ local function tracks_stop ()
       end
       -- Mark when it ended
       local situ = v.situation
-      if situ and last_track_type[situ].name==v.name then
+      if situ and last_track_type[situ] and last_track_type[situ].name==v.name then
          -- Can't use v.elapsed directly as it includes delay and fade time
          last_track_type[situ].elapsed = pos
       end
