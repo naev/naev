@@ -10,10 +10,13 @@ path = "src/lib.rs"
 
 [features]
 paranoid = []
+debug_arrays = []
+tracy = []
 
 [build-dependencies]
 # Windows needs 0.72.1 or it floods overflow warnings.
 bindgen = "0.72.1"
+cc = "1.2"
 pkg-config = "0.3"
 
 [lints]

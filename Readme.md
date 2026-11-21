@@ -65,25 +65,22 @@ to get started making your own, please take a look at the
 Naev's dependencies are intended to be widely available. In addition to a
 graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * rust 1.89 or later
-  * SDL3`*`
+  * SDL3
   * libxml2
   * libopus-dev
   * freetype2
   * OpenAL
   * OpenBLAS
   * intltool
-  * SuiteSparse`*`
-  * enet`*`
-  * physfs`*`
-  * lua 5.1 / luajit`*`
-  * GLPK`*`
-  * libunibreak`*`
-  * cmark`*`
+  * SuiteSparse
+  * enet
+  * physfs
+  * lua 5.1 / luajit
+  * GLPK
+  * libunibreak
+  * cmark
   * pyyaml (compilation only)
   * git-lfs (compilation only)
-
-Dependencies marked with `*` will use subprojects if not found in the host
-system.
 
 ### 3.1  Details for your OS
 
@@ -143,7 +140,7 @@ If you need special settings you can run `meson configure` in your build
 directory to see a list of all available options.
 
 **For installation**, try:
-`meson configure --buildtype=release -Db_lto=true`
+`meson configure --buildtype=release`
 
 **For Building a Windows Installer**, try adding:
 `--prefix="$(pwd)"/build/windows` `--bindir=.` `-Dndata_path=.`
@@ -155,15 +152,9 @@ directory to see a list of all available options.
 folder in your build directory
 
 **For normal development**, try adding:
-`--buildtype=debug -Db_sanitize=address` (adding `-Db_lundef=false` if
-compiling with Clang, substituting `-Ddebug_arrays=true` for
-`-Db_sanitize=...` on Windows if you can't use Clang). (If your system
-supports debuginfod, also add `set debuginfod enabled on` to a file named
-`.gdbinit` in your home directory!)
-
-**For faster debug builds** (but harder to trace with gdb/lldb), try
-`--buildtype=debugoptimized` `-Db_lto=true` `-Db_lto_mode=thin` in place
-of the corresponding values above.
+`--buildtype=debug`. (If your system supports debuginfod, also add
+`set debuginfod enabled on` to a file named `.gdbinit` in your home
+directory!)
 
 #### Up-to-date build instructions
 

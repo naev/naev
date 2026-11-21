@@ -4138,6 +4138,7 @@ src/lutf8lib.c
 src/lutf8lib.h
 src/lvar.c
 src/lvar.h
+src/main.rs
 src/map.c
 src/map.h
 src/mapData.h

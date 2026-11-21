@@ -266,11 +266,6 @@ endforeach
 sdf_source = files('distance_field.c', 'edtaa3func.c')
 mac_source = files('glue_macos.m')
 
-naev_source = [
-   files('naev.c'),
-   source,
-]
-
 # Headers aren't needed for running the builds,
 # as they can all be found in the defined include derectories.
 # These are only used to let Meson know that Doxygen needs to be

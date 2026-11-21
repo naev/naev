@@ -4,7 +4,6 @@ version = @VERSION@
 edition.workspace = true
 rust-version.workspace = true
 publish = false
-build = "@BUILD@/build.rs"
 
 [lints]
 workspace = true
@@ -12,9 +11,15 @@ workspace = true
 [lib]
 path = @PATH@
 
+[[bin]]
+name = "naev"
+path = @MAIN@
+
 [features]
 # Mirror the meson options of the same names.
 paranoid = ["naevc/paranoid"]
+debug_arrays = ["naevc/debug_arrays"]
+tracy = ["naevc/tracy"]
 
 [profile.release-with-debug]
 inherits = "release"

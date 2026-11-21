@@ -1,15 +1,8 @@
 project('naev', ['c', 'rust'],
    version : '0.14.0-alpha.4',
    default_options : [
-      'optimization=g',
-      'c_std=c11',
       'werror=false',
-      'warning_level=3',
       'rust_std=2024',
-      # Default to thin LTO when b_lto is enabled
-      # Fat LTO takes quite a while and can appear to look deadlocked
-      # Users who specifically want fat can still pass -Db_lto_mode=default
-      'b_lto_mode=thin',
    ],
    # Requires meson 1.7.0 for rust_std=2024
    meson_version: '>=1.7.0')
@@ -25,18 +18,11 @@ rustc_needed_version = '>=@0@.0'.format( rust_version )
 cargo_needed_version = '>=1.77.2'
 
 copyright_year = 2026
-forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://codeberg.org/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
 # Tools
-cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments([
-   '-Wno-pedantic',
-   '-Wshadow',
-   '-fno-signed-zeros'
-])
 # TODO Is there a better way to get rust compiler version?
 rustc = find_program('rustc', version: rustc_needed_version, required: false)
 if not rustc.found()
@@ -46,18 +32,6 @@ clang = find_program('clang', required: false)
 if not clang.found()
    error('Clang is required for bindgen to find the standard library correctly. See issue: https://github.com/servo/gecko-media/issues/71')
 endif
-
-if host_machine.system() == 'linux'
-   c_args += ['-D_XOPEN_SOURCE=700']
-elif host_machine.system() == 'windows'
-   # We need SDL_DISABLE_ALLOCA because of
-   # https://github.com/libsdl-org/SDL/issues/13358
-   c_args += ['-D_USE_MATH_DEFINES', '-DSDL_DISABLE_ALLOCA']
-elif host_machine.system() == 'darwin'
-   c_args += ['-D_DARWIN_C_SOURCE', '-D_POSIX_C_SOURCE=200809L']
-endif
-
-add_project_arguments(c_args, language: 'c')
 
 # Filesystem module for copying files
 fs = import('fs')
@@ -93,20 +67,12 @@ subdir('docs')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-   config_data = configuration_data()
    app_metadata = configuration_data()  # For Info.plist, resource.rc, etc.
-   naev_deps = []
    debug = get_option('debug')
    debug_rust = get_option('debug_rust')
    debug_arrays = get_option('debug_arrays')
    tracy = get_option('tracy')
    paranoid = get_option('paranoid')
-   # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
-   config_data.set_quoted('PACKAGE', meson.project_name())
-   config_data.set_quoted('PACKAGE_NAME', meson.project_name())
-   config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
-   config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
-   config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
    app_metadata.set('VERSION', meson.project_version())
    app_metadata.set('VMAJOR', meson.project_version().split('.')[0])
@@ -114,157 +80,9 @@ if buildExec.disabled() == false
    app_metadata.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    app_metadata.set('YEAR', copyright_year)
    app_metadata.set('COPYRIGHT', copyright_holder)
-   config_data.set('DEBUG', debug ? 1 : false)
-   config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
-   config_data.set('DEBUGGING', debug ? 1 : false)
-   config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
    summary('Enabled' , debug       , section: 'Debug', bool_yn: true)
    summary('Paranoid', paranoid    , section: 'Debug', bool_yn: true)
    summary('Arrays'  , debug_arrays, section: 'Debug', bool_yn: true)
-
-   has_posix = cc.has_define('__unix__') or cc.has_define('__unix') or host_machine.system()=='darwin'
-   config_data.set10('HAS_POSIX', has_posix)
-   config_data.set10('HAS_UNIX', has_posix)
-
-   ### Hard deps (required: true)
-
-   naev_deps += cc.find_library('m', required : false)
-
-   enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
-   sdl = dependency('sdl3', version: '>=3.2.0', required: true)
-   # libunibreak removed the incremental API we use in 0.8.0
-   # https://github.com/adah1972/libunibreak/issues/46
-   libunibreak = dependency('libunibreak', required: true, version: '>=4.0,<8.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
-   cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
-   opus = dependency( 'opus', required: true )
-
-   libxml2 = dependency('libxml-2.0', required: false)
-   if not libxml2.found()
-      libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
-   endif
-
-   use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-   if use_system_physfs
-      system_physfs = dependency('physfs', required: false, static: get_option('steamruntime'))
-      if not system_physfs.found()
-         system_physfs = cc.find_library('physfs', required: false, has_headers: ['physfs.h'])
-      endif
-      use_system_physfs = system_physfs.found()
-   endif
-   naev_deps += use_system_physfs ? system_physfs : subproject('physfs').get_variable('physfs_dep')
-
-   naev_deps += [
-      cmark,
-      enet,
-      dependency('freetype2', required: true),
-      libunibreak,
-      libxml2,
-      sdl,
-   ]
-
-   # Lua
-   useLuaJIT = get_option('luajit')
-   lua = dependency('', required: false)
-   if useLuaJIT.disabled() == false
-      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['c_std=gnu99', 'luajit=false'])
-   endif
-   config_data.set10('HAVE_LUAJIT', lua.found())
-   summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
-
-   if not lua.found()
-      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
-   endif
-
-   naev_deps += [lua]
-
-   # Linear Algebra
-   use_system_glpk = ('glpk' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-   use_system_suitesparse = ('SuiteSparse' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-
-   # Steam's runtime carries none of the numeric libraries, so they get linked
-   # in rather than shipped beside the binary.
-   static_deps = get_option('steamruntime')
-   # Passing static: false is not the same as leaving it out. Only the omitted
-   # form probes with -l, which is how the osxcross libraries get found at all.
-   static_kw = static_deps ? {'static': true} : {}
-
-   if use_system_glpk
-      system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'], kwargs: static_kw)
-      use_system_glpk = system_glpk.found()
-   endif
-   naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
-
-   # Distributions build glpk with libtool-dl and compressed file support.
-   # Naev calls neither, but the static archive still refers to them.
-   if use_system_glpk and static_deps
-      naev_deps += cc.find_library('ltdl', required: true, static: true)
-      naev_deps += cc.find_library('z', required: true, static: true)
-   endif
-
-   if use_system_suitesparse
-      message('Note: Naev needs the following SuiteSparse libraries: amd, colamd, cholmod, and either csparse or cxsparse. ' +
-         'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
-      foreach csparse_name : ['cxsparse', 'csparse']
-         system_csparse = cc.find_library(csparse_name, required: false, kwargs: static_kw)
-         if system_csparse.found()
-            break
-         endif
-      endforeach
-      if system_csparse.found()
-         naev_deps += system_csparse
-         config_data.set10('HAVE_SUITESPARSE_CS_H', cc.has_header('suitesparse/cs.h'))
-      else
-         error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
-      endif
-
-      system_cholmod = cc.find_library('cholmod', required: false, kwargs: static_kw)
-      if system_cholmod.found()
-         naev_deps += system_cholmod
-         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', cc.has_header('suitesparse/cholmod.h'))
-      else
-         error('Failed to find an installation of cholmod. See above note about SuiteSparse.')
-      endif
-
-      naev_deps += cc.find_library('amd', required: true, kwargs: static_kw)
-      # CHOLMOD's partition module calls into CAMD. A shared libcholmod
-      # resolves that itself; the static archive leaves it to the caller.
-      naev_deps += cc.find_library('camd', required: false, kwargs: static_kw)
-      naev_deps += cc.find_library('ccolamd', required: false, kwargs: static_kw)
-      naev_deps += cc.find_library('colamd', required: true, kwargs: static_kw)
-      naev_deps += cc.find_library('lapack', required: false, kwargs: static_kw)
-      naev_deps += cc.find_library('metis', required: false, kwargs: static_kw)
-      naev_deps += cc.find_library('suitesparseconfig', required: true, kwargs: static_kw)
-   else
-      naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
-   endif
-
-   if get_option('steamruntime')
-      blas = cc.find_library('openblas', required: true, static: true)
-   elif get_option('blas') == 'Accelerate'
-      blas = dependency('Accelerate', required: true)
-   else
-      blas = cc.find_library(get_option('blas'), required: true)
-   endif
-
-   naev_deps += blas
-
-   # CHOLMOD is built against OpenMP and OpenBLAS needs the Fortran runtime.
-   # Clang's libomp has no static archive, so GCC's libgomp supplies the omp_*
-   # symbols instead.
-   if use_system_suitesparse and static_deps
-      naev_deps += cc.find_library('gomp', required: true, static: true)
-      naev_deps += cc.find_library('gfortran', required: true, static: true)
-   endif
-
-   # libdl can be used for debugging stack traces.
-   if host_machine.system()=='windows'
-      # On non-Windows platforms, GLAD relies on dlopen().
-      # Windows doesn't have dlopen, but we can use dlfcn-win32 instead.
-      libdl = dependency('dl', fallback: ['dlfcn-win32', 'dl_dep'], required: true)
-   else
-      libdl = dependency('dl', required: true)
-   endif
-   naev_deps += libdl
 
    ### Soft deps (required: false)
 
@@ -275,116 +93,41 @@ if buildExec.disabled() == false
    luacheck = find_program('luacheck', required: false)
    nluacheck = find_program(files('utils'/'nluacheck.py'))
 
-   # Audio
-   openal = dependency('openal', required: true)
-   vorbis = dependency('vorbis', required: true)
-   vorbisfile = dependency('vorbisfile', required: true)
-   ogg = dependency('ogg', required: true)  # Transitive dependency. At least some MSYS2 build envs may miss it.
-
-   naev_deps += [openal, ogg, vorbis, vorbisfile]
-
-   have_tracy = false
-   if tracy
-      if not debug
-         error('tracy requires a debug build!')
-      endif
-      use_system_tracy = ('tracy' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
-      if use_system_tracy
-         system_tracy = cc.find_library('tracy', required: false, has_headers: ['tracy/TracyC.h'] )
-         use_system_tracy = system_tracy.found()
-      endif
-      naev_deps += use_system_tracy ? system_tracy : subproject('tracy').get_variable('tracy_dep')
-      config_data.set10('HAVE_TRACY', true)
-      config_data.set10('TRACY_ENABLE', true) # Needed for tracy to actually work
-      have_tracy = true
-   endif
-   summary('tracy', have_tracy, section: 'Debug', bool_yn: true )
-
-   # Standard library feature tests
-   config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
-   config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
-   config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
-   config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   config_data.set10('HAVE_SIGACTION', cc.has_function('sigaction'))
-   config_data.set10('HAVE_STRSIGNAL', cc.has_function('strsignal'))
-   # BLAS include tests
-   cblas_test = '\nint main (void) { double x = 0; return (int)cblas_ddot( 1, &x, 1, &x, 1 ); }'
-   config_data.set10('HAVE_ACCELERATE_ACCELERATE_H', cc.links('#include <Accelerate/Accelerate.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_CBLAS_H', cc.links('#include <cblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.links('#include <cblas_openblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.links('#include <cblas-openblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.links('#include <openblas/cblas.h>' + cblas_test, dependencies: blas))
-   config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
-   config_data.set10('HAVE_OPENBLAS_F77BLAS_H', cc.has_header('openblas/f77blas.h', dependencies: blas))
+   summary('tracy', tracy, section: 'Debug', bool_yn: true )
 
    ### Generated sources
 
-   # Generated headers
-   configure_file(output: 'config.h', configuration: config_data)
-   configure_file(output: 'naev_build_version.h', configuration: {'VERSION': '"'+version+'"'})
-   add_project_arguments('-include', 'config.h', language: 'c')
-
-   include_dirs = [include_directories(
-      'src',
-      'src/tk',
-      'src/tk/widget'
-   )]
-
-   libsdf = static_library('sdf', sdf_source, include_directories: include_dirs, override_options: ['optimization=3'])
-   naev_deps += declare_dependency(link_with: libsdf)
-
    if host_machine.system() == 'darwin'
-      add_languages('objc', native: false)
       configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: app_metadata,
          install: true, install_dir: 'Contents')
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
-      naev_source += mac_source
-      naev_deps += dependency('Foundation', required: true )
 
    elif host_machine.system() == 'windows'
-      windows = import('windows')
       icon = files('extras/logos/logo.ico')
       install_data(icon, install_dir: '.')
-      res_include = include_directories('extras/logos')
-      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
-      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
-      naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
+      configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
+      # TODO resource.rc is generated but never compiled or linked, since cargo
+      # owns the executable. Needs rustc-link-arg-bins or the embed-resource crate.
+      configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
+      # bundle.py finds the DLLs through meson devenv, which can't see what cargo links.
+      dll_dirs = environment()
+      if meson.is_cross_build()
+         dll_dirs.prepend('WINEPATH', meson.get_external_property('sys_root') / 'bin', separator: ';')
+      else
+         dll_dirs.prepend('PATH', fs.parent(find_program(meson.get_compiler('c').cmd_array()[-1]).full_path()))
+      endif
+      meson.add_devenv(dll_dirs)
    endif
-
-   shaders_source = custom_target(
-      'generate_shaders',
-      command: [python, '@INPUT@'],
-      input: 'src/shaders_c_gen.py',
-      output: ['shaders.gen.c', 'shaders.gen.h']
-   )
-   naev_source += shaders_source
-   colours_source = custom_target(
-      'generate_colours',
-      command: [python, '@INPUT@'],
-      input: 'src/colours_c_gen.py',
-      output: ['colours.gen.c', 'colours.gen.h']
-   )
-   naev_source += colours_source
 
 # Target we are cross-compiling for
    target_triplet = get_option('target_triplet')
 
    copydir = find_program(files('utils'/'build'/'copydir.py'))
 
-   # Compiling Naev
-   # 1. First, compile all the C code as a static library with meson.
-   # 2. Next, compile all the main Rust code as a static library with Cargo.
-   # 3. Finally, use meson to link it all together in Rust.
+   # Cargo compiles the C engine, the Rust and the executable. meson arranges
+   # the inputs, then installs what comes out.
 
-   # First create the static library with C using meson
-   naev_clib = static_library(
-      'naev', # Has to be called 'naev' or it won't link properly with the executable (why?)
-      naev_source,
-      include_directories: include_dirs,
-      dependencies: naev_deps,
-      install: false)
-
-   # Next handle setting up and passing stuff to Cargo
+   # Handle setting up and passing stuff to Cargo
    # Since Rust debug is significantly slower than release, we try to use our
    # custom release-with-debug profile that runs quite fast while still having
    # pretty good debugging properties. Use 'debug_rust' option to explicitly
@@ -407,6 +150,7 @@ if buildExec.disabled() == false
    cargo_data.set_quoted('NAME', meson.project_name())
    cargo_data.set_quoted('VERSION', meson.project_version())
    cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
+   cargo_data.set_quoted('MAIN', meson.project_source_root() / 'src' / 'main.rs')
    cargo_data.set_quoted('NAEVC', meson.project_source_root() / 'naevc' )
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
@@ -416,57 +160,14 @@ if buildExec.disabled() == false
    # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
    # https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo
    meson.add_dist_script( cargo_lock, cargo_toml.full_path() )
-   buildrs = configure_file( input: 'build.rs.in', output: 'build.rs', configuration: cargo_data )
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
-   # naevc's build script bakes these into its config module.
+   # naevc's build script reads these.
    cargo_env.set( 'NAEV_VERSION', meson.project_version() )
+   cargo_env.set( 'NAEV_BUILD_VERSION', version )
    cargo_env.set( 'NAEV_PKGDATADIR', get_option('prefix') / ndata_path )
+   cargo_env.set( 'NAEV_BLAS', get_option('blas') )
 
-   # Decide whether to enable linker-plugin-LTO for Rust objects. When
-   # b_lto is on, the final link is done with LTO, which means every object
-   # file fed to the linker (including those inside libnaev.rlib) must carry
-   # bitcode the linker plugin understands. For clang/lld that is LLVM
-   # bitcode in a .llvmbc section, which rustc only emits under
-   # -Clinker-plugin-lto. That flag additionally requires rustc's LLVM and
-   # clang's LLVM to be approximately the same major version, otherwise
-   # the final link fails with "Can't find section .llvmbc" or bitcode
-   # version mismatch errors.
-   # See https://doc.rust-lang.org/rustc/linker-plugin-lto.html
-   linker_plugin_lto_opt = get_option('linker_plugin_lto')
-   use_rust_lto = false
-   if linker_plugin_lto_opt == 'enabled'
-      use_rust_lto = true
-      message('linker_plugin_lto forced on; skipping toolchain compatibility check')
-   elif linker_plugin_lto_opt == 'auto' and get_option('b_lto')
-      cc_id = meson.get_compiler('c').get_id()
-      if cc_id != 'clang'
-         error('b_lto is enabled but the C compiler is "@0@", not clang. Mixed-language LTO across rustc and @0@ is not supported. Re-run with -Db_lto=false or switch to a clang toolchain.'.format(cc_id))
-      endif
-      clang_llvm = meson.get_compiler('c').version().split('.')[0].to_int()
-      rustc_verbose = run_command(rustc, '--version', '--verbose', check: true)
-      rustc_llvm = 0
-      foreach line : rustc_verbose.stdout().split('\n')
-         if line.startswith('LLVM version:')
-            rustc_llvm = line.split(':')[1].strip().split('.')[0].to_int()
-         endif
-      endforeach
-      if rustc_llvm == 0
-         error('b_lto is enabled but could not parse rustc\'s LLVM version. Re-run with -Db_lto=false or -Dlinker_plugin_lto=disabled.')
-      endif
-      llvm_skew = rustc_llvm - clang_llvm
-      if llvm_skew < 0
-         llvm_skew = -llvm_skew
-      endif
-      if llvm_skew > 1
-         error('b_lto is enabled but rustc\'s LLVM (@0@) and clang\'s LLVM (@1@) differ by more than one major version, so linker-plugin-LTO cannot be used. Re-run with -Db_lto=false, install a matching toolchain, or pass -Dlinker_plugin_lto=enabled to override this check at your own risk.'.format(rustc_llvm, clang_llvm))
-      endif
-      use_rust_lto = true
-      message('linker-plugin-LTO enabled (clang LLVM @0@ / rustc LLVM @1@)'.format(clang_llvm, rustc_llvm))
-   endif
-   if use_rust_lto
-      cargo_env.set('RUSTFLAGS', '-Clinker-plugin-lto')
-   endif
    cargo_options = [ '--manifest-path', cargo_toml ]
    cargo_options += [ '--profile', rust_target ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
@@ -487,76 +188,44 @@ if buildExec.disabled() == false
    if paranoid
       cargo_features += 'paranoid'
    endif
+   if debug_arrays
+      cargo_features += 'debug_arrays'
+   endif
+   if tracy
+      if not debug
+         error('tracy requires a debug build!')
+      endif
+      cargo_features += 'tracy'
+   endif
    if cargo_features.length() > 0
       cargo_options += [ '--features', ','.join(cargo_features) ]
    endif
 
-   # First let's compile Rust with cargo, but we can't control output
-   naev_rlib_compile = custom_target( 'cargo-build',
-      depends: [naev_clib],
-      depend_files: source_rust + cargo_toml + buildrs + files(
-         'naevc/Cargo.toml', 'naevc/build.rs', 'naevc/build/headers.rs', 'naevc/src/lib.rs'),
+   # Cargo builds the C engine, all the Rust and the executable in one go.
+   cargo_build = custom_target( 'cargo-build',
       output: 'src',
       console: true,
+      # cargo tracks what is stale itself.
+      build_always_stale: true,
       env: cargo_env,
       command: [ cargo, 'build', cargo_options, ] )
-   # Now we can copy the compile rlib to a location where meson can understand it
-   # TODO When the following gets merged we can simplify this https://github.com/rust-lang/cargo/issues/6790
-   naev_rlib = custom_target( 'naev_rlib',
-      # Not sure why, but we have to keep the dependencies here or it won't
-      # update the binary properly when changes are made
-      #depends: [naev_rlib_compile],
-      depends: [naev_clib, naev_rlib_compile],
-      depend_files: source_rust + cargo_toml + buildrs,
-      output: 'libnaev.rlib',
-      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_artifact_dir / '@OUTPUT@', ] )
-   # Also declare it as a library so meson can link with it. The placeholder
-   # gives that link an object file; with none the library has no sections and
-   # cannot be signed on macOS.
-   naev_rlib_lib = library(
-      'naev_rlib',
-      naev_rlib,
-      files( 'utils' / 'build' / 'naev_rlib_placeholder.c' ),
-      install : true )
-   # We create naev.rs with naev_rlib as a dependency to force rlib to be
-   # compiled first, otherwise meson tries to compile both naev.rs and
-   # naev_rlib in parallel and it fails.
-   naev_rs = custom_target( 'naevrs',
-      output: 'naev.rs',
-      input: meson.project_source_root() / 'utils' / 'build' / 'naev.rs',
-      depends: [naev_rlib],
-      command: [ copydir, meson.project_build_root(), '@INPUT@', ] )
 
-   # Lets make sure that we only enable export_dynamic if we aren't using macos or windows
-   if host_machine.system() in ['windows', 'darwin']
-      use_export_dynamic = false
-   else
-      use_export_dynamic = get_option('debug')
-   endif
-
-   # Add console subsystem linker flag on Windows to show console window
-   naev_bin_link_args = []
-   if get_option('debug') and host_machine.system() == 'windows'
-      naev_bin_link_args += ['-Wl,--subsystem,console']
-   endif
-
-   # Finally, build the executable with Rust again, but using meson to link it all together
-   naev_bin = executable(
-      'naev', # needed so the binary is named 'naev'
-      sources: naev_rs,
-      # Have to make sure Rust uses the dependencies from Cargo
-      rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / target_triplet / rust_target / 'deps', '-L', 'src' / rust_target / 'deps'],
-      # Also have to pull in the C dependencies
-      dependencies: naev_deps,
-      link_with: [naev_rlib_lib],
-      export_dynamic: use_export_dynamic,
-      link_args: naev_bin_link_args,
-      install: true)
+   # Cargo picks where its artifacts land, so lift the binary somewhere meson
+   # and the dev launcher can find it.
+   # TODO Drop the copy once --artifact-dir stabilises.
+   # https://github.com/rust-lang/cargo/issues/6790
+   naev_bin = custom_target( 'naev',
+      depends: [cargo_build],
+      depend_files: source_rust + cargo_toml,
+      output: host_machine.system() == 'windows' ? 'naev.exe' : 'naev',
+      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_artifact_dir / '@OUTPUT@', ],
+      install: true,
+      install_dir: get_option('bindir') )
 
    # Naev pluginmgr cli for managing plugins.
    # Inherits the cargo environment above, so should work in cross compilation environments.
    #pluginmgr_cli = custom_target('pluginmgr-cli',
-   #   depends: [naev_rlib_compile],
+   #   depends: [cargo_build],
    #   console: true,
    #   command: [
    #      'env', cargo_env, cargo,
@@ -569,7 +238,7 @@ if buildExec.disabled() == false
 
    # Simplifies clippy stuff
    clippy = run_target( 'clippy',
-      depends: [naev_rlib_compile],
+      depends: [cargo_build],
       env: cargo_env,
       command: [ cargo, 'clippy', cargo_options, ] )
 
@@ -581,7 +250,7 @@ if buildExec.disabled() == false
       args: ['test', '--workspace'] + cargo_options,
       workdir: meson.project_build_root(),
       is_parallel: false, # too slow
-      depends: [naev_rlib_compile],
+      depends: [cargo_build],
       priority: 1,
    )
 
