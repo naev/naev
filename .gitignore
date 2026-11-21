@@ -6,7 +6,6 @@
 *.swo
 *.bak
 .hgignore
-Cargo.lock
 appImageBuild/
 build/*
 bintray.json
@@ -72,6 +71,8 @@ utils/model-view-c/*.bin
 utils/docmaker/target/*
 utils/linopt-bench/target/*
 utils/safelanes-bench/target/*
+# The utils crates keep their own lockfiles.
+utils/*/Cargo.lock
 
 docs/manual/book
 

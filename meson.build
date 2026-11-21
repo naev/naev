@@ -147,9 +147,6 @@ if buildExec.disabled() == false
    endif
    cargo = find_program('cargo', version: cargo_needed_version)
    cargo_toml = files('Cargo.toml')
-   # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
-   # https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo
-   meson.add_dist_script( cargo_lock )
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
    # naevc's build script reads these.
