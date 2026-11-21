@@ -71,6 +71,7 @@ utils/model-view-c/*.bin
 utils/docmaker/target/*
 utils/linopt-bench/target/*
 utils/safelanes-bench/target/*
+naevc/target/*
 
 docs/manual/book
 

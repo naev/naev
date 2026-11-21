@@ -65,7 +65,6 @@ to get started making your own, please take a look at the
 Naev's dependencies are intended to be widely available. In addition to a
 graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * rust 1.89 or later
-  * bindgen 0.72 or later
   * SDL3`*`
   * libxml2
   * libopus-dev

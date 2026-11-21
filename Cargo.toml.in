@@ -12,6 +12,10 @@ workspace = true
 [lib]
 path = @PATH@
 
+[features]
+# Mirror the meson options of the same names.
+paranoid = ["naevc/paranoid"]
+
 [profile.release-with-debug]
 inherits = "release"
 debug = 1

@@ -1,0 +1,20 @@
+[package]
+name = "naevc"
+version = "0.0.0"
+edition = "2024"
+publish = false
+build = "build.rs"
+
+[lib]
+path = "src/lib.rs"
+
+[features]
+paranoid = []
+
+[build-dependencies]
+# Windows needs 0.72.1 or it floods overflow warnings.
+bindgen = "0.72.1"
+pkg-config = "0.3"
+
+[lints]
+workspace = true
