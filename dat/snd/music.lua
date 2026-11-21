@@ -99,16 +99,18 @@ local function tracks_add( name, situation, params )
       name = "snd/music/"..name_orig
    end
 
+   local vol = 1
    local m = audio.newSource( name, "stream" )
    if params.fade then
       m:setVolume( 0, true )
+      vol = 0
    else
       m:setVolume( music_vol, true )
    end
    local t = {
       m     = m,
       fade  = params.fade,
-      vol   = 1,
+      vol   = vol,
       delay = params.delay,
       name  = name_orig,
       elapsed = 0,
