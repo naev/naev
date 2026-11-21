@@ -200,6 +200,23 @@ if buildExec.disabled() == false
       install: true,
       install_dir: get_option('bindir') )
 
+   # Outfits, naevpedia pages, tech lists and translations. The dev launcher
+   # mounts this directory on top of the tracked data.
+   generated_data = custom_target( 'generated-data',
+      output: 'dat',
+      build_by_default: true,
+      # xtask tracks what is stale itself.
+      build_always_stale: true,
+      env: cargo_env,
+      command: [
+         cargo, 'run', '--quiet', '--release',
+         '--target-dir', meson.project_build_root() / 'xtask',
+         '--manifest-path', cargo_toml, '--package', 'xtask', '--',
+         'data', '--generated-dir', meson.project_build_root() / 'dat',
+      ],
+      install: true,
+      install_dir: ndata_path )
+
    # Naev pluginmgr cli for managing plugins.
    # Inherits the cargo environment above, so should work in cross compilation environments.
    #pluginmgr_cli = custom_target('pluginmgr-cli',
@@ -232,51 +249,10 @@ if buildExec.disabled() == false
       priority: 1,
    )
 
-   gen_authors = find_program(files('utils'/'build'/'gen_authors.py'))
-   authors = custom_target(
-      'authors',
-      command: [
-         gen_authors,
-         '--output', '@OUTPUT0@',
-         '--preamble', '@INPUT0@',
-         '@INPUT1@', '@INPUT2@',
-      ],
-      input: files('dat/AUTHORS', 'assets/gfx/ARTWORK_LICENSE.yaml', 'assets/snd/SOUND_LICENSE.yaml'),
-      output: 'AUTHORS',
-      install: true,
-      install_dir: ndata_path / 'dat',
-   )
-
-   gen_gettext_stats = find_program(files('utils'/'build'/'gen_gettext_stats.py'))
-   gettext_stats = custom_target('gettext_stats',
-      command: [gen_gettext_stats, '--output', '@OUTPUT@', '@INPUT@'],
-      input: files('po/' + meson.project_name() + '.pot'),
-      output: meson.project_name() + '.txt',
-      install: true,
-      install_dir: ndata_path / 'dat/gettext_stats',
-   )
-
-   # Need to add other generated data files here as necessary
-   gen_zip_overlay = find_program(files('utils'/'build'/'gen_zip_overlay.py'))
-   gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors, '--cd', 'gettext_stats', gettext_stats]
-   # Note that generated outfits populate build/dat/ which is included with
-   # naev.py, so no need to put them in the overlay on top
-   #gen_zip_command += ['--cd', 'outfits']
-   #foreach target: gen_outfits
-   #    gen_zip_command += target
-   #endforeach
-   zip_overlay = custom_target('zip_overlay',
-      command: gen_zip_command,
-      output: 'meson_overlay.zip',
-      depends: [authors, gettext_stats], # + gen_outfits,
-      build_by_default: true
-   )
-
    naevpy_config = {
       'build_root': meson.current_build_dir(),
       'source_root': meson.project_source_root(),
       'naev_bin' : naev_bin.full_path(),
-      'zip_overlay' : zip_overlay.full_path(),
       'debug' : debug.to_string(),
       'debug_paranoid' : paranoid.to_string(),
    }
@@ -332,7 +308,7 @@ if buildExec.disabled() == false
       'dat',
       install_dir: ndata_path,
       # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
-      exclude_files: ['AUTHORS', 'outfits/meson.build', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build', 'outfits/tech/meson.build' ],
+      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'scripts/meson.build', 'outfits/tech/meson.build' ],
       exclude_directories: ['outfits/py', 'outfits/bioship/templates'],
    )
 

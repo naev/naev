@@ -33,6 +33,7 @@ resolver = "3"
 exclude = ["utils"]
 members = [
   "naevc",
+  "xtask",
   "src/audio",
   "src/core",
   "src/helpers",
@@ -88,6 +89,7 @@ physics = { path = "src/physics" }
 pluginmgr = { path = "src/pluginmgr" }
 pluginmgr-gui = { path = "src/pluginmgr-gui" }
 formatx = "~0.4.2"
+indicatif = "0.18"
 glow = "0.18"
 ordered-float = "5"
 nalgebra = { version = "0.35", features = [

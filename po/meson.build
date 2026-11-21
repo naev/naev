@@ -31,7 +31,8 @@ gettext_targets = i18n.gettext('naev',
       '--msgid-bugs-address', issue_address,
       '--copyright-holder', copyright_holder,
       ],
-   install_dir: ndata_path / 'dat/gettext',
+   # xtask data builds the catalogues.
+   install: false,
 )
 
 # remove these two aliases once the depend issue above is solved
