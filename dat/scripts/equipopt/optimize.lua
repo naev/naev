@@ -557,7 +557,6 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Figure out slots
    local slots = {}
-   local slots_w, slots_u, slots_s = {}, {}, {}
    for k,v in ipairs(slots_base) do
       -- Must be empty and not locked
       if p:outfitSlot(k)==nil and not v.locked then
@@ -586,15 +585,6 @@ function optimize.optimize( p, cores, outfit_list, params )
             -- potential outfits, but only one constraint
             ncols = ncols + #v.outfits
             nrows = nrows + 1
-
-            -- Sort by type to apply limits
-            if v.type=="Weapon" then
-               table.insert( slots_w, v )
-            elseif v.type=="Utility" then
-               table.insert( slots_u, v )
-            elseif v.type=="Structure" then
-               table.insert( slots_s, v )
-            end
          end
       end
    end
