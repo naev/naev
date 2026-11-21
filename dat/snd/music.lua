@@ -241,7 +241,7 @@ function choose_table.land ()
    local override = spob_songs[ pnt:nameRaw() ]
    if override then
       if type(override)=="function" then
-         local song = override()
+         local song = override( pnt )
          if song then
             if type(song)=="table" then
                tracks_add( song[ rnd.rnd(1, #song) ], "land", params )
