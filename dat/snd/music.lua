@@ -615,6 +615,9 @@ function update( dt )
          if v then
             v.m:setVolume( music_vol * v.vol, true )
          end
+      -- Stopped for whatever reason
+      elseif v.m:isStopped() then
+         table.insert( remove, k )
       end
    end
    for k=#remove, 1, -1 do
