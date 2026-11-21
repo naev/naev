@@ -408,7 +408,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    if pt.noequip then -- Don't equip
       -- Set up useful outfits
       ai_setup.setup(p)
-      return
+      return true
    end
    if not params.noremove then
       p:outfitRm( "all" )
@@ -437,7 +437,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       if fb ~= nil then
          if fb.equip( p ) then
             ai_setup.setup(p)
-            return
+            return true
          end
       end
       rndness = 0
@@ -475,7 +475,11 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Modify forward weapon bonus depending on turn rate
    if st.turn < 150 then
-      params.forward = params.forward * math.max( 0.5, st.turn/150 )
+      -- We don't want to manipulate a table passed by caller, so do a shallow copy
+      local np = tcopy( params )
+      np.forward = params.forward * math.max( 0.5, st.turn/150 )
+      params = np
+      pm.equipopt_params = np
    end
 
    -- Determine what outfits from outfit_list we can actually equip
@@ -597,7 +601,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    if ncols==0 then
       p:fillAmmo()
       ai_setup.setup(p)
-      return -- Nothing to optimize
+      return true -- Nothing to optimize
    end
 
    -- We have to add additional constraints (spaceworthy, limits)
