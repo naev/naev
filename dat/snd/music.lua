@@ -706,4 +706,8 @@ end
 
 function reset()
    music_off = false
+   last_track       = nil
+   last_track_type  = {}
+   last_sysFaction  = nil
+   last_sysNebuDens = nil
 end
