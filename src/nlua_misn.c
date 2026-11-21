@@ -154,7 +154,6 @@ int nlua_loadMisn( nlua_env *env )
  */
 int misn_tryRun( Mission *misn, const char *func )
 {
-   int ret;
    /* Get the function to run. */
    if ( misn_runStart( misn, func ) )
       return 2;
@@ -162,8 +161,29 @@ int misn_tryRun( Mission *misn, const char *func )
       lua_pop( naevL, 1 );
       return 0;
    }
-   ret = misn_runFunc( misn, func, 0, 0 );
-   return ret;
+   return misn_runFunc( misn, func, 0, 0 );
+}
+
+/**
+ * @brief Tries to run a mission, but doesn't err if it fails. It will return
+ * values only on success/accepted.
+ *
+ *    @param misn Mission that owns the function.
+ *    @param func Name of the function to call.
+ *    @param nret Number of return values to collect.
+ *    @return -1 on error, 1 on `misn.finish()` call, 2 if mission got deleted,
+ *          3 if the mission got accepted, and 0 normally.
+ */
+int misn_tryRunWithReturn( Mission *misn, const char *func, int nret )
+{
+   /* Get the function to run. */
+   if ( misn_runStart( misn, func ) )
+      return 2;
+   if ( lua_isnil( naevL, -1 ) ) {
+      lua_pop( naevL, 1 );
+      return 0;
+   }
+   return misn_runFunc( misn, func, 0, nret );
 }
 
 /**
@@ -271,6 +291,8 @@ int misn_runFunc( const Mission *misn, const char *func, int nargs, int nret )
          mission_shift( i );
          break;
       }
+      // Remove parameters
+      lua_pop( naevL, nret );
    }
    /* Mission became accepted. */
    else if ( !isaccepted && cur_mission->accepted )

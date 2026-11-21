@@ -184,6 +184,7 @@ int  mission_reload( const char *name );
  * Actually in nlua_misn.h
  */
 int misn_tryRun( Mission *misn, const char *func );
+int misn_tryRunWithReturn( Mission *misn, const char *func, int nret );
 int misn_runStart( Mission *misn, const char *func );
 int misn_runFunc( const Mission *misn, const char *func, int nargs, int nret );
 int misn_run( Mission *misn, const char *func );

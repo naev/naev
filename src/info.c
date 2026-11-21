@@ -1158,7 +1158,15 @@ static void cargo_jettison( unsigned int wid, const char *str )
       misn = player_missions[f];
 
       /* We run the "abort" function if it's found. */
-      ret = misn_tryRun( misn, "abort" );
+      ret = misn_tryRunWithReturn( misn, "abort", 1 );
+      if ( ret == 0 || ret == 3 ) {
+         // If return value is false (not nil), then we ignore the abort
+         if ( lua_isboolean( naevL, -1 ) && !lua_toboolean( naevL, -1 ) ) {
+            lua_pop( naevL, 1 );
+            return;
+         }
+         lua_pop( naevL, 1 );
+      }
 
       /* Now clean up mission. */
       if ( ret != 2 ) {
