@@ -60,14 +60,14 @@ impl BuildArgs {
       }
    }
 
-   fn cargo_args(&self, cmd: &mut Command) {
+   pub fn cargo_args(&self, cmd: &mut Command) {
       cmd.args(["--profile", self.profile()]);
       if !self.features.is_empty() {
          cmd.arg("--features").arg(self.features.join(","));
       }
    }
 
-   fn binary(&self, target: &Path) -> PathBuf {
+   pub fn binary(&self, target: &Path) -> PathBuf {
       // cargo names the dev profile's directory debug.
       let dir = match self.profile() {
          "dev" => "debug",

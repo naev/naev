@@ -2,7 +2,7 @@ use std::{fs, path::Path, process::Command};
 
 use anyhow::{Context, Result};
 
-fn current(root: &Path) -> Result<String> {
+pub fn current(root: &Path) -> Result<String> {
    // xtask inherits version.workspace, so this is the workspace version.
    let base = env!("CARGO_PKG_VERSION").to_string();
 
