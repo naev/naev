@@ -74,7 +74,6 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * enet
   * physfs
   * lua 5.1 / luajit
-  * cmark
   * pyyaml (compilation only)
   * git-lfs (compilation only)
 

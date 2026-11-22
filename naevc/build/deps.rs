@@ -9,11 +9,7 @@ pub struct Deps {
 pub fn probe() -> Deps {
    let mut include_paths = Vec::new();
 
-   for (name, version) in [
-      ("sdl3", "3.2.0"),
-      ("libenet", "1.3"),
-      ("libcmark", "0.31.0"),
-   ] {
+   for (name, version) in [("sdl3", "3.2.0"), ("libenet", "1.3")] {
       include_paths.extend(required(name, Some(version)));
    }
    // Some MSYS2 environments don't pull in ogg through vorbis.

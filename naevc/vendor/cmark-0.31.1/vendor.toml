@@ -1,0 +1,20 @@
+# The release's COPYING and src/ tree, unchanged, without its command-line
+# program. include/ holds the version and export headers CMake would generate
+# for a static build, and forwards cmark.h, since src/ also has internal
+# headers named like the engine's, such as render.h and utf8.h.
+
+[upstream]
+project = "https://github.com/commonmark/cmark"
+release = "https://github.com/commonmark/cmark/releases/tag/0.31.1"
+tarball = "https://github.com/commonmark/cmark/archive/refs/tags/0.31.1.tar.gz"
+sha256 = "3da93db5469c30588cfeb283d9d62edfc6ded9eb0edc10a4f5bbfb7d722ea802"
+commit = "bb3678d7a73cb02d35c8876ecd097072636200a8"
+license = "BSD-2-Clause, with the houdini and buffer files under MIT, in COPYING"
+
+[build]
+library = "cmark"
+sources = ["src"]
+include = ["src", "include"]
+export = ["include"]
+# Upstream's CMake build uses C99.
+std = "c99"
