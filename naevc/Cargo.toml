@@ -21,6 +21,8 @@ rand = "0.10"
 bindgen = "0.72.1"
 cc = "1.2"
 pkg-config = "0.3"
+serde = { workspace = true }
+toml = { workspace = true }
 
 [lints]
 workspace = true

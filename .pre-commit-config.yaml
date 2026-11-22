@@ -1,6 +1,8 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 minimum_pre_commit_version: '3.2.0'
+# Vendored libraries stay as upstream released them.
+exclude: ^naevc/vendor/
 repos:
 - repo: local
   hooks:

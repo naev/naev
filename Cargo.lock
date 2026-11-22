@@ -3238,6 +3238,8 @@ dependencies = [
  "cc",
  "pkg-config",
  "rand 0.10.2",
+ "serde",
+ "toml",
 ]
 
 [[package]]

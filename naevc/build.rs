@@ -12,6 +12,8 @@ mod deps;
 mod headers;
 #[path = "build/sources.rs"]
 mod sources;
+#[path = "build/vendor.rs"]
+mod vendor;
 
 const INCLUDE_DIRS: &[&str] = &["src", "src/tk", "src/tk/widget"];
 
@@ -50,7 +52,12 @@ fn main() {
    let out_dir =
       PathBuf::from(env::var("OUT_DIR").expect("cargo always sets OUT_DIR for build scripts"));
 
-   let deps = deps::probe();
+   let mut deps = deps::probe();
+   // Vendored headers go first, so a system copy of the same library can't shadow them.
+   deps.include_paths = vendor::build_all(&manifest_dir)
+      .into_iter()
+      .chain(deps.include_paths)
+      .collect();
    let cfg = configure::detect();
    let config_h = configure::write_config_h(&out_dir, &cfg, &deps);
    configure::write_version_header(&out_dir, &cfg);
