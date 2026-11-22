@@ -11,8 +11,6 @@ mod docs;
 mod generated;
 mod i18n;
 mod install;
-// The root build script fills templates with the rest, which xtask doesn't need yet.
-#[allow(dead_code)]
 #[path = "../../extras/metadata.rs"]
 mod metadata;
 mod progress;

@@ -46,6 +46,39 @@ pub struct BuildArgs {
    /// Cargo features to build with.
    #[arg(long, value_delimiter = ',')]
    features: Vec<String>,
+
+   /// Target triple to build for, as cargo takes it. Defaults to the host.
+   #[arg(long)]
+   target: Option<String>,
+}
+
+/// The operating system family a build targets, which decides the install layout.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Platform {
+   /// Linux and the BSDs.
+   FreeDesktop,
+   Windows,
+   MacOs,
+}
+
+impl Platform {
+   fn of(triple: Option<&str>) -> Self {
+      match triple {
+         Some(triple) if triple.contains("-windows") => Self::Windows,
+         Some(triple) if triple.contains("-apple-darwin") => Self::MacOs,
+         Some(_) => Self::FreeDesktop,
+         None if cfg!(windows) => Self::Windows,
+         None if cfg!(target_os = "macos") => Self::MacOs,
+         None => Self::FreeDesktop,
+      }
+   }
+
+   fn executable(self) -> &'static str {
+      match self {
+         Self::Windows => "naev.exe",
+         Self::FreeDesktop | Self::MacOs => "naev",
+      }
+   }
 }
 
 impl BuildArgs {
@@ -65,6 +98,13 @@ impl BuildArgs {
       if !self.features.is_empty() {
          cmd.arg("--features").arg(self.features.join(","));
       }
+      if let Some(triple) = &self.target {
+         cmd.arg("--target").arg(triple);
+      }
+   }
+
+   pub fn platform(&self) -> Platform {
+      Platform::of(self.target.as_deref())
    }
 
    pub fn binary(&self, target: &Path) -> PathBuf {
@@ -73,9 +113,12 @@ impl BuildArgs {
          "dev" => "debug",
          profile => profile,
       };
-      target
-         .join(dir)
-         .join(format!("naev{}", std::env::consts::EXE_SUFFIX))
+      // cargo only nests its output under the triple when one is asked for.
+      let target = match &self.target {
+         Some(triple) => target.join(triple),
+         None => target.to_path_buf(),
+      };
+      target.join(dir).join(self.platform().executable())
    }
 }
 

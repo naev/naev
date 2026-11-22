@@ -7,6 +7,8 @@ use std::{
 use anyhow::{Context, Result, bail};
 use clap::{Args, ValueEnum};
 
+use crate::run::Platform;
+
 // Build files and generator inputs. The generated tree has its own AUTHORS and VERSION.
 const SKIP_FILES: &[&str] = &[
    "AUTHORS",
@@ -114,18 +116,6 @@ pub fn install(
    metadata: &crate::metadata::Metadata,
    args: &InstallArgs,
 ) -> Result<()> {
-   // xtask always builds for the host, and only the Linux and BSD layout exists so far.
-   if !cfg!(any(
-      target_os = "linux",
-      target_os = "freebsd",
-      target_os = "openbsd",
-      target_os = "netbsd"
-   )) {
-      bail!(
-         "xtask install only lays out Linux and BSD installs; use meson install on this platform"
-      );
-   }
-
    let defaults: Vec<Component> = Component::value_variants()
       .iter()
       .copied()
@@ -206,8 +196,30 @@ fn game(
    crate::data::generate(root, data_dir)?;
    files += copy_tree(data_dir, &dat, &[], &[])?;
 
-   // The desktop names its entry, metainfo and icon after the app ID.
-   let app_id = &metadata.app_id;
+   files += match args.build.platform() {
+      Platform::FreeDesktop => freedesktop(root, datadir, &metadata.app_id, dest)?,
+      Platform::MacOs => macos(root, &ndata, metadata, dest)?,
+      Platform::Windows => {
+         copy(
+            &root.join("extras/logos/logo.ico"),
+            &dest(Path::new("logo.ico")),
+            0o644,
+         )?;
+         1
+      }
+   };
+   Ok(files)
+}
+
+// Windows and macOS keep everything inside the game's own directory. The desktop names its entry,
+// metainfo and icon after the app ID.
+fn freedesktop(
+   root: &Path,
+   datadir: &Path,
+   app_id: &str,
+   dest: &impl Fn(&Path) -> PathBuf,
+) -> Result<usize> {
+   let mut files = 0;
    for (name, dir) in [
       (format!("{app_id}.desktop"), datadir.join("applications")),
       (format!("{app_id}.metainfo.xml"), datadir.join("metainfo")),
@@ -241,6 +253,30 @@ fn game(
       files += 1;
    }
    Ok(files)
+}
+
+fn macos(
+   root: &Path,
+   ndata: &Path,
+   metadata: &crate::metadata::Metadata,
+   dest: &impl Fn(&Path) -> PathBuf,
+) -> Result<usize> {
+   let template = root.join("extras/macos/Info.plist.in");
+   let plist = metadata.fill(
+      &fs::read_to_string(&template).with_context(|| format!("reading {}", template.display()))?,
+      &crate::version::current(root)?,
+   );
+   let to = dest(Path::new("Contents/Info.plist"));
+   let parent = to.parent().context("every target has a directory")?;
+   fs::create_dir_all(parent).with_context(|| format!("creating {}", parent.display()))?;
+   fs::write(&to, plist).with_context(|| format!("writing {}", to.display()))?;
+
+   copy(
+      &root.join("extras/logos/naev.icns"),
+      &dest(&ndata.join("naev.icns")),
+      0o644,
+   )?;
+   Ok(2)
 }
 
 fn docs(
