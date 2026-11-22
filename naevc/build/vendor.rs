@@ -15,6 +15,8 @@ struct Build {
    library: String,
    sources: Vec<PathBuf>,
    include: Vec<PathBuf>,
+   #[serde(default)]
+   defines: Vec<String>,
 }
 
 /// Builds every library under vendor/ and returns their include dirs.
@@ -38,8 +40,13 @@ fn build(dir: &Path) -> Vec<PathBuf> {
    let build = manifest.build;
 
    let include: Vec<PathBuf> = build.include.iter().map(|rel| dir.join(rel)).collect();
-   cc::Build::new()
-      .includes(&include)
+   let mut cc = cc::Build::new();
+   // Upstream's code, so its warnings aren't naev's to fix.
+   cc.warnings(false);
+   for define in &build.defines {
+      cc.define(define, None);
+   }
+   cc.includes(&include)
       .files(compiled_sources(dir, &build.sources))
       .compile(&build.library);
    include

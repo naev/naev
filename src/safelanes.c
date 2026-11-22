@@ -11,11 +11,7 @@
 /** @cond */
 #include <math.h>
 
-#if HAVE_SUITESPARSE_CHOLMOD_H
-#include <suitesparse/cholmod.h>
-#else /* HAVE_SUITESPARSE_CHOLMOD_H */
 #include <cholmod.h>
-#endif /* HAVE_SUITESPARSE_CHOLMOD_H */
 
 #if HAVE_OPENBLAS_CBLAS_H
 #include <openblas/cblas.h>

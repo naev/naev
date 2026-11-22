@@ -1,0 +1,33 @@
+# The packages the engine uses, at the release, unchanged: SuiteSparse_config,
+# AMD, COLAMD, CSparse and the CHOLMOD modules safelanes calls. Files not built
+# or included by those are left out, along with the 64-bit variants.
+
+[upstream]
+project = "https://github.com/DrTimothyAldenDavis/SuiteSparse"
+release = "https://github.com/DrTimothyAldenDavis/SuiteSparse/releases/tag/v7.8.3"
+commit = "d3c4926d2c47fd6ae558e898bfc072ade210a2a1"
+license = "BSD-3-Clause, LGPL-2.1+ and GPL-2.0+ by package, in LICENSE.txt and */Doc/License.txt"
+
+[build]
+library = "suitesparse"
+sources = [
+  "SuiteSparse_config",
+  "AMD/Source",
+  "COLAMD/Source",
+  "CSparse/Source",
+  "CHOLMOD/Check",
+  "CHOLMOD/Cholesky",
+  "CHOLMOD/MatrixOps",
+  "CHOLMOD/Modify",
+  "CHOLMOD/Utility",
+]
+include = [
+  "SuiteSparse_config",
+  "AMD/Include",
+  "COLAMD/Include",
+  "CSparse/Include",
+  "CHOLMOD/Include",
+]
+# Leaves out the CHOLMOD modules that need METIS, CAMD and BLAS, and the timer
+# that needs OpenMP or clock_gettime.
+defines = ["NCAMD", "NPARTITION", "NSUPERNODAL", "NTIMER"]

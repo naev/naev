@@ -1,17 +1,5 @@
 use std::path::PathBuf;
 
-// In link order, since a static archive only resolves against what follows it.
-const LINK_ONLY: &[&str] = &[
-   "glpk",
-   "cholmod",
-   "amd",
-   "camd",
-   "colamd",
-   "suitesparseconfig",
-];
-
-const LINK_ONLY_OPTIONAL: &[&str] = &["ccolamd", "lapack", "metis"];
-
 pub struct Deps {
    pub include_paths: Vec<PathBuf>,
    pub have_luajit: bool,
@@ -54,15 +42,8 @@ pub fn probe() -> Deps {
       }
    }
 
-   for name in LINK_ONLY {
-      link_lib(name);
-   }
-   for name in LINK_ONLY_OPTIONAL {
-      if has_library(name) {
-         link_lib(name);
-      }
-   }
-   link_csparse();
+   // glpk ships no pkg-config file.
+   link_lib("glpk");
    link_blas();
    link_platform();
 
@@ -73,20 +54,6 @@ pub fn probe() -> Deps {
       have_luajit,
       have_tracy,
    }
-}
-
-/// c[x]sparse is packaged under either name depending on the distribution.
-fn link_csparse() {
-   for name in ["cxsparse", "csparse"] {
-      if has_library(name) {
-         link_lib(name);
-         return;
-      }
-   }
-   missing(
-      "cxsparse or csparse",
-      "SuiteSparse (CXSparse or CSparse component)",
-   );
 }
 
 fn link_blas() {

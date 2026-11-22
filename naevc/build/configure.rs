@@ -65,14 +65,6 @@ pub fn write_config_h(out_dir: &Path, cfg: &Config, deps: &Deps) -> std::path::P
          ),
       ),
       (
-         "HAVE_SUITESPARSE_CS_H",
-         has_header(deps, "suitesparse/cs.h"),
-      ),
-      (
-         "HAVE_SUITESPARSE_CHOLMOD_H",
-         has_header(deps, "suitesparse/cholmod.h"),
-      ),
-      (
          "HAVE_ACCELERATE_ACCELERATE_H",
          has_cblas(deps, "Accelerate/Accelerate.h"),
       ),

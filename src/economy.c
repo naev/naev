@@ -11,11 +11,7 @@
  *  This is then solved with linear algebra after each time increment.
  */
 /** @cond */
-#if HAVE_SUITESPARSE_CS_H
-#include <suitesparse/cs.h>
-#else /* HAVE_SUITESPARSE_CS_H */
 #include <cs.h>
-#endif /* HAVE_SUITESPARSE_CS_H */
 
 #include "naev.h"
 /** @endcond */
