@@ -9,6 +9,7 @@ use clap::{Args, ValueEnum};
 use crate::metadata::Metadata;
 
 mod linux;
+mod windows;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
 pub enum Kind {
@@ -16,6 +17,8 @@ pub enum Kind {
    Appimage,
    /// The Linux binary, data and libraries for the Steam depots.
    Steam,
+   /// The Windows binary and the DLLs it needs, for the Steam depots.
+   Windows,
 }
 
 #[derive(Args, Debug)]
@@ -72,6 +75,7 @@ pub fn package(
       match kind {
          Kind::Appimage => linux::appimage(&job, &output)?,
          Kind::Steam => linux::steam(&job, &output)?,
+         Kind::Windows => windows::tarball(&job, &output)?,
       }
    }
    Ok(())

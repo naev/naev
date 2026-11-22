@@ -11,6 +11,11 @@ workspace = true
 [dependencies]
 anyhow = { workspace = true }
 clap = { version = "4", features = ["derive", "env"] }
+goblin = { version = "0.10", default-features = false, features = [
+  "pe32",
+  "pe64",
+  "std",
+] }
 indicatif = { workspace = true }
 lzma-rust2 = { version = "0.25", default-features = false, features = [
   "encoder",

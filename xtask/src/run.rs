@@ -73,7 +73,7 @@ impl Platform {
       }
    }
 
-   fn executable(self) -> &'static str {
+   pub fn executable(self) -> &'static str {
       match self {
          Self::Windows => "naev.exe",
          Self::FreeDesktop | Self::MacOs => "naev",
@@ -105,6 +105,10 @@ impl BuildArgs {
 
    pub fn platform(&self) -> Platform {
       Platform::of(self.target.as_deref())
+   }
+
+   pub fn target(&self) -> Option<&str> {
+      self.target.as_deref()
    }
 
    pub fn binary(&self, target: &Path) -> PathBuf {

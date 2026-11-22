@@ -93,6 +93,13 @@ impl InstallArgs {
       }
    }
 
+   /// Puts the binary and its data straight in the prefix, as the Windows packages ship.
+   pub fn flat(mut self) -> Self {
+      self.bindir = ".".into();
+      self.ndata_path = Some(".".into());
+      self
+   }
+
    fn ndata(&self) -> PathBuf {
       self
          .ndata_path
