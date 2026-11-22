@@ -71,7 +71,6 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * freetype2
   * OpenAL
   * intltool
-  * enet
   * physfs
   * lua 5.1 / luajit
   * pyyaml (compilation only)

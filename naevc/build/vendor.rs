@@ -1,5 +1,5 @@
 use std::{
-   collections::HashSet,
+   collections::{HashMap, HashSet},
    fs,
    path::{Path, PathBuf},
 };
@@ -20,6 +20,9 @@ struct Build {
    std: Option<String>,
    // What the engine and bindgen see, defaulting to all of include.
    export: Option<Vec<PathBuf>>,
+   // System libraries it needs, by target OS.
+   #[serde(default)]
+   link: HashMap<String, Vec<String>>,
 }
 
 /// Builds every library under vendor/ and returns the include dirs they export.
@@ -55,6 +58,10 @@ fn build(dir: &Path) -> Vec<PathBuf> {
    cc.includes(in_dir(&build.include))
       .files(compiled_sources(dir, &build.sources))
       .compile(&build.library);
+   let target_os = std::env::var("CARGO_CFG_TARGET_OS").expect("cargo sets it for build scripts");
+   for lib in build.link.get(&target_os).into_iter().flatten() {
+      println!("cargo:rustc-link-lib={lib}");
+   }
    in_dir(build.export.as_deref().unwrap_or(&build.include))
 }
 
