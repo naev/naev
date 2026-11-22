@@ -10,8 +10,7 @@ pub fn probe() -> Deps {
    let mut include_paths = Vec::new();
 
    include_paths.extend(required("sdl3", Some("3.2.0")));
-   // Some MSYS2 environments don't pull in ogg through vorbis.
-   for name in ["opus", "freetype2", "openal", "vorbis", "vorbisfile", "ogg"] {
+   for name in ["opus", "freetype2", "openal"] {
       include_paths.extend(required(name, None));
    }
 
