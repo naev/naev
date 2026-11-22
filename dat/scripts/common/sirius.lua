@@ -54,7 +54,7 @@ function srs.weapsets( outfits )
    pp:weapsetAddType( 1, "Bolt Weapon" )
 end
 
-local ssys, sysr, obelisk, spos, sdir, hook_limits
+local ssys, sysr, obelisk, spos, sdir, hook_limits, button
 function srs.obeliskEnter( oblk )
    obelisk = oblk
    ssys = system.cur()
@@ -89,6 +89,12 @@ function srs.obeliskEnter( oblk )
    -- TODO sound
 
    hook_limits = hook.update( "_srs_update_limits" )
+
+   button = player.menuButtonRegister(_("Abandon Trial"), function ()
+      if tk.yesno(_("Abandon Trial"), _("Are you sure you wish to abandon the trial?") ) then
+         srs.obeliskCleanup()
+      end
+   end )
 end
 
 function srs.obeliskExit ()
@@ -134,6 +140,7 @@ function _srs_obelisk_end( _dt, real_dt )
 end
 
 function _srs_obelisk_cleanup ()
+   player.menuButtonUnregister( button )
    if finalfunc then
       finalfunc()
    end
