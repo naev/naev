@@ -12,3 +12,14 @@ pub fn bar(len: usize, message: &'static str) -> ProgressBar {
    bar.set_message(message);
    bar
 }
+
+pub fn spinner(message: &'static str) -> ProgressBar {
+   let bar = ProgressBar::new_spinner();
+   bar.set_style(
+      ProgressStyle::with_template("{spinner} {msg} [{elapsed}]")
+         .unwrap_or_else(|_| ProgressStyle::default_spinner()),
+   );
+   bar.set_message(message);
+   bar.enable_steady_tick(std::time::Duration::from_millis(120));
+   bar
+}

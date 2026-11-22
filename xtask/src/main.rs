@@ -3,8 +3,10 @@ use std::path::{Path, PathBuf};
 use anyhow::{Context, Result, bail};
 use clap::{Parser, Subcommand};
 
+mod archive;
 mod bioship;
 mod data;
+mod dist;
 mod docs;
 mod generated;
 mod i18n;
@@ -33,6 +35,12 @@ struct Cli {
 enum Command {
    /// Generate the derived data files that ship alongside dat/.
    Data,
+   /// Build the source tarball a release ships.
+   Dist {
+      /// Where the tarball is written.
+      #[arg(long)]
+      output: Option<PathBuf>,
+   },
    /// Refresh POTFILES.in and the translation template.
    Pot,
    /// Bring every translation catalogue up to date with the template.
@@ -66,6 +74,7 @@ fn main() -> Result<()> {
 
    match cli.command {
       Command::Data => data::generate(&root, &data_dir),
+      Command::Dist { output } => dist::dist(&root, &target, output),
       Command::Pot => i18n::pot(&root, &data_dir, &naev),
       Command::UpdatePo => i18n::update_po(&root, &data_dir, &naev),
       Command::Run(args) => run::run(&root, &target, &data_dir, &args),
