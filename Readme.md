@@ -127,13 +127,16 @@ cd ..
 
 ### 4.2  Compilation
 
-Run:
+For development, run `cargo xtask run`. It builds the game with cargo and
+runs it out of the source tree, as described in Running Naev below. Pass
+`--features paranoid` for the debug checks, `--release` for the release
+profile, or `--debug-rust` for an unoptimized build.
+
+To build with meson for an install or a package, run:
 
 ``` bash
 meson setup builddir .
-cd builddir
-meson compile
-./naev.py
+meson compile -C builddir
 ```
 
 If you need special settings you can run `meson configure` in your build
@@ -151,7 +154,7 @@ directory to see a list of all available options.
 `-Dndata_path=Contents/Resources` `-Dinstaller=true`. Check the `dist`
 folder in your build directory
 
-**For normal development**, try adding:
+**For a debug build**, try adding:
 `--buildtype=debug`. (If your system supports debuginfod, also add
 `set debuginfod enabled on` to a file named `.gdbinit` in your home
 directory!)
@@ -163,11 +166,19 @@ Check out the compilation page in our
 
 ### 4.3  Running Naev
 
-You can run Naev directly from the git repository using the `naev.py`
-script which will be generated in the build directory. This script will
-automatically set up all the data paths for running Naev. Make sure the
-art assets are checked out and up to date as mentioned in the Updating Art
-Assets section below.
+You can run Naev directly from the git repository with `cargo xtask run`,
+which builds the game and its derived data and sets up all the data paths.
+It runs the game under gdb or lldb if either is installed; pass
+`--debugger none` for neither. Make sure the art assets are checked out
+and up to date as mentioned in the Updating Art Assets section below.
+
+To debug under valgrind, start `cargo xtask valgrind --server` in one
+terminal, then attach gdb from another with `cargo xtask run --valgrind`.
+Give both the same build flags so gdb reads the binary valgrind runs. The
+game's output appears in the server's terminal. To see it beside gdb, run
+`tty` in the gdb terminal and start the server with
+`cargo xtask valgrind --server > /dev/pts/N 2>&1`, where `/dev/pts/N` is
+what `tty` printed.
 
 ### 4.4  Installation
 

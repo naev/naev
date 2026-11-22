@@ -13,6 +13,7 @@ mod i18n;
 mod metadata;
 mod progress;
 mod rule;
+mod run;
 mod version;
 
 #[derive(Parser)]
@@ -34,6 +35,10 @@ enum Command {
    Pot,
    /// Bring every translation catalogue up to date with the template.
    UpdatePo,
+   /// Build and run the game out of the source tree.
+   Run(run::RunArgs),
+   /// Build and run the game under valgrind.
+   Valgrind(run::ValgrindArgs),
 }
 
 fn main() -> Result<()> {
@@ -47,6 +52,8 @@ fn main() -> Result<()> {
       Command::Data => data::generate(&root, &data_dir),
       Command::Pot => i18n::pot(&root, &data_dir, &naev),
       Command::UpdatePo => i18n::update_po(&root, &data_dir, &naev),
+      Command::Run(args) => run::run(&root, &target, &data_dir, &args),
+      Command::Valgrind(args) => run::valgrind(&root, &target, &data_dir, &args),
    }
 }
 
