@@ -42,8 +42,6 @@ pub fn probe() -> Deps {
       }
    }
 
-   // glpk ships no pkg-config file.
-   link_lib("glpk");
    link_blas();
    link_platform();
 

@@ -17,9 +17,12 @@ struct Build {
    include: Vec<PathBuf>,
    #[serde(default)]
    defines: Vec<String>,
+   std: Option<String>,
+   // What the engine and bindgen see, defaulting to all of include.
+   export: Option<Vec<PathBuf>>,
 }
 
-/// Builds every library under vendor/ and returns their include dirs.
+/// Builds every library under vendor/ and returns the include dirs they export.
 pub fn build_all(crate_dir: &Path) -> Vec<PathBuf> {
    let vendor = crate_dir.join("vendor");
    println!("cargo:rerun-if-changed={}", vendor.display());
@@ -39,17 +42,20 @@ fn build(dir: &Path) -> Vec<PathBuf> {
       toml::from_str(&text).unwrap_or_else(|err| panic!("parsing {}: {err}", path.display()));
    let build = manifest.build;
 
-   let include: Vec<PathBuf> = build.include.iter().map(|rel| dir.join(rel)).collect();
+   let in_dir = |dirs: &[PathBuf]| dirs.iter().map(|rel| dir.join(rel)).collect::<Vec<_>>();
    let mut cc = cc::Build::new();
    // Upstream's code, so its warnings aren't naev's to fix.
    cc.warnings(false);
    for define in &build.defines {
       cc.define(define, None);
    }
-   cc.includes(&include)
+   if let Some(std) = &build.std {
+      cc.std(std);
+   }
+   cc.includes(in_dir(&build.include))
       .files(compiled_sources(dir, &build.sources))
       .compile(&build.library);
-   include
+   in_dir(build.export.as_deref().unwrap_or(&build.include))
 }
 
 /// Every .c file in the source dirs except those another file includes, which build as part of it.
