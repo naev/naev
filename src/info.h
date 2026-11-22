@@ -19,6 +19,7 @@
  * Menu opening routines.
  */
 void menu_info( int window );
+void menu_info_close( void );
 void info_update( void );
 
 /* Custom buttons. */

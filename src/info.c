@@ -331,6 +331,12 @@ void menu_info( int window )
       window = info_lastTab;
    window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 6, window ) );
 }
+
+void menu_info_close( void )
+{
+   info_close( 0, NULL );
+}
+
 /**
  * @brief Closes the information menu.
  *    @param str Unused.

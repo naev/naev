@@ -66,8 +66,9 @@ static int naevL_trigger( lua_State *L );
 static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
 static int naevL_menuInfo( lua_State *L );
-static int naevL_menuInfo( lua_State *L );
+static int naevL_menuInfoClose( lua_State *L );
 static int naevL_menuSmall( lua_State *L );
+static int naevL_menuSmallClose( lua_State *L );
 static int naevL_mapOpen( lua_State *L );
 static int naevL_isPaused( lua_State *L );
 static int naevL_pause( lua_State *L );
@@ -114,7 +115,9 @@ static const luaL_Reg naev_methods[] = {
    { "claimTest", naevL_claimTest },
    { "plugins", naevL_plugins },
    { "menuInfo", naevL_menuInfo },
+   { "menuInfoClose", naevL_menuInfoClose },
    { "menuSmall", naevL_menuSmall },
+   { "menuSmallClose", naevL_menuSmallClose },
    { "mapOpen", naevL_mapOpen },
    { "isPaused", naevL_isPaused },
    { "pause", naevL_pause },
@@ -849,6 +852,18 @@ static int naevL_menuInfo( lua_State *L )
 }
 
 /**
+ * @brief Closes the info menu if it is open.
+ *
+ * @luafunc menuInfoClose
+ */
+static int naevL_menuInfoClose( lua_State *L )
+{
+   (void)L;
+   menu_info_close();
+   return 0;
+}
+
+/**
  * @brief Opens the small menu window.
  *
  * @usage naev.menuSmall()
@@ -863,6 +878,18 @@ static int naevL_menuSmall( lua_State *L )
 {
    menu_small( 0, lua_toboolean( L, 1 ), lua_toboolean( L, 2 ),
                lua_toboolean( L, 3 ) );
+   return 0;
+}
+
+/**
+ * @brief Closes the small menu if it is open.
+ *
+ * @luafunc menuSmallClose
+ */
+static int naevL_menuSmallClose( lua_State *L )
+{
+   (void)L;
+   menu_small_close();
    return 0;
 }
 

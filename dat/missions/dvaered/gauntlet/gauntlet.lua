@@ -52,6 +52,13 @@ function land ()
    misn.finish(true)
 end
 
+local function abandon ()
+   if tk.yesno( _("Abandon Gauntlet"), _("Are you sure you want to abandon the Crimson Gauntlet?") ) then
+      naev.menuSmallClose()
+      hook.safe("leave_the_ring")
+   end
+end
+
 function approach_gauntlet ()
    mem.gtype, mem.gopt, mem.gsubtype, gmods = gauntlet_gui.run()
    if mem.gtype == nil then
@@ -87,6 +94,9 @@ function approach_gauntlet ()
    misn.osdCreate( _("Crimson Gauntlet"),
          { _("Defeat all the other adversaries!") } )
 
+   -- Register button
+   mem.button = player.menuButtonRegister(_("Abandon Gauntlet"), abandon )
+
    hook.load( "loaded" )
    hook.safe("enter_the_ring")
    player.takeoff() -- take off and enter the ring!
@@ -100,6 +110,8 @@ function loaded ()
 end
 function abort ()
    if system.cur() == gauntletsys then
+      -- Abort is only triggered from the info menu atm
+      naev.menuInfoClose()
       hook.safe("leave_the_ring")
       return false, true -- Cancel abort and close window
    end
@@ -133,6 +145,7 @@ function enter_the_ring ()
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
+   player.menuButtonUnregister( mem.button )
    gauntlet.leave_the_ring()
    hook.land("land")
    player.land( spob.get("Totoran") )
