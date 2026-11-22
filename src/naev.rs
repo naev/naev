@@ -33,6 +33,7 @@ mod pilot;
 mod player;
 mod plugin;
 mod rng;
+mod safelanes;
 mod ship;
 mod slots;
 mod spfx;

@@ -3180,6 +3180,7 @@ dependencies = [
  "helpers",
  "image",
  "itertools 0.15.0",
+ "matrixmultiply",
  "mint",
  "mlua",
  "naev_core",

@@ -143,7 +143,6 @@ if buildExec.disabled() == false
    # naevc's build script reads these.
    cargo_env.set( 'NAEV_BUILD_VERSION', version )
    cargo_env.set( 'NAEV_PKGDATADIR', get_option('prefix') / ndata_path )
-   cargo_env.set( 'NAEV_BLAS', get_option('blas') )
 
    cargo_options = [ '--manifest-path', cargo_toml ]
    cargo_options += [ '--profile', rust_target ]

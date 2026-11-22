@@ -211,6 +211,7 @@ sdl3 = { workspace = true }
 renderer = { workspace = true }
 glow = { workspace = true }
 nalgebra = { workspace = true }
+matrixmultiply = "0.3"
 bytemuck = { workspace = true }
 encase = { workspace = true }
 roxmltree = { workspace = true }

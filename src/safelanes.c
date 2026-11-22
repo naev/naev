@@ -13,24 +13,6 @@
 
 #include <cholmod.h>
 
-#if HAVE_OPENBLAS_CBLAS_H
-#include <openblas/cblas.h>
-#elif HAVE_CBLAS_OPENBLAS_H
-#include <cblas_openblas.h>
-#elif HAVE_CBLAS_HYPHEN_OPENBLAS_H
-#include <cblas-openblas.h>
-#elif HAVE_ACCELERATE_ACCELERATE_H
-#include <Accelerate/Accelerate.h>
-#elif HAVE_CBLAS_H
-#include <cblas.h>
-#elif HAVE_F77BLAS_H
-#include <f77blas.h>
-#define I_LOVE_FORTRAN 1
-#elif HAVE_OPENBLAS_F77BLAS_H
-#include <openblas/f77blas.h>
-#define I_LOVE_FORTRAN 1
-#endif
-
 #include <SDL3/SDL_timer.h>
 
 #include "naev.h"
@@ -186,6 +168,12 @@ static cholmod_dense *ncholmod_ddmult( cholmod_dense *A, int transA,
                                        cholmod_dense *B );
 static double safelanes_row_dot_row( cholmod_dense *A, cholmod_dense *B, int i,
                                      int j );
+
+/* Exported from Rust. */
+void safelanes_dgemm( size_t m, size_t k, size_t n, const double *a,
+                      ptrdiff_t rsa, ptrdiff_t csa, const double *b,
+                      ptrdiff_t rsb, ptrdiff_t csb, double *c, ptrdiff_t rsc,
+                      ptrdiff_t csc );
 
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
@@ -1121,23 +1109,13 @@ static cholmod_dense *safelanes_sliceByPresence( const cholmod_dense *m,
 static cholmod_dense *ncholmod_ddmult( cholmod_dense *A, int transA,
                                        cholmod_dense *B )
 {
-#if I_LOVE_FORTRAN
-   blasint M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol,
-           N = B->ncol, lda = A->d, ldb = B->d, ldc = M;
-   assert( K == (blasint)B->nrow );
-   cholmod_dense *out   = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
-   double         alpha = 1., beta = 0.;
-   BLASFUNC( dgemm )
-   ( transA ? "T" : "N", "N", &M, &N, &K, &alpha, A->x, &lda, B->x, &ldb, &beta,
-     out->x, &ldc );
-#else  /* I_LOVE_FORTRAN */
    size_t M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol,
           N = B->ncol;
    assert( K == B->nrow );
    cholmod_dense *out = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
-   cblas_dgemm( CblasColMajor, transA ? CblasTrans : CblasNoTrans, CblasNoTrans,
-                M, N, K, 1, A->x, A->d, B->x, B->d, 0, out->x, out->d );
-#endif /* I_LOVE_FORTRAN */
+   /* CHOLMOD is column-major, with d as the leading dimension. */
+   safelanes_dgemm( M, K, N, A->x, transA ? A->d : 1, transA ? 1 : A->d, B->x,
+                    1, B->d, out->x, 1, out->d );
    return out;
 }
 
@@ -1146,13 +1124,10 @@ static cholmod_dense *ncholmod_ddmult( cholmod_dense *A, int transA,
 static double safelanes_row_dot_row( cholmod_dense *A, cholmod_dense *B, int i,
                                      int j )
 {
+   const double *a = (double *)A->x + i, *b = (double *)B->x + j;
+   double        dot = 0.;
    assert( A->ncol == B->ncol );
-#if I_LOVE_FORTRAN
-   blasint N = A->ncol, incA = A->d, incB = B->d;
-   return BLASFUNC( ddot )( &N, (double *)A->x + i, &incA, (double *)B->x + j,
-                            &incB );
-#else  /* I_LOVE_FORTRAN */
-   return cblas_ddot( A->ncol, (double *)A->x + i, A->d, (double *)B->x + j,
-                      B->d );
-#endif /* I_LOVE_FORTRAN */
+   for ( size_t k = 0; k < A->ncol; k++ )
+      dot += a[k * A->d] * b[k * B->d];
+   return dot;
 }

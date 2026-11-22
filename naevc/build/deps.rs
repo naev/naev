@@ -42,7 +42,6 @@ pub fn probe() -> Deps {
       }
    }
 
-   link_blas();
    link_platform();
 
    let have_tracy = probe_tracy(&mut include_paths);
@@ -51,20 +50,6 @@ pub fn probe() -> Deps {
       include_paths,
       have_luajit,
       have_tracy,
-   }
-}
-
-fn link_blas() {
-   let blas = std::env::var("NAEV_BLAS").unwrap_or_else(|_| "openblas".to_string());
-   println!("cargo:rerun-if-env-changed=NAEV_BLAS");
-
-   if blas == "Accelerate" {
-      println!("cargo:rustc-link-lib=framework=Accelerate");
-   } else {
-      if !has_library(&blas) {
-         missing(&blas, "a BLAS implementation, or set NAEV_BLAS");
-      }
-      link_lib(&blas);
    }
 }
 

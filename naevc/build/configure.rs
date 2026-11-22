@@ -64,22 +64,6 @@ pub fn write_config_h(out_dir: &Path, cfg: &Config, deps: &Deps) -> std::path::P
             "#define _GNU_SOURCE\n#include <fenv.h>\nint main(void){ (void)feenableexcept; return 0; }",
          ),
       ),
-      (
-         "HAVE_ACCELERATE_ACCELERATE_H",
-         has_cblas(deps, "Accelerate/Accelerate.h"),
-      ),
-      ("HAVE_CBLAS_H", has_cblas(deps, "cblas.h")),
-      ("HAVE_CBLAS_OPENBLAS_H", has_cblas(deps, "cblas_openblas.h")),
-      (
-         "HAVE_CBLAS_HYPHEN_OPENBLAS_H",
-         has_cblas(deps, "cblas-openblas.h"),
-      ),
-      ("HAVE_OPENBLAS_CBLAS_H", has_cblas(deps, "openblas/cblas.h")),
-      ("HAVE_F77BLAS_H", has_header(deps, "f77blas.h")),
-      (
-         "HAVE_OPENBLAS_F77BLAS_H",
-         has_header(deps, "openblas/f77blas.h"),
-      ),
    ];
 
    let mut out =
@@ -170,18 +154,6 @@ fn has_symbol(deps: &Deps, header: &str, symbol: &str) -> bool {
    )
 }
 
-/// Compile-only, so this checks the header declares cblas_ddot, not that a library provides it.
-fn has_cblas(deps: &Deps, header: &str) -> bool {
-   compiles(
-      deps,
-      &probe_name(header),
-      &format!(
-         "#include <{header}>\n\
-          int main(void){{ double x = 0; return (int)cblas_ddot( 1, &x, 1, &x, 1 ); }}"
-      ),
-   )
-}
-
 /// Compiles without linking. A failing probe is a normal answer, so cargo stays quiet.
 fn compiles(deps: &Deps, name: &str, code: &str) -> bool {
    let out_dir = std::path::PathBuf::from(env("OUT_DIR")).join("probe");
@@ -205,7 +177,7 @@ fn compiles(deps: &Deps, name: &str, code: &str) -> bool {
       .is_ok()
 }
 
-/// Underscores are doubled so `cblas-openblas.h` and `cblas_openblas.h` get distinct names.
+/// Underscores are doubled so `a-b.h` and `a_b.h` get distinct names.
 fn probe_name(subject: &str) -> String {
    let mut cleaned = String::with_capacity(subject.len() + 2);
    for c in subject.chars() {
