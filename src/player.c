@@ -893,6 +893,7 @@ void player_cleanup( void )
 
    /* Clear up info buttons. */
    info_buttonClear();
+   menu_small_buttonClear();
 
    array_free( player_outfits );
    player_outfits = NULL;

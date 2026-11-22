@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include <SDL3/SDL.h>
+
 /*
  * Menu status.
  */
@@ -29,3 +31,7 @@ void menu_small_close( void );
 
 /* Misc. */
 void menu_main_resize( void );
+int  menu_small_buttonRegister( const char *caption, int priority,
+                                SDL_Keycode key );
+int  menu_small_buttonUnregister( int id );
+void menu_small_buttonClear( void );

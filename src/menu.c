@@ -68,6 +68,18 @@ static glTexture *main_naevLogo        = NULL; /**< Naev Logo texture. */
 static int        menu_small_allowsave = 1;    /** Can save with small menu. */
 extern int        save_loaded;                 /**< From save.c */
 
+typedef struct MenuButton {
+   int   id;
+   char *caption;
+   char *button;
+   int   priority;
+   // Lua stuff
+   const nlua_env *env;
+   int             func;
+   SDL_Keycode     key;
+} MenuButton;
+static MenuButton *menu_buttons = NULL;
+
 /*
  * prototypes
  */
@@ -98,6 +110,105 @@ static void menu_extras_close( unsigned int wid, const char *str );
 static void menu_options_button( unsigned int wid, const char *str );
 /* plugin manager. */
 static void menu_plugin_manager( unsigned int wid, const char *str );
+
+static int sort_buttons( const void *p1, const void *p2 )
+{
+   const MenuButton *b1 = p1;
+   const MenuButton *b2 = p2;
+   if ( b1->priority < b2->priority )
+      return -1;
+   else if ( b1->priority > b2->priority )
+      return +1;
+   return strcmp( b1->caption, b2->caption );
+}
+
+static void menu_button_free( MenuButton *btn )
+{
+   free( btn->caption );
+   free( btn->button );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, btn->func );
+}
+
+static void menu_small_regen( void )
+{
+   if ( menu_isOpen( MENU_SMALL ) ) {
+      menu_small_close();
+      // TODO handle info / options
+      menu_small( 0, 1, 1, menu_small_allowsave );
+   }
+}
+
+int menu_small_buttonRegister( const char *caption, int priority,
+                               SDL_Keycode key )
+{
+   static int  button_idgen = 0;
+   int         id;
+   MenuButton *btn;
+
+   if ( menu_buttons == NULL )
+      menu_buttons = array_create( MenuButton );
+
+   btn          = &array_grow( &menu_buttons );
+   btn->id      = ++button_idgen;
+   btn->caption = strdup( caption );
+   SDL_asprintf( &btn->button, "btnExtra::%s", caption );
+   btn->priority = priority;
+   btn->env      = __NLUA_CURENV;
+   btn->func     = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   btn->key      = key;
+
+   id = btn->id;
+   qsort( menu_buttons, array_size( menu_buttons ), sizeof( MenuButton ),
+          sort_buttons );
+
+   menu_small_regen();
+   return id;
+}
+
+int menu_small_buttonUnregister( int id )
+{
+   for ( int i = 0; i < array_size( menu_buttons ); i++ ) {
+      MenuButton *btn = &menu_buttons[i];
+      if ( btn->id != id )
+         continue;
+      menu_button_free( btn );
+      array_erase( &menu_buttons, btn, btn + 1 );
+
+      menu_small_regen();
+      return 0;
+   }
+   return -1;
+}
+
+void menu_small_buttonClear( void )
+{
+   for ( int i = 0; i < array_size( menu_buttons ); i++ ) {
+      MenuButton *btn = &menu_buttons[i];
+      menu_button_free( btn );
+   }
+   array_free( menu_buttons );
+   menu_buttons = NULL;
+   menu_small_regen();
+}
+
+static void menu_small_buttonClick( unsigned int wid, const char *str )
+{
+   (void)wid;
+   for ( int i = 0; i < array_size( menu_buttons ); i++ ) {
+      MenuButton *btn = &menu_buttons[i];
+      if ( strcmp( btn->button, str ) != 0 )
+         continue;
+
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, btn->func );
+      if ( nlua_pcall( btn->env, 0, 0 ) ) {
+         WARN( _( "Failure to run info button with id '%d':\n%s" ), btn->id,
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
+      }
+      land_needsTakeoff( 1 ); /* Script said so? */
+      return;
+   }
+}
 
 /**
  * Background system for the menu.
@@ -468,12 +579,21 @@ void menu_small( int docheck, int info, int options, int allowsave )
    can_save             = allowsave && land_canSave();
    menu_small_allowsave = allowsave;
 
-   h   = MENU_HEIGHT - ( BUTTON_HEIGHT + 20 ) * ( !info + !options );
+   h   = MENU_HEIGHT + ( BUTTON_HEIGHT + 20 ) *
+                          ( array_size( menu_buttons ) - !info - !options );
    y   = 20 + ( BUTTON_HEIGHT + 20 ) * ( 2 + !!info + !!options );
    wid = window_create( "wdwMenuSmall", _( "Menu" ), -1, -1, MENU_WIDTH,
                         h + BUTTON_HEIGHT + 20 );
 
    window_setCancel( wid, menu_small_resume );
+
+   // Add custom buttons at the top
+   for ( int i = 0; i < array_size( menu_buttons ); i++ ) {
+      const MenuButton *btn = &menu_buttons[i];
+      window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, btn->button,
+                           btn->caption, menu_small_buttonClick, btn->key );
+      y -= BUTTON_HEIGHT + 20;
+   }
 
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnResume",
                         _( "Resume" ), menu_small_resume, SDLK_R );

@@ -166,6 +166,8 @@ static int playerL_chapter( lua_State *L );
 static int playerL_chapterSet( lua_State *L );
 static int playerL_infoButtonRegister( lua_State *L );
 static int playerL_infoButtonUnregister( lua_State *L );
+static int playerL_menuButtonRegister( lua_State *L );
+static int playerL_menuButtonUnregister( lua_State *L );
 static int playerL_canDiscover( lua_State *L );
 static int playerL_save( lua_State *L );
 static int playerL_saveBackup( lua_State *L );
@@ -265,6 +267,8 @@ static const luaL_Reg playerL_methods[] = {
    { "chapterSet", playerL_chapterSet },
    { "infoButtonRegister", playerL_infoButtonRegister },
    { "infoButtonUnregister", playerL_infoButtonUnregister },
+   { "menuButtonRegister", playerL_menuButtonRegister },
+   { "menuButtonUnregister", playerL_menuButtonUnregister },
    { "canDiscover", playerL_canDiscover },
    { "save", playerL_save },
    { "saveBackup", playerL_saveBackup },
@@ -2762,6 +2766,47 @@ static int playerL_infoButtonUnregister( lua_State *L )
    int ret = info_buttonUnregister( id );
    if ( ret != 0 )
       NLUA_WARN( L, _( "Failed to unregister info button with id '%d'!" ), id );
+   return 0;
+}
+
+/**
+ * @brief Registers a button in the smal menu.
+ *
+ *    @luatparam string caption Caption of the button.
+ *    @luatparam function func Function to run when clicked.
+ *    @luatparam[opt] number priority Button priority, lower is more important.
+ *    @luatparam[opt] string key Hotkey for using the button without it being
+ * focused.
+ *    @luatreturn number ID of the small menu window button for use with
+ * `player.menuButtonUnregister`.
+ * @luafunc menuButtonRegister
+ */
+static int playerL_menuButtonRegister( lua_State *L )
+{
+   int         id;
+   const char *caption  = luaL_checkstring( L, 1 );
+   int         priority = luaL_optinteger( L, 3, 5 );
+   const char *key      = luaL_optstring( L, 4, "" );
+   luaL_checktype( L, 2, LUA_TFUNCTION );
+   lua_pushvalue( L, 2 );
+   id =
+      menu_small_buttonRegister( caption, priority, SDL_GetKeyFromName( key ) );
+   lua_pushinteger( L, id );
+   return 1;
+}
+
+/**
+ * @brief Unregisters a button in the menu window.
+ *
+ *    @luatparam number ID of the button to unregister.
+ * @luafunc menuButtonUnregister
+ */
+static int playerL_menuButtonUnregister( lua_State *L )
+{
+   int id  = luaL_checkinteger( L, 1 );
+   int ret = menu_small_buttonUnregister( id );
+   if ( ret != 0 )
+      NLUA_WARN( L, _( "Failed to unregister menu button with id '%d'!" ), id );
    return 0;
 }
 
