@@ -1594,7 +1594,7 @@ impl UserData for LuaAsteroid {
        * @luafunc setArmour
        */
       methods.add_method("setArmour", |_, this, armour: f64| -> mlua::Result<()> {
-         Ok(this.with_mut(|a| {
+         this.with_mut(|a| {
             if a.state != State::Fg {
                return Err(mlua::Error::RuntimeError(
                   "trying to set armour of asteroid not in foreground".to_string(),
@@ -1605,7 +1605,7 @@ impl UserData for LuaAsteroid {
                a.explode(-1, 0.);
             }
             Ok(())
-         })??)
+         })?
       });
 
       /*@
