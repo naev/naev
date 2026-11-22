@@ -581,7 +581,8 @@ void menu_small( int docheck, int info, int options, int allowsave )
 
    h   = MENU_HEIGHT + ( BUTTON_HEIGHT + 20 ) *
                           ( array_size( menu_buttons ) - !info - !options );
-   y   = 20 + ( BUTTON_HEIGHT + 20 ) * ( 2 + !!info + !!options );
+   y   = 20 + ( BUTTON_HEIGHT + 20 ) *
+                 ( 2 + array_size( menu_buttons ) + !!info + !!options );
    wid = window_create( "wdwMenuSmall", _( "Menu" ), -1, -1, MENU_WIDTH,
                         h + BUTTON_HEIGHT + 20 );
 
