@@ -33,7 +33,7 @@ impl Tool {
    }
 }
 
-#[derive(Args, Debug)]
+#[derive(Args, Clone, Debug)]
 pub struct BuildArgs {
    /// Build the release profile, which drops the debug checks. The default is release-with-debug.
    #[arg(long, conflicts_with = "debug_rust")]

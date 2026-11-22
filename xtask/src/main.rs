@@ -13,6 +13,7 @@ mod i18n;
 mod install;
 #[path = "../../extras/metadata.rs"]
 mod metadata;
+mod package;
 mod progress;
 mod rule;
 mod run;
@@ -50,6 +51,8 @@ enum Command {
    /// Install the game.
    #[command(after_help = install::defaults_help())]
    Install(install::InstallArgs),
+   /// Build the release packages.
+   Package(package::PackageArgs),
    /// Build the documentation.
    #[command(after_help = docs::defaults_help())]
    Docs {
@@ -78,6 +81,7 @@ fn main() -> Result<()> {
       Command::Run(args) => run::run(&root, &target, &data_dir, &args),
       Command::Valgrind(args) => run::valgrind(&root, &target, &data_dir, &args),
       Command::Install(args) => install::install(&root, &target, &data_dir, &naev, &args),
+      Command::Package(args) => package::package(&root, &target, &data_dir, &naev, &args),
       Command::Docs { kinds, output } => docs::build(&root, &target, &kinds, output),
    }
 }

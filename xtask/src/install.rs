@@ -20,6 +20,9 @@ const SKIP_FILES: &[&str] = &[
 
 const SKIP_DIRS: &[&str] = &["outfits/bioship/templates"];
 
+const DEFAULT_BINDIR: &str = "bin";
+const DEFAULT_DATADIR: &str = "share";
+
 const ICONS: &[(&str, &str)] = &[
    ("16x16", "logo16.png"),
    ("32x32", "logo32.png"),
@@ -61,11 +64,11 @@ pub struct InstallArgs {
    prefix: PathBuf,
 
    /// Binary directory, relative to the prefix.
-   #[arg(long, default_value = "bin")]
+   #[arg(long, default_value = DEFAULT_BINDIR)]
    bindir: PathBuf,
 
    /// Data directory, relative to the prefix.
-   #[arg(long, default_value = "share")]
+   #[arg(long, default_value = DEFAULT_DATADIR)]
    datadir: PathBuf,
 
    /// Where ndata goes, relative to the prefix. Defaults to <datadir>/naev.
@@ -77,6 +80,19 @@ pub struct InstallArgs {
 }
 
 impl InstallArgs {
+   /// The game alone, in the default layout below prefix, staged under destdir if given.
+   pub fn game(destdir: Option<PathBuf>, prefix: PathBuf, build: crate::run::BuildArgs) -> Self {
+      Self {
+         components: vec![Component::Game],
+         destdir,
+         prefix,
+         bindir: DEFAULT_BINDIR.into(),
+         datadir: DEFAULT_DATADIR.into(),
+         ndata_path: None,
+         build,
+      }
+   }
+
    fn ndata(&self) -> PathBuf {
       self
          .ndata_path
@@ -318,7 +334,7 @@ fn copy(from: &Path, to: &Path, mode: u32) -> Result<()> {
 }
 
 #[cfg(unix)]
-fn set_mode(path: &Path, mode: u32) -> Result<()> {
+pub(crate) fn set_mode(path: &Path, mode: u32) -> Result<()> {
    use std::os::unix::fs::PermissionsExt;
 
    fs::set_permissions(path, fs::Permissions::from_mode(mode))
@@ -326,7 +342,7 @@ fn set_mode(path: &Path, mode: u32) -> Result<()> {
 }
 
 #[cfg(not(unix))]
-fn set_mode(_path: &Path, _mode: u32) -> Result<()> {
+pub(crate) fn set_mode(_path: &Path, _mode: u32) -> Result<()> {
    Ok(())
 }
 
