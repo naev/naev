@@ -1,4 +1,5 @@
 use std::{
+   cell::OnceCell,
    path::{Path, PathBuf},
    process::Command,
 };
@@ -19,6 +20,8 @@ pub enum Kind {
    Steam,
    /// The Windows binary and the DLLs it needs, for the Steam depots.
    Windows,
+   /// The Windows installer.
+   Installer,
 }
 
 #[derive(Args, Debug)]
@@ -51,6 +54,8 @@ struct Job<'a> {
    data_dir: &'a Path,
    metadata: &'a Metadata,
    args: &'a PackageArgs,
+   // Both Windows packages are built from one staged install.
+   windows_stage: OnceCell<PathBuf>,
 }
 
 pub fn package(
@@ -66,6 +71,7 @@ pub fn package(
       data_dir,
       metadata,
       args,
+      windows_stage: OnceCell::new(),
    };
    let output = args
       .output
@@ -76,6 +82,7 @@ pub fn package(
          Kind::Appimage => linux::appimage(&job, &output)?,
          Kind::Steam => linux::steam(&job, &output)?,
          Kind::Windows => windows::tarball(&job, &output)?,
+         Kind::Installer => windows::installer(&job, &output)?,
       }
    }
    Ok(())

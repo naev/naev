@@ -353,7 +353,12 @@ pub(crate) fn set_mode(_path: &Path, _mode: u32) -> Result<()> {
    Ok(())
 }
 
-fn copy_tree(from: &Path, to: &Path, skip_files: &[&str], skip_dirs: &[&str]) -> Result<usize> {
+pub(crate) fn copy_tree(
+   from: &Path,
+   to: &Path,
+   skip_files: &[&str],
+   skip_dirs: &[&str],
+) -> Result<usize> {
    let mut copied = 0;
    let mut pending = vec![PathBuf::new()];
    while let Some(rel) = pending.pop() {

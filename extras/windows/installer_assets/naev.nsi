@@ -20,10 +20,8 @@ Unicode true
 
 Var StartMenuFolder
 
-!define NAME "Naev"
+; VERSION, NAME, PUBLISHER and URL come from Cargo.toml, passed in by xtask package.
 !define PACKAGE "${NAME}"
-!define NAEV_DEV "Naev Team"
-!define NAEV_URL "https://naev.org/"
 
 !define UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall"
 
@@ -39,11 +37,11 @@ ShowUninstDetails show
 ; This is problematic for nightlies, and it's really just used for some extra version metadata.
 ;VIProductVersion "${VERSION}.0"
 ;VIAddVersionKey "ProductName" "${PACKAGE}"
-;VIAddVersionKey "CompanyName" "${NAEV_DEV}"
+;VIAddVersionKey "CompanyName" "${PUBLISHER}"
 ;VIAddVersionKey "ProductVersion" "${VERSION}"
 ;VIAddVersionKey "FileVersion" "${VERSION}"
 ;VIAddVersionKey "FileDescription" "${PACKAGE}"
-;VIAddVersionKey "LegalCopyright" "${NAEV_DEV}"
+;VIAddVersionKey "LegalCopyright" "${PUBLISHER}"
 
 ;--------------------------------
 ;Interface Settings
@@ -148,9 +146,9 @@ Section "-PostInstall"
       WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayName" "${PACKAGE} (remove only)"
       WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "UninstallString" '"$INSTDIR\uninstall.exe"'
       WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
-      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "Publisher" "${NAEV_DEV}"
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "Publisher" "${PUBLISHER}"
       WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayVersion" "${VERSION}"
-      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "HelpLink" "${NAEV_URL}"
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "HelpLink" "${URL}"
       WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoModify" 1
       WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoRepair" 1
       ;Create Uninstaller
@@ -183,7 +181,7 @@ Function .onInit
    ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "UninstallString"
    ${Unless} ${Errors}
       ;If we get here we're already installed
-      MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?" IDNO skip
+      MessageBox MB_YESNO|MB_ICONEXCLAMATION "${NAME} is already installed! Would you like to remove the old install first?" IDNO skip
       ExecWait $R0 $0
       ${Unless} $0 = 0 ;note: = not ==
          MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"

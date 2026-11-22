@@ -8,7 +8,7 @@ use std::{
 use anyhow::{Context, Result, bail};
 use goblin::pe::PE;
 
-use super::Job;
+use super::{Job, run};
 use crate::{
    install::InstallArgs,
    run::{BuildArgs, Platform},
@@ -137,8 +137,53 @@ pub(super) fn tarball(job: &Job, output: &Path) -> Result<()> {
    Ok(())
 }
 
-/// Installs the game flat into a fresh directory, with the DLLs it needs beside it.
+/// The NSIS installer, with the project metadata it shows passed in from Cargo.toml.
+pub(super) fn installer(job: &Job, output: &Path) -> Result<()> {
+   let stage = stage(job)?;
+   let root = job.root;
+
+   // naev.nsi expects its assets, the licences and the icon beside it, and the game under bin/.
+   let work = job.target.join("nsis");
+   if work.exists() {
+      fs::remove_dir_all(&work).with_context(|| format!("clearing {}", work.display()))?;
+   }
+   crate::install::copy_tree(
+      &root.join("extras/windows/installer_assets"),
+      &work,
+      &[],
+      &[],
+   )?;
+   for (from, to) in [
+      (root.join("gpl.txt"), "legal/gpl-3.0.txt"),
+      (root.join("LICENSE"), "legal/naev-license.txt"),
+      (stage.join("logo.ico"), "logo.ico"),
+   ] {
+      fs::copy(&from, work.join(to)).with_context(|| format!("copying {}", from.display()))?;
+   }
+   crate::install::copy_tree(&stage, &work.join("bin"), &[], &[])?;
+
+   let out = output.join("naev-win64");
+   fs::create_dir_all(&out).with_context(|| format!("creating {}", out.display()))?;
+   let exe = out.join("naev-installer.exe");
+   let metadata = job.metadata;
+   let mut makensis = Command::new("makensis");
+   makensis
+      .arg(format!("-XOutFile {}", exe.display()))
+      .arg(format!("-DVERSION={}", crate::version::current(root)?))
+      .arg(format!("-DNAME={}", metadata.name))
+      .arg(format!("-DPUBLISHER={}", metadata.copyright_holder))
+      .arg(format!("-DURL={}", metadata.homepage))
+      .arg(work.join("naev.nsi"));
+   run(makensis, "makensis")?;
+   println!("wrote {}", exe.display());
+   Ok(())
+}
+
+/// Installs the game flat into a fresh directory, with the DLLs it needs beside it, once per run.
 fn stage(job: &Job) -> Result<PathBuf> {
+   if let Some(stage) = job.windows_stage.get() {
+      return Ok(stage.clone());
+   }
    let build = &job.args.build;
    if build.platform() != Platform::Windows {
       bail!("the Windows packages need a Windows build; pass --target");
@@ -157,7 +202,7 @@ fn stage(job: &Job) -> Result<PathBuf> {
       fs::copy(dll, stage.join(name)).with_context(|| format!("copying {}", dll.display()))?;
    }
    println!("bundled {} DLLs, all on {runtime}", dlls.len());
-   Ok(stage)
+   Ok(job.windows_stage.get_or_init(|| stage).clone())
 }
 
 /// Every DLL the executable loads that Windows doesn't provide, and the C runtime they share.
