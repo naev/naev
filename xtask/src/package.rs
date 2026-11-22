@@ -14,6 +14,8 @@ mod linux;
 pub enum Kind {
    /// The Linux AppImage and its zsync file.
    Appimage,
+   /// The Linux binary, data and libraries for the Steam depots.
+   Steam,
 }
 
 #[derive(Args, Debug)]
@@ -69,6 +71,7 @@ pub fn package(
    for kind in &args.kinds {
       match kind {
          Kind::Appimage => linux::appimage(&job, &output)?,
+         Kind::Steam => linux::steam(&job, &output)?,
       }
    }
    Ok(())

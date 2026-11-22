@@ -1,4 +1,5 @@
 use std::{
+   collections::HashMap,
    fs,
    path::{Path, PathBuf},
    process::Command,
@@ -45,6 +46,9 @@ const APPIMAGETOOL: Tool = Tool {
       ),
    ],
 };
+
+// Steam's runtime provides everything else the game links.
+const STEAM_LIBS: &[&str] = &["libopenal.so.1", "libluajit-5.1.so.2"];
 
 /// Installs into an AppDir under /usr and packs it with linuxdeploy and appimagetool.
 pub(super) fn appimage(job: &Job, output: &Path) -> Result<()> {
@@ -116,6 +120,76 @@ pub(super) fn appimage(job: &Job, output: &Path) -> Result<()> {
 
    println!("wrote {}", image.display());
    Ok(())
+}
+
+/// The binary, the libraries Steam's runtime lacks and the data, each in its own handoff directory.
+pub(super) fn steam(job: &Job, output: &Path) -> Result<()> {
+   if job.args.build.platform() != Platform::FreeDesktop {
+      bail!("the Steam Linux depot only packages a Linux build");
+   }
+
+   let stage = job.target.join("steam");
+   if stage.exists() {
+      fs::remove_dir_all(&stage).with_context(|| format!("clearing {}", stage.display()))?;
+   }
+   let install = InstallArgs::game(Some(stage.clone()), "/usr".into(), job.args.build.clone());
+   crate::install::install(job.root, job.target, job.data_dir, job.metadata, &install)?;
+   let binary = stage.join("usr/bin/naev");
+
+   let bin_dir = output.join("naev-steamruntime");
+   fs::create_dir_all(&bin_dir).with_context(|| format!("creating {}", bin_dir.display()))?;
+   let shipped = bin_dir.join("naev.x64");
+   fs::copy(&binary, &shipped).with_context(|| format!("copying {}", binary.display()))?;
+   crate::install::set_mode(&shipped, 0o755)?;
+
+   let libs_dir = output.join("naev-linux-libs");
+   fs::create_dir_all(&libs_dir).with_context(|| format!("creating {}", libs_dir.display()))?;
+   let linked = linked(&binary)?;
+   for name in STEAM_LIBS {
+      let path = linked
+         .get(*name)
+         .with_context(|| format!("{} doesn't link {name}", binary.display()))?;
+      let copied = libs_dir.join(name);
+      fs::copy(path, &copied).with_context(|| format!("copying {}", path.display()))?;
+      // As linuxdeploy ships them. The runtime image builds OpenAL with debug info.
+      let mut strip = Command::new("strip");
+      strip.arg(&copied);
+      run(strip, "strip")?;
+   }
+
+   let ndata_dir = output.join("naev-ndata");
+   fs::create_dir_all(&ndata_dir).with_context(|| format!("creating {}", ndata_dir.display()))?;
+   let ndata = ndata_dir.join("naev-ndata.tar.xz");
+   crate::archive::tar_xz(&ndata, &stage.join("usr/share/naev"), &["dat"])?;
+
+   println!(
+      "wrote {}, {} and {}",
+      shipped.display(),
+      libs_dir.display(),
+      ndata.display()
+   );
+   Ok(())
+}
+
+/// The shared libraries the binary resolves to, by soname, as ldd reports them.
+fn linked(binary: &Path) -> Result<HashMap<String, PathBuf>> {
+   let out = Command::new("ldd")
+      .arg(binary)
+      .output()
+      .context("failed to run ldd")?;
+   if !out.status.success() {
+      bail!("ldd failed with {}", out.status);
+   }
+   Ok(String::from_utf8_lossy(&out.stdout)
+      .lines()
+      .filter_map(|line| {
+         let (name, rest) = line.trim().split_once(" => ")?;
+         let path = rest.split_whitespace().next()?;
+         path
+            .starts_with('/')
+            .then(|| (name.to_string(), PathBuf::from(path)))
+      })
+      .collect())
 }
 
 /// Downloads and checks a tool the first time it's needed.
