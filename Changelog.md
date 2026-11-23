@@ -2,7 +2,6 @@
 
  ### TODO
 
-   * Allow quick abort for special missions #3106
    * Give some reputation reward for first completion of Gauntlet/Qex Race
      #3110
    * Warnings for unreachable delivery times should take `follow lane` into
@@ -79,6 +78,7 @@
    * Pilot for the baron no longer hassles the player in space, but instead can
      be found at the bar
    * Can open the map while the VN is open
+   * You can now abort special missions such as races
 
  ### Engine
 
