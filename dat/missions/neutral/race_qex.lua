@@ -27,7 +27,7 @@ local goal_times = require 'missions.neutral.race.times_qex'
 local medal_col = {Bronze= '#o', Silver= '#w', Gold= '#y'}
 local metal_display_name = {Bronze=p_('trophy', 'Bronze'), Silver=p_('trophy', 'Silver'), Gold=p_('trophy', 'Gold')}
 
-local elapsed_time, race_done
+local elapsed_time, race_done, button, race_abandoned
 
 local col_next = {0, 1, 1, 0.3}
 local col_past = {1, 0, 1, 0.2}
@@ -261,6 +261,12 @@ function approach_terminal ()
    misn.accept()
    misn.setDesc(_("You're participating in a race!"))
    misn.setReward(_("Endless Riches!"))
+   button = player.menuButtonRegister(_("Abandon Race"), function ()
+      if tk.yesno(_("Abandon Race"), _("Are you sure you wish to abandon the race?")) then
+         race_abandoned = true
+         race_complete()
+      end
+   end )
 
    hook.load( "loaded" ) -- don't load into the race
 
@@ -444,7 +450,9 @@ function race_landed ()
    vn.clear()
    vn.scene()
    vn.transition()
-   if beat_time then
+   if race_abandoned then
+      vn.na(_([[You abandoned the race!"]]))
+   elseif beat_time then
       if nxt then
          vn.na(fmt.f(_('You finished the race in {elapsed} and beat the goal time of {goal} ({metal}) but were {short} over the goal time of {ngoal} ({nmetal}).{imp_str} Congratulations!'), {
             elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
@@ -519,6 +527,7 @@ They hand you one of those fake oversized cheques for the audience, and then a c
    end
 
    vn.run()
+   player.menuButtonUnregister( button )
    misn.finish( beat_time )
 end
 
@@ -557,5 +566,6 @@ function abort ()
    pp:setNoJump(false)
    pp:setNoLand(false)
    player.land( mem.race_spob )
+   player.menuButtonUnregister( button )
    misn.finish()
 end
