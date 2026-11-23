@@ -92,9 +92,14 @@ function srs.obeliskEnter( oblk )
 
    button = player.menuButtonRegister(_("Abandon Trial"), function ()
       if tk.yesno(_("Abandon Trial"), _("Are you sure you wish to abandon the trial?") ) then
-         srs.obeliskCleanup()
+         naev.menuSmallClose()
+         hook.safe("cleanup")
       end
    end )
+end
+
+function cleanup ()
+   srs.obeliskCleanup()
 end
 
 function srs.obeliskExit ()
