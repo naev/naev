@@ -263,6 +263,7 @@ function approach_terminal ()
    misn.setReward(_("Endless Riches!"))
    button = player.menuButtonRegister(_("Abandon Race"), function ()
       if tk.yesno(_("Abandon Race"), _("Are you sure you wish to abandon the race?")) then
+         elapsed_time = math.huge
          race_abandoned = true
          race_complete()
       end
@@ -451,7 +452,7 @@ function race_landed ()
    vn.scene()
    vn.transition()
    if race_abandoned then
-      vn.na(_([[You abandoned the race!"]]))
+      vn.na(_([[You abandoned the race!]]))
    elseif beat_time then
       if nxt then
          vn.na(fmt.f(_('You finished the race in {elapsed} and beat the goal time of {goal} ({metal}) but were {short} over the goal time of {ngoal} ({nmetal}).{imp_str} Congratulations!'), {
