@@ -11,6 +11,7 @@ use crate::metadata::Metadata;
 
 mod linux;
 mod macos;
+mod soundtrack;
 mod windows;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
@@ -27,6 +28,8 @@ pub enum Kind {
    Macos,
    /// The universal macOS app on a disk image.
    Dmg,
+   /// The tagged soundtrack, and its MP3s for the Steam soundtrack depot.
+   Soundtrack,
 }
 
 #[derive(Args, Debug)]
@@ -93,6 +96,7 @@ pub fn package(
          Kind::Installer => windows::installer(&job, &output)?,
          Kind::Macos => macos::zip(&job, &output)?,
          Kind::Dmg => macos::dmg(&job, &output)?,
+         Kind::Soundtrack => soundtrack::soundtrack(&job, &output)?,
       }
    }
    Ok(())

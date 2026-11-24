@@ -11,6 +11,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import mutagen
 
+# The formats src/audio loads music from.
+MUSIC_EXTENSIONS = ('.opus', '.ogg', '.flac', '.wav', '.aac', '.mp3')
+
 
 def yaml_list(path):
    try:
@@ -20,7 +23,7 @@ def yaml_list(path):
       return []
 
 
-def process_song(snd_dir, song, song_licensing, track_number):
+def process_song(snd_dir, song, song_licensing, track_number, organization, album):
    """
    Process a single song:
    - Read the original file.
@@ -29,7 +32,7 @@ def process_song(snd_dir, song, song_licensing, track_number):
    - Return necessary info for zipping and CSV.
    """
    filename = os.path.join(snd_dir, 'music', song['filename'])
-   temp = tempfile.NamedTemporaryFile(delete=False, suffix='.ogg').name
+   temp = tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]).name
 
    # Copy the original file to temp
    with open(filename, 'rb') as inf, open(temp, 'wb') as outf:
@@ -42,12 +45,12 @@ def process_song(snd_dir, song, song_licensing, track_number):
       return None
 
    audio['title'] = song['name']
-   licensing_info = song_licensing.get(song['filename'], {})
+   licensing_info = song_licensing.get(os.path.splitext(song['filename'])[0], {})
    audio['artist'] = licensing_info.get('artist', 'Unknown Artist')
    audio['license'] = licensing_info.get('license', 'Unknown License')
    audio['tracknumber'] = str(track_number).zfill(2)
-   audio['organization'] = 'Naev DevTeam'
-   audio['album'] = 'Naev Soundtrack'
+   audio['organization'] = organization
+   audio['album'] = album
 
    audio.save()
 
@@ -64,7 +67,7 @@ def process_song(snd_dir, song, song_licensing, track_number):
    }
 
 
-def generate_soundtrack(source_dir, output, generate_csv=False, max_workers=None):
+def generate_soundtrack(source_dir, output, organization, album, generate_csv=False, max_workers=None):
    snd_dirs = [os.path.join(source_dir, subdir, 'snd') for subdir in ('dat', 'assets')]
 
    # Load licensing information
@@ -76,13 +79,15 @@ def generate_soundtrack(source_dir, output, generate_csv=False, max_workers=None
             songs = data.get('music', [])
             for song in songs:
                song_clean = re.sub(r' \(http[^)]*\)', '', song)  # Strip parenthetical source info
-               song_licensing[song_clean] = {'artist': name, 'license': license}
+               # Keyed without the extension, since the licence file still names the music as .ogg.
+               song_licensing[os.path.splitext(song_clean)[0]] = {'artist': name, 'license': license}
 
    # Collect all existing songs to check for duplicates and missing songs
    existing_songs = set()
    for snd_dir in snd_dirs:
-      for song_path in glob.glob(os.path.join(snd_dir, 'music', '*.ogg')):
-         existing_songs.add(os.path.basename(song_path))
+      for song_path in glob.glob(os.path.join(snd_dir, 'music', '*')):
+         if song_path.endswith(MUSIC_EXTENSIONS):
+            existing_songs.add(os.path.basename(song_path))
 
    # Collect all songs to process and assign track numbers
    songs_to_process = []
@@ -109,7 +114,7 @@ def generate_soundtrack(source_dir, output, generate_csv=False, max_workers=None
    processed_songs = []
    with ThreadPoolExecutor(max_workers=max_workers) as executor:
       future_to_song = {
-         executor.submit(process_song, snd_dir, song, song_licensing, tn): (snd_dir, song)
+         executor.submit(process_song, snd_dir, song, song_licensing, tn, organization, album): (snd_dir, song)
          for snd_dir, song, tn in songs_to_process
       }
       for future in as_completed(future_to_song):
@@ -157,6 +162,8 @@ if __name__ == "__main__":
    parser.add_argument('--source-dir', default='.', help="Path to Naev's source directory.")
    parser.add_argument('--output', default=None, help="Name of the output file.")
    parser.add_argument('--workers', type=int, default=None, help="Number of parallel workers.")
+   parser.add_argument('--organization', required=True, help="Organization tag, the project's copyright holder.")
+   parser.add_argument('--album', required=True, help="Album tag.")
    args = parser.parse_args()
 
    output = args.output
@@ -179,6 +186,8 @@ if __name__ == "__main__":
    generate_soundtrack(
       source_dir=args.source_dir,
       output=output,
+      organization=args.organization,
+      album=args.album,
       generate_csv=args.csv,
       max_workers=args.workers
    )

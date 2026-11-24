@@ -326,7 +326,9 @@ if (mutagen.found())
          soundtrackpy,
          '--csv', 'yes',
          '--source-dir', meson.project_source_root(),
-         '--output', '@OUTPUT0@'
+         '--output', '@OUTPUT0@',
+         '--organization', copyright_holder,
+         '--album', 'Naev Soundtrack',
       ],
       output: [
          'naev-' + meson.project_version() + '-soundtrack.zip',
