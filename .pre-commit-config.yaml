@@ -22,6 +22,16 @@ repos:
       entry: utils/shlinters/line-endings.sh
       types: [text]
       language: script
+    - id: luacheck
+      name: luacheck
+      entry: utils/nluacheck.py --no-color
+      language: script
+      files: ^dat/.*\.lua$
+    - id: validate-metainfo
+      name: validate metainfo
+      entry: appstreamcli validate --no-net --pedantic
+      language: system
+      files: ^org\.naev\.Naev\.metainfo\.xml$
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
