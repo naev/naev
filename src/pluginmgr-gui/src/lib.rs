@@ -86,6 +86,7 @@ impl std::fmt::Display for DropDownAction {
 #[derive(Debug, Clone)]
 enum Message {
    Startup,
+   StartupRefresh,
    UpdateView(Result<(), LogEntry>),
    Selected(usize),
    Install(Plugin, bool),
@@ -372,9 +373,7 @@ impl App {
       sipper(async move |mut sender| {
          sender
             .send(install::Progress {
-               message: Some(
-                  pgettext("plugins", "Refreshing local and remote repositories").to_string(),
-               ),
+               message: Some(pgettext("plugins", "Refreshing local repositories").to_string()),
                value: 0.0,
             })
             .await;
@@ -547,7 +546,10 @@ impl App {
 
    fn update(&mut self, message: Message) -> Task<Message> {
       match message {
-         Message::Startup => self.load_from_cache_or_refresh_task(),
+         Message::Startup => self
+            .refresh_local_task()
+            .chain(Task::done(Message::StartupRefresh)),
+         Message::StartupRefresh => self.load_from_cache_or_refresh_task(),
          Message::UpdateView(value) => {
             // If a previous task errored, we log it
             if let Err(e) = value {
