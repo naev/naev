@@ -1,13 +1,5 @@
 ## v0.14.0 (unreleased)
 
- ### TODO
-
-   * Give some reputation reward for first completion of Gauntlet/Qex Race
-     #3110
-   * Warnings for unreachable delivery times should take `follow lane` into
-     account #2989
-   * Update dat/rescue.lua for the multicore #2931
-
  ### Gameplay
 
    * Changes in faction reputation
