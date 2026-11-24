@@ -25,6 +25,8 @@ pub enum Kind {
    Installer,
    /// The universal macOS app, zipped for the Steam depot.
    Macos,
+   /// The universal macOS app on a disk image.
+   Dmg,
 }
 
 #[derive(Args, Debug)]
@@ -90,6 +92,7 @@ pub fn package(
          Kind::Windows => windows::tarball(&job, &output)?,
          Kind::Installer => windows::installer(&job, &output)?,
          Kind::Macos => macos::zip(&job, &output)?,
+         Kind::Dmg => macos::dmg(&job, &output)?,
       }
    }
    Ok(())

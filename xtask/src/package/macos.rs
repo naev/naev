@@ -32,6 +32,70 @@ pub(super) fn zip(job: &Job, output: &Path) -> Result<()> {
    Ok(())
 }
 
+/// The universal app on an HFS+ disk image, beside a link to /Applications to drag it onto.
+pub(super) fn dmg(job: &Job, output: &Path) -> Result<()> {
+   let app = app(job)?;
+   let assets = job.root.join("extras/macos/dmg_assets");
+   let work = job.target.join("dmg");
+   if work.exists() {
+      fs::remove_dir_all(&work).with_context(|| format!("clearing {}", work.display()))?;
+   }
+   fs::create_dir_all(&work).with_context(|| format!("creating {}", work.display()))?;
+
+   // Arbitrary headroom on top of the files, enough for HFS+'s own metadata.
+   const HEADROOM: u64 = 50 * 1024 * 1024;
+   let image = work.join("naev-macos.hfsplus");
+   fs::File::create(&image)
+      .and_then(|file| file.set_len(size(&assets)? + size(&app)? + HEADROOM))
+      .with_context(|| format!("creating {}", image.display()))?;
+
+   let mut mkfs = Command::new("mkfs.hfsplus");
+   mkfs.arg("-v").arg(&job.metadata.name).arg(&image);
+   run(mkfs, "mkfs.hfsplus")?;
+   for command in [
+      vec!["addall".into(), assets.into_os_string(), "/".into()],
+      vec!["mkdir".into(), "/Naev.app".into()],
+      vec!["addall".into(), app.into_os_string(), "/Naev.app".into()],
+      vec![
+         "symlink".into(),
+         "/Applications".into(),
+         "/Applications".into(),
+      ],
+   ] {
+      let mut hfsplus = Command::new("hfsplus");
+      hfsplus.arg(&image).args(command);
+      run(hfsplus, "hfsplus")?;
+   }
+
+   let out = output.join("naev-macos");
+   fs::create_dir_all(&out).with_context(|| format!("creating {}", out.display()))?;
+   let dmg = out.join("naev-macos.dmg");
+   let mut build = Command::new("dmg");
+   build
+      .args(["-c", "lzma", "-l", "8", "build"])
+      .arg(&image)
+      .arg(&dmg);
+   run(build, "dmg")?;
+   fs::remove_file(&image).with_context(|| format!("removing {}", image.display()))?;
+   println!("wrote {}", dmg.display());
+   Ok(())
+}
+
+/// The total size of the files under a directory.
+fn size(dir: &Path) -> std::io::Result<u64> {
+   let mut total = 0;
+   for entry in fs::read_dir(dir)? {
+      let entry = entry?;
+      let meta = entry.metadata()?;
+      total += if meta.is_dir() {
+         size(&entry.path())?
+      } else {
+         meta.len()
+      };
+   }
+   Ok(total)
+}
+
 /// Builds, bundles and merges every architecture into one signed Naev.app, once per run.
 fn app(job: &Job) -> Result<PathBuf> {
    if let Some(app) = job.macos_app.get() {
