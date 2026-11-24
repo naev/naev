@@ -272,7 +272,7 @@ function spawnDV()
    -- Treat player as one more
    hook.pilot( player.pilot(), "attacked", "attacked" )
 
-   for i = 1, 4 do
+   for i = 1, 5 do
       vigilance = pilot.add( "Dvaered Vigilance", "Dvaered", fleetpos[i + 1], nil, {ai="dvaered_norun"} )
       vigilance:setDir(math.pi/2)
       vigilance:setFriendly()
@@ -369,18 +369,20 @@ function nextStage()
    if mem.stage <= 1 then
       --player.msg("Starting mem.stage 2.")
       hook.timer(1.0, "spawnFLFfighters")
-      hook.timer(3.0, "spawnFLFbombers")
-      hook.timer(5.0, "spawnFLFdestroyers")
-      hook.timer(7.0, "spawnFLFbombers")
+      hook.timer(5.0, "spawnFLFbombers")
+      hook.timer(9.0, "spawnFLFdestroyers")
+      hook.timer(14.0, "spawnFLFbombers")
       mem.deathsFLFneeded = 10
+
    elseif mem.stage <= 2 then
       --player.msg("Starting stage 3.")
       hook.timer(1.0, "spawnFLFfighters")
-      hook.timer(3.0, "spawnFLFdestroyers")
-      hook.timer(5.0, "spawnFLFbombers")
-      hook.timer(7.0, "spawnFLFbombers")
-      hook.timer(9.0, "spawnFLFdestroyers")
+      hook.timer(5.0, "spawnFLFdestroyers")
+      hook.timer(11.0, "spawnFLFbombers")
+      hook.timer(16.0, "spawnFLFbombers")
+      hook.timer(23.0, "spawnFLFdestroyers")
       mem.deathsFLFneeded = 12
+
    elseif mem.stage <= 3 then
       --player.msg("Starting stage 4.")
       local delay = 0
