@@ -7,7 +7,6 @@
    * Warnings for unreachable delivery times should take `follow lane` into
      account #2989
    * Update dat/rescue.lua for the multicore #2931
-   * Fix Dvaered scenario `antiflf03` #2746
 
  ### Gameplay
 
