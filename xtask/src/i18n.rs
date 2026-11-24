@@ -99,3 +99,23 @@ fn run(mut cmd: Command, what: &str) -> Result<()> {
    }
    Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+   use std::{fs, path::Path};
+
+   // gettext can't carry format macros like PRIu64 through translation, so strings use %.0f instead.
+   #[test]
+   fn template_has_no_sysdep_strings() {
+      let pot = Path::new(env!("CARGO_MANIFEST_DIR")).join("../po/naev.pot");
+      let template = fs::read_to_string(&pot).expect("po/naev.pot is in the repository");
+      let found: Vec<&str> = template
+         .lines()
+         .filter(|line| line.contains("%<PRI"))
+         .collect();
+      assert!(
+         found.is_empty(),
+         "translatable strings use PRI macros: {found:?}"
+      );
+   }
+}
