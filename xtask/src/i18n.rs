@@ -68,6 +68,8 @@ fn extract_pot(root: &Path, metadata: &crate::metadata::Metadata) -> Result<()> 
       .arg(root)
       .arg("--from-code=UTF-8")
       .arg("--add-comments")
+      // Line numbers would churn every catalogue on each edit, and they made up most of po/.
+      .arg("--add-location=file")
       .arg("--package-name")
       .arg(PACKAGE)
       .arg("--package-version")
