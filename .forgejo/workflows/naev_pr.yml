@@ -36,17 +36,46 @@ jobs:
           git -C source/assets lfs fetch
           git -C source/assets lfs checkout
 
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-naev-release
+
       - name: Package Dist
         run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled --wrap-mode=forcefallback
-          meson dist -C build --no-tests --include-subprojects
+          cd source
+          cargo xtask dist --output "${{ github.workspace }}/build/dist"
+        env:
+          CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+          CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
+
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-naev-release
+
+      - name: Collect Artifacts
+        run: |
+          mkdir -p handoff/naev-dist
+          mv build/dist/naev-*.tar.xz handoff/naev-dist/source.tar.xz
 
       # Handed over through the cache server every runner shares, so the
       # tarball stays on the runner's network.
       - name: Save Dist
         uses: actions/cache/save@v5
         with:
-          path: build/meson-dist
+          path: handoff/naev-dist
           key: naev-dist-${{ github.run_id }}
 
   "Linux_Compile_Naev":
@@ -56,24 +85,24 @@ jobs:
       matrix:
         include:
           - image: naev-steamruntime
-            config: linux_steamruntime.ini
-            wrap_mode: default
             target: x86_64-unknown-linux-gnu
 
     runs-on: ${{ matrix.image }}
-
+    env:
+      CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+      CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
     steps:
       - name: Get Source
         uses: actions/cache/restore@v5
         with:
-          path: build/meson-dist
+          path: handoff/naev-dist
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
       - name: Restore Cargo Registry
         uses: actions/cache/restore@v5
@@ -84,32 +113,10 @@ jobs:
             build/cargo-home/git/db
           key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
-      - name: Meson Setup
-        id: setup
+      - name: Test Install
         run: |
-          meson setup build source \
-              --native-file='source/utils/build/${{ matrix.config }}' \
-              --buildtype=debug \
-              --wrap-mode=${{ matrix.wrap_mode }} \
-              -Dsteamruntime=false \
-              -Dprefix="/usr" \
-              -Dinstaller=false \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Upload Setup Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.setup.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
+          cd source
+          cargo xtask install --destdir "${{ github.workspace }}/staging" --prefix /usr
 
       # One fixed key per platform. The cache server keeps only the newest
       # save of a key, so main refreshes it without piling up copies.
@@ -123,87 +130,41 @@ jobs:
             build/cargo-home/git/db
           key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
-      - name: Meson Test (luacheck)
-        id: luacheck
+      - name: Test
         run: |
-          meson test luacheck -C build
+          cd source
+          cargo test --workspace --profile release-with-debug
 
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Upload Luacheck Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.luacheck.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-luacheck-log
-          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-
-      - name: Test Install
-        id: install
+      # The same commands as the pre-commit hooks.
+      - name: Lint
         run: |
-          meson install -C build
-        env:
-          DESTDIR: "${{ github.workspace }}/staging"
-
-      - name: Upload Install Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.install.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-install-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Restore Cargo Registry
-        uses: actions/cache/restore@v5
-        with:
-          path: |
-            appImageBuild/builddir/cargo-home/registry/index
-            appImageBuild/builddir/cargo-home/registry/cache
-            appImageBuild/builddir/cargo-home/git/db
-          key: cargo-registry-appimage-${{ matrix.image }}-${{ matrix.target }}
+          cd source
+          utils/nluacheck.py dat --no-color
+          appstreamcli validate --no-net --pedantic org.naev.Naev.metainfo.xml
 
       - name: Compile AppImage
-        id: appimageCompile
         run: |
-          ./source/utils/buildAppImage.sh -c -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
-
-      - name: Save Cargo Registry
-        if: ${{ success() && github.ref == 'refs/heads/main' }}
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            appImageBuild/builddir/cargo-home/registry/index
-            appImageBuild/builddir/cargo-home/registry/cache
-            appImageBuild/builddir/cargo-home/git/db
-          key: cargo-registry-appimage-${{ matrix.image }}-${{ matrix.target }}
+          cd source
+          cargo xtask package appimage --no-compression --output "${{ github.workspace }}/build/staging"
 
       - name: Show sccache Stats
         if: ${{ !cancelled() }}
         run: |
           if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
-      - name: Upload AppImage Compile Log
-        uses: actions/upload-artifact@v3
-        if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
-          path: ${{ github.workspace }}/appImageBuildLog.txt
-
   "Windows_Compile_Naev":
     needs: "Package_Source"
-
     strategy:
       fail-fast: false
       matrix:
         include:
           - image: naev-windows
-            config: windows_cross_mingw.ini
             target: x86_64-pc-windows-gnu
 
     runs-on: ${{ matrix.image }}
+    env:
+      CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+      CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
     steps:
       - name: Configure Build Environment
         run: |
@@ -212,14 +173,14 @@ jobs:
       - name: Get Source
         uses: actions/cache/restore@v5
         with:
-          path: build/meson-dist
+          path: handoff/naev-dist
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
       - name: Restore Cargo Registry
         uses: actions/cache/restore@v5
@@ -230,36 +191,13 @@ jobs:
             build/cargo-home/git/db
           key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
-      - name: Meson Setup
-        id: setup
+      - name: Test Install
         run: |
-          meson setup build source \
-              --prefix="$(pwd)"/source/extras/windows/installer \
-              --bindir=bin \
-              -Dndata_path=bin \
-              --cross-file='source/utils/build/${{ matrix.config }}' \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
-              --wrap-mode=nopromote \
-              -Dinstaller=false \
-              -Drelease=false \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
+          cd source
+          cargo xtask install --target ${{ matrix.target }} --prefix "${{ github.workspace }}/staging" --bindir . --ndata-path .
 
-      - name: Upload Setup Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.setup.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
       - name: Save Cargo Registry
         if: ${{ success() && github.ref == 'refs/heads/main' }}
         uses: actions/cache/save@v5
@@ -275,43 +213,22 @@ jobs:
         run: |
           if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Test Install
-        id: install
-        run: |
-          meson install -C build
-
-      - name: Upload Install Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.install.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-install-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
   "Darwin_Compile_Naev":
     needs: "Package_Source"
-
     strategy:
       fail-fast: false
       matrix:
         include:
           - image: naev-macos
             arch: x86_64
-            config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ${{ matrix.image }}
     env:
+      CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+      CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
       BUILDARCH: "${{ matrix.arch }}"
-
     steps:
       - name: Configure Build Environment
         run: |
@@ -320,14 +237,14 @@ jobs:
       - name: Get Source
         uses: actions/cache/restore@v5
         with:
-          path: build/meson-dist
+          path: handoff/naev-dist
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
       - name: Restore Cargo Registry
         uses: actions/cache/restore@v5
@@ -338,37 +255,13 @@ jobs:
             build/cargo-home/git/db
           key: cargo-registry-${{ matrix.image }}-${{ matrix.arch }}
 
-      - name: Meson Setup
-        id: setup
+      - name: Test Install
         run: |
-          meson setup build source \
-              --prefix="$(pwd)"/build/dist/Naev.app \
-              --bindir=Contents/MacOS \
-              --libdir=Contents/Frameworks \
-              -Dndata_path=Contents/Resources \
-              --cross-file='source/utils/build/${{ matrix.config }}' \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
-              -Dinstaller=false \
-              -Drelease=false \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
+          cd source
+          cargo xtask install --target ${{ matrix.arch }}-apple-darwin --prefix "${{ github.workspace }}/build/dist/Naev.app" --bindir Contents/MacOS --ndata-path Contents/Resources
 
-
-      - name: Upload Setup Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.setup.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-setup-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
       - name: Save Cargo Registry
         if: ${{ success() && github.ref == 'refs/heads/main' }}
         uses: actions/cache/save@v5
@@ -383,25 +276,6 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
-
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-compile-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Test Install
-        id: install
-        run: |
-          meson install -C build
-
-      - name: Upload Install Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.install.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-install-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "Documentation":
     runs-on: naev-docs
@@ -417,29 +291,21 @@ jobs:
       - name: Get Source
         uses: actions/cache/restore@v5
         with:
-          path: build/meson-dist
+          path: handoff/naev-dist
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf build/meson-dist/naev-*.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
-      - name: Meson Setup
-        run: |
-          meson setup build source \
-              -Dexecutable=disabled
-
-      - name: Meson Compile
+      - name: Build Documentation
         id: compile
         run: |
-          meson compile -C build
-          meson compile -C build manual
+          cd source
+          cargo xtask docs lua manual --output "${{ github.workspace }}/build/doc"
+        env:
+          CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+          CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
 
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v3
-        if: ${{ steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ github.sha }}-ldoc-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt

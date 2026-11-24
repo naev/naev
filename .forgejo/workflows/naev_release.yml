@@ -44,21 +44,41 @@ jobs:
           git -C source/assets lfs fetch
           git -C source/assets lfs checkout
 
+      - name: Restore Cargo Registry
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-naev-release
+
       - name: Package Dist
         run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled --wrap-mode=forcefallback
-          meson dist -C build --no-tests --include-subprojects
+          cd source
+          cargo xtask dist --output "${{ github.workspace }}/build/dist"
+        env:
+          CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+          CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
+
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-naev-release
 
       - name: Collect Artifacts
         run: |
-          mkdir -p build/dist
           cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/berg build/dist/
-          cp source/utils/buildUniversalBundle.sh build/dist
-          cp -r source/extras/macos/dmg_assets build/dist
-          cp source/extras/macos/entitlements.plist build/dist
-          mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
-          cp source/Changelog.md build/dist
-          cp source/dat/VERSION build/dist
+          mv build/dist/naev-*.tar.xz build/dist/source.tar.xz
+          # The tarball carries the version xtask stamped it with.
+          tar -xJOf build/dist/source.tar.xz --wildcards '*/dat/VERSION' > build/dist/VERSION
 
       # Build outputs pass between jobs through the cache server every
       # runner shares, laid out the way an artifact download placed them.
@@ -95,19 +115,6 @@ jobs:
           path: handoff/naev-version
           key: naev-version-${{ github.run_id }}
 
-      - name: Stage naev-packaging-assets
-        run: |
-          mkdir -p "handoff/naev-packaging-assets"
-          cp -r "build/dist/buildUniversalBundle.sh" "handoff/naev-packaging-assets/"
-          cp -r "build/dist/dmg_assets" "handoff/naev-packaging-assets/"
-          cp -r "build/dist/entitlements.plist" "handoff/naev-packaging-assets/"
-
-      - name: Save naev-packaging-assets
-        uses: actions/cache/save@v5
-        with:
-          path: handoff/naev-packaging-assets
-          key: naev-packaging-assets-${{ github.run_id }}
-
       - name: Stage naev-deployment-assets
         run: |
           mkdir -p "handoff/naev-deployment-assets"
@@ -128,12 +135,12 @@ jobs:
       matrix:
         include:
           - image: naev-steamruntime
-            config: linux_steamruntime.ini
-            wrap_mode: default
             target: x86_64-unknown-linux-gnu
 
     runs-on: ${{ matrix.image }}
-
+    env:
+      CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+      CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
     steps:
       # The runner's read-only cache credentials override any workflow or job
       # env, but not values a step writes to GITHUB_ENV.
@@ -150,14 +157,10 @@ jobs:
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
-      - name: Place naev-dist
-        run: |
-          cp -r "handoff/naev-dist/." "./"
-
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
       - name: Restore Cargo Registry
         uses: actions/cache/restore@v5
@@ -168,24 +171,13 @@ jobs:
             build/cargo-home/git/db
           key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
-      - name: Meson Setup
+      - name: Package
         run: |
-          meson setup build source \
-              --native-file='source/utils/build/linux_steamruntime.ini' \
-              --buildtype=release \
-              --wrap-mode=${{ matrix.wrap_mode }} \
-              -Dsteamruntime=true \
-              -Dprefix="/usr" \
-              -Dinstaller=true \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
+          cd source
+          cargo xtask package appimage steam --release --output "${{ github.workspace }}/build/staging"
 
-      - name: Meson Compile
-        run: |
-          meson compile -C build
-
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
       - name: Save Cargo Registry
         if: ${{ success() && github.ref == 'refs/heads/main' }}
         uses: actions/cache/save@v5
@@ -208,33 +200,10 @@ jobs:
           path: ${{ github.workspace }}/source/Cargo.lock
           if-no-files-found: error
 
-      - name: Meson Install
-        run: |
-          meson install -C build
-        env:
-          DESTDIR: ${{ github.workspace }}/staging
-
-      - name: Build AppImage
-        run: |
-          DESTDIR="${{ github.workspace }}/AppDir" meson install -C build
-          ./source/utils/buildAppImage.sh -e -i -a "${{ github.workspace }}/AppDir" -s source -b appimage
-
-      - name: Collect Steam Linux64 Artifacts
-        run: |
-          mkdir -p build/dist/ build/libs/
-
-          mv staging/usr/bin/naev build/dist/naev.x64
-          chmod +x build/dist/naev.x64
-
-          # Steam's runtime supplies the rest of what linuxdeploy bundled.
-          cp AppDir/usr/lib/libopenal.so.1 AppDir/usr/lib/libluajit-5.1.so.2 build/libs/
-
-          tar -cJf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
-
       - name: Stage naev-steamruntime
         run: |
           mkdir -p "handoff/naev-steamruntime"
-          cp -r "build/dist/naev.x64" "handoff/naev-steamruntime/"
+          cp -r "build/staging/naev-steamruntime/naev.x64" "handoff/naev-steamruntime/"
 
       - name: Save naev-steamruntime
         uses: actions/cache/save@v5
@@ -245,7 +214,7 @@ jobs:
       - name: Stage naev-ndata
         run: |
           mkdir -p "handoff/naev-ndata"
-          cp -r "build/dist/naev-ndata.tar.xz" "handoff/naev-ndata/"
+          cp -r "build/staging/naev-ndata/naev-ndata.tar.xz" "handoff/naev-ndata/"
 
       - name: Save naev-ndata
         uses: actions/cache/save@v5
@@ -256,7 +225,7 @@ jobs:
       - name: Stage naev-linux-libs
         run: |
           mkdir -p "handoff/naev-linux-libs"
-          cp -r "build/libs/". "handoff/naev-linux-libs/"
+          cp -r build/staging/naev-linux-libs/. "handoff/naev-linux-libs/"
 
       - name: Save naev-linux-libs
         uses: actions/cache/save@v5
@@ -267,7 +236,7 @@ jobs:
       - name: Stage naev-linux-x86-64
         run: |
           mkdir -p "handoff/naev-linux-x86-64"
-          cp -r appimage/dist/* "handoff/naev-linux-x86-64/"
+          cp -r build/staging/naev-linux-x86-64/. "handoff/naev-linux-x86-64/"
 
       - name: Save naev-linux-x86-64
         uses: actions/cache/save@v5
@@ -277,16 +246,17 @@ jobs:
 
   "Windows_Naev_Release":
     needs: "Package_Source"
-
     strategy:
       fail-fast: false
       matrix:
         include:
           - image: naev-windows
-            config: windows_cross_mingw.ini
             target: x86_64-pc-windows-gnu
 
     runs-on: ${{ matrix.image }}
+    env:
+      CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+      CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
     steps:
       # The runner's read-only cache credentials override any workflow or job
       # env, but not values a step writes to GITHUB_ENV.
@@ -307,14 +277,10 @@ jobs:
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
-      - name: Place naev-dist
-        run: |
-          cp -r "handoff/naev-dist/." "./"
-
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
       - name: Restore Cargo Registry
         uses: actions/cache/restore@v5
@@ -325,28 +291,13 @@ jobs:
             build/cargo-home/git/db
           key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
-      - name: Meson Setup
-        # We disable b_lto here because it messes with backtraces on windows
+      - name: Package
         run: |
-          meson setup build source \
-              --prefix="$(pwd)"/build/windows \
-              --bindir=. \
-              -Dndata_path=. \
-              --cross-file='source/utils/build/${{ matrix.config }}' \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=release \
-              --wrap-mode=nopromote \
-              -Dinstaller=true \
-              -Drelease=true \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
+          cd source
+          cargo xtask package windows installer --target ${{ matrix.target }} --release --output "${{ github.workspace }}/build/staging"
 
-      - name: Meson Compile
-        run: |
-          meson compile -C build
-
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
       - name: Save Cargo Registry
         if: ${{ success() && github.ref == 'refs/heads/main' }}
         uses: actions/cache/save@v5
@@ -362,14 +313,10 @@ jobs:
         run: |
           if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
-      - name: Meson Install
-        run: |
-          meson install -C build
-
       - name: Stage naev-win64-installer
         run: |
           mkdir -p "handoff/naev-win64-installer"
-          cp -r "build/dist/naev-installer.exe" "handoff/naev-win64-installer/"
+          cp -r "build/staging/naev-win64/naev-installer.exe" "handoff/naev-win64-installer/"
 
       - name: Save naev-win64-installer
         uses: actions/cache/save@v5
@@ -380,7 +327,7 @@ jobs:
       - name: Stage naev-win64-tarball
         run: |
           mkdir -p "handoff/naev-win64-tarball"
-          cp -r "build/dist/naev-windows.tar.xz" "handoff/naev-win64-tarball/"
+          cp -r "build/staging/naev-win64/naev-windows.tar.xz" "handoff/naev-win64-tarball/"
 
       - name: Save naev-win64-tarball
         uses: actions/cache/save@v5
@@ -388,25 +335,13 @@ jobs:
           path: handoff/naev-win64-tarball
           key: naev-win64-tarball-${{ github.run_id }}
 
-  "Darwin_Compile_Naev":
+  "Darwin_Naev_Release":
     needs: "Package_Source"
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - image: naev-macos
-            arch: x86_64
-            config: macos_cross_osxcross.ini
-            binaries_only: "1"
-          - image: naev-macos
-            arch: aarch64
-            config: macos_aarch64_cross_osxcross.ini
-            binaries_only: "0"
-
-    runs-on: ${{ matrix.image }}
+    runs-on: naev-macos
     env:
-      BUILDARCH: "${{ matrix.arch }}"
+      CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+      CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
+      BUILDARCH: "x86_64"
     steps:
       # The runner's read-only cache credentials override any workflow or job
       # env, but not values a step writes to GITHUB_ENV.
@@ -427,14 +362,10 @@ jobs:
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
-      - name: Place naev-dist
-        run: |
-          cp -r "handoff/naev-dist/." "./"
-
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
       - name: Restore Cargo Registry
         uses: actions/cache/restore@v5
@@ -443,29 +374,15 @@ jobs:
             build/cargo-home/registry/index
             build/cargo-home/registry/cache
             build/cargo-home/git/db
-          key: cargo-registry-${{ matrix.image }}-${{ matrix.arch }}
+          key: cargo-registry-naev-macos
 
-      - name: Meson Setup
+      - name: Package
         run: |
-          meson setup build source \
-              --prefix="$(pwd)"/build/macos/Naev.app \
-              --bindir=Contents/MacOS \
-              --libdir=Contents/Frameworks \
-              -Dndata_path=Contents/Resources \
-              --cross-file='source/utils/build/${{ matrix.config }}' \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=release \
-              -Dinstaller=false \
-              -Drelease=true \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
+          cd source
+          cargo xtask package macos dmg --release --output "${{ github.workspace }}/build/staging"
 
-      - name: Meson Compile
-        run: |
-          meson compile -C build
-
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
       - name: Save Cargo Registry
         if: ${{ success() && github.ref == 'refs/heads/main' }}
         uses: actions/cache/save@v5
@@ -474,89 +391,17 @@ jobs:
             build/cargo-home/registry/index
             build/cargo-home/registry/cache
             build/cargo-home/git/db
-          key: cargo-registry-${{ matrix.image }}-${{ matrix.arch }}
+          key: cargo-registry-naev-macos
 
       - name: Show sccache Stats
         if: ${{ !cancelled() }}
         run: |
           if [ -n "$RUSTC_WRAPPER" ]; then "$RUSTC_WRAPPER" --show-stats; fi
 
-      - name: Meson Install
-        run: |
-          meson install -C build
-        env:
-          NAEV_BUNDLE_BINARIES_ONLY: ${{ matrix.binaries_only }}
-
-      - name: Fix zip name
-        run: |
-          mv build/dist/naev-macos.zip build/dist/naev-macos-${{ matrix.arch }}.zip
-
-      - name: Stage naev-macos-${{ matrix.arch }}
-        run: |
-          mkdir -p "handoff/naev-macos-${{ matrix.arch }}"
-          cp -r "build/dist/naev-macos-${{ matrix.arch }}.zip" "handoff/naev-macos-${{ matrix.arch }}/"
-
-      - name: Save naev-macos-${{ matrix.arch }}
-        uses: actions/cache/save@v5
-        with:
-          path: handoff/naev-macos-${{ matrix.arch }}
-          key: naev-macos-${{ matrix.arch }}-${{ github.run_id }}
-
-  "Darwin_Package_Release":
-    needs:
-      [
-        Package_Source,
-        Darwin_Compile_Naev
-      ]
-    runs-on: naev-macos
-
-    steps:
-      - name: Get Universal Bundle Packaging Script
-        uses: actions/cache/restore@v5
-        with:
-          path: handoff/naev-packaging-assets
-          key: naev-packaging-assets-${{ github.run_id }}
-          fail-on-cache-miss: true
-
-      - name: Place naev-packaging-assets
-        run: |
-          mkdir -p "packaging"
-          cp -r "handoff/naev-packaging-assets/." "packaging/"
-
-      - name: Get x86_64 macOS Bundle
-        uses: actions/cache/restore@v5
-        with:
-          path: handoff/naev-macos-x86_64
-          key: naev-macos-x86_64-${{ github.run_id }}
-          fail-on-cache-miss: true
-
-      - name: Place naev-macos-x86_64
-        run: |
-          cp -r "handoff/naev-macos-x86_64/." "./"
-
-      - name: Get ARM64 macOS Bundle
-        uses: actions/cache/restore@v5
-        with:
-          path: handoff/naev-macos-aarch64
-          key: naev-macos-aarch64-${{ github.run_id }}
-          fail-on-cache-miss: true
-
-      - name: Place naev-macos-aarch64
-        run: |
-          cp -r "handoff/naev-macos-aarch64/." "./"
-
-      - name: Package Universal Bundle
-        run: |
-              mkdir -p arm64 x86_64
-              chmod +x packaging/buildUniversalBundle.sh
-              unzip naev-macos-aarch64.zip -d arm64
-              unzip naev-macos-x86_64.zip -d x86_64
-              ./packaging/buildUniversalBundle.sh -d -i ./packaging/dmg_assets -e ./packaging/entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
-
       - name: Stage naev-macos
         run: |
           mkdir -p "handoff/naev-macos"
-          cp -r build/dist/* "handoff/naev-macos/"
+          cp -r build/staging/naev-macos/. "handoff/naev-macos/"
 
       - name: Save naev-macos
         uses: actions/cache/save@v5
@@ -571,12 +416,12 @@ jobs:
       matrix:
         include:
           - image: naev-steamruntime
-            config: linux_steamruntime.ini
-            wrap_mode: default
             target: x86_64-unknown-linux-gnu
 
     runs-on: ${{ matrix.image }}
-
+    env:
+      CARGO_HOME: ${{ github.workspace }}/build/cargo-home
+      CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
     steps:
       - name: Get Source
         uses: actions/cache/restore@v5
@@ -585,14 +430,10 @@ jobs:
           key: naev-dist-${{ github.run_id }}
           fail-on-cache-miss: true
 
-      - name: Place naev-dist
-        run: |
-          cp -r "handoff/naev-dist/." "./"
-
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf handoff/naev-dist/source.tar.xz -C source --strip 1
 
       - name: Restore Cargo Registry
         uses: actions/cache/restore@v5
@@ -603,41 +444,27 @@ jobs:
             build/cargo-home/git/db
           key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
-      - name: Meson Setup
+      - name: Package
         run: |
-          meson setup build source \
-              --native-file='source/utils/build/linux_steamruntime.ini' \
-              --buildtype=release \
-              --wrap-mode=${{ matrix.wrap_mode }} \
-              -Dsteamruntime=true \
-              -Dprefix="/usr" \
-              -Dinstaller=true \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
+          cd source
+          cargo xtask package soundtrack --output "${{ github.workspace }}/build/staging"
 
-      - name: Meson Compile
-        run: |
-          meson compile -C build soundtrack
-
-      - name: Collect Artifacts
-        run: |
-          mkdir -p build/staging
-          mkdir -p build/dist/steam
-
-          unzip build/naev-*-soundtrack.zip -d build/staging
-          cp build/naev-*-soundtrack.zip build/dist
-          cp source/extras/logos/naev_soundtrack_cover.png build/dist/steam
-
-      - name: Transcode Steam Soundtrack
-        run: |
-          ./source/utils/convertToMP3.sh -i build/staging -f opus -o build/dist/steam
+      # One fixed key per platform. The cache server keeps only the newest
+      # save of a key, so main refreshes it without piling up copies.
+      - name: Save Cargo Registry
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            build/cargo-home/registry/index
+            build/cargo-home/registry/cache
+            build/cargo-home/git/db
+          key: cargo-registry-${{ matrix.image }}-${{ matrix.target }}
 
       - name: Stage naev-soundtrack
         run: |
           mkdir -p "handoff/naev-soundtrack"
-          cp -r build/dist/naev-*-soundtrack.zip "handoff/naev-soundtrack/"
+          cp -r build/staging/naev-soundtrack/naev-*-soundtrack.zip "handoff/naev-soundtrack/"
 
       - name: Save naev-soundtrack
         uses: actions/cache/save@v5
@@ -648,7 +475,7 @@ jobs:
       - name: Stage naev-steam-soundtrack
         run: |
           mkdir -p "handoff/naev-steam-soundtrack"
-          cp -r build/dist/steam/* "handoff/naev-steam-soundtrack/"
+          cp -r build/staging/naev-steam-soundtrack/. "handoff/naev-steam-soundtrack/"
 
       - name: Save naev-steam-soundtrack
         uses: actions/cache/save@v5
@@ -671,7 +498,7 @@ jobs:
         Package_Source,
         Linux_Naev_Release,
         Windows_Naev_Release,
-        Darwin_Package_Release,
+        Darwin_Naev_Release,
         Steam_Naev_Soundtrack_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
