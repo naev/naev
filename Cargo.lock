@@ -7565,6 +7565,7 @@ dependencies = [
  "sha2",
  "tar",
  "toml",
+ "zip",
 ]
 
 [[package]]

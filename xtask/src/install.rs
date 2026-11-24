@@ -100,6 +100,13 @@ impl InstallArgs {
       self
    }
 
+   /// Lays the install out as the inside of a macOS app bundle rooted at the prefix.
+   pub fn app_bundle(mut self) -> Self {
+      self.bindir = "Contents/MacOS".into();
+      self.ndata_path = Some("Contents/Resources".into());
+      self
+   }
+
    fn ndata(&self) -> PathBuf {
       self
          .ndata_path

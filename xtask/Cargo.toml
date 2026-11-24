@@ -12,6 +12,7 @@ workspace = true
 anyhow = { workspace = true }
 clap = { version = "4", features = ["derive", "env"] }
 goblin = { version = "0.10", default-features = false, features = [
+  "mach64",
   "pe32",
   "pe64",
   "std",
@@ -29,3 +30,6 @@ serde_json = "1"
 sha2 = "0.11"
 tar = { version = "0.4", default-features = false }
 toml = { workspace = true }
+zip = { version = "9", default-features = false, features = [
+  "deflate-flate2-zlib-rs",
+] }

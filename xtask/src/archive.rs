@@ -1,10 +1,10 @@
 // Archives are built in Rust, so packaging doesn't depend on which tar and xz the host has.
 
 use std::{
-   fs::File,
-   io::{BufWriter, Read, Write},
+   fs::{self, File},
+   io::{self, BufWriter, Read, Write},
    num::NonZeroU64,
-   path::Path,
+   path::{Path, PathBuf},
 };
 
 use anyhow::{Context, Result};
@@ -51,6 +51,71 @@ pub fn tar_xz(out: &Path, base: &Path, entries: &[impl AsRef<Path>]) -> Result<(
       .with_context(|| format!("finishing {}", out.display()))
 }
 
+/// Writes a deflated zip of the entries, each a file or directory relative to base, keeping their
+/// Unix modes and symlinks. Directories are walked in name order, so the zip is reproducible.
+pub fn zip(out: &Path, base: &Path, entries: &[impl AsRef<Path>]) -> Result<()> {
+   let file = File::create(out).with_context(|| format!("creating {}", out.display()))?;
+   let mut zip = zip::ZipWriter::new(BufWriter::new(file));
+   let mut pending: Vec<PathBuf> = entries
+      .iter()
+      .rev()
+      .map(|entry| entry.as_ref().to_path_buf())
+      .collect();
+   while let Some(rel) = pending.pop() {
+      let path = base.join(&rel);
+      let meta =
+         fs::symlink_metadata(&path).with_context(|| format!("reading {}", path.display()))?;
+      // Zip names always use forward slashes.
+      let name = rel
+         .components()
+         .map(|part| part.as_os_str().to_string_lossy())
+         .collect::<Vec<_>>()
+         .join("/");
+      let options = zip::write::SimpleFileOptions::default()
+         .compression_method(zip::CompressionMethod::Deflated)
+         .unix_permissions(mode(&meta))
+         .large_file(meta.len() > u64::from(u32::MAX));
+      if meta.file_type().is_symlink() {
+         let target =
+            fs::read_link(&path).with_context(|| format!("reading {}", path.display()))?;
+         zip.add_symlink(name, target.to_string_lossy(), options)
+      } else if meta.is_dir() {
+         let mut children: Vec<PathBuf> = fs::read_dir(&path)
+            .with_context(|| format!("reading {}", path.display()))?
+            .map(|child| child.map(|child| rel.join(child.file_name())))
+            .collect::<Result<_, _>>()
+            .with_context(|| format!("reading {}", path.display()))?;
+         children.sort_unstable_by(|a, b| b.cmp(a));
+         pending.extend(children);
+         zip.add_directory(name, options)
+      } else {
+         zip.start_file(name, options).and_then(|()| {
+            let mut from = File::open(&path)?;
+            io::copy(&mut from, &mut zip)?;
+            Ok(())
+         })
+      }
+      .with_context(|| format!("zipping {}", path.display()))?;
+   }
+   zip.finish()
+      .context("finishing the zip")?
+      .flush()
+      .with_context(|| format!("writing {}", out.display()))
+}
+
+#[cfg(unix)]
+fn mode(meta: &fs::Metadata) -> u32 {
+   use std::os::unix::fs::PermissionsExt;
+
+   meta.permissions().mode()
+}
+
+// Windows keeps no Unix modes, so directories get the usual 755 and files 644.
+#[cfg(not(unix))]
+fn mode(meta: &fs::Metadata) -> u32 {
+   if meta.is_dir() { 0o755 } else { 0o644 }
+}
+
 /// The file's SHA-256, in lowercase hex.
 pub fn sha256(file: &Path) -> Result<String> {
    let mut hasher = Sha256::new();
@@ -87,6 +152,48 @@ pub fn checksum(file: &Path) -> Result<()> {
 #[cfg(test)]
 mod tests {
    use super::*;
+
+   #[cfg(unix)]
+   #[test]
+   fn zips_keep_modes_and_symlinks() {
+      use std::os::unix::fs::PermissionsExt;
+
+      let scratch = std::env::temp_dir().join(format!("xtask-zip-{}", std::process::id()));
+      let app = scratch.join("Naev.app/Contents/MacOS");
+      std::fs::create_dir_all(&app).expect("scratch dir is writable");
+      std::fs::write(app.join("naev"), "exe").expect("scratch dir is writable");
+      std::fs::set_permissions(app.join("naev"), std::fs::Permissions::from_mode(0o755))
+         .expect("scratch dir is writable");
+      std::fs::write(app.join("data.txt"), "data").expect("scratch dir is writable");
+      std::os::unix::fs::symlink("naev", app.join("link")).expect("scratch dir is writable");
+
+      let out = scratch.join("out.zip");
+      zip(&out, &scratch, &["Naev.app"]).expect("zipping works");
+      let mut archive =
+         zip::ZipArchive::new(File::open(&out).expect("zip exists")).expect("zip parses");
+      let mode = |archive: &mut zip::ZipArchive<File>, name: &str| {
+         archive
+            .by_name(name)
+            .expect("entry exists")
+            .unix_mode()
+            .expect("entry has a mode")
+      };
+      assert_eq!(
+         mode(&mut archive, "Naev.app/Contents/MacOS/naev") & 0o777,
+         0o755
+      );
+      assert_eq!(
+         mode(&mut archive, "Naev.app/Contents/MacOS/data.txt") & 0o111,
+         0
+      );
+      assert!(
+         archive
+            .by_name("Naev.app/Contents/MacOS/link")
+            .expect("entry exists")
+            .is_symlink()
+      );
+      std::fs::remove_dir_all(&scratch).expect("scratch dir is removable");
+   }
 
    #[test]
    fn tarballs_unpack_to_the_same_tree() {

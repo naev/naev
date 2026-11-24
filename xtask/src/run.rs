@@ -111,6 +111,14 @@ impl BuildArgs {
       self.target.as_deref()
    }
 
+   /// The same build, for the given target triple.
+   pub fn for_target(&self, triple: &str) -> Self {
+      Self {
+         target: Some(triple.into()),
+         ..self.clone()
+      }
+   }
+
    pub fn binary(&self, target: &Path) -> PathBuf {
       // cargo names the dev profile's directory debug.
       let dir = match self.profile() {

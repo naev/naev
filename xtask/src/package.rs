@@ -10,6 +10,7 @@ use clap::{Args, ValueEnum};
 use crate::metadata::Metadata;
 
 mod linux;
+mod macos;
 mod windows;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
@@ -22,6 +23,8 @@ pub enum Kind {
    Windows,
    /// The Windows installer.
    Installer,
+   /// The universal macOS app, zipped for the Steam depot.
+   Macos,
 }
 
 #[derive(Args, Debug)]
@@ -56,6 +59,8 @@ struct Job<'a> {
    args: &'a PackageArgs,
    // Both Windows packages are built from one staged install.
    windows_stage: OnceCell<PathBuf>,
+   // As are both macOS ones, from one universal app.
+   macos_app: OnceCell<PathBuf>,
 }
 
 pub fn package(
@@ -72,6 +77,7 @@ pub fn package(
       metadata,
       args,
       windows_stage: OnceCell::new(),
+      macos_app: OnceCell::new(),
    };
    let output = args
       .output
@@ -83,6 +89,7 @@ pub fn package(
          Kind::Steam => linux::steam(&job, &output)?,
          Kind::Windows => windows::tarball(&job, &output)?,
          Kind::Installer => windows::installer(&job, &output)?,
+         Kind::Macos => macos::zip(&job, &output)?,
       }
    }
    Ok(())
