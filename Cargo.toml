@@ -52,8 +52,7 @@ members = [
 [workspace.package]
 version = "0.14.0-alpha.4"
 edition = "2024"
-rust-version = "1.89"      # Note this has to be set in meson.build too!
-
+rust-version = "1.89"                         # Note this has to be set in meson.build too!
 description = "Naev: Sea of Darkness"
 homepage = "https://naev.org/"
 repository = "https://codeberg.org/naev/naev"
