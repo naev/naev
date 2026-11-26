@@ -5,6 +5,10 @@ on:
 
 name: Nightly Release
 
+# CI builds the vendored libraries, as the release packages do, whatever the image has installed.
+env:
+  NAEV_VENDOR: always
+
 jobs:
   "Nightly_Skip_Check":
     runs-on: naev-release

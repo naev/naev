@@ -11,6 +11,10 @@ on:
 
 name: CI
 
+# CI builds the vendored libraries, as the release packages do, whatever the image has installed.
+env:
+  NAEV_VENDOR: always
+
 jobs:
   "Package_Source":
     runs-on: naev-release
