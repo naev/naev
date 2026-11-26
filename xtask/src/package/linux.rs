@@ -139,7 +139,13 @@ pub(super) fn steam(job: &Job, output: &Path) -> Result<()> {
    let bin_dir = output.join("naev-steamruntime");
    fs::create_dir_all(&bin_dir).with_context(|| format!("creating {}", bin_dir.display()))?;
    let shipped = bin_dir.join("naev.x64");
-   fs::copy(&binary, &shipped).with_context(|| format!("copying {}", binary.display()))?;
+   // Steam installs files uncompressed, and Rust's backtraces read zlib debug sections.
+   let mut objcopy = Command::new("objcopy");
+   objcopy
+      .arg("--compress-debug-sections=zlib")
+      .arg(&binary)
+      .arg(&shipped);
+   run(objcopy, "objcopy")?;
    crate::install::set_mode(&shipped, 0o755)?;
 
    let libs_dir = output.join("naev-linux-libs");
