@@ -402,7 +402,9 @@ static int uniedit_saveTestDirectory( const char *path )
    char buf[PATH_MAX];
    if ( nfile_dirMakeExist( path ) )
       return -1;
-   snprintf( buf, sizeof( buf ), "%s/.naevtestpath", path );
+   int n = snprintf( buf, sizeof( buf ), "%s/.naevtestpath", path );
+   if ( n < 0 || (size_t)n >= sizeof( buf ) )
+      return -1;
    if ( nfile_touch( buf ) )
       return -1;
    // Have to remove the file
