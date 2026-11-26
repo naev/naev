@@ -122,6 +122,8 @@ fn setup_logging() -> Result<()> {
    nlog::init().unwrap_or_else(|e| {
       warn_err!(e);
    });
+   // Logs a backtrace without RUST_BACKTRACE, and into the log file players send.
+   std::panic::set_hook(Box::new(|info| warn!("{info}")));
 
    // Start up PHYSFS. TODO move to ndata workspace.
    unsafe {

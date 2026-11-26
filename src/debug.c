@@ -17,6 +17,7 @@
 
 #if DEBUGGING
 DebugFlags debug_flags;
+#endif /* DEBUGGING */
 
 /**
  * @brief Gets the string related to the signal code.
@@ -106,9 +107,7 @@ const char *debug_sigCodeToStr( int sig, int sig_code )
    }
 #endif /* HAVE_STRSIGNAL */
 }
-#endif /* DEBUGGING */
 
-#if DEBUGGING
 #if HAVE_SIGACTION
 static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 #else  /* HAVE_SIGACTION */
@@ -134,6 +133,7 @@ static void debug_sigHandler( int sig )
    exit( 1 );
 }
 
+#if DEBUGGING
 #if HAVE_SIGACTION
 static void debug_sigHandlerWarn( int sig, siginfo_t *info, void *unused )
 #else  /* HAVE_SIGACTION */
@@ -162,31 +162,32 @@ static void debug_sigHandlerWarn( int sig )
  */
 void debug_sigInit( void )
 {
-#if DEBUGGING
    /* Set up handler. */
 #if HAVE_SIGACTION
-   const char      *str = _( "Unable to set up %s signal handler." );
    struct sigaction so, sa = { .sa_handler = NULL, .sa_flags = SA_SIGINFO };
    sa.sa_sigaction = debug_sigHandler;
    sigemptyset( &sa.sa_mask );
 
    sigaction( SIGSEGV, &sa, &so );
    if ( so.sa_handler == SIG_IGN )
-      DEBUG( str, "SIGSEGV" );
+      DEBUG( _( "Unable to set up %s signal handler." ), "SIGSEGV" );
    sigaction( SIGABRT, &sa, &so );
    if ( so.sa_handler == SIG_IGN )
-      DEBUG( str, "SIGABRT" );
+      DEBUG( _( "Unable to set up %s signal handler." ), "SIGABRT" );
 
+#if DEBUGGING
    sa.sa_sigaction = debug_sigHandlerWarn;
    sigaction( SIGFPE, &sa, &so );
    if ( so.sa_handler == SIG_IGN )
-      DEBUG( str, "SIGFPE" );
+      DEBUG( _( "Unable to set up %s signal handler." ), "SIGFPE" );
+#endif /* DEBUGGING */
 #else  /* HAVE_SIGACTION */
    signal( SIGSEGV, debug_sigHandler );
    signal( SIGABRT, debug_sigHandler );
+#if DEBUGGING
    signal( SIGFPE, debug_sigHandlerWarn );
-#endif /* HAVE_SIGACTION */
 #endif /* DEBUGGING */
+#endif /* HAVE_SIGACTION */
 }
 
 /**
@@ -194,11 +195,9 @@ void debug_sigInit( void )
  */
 void debug_sigClose( void )
 {
-#if DEBUGGING
    signal( SIGSEGV, SIG_DFL );
    signal( SIGABRT, SIG_DFL );
    signal( SIGFPE, SIG_DFL );
-#endif /* DEBUGGING */
 }
 
 /**

@@ -8,6 +8,7 @@ void debug_sigClose( void );
 void debug_enableFPUExcept( void );
 void debug_disableFPUExcept( void );
 void debug_enableLeakSanitizer( void );
+void debug_logBacktrace( void );
 
 enum {
    DEBUG_MARK_EMITTER,   /**< Mark the trail emitters with a cross. */
@@ -25,8 +26,6 @@ typedef char DebugFlags[DEBUG_FLAGS_MAX];
 
 /* Initialize debugging flags. */
 extern DebugFlags debug_flags;
-
-void debug_logBacktrace( void );
 #else /* DEBUGGING */
 #define NOOP()                                                                 \
    do {                                                                        \
@@ -34,5 +33,4 @@ void debug_logBacktrace( void );
 #define debug_isFlag( f ) 0 /**< Checks if flag f is set. */
 #define debug_setFlag( f ) NOOP()
 #define debug_rmFlag( f ) NOOP()
-#define debug_logBacktrace() NOOP()
 #endif /* DEBUGGING */
