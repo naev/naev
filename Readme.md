@@ -77,8 +77,8 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * git-lfs (compilation only)
 
 Naev also carries its own copies of some libraries in `naevc/vendor`, each
-described by its `vendor.toml`. A build links an installed copy instead when
-one matches the versions the library's `[system]` section accepts.
+described by its `vendor.toml`. A build links an installed copy instead
+when one matches the versions the library's `[system]` section accepts.
 
 `NAEV_VENDOR` changes that:
   * `auto`, the default, uses an installed copy when one matches.
@@ -138,33 +138,6 @@ runs it out of the source tree, as described in Running Naev below. Pass
 `--features paranoid` for the debug checks, `--release` for the release
 profile, or `--debug-rust` for an unoptimized build.
 
-To build with meson for an install or a package, run:
-
-``` bash
-meson setup builddir .
-meson compile -C builddir
-```
-
-If you need special settings you can run `meson configure` in your build
-directory to see a list of all available options.
-
-**For installation**, try:
-`meson configure --buildtype=release`
-
-**For Building a Windows Installer**, try adding:
-`--prefix="$(pwd)"/build/windows` `--bindir=.` `-Dndata_path=.`
-`-Dinstaller=true`. Check the `dist` folder in your build directory
-
-**For Building a macOS DMG**, try adding:
-`--prefix="$(pwd)"/build/dist/Naev.app` `--bindir=Contents/MacOS`
-`-Dndata_path=Contents/Resources` `-Dinstaller=true`. Check the `dist`
-folder in your build directory
-
-**For a debug build**, try adding:
-`--buildtype=debug`. (If your system supports debuginfod, also add
-`set debuginfod enabled on` to a file named `.gdbinit` in your home
-directory!)
-
 #### Up-to-date build instructions
 
 Check out the compilation page in our
@@ -188,8 +161,8 @@ what `tty` printed.
 
 ### 4.4  Installation
 
-Naev currently supports `meson install` which will install everything that
-is needed.
+Naev currently supports `cargo xtask install` which will install
+everything that is needed.
 
 If you wish to create a `.desktop` for your desktop environment, logos
 from 16x16 to 256x256 can be found in `extras/logos/`.
@@ -306,10 +279,9 @@ gettext-noop, as well as `n_()` for ngettext. Rust uses `gettext()`,
 
 When content like missions is updated, new translatable text must be made
 available to Weblate. The key manual step is to regenerate the
-`po/naev.pot` file (`cargo xtask pot`, or `meson compile pot` in the build
-dir) and commit it. To avoid merge conflicts, it is recommended to not
-include updated `po/naev.pot` in a pull request that isn't exclusively
-about translation.
+`po/naev.pot` file (`cargo xtask pot` in the build dir) and commit it. To
+avoid merge conflicts, it is recommended to not include updated
+`po/naev.pot` in a pull request that isn't exclusively about translation.
 
 Under the hood: `po/POTFILES.in` is a catalogue of files that may have
 translatable text. We keep it synced using pre-commit hooks, and
