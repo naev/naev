@@ -1,0 +1,22 @@
+# The release's LICENCE and the src/ files the library builds from, unchanged.
+# Pinned below 8.0, which dropped the incremental API the engine uses:
+# https://github.com/adah1972/libunibreak/issues/46
+
+[upstream]
+project = "https://github.com/adah1972/libunibreak"
+release = "https://github.com/adah1972/libunibreak/releases/tag/libunibreak_7_0"
+tarball = "https://github.com/adah1972/libunibreak/releases/download/libunibreak_7_0/libunibreak-7.0.tar.gz"
+sha256 = "8c9a6e121736cd0d5c890ae3ae96f3f4010a19aa040f1dbded833a62a87717d3"
+commit = "3ce4bfa3129ff3738046a44a6db533d2ce25af2b"
+license = "zlib, in LICENCE"
+
+[build]
+library = "unibreak"
+sources = ["src"]
+include = ["src"]
+
+# 8.0 dropped the incremental API, so only 7.x stands in.
+[system]
+pkg-config = "libunibreak"
+min = "7.0"
+below = "8.0"

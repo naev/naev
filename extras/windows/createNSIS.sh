@@ -54,7 +54,9 @@ cp -r "${MESON_INSTALL_DESTDIR_PREFIX}/." "$WORKPATH/bin"
 VERSION="$(<"${MESON_INSTALL_DESTDIR_PREFIX}/dat/VERSION")"
 
 # Compile NSIS installer
-makensis "-XOutFile ${MESON_BUILD_ROOT}/dist/naev-installer.exe" -DVERSION="$VERSION" "$WORKPATH/naev.nsi"
+# The rest mirrors Cargo.toml's metadata, which xtask package passes in itself.
+makensis "-XOutFile ${MESON_BUILD_ROOT}/dist/naev-installer.exe" -DVERSION="$VERSION" \
+   -DNAME="Naev" -DPUBLISHER="Naev Dev Team" -DURL="https://naev.org/" "$WORKPATH/naev.nsi"
 
 #Clean up
 rm -rf "$WORKPATH"

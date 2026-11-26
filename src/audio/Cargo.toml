@@ -1,0 +1,31 @@
+[package]
+name = "audio"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+naevc = { workspace = true }
+naev_core = { workspace = true }
+mlua = { workspace = true }
+ndata = { workspace = true }
+anyhow = { workspace = true }
+nlog = { workspace = true }
+gettext = { workspace = true }
+helpers = { workspace = true }
+nalgebra = { workspace = true }
+slotmap = { workspace = true }
+static_assertions = { workspace = true }
+tracing-mutex = { workspace = true }
+derive_more = { workspace = true }
+symphonia = { workspace = true }
+# no Rust support for Opus, so we use libopus through the adapter
+symphonia-adapter-libopus = { version = "0.3", default-features = false }
+tracing = { workspace = true }
+portable-atomic = { workspace = true }

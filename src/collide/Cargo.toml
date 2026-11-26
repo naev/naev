@@ -1,0 +1,29 @@
+[package]
+name = "collide"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+nalgebra = { workspace = true }
+image = { workspace = true }
+serde = { workspace = true }
+nlog = { workspace = true }
+ndata = { workspace = true }
+physics = { workspace = true }
+quick-xml = { workspace = true }
+itertools = { workspace = true }
+tinyvec = { workspace = true }
+fs-err = { workspace = true }
+bitcode = { workspace = true }
+blake3 = { workspace = true }
+mlua = { workspace = true }
+ramer_douglas_peucker = "0.2"
+mint = "0.5"

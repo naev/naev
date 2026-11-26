@@ -1,0 +1,29 @@
+[package]
+name = "pluginmgr-gui"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+pluginmgr = { workspace = true }
+anyhow = { workspace = true }
+nlog = { workspace = true }
+reqwest = { workspace = true }
+toml = { workspace = true }
+serde = { workspace = true }
+fs-err = { workspace = true }
+chrono = { workspace = true }
+iced = { workspace = true }
+futures = { workspace = true }
+ndata = { workspace = true }
+webbrowser = { workspace = true }
+formatx = { workspace = true }
+sdl3 = { workspace = true }
+itertools = { workspace = true }
+fs_extra = "1"

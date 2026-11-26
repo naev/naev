@@ -157,7 +157,7 @@ for target in "${target_array[@]}"; do
             -v "$TARGET_BUILD":"${HOME}"/build:Z \
             -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
             "$image_windows" \
-            bash -c "meson setup ${HOME}/build ${HOME}/source --prefix=\"${HOME}/build/windows\" --bindir=. -Dndata_path=. --cross-file='${HOME}/source/utils/build/windows_cross_mingw_ucrt64.ini' --buildtype=debug --force-fallback-for=glpk,SuiteSparse -Dinstaller=true -Drelease=true -Db_lto=false -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build && meson install -C ${HOME}/build"
+            bash -c "meson setup ${HOME}/build ${HOME}/source --prefix=\"${HOME}/build/windows\" --bindir=. -Dndata_path=. --cross-file='${HOME}/source/utils/build/windows_cross_mingw_ucrt64.ini' --buildtype=debug -Dinstaller=true -Drelease=true -Db_lto=false -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build && meson install -C ${HOME}/build"
          cp -r "$TARGET_BUILD"/dist/* "$BUILDPATH"/output
          ;;
       macos)
@@ -168,14 +168,14 @@ for target in "${target_array[@]}"; do
             -v "$TARGET_BUILD":"${HOME}"/build:Z \
             -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
             "$image_macos" \
-            bash -c "mkdir -p ${HOME}/build/macos/x86_64 && mkdir -p ${HOME}/build/macos/x86_build && meson setup ${HOME}/build/macos/x86_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_x86.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Db_lto=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/x86_build && meson install -C ${HOME}/build/macos/x86_build && cp -r ${HOME}/build/macos/Naev_x86.app ${HOME}/build/macos/x86_64"
+            bash -c "mkdir -p ${HOME}/build/macos/x86_64 && mkdir -p ${HOME}/build/macos/x86_build && meson setup ${HOME}/build/macos/x86_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_x86.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/x86_build && meson install -C ${HOME}/build/macos/x86_build && cp -r ${HOME}/build/macos/Naev_x86.app ${HOME}/build/macos/x86_64"
          # Build arm64 target:
          docker run --rm -u "$(id -u):$(id -g)" \
             -v "$SOURCEROOT":"${HOME}"/source:Z \
             -v "$TARGET_BUILD":"${HOME}"/build:Z \
             -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
             "$image_macos" \
-            bash -c "mkdir -p ${HOME}/build/macos/arm64 && mkdir -p ${HOME}/build/macos/arm_build && meson setup ${HOME}/build/macos/arm_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_arm.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_aarch64_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Db_lto=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/arm_build && meson install -C ${HOME}/build/macos/arm_build && cp -r ${HOME}/build/macos/Naev_arm.app ${HOME}/build/macos/arm64"
+            bash -c "mkdir -p ${HOME}/build/macos/arm64 && mkdir -p ${HOME}/build/macos/arm_build && meson setup ${HOME}/build/macos/arm_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_arm.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_aarch64_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/arm_build && meson install -C ${HOME}/build/macos/arm_build && cp -r ${HOME}/build/macos/Naev_arm.app ${HOME}/build/macos/arm64"
          # Package universal bundle:
          docker run --rm -u "$(id -u):$(id -g)" \
             -v "$SOURCEROOT":"${HOME}"/source:Z \

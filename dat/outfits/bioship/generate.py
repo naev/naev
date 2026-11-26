@@ -43,7 +43,7 @@ class Build:
       return (open(fn, 'w') for fn in self.file_names(names))
 
 class MesonBuild(Build):
-   ''' If Meson invokes generate.py <template path> -o <output paths>, build only the outfit family that matches the command. '''
+   ''' If xtask invokes generate.py <template path> -o <output paths>, build only the outfit family that matches the command. '''
 
    def __init__( self, template_path, _, *output_paths ):
       self.template_path = template_path
@@ -115,7 +115,7 @@ typename['hull'] = N_("Bioship Shell")
 
 
 ## BioOutfit generation rules.
-## See comments in this directory's meson.build file: these rules must match the build rules.
+## These rules must match the families in xtask/src/bioship.rs.
 
 
 ## Gene Drive recipe:

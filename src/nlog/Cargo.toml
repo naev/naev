@@ -1,0 +1,30 @@
+[package]
+name = "nlog"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+gettext = { workspace = true }
+naevc = { workspace = true }
+anyhow = { workspace = true }
+formatx = { workspace = true }
+semver = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing-appender = { workspace = true }
+tracing-tracy = { workspace = true, optional = true }
+strip-ansi-escapes = "0.2"
+nu-ansi-term = "0.50"
+
+[target.'cfg(unix)'.dependencies]
+nix = { version = "0.31", features = ["signal"] }
+
+[features]
+tracy = ["dep:tracing-tracy"]

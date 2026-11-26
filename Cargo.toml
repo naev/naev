@@ -1,0 +1,257 @@
+[package]
+name = "naev"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[lib]
+path = "src/naev.rs"
+
+[[bin]]
+name = "naev"
+path = "src/main.rs"
+
+[features]
+# Mirror the meson options of the same names.
+paranoid = ["naevc/paranoid"]
+debug_arrays = ["naevc/debug_arrays"]
+tracy = ["naevc/tracy"]
+
+[profile.release-with-debug]
+inherits = "release"
+debug = 1
+debug-assertions = true
+overflow-checks = true
+
+[workspace]
+resolver = "3"
+# The utils crates build on their own.
+exclude = ["utils"]
+members = [
+  "naevc",
+  "xtask",
+  "src/audio",
+  "src/core",
+  "src/helpers",
+  "src/nlog",
+  "src/gettext",
+  "src/ndata",
+  "src/renderer",
+  "src/physics",
+  "src/collide",
+  #"src/toolkit",
+  "src/pluginmgr",
+  #"src/pluginmgr-cli",
+  "src/pluginmgr-gui",
+]
+
+[workspace.package]
+version = "0.14.0-alpha.4"
+edition = "2024"
+# Dependency requirements
+# 1.85 Rust 2024
+# 1.87 nalgebra 0.34
+# 1.88 iced 0.14.0
+# 1.89 symphonia-adapter-libopus
+# 1.93 vec::into_raw_parts
+rust-version = "1.89"                         # Note this has to be set in meson.build too!
+description = "Naev: Sea of Darkness"
+homepage = "https://naev.org/"
+repository = "https://codeberg.org/naev/naev"
+
+[workspace.metadata.naev]
+name = "Naev"
+app-id = "org.naev.Naev"
+copyright-first-year = 2006
+copyright-year = 2026
+copyright-holder = "Naev Dev Team"
+
+[workspace.lints.clippy]
+not_unsafe_ptr_arg_deref = "allow"
+
+[patch.crates-io]
+gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "50d65229477fe5f785c2c90df21eb59c93ea2261" }
+
+[workspace.dependencies]
+naevc = { path = "naevc" }
+sdl3 = "0.22"
+anyhow = "1.0"
+audio = { path = "src/audio" }
+naev_core = { path = "src/core" }
+helpers = { path = "src/helpers" }
+gettext = { path = "src/gettext" }
+nlog = { path = "src/nlog" }
+ndata = { path = "src/ndata" }
+renderer = { path = "src/renderer" }
+#toolkit = { path="src/toolkit" }
+collide = { path = "src/collide" }
+physics = { path = "src/physics" }
+pluginmgr = { path = "src/pluginmgr" }
+pluginmgr-gui = { path = "src/pluginmgr-gui" }
+formatx = "~0.4.2"
+indicatif = "0.18"
+glow = "0.18"
+ordered-float = "5"
+nalgebra = { version = "0.35", features = [
+  "bytemuck",
+  "encase",
+  "serde-serialize",
+] }
+encase = { version = "0.12" } # Needed for shader voodoo
+bytemuck = { version = "1.25", features = [
+  "derive",
+] } # Needed for shader voodoo
+regex = "1.13"
+# need dav1d 0.11.1 or newer, will appear in the version after 0.25.9
+image = { version = "~0.25.10", default-features = false, features = [
+  "avif-native",
+  "jpeg",
+  "png",
+  "webp",
+] }
+mlua = { version = "0.12", features = [
+  "luajit",
+  "anyhow",
+  "send",
+  "serialize",
+  "macros",
+] }
+roxmltree = "0.21"
+symphonia = { version = "0.6", features = ["opt-simd", "aac", "mp3"] }
+slotmap = "1"
+static_assertions = "1.1"
+tracing = { version = "0.1", features = ["release_max_level_warn", "log"] }
+tracing-tracy = { version = "0.12", features = ["system-tracing"] }
+tracing-subscriber = { version = "0.3", features = [
+  "registry",
+  "env-filter",
+  "json",
+] }
+tracing-appender = { version = "0.2" }
+tracing-mutex = "0.3"
+bitcode = { version = "0.6", features = ["serde"] }
+blake3 = "1"
+derive_more = { version = "2", features = [
+  "from",
+  "into",
+  "mul",
+  "add",
+  "add_assign",
+  "mul_assign",
+  "display",
+] }
+palette = "0.7" # Colour conversion
+trie-rs = { version = "0.4" }
+softfloat = "1.0"
+semver = { version = "1.0", features = ["serde"] }
+chrono = { version = "0.4", features = ["serde", "now"] }
+base64 = "0.23"
+iced = { version = "0.14.0", default-features = false, features = [
+  "wayland",
+  "x11",
+  "wgpu",
+  "tokio",
+  "advanced",
+  "image",
+  "markdown",
+  "sipper",
+] }
+tokio = { version = "1", features = ["sync"] }
+webbrowser = { version = "1" }
+itertools = "0.15"
+tinyvec = "1"
+portable-atomic = { version = "1", default-features = false, features = [
+  "float",
+] }
+# Needs 1.4 for iters
+bvh-arena = "~1.4"
+
+# Plugin Manager dependencies
+# Serialization / XML
+serde = { version = "1", features = ["derive"] }
+serde-seeded = "0"
+quick-xml = { version = "0.42", features = ["serialize"] }
+# Networking and archive handling
+reqwest = { version = "0.13", default-features = false, features = [
+  "stream",
+  "blocking",
+  "charset",
+  "http2",
+  "system-proxy",
+  "native-tls",
+] }
+url = { version = "2.5", features = ["serde"] }
+zip = { version = "9", default-features = false, features = ["deflate"] }
+# Utilities and filesystem
+walkdir = "2"
+rayon = "1.12"    # parallel computation
+directories = "6"
+fs-err = "3"
+toml = "1.1"
+trash = "5"
+# Git operations
+# Disable ssh2 because it gives compilation issues
+git2 = { version = "0.21", default-features = false, features = ["https"] }
+# Async runtime and byte buffer types
+#tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+bytes = "1"
+futures = "0.3"
+
+[dependencies]
+audio = { workspace = true }
+naevc = { workspace = true }
+naev_core = { workspace = true }
+helpers = { workspace = true }
+gettext = { workspace = true }
+nlog = { workspace = true }
+ndata = { workspace = true }
+anyhow = { workspace = true }
+formatx = { workspace = true }
+sdl3 = { workspace = true }
+renderer = { workspace = true }
+glow = { workspace = true }
+nalgebra = { workspace = true }
+matrixmultiply = "0.3"
+bytemuck = { workspace = true }
+encase = { workspace = true }
+roxmltree = { workspace = true }
+image = { workspace = true }
+physics = { workspace = true }
+collide = { workspace = true }
+pluginmgr = { workspace = true }
+pluginmgr-gui = { workspace = true }
+mlua = { workspace = true }
+slotmap = { workspace = true }
+derive_more = { workspace = true }
+constcat = "0.6"
+rand = "0.10"
+rayon = { workspace = true }
+palette = { workspace = true }
+serde = { workspace = true }
+serde-seeded = { workspace = true }
+serde_yaml2 = "0.1"
+toml = { workspace = true }
+fs-err = { workspace = true }
+semver = { workspace = true }
+colored = "3"
+regex = { workspace = true }
+mint = "0.5"
+tracing = { workspace = true }
+tracing-mutex = { workspace = true }
+static_assertions = { workspace = true }
+itertools = { workspace = true }
+portable-atomic = { workspace = true }
+bvh-arena = { workspace = true }
+ordered-float = { workspace = true }
+
+# Probably useful
+#etagere = "0" # Texture Atlas generation
+
+[build-dependencies]
+# Compiles the Windows resource in build.rs.
+embed-resource = "3.0"
+toml = { workspace = true }

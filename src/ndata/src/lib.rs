@@ -198,7 +198,7 @@ pub fn check_version() -> anyhow::Result<()> {
          gettext(
             "Unable to find game data. You may need to install, specify a datapath, or run using {} (if developing)."
          ),
-         "naev.py"
+         "cargo xtask run"
       )?);
    }
 

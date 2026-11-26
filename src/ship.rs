@@ -1,6 +1,6 @@
-use crate::array;
 use anyhow::Result;
 use collide::polygon::SpinPolygon;
+use naevc::array;
 use nlog::{warn, warn_err};
 use rayon::prelude::*;
 use renderer::model::Model;

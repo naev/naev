@@ -65,26 +65,28 @@ to get started making your own, please take a look at the
 Naev's dependencies are intended to be widely available. In addition to a
 graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * rust 1.89 or later
-  * bindgen 0.72 or later
-  * SDL3`*`
+  * SDL3
   * libxml2
   * libopus-dev
   * freetype2
   * OpenAL
-  * OpenBLAS
   * intltool
-  * SuiteSparse`*`
-  * enet`*`
-  * physfs`*`
-  * lua 5.1 / luajit`*`
-  * GLPK`*`
-  * libunibreak`*`
-  * cmark`*`
+  * physfs
+  * lua 5.1 / luajit
   * pyyaml (compilation only)
   * git-lfs (compilation only)
 
-Dependencies marked with `*` will use subprojects if not found in the host
-system.
+Naev also carries its own copies of some libraries in `naevc/vendor`, each
+described by its `vendor.toml`. A build links an installed copy instead
+when one matches the versions the library's `[system]` section accepts.
+
+`NAEV_VENDOR` changes that:
+  * `auto`, the default, uses an installed copy when one matches.
+  * `always` builds every vendored copy.
+  * `never` requires the installed ones.
+
+`NAEV_VENDOR_<LIBRARY>` does the same for one library, using the `library`
+name from its `vendor.toml` in capitals.
 
 ### 3.1  Details for your OS
 
@@ -131,40 +133,10 @@ cd ..
 
 ### 4.2  Compilation
 
-Run:
-
-``` bash
-meson setup builddir .
-cd builddir
-meson compile
-./naev.py
-```
-
-If you need special settings you can run `meson configure` in your build
-directory to see a list of all available options.
-
-**For installation**, try:
-`meson configure --buildtype=release -Db_lto=true`
-
-**For Building a Windows Installer**, try adding:
-`--prefix="$(pwd)"/build/windows` `--bindir=.` `-Dndata_path=.`
-`-Dinstaller=true`. Check the `dist` folder in your build directory
-
-**For Building a macOS DMG**, try adding:
-`--prefix="$(pwd)"/build/dist/Naev.app` `--bindir=Contents/MacOS`
-`-Dndata_path=Contents/Resources` `-Dinstaller=true`. Check the `dist`
-folder in your build directory
-
-**For normal development**, try adding:
-`--buildtype=debug -Db_sanitize=address` (adding `-Db_lundef=false` if
-compiling with Clang, substituting `-Ddebug_arrays=true` for
-`-Db_sanitize=...` on Windows if you can't use Clang). (If your system
-supports debuginfod, also add `set debuginfod enabled on` to a file named
-`.gdbinit` in your home directory!)
-
-**For faster debug builds** (but harder to trace with gdb/lldb), try
-`--buildtype=debugoptimized` `-Db_lto=true` `-Db_lto_mode=thin` in place
-of the corresponding values above.
+For development, run `cargo xtask run`. It builds the game with cargo and
+runs it out of the source tree, as described in Running Naev below. Pass
+`--features paranoid` for the debug checks, `--release` for the release
+profile, or `--debug-rust` for an unoptimized build.
 
 #### Up-to-date build instructions
 
@@ -173,16 +145,24 @@ Check out the compilation page in our
 
 ### 4.3  Running Naev
 
-You can run Naev directly from the git repository using the `naev.py`
-script which will be generated in the build directory. This script will
-automatically set up all the data paths for running Naev. Make sure the
-art assets are checked out and up to date as mentioned in the Updating Art
-Assets section below.
+You can run Naev directly from the git repository with `cargo xtask run`,
+which builds the game and its derived data and sets up all the data paths.
+It runs the game under gdb or lldb if either is installed; pass
+`--debugger none` for neither. Make sure the art assets are checked out
+and up to date as mentioned in the Updating Art Assets section below.
+
+To debug under valgrind, start `cargo xtask valgrind --server` in one
+terminal, then attach gdb from another with `cargo xtask run --valgrind`.
+Give both the same build flags so gdb reads the binary valgrind runs. The
+game's output appears in the server's terminal. To see it beside gdb, run
+`tty` in the gdb terminal and start the server with
+`cargo xtask valgrind --server > /dev/pts/N 2>&1`, where `/dev/pts/N` is
+what `tty` printed.
 
 ### 4.4  Installation
 
-Naev currently supports `meson install` which will install everything that
-is needed.
+Naev currently supports `cargo xtask install` which will install
+everything that is needed.
 
 If you wish to create a `.desktop` for your desktop environment, logos
 from 16x16 to 256x256 can be found in `extras/logos/`.
@@ -299,17 +279,17 @@ gettext-noop, as well as `n_()` for ngettext. Rust uses `gettext()`,
 
 When content like missions is updated, new translatable text must be made
 available to Weblate. The key manual step is to regenerate the
-`po/naev.pot` file (`meson compile naev-pot` in the build dir) and commit
-it. To avoid merge conflicts, it is recommended to not include updated
+`po/naev.pot` file (`cargo xtask pot` in the build dir) and commit it. To
+avoid merge conflicts, it is recommended to not include updated
 `po/naev.pot` in a pull request that isn't exclusively about translation.
 
 Under the hood: `po/POTFILES.in` is a catalogue of files that may have
-translatable text. We keep it synced using pre-commit hooks (or manually:
-`meson compile potfiles`). The `naev-pot` Meson target is built using
-standard `xgettext`, plus additional rules. (Rules for `AUTHORS` are in
+translatable text. We keep it synced using pre-commit hooks, and
+`cargo xtask pot` refreshes it too. The template is built using standard
+`xgettext`, plus additional rules. (Rules for `AUTHORS` are in
 `po/update-po.sh`. Rules for XML data files are in
 `po/its/translation.its`.) Individual translations can be updated via
-`meson compile naev-update-po`, but _don't do this_ without a good reason,
+`cargo xtask update-po`, but _don't do this_ without a good reason,
 because Weblate does the same job more carefully.
 
 ### 6.4  Contributing without creating a fork

@@ -1,0 +1,16 @@
+[package]
+name = "gettext"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+naevc = { workspace = true }
+anyhow = { workspace = true }
+mlua = { workspace = true }

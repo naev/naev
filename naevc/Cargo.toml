@@ -1,0 +1,28 @@
+[package]
+name = "naevc"
+version.workspace = true
+edition = "2024"
+publish = false
+build = "build.rs"
+
+[lib]
+path = "src/lib.rs"
+
+[features]
+paranoid = []
+debug_arrays = []
+tracy = []
+
+[dev-dependencies]
+rand = "0.10"
+
+[build-dependencies]
+# Windows needs 0.72.1 or it floods overflow warnings.
+bindgen = "0.72.1"
+cc = "1.2"
+pkg-config = "0.3"
+serde = { workspace = true }
+toml = { workspace = true }
+
+[lints]
+workspace = true

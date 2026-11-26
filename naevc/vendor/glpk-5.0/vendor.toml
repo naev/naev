@@ -1,0 +1,57 @@
+# The release's src/ tree, unchanged, without its proxy test program. GLPK
+# carries its own AMD, COLAMD and zlib under _glp_ symbol names, so they can't
+# meet SuiteSparse's or the system's.
+
+[upstream]
+project = "https://www.gnu.org/software/glpk/"
+tarball = "https://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz"
+signature = "https://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz.sig"
+sha256 = "4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15"
+signed-by = "Andrew Makhorin, A2B5 6CCB 4222 0C06 4813 35BA D17B F230 5981 E818"
+license = "GPL-3.0-or-later in COPYING; AMD and COLAMD LGPL-2.1 and zlib under its own, in src/amd, src/colamd and src/zlib"
+
+[build]
+library = "glpk"
+sources = [
+  "src/amd",
+  "src/api",
+  "src/bflib",
+  "src/colamd",
+  "src/draft",
+  "src/env",
+  "src/intopt",
+  "src/minisat",
+  "src/misc",
+  "src/mpl",
+  "src/npp",
+  "src/proxy",
+  "src/simplex",
+  "src/zlib",
+]
+include = [
+  "src",
+  "src/amd",
+  "src/api",
+  "src/bflib",
+  "src/colamd",
+  "src/draft",
+  "src/env",
+  "src/intopt",
+  "src/minisat",
+  "src/misc",
+  "src/mpl",
+  "src/npp",
+  "src/proxy",
+  "src/simplex",
+  "src/zlib",
+]
+# Its internal headers share names with the engine's, like env.h and rng.h.
+export = ["src"]
+# minisat.h typedefs bool, which C23 reserves.
+std = "c11"
+
+# GLPK ships no pkg-config file.
+[system]
+header = "glpk.h"
+check = "GLP_MAJOR_VERSION == 5"
+link = "glpk"

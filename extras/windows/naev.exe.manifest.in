@@ -2,7 +2,7 @@
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1"
   manifestVersion="1.0">
  <assemblyIdentity
-   name="org.naev.Naev"
+   name="@APPID@"
    version="@VMAJOR@.@VMINOR@.@VREV@.0"
    type="win32"/>
  <asmv3:application xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">

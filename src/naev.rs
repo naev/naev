@@ -17,7 +17,6 @@ unsafe extern "C" {
    pub fn naev_main() -> c_int;
 }
 
-mod array;
 mod asteroid;
 mod commodity;
 mod damagetype;
@@ -34,6 +33,7 @@ mod pilot;
 mod player;
 mod plugin;
 mod rng;
+mod safelanes;
 mod ship;
 mod slots;
 mod spfx;

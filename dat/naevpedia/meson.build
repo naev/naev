@@ -1,2 +1,0 @@
-subdir('ships')
-subdir('outfits')

@@ -3361,71 +3361,98 @@ pub extern "C" fn sound_set_disabled(disable: c_int) {
    SILENT.store(disable != 0, Ordering::Relaxed);
 }
 
-// TODO fails to link with meson, but as a test it works
-/*
 #[test]
-pub fn test_flac_vs_opus () {
-    use std::process::{Command, Stdio};
+pub fn test_flac_vs_opus() {
+   use std::process::{Command, Stdio};
 
-    ndata::setup().unwrap();
+   let libopus = Command::new("ffmpeg")
+      .args(["-hide_banner", "-encoders"])
+      .output()
+      .is_ok_and(|out| String::from_utf8_lossy(&out.stdout).contains("libopus"));
+   if !libopus {
+      eprintln!("skipping: needs ffmpeg with the libopus encoder");
+      return;
+   }
 
-    // Set up audio
-    let attribs: Vec<ALint> = vec![0, 0];
-    let device = al::Device::new(None).unwrap();
-    let context = al::Context::new(&device, &attribs).unwrap();
-    context.set_current().unwrap();
+   // ndata::setup needs PhysFS, which the engine brings up at startup.
+   unsafe {
+      naevc::SDL_PhysFS_Init(std::ptr::null());
+   }
 
-    let path = Buffer::get_valid_path( "snd/sounds/nav" ).unwrap();
-    let path = Path::new("../assets").join(path);
+   ndata::setup().unwrap();
+   // The sound is in the artwork submodule, which the engine mounts from its -d paths at startup.
+   let assets = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets");
+   ndata::physfs::mount(&assets, true).unwrap();
 
-    let temp = ndata::physfs::get_write_dir();
-    let outfile1 = Path::new( "naev_audio_test.flac" );
-    let outfile2 = Path::new( "naev_audio_test.opus" );
-    let out1 = temp.join( &outfile1 );
-    let out2 = temp.join( &outfile2 );
+   // Set up audio
+   let attribs: Vec<ALint> = vec![0, 0];
+   let Ok(device) = al::Device::new(None) else {
+      eprintln!("skipping: no OpenAL device");
+      return;
+   };
+   let context = al::Context::new(&device, &attribs).unwrap();
+   context.set_current().unwrap();
 
-    assert!( Command::new("ffmpeg")
-        .arg("-loglevel")
-        .arg("error")
-        .arg("-i")
-        .arg(&path)
-        .arg("-y")
-        .arg("-c:a")
-        .arg("flac")
-        .arg(&out1)
-        .stdout(Stdio::null())
-        .spawn().unwrap()
-        .wait().unwrap().success() );
+   let path = Buffer::get_valid_path("snd/sounds/nav").unwrap();
+   let path = assets.join(path);
 
-    assert!( Command::new("ffmpeg")
-        .arg("-loglevel")
-        .arg("error")
-        .arg("-i")
-        .arg(&path)
-        .arg("-y")
-        .arg("-c:a")
-        .arg("libopus")
-        .arg("-b:a")
-        .arg("256k")
-        .arg("-frame_duration")
-        .arg("40")
-        .arg("-ar")
-        .arg("48000")
-        .arg(&out2)
-        .stdout(Stdio::null())
-        .spawn().unwrap()
-        .wait().unwrap().success() );
+   let temp = ndata::physfs::get_write_dir();
+   let outfile1 = Path::new("naev_audio_test.flac");
+   let outfile2 = Path::new("naev_audio_test.opus");
+   let out1 = temp.join(&outfile1);
+   let out2 = temp.join(&outfile2);
 
-    let data1 = BufferData::from_path( &outfile1 ).unwrap();
-    let data2 = BufferData::from_path( &outfile2 ).unwrap();
-    assert_eq!( data1.data.len(), data2.data.len() );
+   assert!(
+      Command::new("ffmpeg")
+         .arg("-loglevel")
+         .arg("error")
+         .arg("-i")
+         .arg(&path)
+         .arg("-y")
+         .arg("-c:a")
+         .arg("flac")
+         .arg(&out1)
+         .stdout(Stdio::null())
+         .spawn()
+         .unwrap()
+         .wait()
+         .unwrap()
+         .success()
+   );
 
-    let mut err = 0.0;
-    for (sa, sb) in data1.data.iter().zip( data2.data.iter() ) {
-        err += (sa-sb).powf(2.0);
-    }
-    err /= (data1.data.len() + data2.data.len()) as f32;
+   assert!(
+      Command::new("ffmpeg")
+         .arg("-loglevel")
+         .arg("error")
+         .arg("-i")
+         .arg(&path)
+         .arg("-y")
+         .arg("-c:a")
+         .arg("libopus")
+         .arg("-b:a")
+         .arg("256k")
+         .arg("-frame_duration")
+         .arg("40")
+         .arg("-ar")
+         .arg("48000")
+         .arg(&out2)
+         .stdout(Stdio::null())
+         .spawn()
+         .unwrap()
+         .wait()
+         .unwrap()
+         .success()
+   );
 
-    assert!( err < 1e-3 );
+   let data1 = BufferData::from_path(&outfile1).unwrap();
+   let data2 = BufferData::from_path(&outfile2).unwrap();
+   assert_eq!(data1.data.len(), data2.data.len());
+
+   let mut err = 0.0;
+   for (sa, sb) in data1.data.iter().zip(data2.data.iter()) {
+      err += (sa - sb).powf(2.0);
+   }
+   err /= (data1.data.len() + data2.data.len()) as f32;
+
+   assert!(err < 1e-3);
 }
-*/

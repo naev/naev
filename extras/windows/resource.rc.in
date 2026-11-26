@@ -20,13 +20,13 @@ BEGIN
    BEGIN
       BLOCK "040004b0"
       BEGIN
-         VALUE "Comments", "https://naev.org/"
+         VALUE "Comments", "@HOMEPAGE@"
          VALUE "CompanyName", "@COPYRIGHT@"
-         VALUE "FileDescription", "Naev: Sea of Darkness"
+         VALUE "FileDescription", "@DESCRIPTION@"
          VALUE "InternalName", "naev"
-         VALUE "LegalCopyright", "Copyright (C) 2006-@YEAR@ @COPYRIGHT@"
+         VALUE "LegalCopyright", "Copyright (C) @YEARS@ @COPYRIGHT@"
          VALUE "OriginalFilename", "naev.exe"
-         VALUE "ProductName", "Naev: Sea of Darkness"
+         VALUE "ProductName", "@DESCRIPTION@"
          VALUE "ProductVersion", "@VERSION@"
       END
    END
