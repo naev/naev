@@ -184,9 +184,16 @@ fn stage(job: &Job) -> Result<PathBuf> {
    if let Some(stage) = job.windows_stage.get() {
       return Ok(stage.clone());
    }
-   let build = &job.args.build;
+   // Cross-builds default to the target CI ships. --target picks another, like x86_64-win7-windows-gnu.
+   let build = &match job.args.build.target() {
+      None if !cfg!(windows) => job.args.build.for_target("x86_64-pc-windows-gnu"),
+      _ => job.args.build.clone(),
+   };
    if build.platform() != Platform::Windows {
-      bail!("the Windows packages need a Windows build; pass --target");
+      bail!(
+         "the Windows packages need a Windows --target, not {}",
+         build.target().unwrap_or_default()
+      );
    }
    let stage = job.target.join("windows");
    if stage.exists() {
@@ -271,9 +278,7 @@ fn search_path(build: &BuildArgs) -> Result<Vec<PathBuf>> {
       let path = env::var_os("PATH").context("PATH isn't set")?;
       return Ok(env::split_paths(&path).collect());
    }
-   let triple = build
-      .target()
-      .context("cross-building for Windows needs --target")?;
+   let triple = build.target().context("a cross-build has a target")?;
    let arch = triple.split('-').next().unwrap_or(triple);
    // The same compiler the cc crate picks for this target.
    let compiler = env::var(format!("CC_{}", triple.replace('-', "_")))

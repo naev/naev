@@ -298,7 +298,7 @@ jobs:
       - name: Package
         run: |
           cd source
-          cargo xtask package windows installer --target ${{ matrix.target }} --release --output "${{ github.workspace }}/build/staging"
+          cargo xtask package windows installer --release --output "${{ github.workspace }}/build/staging"
 
       # One fixed key per platform. The cache server keeps only the newest
       # save of a key, so main refreshes it without piling up copies.
