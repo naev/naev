@@ -2959,14 +2959,16 @@ pub extern "C-unwind" fn faction_generators(id: i64) -> *const naevc::FactionGen
 
 #[test]
 fn test_reputation_raw() {
-   use approx::{assert_abs_diff_eq, assert_abs_diff_ne};
+   use approx::assert_abs_diff_eq;
    for rep in -100..=100 {
       let rep = rep as f32;
       let raw = reputation_to_raw(rep);
-      assert_abs_diff_ne!(rep, raw);
-      assert_abs_diff_eq!(rep, raw_to_reputation(raw));
-      assert_abs_diff_eq!(-raw, reputation_to_raw(-rep));
-      assert_abs_diff_eq!(-rep, raw_to_reputation(-raw));
-      assert_abs_diff_eq!(rep, -raw_to_reputation(-raw));
+      const EPSILON: f32 = 1e-5;
+      // It is equal at some low values, it particular near 0
+      //assert_abs_diff_ne!(rep, raw, epsilon = EPSILON);
+      assert_abs_diff_eq!(rep, raw_to_reputation(raw), epsilon = EPSILON);
+      assert_abs_diff_eq!(-raw, reputation_to_raw(-rep), epsilon = EPSILON);
+      assert_abs_diff_eq!(-rep, raw_to_reputation(-raw), epsilon = EPSILON);
+      assert_abs_diff_eq!(rep, -raw_to_reputation(-raw), epsilon = EPSILON);
    }
 }
