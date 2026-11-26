@@ -2957,18 +2957,16 @@ pub extern "C-unwind" fn faction_generators(id: i64) -> *const naevc::FactionGen
    })
 }
 
-/*
 #[test]
-fn test_reputation_raw () {
-   use approx::{abs_diff_ne, abs_diff_eq};
+fn test_reputation_raw() {
+   use approx::{abs_diff_eq, abs_diff_ne};
    for rep in -100..=100 {
       let rep = rep as f32;
-      let raw = reputation_to_raw( rep );
-      let _ = abs_diff_ne!( rep, raw );
-      let _ = abs_diff_eq!( rep, raw_to_reputation( raw ) );
-      let _ = abs_diff_eq!( -raw, reputation_to_raw( -rep ) );
-      let _ = abs_diff_eq!( -rep, raw_to_reputation( -raw ) );
-      let _ = abs_diff_eq!( rep, -raw_to_reputation( -raw ) );
+      let raw = reputation_to_raw(rep);
+      assert_abs_diff_ne!(rep, raw);
+      assert_abs_diff_eq!(rep, raw_to_reputation(raw));
+      assert_abs_diff_eq!(-raw, reputation_to_raw(-rep));
+      assert_abs_diff_eq!(-rep, raw_to_reputation(-raw));
+      assert_abs_diff_eq!(rep, -raw_to_reputation(-raw));
    }
 }
-*/

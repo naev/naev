@@ -255,3 +255,6 @@ ordered-float = { workspace = true }
 # Compiles the Windows resource in build.rs.
 embed-resource = "3.0"
 toml = { workspace = true }
+
+[dev-dependencies]
+approx = "0.5"

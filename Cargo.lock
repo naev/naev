@@ -3330,6 +3330,7 @@ name = "naev"
 version = "0.14.0-alpha.4"
 dependencies = [
  "anyhow",
+ "approx",
  "audio",
  "bvh-arena",
  "bytemuck",

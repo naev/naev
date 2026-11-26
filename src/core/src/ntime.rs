@@ -723,70 +723,74 @@ pub fn refresh() {
 }
 
 // Fails to compile for now, so disabled
-/*
 #[test]
 fn test_ntime_ust() {
-    assert!(NTime::from_string("cat").is_err());
-    assert!(NTime::from_string("UST 123:cat.4567").is_err());
-    assert!(NTime::from_string("UST 123:4567.dog").is_err());
-    assert!(NTime::from_string("cat UST 603:3726.2871").is_err());
-    assert!(NTime::from_string("UST 603:3726.2871 cat").is_err());
-    assert!(NTime::from_string("UST 603:3726.n2871").is_err());
-    assert!(NTime::from_string("UST 123:123:4567").is_err());
-    assert_eq!(
-        NTime::from_string("  UST   123:0001.9999  ").unwrap(),
-        NTime::new(123, 1, 9999)
-    );
-    assert!(NTime::from_string("UST 123:456.8901").is_err());
-    assert!(NTime::from_string("UST 123:4567.89").is_err());
-    assert!(NTime::from_string("UST 123.8901").is_err());
-    assert!(NTime::from_string("UST 123:0123:4567").is_err());
-    assert_eq!(
-        NTime::from_string("UST 123:0123.4567").unwrap(),
-        NTime::new(123, 123, 4567)
-    );
-    assert_eq!(
-        NTime::from_string("UST 603:3726.2871").unwrap(),
-        NTime::new(603, 3726, 2871)
-    );
-    assert_eq!(
-        NTime::from_string("UST 603:3726").unwrap(),
-        NTime::new(603, 3726, 0)
-    );
-    assert_eq!(
-        NTime::from_string("UST 603").unwrap(),
-        NTime::new(603, 0, 0)
-    );
+   assert!(NTime::from_string("cat").is_err());
+   assert!(NTime::from_string("UST 123:cat.4567").is_err());
+   assert!(NTime::from_string("UST 123:4567.dog").is_err());
+   assert!(NTime::from_string("cat UST 603:3726.2871").is_err());
+   assert!(NTime::from_string("UST 603:3726.2871 cat").is_err());
+   assert!(NTime::from_string("UST 603:3726.n2871").is_err());
+   assert!(NTime::from_string("UST 123:123:4567").is_err());
+   assert_eq!(
+      NTime::from_string("  UST   123:0001.9999  ").unwrap(),
+      NTime::new(123, 1, 9999)
+   );
+   assert!(NTime::from_string("UST 123:456.8901").is_err());
+   assert!(NTime::from_string("UST 123:4567.89").is_err());
+   assert!(NTime::from_string("UST 123.8901").is_err());
+   assert!(NTime::from_string("UST 123:0123:4567").is_err());
+   assert_eq!(
+      NTime::from_string("UST 123:0123.4567").unwrap(),
+      NTime::new(123, 123, 4567)
+   );
+   assert_eq!(
+      NTime::from_string("UST 603:3726.2871").unwrap(),
+      NTime::new(603, 3726, 2871)
+   );
+   assert_eq!(
+      NTime::from_string("UST 603:3726").unwrap(),
+      NTime::new(603, 3726, 0)
+   );
+   assert_eq!(
+      NTime::from_string("UST 603").unwrap(),
+      NTime::new(603, 0, 0)
+   );
 }
 
 #[test]
 fn test_ntime_p() {
-    assert!(NTime::from_string("123.456 stp").is_err());
-    assert!(NTime::from_string("123.0456 p cat").is_err());
-    assert!(NTime::from_string("cat 123.0456 stp").is_err());
-    assert!(NTime::from_string("123.0456 pp").is_err());
-    assert_eq!(
-        NTime::from_string("123.4567 stp").unwrap(),
-        NTime::new(0, 123, 4567)
-    );
-    assert_eq!(NTime::from_string("123 stp").unwrap(), NTime::new(0, 123, 0));
+   assert!(NTime::from_string("123.456 stp").is_err());
+   assert!(NTime::from_string("123.0456 p cat").is_err());
+   assert!(NTime::from_string("cat 123.0456 stp").is_err());
+   assert!(NTime::from_string("123.0456 pp").is_err());
+   assert_eq!(
+      NTime::from_string("123.4567 stp").unwrap(),
+      NTime::new(0, 123, 4567)
+   );
+   assert_eq!(
+      NTime::from_string("123 stp").unwrap(),
+      NTime::new(0, 123, 0)
+   );
 }
 
 #[test]
 fn test_ntime_s() {
-    assert!(NTime::from_string("123.45 stu").is_err());
-    assert!(NTime::from_string("123:45 stu").is_err());
-    assert_eq!(NTime::from_string("123 stu").unwrap(), NTime::new(0, 0, 123));
+   assert!(NTime::from_string("123.45 stu").is_err());
+   assert!(NTime::from_string("123:45 stu").is_err());
+   assert_eq!(
+      NTime::from_string("123 stu").unwrap(),
+      NTime::new(0, 0, 123)
+   );
 }
 
 #[test]
 fn test_mlua_time() {
-    let lua = mlua::Lua::new();
-    let globals = lua.globals();
-    globals.set("time", open_time(&lua).unwrap()).unwrap();
-    lua.load(include_str!("ntime_test.lua"))
-        .set_name("mlua NTime test")
-        .exec()
-        .unwrap();
+   let lua = mlua::Lua::new();
+   let globals = lua.globals();
+   globals.set("time", open_time(&lua).unwrap()).unwrap();
+   lua.load(include_str!("ntime_test.lua"))
+      .set_name("mlua NTime test")
+      .exec()
+      .unwrap();
 }
-*/
