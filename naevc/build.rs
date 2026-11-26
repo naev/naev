@@ -164,6 +164,9 @@ fn generate_bindings(root: &Path, out_dir: &Path, deps: &deps::Deps, config_h: &
       .header(merged_path.to_string_lossy())
       // The C compile gets the same config.h, so both agree on what is declared.
       .clang_args(["-include", config_h.to_string_lossy().as_ref()])
+      // Clang's built-in memcpy, malloc and the like take unsigned long, not size_t, so bindgen
+      // can't map their sizes to usize.
+      .clang_arg("-fno-builtin")
       // https://github.com/rust-lang/rust-bindgen/issues/3147
       .wrap_unsafe_ops(true);
 
