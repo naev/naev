@@ -437,7 +437,7 @@ vni.sirius.any = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_serra_m, siri
 
 --[[--
 Gets a random portrait fitting for a specific faction.
-   @tparam fct Faction fct Faction to get images for.
+   @tparam Faction fct Faction to get images for.
    @treturn string Path of the VN image.
    @treturn string Path of the portrait image.
 --]]

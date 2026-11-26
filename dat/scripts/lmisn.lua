@@ -404,7 +404,7 @@ Calculates the in-game time from a position/spob in a system to a position/spob/
    @tparam Pilot p Pilot to compute travel time for.
    @tparam System src_sys System to calculate distance from. If nil, current system.
    @tparam System dst_sys or nil Target system to calculate distance to. If omitted, use src_sys.
-   @tparam Vec2|Spob _src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for. If nil, current pilot position.
+   @tparam Vec2|Spob src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for. If nil, current pilot position.
    @tparam Vec2|Spob|nil dst_pos Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
    @treturn Time The in-game time needed for this travel.
 --]]
