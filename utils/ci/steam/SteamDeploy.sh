@@ -80,12 +80,8 @@ cp -v -r "$SCRIPTROOT"/scripts "$STEAMPATH"
 # Move Linux binary and set as executable
 cp -v "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
 
-# Only what the Steam runtime does not already carry gets transplanted.
-# Everything else naev links against comes from the runtime itself, and a
-# second copy here would shadow it.
-cp -v "$TEMPPATH"/naev-linux-libs/libopenal.so.1 \
-      "$TEMPPATH"/naev-linux-libs/libluajit-5.1.so.2 \
-      "$STEAMPATH"/content/lin64
+# xtask only puts what the Steam runtime doesn't carry in naev-linux-libs.
+cp -v "$TEMPPATH"/naev-linux-libs/* "$STEAMPATH"/content/lin64
 # Rename original binary for wrapper usage
 mv "$STEAMPATH"/content/lin64/naev.x64 "$STEAMPATH"/content/lin64/naev
 # Create wrapper script to preload OpenAL

@@ -48,7 +48,7 @@ const APPIMAGETOOL: Tool = Tool {
 };
 
 // Steam's runtime provides everything else the game links.
-const STEAM_LIBS: &[&str] = &["libopenal.so.1", "libluajit-5.1.so.2"];
+const STEAM_LIBS: &[&str] = &["libopenal.so.1", "libluajit-5.1.so.2", "libphysfs.so.1"];
 
 /// Installs into an AppDir under /usr and packs it with linuxdeploy and appimagetool.
 pub(super) fn appimage(job: &Job, output: &Path) -> Result<()> {
