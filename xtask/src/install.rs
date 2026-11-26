@@ -75,12 +75,17 @@ pub struct InstallArgs {
    #[arg(long)]
    ndata_path: Option<PathBuf>,
 
+   // Packages carry the vendored libraries, whatever the build machine has installed.
+   #[arg(skip)]
+   vendored: bool,
+
    #[command(flatten)]
    build: crate::run::BuildArgs,
 }
 
 impl InstallArgs {
-   /// The game alone, in the default layout below prefix, staged under destdir if given.
+   /// The game alone for a package, in the default layout below prefix, staged under destdir if
+   /// given.
    pub fn game(destdir: Option<PathBuf>, prefix: PathBuf, build: crate::run::BuildArgs) -> Self {
       Self {
          components: vec![Component::Game],
@@ -89,6 +94,7 @@ impl InstallArgs {
          bindir: DEFAULT_BINDIR.into(),
          datadir: DEFAULT_DATADIR.into(),
          ndata_path: None,
+         vendored: true,
          build,
       }
    }
@@ -185,6 +191,9 @@ fn build_engine(root: &Path, args: &InstallArgs) -> Result<()> {
       .env("NAEV_PKGDATADIR", args.pkgdatadir())
       // Stamped as meson stamps its builds, so the installed game reports its commit.
       .env("NAEV_BUILD_VERSION", crate::version::current(root)?);
+   if args.vendored {
+      cmd.env("NAEV_VENDOR", "always");
+   }
    args.build.cargo_args(&mut cmd);
 
    let status = cmd.status().context("failed to run cargo build")?;

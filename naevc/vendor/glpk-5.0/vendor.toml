@@ -49,3 +49,9 @@ include = [
 export = ["src"]
 # minisat.h typedefs bool, which C23 reserves.
 std = "c11"
+
+# GLPK ships no pkg-config file.
+[system]
+header = "glpk.h"
+check = "GLP_MAJOR_VERSION == 5"
+link = "glpk"

@@ -18,3 +18,8 @@ include = ["src", "include"]
 export = ["include"]
 # Upstream's CMake build uses C99.
 std = "c99"
+
+[system]
+pkg-config = "libcmark"
+min = "0.31"
+below = "0.32"

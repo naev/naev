@@ -76,6 +76,18 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * pyyaml (compilation only)
   * git-lfs (compilation only)
 
+Naev also carries its own copies of some libraries in `naevc/vendor`, each
+described by its `vendor.toml`. A build links an installed copy instead when
+one matches the versions the library's `[system]` section accepts.
+
+`NAEV_VENDOR` changes that:
+  * `auto`, the default, uses an installed copy when one matches.
+  * `always` builds every vendored copy.
+  * `never` requires the installed ones.
+
+`NAEV_VENDOR_<LIBRARY>` does the same for one library, using the `library`
+name from its `vendor.toml` in capitals.
+
 ### 3.1  Details for your OS
 
 The Naev wiki has more detailed compilation steps, and lists of packages

@@ -14,3 +14,9 @@ license = "zlib, in LICENCE"
 library = "unibreak"
 sources = ["src"]
 include = ["src"]
+
+# 8.0 dropped the incremental API, so only 7.x stands in.
+[system]
+pkg-config = "libunibreak"
+min = "7.0"
+below = "8.0"
