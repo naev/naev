@@ -204,10 +204,22 @@ fn stage(job: &Job) -> Result<PathBuf> {
 
    let exe = stage.join(Platform::Windows.executable());
    let (dlls, runtime) = bundled(&exe, &search_path(build)?)?;
-   for dll in &dlls {
-      let name = dll.file_name().context("a DLL has a file name")?;
-      fs::copy(dll, stage.join(name)).with_context(|| format!("copying {}", dll.display()))?;
-   }
+   let staged = dlls
+      .iter()
+      .map(|dll| {
+         let copied = stage.join(dll.file_name().context("a DLL has a file name")?);
+         fs::copy(dll, &copied).with_context(|| format!("copying {}", dll.display()))?;
+         Ok(copied)
+      })
+      .collect::<Result<Vec<_>>>()?;
+   // Some MinGW DLLs carry their debug info. The other platforms' packages leave it out.
+   let strip = match build.target() {
+      Some(triple) if !cfg!(windows) => mingw_tool(triple, "strip"),
+      _ => "strip".into(),
+   };
+   let mut cmd = Command::new(&strip);
+   cmd.arg("--strip-debug").args(&staged);
+   run(cmd, &strip)?;
    println!("bundled {} DLLs, all on {runtime}", dlls.len());
    Ok(job.windows_stage.get_or_init(|| stage).clone())
 }
@@ -279,11 +291,10 @@ fn search_path(build: &BuildArgs) -> Result<Vec<PathBuf>> {
       return Ok(env::split_paths(&path).collect());
    }
    let triple = build.target().context("a cross-build has a target")?;
-   let arch = triple.split('-').next().unwrap_or(triple);
    // The same compiler the cc crate picks for this target.
    let compiler = env::var(format!("CC_{}", triple.replace('-', "_")))
       .or_else(|_| env::var(format!("CC_{triple}")))
-      .unwrap_or_else(|_| format!("{arch}-w64-mingw32-gcc"));
+      .unwrap_or_else(|_| mingw_tool(triple, "gcc"));
    let out = Command::new(&compiler)
       .arg("-print-sysroot")
       .output()
@@ -293,6 +304,12 @@ fn search_path(build: &BuildArgs) -> Result<Vec<PathBuf>> {
       bail!("{compiler} reports no sysroot to find the MinGW DLLs in");
    }
    Ok(vec![Path::new(&sysroot).join("mingw/bin")])
+}
+
+/// The cross MinGW tool for the target's architecture.
+fn mingw_tool(triple: &str, tool: &str) -> String {
+   let arch = triple.split('-').next().unwrap_or(triple);
+   format!("{arch}-w64-mingw32-{tool}")
 }
 
 #[cfg(test)]
