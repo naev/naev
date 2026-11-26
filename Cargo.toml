@@ -21,6 +21,14 @@ paranoid = ["naevc/paranoid"]
 debug_arrays = ["naevc/debug_arrays"]
 tracy = ["naevc/tracy"]
 
+# Enough for backtraces to name a file and line in naev's own code.
+[profile.release]
+debug = "line-tables-only"
+
+# Dependencies' debug info is most of a binary's size. release-with-debug inherits this.
+[profile.release.package."*"]
+debug = false
+
 [profile.release-with-debug]
 inherits = "release"
 debug = 1
