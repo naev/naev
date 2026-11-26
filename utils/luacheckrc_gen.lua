@@ -1376,6 +1376,7 @@ stds.spfx = {
       spfx = {
          fields = {
             new = {},
+            exists = {},
             rm = {},
             pos = {},
             setVel = {},
