@@ -19,7 +19,7 @@ rand = "0.10"
 [build-dependencies]
 # Windows needs 0.72.1 or it floods overflow warnings.
 bindgen = "0.72.1"
-cc = "1.2"
+cc = { version = "1.2", features = ["parallel"] }
 pkg-config = "0.3"
 serde = { workspace = true }
 toml = { workspace = true }
