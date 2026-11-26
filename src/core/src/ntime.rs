@@ -722,9 +722,21 @@ pub fn refresh() {
    }
 }
 
+/// Mounts the source tree's dat, which holds timedate.lua, as the engine does at startup.
+#[cfg(test)]
+fn mount_data() {
+   static MOUNTED: std::sync::Once = std::sync::Once::new();
+   MOUNTED.call_once(|| {
+      assert!(unsafe { naevc::SDL_PhysFS_Init(std::ptr::null()) });
+      let dat = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../dat");
+      ndata::physfs::mount(&dat, true).expect("the source tree has dat");
+   });
+}
+
 // Fails to compile for now, so disabled
 #[test]
 fn test_ntime_ust() {
+   mount_data();
    assert!(NTime::from_string("cat").is_err());
    assert!(NTime::from_string("UST 123:cat.4567").is_err());
    assert!(NTime::from_string("UST 123:4567.dog").is_err());
@@ -760,6 +772,7 @@ fn test_ntime_ust() {
 
 #[test]
 fn test_ntime_p() {
+   mount_data();
    assert!(NTime::from_string("123.456 stp").is_err());
    assert!(NTime::from_string("123.0456 p cat").is_err());
    assert!(NTime::from_string("cat 123.0456 stp").is_err());
@@ -776,6 +789,7 @@ fn test_ntime_p() {
 
 #[test]
 fn test_ntime_s() {
+   mount_data();
    assert!(NTime::from_string("123.45 stu").is_err());
    assert!(NTime::from_string("123:45 stu").is_err());
    assert_eq!(
@@ -786,6 +800,7 @@ fn test_ntime_s() {
 
 #[test]
 fn test_mlua_time() {
+   mount_data();
    let lua = mlua::Lua::new();
    let globals = lua.globals();
    globals.set("time", open_time(&lua).unwrap()).unwrap();
