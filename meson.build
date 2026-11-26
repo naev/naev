@@ -7,12 +7,6 @@ project('naev', ['c', 'rust'],
    # Requires meson 1.7.0 for rust_std=2024
    meson_version: '>=1.7.0')
 
-# Dependency requirements
-# 1.85 Rust 2024
-# 1.87 nalgebra 0.34
-# 1.88 iced 0.14.0
-# 1.89 symphonia-adapter-libopus
-# 1.93 vec::into_raw_parts
 rust_version = '1.89' # Mirrors rust-version in Cargo.toml.
 rustc_needed_version = '>=@0@.0'.format( rust_version )
 cargo_needed_version = '>=1.77.2'

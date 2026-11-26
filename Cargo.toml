@@ -52,6 +52,12 @@ members = [
 [workspace.package]
 version = "0.14.0-alpha.4"
 edition = "2024"
+# Dependency requirements
+# 1.85 Rust 2024
+# 1.87 nalgebra 0.34
+# 1.88 iced 0.14.0
+# 1.89 symphonia-adapter-libopus
+# 1.93 vec::into_raw_parts
 rust-version = "1.89"                         # Note this has to be set in meson.build too!
 description = "Naev: Sea of Darkness"
 homepage = "https://naev.org/"
@@ -72,7 +78,6 @@ gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "50d65229477fe5f785c
 
 [workspace.dependencies]
 naevc = { path = "naevc" }
-# Needs SDL 3.4.0 or later for 0.17.1+
 sdl3 = "0.22"
 anyhow = "1.0"
 audio = { path = "src/audio" }
@@ -245,10 +250,6 @@ ordered-float = { workspace = true }
 
 # Probably useful
 #etagere = "0" # Texture Atlas generation
-
-
-#[dev-dependencies]
-#approx = "0.5"
 
 [build-dependencies]
 # Compiles the Windows resource in build.rs.
