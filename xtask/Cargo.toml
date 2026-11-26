@@ -18,7 +18,7 @@ goblin = { version = "0.10", default-features = false, features = [
   "std",
 ] }
 indicatif = { workspace = true }
-lzma-rust2 = { version = "0.25", default-features = false, features = [
+lzma-rust2 = { version = "0.26", default-features = false, features = [
   "encoder",
   "optimization",
   "std",
