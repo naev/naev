@@ -26,7 +26,8 @@ pub fn detect() -> Config {
       version: env("CARGO_PKG_VERSION"),
       pkgdatadir: std::env::var("NAEV_PKGDATADIR")
          .unwrap_or_else(|_| "/usr/local/share/naev".to_string()),
-      debug: std::env::var("DEBUG").is_ok_and(|d| d != "false" && d != "0"),
+      // Debug info alone doesn't make a debug build.
+      debug: std::env::var_os("CARGO_CFG_DEBUG_ASSERTIONS").is_some(),
       paranoid: feature("PARANOID"),
    }
 }
