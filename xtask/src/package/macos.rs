@@ -121,6 +121,7 @@ fn app(job: &Job) -> Result<PathBuf> {
 
    let universal = work.join("universal/Naev.app");
    merge(&thin, &universal)?;
+   debug_symbols(&universal)?;
 
    let entitlements = job.root.join("extras/macos/entitlements.plist");
    // Ad-hoc, which Apple Silicon needs before it runs anything.
@@ -129,6 +130,8 @@ fn app(job: &Job) -> Result<PathBuf> {
       .arg("sign")
       .arg("-e")
       .arg(&entitlements)
+      // rcodesign signs every Mach-O it finds, the dSYM's DWARF included. Excluded files stay sealed.
+      .args(["--exclude", "**/*.dSYM/**"])
       .arg(&universal);
    run(sign, "rcodesign sign")?;
 
@@ -254,6 +257,16 @@ fn merge(thin: &[PathBuf], universal: &Path) -> Result<()> {
       fat(&slices, &universal.join(rel))?;
    }
    crate::install::set_mode(&universal.join(&exe), 0o755)
+}
+
+/// Collects the universal executable's debug info into a dSYM beside it, where Rust's backtraces
+/// look for one.
+fn debug_symbols(app: &Path) -> Result<()> {
+   let exe = executable(app);
+   // osxcross only has a dsymutil when it was built with one, so this is LLVM's or Xcode's.
+   let mut dsymutil = Command::new("dsymutil");
+   dsymutil.arg(&exe).arg("-o").arg(exe.with_extension("dSYM"));
+   run(dsymutil, "dsymutil")
 }
 
 /// Writes one file holding every slice, or a copy when only one architecture has it.
