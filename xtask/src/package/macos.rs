@@ -147,7 +147,6 @@ fn bundle_dylibs(app: &Path, triple: &str) -> Result<()> {
    fs::create_dir_all(&frameworks).with_context(|| format!("creating {}", frameworks.display()))?;
    let exe = executable(app);
    let sysroot = sysroot(triple);
-   let install_name_tool = install_name_tool(triple);
 
    let mut bundled = BTreeSet::new();
    // Each file to rewrite, and the directory its @loader_path rpaths were written against.
@@ -156,7 +155,7 @@ fn bundle_dylibs(app: &Path, triple: &str) -> Result<()> {
       let bytes = fs::read(&file).with_context(|| format!("reading {}", file.display()))?;
       let macho = MachO::parse(&bytes, 0).with_context(|| format!("parsing {}", file.display()))?;
 
-      let mut rewrite = Command::new(&install_name_tool);
+      let mut rewrite = xcrun("install_name_tool");
       if file == exe {
          rewrite.args(["-add_rpath", FRAMEWORKS_RPATH]);
       } else {
@@ -265,7 +264,7 @@ fn fat(slices: &[PathBuf], out: &Path) -> Result<()> {
          fs::copy(only, out).with_context(|| format!("copying {}", only.display()))?;
       }
       _ => {
-         let mut create = Command::new("lipo");
+         let mut create = xcrun("lipo");
          create.args(slices).arg("-create").arg("-output").arg(out);
          run(create, "lipo")?;
       }
@@ -273,18 +272,11 @@ fn fat(slices: &[PathBuf], out: &Path) -> Result<()> {
    Ok(())
 }
 
-/// install_name_tool by the name the cross toolchain gives it, or its plain name on a Mac. lipo
-/// handles every architecture under its plain name on both.
-fn install_name_tool(triple: &str) -> String {
-   // The compiler the cc crate builds with carries the toolchain's prefix, as in
-   // x86_64-apple-darwin23-cc.
-   env::var(format!("CC_{}", triple.replace('-', "_")))
-      .ok()
-      .and_then(|cc| {
-         cc.rsplit_once('-')
-            .map(|(prefix, _)| format!("{prefix}-install_name_tool"))
-      })
-      .unwrap_or_else(|| "install_name_tool".to_string())
+/// An Xcode tool, through the xcrun that finds it on a Mac and in osxcross alike.
+fn xcrun(tool: &str) -> Command {
+   let mut cmd = Command::new("xcrun");
+   cmd.arg(tool);
+   cmd
 }
 
 /// The sysroot pkg-config found this target's libraries in, when cross-building.
