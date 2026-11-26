@@ -1,5 +1,5 @@
 use std::{
-   fs,
+   fs, io,
    path::{Path, PathBuf},
    process::{Command, Stdio},
 };
@@ -91,11 +91,15 @@ fn archive_into(repo: &Path, into: &Path) -> Result<()> {
       .stdout(Stdio::piped())
       .spawn()
       .with_context(|| format!("failed to run git archive in {}", repo.display()))?;
-   let tar = archive
+   let mut tar = archive
       .stdout
       .take()
       .context("git archive closed its output")?;
-   crate::archive::unpack(tar, into)?;
+   crate::archive::unpack(&mut tar, into)?;
+   // git pads the archive past tar's end marker. Closing the pipe at the marker kills it with
+   // SIGPIPE when that padding is still being written.
+   io::copy(&mut tar, &mut io::sink())
+      .with_context(|| format!("reading git archive in {}", repo.display()))?;
    let archived = archive.wait().context("waiting for git archive")?;
    if !archived.success() {
       bail!("git archive failed in {} with {archived}", repo.display());
