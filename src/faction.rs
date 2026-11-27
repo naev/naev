@@ -2972,3 +2972,20 @@ fn test_reputation_raw() {
       assert_abs_diff_eq!(rep, -raw_to_reputation(-raw), epsilon = EPSILON);
    }
 }
+
+#[test]
+fn test_reputation_raw_scale() {
+   use approx::assert_ulps_eq;
+   // The scales match up to 10 reputation.
+   for rep in -10..=10 {
+      let rep = rep as f32;
+      assert_ulps_eq!(rep, reputation_to_raw(rep));
+   }
+   // Past that, every 10 reputation doubles the raw value.
+   for step in 1..=10 {
+      let rep = 10.0 * step as f32;
+      let raw = 10.0 * 2.0f32.powi(step - 1);
+      assert_ulps_eq!(raw, reputation_to_raw(rep));
+      assert_ulps_eq!(-raw, reputation_to_raw(-rep));
+   }
+}
