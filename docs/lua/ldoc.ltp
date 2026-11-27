@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
+  <!-- Runs before anything is drawn, so pages with JS never flash the navbar's no-JS fallback. -->
+  <script>document.documentElement.classList.remove('no-js');</script>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
   <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
@@ -28,7 +30,7 @@
       <a href="https://naev.org/"><img src="https://naev.org/imgs/naev.png" alt="Naev"></a>
     </div>
   </div>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="https://naev.org/favicon.png" alt=
       "Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=
@@ -49,8 +51,16 @@
             <a class="nav-link" href="https://naev.org/downloads/">Downloads</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="https://naev.org/plugins/">Plugins</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://forum.naev.org">Forums</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="https://naev.org/contact/">Contact</a>
           </li>
+        </ul>
+        <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="https://codeberg.org/naev/naev">Code</a>
           </li>
@@ -58,7 +68,7 @@
             <a class="nav-link" href="https://codeberg.org/naev/naev/wiki">Wiki</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://naev.org/api/">Lua API</a>
+            <a class="nav-link active" aria-current="page" href="https://naev.org/api/">Lua API</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="https://naev.org/devmanual/">Dev Manual</a>
@@ -68,7 +78,7 @@
     </div>
   </nav>
 
-<div id="lDoc_container">
+<div id="lDoc_container" class="container">
 
 <div id="main">
 
