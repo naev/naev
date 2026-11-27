@@ -142,15 +142,16 @@ impl Converter {
       })
    }
 
+   /// Writes time as dat/timedate.lua does, for when it fails to load.
    fn to_string_default(nt: NTime) -> String {
       let cycles = nt.cycles();
       let periods = nt.periods();
       let seconds = nt.seconds();
       // TODO try to move 2 to variable decimal length, but not that important
       if cycles == 0 && periods == 0 {
-         formatx!(gettext("{:04} s"), seconds).unwrap()
+         formatx!(gettext("{} stu"), seconds).unwrap()
       } else if cycles == 0 {
-         formatx!(gettext("{p}.{s:04} p"), p = periods, s = seconds,).unwrap()
+         formatx!(gettext("{p}.{s:04} stp"), p = periods, s = seconds,).unwrap()
       } else {
          formatx!(
             gettext("UST {c}:{p:04}.{s:04}"),
@@ -176,42 +177,29 @@ impl Converter {
       }
    }
 
+   /// Reads the forms dat/timedate.lua reads, for when it fails to load.
    fn from_string_default(input: &str) -> Result<NTime> {
-      static RE_UST: LazyLock<Regex> =
-         LazyLock::new(|| Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap());
-      static RE_P: LazyLock<Regex> =
-         LazyLock::new(|| Regex::new(r"^\s*(\d+)(?:\.(\d{4}))?\s+p\s*$").unwrap());
-      static RE_S: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\s*(\d+)\s+s\s*$").unwrap());
+      static RE_UST: LazyLock<Regex> = LazyLock::new(|| {
+         Regex::new(r"^UST (\d+):(\d{4})\.(\d{4})$").expect("a fixed, valid pattern")
+      });
+      static RE_STP: LazyLock<Regex> =
+         LazyLock::new(|| Regex::new(r"^(\d+)\.(\d{4}) stp$").expect("a fixed, valid pattern"));
+      static RE_STU: LazyLock<Regex> =
+         LazyLock::new(|| Regex::new(r"^(\d+) stu$").expect("a fixed, valid pattern"));
 
       if let Some(cap) = RE_UST.captures(input) {
          return Ok(NTime::new(
             cap[1].parse()?,
-            match cap.get(2) {
-               Some(m) => m.as_str().parse::<i64>()?,
-               None => 0,
-            },
-            match cap.get(3) {
-               Some(m) => m.as_str().parse::<i64>()?,
-               None => 0,
-            },
+            cap[2].parse()?,
+            cap[3].parse()?,
          ));
       }
-
-      if let Some(cap) = RE_P.captures(input) {
-         return Ok(NTime::new(
-            0,
-            cap[1].parse()?,
-            match cap.get(2) {
-               Some(m) => m.as_str().parse::<i64>()?,
-               None => 0,
-            },
-         ));
+      if let Some(cap) = RE_STP.captures(input) {
+         return Ok(NTime::new(0, cap[1].parse()?, cap[2].parse()?));
       }
-
-      if let Some(cap) = RE_S.captures(input) {
+      if let Some(cap) = RE_STU.captures(input) {
          return Ok(NTime::new(0, 0, cap[1].parse()?));
       }
-
       anyhow::bail!("not valid ntime")
    }
 
@@ -733,69 +721,80 @@ fn mount_data() {
    });
 }
 
-// Fails to compile for now, so disabled
+/// Checks that the engine's parser, dat/timedate.lua, and the fallback for when it fails to load
+/// both read the input as expected, None meaning they reject it.
+#[cfg(test)]
+fn check_parse(input: &str, expected: Option<NTime>) {
+   mount_data();
+   assert_eq!(
+      NTime::from_string(input).ok(),
+      expected,
+      "timedate.lua reading {input:?}"
+   );
+   assert_eq!(
+      Converter::from_string_default(input).ok(),
+      expected,
+      "the fallback reading {input:?}"
+   );
+}
+
 #[test]
 fn test_ntime_ust() {
-   mount_data();
-   assert!(NTime::from_string("cat").is_err());
-   assert!(NTime::from_string("UST 123:cat.4567").is_err());
-   assert!(NTime::from_string("UST 123:4567.dog").is_err());
-   assert!(NTime::from_string("cat UST 603:3726.2871").is_err());
-   assert!(NTime::from_string("UST 603:3726.2871 cat").is_err());
-   assert!(NTime::from_string("UST 603:3726.n2871").is_err());
-   assert!(NTime::from_string("UST 123:123:4567").is_err());
-   assert_eq!(
-      NTime::from_string("  UST   123:0001.9999  ").unwrap(),
-      NTime::new(123, 1, 9999)
-   );
-   assert!(NTime::from_string("UST 123:456.8901").is_err());
-   assert!(NTime::from_string("UST 123:4567.89").is_err());
-   assert!(NTime::from_string("UST 123.8901").is_err());
-   assert!(NTime::from_string("UST 123:0123:4567").is_err());
-   assert_eq!(
-      NTime::from_string("UST 123:0123.4567").unwrap(),
-      NTime::new(123, 123, 4567)
-   );
-   assert_eq!(
-      NTime::from_string("UST 603:3726.2871").unwrap(),
-      NTime::new(603, 3726, 2871)
-   );
-   assert_eq!(
-      NTime::from_string("UST 603:3726").unwrap(),
-      NTime::new(603, 3726, 0)
-   );
-   assert_eq!(
-      NTime::from_string("UST 603").unwrap(),
-      NTime::new(603, 0, 0)
-   );
+   check_parse("cat", None);
+   check_parse("UST 123:cat.4567", None);
+   check_parse("UST 123:4567.dog", None);
+   check_parse("cat UST 603:3726.2871", None);
+   check_parse("UST 603:3726.2871 cat", None);
+   check_parse("UST 603:3726.n2871", None);
+   check_parse("UST 123:123:4567", None);
+   check_parse("UST 123:0001.9999", Some(NTime::new(123, 1, 9999)));
+   check_parse("  UST   123:0001.9999  ", None);
+   check_parse("UST 123:456.8901", None);
+   check_parse("UST 123:4567.89", None);
+   check_parse("UST 123.8901", None);
+   check_parse("UST 123:0123:4567", None);
+   check_parse("UST 123:0123.4567", Some(NTime::new(123, 123, 4567)));
+   check_parse("UST 603:3726.2871", Some(NTime::new(603, 3726, 2871)));
+   check_parse("UST 603:3726", None);
+   check_parse("UST 603", None);
 }
 
 #[test]
 fn test_ntime_p() {
-   mount_data();
-   assert!(NTime::from_string("123.456 stp").is_err());
-   assert!(NTime::from_string("123.0456 p cat").is_err());
-   assert!(NTime::from_string("cat 123.0456 stp").is_err());
-   assert!(NTime::from_string("123.0456 pp").is_err());
-   assert_eq!(
-      NTime::from_string("123.4567 stp").unwrap(),
-      NTime::new(0, 123, 4567)
-   );
-   assert_eq!(
-      NTime::from_string("123 stp").unwrap(),
-      NTime::new(0, 123, 0)
-   );
+   check_parse("123.456 stp", None);
+   check_parse("123.0456 p cat", None);
+   check_parse("cat 123.0456 stp", None);
+   check_parse("123.0456 pp", None);
+   check_parse("123.4567 stp", Some(NTime::new(0, 123, 4567)));
+   check_parse("123 stp", None);
 }
 
 #[test]
 fn test_ntime_s() {
+   check_parse("123.45 stu", None);
+   check_parse("123:45 stu", None);
+   check_parse("123 stu", Some(NTime::new(0, 0, 123)));
+}
+
+#[test]
+fn test_ntime_round_trip() {
    mount_data();
-   assert!(NTime::from_string("123.45 stu").is_err());
-   assert!(NTime::from_string("123:45 stu").is_err());
-   assert_eq!(
-      NTime::from_string("123 stu").unwrap(),
-      NTime::new(0, 0, 123)
-   );
+   for nt in [
+      NTime::new(0, 0, 0),
+      NTime::new(0, 0, 123),
+      NTime::new(0, 1, 1),
+      NTime::new(0, 123, 4567),
+      NTime::new(123, 1, 9999),
+      NTime::new(603, 3726, 2871),
+   ] {
+      let text = nt.as_string();
+      assert_eq!(
+         text,
+         Converter::to_string_default(nt),
+         "the fallback writing {nt:?}"
+      );
+      check_parse(&text, Some(nt));
+   }
 }
 
 #[test]
