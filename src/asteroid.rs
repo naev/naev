@@ -1032,11 +1032,12 @@ pub fn load() -> Result<()> {
 #[instrument]
 pub fn update(dt: f64) {
    if let Some(cur_system) = crate::system::cur_mut() {
-      for ast in cur_system.asteroids_mut() {
+      let (asteroids, astexcludes) = cur_system.asteroids_full_mut();
+      for ast in asteroids {
          let inner = get_inner_mut(ast);
 
          // Get asteroid exclusions that matter
-         let astex = cur_system.astexclude().iter().filter(|ex| {
+         let astex = astexcludes.iter().filter(|ex| {
             let radius = ast.radius + ex.radius;
             Vector2::new(ast.pos.x - ex.pos.x, ast.pos.y - ex.pos.y).norm_squared()
                <= radius * radius

@@ -35,8 +35,31 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.asteroids) }
    }
 
-   pub fn asteroids_mut(&self) -> &mut [naevc::AsteroidAnchor] {
+   pub fn asteroids_mut(&mut self) -> &mut [naevc::AsteroidAnchor] {
       unsafe { array::array_as_slice_mut(self.0.asteroids) }
+   }
+
+   pub fn asteroids_full(&self) -> (&[naevc::AsteroidAnchor], &[naevc::AsteroidExclusion]) {
+      unsafe {
+         (
+            array::array_as_slice(self.0.asteroids),
+            array::array_as_slice(self.0.astexclude),
+         )
+      }
+   }
+
+   pub fn asteroids_full_mut(
+      &mut self,
+   ) -> (
+      &mut [naevc::AsteroidAnchor],
+      &mut [naevc::AsteroidExclusion],
+   ) {
+      unsafe {
+         (
+            array::array_as_slice_mut(self.0.asteroids),
+            array::array_as_slice_mut(self.0.astexclude),
+         )
+      }
    }
 }
 
