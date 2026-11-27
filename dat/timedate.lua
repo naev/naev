@@ -2,12 +2,13 @@
 Handes how to parse and display time.
 --]]
 function from_string( str )
+   -- to_string zero-pads these fields to 4 digits, and only 4 digits read back as the same value.
    local maj, min, inc
-   maj, min, inc = str:match("^UST (%d+):(%d+)%.(%d+)$")
+   maj, min, inc = str:match("^UST (%d+):(%d%d%d%d)%.(%d%d%d%d)$")
    if maj then
       return time.new( tonumber(maj), tonumber(min), tonumber(inc) )
    end
-   min, inc = str:match("^(%d+)%.(%d+) stp$")
+   min, inc = str:match("^(%d+)%.(%d%d%d%d) stp$")
    if min then
       return time.new( 0, tonumber(min), tonumber(inc) )
    end
