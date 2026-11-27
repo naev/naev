@@ -346,12 +346,24 @@ jobs:
           CARGO_HOME: ${{ github.workspace }}/build/cargo-home
           CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
 
-      - name: Trigger Website Build
+      - name: Publish the API Docs
         if: ${{ steps.compile.outcome == 'success' && github.ref == 'refs/heads/main' }}
-        run: |
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.WEBSITE_TOKEN }}" \
-            -H "Accept: application/json" \
-            -H "Content-Type: application/json" \
-            "https://codeberg.org/api/v1/repos/naev/naev-website/actions/workflows/api_build.yml/dispatches" \
-            -d '{"ref": "main"}'
+        uses: https://codeberg.org/git-pages/action@v2
+        with:
+          site: https://naev.org/
+          path: api
+          server: codeberg.page
+          token: ${{ secrets.GITHUB_TOKEN }}
+          strict: true
+          source: build/doc/lua/
+
+      - name: Publish the Dev Manual
+        if: ${{ steps.compile.outcome == 'success' && github.ref == 'refs/heads/main' }}
+        uses: https://codeberg.org/git-pages/action@v2
+        with:
+          site: https://naev.org/
+          path: devmanual
+          server: codeberg.page
+          token: ${{ secrets.GITHUB_TOKEN }}
+          strict: true
+          source: build/doc/manual/
