@@ -2959,14 +2959,31 @@ pub extern "C-unwind" fn faction_generators(id: i64) -> *const naevc::FactionGen
 
 #[test]
 fn test_reputation_raw() {
-   use approx::{assert_abs_diff_eq, assert_abs_diff_ne};
+   use approx::{assert_abs_diff_eq, assert_ulps_eq};
    for rep in -100..=100 {
       let rep = rep as f32;
       let raw = reputation_to_raw(rep);
-      assert_abs_diff_ne!(rep, raw);
-      assert_abs_diff_eq!(rep, raw_to_reputation(raw));
+      // powf and log2 round, so the round trip can land a few ulps off.
+      assert_ulps_eq!(rep, raw_to_reputation(raw));
       assert_abs_diff_eq!(-raw, reputation_to_raw(-rep));
-      assert_abs_diff_eq!(-rep, raw_to_reputation(-raw));
-      assert_abs_diff_eq!(rep, -raw_to_reputation(-raw));
+      assert_ulps_eq!(-rep, raw_to_reputation(-raw));
+      assert_ulps_eq!(rep, -raw_to_reputation(-raw));
+   }
+}
+
+#[test]
+fn test_reputation_raw_scale() {
+   use approx::assert_ulps_eq;
+   // The scales match up to 10 reputation.
+   for rep in -10..=10 {
+      let rep = rep as f32;
+      assert_ulps_eq!(rep, reputation_to_raw(rep));
+   }
+   // Past that, every 10 reputation doubles the raw value.
+   for step in 1..=10 {
+      let rep = 10.0 * step as f32;
+      let raw = 10.0 * 2.0f32.powi(step - 1);
+      assert_ulps_eq!(raw, reputation_to_raw(rep));
+      assert_ulps_eq!(-raw, reputation_to_raw(-rep));
    }
 }
