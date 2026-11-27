@@ -25,6 +25,11 @@ pub fn dist(root: &Path, target: &Path, output: Option<PathBuf>) -> Result<()> {
 
    // dat/VERSION is ignored by git, so the tarball carries its own copy.
    crate::version::ensure(root, &tree.join("dat"))?;
+   // It has no git history either, so it records the commit time the documentation is dated by.
+   if let Some(time) = crate::version::commit_time(root) {
+      let file = tree.join(crate::version::COMMIT_TIME_FILE);
+      fs::write(&file, time).with_context(|| format!("writing {}", file.display()))?;
+   }
 
    let tarball = out_dir.join(format!("{name}.tar.xz"));
    progress.set_message("compressing");

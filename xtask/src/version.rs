@@ -44,10 +44,17 @@ pub fn ensure(root: &Path, dir: &Path) -> Result<()> {
    fs::write(&file, &version).with_context(|| format!("writing {}", file.display()))
 }
 
-/// When the checked-out commit was made, in seconds since the epoch, or None outside a git
-/// checkout.
+/// The file a source tarball records its commit's time in, for want of git history.
+pub const COMMIT_TIME_FILE: &str = "SOURCE_DATE_EPOCH";
+
+/// When the source's commit was made, in seconds since the epoch: from the file a source tarball
+/// carries, or else from git. None when neither has it.
 pub fn commit_time(root: &Path) -> Option<String> {
-   git(root, &["log", "-1", "--format=%ct"])
+   let shipped = fs::read_to_string(root.join(COMMIT_TIME_FILE))
+      .ok()
+      .map(|text| text.trim().to_string())
+      .filter(|text| !text.is_empty() && text.chars().all(|c| c.is_ascii_digit()));
+   shipped.or_else(|| git(root, &["log", "-1", "--format=%ct"]))
 }
 
 fn git(root: &Path, args: &[&str]) -> Option<String> {
