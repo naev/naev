@@ -15,7 +15,7 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.presence) }
    }
 
-   pub fn presence_mut(&self) -> &mut [naevc::SystemPresence] {
+   pub fn presence_mut(&mut self) -> &mut [naevc::SystemPresence] {
       unsafe { array::array_as_slice_mut(self.0.presence) }
    }
 
@@ -27,7 +27,7 @@ impl SystemWrapper {
       unsafe { array::array_as_slice(self.0.astexclude) }
    }
 
-   pub fn astexclude_mut(&self) -> &mut [naevc::AsteroidExclusion] {
+   pub fn astexclude_mut(&mut self) -> &mut [naevc::AsteroidExclusion] {
       unsafe { array::array_as_slice_mut(self.0.astexclude) }
    }
 

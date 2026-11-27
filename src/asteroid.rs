@@ -691,11 +691,11 @@ impl Asteroid {
    }
 
    /// Updates a single asteroid taking into account keeping it in the anchor
-   fn update(
+   fn update<'a>(
       &mut self,
       dt: f64,
       anchor: &naevc::AsteroidAnchor,
-      astex: Option<&[naevc::AsteroidExclusion]>,
+      astex: impl Iterator<Item = &'a naevc::AsteroidExclusion>,
    ) -> bool {
       let off = Vector2::new(anchor.pos.x, anchor.pos.y) - self.pos();
       let d2 = off.norm_squared();
@@ -704,13 +704,9 @@ impl Asteroid {
          self.solid.vel.x += anchor.accel * dt * off.x / d;
          self.solid.vel.y += anchor.accel * dt * off.y / d;
          true
-      } else if let Some(astex) = astex {
+      } else {
          let mut setvel = false;
          for ex in astex {
-            if ex.affects == 0 {
-               continue;
-            }
-
             let eoff = self.pos() - Vector2::new(ex.pos.x, ex.pos.y);
             let ed2 = eoff.norm_squared();
             if ed2 <= ex.radius * ex.radius {
@@ -721,8 +717,6 @@ impl Asteroid {
             }
          }
          setvel
-      } else {
-         false
       };
 
       if setvel {
@@ -1037,26 +1031,17 @@ pub fn load() -> Result<()> {
 
 #[instrument]
 pub fn update(dt: f64) {
-   if let Some(cur_system) = crate::system::cur() {
+   if let Some(cur_system) = crate::system::cur_mut() {
       for ast in cur_system.asteroids_mut() {
          let inner = get_inner_mut(ast);
-         let mut has_exclusion = false;
-         for ex in cur_system.astexclude_mut() {
-            let radius = ast.radius + ex.radius;
-            if Vector2::new(ast.pos.x - ex.pos.x, ast.pos.y - ex.pos.y).norm_squared()
-               <= radius * radius
-            {
-               ex.affects = 1;
-               has_exclusion = true;
-            } else {
-               ex.affects = 0;
-            }
-         }
 
-         let astex = match has_exclusion {
-            true => Some(cur_system.astexclude()),
-            false => None,
-         };
+         // Get asteroid exclusions that matter
+         let astex = cur_system.astexclude().iter().filter(|ex| {
+            let radius = ast.radius + ex.radius;
+            Vector2::new(ast.pos.x - ex.pos.x, ast.pos.y - ex.pos.y).norm_squared()
+               <= radius * radius
+         });
+
          let mut destroyed = 0;
          inner.asteroids.retain(|_, a| {
             // Skip inexistent asteroids
@@ -1069,7 +1054,7 @@ pub fn update(dt: f64) {
                }
                return true;
             }
-            let retain = a.update(dt, ast, astex);
+            let retain = a.update(dt, ast, astex.clone());
             if !retain {
                destroyed += 1;
             }

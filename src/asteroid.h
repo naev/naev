@@ -74,10 +74,9 @@ typedef struct AsteroidAnchor_ {
  * @brief Represents an asteroid exclusion zone.
  */
 typedef struct AsteroidExclusion_ {
-   char  *label;   /**< Label used for unidiffs. */
-   vec2   pos;     /**< Position in the system (from centre). */
-   double radius;  /**< Radius of the exclusion zone. */
-   int    affects; /**< Temporary internal value when rendering. */
+   char  *label;  /**< Label used for unidiffs. */
+   vec2   pos;    /**< Position in the system (from centre). */
+   double radius; /**< Radius of the exclusion zone. */
 } AsteroidExclusion;
 
 /* Initialization and parsing. */
