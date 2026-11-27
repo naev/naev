@@ -44,6 +44,12 @@ pub fn ensure(root: &Path, dir: &Path) -> Result<()> {
    fs::write(&file, &version).with_context(|| format!("writing {}", file.display()))
 }
 
+/// When the checked-out commit was made, in seconds since the epoch, or None outside a git
+/// checkout.
+pub fn commit_time(root: &Path) -> Option<String> {
+   git(root, &["log", "-1", "--format=%ct"])
+}
+
 fn git(root: &Path, args: &[&str]) -> Option<String> {
    let out = Command::new("git")
       .args(args)

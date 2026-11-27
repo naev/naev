@@ -2,6 +2,7 @@ use std::{
    fmt, fs,
    path::{Path, PathBuf},
    process::Command,
+   time::{SystemTime, UNIX_EPOCH},
 };
 
 use anyhow::{Context, Result, bail};
@@ -241,6 +242,19 @@ fn ldoc(root: &Path, target: &Path, out: &Path) -> Result<()> {
       .arg("-s")
       .arg(root.join("docs/lua"))
       .arg(&staged);
+   // ldoc dates the pages from this, in UTC, so they carry the commit's time as the website's
+   // pages do. Without it ldoc writes local time.
+   if std::env::var_os("SOURCE_DATE_EPOCH").is_none() {
+      let now = || {
+         SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .ok()
+            .map(|since| since.as_secs().to_string())
+      };
+      if let Some(time) = crate::version::commit_time(root).or_else(now) {
+         cmd.env("SOURCE_DATE_EPOCH", time);
+      }
+   }
    run(cmd, Kind::Lua)
 }
 
